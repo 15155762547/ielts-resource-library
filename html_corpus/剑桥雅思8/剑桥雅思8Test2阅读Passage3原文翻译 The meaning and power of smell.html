@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"psychological": 2, "aroma": 1, "conscious": 2, "faculty": 1, "impair": 1, "well-being": 1, "evoke": 1, "scent": 2, "foul": 1, "disgust": 1, "respondent": 2, "agreeable": 1, "fragrant": 1, "perception": 1, "sensation": 1, "cue": 2, "bond": 2, "touching": 1, "infant": 1, "spouse": 1, "well-known": 1, "distinguish": 2, "clothe": 2, "involved": 1, "reveal": 1, "spite": 1, "sensory": 1, "feeble": 1, "undeveloped": 1, "acute": 1, "perceive": 1, "elusive": 1, "phenomenon": 3, "vocabulary": 1, "realm": 1, "implication": 1, "biological": 2, "psychology": 1, "inevitably": 1, "hence": 1, "offensive": 1, "interact": 1, "intimate": 1, "emotionally": 1, "essence": 1};
+        const wordData = {"psychological": {"count": 2, "definition": "adj. 心理的, 心理学的"}, "aroma": {"count": 1, "definition": "n. 香气"}, "conscious": {"count": 2, "definition": "adj. 意识到的, 清醒的, ..."}, "faculty": {"count": 1, "definition": "n. 学院, 全体教员, 全体教..."}, "impair": {"count": 1, "definition": "v. 削弱"}, "well-being": {"count": 1, "definition": "n. 幸福感"}, "evoke": {"count": 1, "definition": "v. 唤起"}, "scent": {"count": 2, "definition": "n. 香味, 气味, 香水, 预感；v. 嗅到,..."}, "foul": {"count": 1, "definition": "adj. 脏臭的, 糟糕的, 说脏话的, 风..."}, "disgust": {"count": 1, "definition": "n. 厌恶；v. 使厌恶"}, "respondent": {"count": 2, "definition": "n. 受访者, 被告"}, "agreeable": {"count": 1, "definition": "adj. 讨喜, 愿意, 合意"}, "fragrant": {"count": 1, "definition": "adj. 芳香的"}, "perception": {"count": 1, "definition": "n. 看法, 知觉, 领悟力"}, "sensation": {"count": 1, "definition": "n. 感觉, 触觉能力, 强烈感觉, 轰动"}, "cue": {"count": 2, "definition": "n. 提示, 台词提示, 台球杆；..."}, "bond": {"count": 2, "definition": "n. 纽带, 债券, 保释金, 抵押贷..."}, "touching": {"count": 1, "definition": "adj. 感人的"}, "infant": {"count": 1, "definition": "n. 婴儿, 学龄前儿童；adj. ..."}, "spouse": {"count": 1, "definition": "n. 配偶"}, "well-known": {"count": 1, "definition": "adj. 知名"}, "distinguish": {"count": 2, "definition": "v. 区分, 使与众不同, 看清,..."}, "clothe": {"count": 2, "definition": "v. 给...穿衣, 提供衣物"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "reveal": {"count": 1, "definition": "v. 透露, 展现；n. 揭晓"}, "spite": {"count": 1, "definition": "n. 恶意；v. 故意激怒"}, "sensory": {"count": 1, "definition": "adj. 感官的"}, "feeble": {"count": 1, "definition": "adj. 虚弱的, 不強烈的"}, "undeveloped": {"count": 1, "definition": "adj. 未开发的, 欠发达的, 未发育..."}, "acute": {"count": 1, "definition": "adj. 严重的, 急性病, 敏..."}, "perceive": {"count": 1, "definition": "v. 感知, 察觉"}, "elusive": {"count": 1, "definition": "adj. 难以捉摸"}, "phenomenon": {"count": 3, "definition": "n. 现象, 非凡的人"}, "vocabulary": {"count": 1, "definition": "n. 词汇量, 词汇, 术语, 词汇表"}, "realm": {"count": 1, "definition": "n. 领域, 王国"}, "implication": {"count": 1, "definition": "n. 影响, 暗示, 牵连"}, "biological": {"count": 2, "definition": "adj. 生物学的, 生物的, 有..."}, "psychology": {"count": 1, "definition": "n. 心理学, 心理, 心理机制"}, "inevitably": {"count": 1, "definition": "adv. 不可避免地, 必然地"}, "hence": {"count": 1, "definition": "adv. 因此"}, "offensive": {"count": 1, "definition": "adj. 冒犯的, 令人作呕的, 进..."}, "interact": {"count": 1, "definition": "vi. 互动, 相互作用"}, "intimate": {"count": 1, "definition": "adj. 亲密的, 私密的, 营造..."}, "emotionally": {"count": 1, "definition": "adv. 情感上, 令人动情地"}, "essence": {"count": 1, "definition": "n. 本质, 精华"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"equity": 1, "institution": 2, "curiosity": 1, "suppress": 1, "dramatically": 1, "existing": 1, "unite": 1, "substantial": 1, "peer": 3, "involved": 3, "disadvantage": 4, "pilot": 2, "bypass": 1, "configuration": 1, "guidance": 2, "provided": 1, "foster": 1, "intellectual": 2, "check-up": 1, "sensory": 1, "handicap": 1, "interfere": 1, "alongside": 1, "random": 1, "advanced": 1, "stride": 1, "perform": 2, "comprehension": 1, "verbal": 1, "bore": 1, "regardless": 1, "abuse": 1, "virtually": 1, "eliminate": 1, "factor": 1, "lead": 1, "interaction": 2, "excite": 1, "perpetuate": 1, "initiative": 1, "marked": 1, "undoubtedly": 1, "vital": 2};
+        const wordData = {"equity": {"count": 1, "definition": "n. 股权价值, 净资产价值, 普通股, ..."}, "institution": {"count": 2, "definition": "n. 机构, 制度, 设立, 老熟人"}, "curiosity": {"count": 1, "definition": "n. 好奇心, 新奇事物"}, "suppress": {"count": 1, "definition": "v. 镇压, 隐瞒, 抑制"}, "dramatically": {"count": 1, "definition": "adv. 急剧地, 戏剧性地, ..."}, "existing": {"count": 1, "definition": "adj. 现有的"}, "unite": {"count": 1, "definition": "v. 团结, 联合"}, "substantial": {"count": 1, "definition": "adj. 大量的, 坚固的"}, "peer": {"count": 3, "definition": "n. 同龄人, 贵族；v. 仔细看"}, "involved": {"count": 3, "definition": "adj. 参与的, 投入的, 有密切..."}, "disadvantage": {"count": 4, "definition": "v. 使处于不利地位；n. 不利条件"}, "pilot": {"count": 2, "definition": "n. 飞行员, 领航员, 试播集, 引..."}, "bypass": {"count": 1, "definition": "n. 绕城公路, 搭桥手术；v. 绕开, 规避"}, "configuration": {"count": 1, "definition": "n. 配置"}, "guidance": {"count": 2, "definition": "n. 指导, 制导"}, "provided": {"count": 1, "definition": "conj. 如果"}, "foster": {"count": 1, "definition": "v. 促进, 寄养；adj. 寄养的"}, "intellectual": {"count": 2, "definition": "adj. 智力的, 聪明的；n. 知识..."}, "check-up": {"count": 1, "definition": "n. 体检"}, "sensory": {"count": 1, "definition": "adj. 感官的"}, "handicap": {"count": 1, "definition": "n. 残疾, 障碍, 让赛, 差点；v. 妨碍"}, "interfere": {"count": 1, "definition": "v. 干涉"}, "alongside": {"count": 1, "definition": "adv. 旁边；prep. 旁边, 同..."}, "random": {"count": 1, "definition": "adj. 随机的, 陌生的, 随意的；..."}, "advanced": {"count": 1, "definition": "adj. 先进的, 高级的, 发达的"}, "stride": {"count": 1, "definition": "v. 大步行走；n. 一大步, 步态, 进展..."}, "perform": {"count": 2, "definition": "v. 表演, 执行, 表现"}, "comprehension": {"count": 1, "definition": "n. 理解能力, 阅读理解"}, "verbal": {"count": 1, "definition": "adj. 语言的, 口头的, 动词的"}, "bore": {"count": 1, "definition": "v. 使...感到无聊, 钻孔, 盯着看, 使..."}, "regardless": {"count": 1, "definition": "adv. 不顾"}, "abuse": {"count": 1, "definition": "n. 滥用, 虐待, 辱骂；v. 滥用, 虐待,..."}, "virtually": {"count": 1, "definition": "adv. 几乎, 虚拟地"}, "eliminate": {"count": 1, "definition": "v. 完全去除, 排除, 淘汰, 消灭"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "interaction": {"count": 2, "definition": "n. 互动, 相互作用"}, "excite": {"count": 1, "definition": "v. 使兴奋, 使过度兴奋, 激起强烈情..."}, "perpetuate": {"count": 1, "definition": "v. 延续"}, "initiative": {"count": 1, "definition": "n. 倡议, 主动性, 先机,..."}, "marked": {"count": 1, "definition": "adj. 明显的, 具有特定特征的"}, "undoubtedly": {"count": 1, "definition": "adv. 毫无疑问地"}, "vital": {"count": 2, "definition": "adj. 至关重要的, 维持生命的,..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

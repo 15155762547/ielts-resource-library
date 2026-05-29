@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"seldom": 1, "thunderstorm": 2, "electrical": 3, "fury": 1, "inflict": 1, "unite": 3, "leisure": 1, "terrify": 1, "lone": 1, "lightning": 17, "bolt": 1, "inviting": 1, "laser": 9, "discharge": 5, "thundercloud": 3, "fir": 2, "trail": 1, "site": 2, "institute": 1, "grid": 1, "precise": 1, "voltage": 1, "trigger": 2, "accord": 1, "occasional": 1, "populate": 1, "lead": 1, "promising": 1, "revealing": 1, "electron": 1, "atom": 1, "ion": 1, "surge": 1, "pointed": 1, "conductor": 1, "ideally": 1, "installation": 1, "portable": 2, "beam": 1, "brew": 1, "stumble": 2, "monster": 1, "manageable": 1, "reckon": 1, "forthcoming": 1, "hop": 2, "predict": 1, "avalanche": 1, "mighty": 1, "matter": 1, "meteorology": 1, "forecast": 1, "confront": 1, "menace": 1, "hail": 1, "induce": 1, "thunder": 2, "moisture": 1, "formation": 1};
+        const wordData = {"seldom": {"count": 1, "definition": "adv. 很少"}, "thunderstorm": {"count": 2, "definition": "n. 雷暴"}, "electrical": {"count": 3, "definition": "adj. 与电有关的"}, "fury": {"count": 1, "definition": "n. 暴怒, 愤怒, 复仇三女神"}, "inflict": {"count": 1, "definition": "v. 施加伤害"}, "unite": {"count": 3, "definition": "v. 团结, 联合"}, "leisure": {"count": 1, "definition": "n. 闲暇, 休闲活动"}, "terrify": {"count": 1, "definition": "v. 使害怕"}, "lone": {"count": 1, "definition": "adj. 独自的, 单亲抚养的"}, "lightning": {"count": 17, "definition": "n. 闪电；adj. 极快的"}, "bolt": {"count": 1, "definition": "n. 插销, 螺栓, 闪电, 弩箭, 布卷；v. ..."}, "inviting": {"count": 1, "definition": "adj. 诱人的"}, "laser": {"count": 9, "definition": "n. 激光"}, "discharge": {"count": 5, "definition": "v. 让…退伍, 让…出院, 释..."}, "thundercloud": {"count": 3, "definition": "n. 雷雨云"}, "fir": {"count": 2, "definition": "n. 冷杉"}, "trail": {"count": 1, "definition": "n. 痕迹, 踪迹, 小径, *..."}, "site": {"count": 2, "definition": "n. 地点, 现场, 场所, *..."}, "institute": {"count": 1, "definition": "n. 研究所；v. 建立"}, "grid": {"count": 1, "definition": "n. 网格, 坐标网格, 电网..."}, "precise": {"count": 1, "definition": "adj. 精确的, 准时发生的, ..."}, "voltage": {"count": 1, "definition": "n. 电压"}, "trigger": {"count": 2, "definition": "v. 引发, 启动, 触发；n. 扳..."}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "occasional": {"count": 1, "definition": "adj. 偶尔的"}, "populate": {"count": 1, "definition": "v. 居住于, 使定居, 填充"}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "promising": {"count": 1, "definition": "adj. 有前途的"}, "revealing": {"count": 1, "definition": "adj. 揭示性的, 暴露的"}, "electron": {"count": 1, "definition": "n. 电子"}, "atom": {"count": 1, "definition": "n. 原子"}, "ion": {"count": 1, "definition": "n. 离子"}, "surge": {"count": 1, "definition": "n. 强烈的情感涌动, 激增, ..."}, "pointed": {"count": 1, "definition": "adj. 尖的, 尖锐的"}, "conductor": {"count": 1, "definition": "n. 指挥, 列车长, 售票员, 导体"}, "ideally": {"count": 1, "definition": "adv. 理想地, 理想化地"}, "installation": {"count": 1, "definition": "n. 安装, 设备, 设施, 就职, 装..."}, "portable": {"count": 2, "definition": "adj. 便携的, 可移植的；n. 便携设备"}, "beam": {"count": 1, "definition": "n. 光束, 梁, 平衡木, 灿烂..."}, "brew": {"count": 1, "definition": "v. 酿造啤酒, 冲泡（茶或咖啡）, 浸..."}, "stumble": {"count": 2, "definition": "n. 小挫折, 绊了一下, 口误；vi. ..."}, "monster": {"count": 1, "definition": "n. 怪物（故事中的）, 庞然大物,..."}, "manageable": {"count": 1, "definition": "adj. 可控的"}, "reckon": {"count": 1, "definition": "v. 认为, 被视为, 预计, 计算"}, "forthcoming": {"count": 1, "definition": "adj. 即将来临, 现成可用, 坦..."}, "hop": {"count": 2, "definition": "v. 单脚跳, 双脚跳, 快速前往, 上车,..."}, "predict": {"count": 1, "definition": "v. 预测"}, "avalanche": {"count": 1, "definition": "n. 雪崩"}, "mighty": {"count": 1, "definition": "adj. 强大的, 巨大的；adv. 非常"}, "matter": {"count": 1, "definition": "n. 问题, 事情, 情况, 事项, 物..."}, "meteorology": {"count": 1, "definition": "n. 气象学"}, "forecast": {"count": 1, "definition": "n. 预测；v. 预测"}, "confront": {"count": 1, "definition": "v. 面对"}, "menace": {"count": 1, "definition": "n. 威胁, 不祥预感, 麻烦制造者, 威..."}, "hail": {"count": 1, "definition": "v. 称赞, 招手叫停, 呼喊, 下冰..."}, "induce": {"count": 1, "definition": "v. 劝说, 引起, 引产"}, "thunder": {"count": 2, "definition": "n. 雷声, 雷鸣般的响声；v. 打雷, 发..."}, "moisture": {"count": 1, "definition": "n. 水分"}, "formation": {"count": 1, "definition": "n. 形成, 形成物, 排列"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"primitive": 1, "automobile": 8, "steam": 15, "evolve": 1, "inherit": 1, "reservoir": 1, "shortcoming": 1, "carriage": 1, "transportation": 1, "uncommon": 1, "shuttle": 1, "glory": 1, "combustion": 2, "gasoline": 4, "complicated": 1, "backfire": 1, "gradual": 1, "rekindle": 1, "basement": 1, "comprise": 1, "wreck": 1, "prototype": 2, "nickname": 1, "convenience": 2, "superior": 2, "piston": 1, "aroma": 1, "hydrocarbon": 1, "impressively": 1, "swift": 1, "accelerate": 1, "feat": 1, "remarkable": 1, "acceleration": 1, "engineering": 2, "innovation": 1, "cabin": 1, "eliminate": 1, "operator": 1, "manually": 1, "ignite": 1, "deposit": 1, "eager": 1, "await": 1, "handful": 1, "sluggish": 1, "erratic": 1, "reverse": 1, "innovative": 1, "plague": 1, "viable": 1, "overnight": 1, "steamer": 1, "gallon": 1, "kerosene": 1, "negligible": 1, "emission": 3, "maintenance": 1};
+        const wordData = {"primitive": {"count": 1, "definition": "adj. 原始的, 早期的, 简陋的, 原始..."}, "automobile": {"count": 8, "definition": "n. 汽车"}, "steam": {"count": 15, "definition": "n. 蒸汽, 蒸汽动力, 水汽；..."}, "evolve": {"count": 1, "definition": "v. 进化"}, "inherit": {"count": 1, "definition": "v. 继承, 遗传, 接手"}, "reservoir": {"count": 1, "definition": "n. 水库, 储备, 储液器"}, "shortcoming": {"count": 1, "definition": "n. 缺点"}, "carriage": {"count": 1, "definition": "n. 车厢, 马车, 运输, 滑架,..."}, "transportation": {"count": 1, "definition": "n. 交通运输系统, 交通工具*..."}, "uncommon": {"count": 1, "definition": "adj. 不常见的, 非同寻常的"}, "shuttle": {"count": 1, "definition": "n. 穿梭车, 航天飞机, 梭子；v. 穿梭..."}, "glory": {"count": 1, "definition": "n. 荣耀, 神的荣耀, 辉煌；v. 以......"}, "combustion": {"count": 2, "definition": "n. 燃烧, 燃烧过程"}, "gasoline": {"count": 4, "definition": "n. 汽油"}, "complicated": {"count": 1, "definition": "adj. 复杂的"}, "backfire": {"count": 1, "definition": "vi. 事与愿违, 回火"}, "gradual": {"count": 1, "definition": "adj. 逐渐的, 平缓的"}, "rekindle": {"count": 1, "definition": "v. 重燃"}, "basement": {"count": 1, "definition": "n. 地下室"}, "comprise": {"count": 1, "definition": "v. 包含, 构成"}, "wreck": {"count": 1, "definition": "n. 失事船只, 事故车辆残骸, 身心..."}, "prototype": {"count": 2, "definition": "n. 原型"}, "nickname": {"count": 1, "definition": "n. 昵称；v. 取昵称"}, "convenience": {"count": 2, "definition": "n. 便利性, 便利设施"}, "superior": {"count": 2, "definition": "adj. 优于他人的, 职位更高..."}, "piston": {"count": 1, "definition": "n. 活塞"}, "aroma": {"count": 1, "definition": "n. 香气"}, "hydrocarbon": {"count": 1, "definition": "n. 烃"}, "impressively": {"count": 1, "definition": "adv. 令人印象深刻地"}, "swift": {"count": 1, "definition": "adj. 迅速的, 高速移动的；n. 雨燕"}, "accelerate": {"count": 1, "definition": "v. 加速, 开始加速"}, "feat": {"count": 1, "definition": "n. 壮举"}, "remarkable": {"count": 1, "definition": "adj. 非凡的"}, "acceleration": {"count": 1, "definition": "n. 加速"}, "engineering": {"count": 2, "definition": "n. 工程, 工程学"}, "innovation": {"count": 1, "definition": "n. 创新"}, "cabin": {"count": 1, "definition": "n. 船舱, 机舱, 小屋"}, "eliminate": {"count": 1, "definition": "v. 完全去除, 排除, 淘汰, 消灭"}, "operator": {"count": 1, "definition": "n. 操作员, 经营者, 接线..."}, "manually": {"count": 1, "definition": "adv. 手动地, 人工地"}, "ignite": {"count": 1, "definition": "v. 点燃"}, "deposit": {"count": 1, "definition": "n. 首付款, 押金, 存款, 矿..."}, "eager": {"count": 1, "definition": "adj. 热切的"}, "await": {"count": 1, "definition": "v. 等待, 即将发生的事"}, "handful": {"count": 1, "definition": "n. 一把, 少数, 难控制的人"}, "sluggish": {"count": 1, "definition": "adj. 迟缓"}, "erratic": {"count": 1, "definition": "adj. 不稳定的；n. 漂砾"}, "reverse": {"count": 1, "definition": "v. 使变得相反, 撤销决定, ..."}, "innovative": {"count": 1, "definition": "adj. 创新的"}, "plague": {"count": 1, "definition": "n. 鼠疫, 瘟疫, 虫灾；v. 困扰, 纠缠"}, "viable": {"count": 1, "definition": "adj. 可行的, 能存活的"}, "overnight": {"count": 1, "definition": "adv. 在夜间, 很快地；adj. 过..."}, "steamer": {"count": 1, "definition": "n. 蒸汽船, 蒸锅"}, "gallon": {"count": 1, "definition": "n. 加仑"}, "kerosene": {"count": 1, "definition": "n. 煤油"}, "negligible": {"count": 1, "definition": "adj. 可忽略的"}, "emission": {"count": 3, "definition": "n. 发射, 排放物"}, "maintenance": {"count": 1, "definition": "n. 维修, 维持, 生活费, 赡..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

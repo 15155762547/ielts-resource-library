@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"controversial": 1, "biologist": 3, "reluctant": 1, "evolution": 9, "backwards": 2, "genetics": 2, "march": 1, "latin": 1, "italian": 1, "primitive": 1, "fossil": 1, "propose": 1, "irreversible": 3, "organism": 1, "partially": 1, "ancestor": 4, "qualified": 1, "probability": 2, "stuck": 1, "exception": 1, "limb": 4, "explorer": 1, "puzzle": 1, "reverse": 2, "gene": 8, "trait": 4, "likelihood": 1, "accumulate": 1, "random": 1, "mutation": 1, "rendering": 1, "useless": 1, "pointed": 1, "mole": 2, "amphibian": 1, "juvenile": 2, "tadpole": 1, "metamorphose": 3, "lineage": 3, "tree": 2, "evolve": 1, "metamorphosis": 1, "suggest": 1, "story": 1, "lizard": 3, "minuscule": 1, "hind": 3, "differ": 1, "accord": 1, "independently": 1, "fin": 1, "shark": 1, "intriguing": 1, "genetic": 1, "provided": 1, "degrade": 1, "womb": 1, "embryo": 2, "ancestral": 2, "sprout": 1, "bud": 1, "lead": 1};
+        const wordData = {"controversial": {"count": 1, "definition": "adj. 有争议的"}, "biologist": {"count": 3, "definition": "n. 生物学家"}, "reluctant": {"count": 1, "definition": "adj. 不情愿的"}, "evolution": {"count": 9, "definition": "n. 进化, 演变"}, "backwards": {"count": 2, "definition": "adv. 向后, 倒序地, 变..."}, "genetics": {"count": 2, "definition": "n. 遗传学"}, "march": {"count": 1, "definition": "v. 齐步走, 快步行走, 游..."}, "latin": {"count": 1, "definition": "n. 拉丁语, 拉丁人, 拉丁音乐；adj. ..."}, "italian": {"count": 1, "definition": "adj. 意大利的；n. 意大利人, 意大..."}, "primitive": {"count": 1, "definition": "adj. 原始的, 早期的, 简陋的, 原始..."}, "fossil": {"count": 1, "definition": "n. 化石, 老顽固"}, "propose": {"count": 1, "definition": "v. 提议, 打算, 求婚, 提名, ..."}, "irreversible": {"count": 3, "definition": "adj. 不可逆的"}, "organism": {"count": 1, "definition": "n. 生物体, 有机整体"}, "partially": {"count": 1, "definition": "adv. 部分地"}, "ancestor": {"count": 4, "definition": "n. 祖先, 祖先物种, 前身"}, "qualified": {"count": 1, "definition": "adj. 有资格的, 有能力的, ..."}, "probability": {"count": 2, "definition": "n. 可能性, 可能发生的事, 概率"}, "stuck": {"count": 1, "definition": "adj. 卡住的, 被困住的, 束手无策..."}, "exception": {"count": 1, "definition": "n. 例外"}, "limb": {"count": 4, "definition": "n. 肢体, 有特定肢体的, 大树枝"}, "explorer": {"count": 1, "definition": "n. 探险者"}, "puzzle": {"count": 1, "definition": "n. 谜题, 谜团, 拼图；v. 使困惑"}, "reverse": {"count": 2, "definition": "v. 使变得相反, 撤销决定, ..."}, "gene": {"count": 8, "definition": "n. 基因"}, "trait": {"count": 4, "definition": "n. 特征"}, "likelihood": {"count": 1, "definition": "n. 可能性"}, "accumulate": {"count": 1, "definition": "v. 积累"}, "random": {"count": 1, "definition": "adj. 随机的, 陌生的, 随意的；..."}, "mutation": {"count": 1, "definition": "n. 变异, 变化"}, "rendering": {"count": 1, "definition": "n. 演绎, 译文, 抹灰"}, "useless": {"count": 1, "definition": "adj. 无用的, 不擅长的"}, "pointed": {"count": 1, "definition": "adj. 尖的, 尖锐的"}, "mole": {"count": 2, "definition": "n. 鼹鼠, 痣, 内奸, 摩尔"}, "amphibian": {"count": 1, "definition": "n. 两栖动物"}, "juvenile": {"count": 2, "definition": "adj. 青少年的, 幼体的, 幼稚的；n. ..."}, "tadpole": {"count": 1, "definition": "n. 蝌蚪"}, "metamorphose": {"count": 3, "definition": "vi. 蜕变, 彻底改变"}, "lineage": {"count": 3, "definition": "n. 血统"}, "tree": {"count": 2, "definition": "n. 树"}, "evolve": {"count": 1, "definition": "v. 进化"}, "metamorphosis": {"count": 1, "definition": "n. 变态, 转变"}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "story": {"count": 1, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "lizard": {"count": 3, "definition": "n. 蜥蜴"}, "minuscule": {"count": 1, "definition": "adj. 非常小的；n. 小写字母"}, "hind": {"count": 3, "definition": "adj. 后部的；n. 雌鹿"}, "differ": {"count": 1, "definition": "vi. 不同, 不同意"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "independently": {"count": 1, "definition": "adv. 独立地, 公正地, 自信地, 经..."}, "fin": {"count": 1, "definition": "n. 鳍, 尾翼"}, "shark": {"count": 1, "definition": "n. 鲨鱼, 骗子"}, "intriguing": {"count": 1, "definition": "adj. 引人入胜"}, "genetic": {"count": 1, "definition": "adj. 遗传的"}, "provided": {"count": 1, "definition": "conj. 如果"}, "degrade": {"count": 1, "definition": "v. 贬低, 降低, 降解"}, "womb": {"count": 1, "definition": "n. 子宫"}, "embryo": {"count": 2, "definition": "n. 胚胎, 萌芽"}, "ancestral": {"count": 2, "definition": "adj. 祖先的"}, "sprout": {"count": 1, "definition": "v. 发芽, 涌现, 长出；n. 球芽甘蓝, ..."}, "bud": {"count": 1, "definition": "n. 芽, 老兄；v. 发芽"}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

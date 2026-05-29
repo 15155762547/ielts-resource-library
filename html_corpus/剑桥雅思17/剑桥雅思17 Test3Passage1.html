@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"extinct": 2, "marsupial": 2, "bore": 1, "superficial": 1, "resemblance": 1, "distinguish": 1, "stripe": 1, "rear": 1, "occupy": 1, "terrain": 1, "dense": 1, "habitat": 2, "exclusively": 1, "muscular": 1, "distend": 1, "adaptation": 1, "compensate": 1, "scarce": 1, "prey": 2, "exhaust": 1, "pursuit": 1, "chase": 1, "scent": 1, "retreat": 1, "temperament": 1, "nocturnal": 1, "breed": 4, "spring": 1, "indication": 1, "crawl": 1, "belly": 1, "cave": 2, "nest": 1, "hollow": 1, "log": 1, "approximate": 1, "widespread": 1, "guinea": 2, "mainland": 2, "occurrence": 1, "fossil": 1, "extinction": 3, "coincide": 1, "predator": 1, "survival": 1, "attribute": 1, "relentless": 1, "bounty": 1, "determined": 1, "campaign": 1, "undoubtedly": 1, "factor": 1, "settler": 1, "captivity": 1, "demise": 1, "singular": 1, "diminish": 1, "sway": 1, "wolf": 1, "decade": 1, "notable": 1, "exception": 1, "sufficient": 1, "concerned": 1, "scarcity": 1, "suggest": 1, "motion": 1, "north-east": 1, "captive": 1, "specimen": 1, "expedition": 1, "definitive": 1};
+        const wordData = {"extinct": {"count": 2, "definition": "adj. 灭绝的, 在社会中消失的, 不..."}, "marsupial": {"count": 2, "definition": "adj. 有袋类动物；n. 有袋动物"}, "bore": {"count": 1, "definition": "v. 使...感到无聊, 钻孔, 盯着看, 使..."}, "superficial": {"count": 1, "definition": "adj. 粗浅的, 表面的, 浅薄的"}, "resemblance": {"count": 1, "definition": "n. 相似性"}, "distinguish": {"count": 1, "definition": "v. 区分, 使与众不同, 看清,..."}, "stripe": {"count": 1, "definition": "n. 条纹, 军衔条, 类别"}, "rear": {"count": 1, "definition": "adj. 后面的；n. 后部, 臀部；v. ..."}, "occupy": {"count": 1, "definition": "v. 占据, 居住, 占领, 忙于, 担任"}, "terrain": {"count": 1, "definition": "n. 地形"}, "dense": {"count": 1, "definition": "adj. 密集的, 浓密的, 愚钝..."}, "habitat": {"count": 2, "definition": "n. 栖息地"}, "exclusively": {"count": 1, "definition": "adv. 仅限, 完全"}, "muscular": {"count": 1, "definition": "adj. 肌肉的, 肌肉发达的"}, "distend": {"count": 1, "definition": "v. 膨胀"}, "adaptation": {"count": 1, "definition": "n. 适应, 改编作品, 适应性..."}, "compensate": {"count": 1, "definition": "v. 弥补, 赔偿, 补偿"}, "scarce": {"count": 1, "definition": "adj. 稀少的；adv. 勉强地"}, "prey": {"count": 2, "definition": "n. 猎物, 受害者；v. 捕食, 利用..."}, "exhaust": {"count": 1, "definition": "n. 废气, 排气管；v. 使筋疲力尽, 耗..."}, "pursuit": {"count": 1, "definition": "n. 追求, 追赶, 消遣"}, "chase": {"count": 1, "definition": "v. 追赶, 驱赶, 追求, 催促, ..."}, "scent": {"count": 1, "definition": "n. 香味, 气味, 香水, 预感；v. 嗅到,..."}, "retreat": {"count": 1, "definition": "n. 撤退, 逃避, 改变主意, ..."}, "temperament": {"count": 1, "definition": "n. 气质, 脾气"}, "nocturnal": {"count": 1, "definition": "adj. 夜行的, 夜间的"}, "breed": {"count": 4, "definition": "v. 繁殖, 培育, 导致, 培养；..."}, "spring": {"count": 1, "definition": "n. 春天, 泉水, 弹簧, 弹力, 活..."}, "indication": {"count": 1, "definition": "n. 迹象, 适应症"}, "crawl": {"count": 1, "definition": "v. 爬行, 爬动, 缓慢移动, ..."}, "belly": {"count": 1, "definition": "n. 腹部, 凸起部分, 有某种类型的..."}, "cave": {"count": 2, "definition": "n. 洞穴；v. 坍塌，塌陷, 屈服..."}, "nest": {"count": 1, "definition": "n. 鸟巢, 巢穴, 窝点, 家, ..."}, "hollow": {"count": 1, "definition": "adj. 中空的, 深陷的, 发出空..."}, "log": {"count": 1, "definition": "n. 原木, 日志, 对数；v. ..."}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "widespread": {"count": 1, "definition": "adj. 广泛"}, "guinea": {"count": 2, "definition": "n. 基尼, 几内亚"}, "mainland": {"count": 2, "definition": "adj. 大陆的"}, "occurrence": {"count": 1, "definition": "n. 事件, 发生"}, "fossil": {"count": 1, "definition": "n. 化石, 老顽固"}, "extinction": {"count": 3, "definition": "n. 灭绝"}, "coincide": {"count": 1, "definition": "vi. 同时发生, 一致, 重合"}, "predator": {"count": 1, "definition": "n. 捕食者, 掠夺者"}, "survival": {"count": 1, "definition": "n. 生存, 遗留物"}, "attribute": {"count": 1, "definition": "v. 归因于, 认为是...所作, *..."}, "relentless": {"count": 1, "definition": "adj. 不懈, 不屈"}, "bounty": {"count": 1, "definition": "n. 慷慨, 赏金"}, "determined": {"count": 1, "definition": "adj. 坚定的, 有决心的"}, "campaign": {"count": 1, "definition": "n. 活动, 战役；v. 进行活动"}, "undoubtedly": {"count": 1, "definition": "adv. 毫无疑问地"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "settler": {"count": 1, "definition": "n. 定居者"}, "captivity": {"count": 1, "definition": "n. 囚禁"}, "demise": {"count": 1, "definition": "n. 消亡, 死亡"}, "singular": {"count": 1, "definition": "n. 单数形式；adj. 单数的, 非凡的,..."}, "diminish": {"count": 1, "definition": "v. 减弱, 贬低"}, "sway": {"count": 1, "definition": "v. 轻轻摇摆, 影响；n. 摇摆, 影响力"}, "wolf": {"count": 1, "definition": "n. 狼；v. 狼吞虎咽"}, "decade": {"count": 1, "definition": "n. 十年"}, "notable": {"count": 1, "definition": "adj. 值得注意的；n. 名人"}, "exception": {"count": 1, "definition": "n. 例外"}, "sufficient": {"count": 1, "definition": "adj. 足够的"}, "concerned": {"count": 1, "definition": "adj. 担忧的, 相关的, 关..."}, "scarcity": {"count": 1, "definition": "n. 稀缺"}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "motion": {"count": 1, "definition": "n. 运动, 手势, 动议, 排便；v. ..."}, "north-east": {"count": 1, "definition": "adv. 东北方向, 更靠东北的位置"}, "captive": {"count": 1, "definition": "adj. 被囚禁的, 失去自由的；n. 俘虏"}, "specimen": {"count": 1, "definition": "n. 样本, 标本"}, "expedition": {"count": 1, "definition": "n. 探险, 探险队, 快速出行"}, "definitive": {"count": 1, "definition": "adj. 最终的, 最权威的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

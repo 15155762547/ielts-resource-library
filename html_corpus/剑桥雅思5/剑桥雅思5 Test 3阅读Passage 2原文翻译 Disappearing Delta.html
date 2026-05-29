@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"fertile": 2, "delta": 16, "erode": 2, "mediterranean": 5, "astound": 1, "scour": 1, "coastline": 3, "sediment": 12, "dam": 8, "virtually": 2, "interior": 1, "deposit": 1, "silt": 2, "dispense": 1, "fertilizer": 3, "construct": 1, "irrigation": 3, "surrounding": 1, "drought": 1, "accumulate": 1, "passing": 1, "story": 1, "institute": 1, "gram": 1, "cubic": 1, "significance": 1, "marine": 1, "geology": 1, "replenish": 1, "divert": 1, "canal": 3, "proportion": 1, "pump": 1, "freshwater": 1, "lagoon": 6, "aquaculture": 1, "laden": 1, "municipal": 1, "agricultural": 2, "pollutant": 1, "concur": 1, "mercury": 2, "lead": 3, "copper": 1, "zinc": 1, "coincide": 1, "availability": 1, "dramatically": 1, "poison": 1, "productivity": 1, "stimulate": 1, "ecology": 1, "accord": 1, "erosion": 1, "principal": 1, "impact": 1, "ecosystem": 1, "artificial": 1, "flush": 1, "devise": 1};
+        const wordData = {"fertile": {"count": 2, "definition": "adj. 肥沃的, 能生育的, 多产的, 富..."}, "delta": {"count": 16, "definition": "n. 德尔塔, 三角洲, 德尔塔毒株"}, "erode": {"count": 2, "definition": "v. 侵蚀, 削弱"}, "mediterranean": {"count": 5, "definition": "adj. 地中海的；n. 地中海"}, "astound": {"count": 1, "definition": "v. 使震惊"}, "scour": {"count": 1, "definition": "v. 仔细搜索, 擦洗, 冲刷"}, "coastline": {"count": 3, "definition": "n. 海岸线"}, "sediment": {"count": 12, "definition": "n. 沉淀物, 泥沙"}, "dam": {"count": 8, "definition": "n. 水坝, 水库, 母兽, 橡皮障, ..."}, "virtually": {"count": 2, "definition": "adv. 几乎, 虚拟地"}, "interior": {"count": 1, "definition": "n. 内部, 内陆, 内政；adj. ..."}, "deposit": {"count": 1, "definition": "n. 首付款, 押金, 存款, 矿..."}, "silt": {"count": 2, "definition": "n. 淤泥；v. 使淤塞, 淤塞"}, "dispense": {"count": 1, "definition": "v. 分发, 提供, 配药"}, "fertilizer": {"count": 3, "definition": "n. 肥料"}, "construct": {"count": 1, "definition": "v. 建造, 组装, 构造；n. 构..."}, "irrigation": {"count": 3, "definition": "n. 灌溉, 冲洗"}, "surrounding": {"count": 1, "definition": "adj. 周围的"}, "drought": {"count": 1, "definition": "n. 干旱, 短缺"}, "accumulate": {"count": 1, "definition": "v. 积累"}, "passing": {"count": 1, "definition": "n. 时间的流逝, 消逝, 通..."}, "story": {"count": 1, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "institute": {"count": 1, "definition": "n. 研究所；v. 建立"}, "gram": {"count": 1, "definition": "n. 克, 字"}, "cubic": {"count": 1, "definition": "adj. 立方, 立方单位, 立方体"}, "significance": {"count": 1, "definition": "n. 重要性, 含义"}, "marine": {"count": 1, "definition": "adj. 海洋的, 航海的；n. 海军..."}, "geology": {"count": 1, "definition": "n. 地质学, 地质状况"}, "replenish": {"count": 1, "definition": "v. 补充"}, "divert": {"count": 1, "definition": "v. 使转向, 转移用途, 转..."}, "canal": {"count": 3, "definition": "n. 运河, 管"}, "proportion": {"count": 1, "definition": "n. 部分, 比例, 均衡, 尺寸..."}, "pump": {"count": 1, "definition": "v. 用泵抽送, 喷出, 快速上下移..."}, "freshwater": {"count": 1, "definition": "adj. 淡水"}, "lagoon": {"count": 6, "definition": "n. 潟湖, 淡水泻湖, 污水潟湖"}, "aquaculture": {"count": 1, "definition": "n. 水产养殖"}, "laden": {"count": 1, "definition": "adj. 装满的, 充满负面情绪的, 充满"}, "municipal": {"count": 1, "definition": "adj. 市政府的"}, "agricultural": {"count": 2, "definition": "adj. 农业的"}, "pollutant": {"count": 1, "definition": "n. 污染物"}, "concur": {"count": 1, "definition": "v. 同意"}, "mercury": {"count": 2, "definition": "n. 汞"}, "lead": {"count": 3, "definition": "v. 带领, 连接, 通向, ..."}, "copper": {"count": 1, "definition": "n. 铜, 铜币, 警察"}, "zinc": {"count": 1, "definition": "n. 锌, 铁皮"}, "coincide": {"count": 1, "definition": "vi. 同时发生, 一致, 重合"}, "availability": {"count": 1, "definition": "n. 可用性, 空闲时间"}, "dramatically": {"count": 1, "definition": "adv. 急剧地, 戏剧性地, ..."}, "poison": {"count": 1, "definition": "n. 毒药, 毒害；v. 毒杀, ..."}, "productivity": {"count": 1, "definition": "n. 生产力"}, "stimulate": {"count": 1, "definition": "v. 刺激, 激励"}, "ecology": {"count": 1, "definition": "n. 生态学"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "erosion": {"count": 1, "definition": "n. 侵蚀"}, "principal": {"count": 1, "definition": "adj. 主要的；n. 大学校长, ..."}, "impact": {"count": 1, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "ecosystem": {"count": 1, "definition": "n. 生态系统"}, "artificial": {"count": 1, "definition": "adj. 人造的, 人为的, 假的"}, "flush": {"count": 1, "definition": "v. 脸红, 冲马桶, 冲洗, 冲走, 赶出；..."}, "devise": {"count": 1, "definition": "v. 设计"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

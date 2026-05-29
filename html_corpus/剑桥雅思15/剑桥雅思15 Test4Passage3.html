@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"offend": 1, "circumstance": 1, "maximize": 2, "quota": 1, "short-term": 1, "lease": 1, "tropical": 1, "corrupt": 1, "unsophisticated": 1, "reverse": 1, "ineffective": 1, "publicly": 1, "shareholder": 3, "obligation": 1, "provided": 1, "liable": 1, "breach": 1, "manufacturer": 1, "wage": 1, "sentiment": 1, "ultimate": 3, "destructive": 2, "unprofitable": 1, "sustainable": 1, "profitable": 1, "spill": 1, "harvest": 1, "enforce": 1, "exert": 1, "concerned": 1, "infect": 1, "demanding": 1, "obey": 1, "hamburger": 1, "plummet": 1, "jewelry": 1, "outrage": 1, "necessity": 1, "accordance": 1, "lead": 1, "precisely": 1, "explicit": 1, "enforced": 1, "empower": 1, "hopeful": 1, "selfish": 1, "predict": 1};
+        const wordData = {"offend": {"count": 1, "definition": "v. 冒犯, 令人不快, 违法, 违背"}, "circumstance": {"count": 1, "definition": "n. 情况, 生活状况, 境遇"}, "maximize": {"count": 2, "definition": "v. 使最大化, 充分利用"}, "quota": {"count": 1, "definition": "n. 配额, 定额, 当选所需票数"}, "short-term": {"count": 1, "definition": "adj. 短期的"}, "lease": {"count": 1, "definition": "n. 租约；v. 出租"}, "tropical": {"count": 1, "definition": "adj. 热带的"}, "corrupt": {"count": 1, "definition": "adj. 腐败的, 不道德的, 损..."}, "unsophisticated": {"count": 1, "definition": "adj. 缺乏经验的, 简单的"}, "reverse": {"count": 1, "definition": "v. 使变得相反, 撤销决定, ..."}, "ineffective": {"count": 1, "definition": "adj. 无效的"}, "publicly": {"count": 1, "definition": "adv. 由政府出资, 公开地, 公用的"}, "shareholder": {"count": 3, "definition": "n. 股东"}, "obligation": {"count": 1, "definition": "n. 义务"}, "provided": {"count": 1, "definition": "conj. 如果"}, "liable": {"count": 1, "definition": "adj. 有赔偿责任的, 易发生..."}, "breach": {"count": 1, "definition": "n. 违反, 违约, 破裂, ..."}, "manufacturer": {"count": 1, "definition": "n. 制造商"}, "wage": {"count": 1, "definition": "n. 工资；v. 发动"}, "sentiment": {"count": 1, "definition": "n. 情感, 多愁善感"}, "ultimate": {"count": 3, "definition": "adj. 最终的, 极致的, 最初..."}, "destructive": {"count": 2, "definition": "adj. 破坏性的, 有害的"}, "unprofitable": {"count": 1, "definition": "adj. 不盈利的, 无益的"}, "sustainable": {"count": 1, "definition": "adj. 可持续, 可持续的"}, "profitable": {"count": 1, "definition": "adj. 盈利的, 有益的"}, "spill": {"count": 1, "definition": "v. 溢出, 涌出；n. 溢出的液体, ..."}, "harvest": {"count": 1, "definition": "n. 收获季节, 收获物；v. 收..."}, "enforce": {"count": 1, "definition": "v. 强制执行, 迫使"}, "exert": {"count": 1, "definition": "v. 施加, 产生影响, 努力"}, "concerned": {"count": 1, "definition": "adj. 担忧的, 相关的, 关..."}, "infect": {"count": 1, "definition": "v. 传染, 使感染病菌, 感染"}, "demanding": {"count": 1, "definition": "adj. 要求高的, 苛求的"}, "obey": {"count": 1, "definition": "v. 服从"}, "hamburger": {"count": 1, "definition": "n. 汉堡, 牛肉糜"}, "plummet": {"count": 1, "definition": "v. 暴跌"}, "jewelry": {"count": 1, "definition": "n. 首饰"}, "outrage": {"count": 1, "definition": "n. 愤慨, 暴行；v. 激怒"}, "necessity": {"count": 1, "definition": "n. 必要性, 必需品, 必然性"}, "accordance": {"count": 1, "definition": "n. 一致, 同意"}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "precisely": {"count": 1, "definition": "adv. 精确地, 准确地"}, "explicit": {"count": 1, "definition": "adj. 明确的, 直白的, 露骨的"}, "enforced": {"count": 1, "definition": "adj. 强制"}, "empower": {"count": 1, "definition": "v. 授权, 赋能"}, "hopeful": {"count": 1, "definition": "adj. 乐观的, 有希望的, ..."}, "selfish": {"count": 1, "definition": "adj. 自私的"}, "predict": {"count": 1, "definition": "v. 预测"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

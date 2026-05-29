@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"accord": 3, "advent": 2, "empire": 3, "communal": 1, "shipment": 1, "goods": 1, "regulate": 2, "harvest": 1, "solar": 6, "marked": 2, "successive": 1, "darkness": 3, "rotate": 1, "axis": 1, "lunar": 2, "orbit": 1, "artificial": 1, "impact": 1, "equator": 1, "wax": 1, "wane": 1, "conspicuous": 1, "passing": 3, "hence": 1, "latitude": 1, "influence": 1, "seasonal": 1, "agriculture": 1, "northward": 1, "formulate": 1, "municipal": 1, "approximate": 1, "sunrise": 2, "cosmic": 1, "significance": 1, "interval": 2, "daylight": 2, "temporal": 5, "duration": 1, "varied": 2, "spring": 2, "disseminate": 1, "sundial": 2, "counterpart": 1, "basin": 1, "denote": 1, "inscribe": 1, "inner": 1, "perform": 1, "mediterranean": 1, "mechanical": 2, "adjust": 1, "suite": 1, "evolve": 1, "scheme": 1, "italian": 1, "sunset": 1, "astronomical": 1, "midday": 1, "supersede": 1, "commence": 1, "revolutionary": 1, "descend": 1, "provided": 1, "motive": 1, "gear": 2, "coil": 1, "tension": 1, "pendulum": 6, "devise": 1, "variation": 1, "anchor": 3, "motion": 1, "catch": 1, "precise": 1, "accurate": 1, "instrument": 1, "beam": 1, "satellite": 1, "calibrate": 1, "precision": 1, "navigation": 1, "instant": 1, "grid": 1, "integral": 1};
+        const wordData = {"accord": {"count": 3, "definition": "n. 协议；v. 给予"}, "advent": {"count": 2, "definition": "n. 来临, 将临期"}, "empire": {"count": 3, "definition": "n. 帝国, 商业帝国, 势力范围"}, "communal": {"count": 1, "definition": "adj. 共有的, 社区的"}, "shipment": {"count": 1, "definition": "n. 运送货物, 运送的货物"}, "goods": {"count": 1, "definition": "n. 商品, 物品, 货物"}, "regulate": {"count": 2, "definition": "v. 用规章制度控制, 调节"}, "harvest": {"count": 1, "definition": "n. 收获季节, 收获物；v. 收..."}, "solar": {"count": 6, "definition": "adj. 太阳的, 太阳能的"}, "marked": {"count": 2, "definition": "adj. 明显的, 具有特定特征的"}, "successive": {"count": 1, "definition": "adj. 连续的"}, "darkness": {"count": 3, "definition": "n. 黑暗, 暗度, 邪恶"}, "rotate": {"count": 1, "definition": "v. 旋转, 轮换"}, "axis": {"count": 1, "definition": "n. 轴, 坐标轴, 对称轴, 轴心"}, "lunar": {"count": 2, "definition": "adj. 月亮的"}, "orbit": {"count": 1, "definition": "n. 轨道, 势力范围；v. 绕...运行"}, "artificial": {"count": 1, "definition": "adj. 人造的, 人为的, 假的"}, "impact": {"count": 1, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "equator": {"count": 1, "definition": "n. 赤道"}, "wax": {"count": 1, "definition": "n. 蜡, 耳垢；v. 打蜡, 涂蜡, 蜜蜡脱..."}, "wane": {"count": 1, "definition": "vi. 减少, 变小；n. 逐渐减弱, *..."}, "conspicuous": {"count": 1, "definition": "adj. 显眼"}, "passing": {"count": 3, "definition": "n. 时间的流逝, 消逝, 通..."}, "hence": {"count": 1, "definition": "adv. 因此"}, "latitude": {"count": 1, "definition": "n. 纬度, 纬度地区, 自由度"}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "seasonal": {"count": 1, "definition": "adj. 季节性的, 应季的"}, "agriculture": {"count": 1, "definition": "n. 农业"}, "northward": {"count": 1, "definition": "adj. 向北的"}, "formulate": {"count": 1, "definition": "v. 精心制定, 明确表达"}, "municipal": {"count": 1, "definition": "adj. 市政府的"}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "sunrise": {"count": 2, "definition": "n. 日出时刻, 朝霞"}, "cosmic": {"count": 1, "definition": "adj. 宇宙的, 巨大的"}, "significance": {"count": 1, "definition": "n. 重要性, 含义"}, "interval": {"count": 2, "definition": "n. 间隔, 幕间休息, 间歇, ..."}, "daylight": {"count": 2, "definition": "n. 日光"}, "temporal": {"count": 5, "definition": "adj. 世俗的, 时间的, 颞的"}, "duration": {"count": 1, "definition": "n. 持续时间"}, "varied": {"count": 2, "definition": "adj. 多种多样的, 变化的"}, "spring": {"count": 2, "definition": "n. 春天, 泉水, 弹簧, 弹力, 活..."}, "disseminate": {"count": 1, "definition": "v. 传播"}, "sundial": {"count": 2, "definition": "n. 日晷"}, "counterpart": {"count": 1, "definition": "n. 对应的人"}, "basin": {"count": 1, "definition": "n. 洗手池, 盆, 流域, 洼地, 港湾"}, "denote": {"count": 1, "definition": "v. 表示, 意指"}, "inscribe": {"count": 1, "definition": "v. 刻写"}, "inner": {"count": 1, "definition": "adj. 内部的, 内心的"}, "perform": {"count": 1, "definition": "v. 表演, 执行, 表现"}, "mediterranean": {"count": 1, "definition": "adj. 地中海的；n. 地中海"}, "mechanical": {"count": 2, "definition": "adj. 由发动机驱动的, 与机..."}, "adjust": {"count": 1, "definition": "v. 调整, 适应, 整理"}, "suite": {"count": 1, "definition": "n. 套房, 成套家具, 组曲, ..."}, "evolve": {"count": 1, "definition": "v. 进化"}, "scheme": {"count": 1, "definition": "n. 计划, 阴谋, 图案, 廉租..."}, "italian": {"count": 1, "definition": "adj. 意大利的；n. 意大利人, 意大..."}, "sunset": {"count": 1, "definition": "n. 日落时分, 晚霞, 日落条款；adj. ..."}, "astronomical": {"count": 1, "definition": "adj. 天文学的, 天文数字的"}, "midday": {"count": 1, "definition": "n. 中午"}, "supersede": {"count": 1, "definition": "v. 取代"}, "commence": {"count": 1, "definition": "v. 开始"}, "revolutionary": {"count": 1, "definition": "adj. 革命的, 革命性的；n. ..."}, "descend": {"count": 1, "definition": "v. 下降, 斜降, 降临"}, "provided": {"count": 1, "definition": "conj. 如果"}, "motive": {"count": 1, "definition": "n. 动机；adj. 发动的"}, "gear": {"count": 2, "definition": "n. 齿轮, 挡位, 装备, 服装, 个人物..."}, "coil": {"count": 1, "definition": "v. 卷绕；n. 线圈, 一圈, 电感线圈, ..."}, "tension": {"count": 1, "definition": "n. 紧张关系, 紧张局势, ..."}, "pendulum": {"count": 6, "definition": "n. 钟摆"}, "devise": {"count": 1, "definition": "v. 设计"}, "variation": {"count": 1, "definition": "n. 变化, 变体, 变奏"}, "anchor": {"count": 3, "definition": "n. 锚, 支柱, 主播；v. ..."}, "motion": {"count": 1, "definition": "n. 运动, 手势, 动议, 排便；v. ..."}, "catch": {"count": 1, "definition": "v. 抓住, 接住, 赶上, ..."}, "precise": {"count": 1, "definition": "adj. 精确的, 准时发生的, ..."}, "accurate": {"count": 1, "definition": "adj. 准确的, 能提供准确信息的, ..."}, "instrument": {"count": 1, "definition": "n. 乐器, 仪器, 仪表, 工具, 工..."}, "beam": {"count": 1, "definition": "n. 光束, 梁, 平衡木, 灿烂..."}, "satellite": {"count": 1, "definition": "n. 人造卫星, 卫星, 附属物"}, "calibrate": {"count": 1, "definition": "v. 校准"}, "precision": {"count": 1, "definition": "n. 精确性"}, "navigation": {"count": 1, "definition": "n. 导航, 航行, 浏览"}, "instant": {"count": 1, "definition": "adj. 立即的, 速食的；n. ..."}, "grid": {"count": 1, "definition": "n. 网格, 坐标网格, 电网..."}, "integral": {"count": 1, "definition": "adj. 必不可少的, 内置的, ..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

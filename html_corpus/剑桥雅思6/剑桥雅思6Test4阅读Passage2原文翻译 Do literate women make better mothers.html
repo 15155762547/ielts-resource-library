@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"decade": 1, "survival": 2, "literate": 2, "long-term": 1, "eliminate": 1, "factor": 2, "illiterate": 5, "established": 1, "literacy": 4, "crusade": 5, "tropical": 3, "institute": 2, "autonomous": 1, "infancy": 1, "striking": 1, "infant": 4, "mortality": 5, "campaign": 3, "nourish": 1, "accord": 1, "curriculum": 1, "clinic": 1, "opt": 1, "exert": 1, "merely": 1, "implication": 1, "intervention": 1, "recommendation": 1, "maternal": 1, "hygiene": 1, "suggest": 1, "bypass": 1, "notoriously": 1, "impact": 1, "replicate": 1};
+        const wordData = {"decade": {"count": 1, "definition": "n. 十年"}, "survival": {"count": 2, "definition": "n. 生存, 遗留物"}, "literate": {"count": 2, "definition": "adj. 识字的, 通晓的"}, "long-term": {"count": 1, "definition": "adv. 长期的"}, "eliminate": {"count": 1, "definition": "v. 完全去除, 排除, 淘汰, 消灭"}, "factor": {"count": 2, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "illiterate": {"count": 5, "definition": "adj. 不识字的, 写得差的, 外行的；..."}, "established": {"count": 1, "definition": "adj. 确立的, 知名的, 法定的"}, "literacy": {"count": 4, "definition": "n. 读写能力, 素养"}, "crusade": {"count": 5, "definition": "n. 圣战, 十字军东征；v. 投身于"}, "tropical": {"count": 3, "definition": "adj. 热带的"}, "institute": {"count": 2, "definition": "n. 研究所；v. 建立"}, "autonomous": {"count": 1, "definition": "adj. 自治的, 独立的, 自动的"}, "infancy": {"count": 1, "definition": "n. 婴儿期, 初期"}, "striking": {"count": 1, "definition": "adj. 引人注目的, 出众的"}, "infant": {"count": 4, "definition": "n. 婴儿, 学龄前儿童；adj. ..."}, "mortality": {"count": 5, "definition": "n. 凡人皆有一死, 死亡率, 死亡"}, "campaign": {"count": 3, "definition": "n. 活动, 战役；v. 进行活动"}, "nourish": {"count": 1, "definition": "v. 滋养, 培养"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "curriculum": {"count": 1, "definition": "n. 课程"}, "clinic": {"count": 1, "definition": "n. 诊所, 门诊时间, 专科..."}, "opt": {"count": 1, "definition": "v. 选择"}, "exert": {"count": 1, "definition": "v. 施加, 产生影响, 努力"}, "merely": {"count": 1, "definition": "adv. 仅仅"}, "implication": {"count": 1, "definition": "n. 影响, 暗示, 牵连"}, "intervention": {"count": 1, "definition": "n. 干预, 干涉, 医疗干预..."}, "recommendation": {"count": 1, "definition": "n. 建议, 推荐, 推荐信"}, "maternal": {"count": 1, "definition": "adj. 有母爱的, 母亲的, 母系的"}, "hygiene": {"count": 1, "definition": "n. 卫生"}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "bypass": {"count": 1, "definition": "n. 绕城公路, 搭桥手术；v. 绕开, 规避"}, "notoriously": {"count": 1, "definition": "adv. 臭名昭著地"}, "impact": {"count": 1, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "replicate": {"count": 1, "definition": "v. 复制, 自我复制"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

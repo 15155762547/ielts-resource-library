@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"russian": 1, "explorer": 1, "archipelago": 1, "learned": 1, "farther": 1, "inhabitant": 1, "unite": 3, "mainland": 1, "coastline": 1, "gulf": 1, "shellfish": 2, "crustacean": 1, "bounty": 1, "accord": 1, "herring": 1, "cod": 1, "sole": 1, "perch": 1, "salmon": 19, "pump": 1, "circulate": 1, "nourishment": 1, "predictable": 1, "abundance": 1, "flourish": 1, "eagle": 1, "ultimate": 1, "spawn": 2, "catch": 3, "exceed": 1, "severe": 1, "federal": 1, "onset": 1, "constitution": 1, "mandate": 1, "sustainable": 2, "harvest": 2, "decade": 1, "steadily": 1, "excess": 1, "biologist": 4, "sonar": 1, "aeroplane": 1, "approximate": 1, "halt": 2, "mechanism": 1, "accordingly": 1, "prosper": 1, "endanger": 1, "marine": 1, "council": 3, "established": 1, "undergo": 1, "certification": 6, "appoint": 1, "compose": 1, "representative": 1, "lead": 1, "devastate": 1, "crisis": 1, "impact": 1, "contend": 1, "climatic": 1, "prompt": 1, "cumulative": 1, "phenomenon": 1, "culminate": 1, "harsh": 1, "frozen": 1, "concerned": 1, "qualified": 1, "logo": 1};
+        const wordData = {"russian": {"count": 1, "definition": "adj. 俄罗斯的；n. 俄罗斯人, 俄语"}, "explorer": {"count": 1, "definition": "n. 探险者"}, "archipelago": {"count": 1, "definition": "n. 群岛"}, "learned": {"count": 1, "definition": "adj. 博学的, 学者的, 习得的"}, "farther": {"count": 1, "definition": "adv. 更远的；adj. 更远"}, "inhabitant": {"count": 1, "definition": "n. 居民"}, "unite": {"count": 3, "definition": "v. 团结, 联合"}, "mainland": {"count": 1, "definition": "adj. 大陆的"}, "coastline": {"count": 1, "definition": "n. 海岸线"}, "gulf": {"count": 1, "definition": "n. 海湾, 波斯湾, 鸿沟, 深坑"}, "shellfish": {"count": 2, "definition": "n. 贝类"}, "crustacean": {"count": 1, "definition": "n. 甲壳动物"}, "bounty": {"count": 1, "definition": "n. 慷慨, 赏金"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "herring": {"count": 1, "definition": "n. 鲱鱼"}, "cod": {"count": 1, "definition": "n. 鳕鱼"}, "sole": {"count": 1, "definition": "adj. 唯一的, 独有的；n. ..."}, "perch": {"count": 1, "definition": "v. 栖息, 坐在高处边缘, 位于高处；..."}, "salmon": {"count": 19, "definition": "n. 鲑鱼"}, "pump": {"count": 1, "definition": "v. 用泵抽送, 喷出, 快速上下移..."}, "circulate": {"count": 1, "definition": "v. 循环, 传播, 分发, 周旋"}, "nourishment": {"count": 1, "definition": "n. 营养"}, "predictable": {"count": 1, "definition": "adj. 可预测的, 一成不变的"}, "abundance": {"count": 1, "definition": "n. 大量"}, "flourish": {"count": 1, "definition": "v. 繁荣, 茁壮成长, 挥舞；..."}, "eagle": {"count": 1, "definition": "n. 鹰, 老鹰"}, "ultimate": {"count": 1, "definition": "adj. 最终的, 极致的, 最初..."}, "spawn": {"count": 2, "definition": "v. 产卵, 引发, 产生；n. 鱼卵"}, "catch": {"count": 3, "definition": "v. 抓住, 接住, 赶上, ..."}, "exceed": {"count": 1, "definition": "v. 超过, 违反, 胜过"}, "severe": {"count": 1, "definition": "adj. 严重的, 严厉的惩罚, ..."}, "federal": {"count": 1, "definition": "adj. 联邦制的, 联邦政府的"}, "onset": {"count": 1, "definition": "n. 开始"}, "constitution": {"count": 1, "definition": "n. 宪法, 体质, 构成, 建立"}, "mandate": {"count": 1, "definition": "n. 授权, 任期, 命令, 托管权；v. ..."}, "sustainable": {"count": 2, "definition": "adj. 可持续, 可持续的"}, "harvest": {"count": 2, "definition": "n. 收获季节, 收获物；v. 收..."}, "decade": {"count": 1, "definition": "n. 十年"}, "steadily": {"count": 1, "definition": "adv. 逐渐地, 持续地"}, "excess": {"count": 1, "definition": "n. 过量, 超出部分, 免赔额..."}, "biologist": {"count": 4, "definition": "n. 生物学家"}, "sonar": {"count": 1, "definition": "n. 声呐"}, "aeroplane": {"count": 1, "definition": "n. 飞机"}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "halt": {"count": 2, "definition": "v. 停止；n. 停止, 小站"}, "mechanism": {"count": 1, "definition": "n. 机械装置, 机制, 生理机制"}, "accordingly": {"count": 1, "definition": "adv. 相应地, 因此"}, "prosper": {"count": 1, "definition": "v. 繁荣"}, "endanger": {"count": 1, "definition": "v. 危及"}, "marine": {"count": 1, "definition": "adj. 海洋的, 航海的；n. 海军..."}, "council": {"count": 3, "definition": "n. 议会, 市政委员会, 委员..."}, "established": {"count": 1, "definition": "adj. 确立的, 知名的, 法定的"}, "undergo": {"count": 1, "definition": "v. 经历"}, "certification": {"count": 6, "definition": "n. 认证, 资格证书"}, "appoint": {"count": 1, "definition": "v. 任命, 指定"}, "compose": {"count": 1, "definition": "v. 作曲, 撰写, 组成, 镇静"}, "representative": {"count": 1, "definition": "n. 代表, 销售代表, 典型, ..."}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "devastate": {"count": 1, "definition": "v. 彻底摧毁, 使震惊"}, "crisis": {"count": 1, "definition": "n. 危机"}, "impact": {"count": 1, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "contend": {"count": 1, "definition": "v. 主张, 竞争"}, "climatic": {"count": 1, "definition": "adj. 气候的"}, "prompt": {"count": 1, "definition": "v. 促使, 提示, 提词；adj. 迅速..."}, "cumulative": {"count": 1, "definition": "adj. 累积的, 累计的"}, "phenomenon": {"count": 1, "definition": "n. 现象, 非凡的人"}, "culminate": {"count": 1, "definition": "v. 达到高潮"}, "harsh": {"count": 1, "definition": "adj. 严厉的, 恶劣的, 刺..."}, "frozen": {"count": 1, "definition": "adj. 冷冻保存的, 冰冷的, ..."}, "concerned": {"count": 1, "definition": "adj. 担忧的, 相关的, 关..."}, "qualified": {"count": 1, "definition": "adj. 有资格的, 有能力的, ..."}, "logo": {"count": 1, "definition": "n. 标志"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

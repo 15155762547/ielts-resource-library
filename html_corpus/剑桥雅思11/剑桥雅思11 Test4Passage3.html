@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"mankind": 2, "manifold": 1, "agriculture": 1, "slice": 1, "significance": 1, "originate": 1, "embark": 1, "foremost": 1, "compose": 1, "infinite": 2, "likeness": 1, "disclose": 1, "distill": 1, "celebrated": 1, "eloquent": 1, "hymn": 1, "conceal": 2, "core": 1, "skillful": 1, "craftsman": 1, "instrument": 1, "barely": 1, "configuration": 1, "random": 1, "sigh": 1, "genius": 1, "motion": 1, "subtropical": 1, "philosopher": 1, "subtle": 1, "precisely": 1, "victim": 1, "triumph": 1, "smooth": 1, "expertise": 1, "tick": 1, "stunt": 1, "merely": 1, "squash": 1, "freak": 1, "sumerian": 3, "trim": 1, "reverse": 1, "slot": 1, "corresponding": 1, "convey": 1, "absence": 1, "enlist": 1, "correspond": 1, "translation": 1};
+        const wordData = {"mankind": {"count": 2, "definition": "n. 人类"}, "manifold": {"count": 1, "definition": "adj. 多种多样的；n. 歧管"}, "agriculture": {"count": 1, "definition": "n. 农业"}, "slice": {"count": 1, "definition": "n. 切片, 份额, 切刀, 旋转球；v. ..."}, "significance": {"count": 1, "definition": "n. 重要性, 含义"}, "originate": {"count": 1, "definition": "v. 开始, 创造, 源自"}, "embark": {"count": 1, "definition": "v. 登船"}, "foremost": {"count": 1, "definition": "adj. 最重要的；adv. 最重要的是"}, "compose": {"count": 1, "definition": "v. 作曲, 撰写, 组成, 镇静"}, "infinite": {"count": 2, "definition": "adj. 巨大的, 无限的；n. 永恒的事..."}, "likeness": {"count": 1, "definition": "n. 相似性, 肖像"}, "disclose": {"count": 1, "definition": "v. 透露, 展示"}, "distill": {"count": 1, "definition": "v. 蒸馏提纯, 蒸馏制酒, 提炼精华"}, "celebrated": {"count": 1, "definition": "adj. 著名的"}, "eloquent": {"count": 1, "definition": "adj. 雄辩的, 传神的"}, "hymn": {"count": 1, "definition": "n. 赞美诗, 颂歌"}, "conceal": {"count": 2, "definition": "v. 隐藏"}, "core": {"count": 1, "definition": "n. 核心, 中心部分, 果核, 核心..."}, "skillful": {"count": 1, "definition": "adj. 熟练的, 技艺精湛的"}, "craftsman": {"count": 1, "definition": "n. 工匠"}, "instrument": {"count": 1, "definition": "n. 乐器, 仪器, 仪表, 工具, 工..."}, "barely": {"count": 1, "definition": "adv. 勉强地, 几乎不, 仅仅, 刚刚"}, "configuration": {"count": 1, "definition": "n. 配置"}, "random": {"count": 1, "definition": "adj. 随机的, 陌生的, 随意的；..."}, "sigh": {"count": 1, "definition": "v. 叹气, 叹着气说, 发出叹..."}, "genius": {"count": 1, "definition": "n. 极高的智力或技能, 天才..."}, "motion": {"count": 1, "definition": "n. 运动, 手势, 动议, 排便；v. ..."}, "subtropical": {"count": 1, "definition": "adj. 亚热带的"}, "philosopher": {"count": 1, "definition": "n. 哲学家, 深思者"}, "subtle": {"count": 1, "definition": "adj. 不易察觉的, 巧妙的, ..."}, "precisely": {"count": 1, "definition": "adv. 精确地, 准确地"}, "victim": {"count": 1, "definition": "n. 受害者, 受骗者, 祭品"}, "triumph": {"count": 1, "definition": "n. 巨大的胜利, 胜利的喜悦*..."}, "smooth": {"count": 1, "definition": "adj. 平滑的, 无颗粒的, 顺..."}, "expertise": {"count": 1, "definition": "n. 专业知识"}, "tick": {"count": 1, "definition": "v. 滴答作响, 打勾；n. 勾号, 蜱虫, ..."}, "stunt": {"count": 1, "definition": "n. 特技, 噱头, 愚蠢的行为；v. 阻碍..."}, "merely": {"count": 1, "definition": "adv. 仅仅"}, "squash": {"count": 1, "definition": "v. 压扁, 挤进, 压制；n. 壁球, 果汁..."}, "freak": {"count": 1, "definition": "n. 狂热爱好者, 怪人, 异类, 异常事..."}, "sumerian": {"count": 3, "definition": "n. 苏美尔人；adj. 苏美尔的"}, "trim": {"count": 1, "definition": "v. 修剪, 剪掉多余部分, 装饰边缘；..."}, "reverse": {"count": 1, "definition": "v. 使变得相反, 撤销决定, ..."}, "slot": {"count": 1, "definition": "n. 插槽, 时间段；v. 插入"}, "corresponding": {"count": 1, "definition": "adj. 相应的"}, "convey": {"count": 1, "definition": "v. 传达, 运送"}, "absence": {"count": 1, "definition": "n. 缺席, 缺乏"}, "enlist": {"count": 1, "definition": "v. 请求帮助, 参军"}, "correspond": {"count": 1, "definition": "vi. 对应, 相当, 通信"}, "translation": {"count": 1, "definition": "n. 翻译, 译文, 转化"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

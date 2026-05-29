@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"startle": 1, "compound": 1, "machinery": 1, "tempt": 1, "explosion": 1, "commerce": 2, "quota": 1, "traditionally": 1, "boom": 1, "goods": 4, "theoretically": 1, "matter": 1, "instant": 1, "friction": 1, "chinese": 1, "clothe": 1, "shipment": 2, "spring": 1, "agriculture": 1, "manufacture": 4, "sector": 1, "accounting": 1, "output": 3, "dominate": 2, "raw": 1, "wheat": 1, "ore": 1, "bulky": 2, "lighter": 1, "transportation": 4, "influence": 1, "south-east": 1, "manufacturer": 1, "freight": 5, "domestic": 1, "obstacle": 1, "compact": 1, "disc": 1, "aeroplane": 1, "insignificant": 1, "factor": 1, "availability": 1, "innovation": 1, "swift": 1, "productivity": 4, "involved": 1, "portion": 1, "container": 5, "crane": 1, "unload": 1, "capsize": 1, "cargo": 3, "deck": 1, "vessel": 1, "dock": 1, "story": 1, "railroad": 1, "tariff": 1, "restriction": 1, "haul": 2, "dramatically": 1, "fleet": 1, "locomotive": 1, "marked": 1, "albeit": 1, "ownership": 1, "deter": 1};
+        const wordData = {"startle": {"count": 1, "definition": "v. 使吃惊"}, "compound": {"count": 1, "definition": "n. 混合物, 化合物, 复合..."}, "machinery": {"count": 1, "definition": "n. 机械, 机械装置, 机制"}, "tempt": {"count": 1, "definition": "v. 引诱, 吸引"}, "explosion": {"count": 1, "definition": "n. 爆炸, 激增, 爆发"}, "commerce": {"count": 2, "definition": "n. 商业"}, "quota": {"count": 1, "definition": "n. 配额, 定额, 当选所需票数"}, "traditionally": {"count": 1, "definition": "adv. 传统上, 传统地"}, "boom": {"count": 1, "definition": "n. 繁荣期, 热潮, 帆杆, 轰..."}, "goods": {"count": 4, "definition": "n. 商品, 物品, 货物"}, "theoretically": {"count": 1, "definition": "adv. 理论上, 理论上可能地"}, "matter": {"count": 1, "definition": "n. 问题, 事情, 情况, 事项, 物..."}, "instant": {"count": 1, "definition": "adj. 立即的, 速食的；n. ..."}, "friction": {"count": 1, "definition": "n. 摩擦, 摩擦力"}, "chinese": {"count": 1, "definition": "adj. 中国的；n. 中国人, 中文"}, "clothe": {"count": 1, "definition": "v. 给...穿衣, 提供衣物"}, "shipment": {"count": 2, "definition": "n. 运送货物, 运送的货物"}, "spring": {"count": 1, "definition": "n. 春天, 泉水, 弹簧, 弹力, 活..."}, "agriculture": {"count": 1, "definition": "n. 农业"}, "manufacture": {"count": 4, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "sector": {"count": 1, "definition": "n. 行业, 防区, 扇形"}, "accounting": {"count": 1, "definition": "n. 会计"}, "output": {"count": 3, "definition": "n. 产量, 输出, 输出功率, 输出..."}, "dominate": {"count": 2, "definition": "v. 支配, 占主导地位, 最为..."}, "raw": {"count": 1, "definition": "adj. 生的, 原始的, 未经处..."}, "wheat": {"count": 1, "definition": "n. 小麦"}, "ore": {"count": 1, "definition": "n. 矿石"}, "bulky": {"count": 2, "definition": "adj. 笨重, 庞大"}, "lighter": {"count": 1, "definition": "n. 打火机, 驳船"}, "transportation": {"count": 4, "definition": "n. 交通运输系统, 交通工具*..."}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "south-east": {"count": 1, "definition": "adv. 东南方向, 更偏东南的位置"}, "manufacturer": {"count": 1, "definition": "n. 制造商"}, "freight": {"count": 5, "definition": "n. 货物；v. 运输, 充满"}, "domestic": {"count": 1, "definition": "adj. 国内的, 家庭的, 家..."}, "obstacle": {"count": 1, "definition": "n. 障碍, 障碍物, 障碍栏"}, "compact": {"count": 1, "definition": "adj. 小巧的, 节省空间的, 紧密的, ..."}, "disc": {"count": 1, "definition": "n. 圆盘, 光盘, 磁盘, 唱片, 椎..."}, "aeroplane": {"count": 1, "definition": "n. 飞机"}, "insignificant": {"count": 1, "definition": "adj. 微不足道"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "availability": {"count": 1, "definition": "n. 可用性, 空闲时间"}, "innovation": {"count": 1, "definition": "n. 创新"}, "swift": {"count": 1, "definition": "adj. 迅速的, 高速移动的；n. 雨燕"}, "productivity": {"count": 4, "definition": "n. 生产力"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "portion": {"count": 1, "definition": "n. 部分, 一份, 份额；v. 分配"}, "container": {"count": 5, "definition": "n. 容器, 集装箱, 花盆"}, "crane": {"count": 1, "definition": "n. 起重机, 鹤；v. 伸长脖子看"}, "unload": {"count": 1, "definition": "v. 卸货, 清空, 倾诉, 抛售"}, "capsize": {"count": 1, "definition": "v. 倾覆"}, "cargo": {"count": 3, "definition": "n. 货物"}, "deck": {"count": 1, "definition": "n. 甲板, 层, 平台, 播放器,..."}, "vessel": {"count": 1, "definition": "n. 血管, 船, 容器"}, "dock": {"count": 1, "definition": "n. 码头, 港区, 泊位, 装卸平台, 被..."}, "story": {"count": 1, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "railroad": {"count": 1, "definition": "n. 铁路轨道, 铁路系统；v. 强迫, 施..."}, "tariff": {"count": 1, "definition": "n. 关税, 价目表, 法定刑罚"}, "restriction": {"count": 1, "definition": "n. 限制规定, 限制, 自由限制"}, "haul": {"count": 2, "definition": "v. 拖, 艰难地移动, 强行带走, 传讯；..."}, "dramatically": {"count": 1, "definition": "adv. 急剧地, 戏剧性地, ..."}, "fleet": {"count": 1, "definition": "n. 舰队, 渔船队, 海军舰队..."}, "locomotive": {"count": 1, "definition": "n. 火车头；adj. 运动的"}, "marked": {"count": 1, "definition": "adj. 明显的, 具有特定特征的"}, "albeit": {"count": 1, "definition": "conj. 尽管"}, "ownership": {"count": 1, "definition": "n. 所有权"}, "deter": {"count": 1, "definition": "v. 威慑"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"microbe": 20, "bacteria": 10, "populate": 1, "outlive": 1, "invisible": 1, "naked": 1, "ubiquitous": 1, "inhabit": 1, "coral": 1, "utterly": 1, "absorb": 1, "peril": 1, "colony": 1, "trillion": 2, "suggest": 1, "gut": 1, "galaxy": 1, "deadly": 1, "bloodstream": 1, "swallow": 1, "gram": 1, "continually": 1, "fascinating": 1, "journalist": 1, "adept": 1, "knack": 1, "enthrall": 1, "lead": 1, "bizarre": 1, "alien": 1, "bid": 1, "persuade": 1, "potent": 1, "microscope": 1, "magnify": 1, "teem": 1, "biologist": 1, "germ": 2, "endure": 1, "plea": 1, "tolerance": 1, "vital": 1, "supposedly": 1, "nurture": 1, "symbiotic": 1, "mutual": 2, "beneficial": 1, "destructive": 1, "organism": 1, "digestion": 1, "regulate": 1, "immune": 2, "eliminate": 1, "toxin": 1, "vitamin": 1, "combat": 1, "obsession": 1, "hygiene": 1, "antibiotic": 1, "disrupt": 1, "bacterial": 1, "soar": 1, "bowel": 1, "norm": 1, "excessive": 1, "household": 1, "detergent": 1, "bay": 1, "exposure": 1, "diverse": 1, "fungus": 1, "wipe": 1, "frog": 1, "halt": 1, "bacterium": 2, "squid": 1, "predator": 1, "enthusiasm": 1, "mosquito": 2, "fever": 1, "infect": 1, "manipulate": 1, "construct": 1, "ward": 1, "mixed": 1, "cocktail": 1};
+        const wordData = {"microbe": {"count": 20, "definition": "n. 微生物"}, "bacteria": {"count": 10, "definition": "n. 细菌"}, "populate": {"count": 1, "definition": "v. 居住于, 使定居, 填充"}, "outlive": {"count": 1, "definition": "v. 比...活得久, 比...持久"}, "invisible": {"count": 1, "definition": "adj. 看不见的, 无形的（服务）"}, "naked": {"count": 1, "definition": "adj. 赤裸的, 无遮盖的, 直白..."}, "ubiquitous": {"count": 1, "definition": "adj. 无所不在"}, "inhabit": {"count": 1, "definition": "v. 居住于"}, "coral": {"count": 1, "definition": "n. 珊瑚, 珊瑚虫；adj. 珊瑚色"}, "utterly": {"count": 1, "definition": "adv. 完全地"}, "absorb": {"count": 1, "definition": "v. 吸收, 缓冲（物理冲击）, 领..."}, "peril": {"count": 1, "definition": "n. 极度危险, 危险源"}, "colony": {"count": 1, "definition": "n. 殖民地, 移民群体, 聚居区, ..."}, "trillion": {"count": 2, "definition": "num. 万亿, 巨大的数量, ..."}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "gut": {"count": 1, "definition": "n. 肠道, 内脏, 大肚子,..."}, "galaxy": {"count": 1, "definition": "n. 星系, 银河系, 名人荟萃"}, "deadly": {"count": 1, "definition": "adj. 致命的, 极大的, 强大的, ..."}, "bloodstream": {"count": 1, "definition": "n. 血流"}, "swallow": {"count": 1, "definition": "v. 吞咽, 咽口水, 吞没, 耗..."}, "gram": {"count": 1, "definition": "n. 克, 字"}, "continually": {"count": 1, "definition": "adv. 不停地, 持续地"}, "fascinating": {"count": 1, "definition": "adj. 迷人的"}, "journalist": {"count": 1, "definition": "n. 记者"}, "adept": {"count": 1, "definition": "adj. 熟练的；n. 能手"}, "knack": {"count": 1, "definition": "n. 本领, 倾向"}, "enthrall": {"count": 1, "definition": "v. 迷住"}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "bizarre": {"count": 1, "definition": "adj. 怪异"}, "alien": {"count": 1, "definition": "n. 外国人, 外星人；adj. ..."}, "bid": {"count": 1, "definition": "n. 出价, 投标, 努力, 叫牌；..."}, "persuade": {"count": 1, "definition": "v. 说服"}, "potent": {"count": 1, "definition": "adj. 强有力的, 有影响力的"}, "microscope": {"count": 1, "definition": "n. 显微镜"}, "magnify": {"count": 1, "definition": "v. 放大, 夸大"}, "teem": {"count": 1, "definition": "v. 充满"}, "biologist": {"count": 1, "definition": "n. 生物学家"}, "germ": {"count": 2, "definition": "n. 细菌, 萌芽, 胚芽"}, "endure": {"count": 1, "definition": "v. 忍受, 持续"}, "plea": {"count": 1, "definition": "n. 恳求, 抗辩, 辩解"}, "tolerance": {"count": 1, "definition": "n. 宽容, 耐受性, 公差"}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "supposedly": {"count": 1, "definition": "adv. 据称"}, "nurture": {"count": 1, "definition": "v. 培育, 促进发展, 滋养情感；n. 养育"}, "symbiotic": {"count": 1, "definition": "adj. 共生的, 互惠互利的"}, "mutual": {"count": 2, "definition": "adj. 相互的, 共享的"}, "beneficial": {"count": 1, "definition": "adj. 有益的"}, "destructive": {"count": 1, "definition": "adj. 破坏性的, 有害的"}, "organism": {"count": 1, "definition": "n. 生物体, 有机整体"}, "digestion": {"count": 1, "definition": "n. 消化过程, 消化能力, 消化分解"}, "regulate": {"count": 1, "definition": "v. 用规章制度控制, 调节"}, "immune": {"count": 2, "definition": "adj. 免疫的, 不受影响的, 受..."}, "eliminate": {"count": 1, "definition": "v. 完全去除, 排除, 淘汰, 消灭"}, "toxin": {"count": 1, "definition": "n. 毒素"}, "vitamin": {"count": 1, "definition": "n. 维生素"}, "combat": {"count": 1, "definition": "n. 战斗；v. 对抗, 战斗"}, "obsession": {"count": 1, "definition": "n. 执念, 着迷的事物"}, "hygiene": {"count": 1, "definition": "n. 卫生"}, "antibiotic": {"count": 1, "definition": "n. 抗生素；adj. 抗生素的"}, "disrupt": {"count": 1, "definition": "v. 妨碍, 颠覆"}, "bacterial": {"count": 1, "definition": "adj. 细菌的"}, "soar": {"count": 1, "definition": "vi. 迅速上升, 翱翔, 滞..."}, "bowel": {"count": 1, "definition": "n. 肠, 深处"}, "norm": {"count": 1, "definition": "n. 常规, 规范, 标准；v. 规范化"}, "excessive": {"count": 1, "definition": "adj. 过度的"}, "household": {"count": 1, "definition": "n. 家庭成员"}, "detergent": {"count": 1, "definition": "n. 洗涤剂"}, "bay": {"count": 1, "definition": "n. 海湾, 停车位, 凸窗区, 枣红..."}, "exposure": {"count": 1, "definition": "n. 暴露, 曝光, 体验, 冻伤, 曝..."}, "diverse": {"count": 1, "definition": "adj. 多样的"}, "fungus": {"count": 1, "definition": "n. 真菌, 霉菌"}, "wipe": {"count": 1, "definition": "v. 擦拭, 擦去, 擦除, 抹去；..."}, "frog": {"count": 1, "definition": "n. 青蛙, 法国佬"}, "halt": {"count": 1, "definition": "v. 停止；n. 停止, 小站"}, "bacterium": {"count": 2, "definition": "n. 细菌"}, "squid": {"count": 1, "definition": "n. 鱿鱼"}, "predator": {"count": 1, "definition": "n. 捕食者, 掠夺者"}, "enthusiasm": {"count": 1, "definition": "n. 热情, 爱好"}, "mosquito": {"count": 2, "definition": "n. 蚊子"}, "fever": {"count": 1, "definition": "n. 发烧, 热病, 狂热"}, "infect": {"count": 1, "definition": "v. 传染, 使感染病菌, 感染"}, "manipulate": {"count": 1, "definition": "v. 操纵, 熟练操作, 推拿"}, "construct": {"count": 1, "definition": "v. 建造, 组装, 构造；n. 构..."}, "ward": {"count": 1, "definition": "n. 病房, 选区, 被监护人；v. 防止..."}, "mixed": {"count": 1, "definition": "adj. 混合的, 褒贬不一的, 多元文..."}, "cocktail": {"count": 1, "definition": "n. 鸡尾酒, 冷盘拼盘, 混合物"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

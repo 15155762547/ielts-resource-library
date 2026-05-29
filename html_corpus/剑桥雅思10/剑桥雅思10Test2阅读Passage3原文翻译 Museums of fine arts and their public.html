@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"reproduction": 5, "rewarding": 2, "manuscript": 1, "evolve": 1, "precisely": 1, "convention": 1, "signify": 1, "accurate": 1, "facsimile": 1, "witness": 1, "assign": 2, "workshop": 1, "apprentice": 1, "reproduce": 1, "faithful": 1, "duplication": 1, "implicit": 1, "recognition": 1, "unfortunate": 2, "severe": 1, "limitation": 2, "exhibit": 4, "treasure": 2, "attendant": 1, "architectural": 1, "reinforce": 1, "monetary": 1, "institution": 1, "evident": 1, "spontaneous": 3, "diverse": 1, "sculpture": 1, "heighten": 1, "sheer": 1, "realistically": 1, "distress": 1, "vital": 1, "factor": 1, "appreciation": 1, "prescribe": 2, "opera": 1, "duration": 1, "temporal": 1, "sequence": 1, "superficial": 1, "involved": 1, "consequently": 1, "dominant": 1, "historian": 1, "academic": 1, "devoted": 1, "harmony": 1, "dedicated": 1, "conserve": 1, "authentic": 1, "abundance": 1, "absent": 1, "suppress": 1, "render": 1, "permanently": 1, "accessible": 1, "awe": 1, "establishment": 1};
+        const wordData = {"reproduction": {"count": 5, "definition": "n. 繁殖, 复制, 重放, 复制品"}, "rewarding": {"count": 2, "definition": "adj. 有意义的, 报酬丰厚的"}, "manuscript": {"count": 1, "definition": "n. 手稿, 手抄本"}, "evolve": {"count": 1, "definition": "v. 进化"}, "precisely": {"count": 1, "definition": "adv. 精确地, 准确地"}, "convention": {"count": 1, "definition": "n. 惯例, 大会, 公约"}, "signify": {"count": 1, "definition": "v. 表示, 表明, 有重要意义"}, "accurate": {"count": 1, "definition": "adj. 准确的, 能提供准确信息的, ..."}, "facsimile": {"count": 1, "definition": "n. 精确复制品, 传真机"}, "witness": {"count": 1, "definition": "n. 目击者, 证人, 见证人..."}, "assign": {"count": 2, "definition": "v. 分配, 指派, 派遣, 指定, ..."}, "workshop": {"count": 1, "definition": "n. 研讨会, 车间"}, "apprentice": {"count": 1, "definition": "n. 学徒；v. 当学徒"}, "reproduce": {"count": 1, "definition": "v. 复制, 重现, 繁殖"}, "faithful": {"count": 1, "definition": "adj. 忠诚的, 坚定的支持者, 忠贞..."}, "duplication": {"count": 1, "definition": "n. 复制, 重复"}, "implicit": {"count": 1, "definition": "adj. 含蓄的, 隐含的, 完全的"}, "recognition": {"count": 1, "definition": "n. 认出, 承认, 表彰"}, "unfortunate": {"count": 2, "definition": "adj. 不幸的, 遗憾的, 尴尬..."}, "severe": {"count": 1, "definition": "adj. 严重的, 严厉的惩罚, ..."}, "limitation": {"count": 2, "definition": "n. 限制"}, "exhibit": {"count": 4, "definition": "v. 展出, 表现出；n. 展品, *..."}, "treasure": {"count": 2, "definition": "n. 宝物, 珍宝, 宝贝；v. 珍视"}, "attendant": {"count": 1, "definition": "n. 服务员, 护理员；adj. 伴随的"}, "architectural": {"count": 1, "definition": "adj. 建筑的"}, "reinforce": {"count": 1, "definition": "v. 加强, 加固, 增援"}, "monetary": {"count": 1, "definition": "adj. 货币的"}, "institution": {"count": 1, "definition": "n. 机构, 制度, 设立, 老熟人"}, "evident": {"count": 1, "definition": "adj. 明显的"}, "spontaneous": {"count": 3, "definition": "adj. 自发的, 冲动行事的, 自然发..."}, "diverse": {"count": 1, "definition": "adj. 多样的"}, "sculpture": {"count": 1, "definition": "n. 雕塑作品, 雕塑艺术"}, "heighten": {"count": 1, "definition": "v. 加强"}, "sheer": {"count": 1, "definition": "adj. 纯粹的, 纯的, 陡峭的, 透明的；..."}, "realistically": {"count": 1, "definition": "adv. 实际上可能地, 理智地, 逼真地"}, "distress": {"count": 1, "definition": "n. 苦恼, 贫困, 遇险, 痛苦；..."}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "appreciation": {"count": 1, "definition": "n. 欣赏, 理解, 感激, ..."}, "prescribe": {"count": 2, "definition": "v. 开药, 规定"}, "opera": {"count": 1, "definition": "n. 歌剧, 歌剧团"}, "duration": {"count": 1, "definition": "n. 持续时间"}, "temporal": {"count": 1, "definition": "adj. 世俗的, 时间的, 颞的"}, "sequence": {"count": 1, "definition": "n. 序列, 次序, 片段；v. 排..."}, "superficial": {"count": 1, "definition": "adj. 粗浅的, 表面的, 浅薄的"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "consequently": {"count": 1, "definition": "adv. 因此"}, "dominant": {"count": 1, "definition": "adj. 主导的, 显性基因"}, "historian": {"count": 1, "definition": "n. 历史学家"}, "academic": {"count": 1, "definition": "adj. 学术的, 理论性的, 善..."}, "devoted": {"count": 1, "definition": "adj. 忠诚的"}, "harmony": {"count": 1, "definition": "n. 和谐, 和声, 协调"}, "dedicated": {"count": 1, "definition": "adj. 专注的, 专用的"}, "conserve": {"count": 1, "definition": "v. 保护, 节约；n. 蜜饯"}, "authentic": {"count": 1, "definition": "adj. 真实的, 准确的, 仿真的"}, "abundance": {"count": 1, "definition": "n. 大量"}, "absent": {"count": 1, "definition": "adj. 缺席的, 不存在的, 心..."}, "suppress": {"count": 1, "definition": "v. 镇压, 隐瞒, 抑制"}, "render": {"count": 1, "definition": "v. 使成为, 提供, 呈递, 表..."}, "permanently": {"count": 1, "definition": "adv. 永久地"}, "accessible": {"count": 1, "definition": "adj. 可到达的, 无障碍的, ..."}, "awe": {"count": 1, "definition": "n. 敬畏；v. 使敬畏"}, "establishment": {"count": 1, "definition": "n. 机构, 当权派, 建立"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

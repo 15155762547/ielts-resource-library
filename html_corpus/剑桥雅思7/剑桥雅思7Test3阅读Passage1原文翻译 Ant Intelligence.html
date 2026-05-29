@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"intelligent": 1, "kingdom": 2, "spring": 1, "ape": 1, "sufficient": 1, "suggest": 4, "hint": 1, "considerable": 1, "scrutiny": 1, "spark": 1, "cognition": 1, "involved": 1, "repel": 1, "jingle": 1, "slogan": 1, "martial": 1, "arouse": 1, "propagate": 2, "biologist": 1, "embarrassment": 1, "livestock": 1, "spray": 1, "transmission": 1, "encode": 1, "gene": 2, "instinct": 1, "learned": 1, "continuity": 1, "fungus": 2, "herd": 1, "craft": 1, "sophisticated": 2, "agricultural": 1, "sustainable": 1, "ruin": 1, "adaptable": 1, "digest": 1, "cellulose": 1, "cultivate": 2, "nest": 3, "secrete": 1, "antibiotic": 1, "weed": 1, "essentially": 1, "distant": 2, "diverse": 1, "continually": 1, "domesticate": 1, "impressively": 1, "strain": 1, "prehistoric": 2, "exposure": 1, "urban": 2, "chamber": 1, "tunnel": 1, "amazed": 1, "accomplish": 1, "magnificent": 1, "compose": 1, "interconnect": 1, "territory": 1, "endure": 1, "intricate": 1, "outstrip": 1, "ancestor": 1, "hail": 1, "masterpiece": 1, "cave": 1, "primitive": 1, "albeit": 1, "forage": 3, "navigate": 1, "integrate": 1, "bearing": 2, "continuously": 1, "landmark": 1, "framework": 1, "consult": 1, "transmit": 1, "scout": 2, "maze": 3, "proceed": 1, "elaborate": 1, "precaution": 1, "clue": 1, "sequence": 1, "compass": 1, "exhaustive": 1};
+        const wordData = {"intelligent": {"count": 1, "definition": "adj. 聪明, 有智慧, 智能"}, "kingdom": {"count": 2, "definition": "n. 王国, 领域, 界"}, "spring": {"count": 1, "definition": "n. 春天, 泉水, 弹簧, 弹力, 活..."}, "ape": {"count": 1, "definition": "n. 猿；v. 模仿, 嘲弄地模仿"}, "sufficient": {"count": 1, "definition": "adj. 足够的"}, "suggest": {"count": 4, "definition": "v. 建议, 推荐, 暗示"}, "hint": {"count": 1, "definition": "n. 暗示, 迹象, 微量, 提示；v. 暗示"}, "considerable": {"count": 1, "definition": "adj. 可观的"}, "scrutiny": {"count": 1, "definition": "n. 仔细检查"}, "spark": {"count": 1, "definition": "v. 引发, 发出火花；n. 火花, 电..."}, "cognition": {"count": 1, "definition": "n. 认知"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "repel": {"count": 1, "definition": "v. 击退, 排斥, 使厌恶"}, "jingle": {"count": 1, "definition": "n. 叮当声, 广告歌；v. 叮当作响"}, "slogan": {"count": 1, "definition": "n. 口号"}, "martial": {"count": 1, "definition": "adj. 军事的"}, "arouse": {"count": 1, "definition": "v. 引起"}, "propagate": {"count": 2, "definition": "v. 传播, 繁殖"}, "biologist": {"count": 1, "definition": "n. 生物学家"}, "embarrassment": {"count": 1, "definition": "n. 尴尬, 令人尴尬的事, 令..."}, "livestock": {"count": 1, "definition": "n. 牲畜"}, "spray": {"count": 1, "definition": "n. 喷雾, 喷雾剂, 喷雾器, 喷洒, 小..."}, "transmission": {"count": 1, "definition": "n. 传递, 传输, 广播, ..."}, "encode": {"count": 1, "definition": "v. 编码, 转译"}, "gene": {"count": 2, "definition": "n. 基因"}, "instinct": {"count": 1, "definition": "n. 本能, 直觉"}, "learned": {"count": 1, "definition": "adj. 博学的, 学者的, 习得的"}, "continuity": {"count": 1, "definition": "n. 连续性, 连贯性, 剧情连贯性"}, "fungus": {"count": 2, "definition": "n. 真菌, 霉菌"}, "herd": {"count": 1, "definition": "n. 兽群, 人群；v. 驱赶, 放牧"}, "craft": {"count": 1, "definition": "n. 手工艺, 技艺, 诡计, 船..."}, "sophisticated": {"count": 2, "definition": "adj. 精密的, 世故的, 精通的"}, "agricultural": {"count": 1, "definition": "adj. 农业的"}, "sustainable": {"count": 1, "definition": "adj. 可持续, 可持续的"}, "ruin": {"count": 1, "definition": "v. 彻底毁坏, 使破产；n. ..."}, "adaptable": {"count": 1, "definition": "adj. 能适应的"}, "digest": {"count": 1, "definition": "v. 消化, 分解, 领会；n. 摘要"}, "cellulose": {"count": 1, "definition": "n. 纤维素, 纤维素衍生物"}, "cultivate": {"count": 2, "definition": "v. 耕种, 种植, 培养"}, "nest": {"count": 3, "definition": "n. 鸟巢, 巢穴, 窝点, 家, ..."}, "secrete": {"count": 1, "definition": "v. 分泌, 隐藏"}, "antibiotic": {"count": 1, "definition": "n. 抗生素；adj. 抗生素的"}, "weed": {"count": 1, "definition": "n. 杂草, 水草, 烟草, 大麻, 懦..."}, "essentially": {"count": 1, "definition": "adv. 本质上"}, "distant": {"count": 2, "definition": "adj. 遥远的, 不同的, 远房的, ..."}, "diverse": {"count": 1, "definition": "adj. 多样的"}, "continually": {"count": 1, "definition": "adv. 不停地, 持续地"}, "domesticate": {"count": 1, "definition": "v. 驯化, 栽培, 顾家"}, "impressively": {"count": 1, "definition": "adv. 令人印象深刻地"}, "strain": {"count": 1, "definition": "n. 紧张, 精神紧张, 拉力..."}, "prehistoric": {"count": 2, "definition": "adj. 史前的"}, "exposure": {"count": 1, "definition": "n. 暴露, 曝光, 体验, 冻伤, 曝..."}, "urban": {"count": 2, "definition": "adj. 城市的, 都市音乐的"}, "chamber": {"count": 1, "definition": "n. 会议厅, 议院, 专用室, ..."}, "tunnel": {"count": 1, "definition": "n. 隧道, 洞穴；v. 挖掘隧道"}, "amazed": {"count": 1, "definition": "adj. 惊叹"}, "accomplish": {"count": 1, "definition": "v. 完成"}, "magnificent": {"count": 1, "definition": "adj. 壮丽的"}, "compose": {"count": 1, "definition": "v. 作曲, 撰写, 组成, 镇静"}, "interconnect": {"count": 1, "definition": "v. 互联"}, "territory": {"count": 1, "definition": "n. 领土, 领地, 领域, ..."}, "endure": {"count": 1, "definition": "v. 忍受, 持续"}, "intricate": {"count": 1, "definition": "adj. 复杂"}, "outstrip": {"count": 1, "definition": "v. 超越, 胜过, 跑得更快"}, "ancestor": {"count": 1, "definition": "n. 祖先, 祖先物种, 前身"}, "hail": {"count": 1, "definition": "v. 称赞, 招手叫停, 呼喊, 下冰..."}, "masterpiece": {"count": 1, "definition": "n. 代表作"}, "cave": {"count": 1, "definition": "n. 洞穴；v. 坍塌，塌陷, 屈服..."}, "primitive": {"count": 1, "definition": "adj. 原始的, 早期的, 简陋的, 原始..."}, "albeit": {"count": 1, "definition": "conj. 尽管"}, "forage": {"count": 3, "definition": "vi. 觅食, 摸索寻找；n. 饲料"}, "navigate": {"count": 1, "definition": "v. 导航, 航行, 应对, 浏览"}, "integrate": {"count": 1, "definition": "v. 整合, 融入"}, "bearing": {"count": 2, "definition": "n. 关系, 仪态, 方位, 方位感, 轴承"}, "continuously": {"count": 1, "definition": "adv. 连续地, 不断地"}, "landmark": {"count": 1, "definition": "n. 地标, 里程碑, 历史遗迹"}, "framework": {"count": 1, "definition": "n. 框架"}, "consult": {"count": 1, "definition": "v. 咨询, 商议, 查阅"}, "transmit": {"count": 1, "definition": "v. 发送信号, 传递, 传导"}, "scout": {"count": 2, "definition": "n. 童子军组织, 童子军成员, 侦察..."}, "maze": {"count": 3, "definition": "n. 迷宫"}, "proceed": {"count": 1, "definition": "vi. 继续, 接着, 前进"}, "elaborate": {"count": 1, "definition": "adj. 精心设计的；v. 详细说明..."}, "precaution": {"count": 1, "definition": "n. 预防措施, 避孕措施"}, "clue": {"count": 1, "definition": "n. 线索；v. 提示, 使某人..."}, "sequence": {"count": 1, "definition": "n. 序列, 次序, 片段；v. 排..."}, "compass": {"count": 1, "definition": "n. 指南针, 圆规, 范围"}, "exhaustive": {"count": 1, "definition": "adj. 全面的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

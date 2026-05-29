@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"historian": 2, "puzzled": 1, "prehistoric": 3, "monument": 2, "erect": 1, "comprise": 1, "massive": 2, "upright": 1, "circular": 3, "layout": 1, "ruin": 1, "construct": 1, "neolithic": 2, "primitive": 2, "ditch": 1, "pit": 1, "era": 1, "timber": 1, "accord": 2, "scholar": 2, "hoist": 1, "standing": 1, "formation": 1, "trace": 1, "kilometer": 1, "sophisticated": 1, "engineering": 1, "haul": 3, "boulder": 2, "ton": 1, "sledge": 1, "roller": 1, "tree": 1, "trunk": 1, "raft": 1, "alternatively": 1, "tow": 1, "fleet": 1, "vessel": 1, "basket": 1, "bearing": 1, "groove": 1, "plank": 1, "challenging": 1, "industrious": 1, "cart": 1, "suggest": 2, "glacier": 1, "sandstone": 1, "slab": 1, "crescent": 1, "assemble": 1, "visible": 1, "site": 4, "reveal": 1, "judicial": 1, "popularize": 1, "unearth": 2, "grave": 1, "inhabit": 1, "distinct": 1, "tribe": 1, "undertaking": 1, "artefact": 1, "hypothesis": 1, "agrarian": 1, "indigenous": 1, "isle": 1, "advanced": 1, "communal": 1, "continent": 1, "descend": 1, "surrounding": 1, "architect": 1, "striking": 1, "consensus": 1, "burial": 1, "astronomer": 1, "cluster": 1, "corresponding": 1, "eclipse": 1, "considerable": 1, "decade": 1, "critic": 1, "predict": 1, "dense": 1, "obscure": 1, "ski": 1, "remains": 1, "speculate": 1, "healing": 1, "curative": 1};
+        const wordData = {"historian": {"count": 2, "definition": "n. 历史学家"}, "puzzled": {"count": 1, "definition": "adj. 困惑的"}, "prehistoric": {"count": 3, "definition": "adj. 史前的"}, "monument": {"count": 2, "definition": "n. 纪念碑, 历史建筑, 丰碑"}, "erect": {"count": 1, "definition": "v. 建造, 竖立, 建立；adj. ..."}, "comprise": {"count": 1, "definition": "v. 包含, 构成"}, "massive": {"count": 2, "definition": "adj. 巨大的, 庞大的, 重大的"}, "upright": {"count": 1, "definition": "adj. 挺直的, 直立的, 正直的；adv. ..."}, "circular": {"count": 3, "definition": "adj. 圆形的, 循环的, 循环论证的, ..."}, "layout": {"count": 1, "definition": "n. 布局"}, "ruin": {"count": 1, "definition": "v. 彻底毁坏, 使破产；n. ..."}, "construct": {"count": 1, "definition": "v. 建造, 组装, 构造；n. 构..."}, "neolithic": {"count": 2, "definition": "adj. 新石器时代"}, "primitive": {"count": 2, "definition": "adj. 原始的, 早期的, 简陋的, 原始..."}, "ditch": {"count": 1, "definition": "n. 沟渠；v. 抛弃, 水上迫降, 逃学"}, "pit": {"count": 1, "definition": "n. 坑, 矿井, 煤矿, 麻点, 果核, ..."}, "era": {"count": 1, "definition": "n. 时代"}, "timber": {"count": 1, "definition": "n. 林木, 木材, 木梁, 倒木"}, "accord": {"count": 2, "definition": "n. 协议；v. 给予"}, "scholar": {"count": 2, "definition": "n. 学者, 奖学金获得者, 优秀学..."}, "hoist": {"count": 1, "definition": "v. 提升；n. 起重机"}, "standing": {"count": 1, "definition": "adj. 站立的, 持久的；n. ..."}, "formation": {"count": 1, "definition": "n. 形成, 形成物, 排列"}, "trace": {"count": 1, "definition": "v. 追踪, 追溯, 追溯发展, ..."}, "kilometer": {"count": 1, "definition": "n. 千米"}, "sophisticated": {"count": 1, "definition": "adj. 精密的, 世故的, 精通的"}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "haul": {"count": 3, "definition": "v. 拖, 艰难地移动, 强行带走, 传讯；..."}, "boulder": {"count": 2, "definition": "n. 巨石"}, "ton": {"count": 1, "definition": "n. 吨, 大量, 吨位, 百迈"}, "sledge": {"count": 1, "definition": "n. 雪橇；v. 滑雪橇"}, "roller": {"count": 1, "definition": "n. 滚轮, 巨浪, 卷发棒"}, "tree": {"count": 1, "definition": "n. 树"}, "trunk": {"count": 1, "definition": "n. 树干, 后备箱, 象鼻, 泳裤, 大箱..."}, "raft": {"count": 1, "definition": "n. 木筏, 充气筏, 大量"}, "alternatively": {"count": 1, "definition": "adv. 或者"}, "tow": {"count": 1, "definition": "v. 拖, 拉着走；n. 拖车"}, "fleet": {"count": 1, "definition": "n. 舰队, 渔船队, 海军舰队..."}, "vessel": {"count": 1, "definition": "n. 血管, 船, 容器"}, "basket": {"count": 1, "definition": "n. 篮子, 一篮的量, 购物..."}, "bearing": {"count": 1, "definition": "n. 关系, 仪态, 方位, 方位感, 轴承"}, "groove": {"count": 1, "definition": "n. 沟槽, 节奏感"}, "plank": {"count": 1, "definition": "n. 木板, 政纲, 平板支撑"}, "challenging": {"count": 1, "definition": "adj. 挑战性, 挑衅性"}, "industrious": {"count": 1, "definition": "adj. 勤奋的"}, "cart": {"count": 1, "definition": "n. 马车, 手推车, 小推车, 购物车；..."}, "suggest": {"count": 2, "definition": "v. 建议, 推荐, 暗示"}, "glacier": {"count": 1, "definition": "n. 冰川"}, "sandstone": {"count": 1, "definition": "n. 砂岩"}, "slab": {"count": 1, "definition": "n. 厚板, 厚片"}, "crescent": {"count": 1, "definition": "n. 新月形, 新月形街道, 新月标志"}, "assemble": {"count": 1, "definition": "v. 聚集, 组装"}, "visible": {"count": 1, "definition": "adj. 可见的, 明显的"}, "site": {"count": 4, "definition": "n. 地点, 现场, 场所, *..."}, "reveal": {"count": 1, "definition": "v. 透露, 展现；n. 揭晓"}, "judicial": {"count": 1, "definition": "adj. 司法的"}, "popularize": {"count": 1, "definition": "v. 使流行, 通俗化"}, "unearth": {"count": 2, "definition": "v. 挖掘, 揭露"}, "grave": {"count": 1, "definition": "n. 坟墓, 死亡, 重音符号；..."}, "inhabit": {"count": 1, "definition": "v. 居住于"}, "distinct": {"count": 1, "definition": "adj. 清晰的, 不同的, 明确的"}, "tribe": {"count": 1, "definition": "n. 部落, 群体, 族, 大家族"}, "undertaking": {"count": 1, "definition": "n. 事业, 承诺, 殡葬业"}, "artefact": {"count": 1, "definition": "n. 人造物品"}, "hypothesis": {"count": 1, "definition": "n. 假设, 推测"}, "agrarian": {"count": 1, "definition": "adj. 农业的"}, "indigenous": {"count": 1, "definition": "adj. 原生的, 本土的"}, "isle": {"count": 1, "definition": "n. 小岛"}, "advanced": {"count": 1, "definition": "adj. 先进的, 高级的, 发达的"}, "communal": {"count": 1, "definition": "adj. 共有的, 社区的"}, "continent": {"count": 1, "definition": "adj. 节欲的, 能控制排便的；n. ..."}, "descend": {"count": 1, "definition": "v. 下降, 斜降, 降临"}, "surrounding": {"count": 1, "definition": "adj. 周围的"}, "architect": {"count": 1, "definition": "n. 建筑师, 设计师, 系统架构师；..."}, "striking": {"count": 1, "definition": "adj. 引人注目的, 出众的"}, "consensus": {"count": 1, "definition": "n. 共识"}, "burial": {"count": 1, "definition": "n. 埋葬"}, "astronomer": {"count": 1, "definition": "n. 天文学家"}, "cluster": {"count": 1, "definition": "n. 簇, 群, 辅音丛；v. 聚集"}, "corresponding": {"count": 1, "definition": "adj. 相应的"}, "eclipse": {"count": 1, "definition": "n. 日食或月食, 失色；v. 遮蔽, 使相..."}, "considerable": {"count": 1, "definition": "adj. 可观的"}, "decade": {"count": 1, "definition": "n. 十年"}, "critic": {"count": 1, "definition": "n. 评论家, 批评者"}, "predict": {"count": 1, "definition": "v. 预测"}, "dense": {"count": 1, "definition": "adj. 密集的, 浓密的, 愚钝..."}, "obscure": {"count": 1, "definition": "adj. 鲜为人知的, 晦涩的；v. 掩盖"}, "ski": {"count": 1, "definition": "n. 滑雪板, 滑水板；adj. 滑雪的；..."}, "remains": {"count": 1, "definition": "n. 剩余部分, 遗迹, 遗体"}, "speculate": {"count": 1, "definition": "v. 猜测, 投机"}, "healing": {"count": 1, "definition": "n. 治愈"}, "curative": {"count": 1, "definition": "adj. 治疗的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"stadium": 22, "urban": 6, "architecture": 1, "empire": 1, "medieval": 1, "cathedral": 1, "dominate": 1, "era": 2, "soar": 1, "notably": 1, "architect": 3, "arena": 6, "capacity": 1, "spectator": 2, "versatile": 1, "fortress": 2, "conservation": 1, "thereby": 1, "venue": 1, "spectacle": 1, "impose": 1, "endure": 1, "site": 2, "opera": 1, "outstanding": 1, "acoustics": 1, "italian": 1, "absorb": 1, "fabric": 1, "evolve": 1, "progressive": 1, "revert": 1, "ruin": 1, "residence": 1, "surrounding": 2, "flexibility": 1, "reinforce": 2, "concrete": 1, "match": 1, "situated": 1, "suburban": 1, "factor": 1, "accessible": 1, "innovative": 1, "scope": 1, "hub": 1, "retail": 1, "outlet": 1, "compactness": 1, "regenerate": 1, "catering": 1, "blueprint": 1, "phenomenon": 1, "integrate": 1, "interconnect": 1, "grid": 1, "usage": 1, "fitting": 1, "wind": 1, "turbine": 1, "solar": 1, "latter": 1, "inaugurate": 1, "annually": 1, "output": 1, "carbon": 1, "dioxide": 1, "ton": 1, "proof": 1, "impact": 1, "emission": 1, "residential": 1, "advanced": 1, "engineering": 1, "sustainable": 1};
+        const wordData = {"stadium": {"count": 22, "definition": "n. 体育场"}, "urban": {"count": 6, "definition": "adj. 城市的, 都市音乐的"}, "architecture": {"count": 1, "definition": "n. 建筑设计艺术, 建筑风格*..."}, "empire": {"count": 1, "definition": "n. 帝国, 商业帝国, 势力范围"}, "medieval": {"count": 1, "definition": "adj. 中世纪的"}, "cathedral": {"count": 1, "definition": "n. 大教堂"}, "dominate": {"count": 1, "definition": "v. 支配, 占主导地位, 最为..."}, "era": {"count": 2, "definition": "n. 时代"}, "soar": {"count": 1, "definition": "vi. 迅速上升, 翱翔, 滞..."}, "notably": {"count": 1, "definition": "adv. 显著地, 非常"}, "architect": {"count": 3, "definition": "n. 建筑师, 设计师, 系统架构师；..."}, "arena": {"count": 6, "definition": "n. 竞技场, 领域"}, "capacity": {"count": 1, "definition": "n. 容量, 能力, 身份, 产能,..."}, "spectator": {"count": 2, "definition": "n. 观众"}, "versatile": {"count": 1, "definition": "adj. 多才多艺, 多功能"}, "fortress": {"count": 2, "definition": "n. 堡垒"}, "conservation": {"count": 1, "definition": "n. 自然保护, 文物保护, 资源节..."}, "thereby": {"count": 1, "definition": "adv. 由此"}, "venue": {"count": 1, "definition": "n. 场地"}, "spectacle": {"count": 1, "definition": "n. 眼镜, 壮观场面, 奇观, 引人注目..."}, "impose": {"count": 1, "definition": "v. 实施, 强加, 强加（想法）..."}, "endure": {"count": 1, "definition": "v. 忍受, 持续"}, "site": {"count": 2, "definition": "n. 地点, 现场, 场所, *..."}, "opera": {"count": 1, "definition": "n. 歌剧, 歌剧团"}, "outstanding": {"count": 1, "definition": "adj. 杰出的, 未支付的, 显著的"}, "acoustics": {"count": 1, "definition": "n. 声学"}, "italian": {"count": 1, "definition": "adj. 意大利的；n. 意大利人, 意大..."}, "absorb": {"count": 1, "definition": "v. 吸收, 缓冲（物理冲击）, 领..."}, "fabric": {"count": 1, "definition": "n. 织物, 结构, 建筑结构"}, "evolve": {"count": 1, "definition": "v. 进化"}, "progressive": {"count": 1, "definition": "adj. 进步的, 渐进的, 进行时, ..."}, "revert": {"count": 1, "definition": "v. 恢复"}, "ruin": {"count": 1, "definition": "v. 彻底毁坏, 使破产；n. ..."}, "residence": {"count": 1, "definition": "n. 住所, 居住, 居留许可"}, "surrounding": {"count": 2, "definition": "adj. 周围的"}, "flexibility": {"count": 1, "definition": "n. 适应性, 柔韧性"}, "reinforce": {"count": 2, "definition": "v. 加强, 加固, 增援"}, "concrete": {"count": 1, "definition": "adj. 混凝土制成的, 具体的, ..."}, "match": {"count": 1, "definition": "n. 比赛, 对手, 相配, 匹配, 火..."}, "situated": {"count": 1, "definition": "adj. 位于, 处于"}, "suburban": {"count": 1, "definition": "adj. 郊区的, 古板的"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "accessible": {"count": 1, "definition": "adj. 可到达的, 无障碍的, ..."}, "innovative": {"count": 1, "definition": "adj. 创新的"}, "scope": {"count": 1, "definition": "n. 机会, 范围, 观察镜；v. ..."}, "hub": {"count": 1, "definition": "n. 中心, 核心, 轮毂"}, "retail": {"count": 1, "definition": "n. 零售；adv. 零售的；v. 零售..."}, "outlet": {"count": 1, "definition": "n. 专卖店, 直销店, 发泄途径, ..."}, "compactness": {"count": 1, "definition": "n. 紧凑性, 精悍, 密实度"}, "regenerate": {"count": 1, "definition": "v. 再生"}, "catering": {"count": 1, "definition": "n. 餐饮服务"}, "blueprint": {"count": 1, "definition": "n. 蓝图"}, "phenomenon": {"count": 1, "definition": "n. 现象, 非凡的人"}, "integrate": {"count": 1, "definition": "v. 整合, 融入"}, "interconnect": {"count": 1, "definition": "v. 互联"}, "grid": {"count": 1, "definition": "n. 网格, 坐标网格, 电网..."}, "usage": {"count": 1, "definition": "n. 词语用法, 使用量"}, "fitting": {"count": 1, "definition": "adj. 合适的, 合身的；n. 配件, 固..."}, "wind": {"count": 1, "definition": "n. 风, 肠胃气, 气息, 管乐器, ..."}, "turbine": {"count": 1, "definition": "n. 涡轮机"}, "solar": {"count": 1, "definition": "adj. 太阳的, 太阳能的"}, "latter": {"count": 1, "definition": "adj. 后者, 较后的, 较近的"}, "inaugurate": {"count": 1, "definition": "v. 就职, 落成, 开创"}, "annually": {"count": 1, "definition": "adv. 每年"}, "output": {"count": 1, "definition": "n. 产量, 输出, 输出功率, 输出..."}, "carbon": {"count": 1, "definition": "n. 碳, 二氧化碳, 复写本, ..."}, "dioxide": {"count": 1, "definition": "n. 二氧化物"}, "ton": {"count": 1, "definition": "n. 吨, 大量, 吨位, 百迈"}, "proof": {"count": 1, "definition": "n. 证据, 验证, 证明方法, 校样,..."}, "impact": {"count": 1, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "emission": {"count": 1, "definition": "n. 发射, 排放物"}, "residential": {"count": 1, "definition": "adj. 住宅的, 提供住宿的"}, "advanced": {"count": 1, "definition": "adj. 先进的, 高级的, 发达的"}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "sustainable": {"count": 1, "definition": "adj. 可持续, 可持续的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

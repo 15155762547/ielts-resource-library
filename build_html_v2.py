@@ -9,25 +9,37 @@ OUTPUT_DIR = "/Volumes/奥睿科1TB/代码程序/剑雅资源库/html_corpus"
 
 # ----------------- 词汇处理 -----------------
 
-def build_vocab_set():
-    vocab = set()
-    if not os.path.exists(VOCAB_FILE):
-        print(f"警告: 找不到词汇文件 {VOCAB_FILE}，将尝试读取当前目录下的文件")
-        local_vocab = "wordlist_only.txt"
-        if os.path.exists(local_vocab):
-            vocab_path = local_vocab
-        else:
-            raise FileNotFoundError("未找到 wordlist_only.txt 文件")
+def build_vocab_dict():
+    vocab_dict = {}
+    csv_path = "/Volumes/奥睿科1TB/代码程序/剑雅资源库/合并单词表.csv"
+    
+    if os.path.exists(csv_path):
+        import csv
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            next(reader, None) # skip header
+            for row in reader:
+                if len(row) >= 2:
+                    word = row[0].strip().lower()
+                    definition = row[1].strip()
+                    if word:
+                        vocab_dict[word] = definition
+        print(f"成功加载词汇字典: {len(vocab_dict)} 个单词释义")
     else:
-        vocab_path = VOCAB_FILE
-        
-    with open(vocab_path, 'r', encoding='utf-8') as f:
-        for word in f:
-            word = word.strip().lower()
-            if word:
-                vocab.add(word)
-    print(f"成功加载词汇表: {len(vocab)} 个单词")
-    return vocab
+        print("警告: 找不到合并单词表.csv，将尝试读取 wordlist_only.txt")
+        txt_path = "/Volumes/奥睿科1TB/代码程序/剑雅资源库/wordlist_only.txt"
+        if os.path.exists(txt_path):
+            with open(txt_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    word = line.strip().lower()
+                    if word:
+                        vocab_dict[word] = "暂无释义"
+            print(f"从 wordlist_only.txt 成功加载词汇表: {len(vocab_dict)} 个单词")
+        else:
+            raise FileNotFoundError("未找到合并单词表.csv 或 wordlist_only.txt 文件")
+            
+    return vocab_dict
+
 
 
 def find_stem(word: str, vocab: set) -> str:
@@ -75,7 +87,7 @@ def find_stem(word: str, vocab: set) -> str:
     return None
 
 
-def highlight_text(text: str, vocab: set, word_counts: dict) -> tuple[str, set]:
+def highlight_text(text: str, vocab: set, word_counts: dict, vocab_dict: dict) -> tuple[str, set]:
     if not text.strip():
         return "", set()
 
@@ -92,13 +104,19 @@ def highlight_text(text: str, vocab: set, word_counts: dict) -> tuple[str, set]:
                 # Wrap matching vocabulary in interactive mark tags
                 result.append(f'<mark class="vocab-word" data-word="{vocab_word}">{token}</mark>')
                 matched_words.add(vocab_word)
-                word_counts[vocab_word] = word_counts.get(vocab_word, 0) + 1
+                if vocab_word not in word_counts:
+                    word_counts[vocab_word] = {
+                        "count": 0,
+                        "definition": vocab_dict.get(vocab_word, "暂无释义")
+                    }
+                word_counts[vocab_word]["count"] += 1
             else:
                 result.append(token)
         else:
             result.append(token)
             
     return ''.join(result), matched_words
+
 
 # ----------------- 数据清洗与对齐 -----------------
 
@@ -420,11 +438,10 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }}
@@ -444,8 +461,36 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
             color: white;
         }}
 
+        .vocab-item .word-info {{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }}
+
         .vocab-item .word-name {{
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }}
+
+        .vocab-item.active-filter .word-name {{
+            color: white;
+        }}
+
+        .vocab-item .word-def {{
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }}
+
+        .vocab-item.active-filter .word-def {{
+            color: rgba(255, 255, 255, 0.7);
         }}
 
         .vocab-item .badge {{
@@ -456,6 +501,7 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
             border-radius: 99px;
             font-weight: 600;
         }}
+
 
         /* Main Workspace */
         main {{
@@ -722,6 +768,42 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }}
 
+        /* Tooltip style */
+        .vocab-tooltip {{
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }}
+
+        .vocab-tooltip.visible {{
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }}
+
+        .vocab-tooltip .tooltip-word {{
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }}
+
+        .vocab-tooltip .tooltip-def {{
+            color: rgba(255, 255, 255, 0.9);
+        }}
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {{
             display: none;
@@ -872,15 +954,19 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {word_counts_json};
+        const wordData = {word_counts_json}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {{
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         }});
 
         function toggleSidebar() {{
@@ -907,21 +993,21 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {{
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${{word}}</span>
-                    <span class="badge">${{wordCounts[word]}}</span>
+                    <div class="word-info">
+                        <span class="word-name">${{word}}</span>
+                        <span class="word-def" title="${{wordData[word].definition}}">${{wordData[word].definition}}</span>
+                    </div>
+                    <span class="badge">${{wordData[word].count}}</span>
                 `;
                 
                 li.onclick = (e) => {{
@@ -947,6 +1033,54 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
                     selectWord(word);
                 }};
             }});
+        }}
+
+        function setupTooltipListeners() {{
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {{
+                el.addEventListener('mouseenter', (e) => {{
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${{word}}</div>
+                        <div class="tooltip-def">${{definition}}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                }});
+                
+                el.addEventListener('mouseleave', () => {{
+                    tooltip.classList.remove('visible');
+                }});
+            }});
+        }}
+
+        function positionTooltip(targetEl, tooltip) {{
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {{
+                x = window.innerWidth - tooltipWidth - 10;
+            }}
+            
+            if (rect.top - tooltipHeight - 10 < 10) {{
+                y = rect.bottom + scrollTop + 10;
+            }}
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }}
 
         function selectWord(word) {{
@@ -993,8 +1127,6 @@ ARTICLE_TEMPLATE = """<!DOCTYPE html>
 </body>
 </html>
 """
-
-# ----------------- 总索引页面模板 -----------------
 
 INDEX_TEMPLATE = """<!DOCTYPE html>
 <html lang="zh-CN">
@@ -1416,7 +1548,9 @@ INDEX_TEMPLATE = """<!DOCTYPE html>
 # ----------------- 主程序 -----------------
 
 def main():
-    vocab = build_vocab_set()
+    vocab_dict = build_vocab_dict()
+    vocab = set(vocab_dict.keys())
+
     
     # Clean up old generated HTML and JSON files to prevent orphans
     if os.path.exists(OUTPUT_DIR):
@@ -1496,8 +1630,9 @@ def main():
                 en_paras_html = []
                 block_words = set()
                 for en_p in en_paras:
-                    highlighted_p, p_words = highlight_text(en_p, vocab, file_word_counts)
+                    highlighted_p, p_words = highlight_text(en_p, vocab, file_word_counts, vocab_dict)
                     en_paras_html.append(f'<p>{highlighted_p}</p>')
+
                     block_words.update(p_words)
                     
                 # 2. Format ZH paragraphs
@@ -1521,7 +1656,8 @@ def main():
                 )
                 
             # Accumulate highlights for the book
-            total_highlights_count += sum(file_word_counts.values())
+            total_highlights_count += sum(item["count"] for item in file_word_counts.values())
+
             
             # Create Global Search Index mappings
             html_name = get_clean_html_name(fname, book_name)

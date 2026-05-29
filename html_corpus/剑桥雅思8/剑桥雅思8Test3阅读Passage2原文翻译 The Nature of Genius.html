@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"genius": 22, "latin": 1, "cult": 1, "concerned": 1, "perpetuate": 1, "gradual": 1, "attribute": 1, "derive": 1, "gene": 1, "astrology": 1, "genetics": 1, "exceptional": 2, "folk": 1, "ambivalent": 1, "envy": 2, "gifted": 7, "mythology": 1, "talented": 1, "defective": 1, "intellectual": 3, "eccentric": 1, "intelligent": 1, "mathematical": 1, "enrich": 1, "considerable": 1, "encouragement": 1, "tutor": 2, "beneficial": 1, "fascinating": 1, "anecdote": 1, "exception": 1, "collate": 1, "infant": 1, "mortality": 1, "expectancy": 1, "nobility": 1, "bully": 1, "corporal": 1, "punishment": 1, "privileged": 1, "psychology": 1, "peak": 2, "mist": 2, "visible": 1, "vantage": 2, "outstanding": 1, "mundane": 1, "mediocre": 1, "incapable": 1, "accidental": 2, "determined": 1, "vice": 1, "determination": 1, "nurture": 1, "trigger": 1, "marvel": 1, "manifestation": 1, "superior": 1, "commonplace": 1, "outrageous": 1, "fabric": 1, "outstrip": 2, "jogging": 1, "emulate": 1, "fame": 1, "dedication": 1, "restriction": 1, "integrity": 1, "descriptive": 1, "precision": 1, "delude": 1, "humanity": 1};
+        const wordData = {"genius": {"count": 22, "definition": "n. 极高的智力或技能, 天才..."}, "latin": {"count": 1, "definition": "n. 拉丁语, 拉丁人, 拉丁音乐；adj. ..."}, "cult": {"count": 1, "definition": "n. 狂热, 邪教, 宗教；..."}, "concerned": {"count": 1, "definition": "adj. 担忧的, 相关的, 关..."}, "perpetuate": {"count": 1, "definition": "v. 延续"}, "gradual": {"count": 1, "definition": "adj. 逐渐的, 平缓的"}, "attribute": {"count": 1, "definition": "v. 归因于, 认为是...所作, *..."}, "derive": {"count": 1, "definition": "v. 从...获得, 源自, 推导出"}, "gene": {"count": 1, "definition": "n. 基因"}, "astrology": {"count": 1, "definition": "n. 占星术"}, "genetics": {"count": 1, "definition": "n. 遗传学"}, "exceptional": {"count": 2, "definition": "adj. 卓越的, 罕见的"}, "folk": {"count": 1, "definition": "n. 人们, 各位, 家人, 特定群体,..."}, "ambivalent": {"count": 1, "definition": "adj. 矛盾"}, "envy": {"count": 2, "definition": "n. 嫉妒；v. 嫉妒, 庆幸"}, "gifted": {"count": 7, "definition": "adj. 天才, 天赋"}, "mythology": {"count": 1, "definition": "n. 神话, 谬见"}, "talented": {"count": 1, "definition": "adj. 有天赋的"}, "defective": {"count": 1, "definition": "adj. 有缺陷的, 身体有缺陷的"}, "intellectual": {"count": 3, "definition": "adj. 智力的, 聪明的；n. 知识..."}, "eccentric": {"count": 1, "definition": "adj. 古怪的；n. 怪人"}, "intelligent": {"count": 1, "definition": "adj. 聪明, 有智慧, 智能"}, "mathematical": {"count": 1, "definition": "adj. 数学的"}, "enrich": {"count": 1, "definition": "v. 丰富, 强化, 使富有"}, "considerable": {"count": 1, "definition": "adj. 可观的"}, "encouragement": {"count": 1, "definition": "n. 鼓励"}, "tutor": {"count": 2, "definition": "n. 私人教师, 辅导教师, 导师, 助教..."}, "beneficial": {"count": 1, "definition": "adj. 有益的"}, "fascinating": {"count": 1, "definition": "adj. 迷人的"}, "anecdote": {"count": 1, "definition": "n. 轶事"}, "exception": {"count": 1, "definition": "n. 例外"}, "collate": {"count": 1, "definition": "v. 汇总, 整理"}, "infant": {"count": 1, "definition": "n. 婴儿, 学龄前儿童；adj. ..."}, "mortality": {"count": 1, "definition": "n. 凡人皆有一死, 死亡率, 死亡"}, "expectancy": {"count": 1, "definition": "n. 期待"}, "nobility": {"count": 1, "definition": "n. 贵族, 高尚"}, "bully": {"count": 1, "definition": "n. 欺凌者；v. 欺负；interj. 好极..."}, "corporal": {"count": 1, "definition": "n. 下士"}, "punishment": {"count": 1, "definition": "n. 惩罚, 损坏"}, "privileged": {"count": 1, "definition": "adj. 特权, 荣幸, 保密"}, "psychology": {"count": 1, "definition": "n. 心理学, 心理, 心理机制"}, "peak": {"count": 2, "definition": "n. 顶点, 山峰, 尖端, 帽檐；..."}, "mist": {"count": 2, "definition": "n. 薄雾, 喷雾；v. 起雾, 含泪, 喷洒"}, "visible": {"count": 1, "definition": "adj. 可见的, 明显的"}, "vantage": {"count": 2, "definition": "n. 优势位置, 有利机会, 优势"}, "outstanding": {"count": 1, "definition": "adj. 杰出的, 未支付的, 显著的"}, "mundane": {"count": 1, "definition": "adj. 平凡的"}, "mediocre": {"count": 1, "definition": "adj. 平庸的"}, "incapable": {"count": 1, "definition": "adj. 无能力的, 无能的"}, "accidental": {"count": 2, "definition": "adj. 偶然的"}, "determined": {"count": 1, "definition": "adj. 坚定的, 有决心的"}, "vice": {"count": 1, "definition": "n. 色毒犯罪, 恶习, 老虎钳"}, "determination": {"count": 1, "definition": "n. 决心, 决定, 测定"}, "nurture": {"count": 1, "definition": "v. 培育, 促进发展, 滋养情感；n. 养育"}, "trigger": {"count": 1, "definition": "v. 引发, 启动, 触发；n. 扳..."}, "marvel": {"count": 1, "definition": "n. 奇迹；v. 惊叹"}, "manifestation": {"count": 1, "definition": "n. 表现, 显灵"}, "superior": {"count": 1, "definition": "adj. 优于他人的, 职位更高..."}, "commonplace": {"count": 1, "definition": "adj. 常见的；n. 司空见惯的事, 陈..."}, "outrageous": {"count": 1, "definition": "adj. 不公正的, 离谱的"}, "fabric": {"count": 1, "definition": "n. 织物, 结构, 建筑结构"}, "outstrip": {"count": 2, "definition": "v. 超越, 胜过, 跑得更快"}, "jogging": {"count": 1, "definition": "n. 慢跑"}, "emulate": {"count": 1, "definition": "v. 效仿, 仿真"}, "fame": {"count": 1, "definition": "n. 名声"}, "dedication": {"count": 1, "definition": "n. 奉献精神, 落成典礼, 题献"}, "restriction": {"count": 1, "definition": "n. 限制规定, 限制, 自由限制"}, "integrity": {"count": 1, "definition": "n. 诚信, 完整性"}, "descriptive": {"count": 1, "definition": "adj. 描述性的, 描述性"}, "precision": {"count": 1, "definition": "n. 精确性"}, "delude": {"count": 1, "definition": "v. 欺骗"}, "humanity": {"count": 1, "definition": "n. 全人类, 人性, 仁慈, 人文学科"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

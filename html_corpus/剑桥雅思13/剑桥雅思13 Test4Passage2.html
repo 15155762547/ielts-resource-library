@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"endanger": 2, "accord": 1, "sustain": 1, "institute": 2, "ecosystem": 1, "degradation": 4, "decade": 2, "gram": 1, "bacteria": 3, "microorganism": 3, "virus": 1, "amid": 1, "decompose": 1, "mineral": 1, "existing": 1, "antibiotic": 1, "ally": 1, "digest": 1, "carbon": 3, "atmosphere": 2, "perform": 1, "agriculture": 2, "nutrient": 2, "decay": 1, "harvest": 1, "enrich": 1, "gradual": 1, "fertile": 1, "manufacture": 1, "nitrate": 1, "synthetic": 1, "pollute": 1, "oxide": 1, "excess": 1, "nitrogen": 1, "acidic": 1, "salty": 1, "degrade": 1, "nourish": 1, "tree": 1, "flourish": 1, "cocktail": 2, "beneficial": 1, "humus": 2, "applied": 1, "plot": 2, "pierce": 1, "dirt": 1, "accurate": 1, "classify": 1, "unify": 1, "database": 1, "drone": 1, "satellite": 1, "accessible": 1, "sustainable": 1, "vice": 1, "propose": 1, "action": 2, "brink": 1, "agitate": 1, "conserve": 1, "diversity": 1, "benchmark": 1};
+        const wordData = {"endanger": {"count": 2, "definition": "v. 危及"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "sustain": {"count": 1, "definition": "v. 维持, 保持, 遭受, 支持, ..."}, "institute": {"count": 2, "definition": "n. 研究所；v. 建立"}, "ecosystem": {"count": 1, "definition": "n. 生态系统"}, "degradation": {"count": 4, "definition": "n. 尊严丧失, 退化"}, "decade": {"count": 2, "definition": "n. 十年"}, "gram": {"count": 1, "definition": "n. 克, 字"}, "bacteria": {"count": 3, "definition": "n. 细菌"}, "microorganism": {"count": 3, "definition": "n. 微生物"}, "virus": {"count": 1, "definition": "n. 病毒, 病毒感染, 计算机病毒"}, "amid": {"count": 1, "definition": "prep. 其中, 环绕"}, "decompose": {"count": 1, "definition": "v. 腐烂, 分解"}, "mineral": {"count": 1, "definition": "n. 矿物, 矿泉水"}, "existing": {"count": 1, "definition": "adj. 现有的"}, "antibiotic": {"count": 1, "definition": "n. 抗生素；adj. 抗生素的"}, "ally": {"count": 1, "definition": "n. 盟国, 盟友, 同盟国,..."}, "digest": {"count": 1, "definition": "v. 消化, 分解, 领会；n. 摘要"}, "carbon": {"count": 3, "definition": "n. 碳, 二氧化碳, 复写本, ..."}, "atmosphere": {"count": 2, "definition": "n. 大气层, 大气, 空气, 氛围"}, "perform": {"count": 1, "definition": "v. 表演, 执行, 表现"}, "agriculture": {"count": 2, "definition": "n. 农业"}, "nutrient": {"count": 2, "definition": "n. 营养素"}, "decay": {"count": 1, "definition": "n. 腐烂, 衰落, 衰变；v. 腐烂, 破败,..."}, "harvest": {"count": 1, "definition": "n. 收获季节, 收获物；v. 收..."}, "enrich": {"count": 1, "definition": "v. 丰富, 强化, 使富有"}, "gradual": {"count": 1, "definition": "adj. 逐渐的, 平缓的"}, "fertile": {"count": 1, "definition": "adj. 肥沃的, 能生育的, 多产的, 富..."}, "manufacture": {"count": 1, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "nitrate": {"count": 1, "definition": "n. 硝酸盐"}, "synthetic": {"count": 1, "definition": "adj. 人造的, 综合语的；n. 合成材料"}, "pollute": {"count": 1, "definition": "v. 污染"}, "oxide": {"count": 1, "definition": "n. 氧化物"}, "excess": {"count": 1, "definition": "n. 过量, 超出部分, 免赔额..."}, "nitrogen": {"count": 1, "definition": "n. 氮气"}, "acidic": {"count": 1, "definition": "adj. 酸的, 含有酸的"}, "salty": {"count": 1, "definition": "adj. 咸的, 尖酸刻薄的"}, "degrade": {"count": 1, "definition": "v. 贬低, 降低, 降解"}, "nourish": {"count": 1, "definition": "v. 滋养, 培养"}, "tree": {"count": 1, "definition": "n. 树"}, "flourish": {"count": 1, "definition": "v. 繁荣, 茁壮成长, 挥舞；..."}, "cocktail": {"count": 2, "definition": "n. 鸡尾酒, 冷盘拼盘, 混合物"}, "beneficial": {"count": 1, "definition": "adj. 有益的"}, "humus": {"count": 2, "definition": "n. 腐殖质"}, "applied": {"count": 1, "definition": "adj. 应用的"}, "plot": {"count": 2, "definition": "n. 情节, 阴谋, 小块土地；v. 密..."}, "pierce": {"count": 1, "definition": "v. 刺穿, 穿透, 突破"}, "dirt": {"count": 1, "definition": "n. 污垢, 泥土, 丑闻, 粪便"}, "accurate": {"count": 1, "definition": "adj. 准确的, 能提供准确信息的, ..."}, "classify": {"count": 1, "definition": "v. 分类, 划分, 列为机密"}, "unify": {"count": 1, "definition": "v. 统一"}, "database": {"count": 1, "definition": "n. 数据库"}, "drone": {"count": 1, "definition": "n. 无人机, 嗡嗡声, 持续低音, 雄蜂..."}, "satellite": {"count": 1, "definition": "n. 人造卫星, 卫星, 附属物"}, "accessible": {"count": 1, "definition": "adj. 可到达的, 无障碍的, ..."}, "sustainable": {"count": 1, "definition": "adj. 可持续, 可持续的"}, "vice": {"count": 1, "definition": "n. 色毒犯罪, 恶习, 老虎钳"}, "propose": {"count": 1, "definition": "v. 提议, 打算, 求婚, 提名, ..."}, "action": {"count": 2, "definition": "n. 行动, 行为, 罢工行动, ..."}, "brink": {"count": 1, "definition": "n. 边缘"}, "agitate": {"count": 1, "definition": "v. 极力主张变革, 使焦虑不安, 搅动..."}, "conserve": {"count": 1, "definition": "v. 保护, 节约；n. 蜜饯"}, "diversity": {"count": 1, "definition": "n. 多样性, 涵盖多种类型, 多元性"}, "benchmark": {"count": 1, "definition": "n. 基准；v. 基准"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

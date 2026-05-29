@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"coconut": 25, "exotic": 1, "italian": 1, "merchant": 1, "nut": 1, "tropical": 2, "cliche": 1, "romance": 1, "envisage": 1, "flesh": 3, "palm": 3, "smooth": 1, "slender": 1, "trunk": 3, "timber": 1, "replacement": 1, "endanger": 1, "surmount": 1, "vein": 1, "leaf": 1, "immature": 1, "tight": 1, "cluster": 1, "stem": 1, "sap": 2, "kilogram": 1, "waterproof": 1, "fibrous": 3, "inner": 1, "manufacture": 1, "innermost": 1, "prominent": 1, "obtain": 1, "charcoal": 1, "bowl": 1, "nutrient": 1, "hormone": 1, "yield": 1, "mature": 1, "gradual": 1, "edible": 1, "cosmetic": 1, "derivative": 1, "strategic": 1, "sphere": 1, "maritime": 1, "tolerate": 1, "viable": 1, "indefinite": 1, "suggest": 1, "germinate": 2, "literally": 1, "shore": 1, "exposed": 1, "glare": 1, "embryo": 1, "voyage": 2, "moisture": 1, "seedling": 1, "academic": 1, "explorer": 1, "migration": 1, "reveal": 1, "sailor": 2, "atlantic": 1, "propose": 1, "diversity": 1, "indigenous": 1, "intriguing": 1, "originate": 1, "coral": 1, "disperse": 1};
+        const wordData = {"coconut": {"count": 25, "definition": "n. 椰子, 椰肉"}, "exotic": {"count": 1, "definition": "adj. 异国"}, "italian": {"count": 1, "definition": "adj. 意大利的；n. 意大利人, 意大..."}, "merchant": {"count": 1, "definition": "n. 商人, 店主, 爱好者；adj. 海..."}, "nut": {"count": 1, "definition": "n. 坚果, 螺母, 脑袋, 疯子, 爱..."}, "tropical": {"count": 2, "definition": "adj. 热带的"}, "cliche": {"count": 1, "definition": "n. 陈词滥调；adj. 老套的，陈..."}, "romance": {"count": 1, "definition": "n. 短暂的浪漫恋情, 恋爱感..."}, "envisage": {"count": 1, "definition": "v. 设想"}, "flesh": {"count": 3, "definition": "n. 肉, 肌肤, 果肉, 肉体欲望；v. ..."}, "palm": {"count": 3, "definition": "n. 棕榈树, 手掌；v. 藏于掌中"}, "smooth": {"count": 1, "definition": "adj. 平滑的, 无颗粒的, 顺..."}, "slender": {"count": 1, "definition": "adj. 苗条的, 细长的, 微薄的"}, "trunk": {"count": 3, "definition": "n. 树干, 后备箱, 象鼻, 泳裤, 大箱..."}, "timber": {"count": 1, "definition": "n. 林木, 木材, 木梁, 倒木"}, "replacement": {"count": 1, "definition": "n. 替换, 替代品, 替代者"}, "endanger": {"count": 1, "definition": "v. 危及"}, "surmount": {"count": 1, "definition": "v. 克服, 置于...之上"}, "vein": {"count": 1, "definition": "n. 静脉, 叶脉, 纹理, 矿脉, 一..."}, "leaf": {"count": 1, "definition": "n. 叶子, 有叶的, 页, 金属箔, ..."}, "immature": {"count": 1, "definition": "adj. 行为幼稚的, 未成熟的"}, "tight": {"count": 1, "definition": "adj. 牢固的, 紧身的, 时间..."}, "cluster": {"count": 1, "definition": "n. 簇, 群, 辅音丛；v. 聚集"}, "stem": {"count": 1, "definition": "n. 茎, 杯茎, 烟斗杆, 有茎的, ..."}, "sap": {"count": 2, "definition": "n. 树液, 笨蛋；v. 削弱"}, "kilogram": {"count": 1, "definition": "n. 千克"}, "waterproof": {"count": 1, "definition": "adj. 防水的；n. 防水服；v. 使防水"}, "fibrous": {"count": 3, "definition": "adj. 纤维的"}, "inner": {"count": 1, "definition": "adj. 内部的, 内心的"}, "manufacture": {"count": 1, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "innermost": {"count": 1, "definition": "adj. 内心最深处, 最内部的"}, "prominent": {"count": 1, "definition": "adj. 重要的, 显眼的, 突出的"}, "obtain": {"count": 1, "definition": "v. 获得, 存在"}, "charcoal": {"count": 1, "definition": "n. 木炭, 炭灰色"}, "bowl": {"count": 1, "definition": "n. 碗, 一碗的量, 碗状部分..."}, "nutrient": {"count": 1, "definition": "n. 营养素"}, "hormone": {"count": 1, "definition": "n. 激素"}, "yield": {"count": 1, "definition": "n. 产量；v. 产生, 屈服, 让..."}, "mature": {"count": 1, "definition": "adj. 成熟的, 发育完全的, ..."}, "gradual": {"count": 1, "definition": "adj. 逐渐的, 平缓的"}, "edible": {"count": 1, "definition": "adj. 可食用的"}, "cosmetic": {"count": 1, "definition": "n. 化妆品；adj. 表面的, 整容的"}, "derivative": {"count": 1, "definition": "n. 衍生物；adj. 非原创的"}, "strategic": {"count": 1, "definition": "adj. 战略性的, 军事战略的"}, "sphere": {"count": 1, "definition": "n. 球体, 领域, 球形物, 圈层"}, "maritime": {"count": 1, "definition": "adj. 航海, 沿海"}, "tolerate": {"count": 1, "definition": "v. 容忍, 忍受, 耐受"}, "viable": {"count": 1, "definition": "adj. 可行的, 能存活的"}, "indefinite": {"count": 1, "definition": "adj. 无限期的, 不明确的"}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "germinate": {"count": 2, "definition": "v. 发芽"}, "literally": {"count": 1, "definition": "adv. 字面意思地, 确实地, 简直"}, "shore": {"count": 1, "definition": "n. 海岸, 海滨, 沿海国家；v. 支撑..."}, "exposed": {"count": 1, "definition": "adj. 外露, 易受伤害, 有风险"}, "glare": {"count": 1, "definition": "vi. 怒视, 刺眼；n. 强光, 怒视"}, "embryo": {"count": 1, "definition": "n. 胚胎, 萌芽"}, "voyage": {"count": 2, "definition": "n. 航行；v. 航行"}, "moisture": {"count": 1, "definition": "n. 水分"}, "seedling": {"count": 1, "definition": "n. 幼苗"}, "academic": {"count": 1, "definition": "adj. 学术的, 理论性的, 善..."}, "explorer": {"count": 1, "definition": "n. 探险者"}, "migration": {"count": 1, "definition": "n. 迁徙, 移民, 迁移"}, "reveal": {"count": 1, "definition": "v. 透露, 展现；n. 揭晓"}, "sailor": {"count": 2, "definition": "n. 船员, 水手"}, "atlantic": {"count": 1, "definition": "n. 大西洋；adj. 大西洋的"}, "propose": {"count": 1, "definition": "v. 提议, 打算, 求婚, 提名, ..."}, "diversity": {"count": 1, "definition": "n. 多样性, 涵盖多种类型, 多元性"}, "indigenous": {"count": 1, "definition": "adj. 原生的, 本土的"}, "intriguing": {"count": 1, "definition": "adj. 引人入胜"}, "originate": {"count": 1, "definition": "v. 开始, 创造, 源自"}, "coral": {"count": 1, "definition": "n. 珊瑚, 珊瑚虫；adj. 珊瑚色"}, "disperse": {"count": 1, "definition": "v. 分散, 散布"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"tablet": 2, "skim": 2, "invisible": 1, "transformation": 1, "circuit": 6, "underlie": 2, "implication": 1, "neuroscience": 2, "acquisition": 1, "literacy": 1, "necessitate": 1, "evolve": 1, "mechanism": 1, "decode": 1, "goat": 1, "herd": 1, "elaborate": 1, "depict": 1, "intellectual": 1, "inference": 1, "empathy": 3, "insight": 1, "caution": 2, "threat": 1, "mode": 1, "binary": 2, "versus": 2, "innovation": 1, "scholar": 2, "err": 1, "innovate": 2, "disrupt": 1, "diminish": 2, "hinge": 1, "confront": 1, "genetic": 1, "blueprint": 1, "dominant": 1, "orient": 1, "allocate": 2, "psychology": 1, "patience": 1, "concerned": 1, "cognitive": 1, "inability": 1, "sufficient": 1, "comprehend": 2, "complexity": 2, "demanding": 1, "comprehension": 2, "story": 3, "plot": 2, "universal": 1, "paperback": 1, "superior": 1, "peer": 1, "sequence": 1, "chronological": 1, "norm": 1, "browse": 1, "grasp": 1, "perceive": 1, "collateral": 1, "straightforward": 1, "subtle": 1, "navigate": 1, "retreat": 1, "susceptible": 1, "irrational": 1, "hopeful": 1, "applied": 1, "entrench": 1, "alongside": 1};
+        const wordData = {"tablet": {"count": 2, "definition": "n. 平板电脑, 药片, 片剂, 碑, ..."}, "skim": {"count": 2, "definition": "v. 撇去浮沫, 掠过, 略读, 小额窃取,..."}, "invisible": {"count": 1, "definition": "adj. 看不见的, 无形的（服务）"}, "transformation": {"count": 1, "definition": "n. 转变, 多元化转型"}, "circuit": {"count": 6, "definition": "n. 回路, 电路, 巡回赛, 赛..."}, "underlie": {"count": 2, "definition": "v. 基础"}, "implication": {"count": 1, "definition": "n. 影响, 暗示, 牵连"}, "neuroscience": {"count": 2, "definition": "n. 神经科学"}, "acquisition": {"count": 1, "definition": "n. 获得, 购置物, 收购"}, "literacy": {"count": 1, "definition": "n. 读写能力, 素养"}, "necessitate": {"count": 1, "definition": "v. 需要"}, "evolve": {"count": 1, "definition": "v. 进化"}, "mechanism": {"count": 1, "definition": "n. 机械装置, 机制, 生理机制"}, "decode": {"count": 1, "definition": "v. 解码, 解读, 翻译理解"}, "goat": {"count": 1, "definition": "n. 山羊, 老色鬼"}, "herd": {"count": 1, "definition": "n. 兽群, 人群；v. 驱赶, 放牧"}, "elaborate": {"count": 1, "definition": "adj. 精心设计的；v. 详细说明..."}, "depict": {"count": 1, "definition": "v. 描绘, 描述"}, "intellectual": {"count": 1, "definition": "adj. 智力的, 聪明的；n. 知识..."}, "inference": {"count": 1, "definition": "n. 推论"}, "empathy": {"count": 3, "definition": "n. 共情能力"}, "insight": {"count": 1, "definition": "n. 洞见, 洞察力"}, "caution": {"count": 2, "definition": "n. 谨慎, 警方警告, 警示；v. 告..."}, "threat": {"count": 1, "definition": "n. 威胁"}, "mode": {"count": 1, "definition": "n. 方式, 模式, 状态, 风格, 调..."}, "binary": {"count": 2, "definition": "adj. 二进制的, 二元的；n. 二进制..."}, "versus": {"count": 2, "definition": "prep. 对抗, 对比"}, "innovation": {"count": 1, "definition": "n. 创新"}, "scholar": {"count": 2, "definition": "n. 学者, 奖学金获得者, 优秀学..."}, "err": {"count": 1, "definition": "v. 犯错"}, "innovate": {"count": 2, "definition": "v. 创新"}, "disrupt": {"count": 1, "definition": "v. 妨碍, 颠覆"}, "diminish": {"count": 2, "definition": "v. 减弱, 贬低"}, "hinge": {"count": 1, "definition": "n. 铰链；v. 用铰链连接"}, "confront": {"count": 1, "definition": "v. 面对"}, "genetic": {"count": 1, "definition": "adj. 遗传的"}, "blueprint": {"count": 1, "definition": "n. 蓝图"}, "dominant": {"count": 1, "definition": "adj. 主导的, 显性基因"}, "orient": {"count": 1, "definition": "v. 朝向, 定位, 适应"}, "allocate": {"count": 2, "definition": "v. 分配"}, "psychology": {"count": 1, "definition": "n. 心理学, 心理, 心理机制"}, "patience": {"count": 1, "definition": "n. 耐心, 毅力, 单人纸牌游戏"}, "concerned": {"count": 1, "definition": "adj. 担忧的, 相关的, 关..."}, "cognitive": {"count": 1, "definition": "adj. 认知的"}, "inability": {"count": 1, "definition": "n. 无力"}, "sufficient": {"count": 1, "definition": "adj. 足够的"}, "comprehend": {"count": 2, "definition": "v. 完全理解"}, "complexity": {"count": 2, "definition": "n. 复杂性, 复杂方面"}, "demanding": {"count": 1, "definition": "adj. 要求高的, 苛求的"}, "comprehension": {"count": 2, "definition": "n. 理解能力, 阅读理解"}, "story": {"count": 3, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "plot": {"count": 2, "definition": "n. 情节, 阴谋, 小块土地；v. 密..."}, "universal": {"count": 1, "definition": "adj. 普遍的"}, "paperback": {"count": 1, "definition": "n. 平装本"}, "superior": {"count": 1, "definition": "adj. 优于他人的, 职位更高..."}, "peer": {"count": 1, "definition": "n. 同龄人, 贵族；v. 仔细看"}, "sequence": {"count": 1, "definition": "n. 序列, 次序, 片段；v. 排..."}, "chronological": {"count": 1, "definition": "adj. 按时间顺序"}, "norm": {"count": 1, "definition": "n. 常规, 规范, 标准；v. 规范化"}, "browse": {"count": 1, "definition": "n. 随意浏览商店, 浏览；v. 随意浏..."}, "grasp": {"count": 1, "definition": "v. 紧握, 理解, 抓住机会；..."}, "perceive": {"count": 1, "definition": "v. 感知, 察觉"}, "collateral": {"count": 1, "definition": "n. 抵押品；adj. 附属的"}, "straightforward": {"count": 1, "definition": "adj. 简单的, 坦率的"}, "subtle": {"count": 1, "definition": "adj. 不易察觉的, 巧妙的, ..."}, "navigate": {"count": 1, "definition": "v. 导航, 航行, 应对, 浏览"}, "retreat": {"count": 1, "definition": "n. 撤退, 逃避, 改变主意, ..."}, "susceptible": {"count": 1, "definition": "adj. 易受伤害的, 易受感情影响的,..."}, "irrational": {"count": 1, "definition": "adj. 不理性的"}, "hopeful": {"count": 1, "definition": "adj. 乐观的, 有希望的, ..."}, "applied": {"count": 1, "definition": "adj. 应用的"}, "entrench": {"count": 1, "definition": "v. 牢固确立"}, "alongside": {"count": 1, "definition": "adv. 旁边；prep. 旁边, 同..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

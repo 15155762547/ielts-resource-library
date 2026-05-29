@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"heritage": 2, "decade": 1, "awareness": 2, "imbalance": 2, "concerned": 2, "threat": 2, "frontier": 2, "deterioration": 1, "fir": 3, "destruction": 1, "combat": 1, "extension": 2, "ecosystem": 4, "involved": 1, "joint": 2, "action": 1, "confine": 1, "geographical": 1, "mediterranean": 1, "nordic": 1, "discard": 1, "perform": 1, "triple": 1, "biological": 1, "recreational": 1, "lung": 1, "photosynthesis": 1, "oxygen": 1, "transformation": 1, "solar": 1, "fulfill": 1, "immense": 1, "raw": 1, "renew": 1, "condemn": 1, "urban": 1, "leisure": 2, "hiking": 1, "dawn": 1, "hence": 2, "myth": 1, "artificial": 1, "exploit": 1, "vital": 1, "transcend": 1, "inevitable": 1, "declaration": 2, "ecological": 1, "coherent": 1, "continuity": 1, "resolution": 5, "propose": 3, "surveillance": 1, "site": 1, "lead": 1, "proportion": 1, "tree": 5, "needle": 1, "continent": 1, "cumulative": 1, "factor": 2, "atmospheric": 1, "pollutant": 1, "principal": 1, "culprit": 1, "compound": 1, "nitrogen": 1, "dioxide": 1, "accentuate": 1, "climatic": 1, "drought": 1, "genetic": 2, "diversity": 1, "reverse": 1, "establishment": 1, "minister": 1, "undoubtedly": 1, "scatter": 1, "ski": 1, "long-term": 1, "physiology": 1, "physiological": 1, "scholarship": 1, "doctoral": 1, "established": 1, "framework": 1, "motivation": 1, "representative": 1};
+        const wordData = {"heritage": {"count": 2, "definition": "n. 遗产"}, "decade": {"count": 1, "definition": "n. 十年"}, "awareness": {"count": 2, "definition": "n. 意识, 关注"}, "imbalance": {"count": 2, "definition": "n. 不平衡"}, "concerned": {"count": 2, "definition": "adj. 担忧的, 相关的, 关..."}, "threat": {"count": 2, "definition": "n. 威胁"}, "frontier": {"count": 2, "definition": "n. 边界, 边疆, 前沿"}, "deterioration": {"count": 1, "definition": "n. 恶化"}, "fir": {"count": 3, "definition": "n. 冷杉"}, "destruction": {"count": 1, "definition": "n. 破坏"}, "combat": {"count": 1, "definition": "n. 战斗；v. 对抗, 战斗"}, "extension": {"count": 2, "definition": "n. 扩展, 扩建房间, 建筑扩建部..."}, "ecosystem": {"count": 4, "definition": "n. 生态系统"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "joint": {"count": 2, "definition": "adj. 共同的；n. 关节, 连接处, ..."}, "action": {"count": 1, "definition": "n. 行动, 行为, 罢工行动, ..."}, "confine": {"count": 1, "definition": "v. 限制, 关押, 卧床"}, "geographical": {"count": 1, "definition": "adj. 地理的, 地理学的, 受地理位..."}, "mediterranean": {"count": 1, "definition": "adj. 地中海的；n. 地中海"}, "nordic": {"count": 1, "definition": "adj. 北欧, 北欧人种"}, "discard": {"count": 1, "definition": "v. 丢弃, 弃牌；n. 废弃物"}, "perform": {"count": 1, "definition": "v. 表演, 执行, 表现"}, "triple": {"count": 1, "definition": "adj. 三部分的, 三倍的；v. 使成三倍"}, "biological": {"count": 1, "definition": "adj. 生物学的, 生物的, 有..."}, "recreational": {"count": 1, "definition": "adj. 娱乐的"}, "lung": {"count": 1, "definition": "n. 肺"}, "photosynthesis": {"count": 1, "definition": "n. 光合作用"}, "oxygen": {"count": 1, "definition": "n. 氧气"}, "transformation": {"count": 1, "definition": "n. 转变, 多元化转型"}, "solar": {"count": 1, "definition": "adj. 太阳的, 太阳能的"}, "fulfill": {"count": 1, "definition": "v. 实现, 满足, 履行, ..."}, "immense": {"count": 1, "definition": "adj. 巨大的"}, "raw": {"count": 1, "definition": "adj. 生的, 原始的, 未经处..."}, "renew": {"count": 1, "definition": "v. 重新开始, 续期, 重申..."}, "condemn": {"count": 1, "definition": "v. 谴责, 判刑, 使陷入困境,..."}, "urban": {"count": 1, "definition": "adj. 城市的, 都市音乐的"}, "leisure": {"count": 2, "definition": "n. 闲暇, 休闲活动"}, "hiking": {"count": 1, "definition": "n. 徒步"}, "dawn": {"count": 1, "definition": "n. 黎明, 开端；vi. 开始, ..."}, "hence": {"count": 2, "definition": "adv. 因此"}, "myth": {"count": 1, "definition": "n. 神话, 谬论"}, "artificial": {"count": 1, "definition": "adj. 人造的, 人为的, 假的"}, "exploit": {"count": 1, "definition": "v. 利用, 剥削, 充分利用, ..."}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "transcend": {"count": 1, "definition": "v. 超越"}, "inevitable": {"count": 1, "definition": "adj. 不可避免, 必然, 注定"}, "declaration": {"count": 2, "definition": "n. 声明, 表白, 申报, 选举结果..."}, "ecological": {"count": 1, "definition": "adj. 生态的, 环保的"}, "coherent": {"count": 1, "definition": "adj. 连贯的, 表达清晰的"}, "continuity": {"count": 1, "definition": "n. 连续性, 连贯性, 剧情连贯性"}, "resolution": {"count": 5, "definition": "n. 决心, 决议, 解决, 分辨率"}, "propose": {"count": 3, "definition": "v. 提议, 打算, 求婚, 提名, ..."}, "surveillance": {"count": 1, "definition": "n. 监视"}, "site": {"count": 1, "definition": "n. 地点, 现场, 场所, *..."}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "proportion": {"count": 1, "definition": "n. 部分, 比例, 均衡, 尺寸..."}, "tree": {"count": 5, "definition": "n. 树"}, "needle": {"count": 1, "definition": "n. 缝衣针, 注射针头, 编织..."}, "continent": {"count": 1, "definition": "adj. 节欲的, 能控制排便的；n. ..."}, "cumulative": {"count": 1, "definition": "adj. 累积的, 累计的"}, "factor": {"count": 2, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "atmospheric": {"count": 1, "definition": "adj. 大气的, 有氛围的"}, "pollutant": {"count": 1, "definition": "n. 污染物"}, "principal": {"count": 1, "definition": "adj. 主要的；n. 大学校长, ..."}, "culprit": {"count": 1, "definition": "n. 罪犯, 罪魁祸首"}, "compound": {"count": 1, "definition": "n. 混合物, 化合物, 复合..."}, "nitrogen": {"count": 1, "definition": "n. 氮气"}, "dioxide": {"count": 1, "definition": "n. 二氧化物"}, "accentuate": {"count": 1, "definition": "v. 强调"}, "climatic": {"count": 1, "definition": "adj. 气候的"}, "drought": {"count": 1, "definition": "n. 干旱, 短缺"}, "genetic": {"count": 2, "definition": "adj. 遗传的"}, "diversity": {"count": 1, "definition": "n. 多样性, 涵盖多种类型, 多元性"}, "reverse": {"count": 1, "definition": "v. 使变得相反, 撤销决定, ..."}, "establishment": {"count": 1, "definition": "n. 机构, 当权派, 建立"}, "minister": {"count": 1, "definition": "n. 部长, 牧师, 公使；v. ..."}, "undoubtedly": {"count": 1, "definition": "adv. 毫无疑问地"}, "scatter": {"count": 1, "definition": "v. 撒播, 分散；n. 散布物"}, "ski": {"count": 1, "definition": "n. 滑雪板, 滑水板；adj. 滑雪的；..."}, "long-term": {"count": 1, "definition": "adv. 长期的"}, "physiology": {"count": 1, "definition": "n. 生理学, 生理机能"}, "physiological": {"count": 1, "definition": "adj. 生理的, 生理功能的"}, "scholarship": {"count": 1, "definition": "n. 奖学金, 学术成就"}, "doctoral": {"count": 1, "definition": "adj. 博士的"}, "established": {"count": 1, "definition": "adj. 确立的, 知名的, 法定的"}, "framework": {"count": 1, "definition": "n. 框架"}, "motivation": {"count": 1, "definition": "n. 动机, 动力, 动机说明"}, "representative": {"count": 1, "definition": "n. 代表, 销售代表, 典型, ..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

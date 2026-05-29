@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"obtain": 4, "intensive": 1, "casual": 1, "introspection": 2, "informant": 12, "ideally": 1, "utterance": 3, "translation": 2, "usage": 2, "ambiguity": 1, "intuition": 2, "convenience": 1, "norm": 1, "generative": 1, "linguistics": 1, "uncertain": 1, "recourse": 1, "enquiry": 1, "latter": 1, "factor": 3, "interact": 1, "large-scale": 1, "influence": 1, "formality": 1, "fluency": 1, "consistency": 1, "scrupulous": 1, "checked": 1, "accurate": 2, "repeatedly": 1, "abnormal": 1, "devise": 1, "paradox": 1, "ethical": 1, "objection": 1, "anticipate": 1, "alternatively": 1, "tape": 2, "recorder": 1, "microphone": 1, "stimulate": 1, "locality": 1, "audio": 1, "ambiguous": 1, "supplement": 2, "non-verbal": 1, "facial": 1, "dramatically": 1, "limitation": 1, "transcription": 2, "commentary": 1, "provided": 1, "action": 1, "bilingual": 1, "interpreter": 1, "questionnaire": 1, "variable": 2, "pronunciation": 1, "elicit": 1, "elicitation": 1, "substitution": 1, "stimulus": 1, "representative": 1, "compile": 1, "linguistic": 3, "corpus": 3, "unbiased": 1, "accessible": 1, "selective": 1, "hypothesis": 1, "inevitably": 1, "coverage": 1, "derive": 1};
+        const wordData = {"obtain": {"count": 4, "definition": "v. 获得, 存在"}, "intensive": {"count": 1, "definition": "adj. 密集的, 精细的, 集约的"}, "casual": {"count": 1, "definition": "adj. 非正式的, 轻松的, 不经..."}, "introspection": {"count": 2, "definition": "n. 自省"}, "informant": {"count": 12, "definition": "n. 线人, 信息提供者"}, "ideally": {"count": 1, "definition": "adv. 理想地, 理想化地"}, "utterance": {"count": 3, "definition": "n. 说出的话, 话语"}, "translation": {"count": 2, "definition": "n. 翻译, 译文, 转化"}, "usage": {"count": 2, "definition": "n. 词语用法, 使用量"}, "ambiguity": {"count": 1, "definition": "n. 多义性, 多义词, 模糊不清"}, "intuition": {"count": 2, "definition": "n. 直觉"}, "convenience": {"count": 1, "definition": "n. 便利性, 便利设施"}, "norm": {"count": 1, "definition": "n. 常规, 规范, 标准；v. 规范化"}, "generative": {"count": 1, "definition": "adj. 生成性的"}, "linguistics": {"count": 1, "definition": "n. 语言学"}, "uncertain": {"count": 1, "definition": "adj. 不确定的, 易变的, 不明确的, ..."}, "recourse": {"count": 1, "definition": "n. 求助"}, "enquiry": {"count": 1, "definition": "n. 调查, 询问, 查询, 问讯处"}, "latter": {"count": 1, "definition": "adj. 后者, 较后的, 较近的"}, "factor": {"count": 3, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "interact": {"count": 1, "definition": "vi. 互动, 相互作用"}, "large-scale": {"count": 1, "definition": "adj. 大规模的, 大比例尺的"}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "formality": {"count": 1, "definition": "n. 正式手续, 形式上的要求, 礼节"}, "fluency": {"count": 1, "definition": "n. 流利, 流畅"}, "consistency": {"count": 1, "definition": "n. 一致性, 稠度"}, "scrupulous": {"count": 1, "definition": "adj. 严谨, 正直"}, "checked": {"count": 1, "definition": "adj. 方格图案的"}, "accurate": {"count": 2, "definition": "adj. 准确的, 能提供准确信息的, ..."}, "repeatedly": {"count": 1, "definition": "adv. 反复地"}, "abnormal": {"count": 1, "definition": "adj. 不正常的"}, "devise": {"count": 1, "definition": "v. 设计"}, "paradox": {"count": 1, "definition": "n. 悖论, 似是而非的论点"}, "ethical": {"count": 1, "definition": "adj. 伦理的, 道德的"}, "objection": {"count": 1, "definition": "n. 反对理由"}, "anticipate": {"count": 1, "definition": "v. 预料, 预见, 期待, ..."}, "alternatively": {"count": 1, "definition": "adv. 或者"}, "tape": {"count": 2, "definition": "n. 胶带, 磁带, 录音带, 带..."}, "recorder": {"count": 1, "definition": "n. 录音机, 竖笛, 记录法官, 记录员"}, "microphone": {"count": 1, "definition": "n. 麦克风"}, "stimulate": {"count": 1, "definition": "v. 刺激, 激励"}, "locality": {"count": 1, "definition": "n. 地区, 所在地"}, "audio": {"count": 1, "definition": "adj. 音频的；n. 音频"}, "ambiguous": {"count": 1, "definition": "adj. 模棱两可的, 不明确的"}, "supplement": {"count": 2, "definition": "n. 补充物, 副刊, 附录, 附加费；..."}, "non-verbal": {"count": 1, "definition": "adj. 非语言的"}, "facial": {"count": 1, "definition": "adj. 面部的；n. 面部护理"}, "dramatically": {"count": 1, "definition": "adv. 急剧地, 戏剧性地, ..."}, "limitation": {"count": 1, "definition": "n. 限制"}, "transcription": {"count": 2, "definition": "n. 转录, 文字记录, 誊写, 改编"}, "commentary": {"count": 1, "definition": "n. 实况解说, 评注, 评论"}, "provided": {"count": 1, "definition": "conj. 如果"}, "action": {"count": 1, "definition": "n. 行动, 行为, 罢工行动, ..."}, "bilingual": {"count": 1, "definition": "n. 双语者；adj. 双语的, 双语"}, "interpreter": {"count": 1, "definition": "n. 口译员, 演绎者, 解释器"}, "questionnaire": {"count": 1, "definition": "n. 问卷"}, "variable": {"count": 2, "definition": "n. 变量；adj. 易变的, 可调..."}, "pronunciation": {"count": 1, "definition": "n. 发音, 发音方式"}, "elicit": {"count": 1, "definition": "v. 引出"}, "elicitation": {"count": 1, "definition": "n. 引出"}, "substitution": {"count": 1, "definition": "n. 替换"}, "stimulus": {"count": 1, "definition": "n. 促进因素, 刺激"}, "representative": {"count": 1, "definition": "n. 代表, 销售代表, 典型, ..."}, "compile": {"count": 1, "definition": "v. 汇编, 编译"}, "linguistic": {"count": 3, "definition": "adj. 语言的"}, "corpus": {"count": 3, "definition": "n. 语料库"}, "unbiased": {"count": 1, "definition": "adj. 公正的"}, "accessible": {"count": 1, "definition": "adj. 可到达的, 无障碍的, ..."}, "selective": {"count": 1, "definition": "adj. 有选择性的, 挑剔的"}, "hypothesis": {"count": 1, "definition": "n. 假设, 推测"}, "inevitably": {"count": 1, "definition": "adv. 不可避免地, 必然地"}, "coverage": {"count": 1, "definition": "n. 新闻报道, 覆盖范围, 覆..."}, "derive": {"count": 1, "definition": "v. 从...获得, 源自, 推导出"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

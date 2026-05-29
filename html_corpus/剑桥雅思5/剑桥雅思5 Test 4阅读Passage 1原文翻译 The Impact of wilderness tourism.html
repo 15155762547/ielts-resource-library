@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"tourism": 16, "boom": 1, "wilderness": 2, "arctic": 7, "wetland": 1, "unite": 1, "fragile": 5, "vulnerable": 2, "abnormal": 1, "ecology": 1, "inhabitant": 2, "proportion": 1, "marked": 1, "harsh": 1, "prevail": 1, "consequently": 1, "drawn": 1, "indigenous": 1, "isolated": 1, "breed": 1, "monument": 1, "established": 2, "profound": 1, "porter": 1, "output": 1, "insufficient": 1, "terrace": 1, "irrigation": 1, "survival": 2, "traditionally": 1, "involved": 1, "dependence": 1, "culprit": 1, "wage": 1, "handout": 1, "undermine": 1, "dilemma": 1, "external": 1, "impact": 2, "erosion": 1, "trail": 1, "deforestation": 1, "tree": 1, "degradation": 1, "inevitably": 1, "minimize": 1, "reinvigorate": 1, "alpine": 1, "operator": 1, "integrate": 1, "impose": 1, "renaissance": 1, "communal": 2, "exploit": 1, "transient": 1, "repatriate": 1, "thereby": 1, "accrue": 1, "corporation": 1, "tundra": 1, "reservation": 1, "profitable": 1, "pottery": 1, "jewelry": 1, "penetrate": 1, "merely": 1, "imbalance": 1, "venture": 1, "aspiration": 1, "norm": 1, "exception": 1};
+        const wordData = {"tourism": {"count": 16, "definition": "n. 旅游业"}, "boom": {"count": 1, "definition": "n. 繁荣期, 热潮, 帆杆, 轰..."}, "wilderness": {"count": 2, "definition": "n. 荒野, 荒芜之地, 沉寂期"}, "arctic": {"count": 7, "definition": "adj. 与北极地区相关的, 极寒的；..."}, "wetland": {"count": 1, "definition": "adj. 湿地相关；n. 湿地"}, "unite": {"count": 1, "definition": "v. 团结, 联合"}, "fragile": {"count": 5, "definition": "adj. 易碎的, 脆弱的, 纤细..."}, "vulnerable": {"count": 2, "definition": "adj. 脆弱的"}, "abnormal": {"count": 1, "definition": "adj. 不正常的"}, "ecology": {"count": 1, "definition": "n. 生态学"}, "inhabitant": {"count": 2, "definition": "n. 居民"}, "proportion": {"count": 1, "definition": "n. 部分, 比例, 均衡, 尺寸..."}, "marked": {"count": 1, "definition": "adj. 明显的, 具有特定特征的"}, "harsh": {"count": 1, "definition": "adj. 严厉的, 恶劣的, 刺..."}, "prevail": {"count": 1, "definition": "vi. 盛行, 占上风, 战胜"}, "consequently": {"count": 1, "definition": "adv. 因此"}, "drawn": {"count": 1, "definition": "adj. 憔悴的；v. 拉"}, "indigenous": {"count": 1, "definition": "adj. 原生的, 本土的"}, "isolated": {"count": 1, "definition": "adj. 偏僻的, 孤僻的, 孤立的"}, "breed": {"count": 1, "definition": "v. 繁殖, 培育, 导致, 培养；..."}, "monument": {"count": 1, "definition": "n. 纪念碑, 历史建筑, 丰碑"}, "established": {"count": 2, "definition": "adj. 确立的, 知名的, 法定的"}, "profound": {"count": 1, "definition": "adj. 深刻的, 渊博的, 深..."}, "porter": {"count": 1, "definition": "n. 搬运工, 护工, 门卫, 列车员"}, "output": {"count": 1, "definition": "n. 产量, 输出, 输出功率, 输出..."}, "insufficient": {"count": 1, "definition": "adj. 不足的"}, "terrace": {"count": 1, "definition": "n. 排屋, 露台, 看台, 梯田"}, "irrigation": {"count": 1, "definition": "n. 灌溉, 冲洗"}, "survival": {"count": 2, "definition": "n. 生存, 遗留物"}, "traditionally": {"count": 1, "definition": "adv. 传统上, 传统地"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "dependence": {"count": 1, "definition": "n. 依赖"}, "culprit": {"count": 1, "definition": "n. 罪犯, 罪魁祸首"}, "wage": {"count": 1, "definition": "n. 工资；v. 发动"}, "handout": {"count": 1, "definition": "n. 施舍物, 补助金, 宣传单, 讲义"}, "undermine": {"count": 1, "definition": "v. 逐渐削弱, 挖空基础"}, "dilemma": {"count": 1, "definition": "n. 两难"}, "external": {"count": 1, "definition": "adj. 外部的, 来自外部的, ..."}, "impact": {"count": 2, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "erosion": {"count": 1, "definition": "n. 侵蚀"}, "trail": {"count": 1, "definition": "n. 痕迹, 踪迹, 小径, *..."}, "deforestation": {"count": 1, "definition": "n. 砍伐森林"}, "tree": {"count": 1, "definition": "n. 树"}, "degradation": {"count": 1, "definition": "n. 尊严丧失, 退化"}, "inevitably": {"count": 1, "definition": "adv. 不可避免地, 必然地"}, "minimize": {"count": 1, "definition": "v. 最小化, 轻视, 最小化（..."}, "reinvigorate": {"count": 1, "definition": "v. 重振"}, "alpine": {"count": 1, "definition": "adj. 高山的；n. 高山植物"}, "operator": {"count": 1, "definition": "n. 操作员, 经营者, 接线..."}, "integrate": {"count": 1, "definition": "v. 整合, 融入"}, "impose": {"count": 1, "definition": "v. 实施, 强加, 强加（想法）..."}, "renaissance": {"count": 1, "definition": "n. 文艺复兴, 复兴"}, "communal": {"count": 2, "definition": "adj. 共有的, 社区的"}, "exploit": {"count": 1, "definition": "v. 利用, 剥削, 充分利用, ..."}, "transient": {"count": 1, "definition": "adj. 短暂的, 暂住的；n. 暂住者"}, "repatriate": {"count": 1, "definition": "v. 遣返, 汇回"}, "thereby": {"count": 1, "definition": "adv. 由此"}, "accrue": {"count": 1, "definition": "v. 逐渐增长, 随时间积累"}, "corporation": {"count": 1, "definition": "n. 大公司, 法人团体, 市政当局"}, "tundra": {"count": 1, "definition": "n. 冻原"}, "reservation": {"count": 1, "definition": "n. 预订, 保留意见, 保留地, 保..."}, "profitable": {"count": 1, "definition": "adj. 盈利的, 有益的"}, "pottery": {"count": 1, "definition": "n. 陶器, 陶土, 制陶, 陶坊"}, "jewelry": {"count": 1, "definition": "n. 首饰"}, "penetrate": {"count": 1, "definition": "v. 穿透, 打入, 看穿, 理解, 被理解, ..."}, "merely": {"count": 1, "definition": "adv. 仅仅"}, "imbalance": {"count": 1, "definition": "n. 不平衡"}, "venture": {"count": 1, "definition": "n. 风险企业；v. 冒险前往, 谨..."}, "aspiration": {"count": 1, "definition": "n. 抱负, 送气音"}, "norm": {"count": 1, "definition": "n. 常规, 规范, 标准；v. 规范化"}, "exception": {"count": 1, "definition": "n. 例外"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

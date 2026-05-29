@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"cave": 1, "presume": 1, "inhabitant": 1, "extinction": 1, "glimpse": 1, "cross": 1, "isle": 1, "alongside": 1, "ecosystem": 4, "tree": 4, "dredge": 1, "ecology": 1, "predator": 2, "niche": 1, "conservation": 1, "arbitrary": 1, "assemblage": 1, "jar": 1, "merely": 1, "shoal": 1, "chase": 1, "shore": 1, "boost": 1, "catch": 1, "surrounding": 1, "scour": 1, "enthusiasm": 1, "inspiring": 1, "awful": 1, "threat": 1, "prey": 1, "decade": 1, "intensive": 1, "browse": 1, "winkle": 1, "bare": 2, "conservationist": 2, "suggest": 1, "proposal": 1, "triple": 1, "beaver": 1, "bison": 1, "moose": 1, "large-scale": 1, "highland": 1, "hint": 1};
+        const wordData = {"cave": {"count": 1, "definition": "n. 洞穴；v. 坍塌，塌陷, 屈服..."}, "presume": {"count": 1, "definition": "v. 推测, 推定, 假设, 冒昧"}, "inhabitant": {"count": 1, "definition": "n. 居民"}, "extinction": {"count": 1, "definition": "n. 灭绝"}, "glimpse": {"count": 1, "definition": "n. 一瞥, 初步了解；v. 瞥..."}, "cross": {"count": 1, "definition": "v. 穿过, 交叉, 交叉放置, 反对,..."}, "isle": {"count": 1, "definition": "n. 小岛"}, "alongside": {"count": 1, "definition": "adv. 旁边；prep. 旁边, 同..."}, "ecosystem": {"count": 4, "definition": "n. 生态系统"}, "tree": {"count": 4, "definition": "n. 树"}, "dredge": {"count": 1, "definition": "v. 疏浚, 挖掘, 撒粉"}, "ecology": {"count": 1, "definition": "n. 生态学"}, "predator": {"count": 2, "definition": "n. 捕食者, 掠夺者"}, "niche": {"count": 1, "definition": "n. 合适的位置, 利基市场, ..."}, "conservation": {"count": 1, "definition": "n. 自然保护, 文物保护, 资源节..."}, "arbitrary": {"count": 1, "definition": "adj. 任意的, 专横的"}, "assemblage": {"count": 1, "definition": "n. 集合, 组装件, 集合艺术, 组装"}, "jar": {"count": 1, "definition": "n. 罐子, 一罐, 水罐, 一杯啤酒, 震动；..."}, "merely": {"count": 1, "definition": "adv. 仅仅"}, "shoal": {"count": 1, "definition": "n. 鱼群, 沙洲"}, "chase": {"count": 1, "definition": "v. 追赶, 驱赶, 追求, 催促, ..."}, "shore": {"count": 1, "definition": "n. 海岸, 海滨, 沿海国家；v. 支撑..."}, "boost": {"count": 1, "definition": "v. 促进, 偷窃；n. 帮助, ..."}, "catch": {"count": 1, "definition": "v. 抓住, 接住, 赶上, ..."}, "surrounding": {"count": 1, "definition": "adj. 周围的"}, "scour": {"count": 1, "definition": "v. 仔细搜索, 擦洗, 冲刷"}, "enthusiasm": {"count": 1, "definition": "n. 热情, 爱好"}, "inspiring": {"count": 1, "definition": "adj. 鼓舞人心"}, "awful": {"count": 1, "definition": "adj. 非常糟糕的, 非常令人..."}, "threat": {"count": 1, "definition": "n. 威胁"}, "prey": {"count": 1, "definition": "n. 猎物, 受害者；v. 捕食, 利用..."}, "decade": {"count": 1, "definition": "n. 十年"}, "intensive": {"count": 1, "definition": "adj. 密集的, 精细的, 集约的"}, "browse": {"count": 1, "definition": "n. 随意浏览商店, 浏览；v. 随意浏..."}, "winkle": {"count": 1, "definition": "n. 滨螺；v. 费力取出，撬出, ..."}, "bare": {"count": 2, "definition": "adj. 赤裸的, 光秃秃的, ..."}, "conservationist": {"count": 2, "definition": "n. 环保人士"}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "proposal": {"count": 1, "definition": "n. 提议, 求婚"}, "triple": {"count": 1, "definition": "adj. 三部分的, 三倍的；v. 使成三倍"}, "beaver": {"count": 1, "definition": "n. 河狸, 河狸毛皮, 女性阴部；v. ..."}, "bison": {"count": 1, "definition": "n. 野牛"}, "moose": {"count": 1, "definition": "n. 驼鹿"}, "large-scale": {"count": 1, "definition": "adj. 大规模的, 大比例尺的"}, "highland": {"count": 1, "definition": "adj. 高地的, 苏格兰高地的；n. 高..."}, "hint": {"count": 1, "definition": "n. 暗示, 迹象, 微量, 提示；v. 暗示"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

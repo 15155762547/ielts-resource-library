@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"enterprising": 1, "cellular": 1, "fluid": 1, "reptile": 2, "mammal": 3, "scorpion": 1, "crustacean": 1, "crab": 1, "spider": 1, "worm": 1, "prior": 1, "invasion": 1, "migration": 1, "involved": 1, "reproduction": 1, "terrestrial": 3, "seal": 1, "intermediate": 1, "dolphin": 3, "cease": 1, "altogether": 1, "revert": 1, "marine": 3, "ancestor": 6, "ashore": 1, "breed": 1, "equivalent": 1, "gill": 1, "turtle": 12, "vertebrate": 1, "descend": 1, "dinosaur": 3, "fossil": 5, "tortoise": 11, "fragment": 1, "reptilian": 1, "fin": 1, "streamline": 1, "obtain": 1, "triangular": 3, "graph": 4, "plot": 1, "tight": 1, "cluster": 5, "triangle": 1, "overlap": 1, "amphibious": 1, "approximate": 1, "era": 1, "tree": 1, "aquatic": 2, "constitute": 1, "nest": 1, "suggest": 1, "continuously": 1, "remarkable": 1, "primeval": 1, "bacteria": 1, "evolve": 1};
+        const wordData = {"enterprising": {"count": 1, "definition": "adj. 开拓进取"}, "cellular": {"count": 1, "definition": "adj. 细胞的, 蜂窝的, 蜂窝状的"}, "fluid": {"count": 1, "definition": "n. 流体；adj. 流畅的, 易变的,..."}, "reptile": {"count": 2, "definition": "n. 爬行动物"}, "mammal": {"count": 3, "definition": "n. 哺乳动物"}, "scorpion": {"count": 1, "definition": "n. 蝎子"}, "crustacean": {"count": 1, "definition": "n. 甲壳动物"}, "crab": {"count": 1, "definition": "n. 螃蟹, 蟹肉, 阴虱"}, "spider": {"count": 1, "definition": "n. 蜘蛛"}, "worm": {"count": 1, "definition": "n. 蠕虫, 寄生虫, 幼虫, 蠕虫病..."}, "prior": {"count": 1, "definition": "adj. 先前的, 优先的, 在..."}, "invasion": {"count": 1, "definition": "n. 入侵, 涌入, 侵犯"}, "migration": {"count": 1, "definition": "n. 迁徙, 移民, 迁移"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "reproduction": {"count": 1, "definition": "n. 繁殖, 复制, 重放, 复制品"}, "terrestrial": {"count": 3, "definition": "adj. 陆生的, 地球的, 地面技术的"}, "seal": {"count": 1, "definition": "v. 封口, 密封, 敲定, ..."}, "intermediate": {"count": 1, "definition": "adj. 中间的, 中级的；n. ..."}, "dolphin": {"count": 3, "definition": "n. 海豚"}, "cease": {"count": 1, "definition": "v. 停止"}, "altogether": {"count": 1, "definition": "adv. 完全地, 总共, 总..."}, "revert": {"count": 1, "definition": "v. 恢复"}, "marine": {"count": 3, "definition": "adj. 海洋的, 航海的；n. 海军..."}, "ancestor": {"count": 6, "definition": "n. 祖先, 祖先物种, 前身"}, "ashore": {"count": 1, "definition": "adv. 在岸上"}, "breed": {"count": 1, "definition": "v. 繁殖, 培育, 导致, 培养；..."}, "equivalent": {"count": 1, "definition": "n. 等价物；adj. 等值的"}, "gill": {"count": 1, "definition": "n. 鳃, 及耳"}, "turtle": {"count": 12, "definition": "n. 海龟, 龟"}, "vertebrate": {"count": 1, "definition": "adj. 有脊椎的；n. 脊椎动物"}, "descend": {"count": 1, "definition": "v. 下降, 斜降, 降临"}, "dinosaur": {"count": 3, "definition": "n. 恐龙, 老古董"}, "fossil": {"count": 5, "definition": "n. 化石, 老顽固"}, "tortoise": {"count": 11, "definition": "n. 龟"}, "fragment": {"count": 1, "definition": "n. 碎片, 片段；v. 破碎"}, "reptilian": {"count": 1, "definition": "adj. 爬行动物的"}, "fin": {"count": 1, "definition": "n. 鳍, 尾翼"}, "streamline": {"count": 1, "definition": "v. 流线型化, 优化"}, "obtain": {"count": 1, "definition": "v. 获得, 存在"}, "triangular": {"count": 3, "definition": "adj. 三角形的, 三方的"}, "graph": {"count": 4, "definition": "n. 图表"}, "plot": {"count": 1, "definition": "n. 情节, 阴谋, 小块土地；v. 密..."}, "tight": {"count": 1, "definition": "adj. 牢固的, 紧身的, 时间..."}, "cluster": {"count": 5, "definition": "n. 簇, 群, 辅音丛；v. 聚集"}, "triangle": {"count": 1, "definition": "n. 三角形, 三角铁, 三角关系, 三角板"}, "overlap": {"count": 1, "definition": "v. 重叠, 使重叠, 时间重叠, 交叉；..."}, "amphibious": {"count": 1, "definition": "adj. 两栖的, 两栖作战, 水陆两用的"}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "era": {"count": 1, "definition": "n. 时代"}, "tree": {"count": 1, "definition": "n. 树"}, "aquatic": {"count": 2, "definition": "adj. 水生的, 水上运动的"}, "constitute": {"count": 1, "definition": "v. 构成, 组成, 设立"}, "nest": {"count": 1, "definition": "n. 鸟巢, 巢穴, 窝点, 家, ..."}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "continuously": {"count": 1, "definition": "adv. 连续地, 不断地"}, "remarkable": {"count": 1, "definition": "adj. 非凡的"}, "primeval": {"count": 1, "definition": "adj. 原始的"}, "bacteria": {"count": 1, "definition": "n. 细菌"}, "evolve": {"count": 1, "definition": "v. 进化"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"pharmaceutical": 8, "profitable": 1, "representative": 1, "physician": 4, "trunk": 1, "gadget": 2, "prescribe": 6, "attendance": 1, "ethical": 1, "prospect": 1, "bribe": 1, "escalate": 1, "extravagance": 1, "explosion": 1, "sheer": 1, "influence": 2, "glossy": 1, "brochure": 2, "prescription": 2, "essentially": 1, "tremendous": 1, "pamphlet": 1, "tablet": 1, "bearing": 1, "logo": 1, "mug": 1, "recipient": 1, "loyal": 1, "comprehensive": 1, "investigate": 1, "availability": 2, "dispense": 1, "differ": 1, "steak": 1, "remains": 1, "grapple": 1, "scrutinize": 1};
+        const wordData = {"pharmaceutical": {"count": 8, "definition": "adj. 制药的；n. 药物"}, "profitable": {"count": 1, "definition": "adj. 盈利的, 有益的"}, "representative": {"count": 1, "definition": "n. 代表, 销售代表, 典型, ..."}, "physician": {"count": 4, "definition": "n. 内科医生"}, "trunk": {"count": 1, "definition": "n. 树干, 后备箱, 象鼻, 泳裤, 大箱..."}, "gadget": {"count": 2, "definition": "n. 小工具"}, "prescribe": {"count": 6, "definition": "v. 开药, 规定"}, "attendance": {"count": 1, "definition": "n. 出勤, 出席人数"}, "ethical": {"count": 1, "definition": "adj. 伦理的, 道德的"}, "prospect": {"count": 1, "definition": "n. 可能性, 预期, 成功的..."}, "bribe": {"count": 1, "definition": "n. 贿赂；v. 贿赂"}, "escalate": {"count": 1, "definition": "v. 升级, 上报"}, "extravagance": {"count": 1, "definition": "n. 挥霍, 奢侈品, 夸张的事物"}, "explosion": {"count": 1, "definition": "n. 爆炸, 激增, 爆发"}, "sheer": {"count": 1, "definition": "adj. 纯粹的, 纯的, 陡峭的, 透明的；..."}, "influence": {"count": 2, "definition": "n. 影响；v. 影响"}, "glossy": {"count": 1, "definition": "adj. 光滑, 精美；n. 光面杂志"}, "brochure": {"count": 2, "definition": "n. 宣传册"}, "prescription": {"count": 2, "definition": "n. 处方, 处方药, 开处方, ..."}, "essentially": {"count": 1, "definition": "adv. 本质上"}, "tremendous": {"count": 1, "definition": "adj. 巨大的, 极好的"}, "pamphlet": {"count": 1, "definition": "n. 小册子"}, "tablet": {"count": 1, "definition": "n. 平板电脑, 药片, 片剂, 碑, ..."}, "bearing": {"count": 1, "definition": "n. 关系, 仪态, 方位, 方位感, 轴承"}, "logo": {"count": 1, "definition": "n. 标志"}, "mug": {"count": 1, "definition": "n. 马克杯, 一杯饮料, 脸, 容易受骗..."}, "recipient": {"count": 1, "definition": "n. 接受者"}, "loyal": {"count": 1, "definition": "adj. 忠诚的"}, "comprehensive": {"count": 1, "definition": "adj. 全面的, 综合性的, 大幅..."}, "investigate": {"count": 1, "definition": "v. 调查, 研究"}, "availability": {"count": 2, "definition": "n. 可用性, 空闲时间"}, "dispense": {"count": 1, "definition": "v. 分发, 提供, 配药"}, "differ": {"count": 1, "definition": "vi. 不同, 不同意"}, "steak": {"count": 1, "definition": "n. 优质牛排, 肉排, 烹饪用牛肉块, ..."}, "remains": {"count": 1, "definition": "n. 剩余部分, 遗迹, 遗体"}, "grapple": {"count": 1, "definition": "v. 扭打, 努力解决"}, "scrutinize": {"count": 1, "definition": "v. 仔细检查"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

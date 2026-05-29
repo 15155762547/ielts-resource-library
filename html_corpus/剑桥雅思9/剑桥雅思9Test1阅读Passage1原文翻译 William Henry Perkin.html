@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"march": 1, "curiosity": 1, "prompt": 2, "engineering": 1, "stumble": 1, "functional": 1, "enthusiasm": 2, "immerse": 1, "devotion": 1, "perceive": 1, "eminent": 1, "institution": 1, "fir": 1, "chemist": 2, "breakthrough": 2, "fame": 2, "viable": 1, "malaria": 2, "derive": 1, "bark": 1, "tree": 1, "surpass": 1, "passing": 1, "synthetic": 3, "substitute": 1, "pupil": 1, "manufacture": 2, "readily": 1, "tar": 2, "mysterious": 1, "investigate": 1, "incorporate": 1, "potassium": 1, "experimental": 1, "textile": 1, "dye": 13, "excretion": 1, "obtain": 1, "outrageous": 1, "costly": 1, "muddy": 1, "hue": 1, "fade": 2, "backdrop": 1, "grasp": 1, "fabric": 1, "patent": 1, "fascinating": 1, "instant": 1, "recognition": 1, "violet": 1, "assure": 2, "fierce": 1, "objection": 1, "mentor": 1, "plentiful": 1, "synthetically": 1, "boost": 1, "flatter": 1, "shade": 1, "fashionable": 1, "gown": 1, "bold": 1, "merely": 1, "decorative": 1, "vital": 1, "stain": 1, "invisible": 1, "microbe": 1, "bacteria": 1, "tuberculosis": 1, "cholera": 1, "artificial": 1, "vaccine": 1};
+        const wordData = {"march": {"count": 1, "definition": "v. 齐步走, 快步行走, 游..."}, "curiosity": {"count": 1, "definition": "n. 好奇心, 新奇事物"}, "prompt": {"count": 2, "definition": "v. 促使, 提示, 提词；adj. 迅速..."}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "stumble": {"count": 1, "definition": "n. 小挫折, 绊了一下, 口误；vi. ..."}, "functional": {"count": 1, "definition": "adj. 实用, 功能型, 可用"}, "enthusiasm": {"count": 2, "definition": "n. 热情, 爱好"}, "immerse": {"count": 1, "definition": "v. 浸入, 沉浸"}, "devotion": {"count": 1, "definition": "n. 热爱, 投入, 虔诚, 祷告"}, "perceive": {"count": 1, "definition": "v. 感知, 察觉"}, "eminent": {"count": 1, "definition": "adj. 著名的, 出色的"}, "institution": {"count": 1, "definition": "n. 机构, 制度, 设立, 老熟人"}, "fir": {"count": 1, "definition": "n. 冷杉"}, "chemist": {"count": 2, "definition": "n. 药剂师, 药店, 化学家"}, "breakthrough": {"count": 2, "definition": "n. 突破；adj. 首创的"}, "fame": {"count": 2, "definition": "n. 名声"}, "viable": {"count": 1, "definition": "adj. 可行的, 能存活的"}, "malaria": {"count": 2, "definition": "n. 疟疾"}, "derive": {"count": 1, "definition": "v. 从...获得, 源自, 推导出"}, "bark": {"count": 1, "definition": "n. 树皮, 犬吠声, 短促的响声；v. 吠..."}, "tree": {"count": 1, "definition": "n. 树"}, "surpass": {"count": 1, "definition": "v. 超越"}, "passing": {"count": 1, "definition": "n. 时间的流逝, 消逝, 通..."}, "synthetic": {"count": 3, "definition": "adj. 人造的, 综合语的；n. 合成材料"}, "substitute": {"count": 1, "definition": "n. 替代品, 替补队员；v. ..."}, "pupil": {"count": 1, "definition": "n. 学生, 瞳孔"}, "manufacture": {"count": 2, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "readily": {"count": 1, "definition": "adv. 轻易地, 毫不犹豫地"}, "tar": {"count": 2, "definition": "n. 焦油, 烟焦油；v. 涂焦油"}, "mysterious": {"count": 1, "definition": "adj. 难以理解的, 神秘的, ..."}, "investigate": {"count": 1, "definition": "v. 调查, 研究"}, "incorporate": {"count": 1, "definition": "v. 纳入, 注册公司"}, "potassium": {"count": 1, "definition": "n. 钾"}, "experimental": {"count": 1, "definition": "adj. 实验性的, 实验的"}, "textile": {"count": 1, "definition": "n. 纺织品, 纺织业"}, "dye": {"count": 13, "definition": "v. 染色；n. 染料"}, "excretion": {"count": 1, "definition": "n. 排泄"}, "obtain": {"count": 1, "definition": "v. 获得, 存在"}, "outrageous": {"count": 1, "definition": "adj. 不公正的, 离谱的"}, "costly": {"count": 1, "definition": "adj. 昂贵的, 造成严重问题的"}, "muddy": {"count": 1, "definition": "adj. 泥泞的, 浑浊的, 暗淡的；v. 弄..."}, "hue": {"count": 1, "definition": "n. 色彩, 类型"}, "fade": {"count": 2, "definition": "v. 褪色, 逐渐消失, 衰退"}, "backdrop": {"count": 1, "definition": "n. 背景, 背景情况, 背景幕布"}, "grasp": {"count": 1, "definition": "v. 紧握, 理解, 抓住机会；..."}, "fabric": {"count": 1, "definition": "n. 织物, 结构, 建筑结构"}, "patent": {"count": 1, "definition": "n. 专利权；adj. 专利的, 明显..."}, "fascinating": {"count": 1, "definition": "adj. 迷人的"}, "instant": {"count": 1, "definition": "adj. 立即的, 速食的；n. ..."}, "recognition": {"count": 1, "definition": "n. 认出, 承认, 表彰"}, "violet": {"count": 1, "definition": "adj. 紫罗兰色；n. 紫罗兰"}, "assure": {"count": 2, "definition": "v. 保证, 确信, 确保, 投保"}, "fierce": {"count": 1, "definition": "adj. 凶猛的, 激烈的"}, "objection": {"count": 1, "definition": "n. 反对理由"}, "mentor": {"count": 1, "definition": "n. 导师, 指导者；v. 指导"}, "plentiful": {"count": 1, "definition": "adj. 丰富的"}, "synthetically": {"count": 1, "definition": "adv. 合成地"}, "boost": {"count": 1, "definition": "v. 促进, 偷窃；n. 帮助, ..."}, "flatter": {"count": 1, "definition": "vt. 奉承, 自以为是, 美化"}, "shade": {"count": 1, "definition": "n. 阴凉处, 色度, 遮光罩, ..."}, "fashionable": {"count": 1, "definition": "adj. 时尚的, 上流社会流行的"}, "gown": {"count": 1, "definition": "n. 礼服, 长袍, 防护服"}, "bold": {"count": 1, "definition": "adj. 勇敢的, 粗体, 醒目的；..."}, "merely": {"count": 1, "definition": "adv. 仅仅"}, "decorative": {"count": 1, "definition": "adj. 装饰性的"}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "stain": {"count": 1, "definition": "v. 弄脏, 染色, 败坏名声；n. 污渍, ..."}, "invisible": {"count": 1, "definition": "adj. 看不见的, 无形的（服务）"}, "microbe": {"count": 1, "definition": "n. 微生物"}, "bacteria": {"count": 1, "definition": "n. 细菌"}, "tuberculosis": {"count": 1, "definition": "n. 肺结核"}, "cholera": {"count": 1, "definition": "n. 霍乱"}, "artificial": {"count": 1, "definition": "adj. 人造的, 人为的, 假的"}, "vaccine": {"count": 1, "definition": "n. 疫苗"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

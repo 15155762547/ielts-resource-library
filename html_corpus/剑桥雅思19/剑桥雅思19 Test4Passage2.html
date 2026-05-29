@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"mat": 1, "microbe": 1, "sponge": 2, "breakthrough": 1, "antibiotic": 2, "bacteria": 1, "north-east": 1, "atlantic": 1, "boost": 1, "prospect": 1, "exploit": 2, "mineral": 1, "marine": 4, "urge": 2, "halt": 1, "mining": 12, "octopus": 1, "decade": 1, "nickel": 1, "accord": 2, "geological": 1, "corporation": 1, "diversify": 1, "copper": 1, "soar": 1, "yield": 1, "superior": 1, "ore": 1, "machinery": 1, "terrestrial": 1, "excavate": 1, "slurry": 2, "particle": 1, "vessel": 1, "pump": 1, "discharge": 2, "caution": 1, "massive": 1, "framework": 1, "disregard": 1, "impact": 3, "indigenous": 1, "seabed": 3, "remains": 1, "mars": 1, "venus": 1, "lead": 2, "suggest": 1, "vent": 5, "magma": 1, "biodiversity": 1, "well-known": 1, "crustacean": 1, "clam": 1, "grave": 1, "threat": 1, "vital": 1, "sediment": 1, "plume": 1, "disturb": 1, "oceanography": 1, "occupy": 1, "canadian": 1, "underwater": 1, "sustainable": 1, "continually": 1, "deplete": 1, "critic": 1, "exotic": 1, "ecosystem": 2, "assault": 1, "inflict": 1};
+        const wordData = {"mat": {"count": 1, "definition": "n. 地垫, 垫子, 桌垫, 缠结"}, "microbe": {"count": 1, "definition": "n. 微生物"}, "sponge": {"count": 2, "definition": "n. 海绵, 人造海绵, 海绵动物, 海绵..."}, "breakthrough": {"count": 1, "definition": "n. 突破；adj. 首创的"}, "antibiotic": {"count": 2, "definition": "n. 抗生素；adj. 抗生素的"}, "bacteria": {"count": 1, "definition": "n. 细菌"}, "north-east": {"count": 1, "definition": "adv. 东北方向, 更靠东北的位置"}, "atlantic": {"count": 1, "definition": "n. 大西洋；adj. 大西洋的"}, "boost": {"count": 1, "definition": "v. 促进, 偷窃；n. 帮助, ..."}, "prospect": {"count": 1, "definition": "n. 可能性, 预期, 成功的..."}, "exploit": {"count": 2, "definition": "v. 利用, 剥削, 充分利用, ..."}, "mineral": {"count": 1, "definition": "n. 矿物, 矿泉水"}, "marine": {"count": 4, "definition": "adj. 海洋的, 航海的；n. 海军..."}, "urge": {"count": 2, "definition": "v. 敦促, 强烈推荐, 驱使；..."}, "halt": {"count": 1, "definition": "v. 停止；n. 停止, 小站"}, "mining": {"count": 12, "definition": "n. 采矿"}, "octopus": {"count": 1, "definition": "n. 章鱼"}, "decade": {"count": 1, "definition": "n. 十年"}, "nickel": {"count": 1, "definition": "n. 镍, 五分硬币"}, "accord": {"count": 2, "definition": "n. 协议；v. 给予"}, "geological": {"count": 1, "definition": "adj. 地质学的, 地质的"}, "corporation": {"count": 1, "definition": "n. 大公司, 法人团体, 市政当局"}, "diversify": {"count": 1, "definition": "v. 多元化, 使多样化"}, "copper": {"count": 1, "definition": "n. 铜, 铜币, 警察"}, "soar": {"count": 1, "definition": "vi. 迅速上升, 翱翔, 滞..."}, "yield": {"count": 1, "definition": "n. 产量；v. 产生, 屈服, 让..."}, "superior": {"count": 1, "definition": "adj. 优于他人的, 职位更高..."}, "ore": {"count": 1, "definition": "n. 矿石"}, "machinery": {"count": 1, "definition": "n. 机械, 机械装置, 机制"}, "terrestrial": {"count": 1, "definition": "adj. 陆生的, 地球的, 地面技术的"}, "excavate": {"count": 1, "definition": "v. 挖掘, 挖出"}, "slurry": {"count": 2, "definition": "n. 泥浆"}, "particle": {"count": 1, "definition": "n. 颗粒, 小品词"}, "vessel": {"count": 1, "definition": "n. 血管, 船, 容器"}, "pump": {"count": 1, "definition": "v. 用泵抽送, 喷出, 快速上下移..."}, "discharge": {"count": 2, "definition": "v. 让…退伍, 让…出院, 释..."}, "caution": {"count": 1, "definition": "n. 谨慎, 警方警告, 警示；v. 告..."}, "massive": {"count": 1, "definition": "adj. 巨大的, 庞大的, 重大的"}, "framework": {"count": 1, "definition": "n. 框架"}, "disregard": {"count": 1, "definition": "v. 忽视；n. 忽视"}, "impact": {"count": 3, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "indigenous": {"count": 1, "definition": "adj. 原生的, 本土的"}, "seabed": {"count": 3, "definition": "n. 海底, 海床, 海底地质层"}, "remains": {"count": 1, "definition": "n. 剩余部分, 遗迹, 遗体"}, "mars": {"count": 1, "definition": "n. 火星"}, "venus": {"count": 1, "definition": "n. 金星"}, "lead": {"count": 2, "definition": "v. 带领, 连接, 通向, ..."}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "vent": {"count": 5, "definition": "n. 通风口, 排泄孔, 开衩；v. 发泄"}, "magma": {"count": 1, "definition": "n. 岩浆"}, "biodiversity": {"count": 1, "definition": "n. 生物多样性"}, "well-known": {"count": 1, "definition": "adj. 知名"}, "crustacean": {"count": 1, "definition": "n. 甲壳动物"}, "clam": {"count": 1, "definition": "n. 蛤蜊；v. 缄口"}, "grave": {"count": 1, "definition": "n. 坟墓, 死亡, 重音符号；..."}, "threat": {"count": 1, "definition": "n. 威胁"}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "sediment": {"count": 1, "definition": "n. 沉淀物, 泥沙"}, "plume": {"count": 1, "definition": "n. 烟羽, 羽毛, 羽饰"}, "disturb": {"count": 1, "definition": "v. 打扰, 使不安, 弄乱, 扰乱"}, "oceanography": {"count": 1, "definition": "n. 海洋学"}, "occupy": {"count": 1, "definition": "v. 占据, 居住, 占领, 忙于, 担任"}, "canadian": {"count": 1, "definition": "adj. 加拿大的；n. 加拿大人"}, "underwater": {"count": 1, "definition": "adv. 水面下的；adj. 水下的"}, "sustainable": {"count": 1, "definition": "adj. 可持续, 可持续的"}, "continually": {"count": 1, "definition": "adv. 不停地, 持续地"}, "deplete": {"count": 1, "definition": "v. 耗尽"}, "critic": {"count": 1, "definition": "n. 评论家, 批评者"}, "exotic": {"count": 1, "definition": "adj. 异国"}, "ecosystem": {"count": 2, "definition": "n. 生态系统"}, "assault": {"count": 1, "definition": "n. 袭击, 攻击占领, 奋力..."}, "inflict": {"count": 1, "definition": "v. 施加伤害"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

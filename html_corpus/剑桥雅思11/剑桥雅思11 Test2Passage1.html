@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"fleet": 1, "isle": 1, "vessel": 1, "witness": 1, "outdated": 1, "mishandle": 1, "trap": 1, "erode": 1, "marine": 1, "organism": 1, "site": 1, "dive": 1, "uncover": 2, "timber": 2, "diving": 1, "bow": 1, "fade": 1, "historian": 1, "initiate": 1, "wreck": 3, "hop": 1, "unsatisfactory": 1, "collaboration": 1, "electrical": 1, "engineering": 1, "institute": 1, "reveal": 1, "excavation": 1, "climax": 1, "unaware": 1, "artefact": 1, "factor": 1, "namely": 1, "bolt": 1, "suck": 1, "downward": 1, "hydraulic": 1, "surrounding": 1, "fixed": 1, "underwater": 1, "precise": 1, "cushion": 1};
+        const wordData = {"fleet": {"count": 1, "definition": "n. 舰队, 渔船队, 海军舰队..."}, "isle": {"count": 1, "definition": "n. 小岛"}, "vessel": {"count": 1, "definition": "n. 血管, 船, 容器"}, "witness": {"count": 1, "definition": "n. 目击者, 证人, 见证人..."}, "outdated": {"count": 1, "definition": "adj. 过时的"}, "mishandle": {"count": 1, "definition": "v. 处理不当, 粗鲁对待"}, "trap": {"count": 1, "definition": "n. 陷阱, 圈套, 困境, 双轮..."}, "erode": {"count": 1, "definition": "v. 侵蚀, 削弱"}, "marine": {"count": 1, "definition": "adj. 海洋的, 航海的；n. 海军..."}, "organism": {"count": 1, "definition": "n. 生物体, 有机整体"}, "site": {"count": 1, "definition": "n. 地点, 现场, 场所, *..."}, "dive": {"count": 1, "definition": "vi. 头先入水跳水, 使用特殊..."}, "uncover": {"count": 2, "definition": "v. 揭开, 发现"}, "timber": {"count": 2, "definition": "n. 林木, 木材, 木梁, 倒木"}, "diving": {"count": 1, "definition": "n. 跳水, 潜水"}, "bow": {"count": 1, "definition": "v. 鞠躬, 点头, 弯曲, 用弓..."}, "fade": {"count": 1, "definition": "v. 褪色, 逐渐消失, 衰退"}, "historian": {"count": 1, "definition": "n. 历史学家"}, "initiate": {"count": 1, "definition": "v. 开始, 介绍, 接纳；n. 新..."}, "wreck": {"count": 3, "definition": "n. 失事船只, 事故车辆残骸, 身心..."}, "hop": {"count": 1, "definition": "v. 单脚跳, 双脚跳, 快速前往, 上车,..."}, "unsatisfactory": {"count": 1, "definition": "adj. 不够好"}, "collaboration": {"count": 1, "definition": "n. 合作, 合作成果, 通敌"}, "electrical": {"count": 1, "definition": "adj. 与电有关的"}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "institute": {"count": 1, "definition": "n. 研究所；v. 建立"}, "reveal": {"count": 1, "definition": "v. 透露, 展现；n. 揭晓"}, "excavation": {"count": 1, "definition": "n. 考古挖掘, 考古遗址, 挖掘作业"}, "climax": {"count": 1, "definition": "n. 高潮, 高潮部分, 性高潮；v. 达到..."}, "unaware": {"count": 1, "definition": "adj. 不知道的"}, "artefact": {"count": 1, "definition": "n. 人造物品"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "namely": {"count": 1, "definition": "adv. 即"}, "bolt": {"count": 1, "definition": "n. 插销, 螺栓, 闪电, 弩箭, 布卷；v. ..."}, "suck": {"count": 1, "definition": "v. 吸, 含吮, 抽吸, ..."}, "downward": {"count": 1, "definition": "adj. 向下的"}, "hydraulic": {"count": 1, "definition": "adj. 液压的, 液压传动的, 水力学..."}, "surrounding": {"count": 1, "definition": "adj. 周围的"}, "fixed": {"count": 1, "definition": "adj. 固定的, 坚定的, 固定..."}, "underwater": {"count": 1, "definition": "adv. 水面下的；adj. 水下的"}, "precise": {"count": 1, "definition": "adj. 精确的, 准时发生的, ..."}, "cushion": {"count": 1, "definition": "n. 软垫, 气垫, 缓冲, 台边；v. 缓冲,..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

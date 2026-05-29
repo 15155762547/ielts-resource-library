@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"bat": 9, "prey": 3, "obstacle": 3, "daytime": 3, "exploit": 2, "thorough": 1, "probable": 1, "nocturnal": 1, "mammal": 1, "dinosaur": 2, "dominate": 1, "mammalian": 1, "ancestor": 2, "scrap": 1, "mysterious": 1, "extinction": 1, "daylight": 1, "substantial": 1, "engineering": 1, "absence": 1, "dolphin": 1, "muddy": 1, "obstruct": 1, "scatter": 1, "dirt": 1, "manufacture": 3, "lantern": 1, "bacteria": 1, "mate": 1, "prohibitive": 1, "exposed": 1, "vastly": 1, "fraction": 1, "bounce": 1, "immense": 1, "illuminate": 1, "exception": 1, "weird": 1, "facial": 4, "tricycle": 1, "sensation": 2, "phantom": 1, "limb": 1, "echo": 3, "footstep": 1, "instrument": 2, "matter": 1, "submarine": 1, "sonar": 6, "radar": 7, "pioneer": 1, "feat": 1, "navigation": 1, "dumb": 1, "admiration": 1, "incorrect": 1, "underlying": 1, "mathematical": 1, "echolocation": 1};
+        const wordData = {"bat": {"count": 9, "definition": "n. 球棒, 蝙蝠；v. 击球, 拍打"}, "prey": {"count": 3, "definition": "n. 猎物, 受害者；v. 捕食, 利用..."}, "obstacle": {"count": 3, "definition": "n. 障碍, 障碍物, 障碍栏"}, "daytime": {"count": 3, "definition": "n. 白天"}, "exploit": {"count": 2, "definition": "v. 利用, 剥削, 充分利用, ..."}, "thorough": {"count": 1, "definition": "adj. 彻底的, 周密的, 完全的"}, "probable": {"count": 1, "definition": "adj. 可能的；n. 有希望的候选人"}, "nocturnal": {"count": 1, "definition": "adj. 夜行的, 夜间的"}, "mammal": {"count": 1, "definition": "n. 哺乳动物"}, "dinosaur": {"count": 2, "definition": "n. 恐龙, 老古董"}, "dominate": {"count": 1, "definition": "v. 支配, 占主导地位, 最为..."}, "mammalian": {"count": 1, "definition": "adj. 哺乳类"}, "ancestor": {"count": 2, "definition": "n. 祖先, 祖先物种, 前身"}, "scrap": {"count": 1, "definition": "n. 碎片, 少量, 残羹剩饭, 废品, 小..."}, "mysterious": {"count": 1, "definition": "adj. 难以理解的, 神秘的, ..."}, "extinction": {"count": 1, "definition": "n. 灭绝"}, "daylight": {"count": 1, "definition": "n. 日光"}, "substantial": {"count": 1, "definition": "adj. 大量的, 坚固的"}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "absence": {"count": 1, "definition": "n. 缺席, 缺乏"}, "dolphin": {"count": 1, "definition": "n. 海豚"}, "muddy": {"count": 1, "definition": "adj. 泥泞的, 浑浊的, 暗淡的；v. 弄..."}, "obstruct": {"count": 1, "definition": "v. 阻挡, 妨碍"}, "scatter": {"count": 1, "definition": "v. 撒播, 分散；n. 散布物"}, "dirt": {"count": 1, "definition": "n. 污垢, 泥土, 丑闻, 粪便"}, "manufacture": {"count": 3, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "lantern": {"count": 1, "definition": "n. 灯笼"}, "bacteria": {"count": 1, "definition": "n. 细菌"}, "mate": {"count": 1, "definition": "n. 朋友, 伙计, 同伴, *..."}, "prohibitive": {"count": 1, "definition": "adj. 价格过高的, 法律禁止的, 必..."}, "exposed": {"count": 1, "definition": "adj. 外露, 易受伤害, 有风险"}, "vastly": {"count": 1, "definition": "adv. 非常"}, "fraction": {"count": 1, "definition": "n. 一小部分, 分数, 馏分"}, "bounce": {"count": 1, "definition": "v. 弹回, 跳跃, 颠动, ..."}, "immense": {"count": 1, "definition": "adj. 巨大的"}, "illuminate": {"count": 1, "definition": "v. 照亮, 阐明, 用灯光装饰, 使容光..."}, "exception": {"count": 1, "definition": "n. 例外"}, "weird": {"count": 1, "definition": "adj. 奇怪的, 诡异可怕的；v. 使..."}, "facial": {"count": 4, "definition": "adj. 面部的；n. 面部护理"}, "tricycle": {"count": 1, "definition": "n. 三轮车"}, "sensation": {"count": 2, "definition": "n. 感觉, 触觉能力, 强烈感觉, 轰动"}, "phantom": {"count": 1, "definition": "n. 幻影, 幻象；adj. 鬼魅般的, 仅..."}, "limb": {"count": 1, "definition": "n. 肢体, 有特定肢体的, 大树枝"}, "echo": {"count": 3, "definition": "v. 回声, 发出回声, 附和..."}, "footstep": {"count": 1, "definition": "n. 脚步声"}, "instrument": {"count": 2, "definition": "n. 乐器, 仪器, 仪表, 工具, 工..."}, "matter": {"count": 1, "definition": "n. 问题, 事情, 情况, 事项, 物..."}, "submarine": {"count": 1, "definition": "n. 潜艇, 潜艇三明治；adj. 海下的"}, "sonar": {"count": 6, "definition": "n. 声呐"}, "radar": {"count": 7, "definition": "n. 雷达"}, "pioneer": {"count": 1, "definition": "n. 先驱, 拓荒者；v. 开创"}, "feat": {"count": 1, "definition": "n. 壮举"}, "navigation": {"count": 1, "definition": "n. 导航, 航行, 浏览"}, "dumb": {"count": 1, "definition": "adj. 愚蠢的, 沉默的, 哑的；v. 使..."}, "admiration": {"count": 1, "definition": "n. 钦佩"}, "incorrect": {"count": 1, "definition": "adj. 不正确的, 不合规矩的"}, "underlying": {"count": 1, "definition": "adj. 潜在的, 底层的"}, "mathematical": {"count": 1, "definition": "adj. 数学的"}, "echolocation": {"count": 1, "definition": "n. 回声定位"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

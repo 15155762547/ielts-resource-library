@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"pane": 12, "bishop": 2, "shattered": 2, "fragment": 2, "manufacturer": 1, "crystal": 10, "nickel": 13, "glaze": 1, "federation": 1, "phenomenon": 1, "consultant": 1, "involved": 1, "consult": 2, "iceberg": 1, "engineering": 1, "shatter": 2, "cube": 1, "shard": 1, "architect": 1, "bolt": 1, "transparent": 1, "ceiling": 1, "jet": 1, "solidify": 1, "interior": 2, "shrink": 1, "exert": 1, "tensile": 2, "crack": 2, "propagate": 1, "tension": 1, "resistant": 1, "trace": 1, "raw": 1, "alloy": 1, "molten": 1, "heated": 2, "atom": 1, "gram": 1, "furnace": 1, "dense": 3, "stable": 2, "compact": 1, "subsequent": 1, "coil": 1, "spring": 1, "revert": 1, "unleash": 1, "elapse": 1, "manufacture": 1, "decade": 3, "ironically": 1, "complicated": 1, "batch": 1, "waterfront": 1, "rash": 1, "cradle": 1};
+        const wordData = {"pane": {"count": 12, "definition": "n. 窗格, 面板"}, "bishop": {"count": 2, "definition": "n. 主教, 象"}, "shattered": {"count": 2, "definition": "adj. 极度震惊和沮丧的, 筋疲力尽的"}, "fragment": {"count": 2, "definition": "n. 碎片, 片段；v. 破碎"}, "manufacturer": {"count": 1, "definition": "n. 制造商"}, "crystal": {"count": 10, "definition": "n. 晶体, 水晶, 水晶玻璃, ..."}, "nickel": {"count": 13, "definition": "n. 镍, 五分硬币"}, "glaze": {"count": 1, "definition": "v. 目光呆滞, 安装玻璃, 上光；n. 釉..."}, "federation": {"count": 1, "definition": "n. 联邦, 联合会, 联合"}, "phenomenon": {"count": 1, "definition": "n. 现象, 非凡的人"}, "consultant": {"count": 1, "definition": "n. 顾问, 主任医师"}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "consult": {"count": 2, "definition": "v. 咨询, 商议, 查阅"}, "iceberg": {"count": 1, "definition": "n. 冰山"}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "shatter": {"count": 2, "definition": "v. （使）粉碎, 粉碎, 使震惊"}, "cube": {"count": 1, "definition": "n. 立方体, 小方块, 立方；v. 求立方..."}, "shard": {"count": 1, "definition": "n. 碎片"}, "architect": {"count": 1, "definition": "n. 建筑师, 设计师, 系统架构师；..."}, "bolt": {"count": 1, "definition": "n. 插销, 螺栓, 闪电, 弩箭, 布卷；v. ..."}, "transparent": {"count": 1, "definition": "adj. 透明的, 显而易见的, 易..."}, "ceiling": {"count": 1, "definition": "n. 天花板, 上限, 升限"}, "jet": {"count": 1, "definition": "n. 喷气式飞机, 喷射流, 煤玉；..."}, "solidify": {"count": 1, "definition": "v. 使凝固, 巩固"}, "interior": {"count": 2, "definition": "n. 内部, 内陆, 内政；adj. ..."}, "shrink": {"count": 1, "definition": "v. 缩水, 缩小, 退缩；n. 心..."}, "exert": {"count": 1, "definition": "v. 施加, 产生影响, 努力"}, "tensile": {"count": 2, "definition": "adj. 拉伸的, 可延伸的"}, "crack": {"count": 2, "definition": "v. 破裂, 打碎, 猛击, 发出..."}, "propagate": {"count": 1, "definition": "v. 传播, 繁殖"}, "tension": {"count": 1, "definition": "n. 紧张关系, 紧张局势, ..."}, "resistant": {"count": 1, "definition": "adj. 不受影响的, 抵抗的, 耐...的"}, "trace": {"count": 1, "definition": "v. 追踪, 追溯, 追溯发展, ..."}, "raw": {"count": 1, "definition": "adj. 生的, 原始的, 未经处..."}, "alloy": {"count": 1, "definition": "n. 合金；v. 熔合"}, "molten": {"count": 1, "definition": "adj. 熔化的"}, "heated": {"count": 2, "definition": "adj. 激烈的, 加热的"}, "atom": {"count": 1, "definition": "n. 原子"}, "gram": {"count": 1, "definition": "n. 克, 字"}, "furnace": {"count": 1, "definition": "n. 熔炉, 锅炉"}, "dense": {"count": 3, "definition": "adj. 密集的, 浓密的, 愚钝..."}, "stable": {"count": 2, "definition": "adj. 稳定的, 沉稳的, 化学..."}, "compact": {"count": 1, "definition": "adj. 小巧的, 节省空间的, 紧密的, ..."}, "subsequent": {"count": 1, "definition": "adj. 随后的"}, "coil": {"count": 1, "definition": "v. 卷绕；n. 线圈, 一圈, 电感线圈, ..."}, "spring": {"count": 1, "definition": "n. 春天, 泉水, 弹簧, 弹力, 活..."}, "revert": {"count": 1, "definition": "v. 恢复"}, "unleash": {"count": 1, "definition": "v. 突然释放"}, "elapse": {"count": 1, "definition": "v. 流逝"}, "manufacture": {"count": 1, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "decade": {"count": 3, "definition": "n. 十年"}, "ironically": {"count": 1, "definition": "adv. 讽刺地, 具有讽刺意味的是"}, "complicated": {"count": 1, "definition": "adj. 复杂的"}, "batch": {"count": 1, "definition": "n. 一批, 批次, 批处理；v. 分批处理"}, "waterfront": {"count": 1, "definition": "n. 滨水区"}, "rash": {"count": 1, "definition": "n. 皮疹, 一连串不幸事件；adj. 轻..."}, "cradle": {"count": 1, "definition": "n. 摇篮, 发源地, 吊篮, 听筒架；v. ..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

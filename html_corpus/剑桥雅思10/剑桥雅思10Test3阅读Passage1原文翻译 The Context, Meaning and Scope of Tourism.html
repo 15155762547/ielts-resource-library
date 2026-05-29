@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"primitive": 1, "traverse": 1, "provided": 2, "clothe": 1, "survival": 1, "conviction": 1, "migration": 1, "compelling": 1, "motivation": 1, "era": 1, "aristocrat": 1, "seaside": 1, "resort": 1, "villa": 1, "vital": 1, "tourism": 20, "distinct": 1, "phenomenon": 1, "historian": 1, "suggest": 3, "advent": 1, "availability": 1, "transportation": 2, "subsequent": 1, "jet": 1, "expansion": 1, "segment": 1, "entity": 1, "accord": 1, "council": 1, "virtually": 1, "gross": 2, "output": 1, "trillion": 1, "lead": 1, "contributor": 1, "accounting": 1, "excess": 1, "indirect": 1, "profound": 1, "impact": 4, "obscure": 1, "diversity": 2, "motel": 1, "accommodation": 1, "amusement": 1, "leisure": 1, "enterprise": 1, "resident": 1, "overlook": 1, "underestimate": 1, "amorphous": 1, "analyst": 1, "credible": 1, "economics": 1, "exclusive": 1, "commodity": 1, "unite": 2, "kingdom": 1, "certainty": 1, "precise": 1, "valid": 1, "participation": 1, "domestic": 1};
+        const wordData = {"primitive": {"count": 1, "definition": "adj. 原始的, 早期的, 简陋的, 原始..."}, "traverse": {"count": 1, "definition": "v. 穿越；n. 横移"}, "provided": {"count": 2, "definition": "conj. 如果"}, "clothe": {"count": 1, "definition": "v. 给...穿衣, 提供衣物"}, "survival": {"count": 1, "definition": "n. 生存, 遗留物"}, "conviction": {"count": 1, "definition": "n. 定罪, 信念, 确信"}, "migration": {"count": 1, "definition": "n. 迁徙, 移民, 迁移"}, "compelling": {"count": 1, "definition": "adj. 引人入胜, 不可抗拒, 令人信服"}, "motivation": {"count": 1, "definition": "n. 动机, 动力, 动机说明"}, "era": {"count": 1, "definition": "n. 时代"}, "aristocrat": {"count": 1, "definition": "n. 贵族"}, "seaside": {"count": 1, "definition": "n. 海滨；adj. 海滨的"}, "resort": {"count": 1, "definition": "n. 度假胜地, 不得已而为之, 最后..."}, "villa": {"count": 1, "definition": "n. 度假别墅, 乡间别墅, 城市别墅, ..."}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "tourism": {"count": 20, "definition": "n. 旅游业"}, "distinct": {"count": 1, "definition": "adj. 清晰的, 不同的, 明确的"}, "phenomenon": {"count": 1, "definition": "n. 现象, 非凡的人"}, "historian": {"count": 1, "definition": "n. 历史学家"}, "suggest": {"count": 3, "definition": "v. 建议, 推荐, 暗示"}, "advent": {"count": 1, "definition": "n. 来临, 将临期"}, "availability": {"count": 1, "definition": "n. 可用性, 空闲时间"}, "transportation": {"count": 2, "definition": "n. 交通运输系统, 交通工具*..."}, "subsequent": {"count": 1, "definition": "adj. 随后的"}, "jet": {"count": 1, "definition": "n. 喷气式飞机, 喷射流, 煤玉；..."}, "expansion": {"count": 1, "definition": "n. 扩张"}, "segment": {"count": 1, "definition": "n. 部分, 瓣, 扇形, 音段；v. 分割"}, "entity": {"count": 1, "definition": "n. 实体"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "council": {"count": 1, "definition": "n. 议会, 市政委员会, 委员..."}, "virtually": {"count": 1, "definition": "adv. 几乎, 虚拟地"}, "gross": {"count": 2, "definition": "adj. 总额, 明显错误的, ..."}, "output": {"count": 1, "definition": "n. 产量, 输出, 输出功率, 输出..."}, "trillion": {"count": 1, "definition": "num. 万亿, 巨大的数量, ..."}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "contributor": {"count": 1, "definition": "n. 投稿人, 捐助者, 促成因素"}, "accounting": {"count": 1, "definition": "n. 会计"}, "excess": {"count": 1, "definition": "n. 过量, 超出部分, 免赔额..."}, "indirect": {"count": 1, "definition": "adj. 间接的, 非直接的, 委婉的, 迂..."}, "profound": {"count": 1, "definition": "adj. 深刻的, 渊博的, 深..."}, "impact": {"count": 4, "definition": "n. 影响, 撞击；v. 影响, 撞击"}, "obscure": {"count": 1, "definition": "adj. 鲜为人知的, 晦涩的；v. 掩盖"}, "diversity": {"count": 2, "definition": "n. 多样性, 涵盖多种类型, 多元性"}, "motel": {"count": 1, "definition": "n. 汽车旅馆"}, "accommodation": {"count": 1, "definition": "n. 住所, 膳宿, 妥协, 调节"}, "amusement": {"count": 1, "definition": "n. 娱乐感, 娱乐活动, 娱乐状态"}, "leisure": {"count": 1, "definition": "n. 闲暇, 休闲活动"}, "enterprise": {"count": 1, "definition": "n. 企业, 大型项目, 私营企业, 创业..."}, "resident": {"count": 1, "definition": "n. 居民, 住客, 住院医师；adj. ..."}, "overlook": {"count": 1, "definition": "v. 忽略, 忽视, 俯瞰, ..."}, "underestimate": {"count": 1, "definition": "v. 低估, 轻视；n. 低估的估计"}, "amorphous": {"count": 1, "definition": "adj. 无定形的"}, "analyst": {"count": 1, "definition": "n. 分析师, 精神分析师"}, "credible": {"count": 1, "definition": "adj. 可信的, 有希望的"}, "economics": {"count": 1, "definition": "n. 经济学, 经济影响"}, "exclusive": {"count": 1, "definition": "adj. 专属的, 排外的, 高..."}, "commodity": {"count": 1, "definition": "n. 商品, 有用的东西"}, "unite": {"count": 2, "definition": "v. 团结, 联合"}, "kingdom": {"count": 1, "definition": "n. 王国, 领域, 界"}, "certainty": {"count": 1, "definition": "n. 确信, 确定性事物"}, "precise": {"count": 1, "definition": "adj. 精确的, 准时发生的, ..."}, "valid": {"count": 1, "definition": "adj. 合法的, 合理的, 系统接受的"}, "participation": {"count": 1, "definition": "n. 参与"}, "domestic": {"count": 1, "definition": "adj. 国内的, 家庭的, 家..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

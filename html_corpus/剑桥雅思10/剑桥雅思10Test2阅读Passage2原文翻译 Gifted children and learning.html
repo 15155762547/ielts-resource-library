@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"frequent": 1, "determined": 1, "provision": 1, "backup": 1, "verbal": 1, "interaction": 1, "influence": 1, "learned": 4, "manipulate": 1, "vocabulary": 1, "dependent": 1, "predict": 1, "creativity": 2, "excellence": 1, "exceptional": 1, "challenging": 1, "tuition": 1, "encouragement": 1, "qualitative": 1, "intellectual": 2, "pupil": 6, "external": 1, "compensate": 1, "evaluation": 1, "awareness": 1, "curiosity": 2, "achiever": 2, "overview": 1, "shore": 1, "succinct": 1, "gifted": 3, "merely": 2, "shorten": 1, "conversely": 1, "tendency": 1, "diminish": 1, "autonomy": 2, "dependence": 1, "motivation": 2, "competent": 1, "tutor": 1, "deprive": 1, "theoretical": 1, "vital": 1, "outstanding": 1, "domain": 1, "independence": 1, "expertise": 2, "mixed": 1, "facilitate": 1, "negative": 1, "inhibit": 1, "motivate": 1, "harness": 1, "curious": 1, "efficiency": 1};
+        const wordData = {"frequent": {"count": 1, "definition": "adj. 频繁的；v. 常去"}, "determined": {"count": 1, "definition": "adj. 坚定的, 有决心的"}, "provision": {"count": 1, "definition": "n. 供应, 预备, 给养, ..."}, "backup": {"count": 1, "definition": "n. 后备支持, 数据备份"}, "verbal": {"count": 1, "definition": "adj. 语言的, 口头的, 动词的"}, "interaction": {"count": 1, "definition": "n. 互动, 相互作用"}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "learned": {"count": 4, "definition": "adj. 博学的, 学者的, 习得的"}, "manipulate": {"count": 1, "definition": "v. 操纵, 熟练操作, 推拿"}, "vocabulary": {"count": 1, "definition": "n. 词汇量, 词汇, 术语, 词汇表"}, "dependent": {"count": 1, "definition": "adj. 依赖的, 上瘾的, 从属的；..."}, "predict": {"count": 1, "definition": "v. 预测"}, "creativity": {"count": 2, "definition": "n. 创造力"}, "excellence": {"count": 1, "definition": "n. 卓越"}, "exceptional": {"count": 1, "definition": "adj. 卓越的, 罕见的"}, "challenging": {"count": 1, "definition": "adj. 挑战性, 挑衅性"}, "tuition": {"count": 1, "definition": "n. 教学, 学费"}, "encouragement": {"count": 1, "definition": "n. 鼓励"}, "qualitative": {"count": 1, "definition": "adj. 定性的"}, "intellectual": {"count": 2, "definition": "adj. 智力的, 聪明的；n. 知识..."}, "pupil": {"count": 6, "definition": "n. 学生, 瞳孔"}, "external": {"count": 1, "definition": "adj. 外部的, 来自外部的, ..."}, "compensate": {"count": 1, "definition": "v. 弥补, 赔偿, 补偿"}, "evaluation": {"count": 1, "definition": "n. 评估"}, "awareness": {"count": 1, "definition": "n. 意识, 关注"}, "curiosity": {"count": 2, "definition": "n. 好奇心, 新奇事物"}, "achiever": {"count": 2, "definition": "n. 成功人士, 有所成就的人"}, "overview": {"count": 1, "definition": "n. 概述"}, "shore": {"count": 1, "definition": "n. 海岸, 海滨, 沿海国家；v. 支撑..."}, "succinct": {"count": 1, "definition": "adj. 简洁的"}, "gifted": {"count": 3, "definition": "adj. 天才, 天赋"}, "merely": {"count": 2, "definition": "adv. 仅仅"}, "shorten": {"count": 1, "definition": "v. 缩短"}, "conversely": {"count": 1, "definition": "adv. 相反地"}, "tendency": {"count": 1, "definition": "n. 倾向, 趋势, 派别"}, "diminish": {"count": 1, "definition": "v. 减弱, 贬低"}, "autonomy": {"count": 2, "definition": "n. 自治权, 自主性"}, "dependence": {"count": 1, "definition": "n. 依赖"}, "motivation": {"count": 2, "definition": "n. 动机, 动力, 动机说明"}, "competent": {"count": 1, "definition": "adj. 有能力的, 合格的, 有..."}, "tutor": {"count": 1, "definition": "n. 私人教师, 辅导教师, 导师, 助教..."}, "deprive": {"count": 1, "definition": "v. 剥夺"}, "theoretical": {"count": 1, "definition": "adj. 理论的, 假设的"}, "vital": {"count": 1, "definition": "adj. 至关重要的, 维持生命的,..."}, "outstanding": {"count": 1, "definition": "adj. 杰出的, 未支付的, 显著的"}, "domain": {"count": 1, "definition": "n. 领域, 域名, 领地, 定义域"}, "independence": {"count": 1, "definition": "n. 独立"}, "expertise": {"count": 2, "definition": "n. 专业知识"}, "mixed": {"count": 1, "definition": "adj. 混合的, 褒贬不一的, 多元文..."}, "facilitate": {"count": 1, "definition": "v. 促进"}, "negative": {"count": 1, "definition": "adj. 负面的, 否定的, 拒绝..."}, "inhibit": {"count": 1, "definition": "v. 抑制, 使拘束"}, "motivate": {"count": 1, "definition": "v. 激励"}, "harness": {"count": 1, "definition": "n. 马具, 安全带；v. 套上挽具, 利用"}, "curious": {"count": 1, "definition": "adj. 好奇的, 奇特的"}, "efficiency": {"count": 1, "definition": "n. 效率, 节省, 能效, 一室..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

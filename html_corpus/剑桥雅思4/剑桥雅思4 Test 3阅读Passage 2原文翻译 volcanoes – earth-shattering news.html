@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"volcano": 10, "ultimate": 1, "machinery": 1, "violent": 2, "eruption": 9, "blow": 2, "scatter": 1, "ash": 1, "practically": 1, "globe": 1, "hurl": 1, "fragment": 1, "stratosphere": 2, "ski": 2, "continent": 5, "bang": 1, "mushroom": 1, "surge": 2, "molten": 4, "lava": 8, "story": 1, "rift": 1, "construct": 1, "topography": 1, "basement": 1, "stable": 2, "atmosphere": 2, "provided": 2, "cubic": 2, "continental": 1, "crust": 3, "crater": 3, "nitrogen": 1, "carbon": 1, "dioxide": 2, "methane": 1, "ammonia": 1, "hydrogen": 1, "core": 1, "mantle": 5, "brittle": 1, "crack": 2, "archipelago": 1, "convection": 1, "fracture": 2, "bump": 1, "grind": 1, "collision": 1, "heated": 1, "swift": 2, "magma": 3, "granite": 1, "extrusion": 1, "squeeze": 1, "horizontally": 1, "plateau": 1, "upward": 1, "glow": 1, "tremendous": 2, "mars": 1, "jupiter": 1, "uranus": 1, "blast": 3, "pumice": 1, "explosion": 2, "causeway": 1, "atlantic": 1, "rockies": 1, "decade": 1, "strait": 1, "predictable": 1, "geological": 1, "cone": 1, "rim": 1, "plug": 1, "irresistible": 1, "fierce": 1, "starve": 1, "harvest": 1, "frost": 1};
+        const wordData = {"volcano": {"count": 10, "definition": "n. 火山"}, "ultimate": {"count": 1, "definition": "adj. 最终的, 极致的, 最初..."}, "machinery": {"count": 1, "definition": "n. 机械, 机械装置, 机制"}, "violent": {"count": 2, "definition": "adj. 暴力的, 激烈的, 猛烈的, ..."}, "eruption": {"count": 9, "definition": "n. 火山喷发, 爆发, 皮疹"}, "blow": {"count": 2, "definition": "v. 吹气, 吹风, 被风吹动, ..."}, "scatter": {"count": 1, "definition": "v. 撒播, 分散；n. 散布物"}, "ash": {"count": 1, "definition": "n. 灰烬, 骨灰, 白蜡树, 白蜡木,..."}, "practically": {"count": 1, "definition": "adv. 几乎, 实际地"}, "globe": {"count": 1, "definition": "n. 全球, 地球仪, 球体, 灯泡"}, "hurl": {"count": 1, "definition": "v. 猛投, 大声辱骂, 呕吐"}, "fragment": {"count": 1, "definition": "n. 碎片, 片段；v. 破碎"}, "stratosphere": {"count": 2, "definition": "n. 平流层, 最高层"}, "ski": {"count": 2, "definition": "n. 滑雪板, 滑水板；adj. 滑雪的；..."}, "continent": {"count": 5, "definition": "adj. 节欲的, 能控制排便的；n. ..."}, "bang": {"count": 1, "definition": "v. 猛击, 砰地关上, 猛放, 撞到, 发..."}, "mushroom": {"count": 1, "definition": "n. 蘑菇；vi. 迅速增长, 采蘑菇"}, "surge": {"count": 2, "definition": "n. 强烈的情感涌动, 激增, ..."}, "molten": {"count": 4, "definition": "adj. 熔化的"}, "lava": {"count": 8, "definition": "n. 熔岩, 火山岩"}, "story": {"count": 1, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "rift": {"count": 1, "definition": "n. 分歧, 裂缝"}, "construct": {"count": 1, "definition": "v. 建造, 组装, 构造；n. 构..."}, "topography": {"count": 1, "definition": "n. 地形"}, "basement": {"count": 1, "definition": "n. 地下室"}, "stable": {"count": 2, "definition": "adj. 稳定的, 沉稳的, 化学..."}, "atmosphere": {"count": 2, "definition": "n. 大气层, 大气, 空气, 氛围"}, "provided": {"count": 2, "definition": "conj. 如果"}, "cubic": {"count": 2, "definition": "adj. 立方, 立方单位, 立方体"}, "continental": {"count": 1, "definition": "adj. 欧洲大陆的, 欧陆式的, 北美..."}, "crust": {"count": 3, "definition": "n. 面包皮, 馅饼皮, 地壳, 硬壳；v. ..."}, "crater": {"count": 3, "definition": "n. 火山口, 弹坑"}, "nitrogen": {"count": 1, "definition": "n. 氮气"}, "carbon": {"count": 1, "definition": "n. 碳, 二氧化碳, 复写本, ..."}, "dioxide": {"count": 2, "definition": "n. 二氧化物"}, "methane": {"count": 1, "definition": "n. 甲烷"}, "ammonia": {"count": 1, "definition": "n. 氨"}, "hydrogen": {"count": 1, "definition": "n. 氢"}, "core": {"count": 1, "definition": "n. 核心, 中心部分, 果核, 核心..."}, "mantle": {"count": 5, "definition": "n. 衣钵, 覆盖层, 斗篷, 地幔, 灯罩, ..."}, "brittle": {"count": 1, "definition": "adj. 脆的, 脆弱的, 尖刻的；n. 坚..."}, "crack": {"count": 2, "definition": "v. 破裂, 打碎, 猛击, 发出..."}, "archipelago": {"count": 1, "definition": "n. 群岛"}, "convection": {"count": 1, "definition": "n. 对流"}, "fracture": {"count": 2, "definition": "n. 骨折, 断裂；v. 使断裂, 分裂"}, "bump": {"count": 1, "definition": "v. 意外撞到, 碰撞, 颠簸行进, 调动；..."}, "grind": {"count": 1, "definition": "v. 碾碎, 磨面粉, 绞肉, 磨锋利,..."}, "collision": {"count": 1, "definition": "n. 碰撞, 冲突"}, "heated": {"count": 1, "definition": "adj. 激烈的, 加热的"}, "swift": {"count": 2, "definition": "adj. 迅速的, 高速移动的；n. 雨燕"}, "magma": {"count": 3, "definition": "n. 岩浆"}, "granite": {"count": 1, "definition": "n. 花岗岩"}, "extrusion": {"count": 1, "definition": "n. 挤出, 挤压成型"}, "squeeze": {"count": 1, "definition": "v. 挤压, 榨取, 挤入, ..."}, "horizontally": {"count": 1, "definition": "adv. 水平地"}, "plateau": {"count": 1, "definition": "n. 高原, 平台期；v. 进入平台期"}, "upward": {"count": 1, "definition": "adj. 向上的, 上升的"}, "glow": {"count": 1, "definition": "vi. 发光, 容光焕发, 神采奕奕, 呈..."}, "tremendous": {"count": 2, "definition": "adj. 巨大的, 极好的"}, "mars": {"count": 1, "definition": "n. 火星"}, "jupiter": {"count": 1, "definition": "n. 木星"}, "uranus": {"count": 1, "definition": "n. 天王星，太阳系第七颗行星, 乌..."}, "blast": {"count": 3, "definition": "n. 爆炸, 一阵强风, 喇叭..."}, "pumice": {"count": 1, "definition": "n. 浮石"}, "explosion": {"count": 2, "definition": "n. 爆炸, 激增, 爆发"}, "causeway": {"count": 1, "definition": "n. 堤道"}, "atlantic": {"count": 1, "definition": "n. 大西洋；adj. 大西洋的"}, "rockies": {"count": 1, "definition": "n. 落基山脉"}, "decade": {"count": 1, "definition": "n. 十年"}, "strait": {"count": 1, "definition": "n. 海峡, 困境"}, "predictable": {"count": 1, "definition": "adj. 可预测的, 一成不变的"}, "geological": {"count": 1, "definition": "adj. 地质学的, 地质的"}, "cone": {"count": 1, "definition": "n. 圆锥形, 球果, 交通锥, 锥形..."}, "rim": {"count": 1, "definition": "n. 边缘, 轮辋, 带边缘的；v. 镶边"}, "plug": {"count": 1, "definition": "v. 堵塞, 填补, 推广, 枪击；..."}, "irresistible": {"count": 1, "definition": "adj. 不可阻挡, 无法抗拒"}, "fierce": {"count": 1, "definition": "adj. 凶猛的, 激烈的"}, "starve": {"count": 1, "definition": "v. 挨饿, 缺乏"}, "harvest": {"count": 1, "definition": "n. 收获季节, 收获物；v. 收..."}, "frost": {"count": 1, "definition": "n. 霜冻, 霜；v. 结霜, 撒糖霜"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

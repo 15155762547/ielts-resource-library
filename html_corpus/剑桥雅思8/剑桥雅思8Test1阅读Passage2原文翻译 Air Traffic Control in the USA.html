@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"ski": 2, "canyon": 2, "establishment": 1, "federal": 1, "aviation": 2, "regulate": 1, "oversee": 1, "unite": 4, "congested": 1, "rudimentary": 2, "manually": 1, "vicinity": 4, "beacon": 1, "cross-country": 1, "useless": 1, "approximate": 1, "metropolitan": 4, "radar": 2, "advent": 1, "jet": 3, "pilot": 12, "margin": 1, "practically": 1, "demanding": 1, "telling": 1, "depart": 1, "accommodate": 2, "virtually": 1, "blanket": 1, "bound": 1, "recreational": 1, "restriction": 1, "impose": 1, "suggest": 1, "reliance": 1, "cue": 1, "necessitate": 1, "instrumental": 1, "altitude": 2, "provided": 1, "instrument": 2, "devise": 1, "designate": 3, "division": 1, "stem": 1, "climb": 1, "realm": 1, "efficiently": 1, "skilled": 1, "correspond": 1, "municipal": 1, "respective": 1, "encompass": 1, "rigorous": 1, "explicit": 2, "obey": 1, "clearance": 1, "cruise": 1};
+        const wordData = {"ski": {"count": 2, "definition": "n. 滑雪板, 滑水板；adj. 滑雪的；..."}, "canyon": {"count": 2, "definition": "n. 峡谷"}, "establishment": {"count": 1, "definition": "n. 机构, 当权派, 建立"}, "federal": {"count": 1, "definition": "adj. 联邦制的, 联邦政府的"}, "aviation": {"count": 2, "definition": "n. 航空"}, "regulate": {"count": 1, "definition": "v. 用规章制度控制, 调节"}, "oversee": {"count": 1, "definition": "v. 监督"}, "unite": {"count": 4, "definition": "v. 团结, 联合"}, "congested": {"count": 1, "definition": "adj. 拥挤的, 充血的"}, "rudimentary": {"count": 2, "definition": "adj. 基础的, 未完全发展的"}, "manually": {"count": 1, "definition": "adv. 手动地, 人工地"}, "vicinity": {"count": 4, "definition": "n. 附近"}, "beacon": {"count": 1, "definition": "n. 灯塔, 无线电导航台, 烽火"}, "cross-country": {"count": 1, "definition": "n. 越野赛跑, 越野运动"}, "useless": {"count": 1, "definition": "adj. 无用的, 不擅长的"}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "metropolitan": {"count": 4, "definition": "adj. 大城市的, 本土的"}, "radar": {"count": 2, "definition": "n. 雷达"}, "advent": {"count": 1, "definition": "n. 来临, 将临期"}, "jet": {"count": 3, "definition": "n. 喷气式飞机, 喷射流, 煤玉；..."}, "pilot": {"count": 12, "definition": "n. 飞行员, 领航员, 试播集, 引..."}, "margin": {"count": 1, "definition": "n. 页边空白, 优势, 利润, 安全..."}, "practically": {"count": 1, "definition": "adv. 几乎, 实际地"}, "demanding": {"count": 1, "definition": "adj. 要求高的, 苛求的"}, "telling": {"count": 1, "definition": "adj. 有力的, 说明问题的"}, "depart": {"count": 1, "definition": "v. 离开, 离职"}, "accommodate": {"count": 2, "definition": "v. 提供住宿, 容纳, 接纳, 满足,..."}, "virtually": {"count": 1, "definition": "adv. 几乎, 虚拟地"}, "blanket": {"count": 1, "definition": "n. 毯子, 覆盖层；adj. 全面的；..."}, "bound": {"count": 1, "definition": "adj. 极有可能发生的, 受约束,..."}, "recreational": {"count": 1, "definition": "adj. 娱乐的"}, "restriction": {"count": 1, "definition": "n. 限制规定, 限制, 自由限制"}, "impose": {"count": 1, "definition": "v. 实施, 强加, 强加（想法）..."}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "reliance": {"count": 1, "definition": "n. 依赖"}, "cue": {"count": 1, "definition": "n. 提示, 台词提示, 台球杆；..."}, "necessitate": {"count": 1, "definition": "v. 需要"}, "instrumental": {"count": 1, "definition": "adj. 起重要作用的, 乐器的*..."}, "altitude": {"count": 2, "definition": "n. 海拔高度, 高地"}, "provided": {"count": 1, "definition": "conj. 如果"}, "instrument": {"count": 2, "definition": "n. 乐器, 仪器, 仪表, 工具, 工..."}, "devise": {"count": 1, "definition": "v. 设计"}, "designate": {"count": 3, "definition": "v. 正式命名, 任命, 标记；..."}, "division": {"count": 1, "definition": "n. 分开, 除法, 分歧, *..."}, "stem": {"count": 1, "definition": "n. 茎, 杯茎, 烟斗杆, 有茎的, ..."}, "climb": {"count": 1, "definition": "v. 向上爬, 攀岩, 攀爬, 上升, ..."}, "realm": {"count": 1, "definition": "n. 领域, 王国"}, "efficiently": {"count": 1, "definition": "adv. 高效地"}, "skilled": {"count": 1, "definition": "adj. 熟练的, 需要专门技能的"}, "correspond": {"count": 1, "definition": "vi. 对应, 相当, 通信"}, "municipal": {"count": 1, "definition": "adj. 市政府的"}, "respective": {"count": 1, "definition": "adj. 各自的"}, "encompass": {"count": 1, "definition": "v. 包括, 围绕"}, "rigorous": {"count": 1, "definition": "adj. 严谨的, 严格的"}, "explicit": {"count": 2, "definition": "adj. 明确的, 直白的, 露骨的"}, "obey": {"count": 1, "definition": "v. 服从"}, "clearance": {"count": 1, "definition": "n. 清理, 间隙, 许可, 通关, 清算, 解..."}, "cruise": {"count": 1, "definition": "n. 邮轮旅游；v. 乘船游览, 巡..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

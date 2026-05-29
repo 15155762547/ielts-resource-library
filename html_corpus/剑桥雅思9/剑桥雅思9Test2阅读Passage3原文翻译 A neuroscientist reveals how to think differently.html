@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"decade": 2, "trace": 1, "fir": 1, "neuron": 1, "innovation": 2, "briefly": 1, "precisely": 1, "distinct": 1, "perception": 9, "utilize": 1, "circuit": 2, "suggest": 1, "irrelevant": 1, "revolutionary": 1, "matter": 1, "realization": 1, "limitation": 1, "constraint": 1, "march": 1, "fixed": 1, "watt": 1, "bulb": 1, "evolve": 1, "efficiently": 1, "impede": 1, "confront": 1, "shortcut": 2, "biological": 1, "electrical": 1, "transmit": 1, "photon": 1, "efficiency": 1, "pitfall": 1, "plague": 1, "learned": 1, "curse": 1, "interpretation": 2, "ultimate": 1, "conjecture": 1, "likelihood": 1, "influence": 1, "bombard": 1, "novelty": 3, "willingness": 1, "exposed": 1, "embrace": 1, "trigger": 1, "impediment": 1, "inhibit": 2, "uncertainty": 1, "trivial": 1, "afflict": 1, "disorder": 1, "variant": 1, "explosion": 1, "coordinate": 1, "neuroscience": 1, "reveal": 1, "empathy": 1, "convince": 1, "cognition": 1, "enthusiasm": 1, "reputation": 1, "creativity": 1, "accomplish": 1, "alienation": 1, "asset": 1};
+        const wordData = {"decade": {"count": 2, "definition": "n. 十年"}, "trace": {"count": 1, "definition": "v. 追踪, 追溯, 追溯发展, ..."}, "fir": {"count": 1, "definition": "n. 冷杉"}, "neuron": {"count": 1, "definition": "n. 神经元"}, "innovation": {"count": 2, "definition": "n. 创新"}, "briefly": {"count": 1, "definition": "adv. 短暂地, 简要地"}, "precisely": {"count": 1, "definition": "adv. 精确地, 准确地"}, "distinct": {"count": 1, "definition": "adj. 清晰的, 不同的, 明确的"}, "perception": {"count": 9, "definition": "n. 看法, 知觉, 领悟力"}, "utilize": {"count": 1, "definition": "v. 使用"}, "circuit": {"count": 2, "definition": "n. 回路, 电路, 巡回赛, 赛..."}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "irrelevant": {"count": 1, "definition": "adj. 不相关的"}, "revolutionary": {"count": 1, "definition": "adj. 革命的, 革命性的；n. ..."}, "matter": {"count": 1, "definition": "n. 问题, 事情, 情况, 事项, 物..."}, "realization": {"count": 1, "definition": "n. 意识, 实现, 变现"}, "limitation": {"count": 1, "definition": "n. 限制"}, "constraint": {"count": 1, "definition": "n. 限制, 管制"}, "march": {"count": 1, "definition": "v. 齐步走, 快步行走, 游..."}, "fixed": {"count": 1, "definition": "adj. 固定的, 坚定的, 固定..."}, "watt": {"count": 1, "definition": "n. 瓦特"}, "bulb": {"count": 1, "definition": "n. 灯泡, 球茎, 球状物"}, "evolve": {"count": 1, "definition": "v. 进化"}, "efficiently": {"count": 1, "definition": "adv. 高效地"}, "impede": {"count": 1, "definition": "v. 阻碍"}, "confront": {"count": 1, "definition": "v. 面对"}, "shortcut": {"count": 2, "definition": "n. 捷径, 快捷方法, 快捷方式"}, "biological": {"count": 1, "definition": "adj. 生物学的, 生物的, 有..."}, "electrical": {"count": 1, "definition": "adj. 与电有关的"}, "transmit": {"count": 1, "definition": "v. 发送信号, 传递, 传导"}, "photon": {"count": 1, "definition": "n. 光子"}, "efficiency": {"count": 1, "definition": "n. 效率, 节省, 能效, 一室..."}, "pitfall": {"count": 1, "definition": "n. 陷阱"}, "plague": {"count": 1, "definition": "n. 鼠疫, 瘟疫, 虫灾；v. 困扰, 纠缠"}, "learned": {"count": 1, "definition": "adj. 博学的, 学者的, 习得的"}, "curse": {"count": 1, "definition": "n. 骂人的话, 诅咒, 祸根, 月经；v. ..."}, "interpretation": {"count": 2, "definition": "n. 解释, 演绎"}, "ultimate": {"count": 1, "definition": "adj. 最终的, 极致的, 最初..."}, "conjecture": {"count": 1, "definition": "n. 推测, 推测过程；v. 推测"}, "likelihood": {"count": 1, "definition": "n. 可能性"}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "bombard": {"count": 1, "definition": "v. 轰炸, 连珠炮似的提问"}, "novelty": {"count": 3, "definition": "n. 新奇性, 新奇事物, 新奇小玩意儿；..."}, "willingness": {"count": 1, "definition": "n. 愿意"}, "exposed": {"count": 1, "definition": "adj. 外露, 易受伤害, 有风险"}, "embrace": {"count": 1, "definition": "n. 拥抱, 欣然接受；v. 拥抱, ..."}, "trigger": {"count": 1, "definition": "v. 引发, 启动, 触发；n. 扳..."}, "impediment": {"count": 1, "definition": "n. 障碍, 言语障碍"}, "inhibit": {"count": 2, "definition": "v. 抑制, 使拘束"}, "uncertainty": {"count": 1, "definition": "n. 不确定性, 不确定的事物"}, "trivial": {"count": 1, "definition": "adj. 不重要的"}, "afflict": {"count": 1, "definition": "v. 使痛苦"}, "disorder": {"count": 1, "definition": "n. 紊乱, 混乱, 骚乱"}, "variant": {"count": 1, "definition": "n. 变体；adj. 略有不同的"}, "explosion": {"count": 1, "definition": "n. 爆炸, 激增, 爆发"}, "coordinate": {"count": 1, "definition": "v. 协调, 协调动作, 搭配；n. 坐..."}, "neuroscience": {"count": 1, "definition": "n. 神经科学"}, "reveal": {"count": 1, "definition": "v. 透露, 展现；n. 揭晓"}, "empathy": {"count": 1, "definition": "n. 共情能力"}, "convince": {"count": 1, "definition": "v. 使相信, 劝说"}, "cognition": {"count": 1, "definition": "n. 认知"}, "enthusiasm": {"count": 1, "definition": "n. 热情, 爱好"}, "reputation": {"count": 1, "definition": "n. 声誉"}, "creativity": {"count": 1, "definition": "n. 创造力"}, "accomplish": {"count": 1, "definition": "v. 完成"}, "alienation": {"count": 1, "definition": "n. 疏远, 不合群"}, "asset": {"count": 1, "definition": "n. 资产"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

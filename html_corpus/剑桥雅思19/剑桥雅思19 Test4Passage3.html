@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"assumption": 2, "essentially": 1, "selfish": 4, "ruthless": 1, "impulse": 1, "accumulate": 2, "ulterior": 1, "motive": 1, "transcend": 1, "innate": 2, "brutality": 1, "bleak": 1, "gene": 1, "individualistic": 1, "prevalent": 2, "psychology": 2, "trait": 9, "prehistoric": 7, "brutal": 2, "survival": 2, "bound": 1, "rival": 1, "racism": 2, "desperate": 1, "era": 2, "sparse": 1, "populate": 1, "accord": 1, "contemporary": 1, "anthropologist": 2, "ethical": 1, "obligation": 1, "swap": 1, "arrow": 3, "acclaim": 1, "fir": 1, "exile": 1, "dictate": 1, "autonomy": 1, "custody": 1, "agriculture": 1, "settle": 1, "domination": 1, "evolution": 1, "ruthlessly": 2, "cooperation": 1, "presumably": 1, "negative": 2, "psychological": 2, "factor": 1, "repeatedly": 1, "habitat": 1, "primate": 1, "ape": 1, "gorilla": 1, "disrupt": 1, "violent": 1, "advent": 1, "ultimate": 1, "feasible": 1};
+        const wordData = {"assumption": {"count": 2, "definition": "n. 假设, 承担"}, "essentially": {"count": 1, "definition": "adv. 本质上"}, "selfish": {"count": 4, "definition": "adj. 自私的"}, "ruthless": {"count": 1, "definition": "adj. 无情的"}, "impulse": {"count": 1, "definition": "n. 冲动, 脉冲, 推动力"}, "accumulate": {"count": 2, "definition": "v. 积累"}, "ulterior": {"count": 1, "definition": "adj. 别有用心"}, "motive": {"count": 1, "definition": "n. 动机；adj. 发动的"}, "transcend": {"count": 1, "definition": "v. 超越"}, "innate": {"count": 2, "definition": "adj. 天生的"}, "brutality": {"count": 1, "definition": "n. 残暴, 冷酷"}, "bleak": {"count": 1, "definition": "adj. 无望的, 阴冷的, 荒凉的"}, "gene": {"count": 1, "definition": "n. 基因"}, "individualistic": {"count": 1, "definition": "adj. 个人主义的, 主张个人自由的"}, "prevalent": {"count": 2, "definition": "adj. 普遍的"}, "psychology": {"count": 2, "definition": "n. 心理学, 心理, 心理机制"}, "trait": {"count": 9, "definition": "n. 特征"}, "prehistoric": {"count": 7, "definition": "adj. 史前的"}, "brutal": {"count": 2, "definition": "adj. 残暴的, 直率的"}, "survival": {"count": 2, "definition": "n. 生存, 遗留物"}, "bound": {"count": 1, "definition": "adj. 极有可能发生的, 受约束,..."}, "rival": {"count": 1, "definition": "n. 竞争对手；adj. 竞争的；..."}, "racism": {"count": 2, "definition": "n. 种族歧视, 种族主义"}, "desperate": {"count": 1, "definition": "adj. 绝望的, 孤注一掷的, 极其渴..."}, "era": {"count": 2, "definition": "n. 时代"}, "sparse": {"count": 1, "definition": "adj. 稀疏"}, "populate": {"count": 1, "definition": "v. 居住于, 使定居, 填充"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "contemporary": {"count": 1, "definition": "adj. 同时代的, 现代的, 现..."}, "anthropologist": {"count": 2, "definition": "n. 人类学家"}, "ethical": {"count": 1, "definition": "adj. 伦理的, 道德的"}, "obligation": {"count": 1, "definition": "n. 义务"}, "swap": {"count": 1, "definition": "v. 交换, 调换位置, 替换；n. 交换物..."}, "arrow": {"count": 3, "definition": "n. 箭, 箭头"}, "acclaim": {"count": 1, "definition": "v. 公开赞扬；n. 赞誉"}, "fir": {"count": 1, "definition": "n. 冷杉"}, "exile": {"count": 1, "definition": "n. 流亡, 流亡者；v. 流放"}, "dictate": {"count": 1, "definition": "v. 命令, 支配, 口述；n. 命令"}, "autonomy": {"count": 1, "definition": "n. 自治权, 自主性"}, "custody": {"count": 1, "definition": "n. 监护权, 拘留"}, "agriculture": {"count": 1, "definition": "n. 农业"}, "settle": {"count": 1, "definition": "v. 解决争端, 最终决定, ..."}, "domination": {"count": 1, "definition": "n. 支配, 主导地位, 压制"}, "evolution": {"count": 1, "definition": "n. 进化, 演变"}, "ruthlessly": {"count": 2, "definition": "adv. 无情地"}, "cooperation": {"count": 1, "definition": "n. 合作, 配合度"}, "presumably": {"count": 1, "definition": "adv. 大概"}, "negative": {"count": 2, "definition": "adj. 负面的, 否定的, 拒绝..."}, "psychological": {"count": 2, "definition": "adj. 心理的, 心理学的"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "repeatedly": {"count": 1, "definition": "adv. 反复地"}, "habitat": {"count": 1, "definition": "n. 栖息地"}, "primate": {"count": 1, "definition": "n. 灵长目动物, 首席主教"}, "ape": {"count": 1, "definition": "n. 猿；v. 模仿, 嘲弄地模仿"}, "gorilla": {"count": 1, "definition": "n. 大猩猩, 壮汉"}, "disrupt": {"count": 1, "definition": "v. 妨碍, 颠覆"}, "violent": {"count": 1, "definition": "adj. 暴力的, 激烈的, 猛烈的, ..."}, "advent": {"count": 1, "definition": "n. 来临, 将临期"}, "ultimate": {"count": 1, "definition": "adj. 最终的, 极致的, 最初..."}, "feasible": {"count": 1, "definition": "adj. 可行的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

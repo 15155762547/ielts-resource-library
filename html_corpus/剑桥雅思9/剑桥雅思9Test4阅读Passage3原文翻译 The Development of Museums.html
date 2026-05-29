@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"conviction": 2, "relic": 2, "infallible": 1, "testimony": 1, "rooted": 1, "evident": 1, "artefact": 2, "chronicle": 1, "endure": 1, "tangible": 1, "showcase": 1, "scholar": 1, "subtle": 1, "format": 1, "exclusive": 1, "domain": 1, "heritage": 9, "excite": 2, "imperial": 1, "prototype": 1, "predict": 1, "so-called": 1, "site": 4, "vivid": 1, "suggest": 1, "distinction": 1, "gradual": 1, "evaporate": 1, "story": 1, "authenticity": 1, "presentation": 4, "cage": 1, "greenhouse": 1, "jungle": 1, "undergo": 1, "fantasy": 1, "distinct": 1, "recreate": 1, "asset": 1, "exhibit": 1, "attractively": 1, "steer": 1, "attractiveness": 1, "accuracy": 1, "depict": 1, "facial": 1, "correspond": 1, "perception": 2, "dominant": 1, "gesture": 1, "contemporary": 1, "ancestor": 1, "compensation": 1, "interpretation": 2, "misconception": 1, "prejudice": 1, "matter": 1, "bias": 4, "provided": 1, "inevitable": 1, "representation": 2, "cathedral": 1, "dwelling": 1, "premise": 1, "approximate": 1, "inhabitant": 1, "circumstance": 1, "era": 1, "stroll": 1, "nostalgia": 1, "induce": 1};
+        const wordData = {"conviction": {"count": 2, "definition": "n. 定罪, 信念, 确信"}, "relic": {"count": 2, "definition": "n. 遗物, 圣物"}, "infallible": {"count": 1, "definition": "adj. 无误, 可靠"}, "testimony": {"count": 1, "definition": "n. 证明, 证词"}, "rooted": {"count": 1, "definition": "adj. 源于...的, 根深蒂固的, 筋疲..."}, "evident": {"count": 1, "definition": "adj. 明显的"}, "artefact": {"count": 2, "definition": "n. 人造物品"}, "chronicle": {"count": 1, "definition": "n. 编年史；v. 按时间顺序记录"}, "endure": {"count": 1, "definition": "v. 忍受, 持续"}, "tangible": {"count": 1, "definition": "adj. 实在的, 可触摸的"}, "showcase": {"count": 1, "definition": "n. 展示平台, 展示柜；v. 展示"}, "scholar": {"count": 1, "definition": "n. 学者, 奖学金获得者, 优秀学..."}, "subtle": {"count": 1, "definition": "adj. 不易察觉的, 巧妙的, ..."}, "format": {"count": 1, "definition": "n. 格式, 开本, 数据格式；v. 排..."}, "exclusive": {"count": 1, "definition": "adj. 专属的, 排外的, 高..."}, "domain": {"count": 1, "definition": "n. 领域, 域名, 领地, 定义域"}, "heritage": {"count": 9, "definition": "n. 遗产"}, "excite": {"count": 2, "definition": "v. 使兴奋, 使过度兴奋, 激起强烈情..."}, "imperial": {"count": 1, "definition": "adj. 帝国的, 英制的"}, "prototype": {"count": 1, "definition": "n. 原型"}, "predict": {"count": 1, "definition": "v. 预测"}, "so-called": {"count": 1, "definition": "adj. 所谓的, 通常所说的"}, "site": {"count": 4, "definition": "n. 地点, 现场, 场所, *..."}, "vivid": {"count": 1, "definition": "adj. 生动, 鲜明, 清晰"}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "distinction": {"count": 1, "definition": "n. 区别, 区分, 特点, 卓越, 荣誉"}, "gradual": {"count": 1, "definition": "adj. 逐渐的, 平缓的"}, "evaporate": {"count": 1, "definition": "v. 蒸发, 逐渐消失"}, "story": {"count": 1, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "authenticity": {"count": 1, "definition": "n. 真实性"}, "presentation": {"count": 4, "definition": "n. 展示会, 呈递, 呈现方式, 演..."}, "cage": {"count": 1, "definition": "n. 笼子；v. 关进笼子"}, "greenhouse": {"count": 1, "definition": "n. 温室"}, "jungle": {"count": 1, "definition": "n. 丛林, 险恶的环境, 丛林音乐"}, "undergo": {"count": 1, "definition": "v. 经历"}, "fantasy": {"count": 1, "definition": "n. 幻想, 想象, 想象力,..."}, "distinct": {"count": 1, "definition": "adj. 清晰的, 不同的, 明确的"}, "recreate": {"count": 1, "definition": "v. 重现"}, "asset": {"count": 1, "definition": "n. 资产"}, "exhibit": {"count": 1, "definition": "v. 展出, 表现出；n. 展品, *..."}, "attractively": {"count": 1, "definition": "adv. 吸引人地"}, "steer": {"count": 1, "definition": "v. 驾驶, 朝某个方向前进, ..."}, "attractiveness": {"count": 1, "definition": "n. 吸引力"}, "accuracy": {"count": 1, "definition": "n. 准确性, 准确度"}, "depict": {"count": 1, "definition": "v. 描绘, 描述"}, "facial": {"count": 1, "definition": "adj. 面部的；n. 面部护理"}, "correspond": {"count": 1, "definition": "vi. 对应, 相当, 通信"}, "perception": {"count": 2, "definition": "n. 看法, 知觉, 领悟力"}, "dominant": {"count": 1, "definition": "adj. 主导的, 显性基因"}, "gesture": {"count": 1, "definition": "n. 手势, 表示；v. 做手势"}, "contemporary": {"count": 1, "definition": "adj. 同时代的, 现代的, 现..."}, "ancestor": {"count": 1, "definition": "n. 祖先, 祖先物种, 前身"}, "compensation": {"count": 1, "definition": "n. 赔偿, 薪酬, 补偿"}, "interpretation": {"count": 2, "definition": "n. 解释, 演绎"}, "misconception": {"count": 1, "definition": "n. 误解"}, "prejudice": {"count": 1, "definition": "n. 偏见；v. 使产生偏见, 损害"}, "matter": {"count": 1, "definition": "n. 问题, 事情, 情况, 事项, 物..."}, "bias": {"count": 4, "definition": "n. 偏见, 天赋, 偏差, 斜裁；v. ..."}, "provided": {"count": 1, "definition": "conj. 如果"}, "inevitable": {"count": 1, "definition": "adj. 不可避免, 必然, 注定"}, "representation": {"count": 2, "definition": "n. 表现, 代表, 陈述"}, "cathedral": {"count": 1, "definition": "n. 大教堂"}, "dwelling": {"count": 1, "definition": "n. 住所"}, "premise": {"count": 1, "definition": "n. 前提"}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "inhabitant": {"count": 1, "definition": "n. 居民"}, "circumstance": {"count": 1, "definition": "n. 情况, 生活状况, 境遇"}, "era": {"count": 1, "definition": "n. 时代"}, "stroll": {"count": 1, "definition": "v. 散步；n. 漫步"}, "nostalgia": {"count": 1, "definition": "n. 怀旧之情"}, "induce": {"count": 1, "definition": "v. 劝说, 引起, 引产"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

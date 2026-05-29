@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"smooth": 1, "cocoon": 3, "protective": 1, "legend": 2, "ruler": 1, "china": 7, "story": 1, "destruction": 1, "tree": 2, "thread": 3, "wind": 1, "subsequently": 1, "persuade": 1, "rear": 1, "grove": 1, "devise": 1, "woven": 1, "harvest": 1, "weave": 2, "royalty": 1, "entitle": 2, "clothe": 1, "gradual": 2, "relaxed": 1, "dynasty": 2, "peasant": 1, "instrument": 1, "noble": 1, "climb": 1, "cross": 1, "merchant": 2, "goods": 1, "sole": 1, "empire": 1, "accord": 1, "monk": 1, "turkey": 1, "conceal": 1, "cane": 1, "chinese": 1, "conquer": 1, "magnificent": 1, "extensive": 1, "settle": 1, "esteem": 1, "reputation": 1, "facilitate": 1, "canal": 1, "factor": 1, "nylon": 1, "traditionally": 1, "stocking": 1, "parachute": 1, "stifle": 1, "restore": 1, "practically": 1, "decade": 1, "recapture": 1, "metric": 1, "ton": 1};
+        const wordData = {"smooth": {"count": 1, "definition": "adj. 平滑的, 无颗粒的, 顺..."}, "cocoon": {"count": 3, "definition": "n. 茧, 保护层；v. 包裹, 宅在家里"}, "protective": {"count": 1, "definition": "adj. 保护的, 有保护欲的, ..."}, "legend": {"count": 2, "definition": "n. 传说, 传奇人物, 图例, 铭文"}, "ruler": {"count": 1, "definition": "n. 统治者, 尺子"}, "china": {"count": 7, "definition": "n. 瓷器粘土, 瓷器"}, "story": {"count": 1, "definition": "n. 故事, 故事情节, 叙述, 经历,..."}, "destruction": {"count": 1, "definition": "n. 破坏"}, "tree": {"count": 2, "definition": "n. 树"}, "thread": {"count": 3, "definition": "n. 线, 线索, 细线, 帖子, ..."}, "wind": {"count": 1, "definition": "n. 风, 肠胃气, 气息, 管乐器, ..."}, "subsequently": {"count": 1, "definition": "adv. 之后"}, "persuade": {"count": 1, "definition": "v. 说服"}, "rear": {"count": 1, "definition": "adj. 后面的；n. 后部, 臀部；v. ..."}, "grove": {"count": 1, "definition": "n. 小树林, 果园, 林荫道"}, "devise": {"count": 1, "definition": "v. 设计"}, "woven": {"count": 1, "definition": "v. 编织"}, "harvest": {"count": 1, "definition": "n. 收获季节, 收获物；v. 收..."}, "weave": {"count": 2, "definition": "v. 编织, 编结, 穿梭, ..."}, "royalty": {"count": 1, "definition": "n. 王室成员, 版税, 矿区使用费"}, "entitle": {"count": 2, "definition": "v. 给予权利, 命名"}, "clothe": {"count": 1, "definition": "v. 给...穿衣, 提供衣物"}, "gradual": {"count": 2, "definition": "adj. 逐渐的, 平缓的"}, "relaxed": {"count": 1, "definition": "adj. 放松的, 随意的, 宽松的"}, "dynasty": {"count": 2, "definition": "n. 王朝, 王朝时期"}, "peasant": {"count": 1, "definition": "n. 小农, 粗人"}, "instrument": {"count": 1, "definition": "n. 乐器, 仪器, 仪表, 工具, 工..."}, "noble": {"count": 1, "definition": "adj. 高尚的, 贵族的, 宏伟..."}, "climb": {"count": 1, "definition": "v. 向上爬, 攀岩, 攀爬, 上升, ..."}, "cross": {"count": 1, "definition": "v. 穿过, 交叉, 交叉放置, 反对,..."}, "merchant": {"count": 2, "definition": "n. 商人, 店主, 爱好者；adj. 海..."}, "goods": {"count": 1, "definition": "n. 商品, 物品, 货物"}, "sole": {"count": 1, "definition": "adj. 唯一的, 独有的；n. ..."}, "empire": {"count": 1, "definition": "n. 帝国, 商业帝国, 势力范围"}, "accord": {"count": 1, "definition": "n. 协议；v. 给予"}, "monk": {"count": 1, "definition": "n. 和尚"}, "turkey": {"count": 1, "definition": "n. 火鸡, 火鸡肉, 失败之作, 笨蛋"}, "conceal": {"count": 1, "definition": "v. 隐藏"}, "cane": {"count": 1, "definition": "n. 茎秆, 藤材, 支撑杆, 手杖, （体罚..."}, "chinese": {"count": 1, "definition": "adj. 中国的；n. 中国人, 中文"}, "conquer": {"count": 1, "definition": "v. 征服, 战胜, 克服"}, "magnificent": {"count": 1, "definition": "adj. 壮丽的"}, "extensive": {"count": 1, "definition": "adj. 广阔的, 渊博的"}, "settle": {"count": 1, "definition": "v. 解决争端, 最终决定, ..."}, "esteem": {"count": 1, "definition": "n. 敬重；v. 尊敬, 看待"}, "reputation": {"count": 1, "definition": "n. 声誉"}, "facilitate": {"count": 1, "definition": "v. 促进"}, "canal": {"count": 1, "definition": "n. 运河, 管"}, "factor": {"count": 1, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "nylon": {"count": 1, "definition": "n. 尼龙, 尼龙丝袜"}, "traditionally": {"count": 1, "definition": "adv. 传统上, 传统地"}, "stocking": {"count": 1, "definition": "n. 长筒袜, 圣诞袜"}, "parachute": {"count": 1, "definition": "n. 降落伞；v. 跳伞, 空投, 空降"}, "stifle": {"count": 1, "definition": "v. 压制, 使窒息"}, "restore": {"count": 1, "definition": "v. 恢复, 修复, 归还"}, "practically": {"count": 1, "definition": "adv. 几乎, 实际地"}, "decade": {"count": 1, "definition": "n. 十年"}, "recapture": {"count": 1, "definition": "n. 收复, 重新捕获；v. 收复, 重新捕..."}, "metric": {"count": 1, "definition": "adj. 使用公制的, 公制制造的, 格..."}, "ton": {"count": 1, "definition": "n. 吨, 大量, 吨位, 百迈"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

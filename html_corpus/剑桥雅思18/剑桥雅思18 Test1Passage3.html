@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"amateur": 1, "satellite": 15, "orbit": 11, "yearly": 1, "decade": 1, "lead": 3, "deploy": 1, "constellation": 2, "iridium": 1, "smash": 1, "inactive": 1, "russian": 4, "altitude": 1, "altogether": 1, "operator": 6, "steer": 1, "spacecraft": 1, "junk": 2, "era": 1, "investigate": 1, "efficiently": 1, "compile": 1, "massive": 1, "debris": 6, "cascade": 1, "fragment": 1, "rendering": 1, "collaborate": 1, "threat": 1, "coordination": 1, "guideline": 1, "vent": 1, "leftover": 1, "explosion": 1, "atmosphere": 1, "disintegrate": 1, "abide": 1, "steward": 1, "enterprise": 1, "bankrupt": 1, "tackle": 1, "precision": 1, "alleviate": 1, "maneuver": 1, "collision": 1, "precisely": 1, "aerospace": 1, "corporation": 1, "landing": 1, "accuracy": 1, "database": 5, "consistently": 1, "authoritative": 1, "catalogue": 2, "accurate": 1, "designate": 2, "tragedy": 1, "pollute": 1};
+        const wordData = {"amateur": {"count": 1, "definition": "adj. 业余爱好的, 业余的, 业余水..."}, "satellite": {"count": 15, "definition": "n. 人造卫星, 卫星, 附属物"}, "orbit": {"count": 11, "definition": "n. 轨道, 势力范围；v. 绕...运行"}, "yearly": {"count": 1, "definition": "adv. 每年一次；adj. 每年发生一..."}, "decade": {"count": 1, "definition": "n. 十年"}, "lead": {"count": 3, "definition": "v. 带领, 连接, 通向, ..."}, "deploy": {"count": 1, "definition": "v. 部署军队或武器, 有效利用"}, "constellation": {"count": 2, "definition": "n. 星座, 群"}, "iridium": {"count": 1, "definition": "n. 铱"}, "smash": {"count": 1, "definition": "v. 打碎, 猛击, 冲破, ..."}, "inactive": {"count": 1, "definition": "adj. 不活跃的, 未被使用的, 无效的"}, "russian": {"count": 4, "definition": "adj. 俄罗斯的；n. 俄罗斯人, 俄语"}, "altitude": {"count": 1, "definition": "n. 海拔高度, 高地"}, "altogether": {"count": 1, "definition": "adv. 完全地, 总共, 总..."}, "operator": {"count": 6, "definition": "n. 操作员, 经营者, 接线..."}, "steer": {"count": 1, "definition": "v. 驾驶, 朝某个方向前进, ..."}, "spacecraft": {"count": 1, "definition": "n. 航天器"}, "junk": {"count": 2, "definition": "n. 垃圾, 垃圾食品, 平底帆船；v. 丢弃"}, "era": {"count": 1, "definition": "n. 时代"}, "investigate": {"count": 1, "definition": "v. 调查, 研究"}, "efficiently": {"count": 1, "definition": "adv. 高效地"}, "compile": {"count": 1, "definition": "v. 汇编, 编译"}, "massive": {"count": 1, "definition": "adj. 巨大的, 庞大的, 重大的"}, "debris": {"count": 6, "definition": "n. 碎片"}, "cascade": {"count": 1, "definition": "n. 小瀑布群, 大量倾泻, 大量垂落, ..."}, "fragment": {"count": 1, "definition": "n. 碎片, 片段；v. 破碎"}, "rendering": {"count": 1, "definition": "n. 演绎, 译文, 抹灰"}, "collaborate": {"count": 1, "definition": "vi. 合作, 通敌"}, "threat": {"count": 1, "definition": "n. 威胁"}, "coordination": {"count": 1, "definition": "n. 协调, 协调性"}, "guideline": {"count": 1, "definition": "n. 指导方针, 决策参考"}, "vent": {"count": 1, "definition": "n. 通风口, 排泄孔, 开衩；v. 发泄"}, "leftover": {"count": 1, "definition": "adj. 剩余的；n. 剩饭, 遗留物"}, "explosion": {"count": 1, "definition": "n. 爆炸, 激增, 爆发"}, "atmosphere": {"count": 1, "definition": "n. 大气层, 大气, 空气, 氛围"}, "disintegrate": {"count": 1, "definition": "vi. 崩解, 瓦解"}, "abide": {"count": 1, "definition": "v. 忍受, 居住"}, "steward": {"count": 1, "definition": "n. 乘务员, 管理员, 伙食管理员, 管..."}, "enterprise": {"count": 1, "definition": "n. 企业, 大型项目, 私营企业, 创业..."}, "bankrupt": {"count": 1, "definition": "adj. 破产的, 彻底缺乏的；n. 破产..."}, "tackle": {"count": 1, "definition": "v. 努力解决, 与...交涉, 抢断, ..."}, "precision": {"count": 1, "definition": "n. 精确性"}, "alleviate": {"count": 1, "definition": "v. 减轻"}, "maneuver": {"count": 1, "definition": "n. 灵巧的动作, 策略, 军事演习"}, "collision": {"count": 1, "definition": "n. 碰撞, 冲突"}, "precisely": {"count": 1, "definition": "adv. 精确地, 准确地"}, "aerospace": {"count": 1, "definition": "n. 航空航天"}, "corporation": {"count": 1, "definition": "n. 大公司, 法人团体, 市政当局"}, "landing": {"count": 1, "definition": "n. 着陆, 楼梯平台, 登陆, 码头..."}, "accuracy": {"count": 1, "definition": "n. 准确性, 准确度"}, "database": {"count": 5, "definition": "n. 数据库"}, "consistently": {"count": 1, "definition": "adv. 始终如一地, 持续不变地, 一..."}, "authoritative": {"count": 1, "definition": "adj. 权威的, 可靠的"}, "catalogue": {"count": 2, "definition": "n. 目录，清单；v. 编目"}, "accurate": {"count": 1, "definition": "adj. 准确的, 能提供准确信息的, ..."}, "designate": {"count": 2, "definition": "v. 正式命名, 任命, 标记；..."}, "tragedy": {"count": 1, "definition": "n. 悲剧"}, "pollute": {"count": 1, "definition": "v. 污染"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

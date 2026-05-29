@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"patent": 4, "revolutionary": 1, "synthetic": 3, "derive": 1, "action": 1, "constituent": 1, "melt": 1, "heated": 3, "revert": 1, "viscous": 1, "fixed": 1, "distinction": 1, "impetus": 1, "factor": 2, "immense": 1, "domain": 1, "pragmatic": 1, "substitute": 1, "dwindle": 1, "ivory": 1, "embark": 1, "resin": 5, "acid": 1, "volatile": 1, "fluid": 1, "photographic": 1, "amass": 1, "manufacture": 2, "vacuum": 1, "kettle": 1, "soluble": 1, "malleable": 1, "shallow": 1, "tray": 1, "harden": 3, "cotton": 1, "moisture": 1, "resistance": 1, "catalyst": 1, "compound": 1, "ammonia": 1, "raw": 1, "hollow": 1, "thereby": 1, "taper": 1, "molten": 1, "smooth": 1, "streamline": 1, "disdain": 1, "unparalleled": 1, "popularity": 1, "expansion": 1, "goods": 1, "electrical": 1, "manufacturer": 1, "seize": 1, "insulate": 1, "relish": 1, "dazzling": 1, "array": 1, "shade": 1, "delighted": 1, "tone": 1, "era": 1, "despise": 1, "renaissance": 1, "renew": 1, "marketplace": 1, "dedicated": 1, "innovative": 1};
+        const wordData = {"patent": {"count": 4, "definition": "n. 专利权；adj. 专利的, 明显..."}, "revolutionary": {"count": 1, "definition": "adj. 革命的, 革命性的；n. ..."}, "synthetic": {"count": 3, "definition": "adj. 人造的, 综合语的；n. 合成材料"}, "derive": {"count": 1, "definition": "v. 从...获得, 源自, 推导出"}, "action": {"count": 1, "definition": "n. 行动, 行为, 罢工行动, ..."}, "constituent": {"count": 1, "definition": "n. 选民, 组成部分；adj. 构成的"}, "melt": {"count": 1, "definition": "v. 融化, 软化, 热化"}, "heated": {"count": 3, "definition": "adj. 激烈的, 加热的"}, "revert": {"count": 1, "definition": "v. 恢复"}, "viscous": {"count": 1, "definition": "adj. 粘稠的"}, "fixed": {"count": 1, "definition": "adj. 固定的, 坚定的, 固定..."}, "distinction": {"count": 1, "definition": "n. 区别, 区分, 特点, 卓越, 荣誉"}, "impetus": {"count": 1, "definition": "n. 推动力, 冲力"}, "factor": {"count": 2, "definition": "n. 因素, 因数, 倍数, 系数, 因子；..."}, "immense": {"count": 1, "definition": "adj. 巨大的"}, "domain": {"count": 1, "definition": "n. 领域, 域名, 领地, 定义域"}, "pragmatic": {"count": 1, "definition": "adj. 务实的"}, "substitute": {"count": 1, "definition": "n. 替代品, 替补队员；v. ..."}, "dwindle": {"count": 1, "definition": "v. 逐渐减少"}, "ivory": {"count": 1, "definition": "n. 象牙, 象牙制品, 象牙白"}, "embark": {"count": 1, "definition": "v. 登船"}, "resin": {"count": 5, "definition": "n. 树脂, 合成树脂"}, "acid": {"count": 1, "definition": "n. 酸, 迷幻药；adj. 酸性的, 酸..."}, "volatile": {"count": 1, "definition": "adj. 情绪多变的, 不稳定的, 易挥..."}, "fluid": {"count": 1, "definition": "n. 流体；adj. 流畅的, 易变的,..."}, "photographic": {"count": 1, "definition": "adj. 摄影的"}, "amass": {"count": 1, "definition": "v. 积累"}, "manufacture": {"count": 2, "definition": "v. 批量生产, 捏造, 生成；n. 制..."}, "vacuum": {"count": 1, "definition": "n. 真空, 空白, 吸尘；v. 用..."}, "kettle": {"count": 1, "definition": "n. 烧水壶；v. 包围控制"}, "soluble": {"count": 1, "definition": "adj. 可溶解的, 可解决的"}, "malleable": {"count": 1, "definition": "adj. 可锻的, 易受影响的"}, "shallow": {"count": 1, "definition": "adj. 浅的, 肤浅的, 浅呼吸的"}, "tray": {"count": 1, "definition": "n. 托盘"}, "harden": {"count": 3, "definition": "v. 变硬, 加剧, 坚定, 使冷酷"}, "cotton": {"count": 1, "definition": "n. 棉花, 棉布, 棉线, 棉球；..."}, "moisture": {"count": 1, "definition": "n. 水分"}, "resistance": {"count": 1, "definition": "n. 反对, 武力抵抗, 抵抗..."}, "catalyst": {"count": 1, "definition": "n. 催化剂"}, "compound": {"count": 1, "definition": "n. 混合物, 化合物, 复合..."}, "ammonia": {"count": 1, "definition": "n. 氨"}, "raw": {"count": 1, "definition": "adj. 生的, 原始的, 未经处..."}, "hollow": {"count": 1, "definition": "adj. 中空的, 深陷的, 发出空..."}, "thereby": {"count": 1, "definition": "adv. 由此"}, "taper": {"count": 1, "definition": "v. 逐渐变细；n. 引火物, 细蜡烛, 逐..."}, "molten": {"count": 1, "definition": "adj. 熔化的"}, "smooth": {"count": 1, "definition": "adj. 平滑的, 无颗粒的, 顺..."}, "streamline": {"count": 1, "definition": "v. 流线型化, 优化"}, "disdain": {"count": 1, "definition": "n. 蔑视；v. 蔑视, 不屑于"}, "unparalleled": {"count": 1, "definition": "adj. 无与伦比"}, "popularity": {"count": 1, "definition": "n. 人气"}, "expansion": {"count": 1, "definition": "n. 扩张"}, "goods": {"count": 1, "definition": "n. 商品, 物品, 货物"}, "electrical": {"count": 1, "definition": "adj. 与电有关的"}, "manufacturer": {"count": 1, "definition": "n. 制造商"}, "seize": {"count": 1, "definition": "v. 抓住, 占领, 逮捕, ..."}, "insulate": {"count": 1, "definition": "v. 绝缘, 隔离"}, "relish": {"count": 1, "definition": "v. 非常享受；n. 极大的享受, 开胃酱"}, "dazzling": {"count": 1, "definition": "adj. 耀眼的, 令人惊叹的"}, "array": {"count": 1, "definition": "n. 阵列, 数组；v. 排列, 列阵"}, "shade": {"count": 1, "definition": "n. 阴凉处, 色度, 遮光罩, ..."}, "delighted": {"count": 1, "definition": "adj. 高兴"}, "tone": {"count": 1, "definition": "n. 语气, 基调, 音色, ..."}, "era": {"count": 1, "definition": "n. 时代"}, "despise": {"count": 1, "definition": "v. 鄙视"}, "renaissance": {"count": 1, "definition": "n. 文艺复兴, 复兴"}, "renew": {"count": 1, "definition": "v. 重新开始, 续期, 重申..."}, "marketplace": {"count": 1, "definition": "n. 市场, 市集"}, "dedicated": {"count": 1, "definition": "adj. 专注的, 专用的"}, "innovative": {"count": 1, "definition": "adj. 创新的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

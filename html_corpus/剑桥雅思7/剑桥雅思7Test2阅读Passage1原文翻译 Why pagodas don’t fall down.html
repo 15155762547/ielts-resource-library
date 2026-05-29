@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"typhoon": 3, "pagoda": 23, "standing": 1, "lightning": 1, "disastrous": 1, "topple": 1, "elevate": 1, "highway": 1, "devastate": 1, "magnificent": 1, "temple": 3, "scholar": 1, "slender": 1, "stable": 1, "erect": 1, "reinforce": 1, "concrete": 1, "dampen": 1, "sideways": 1, "skyscraper": 3, "masterpiece": 1, "engineering": 2, "wedge": 1, "upright": 1, "hesitation": 1, "soar": 1, "carpenter": 1, "sway": 3, "settle": 1, "china": 3, "buddhism": 1, "chinese": 2, "brick": 1, "inner": 2, "staircase": 2, "architecture": 1, "storey": 4, "dispense": 1, "learned": 1, "eaves": 4, "gush": 1, "overhang": 2, "width": 1, "porcelain": 1, "tile": 2, "earthenware": 1, "resilience": 1, "pine": 1, "tree": 1, "massive": 1, "pillar": 5, "startle": 1, "suspend": 1, "column": 2, "structural": 3, "institute": 1, "stationary": 1, "pendulum": 1, "assistance": 1, "advanced": 1, "grasp": 1, "applied": 1, "stack": 2, "consecutive": 1, "constrain": 1, "bang": 1, "taper": 1, "successive": 1, "vertical": 1, "corresponding": 1, "counterpart": 1, "interestingly": 1, "pole": 3, "graceful": 1, "abrupt": 1, "anticipate": 1};
+        const wordData = {"typhoon": {"count": 3, "definition": "n. 台风"}, "pagoda": {"count": 23, "definition": "n. 宝塔"}, "standing": {"count": 1, "definition": "adj. 站立的, 持久的；n. ..."}, "lightning": {"count": 1, "definition": "n. 闪电；adj. 极快的"}, "disastrous": {"count": 1, "definition": "adj. 灾难性的"}, "topple": {"count": 1, "definition": "v. 摔倒, 推翻"}, "elevate": {"count": 1, "definition": "v. 提升, 抬高, 提高, 振奋"}, "highway": {"count": 1, "definition": "n. 高速公路, 公路"}, "devastate": {"count": 1, "definition": "v. 彻底摧毁, 使震惊"}, "magnificent": {"count": 1, "definition": "adj. 壮丽的"}, "temple": {"count": 3, "definition": "n. 寺庙, 太阳穴"}, "scholar": {"count": 1, "definition": "n. 学者, 奖学金获得者, 优秀学..."}, "slender": {"count": 1, "definition": "adj. 苗条的, 细长的, 微薄的"}, "stable": {"count": 1, "definition": "adj. 稳定的, 沉稳的, 化学..."}, "erect": {"count": 1, "definition": "v. 建造, 竖立, 建立；adj. ..."}, "reinforce": {"count": 1, "definition": "v. 加强, 加固, 增援"}, "concrete": {"count": 1, "definition": "adj. 混凝土制成的, 具体的, ..."}, "dampen": {"count": 1, "definition": "v. 弄湿, 抑制"}, "sideways": {"count": 1, "definition": "adv. 横向, 一侧向前；adj. 朝向侧..."}, "skyscraper": {"count": 3, "definition": "n. 摩天大楼"}, "masterpiece": {"count": 1, "definition": "n. 代表作"}, "engineering": {"count": 2, "definition": "n. 工程, 工程学"}, "wedge": {"count": 1, "definition": "n. 楔子, 楔形物, 坡跟鞋, 挖起杆；..."}, "upright": {"count": 1, "definition": "adj. 挺直的, 直立的, 正直的；adv. ..."}, "hesitation": {"count": 1, "definition": "n. 犹豫, 踌躇"}, "soar": {"count": 1, "definition": "vi. 迅速上升, 翱翔, 滞..."}, "carpenter": {"count": 1, "definition": "n. 木匠"}, "sway": {"count": 3, "definition": "v. 轻轻摇摆, 影响；n. 摇摆, 影响力"}, "settle": {"count": 1, "definition": "v. 解决争端, 最终决定, ..."}, "china": {"count": 3, "definition": "n. 瓷器粘土, 瓷器"}, "buddhism": {"count": 1, "definition": "n. 佛教"}, "chinese": {"count": 2, "definition": "adj. 中国的；n. 中国人, 中文"}, "brick": {"count": 1, "definition": "n. 砖块, 积木, 靠谱的朋友；v. ..."}, "inner": {"count": 2, "definition": "adj. 内部的, 内心的"}, "staircase": {"count": 2, "definition": "n. 楼梯"}, "architecture": {"count": 1, "definition": "n. 建筑设计艺术, 建筑风格*..."}, "storey": {"count": 4, "definition": "n. 楼层, 层数"}, "dispense": {"count": 1, "definition": "v. 分发, 提供, 配药"}, "learned": {"count": 1, "definition": "adj. 博学的, 学者的, 习得的"}, "eaves": {"count": 4, "definition": "n. 屋檐"}, "gush": {"count": 1, "definition": "v. 涌出, 迸出, 滔滔不绝地说；n. 涌..."}, "overhang": {"count": 2, "definition": "v. 悬垂；n. 悬垂部分, 悬垂量, 过剩"}, "width": {"count": 1, "definition": "n. 宽度"}, "porcelain": {"count": 1, "definition": "n. 瓷器"}, "tile": {"count": 2, "definition": "n. 瓷砖, 瓦片, 棋子；v. 铺瓷砖, 平..."}, "earthenware": {"count": 1, "definition": "n. 陶器"}, "resilience": {"count": 1, "definition": "n. 韧性, 弹性"}, "pine": {"count": 1, "definition": "n. 松树, 松木；v. 思念"}, "tree": {"count": 1, "definition": "n. 树"}, "massive": {"count": 1, "definition": "adj. 巨大的, 庞大的, 重大的"}, "pillar": {"count": 5, "definition": "n. 柱子, 纪念柱, 柱状物, 中坚力量..."}, "startle": {"count": 1, "definition": "v. 使吃惊"}, "suspend": {"count": 1, "definition": "v. 悬挂, 暂停, 推迟, 停职, 悬浮"}, "column": {"count": 2, "definition": "n. 栏, 列, 专栏, 柱子, ..."}, "structural": {"count": 3, "definition": "adj. 结构的"}, "institute": {"count": 1, "definition": "n. 研究所；v. 建立"}, "stationary": {"count": 1, "definition": "adj. 静止的, 稳定的"}, "pendulum": {"count": 1, "definition": "n. 钟摆"}, "assistance": {"count": 1, "definition": "n. 帮助"}, "advanced": {"count": 1, "definition": "adj. 先进的, 高级的, 发达的"}, "grasp": {"count": 1, "definition": "v. 紧握, 理解, 抓住机会；..."}, "applied": {"count": 1, "definition": "adj. 应用的"}, "stack": {"count": 2, "definition": "n. 一摞, 大量, 工厂烟囱, 图书馆藏..."}, "consecutive": {"count": 1, "definition": "adj. 连续的"}, "constrain": {"count": 1, "definition": "v. 强迫, 限制"}, "bang": {"count": 1, "definition": "v. 猛击, 砰地关上, 猛放, 撞到, 发..."}, "taper": {"count": 1, "definition": "v. 逐渐变细；n. 引火物, 细蜡烛, 逐..."}, "successive": {"count": 1, "definition": "adj. 连续的"}, "vertical": {"count": 1, "definition": "adj. 垂直的, 纵向的, 纵向传..."}, "corresponding": {"count": 1, "definition": "adj. 相应的"}, "counterpart": {"count": 1, "definition": "n. 对应的人"}, "interestingly": {"count": 1, "definition": "adv. 有趣地"}, "pole": {"count": 3, "definition": "n. 杆子, 极点, 电极, 极端；..."}, "graceful": {"count": 1, "definition": "adj. 优雅的, 得体的"}, "abrupt": {"count": 1, "definition": "adj. 突然的, 唐突的"}, "anticipate": {"count": 1, "definition": "v. 预料, 预见, 期待, ..."}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

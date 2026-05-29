@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"civilization": 2, "tunnel": 34, "provided": 2, "settlement": 1, "millennium": 1, "vertical": 3, "shaft": 12, "interval": 2, "excavate": 3, "ventilation": 1, "hillside": 1, "canal": 1, "construct": 4, "agriculture": 1, "climb": 1, "lid": 1, "plumb": 2, "rod": 1, "slope": 1, "drain": 1, "involved": 1, "approximate": 1, "excavation": 1, "advanced": 1, "geometry": 1, "geological": 1, "deviate": 1, "checked": 1, "penetrate": 1, "aqueduct": 1, "lateral": 1, "corridor": 1, "obstacle": 1, "mineral": 4, "vein": 2, "trace": 1, "sole": 1, "determined": 1, "straightforward": 1, "influence": 1, "quench": 1, "healing": 1, "crack": 1, "uncommon": 1, "decade": 1, "centimeter": 1, "patron": 1, "architect": 1, "turkey": 1, "divert": 1, "threatening": 1, "harbor": 1, "visible": 1};
+        const wordData = {"civilization": {"count": 2, "definition": "n. 文明, 人类文明, 文明之地"}, "tunnel": {"count": 34, "definition": "n. 隧道, 洞穴；v. 挖掘隧道"}, "provided": {"count": 2, "definition": "conj. 如果"}, "settlement": {"count": 1, "definition": "n. 和解协议, 达成协议, ..."}, "millennium": {"count": 1, "definition": "n. 一千年, 千禧年"}, "vertical": {"count": 3, "definition": "adj. 垂直的, 纵向的, 纵向传..."}, "shaft": {"count": 12, "definition": "n. 竖井, 杆, 轴, 辕, 光束, 剧痛, 尖..."}, "interval": {"count": 2, "definition": "n. 间隔, 幕间休息, 间歇, ..."}, "excavate": {"count": 3, "definition": "v. 挖掘, 挖出"}, "ventilation": {"count": 1, "definition": "n. 通风"}, "hillside": {"count": 1, "definition": "n. 山坡"}, "canal": {"count": 1, "definition": "n. 运河, 管"}, "construct": {"count": 4, "definition": "v. 建造, 组装, 构造；n. 构..."}, "agriculture": {"count": 1, "definition": "n. 农业"}, "climb": {"count": 1, "definition": "v. 向上爬, 攀岩, 攀爬, 上升, ..."}, "lid": {"count": 1, "definition": "n. 盖子, 眼睑"}, "plumb": {"count": 2, "definition": "v. 探究；adv. 精确地, 完全地"}, "rod": {"count": 1, "definition": "n. 杆, 鱼竿, 教鞭, 手枪"}, "slope": {"count": 1, "definition": "n. 斜坡, 山坡, 坡度；vi. 倾斜"}, "drain": {"count": 1, "definition": "v. 排干, 排出液体, 喝光..."}, "involved": {"count": 1, "definition": "adj. 参与的, 投入的, 有密切..."}, "approximate": {"count": 1, "definition": "adj. 近似的；v. 接近的, 估算"}, "excavation": {"count": 1, "definition": "n. 考古挖掘, 考古遗址, 挖掘作业"}, "advanced": {"count": 1, "definition": "adj. 先进的, 高级的, 发达的"}, "geometry": {"count": 1, "definition": "n. 几何学, 几何形状"}, "geological": {"count": 1, "definition": "adj. 地质学的, 地质的"}, "deviate": {"count": 1, "definition": "v. 偏离"}, "checked": {"count": 1, "definition": "adj. 方格图案的"}, "penetrate": {"count": 1, "definition": "v. 穿透, 打入, 看穿, 理解, 被理解, ..."}, "aqueduct": {"count": 1, "definition": "n. 渡槽"}, "lateral": {"count": 1, "definition": "adj. 侧面的；n. 侧枝, 横向传球, ..."}, "corridor": {"count": 1, "definition": "n. 走廊, 走廊地带, 车厢过道"}, "obstacle": {"count": 1, "definition": "n. 障碍, 障碍物, 障碍栏"}, "mineral": {"count": 4, "definition": "n. 矿物, 矿泉水"}, "vein": {"count": 2, "definition": "n. 静脉, 叶脉, 纹理, 矿脉, 一..."}, "trace": {"count": 1, "definition": "v. 追踪, 追溯, 追溯发展, ..."}, "sole": {"count": 1, "definition": "adj. 唯一的, 独有的；n. ..."}, "determined": {"count": 1, "definition": "adj. 坚定的, 有决心的"}, "straightforward": {"count": 1, "definition": "adj. 简单的, 坦率的"}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "quench": {"count": 1, "definition": "v. 解渴, 熄灭"}, "healing": {"count": 1, "definition": "n. 治愈"}, "crack": {"count": 1, "definition": "v. 破裂, 打碎, 猛击, 发出..."}, "uncommon": {"count": 1, "definition": "adj. 不常见的, 非同寻常的"}, "decade": {"count": 1, "definition": "n. 十年"}, "centimeter": {"count": 1, "definition": "n. 厘米"}, "patron": {"count": 1, "definition": "n. 赞助人, 顾客"}, "architect": {"count": 1, "definition": "n. 建筑师, 设计师, 系统架构师；..."}, "turkey": {"count": 1, "definition": "n. 火鸡, 火鸡肉, 失败之作, 笨蛋"}, "divert": {"count": 1, "definition": "v. 使转向, 转移用途, 转..."}, "threatening": {"count": 1, "definition": "adj. 威胁性的, 不祥的"}, "harbor": {"count": 1, "definition": "n. 海港；v. 窝藏, 怀有, 蕴藏"}, "visible": {"count": 1, "definition": "adj. 可见的, 明显的"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

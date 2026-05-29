@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"radioactivity": 6, "sole": 1, "noble": 1, "remarkable": 1, "prodigious": 1, "completion": 1, "fulfill": 1, "mathematical": 1, "spring": 1, "marked": 1, "partnership": 1, "significance": 1, "phenomenon": 1, "uranium": 2, "mineral": 2, "drawn": 1, "superior": 1, "ore": 1, "devoted": 2, "radiation": 2, "obtain": 1, "chemist": 2, "pupil": 1, "doctorate": 1, "eve": 1, "appoint": 3, "lecturer": 1, "experimental": 1, "demonstration": 1, "bitter": 1, "blow": 1, "henceforth": 1, "devote": 1, "vacant": 1, "institute": 3, "earnest": 1, "fame": 1, "academy": 1, "radioactive": 3, "triumphant": 1, "unite": 1, "gram": 2, "campaign": 1, "satisfaction": 1, "foundation": 1, "inauguration": 1, "outstanding": 1, "accumulate": 1, "abundant": 1, "decisive": 1, "neutron": 1, "jam": 1, "artificial": 1, "exposure": 1, "tub": 1, "isotope": 1, "immense": 1, "influence": 1, "subsequent": 1, "physicist": 1};
+        const wordData = {"radioactivity": {"count": 6, "definition": "n. 辐射"}, "sole": {"count": 1, "definition": "adj. 唯一的, 独有的；n. ..."}, "noble": {"count": 1, "definition": "adj. 高尚的, 贵族的, 宏伟..."}, "remarkable": {"count": 1, "definition": "adj. 非凡的"}, "prodigious": {"count": 1, "definition": "adj. 巨大的"}, "completion": {"count": 1, "definition": "n. 完成"}, "fulfill": {"count": 1, "definition": "v. 实现, 满足, 履行, ..."}, "mathematical": {"count": 1, "definition": "adj. 数学的"}, "spring": {"count": 1, "definition": "n. 春天, 泉水, 弹簧, 弹力, 活..."}, "marked": {"count": 1, "definition": "adj. 明显的, 具有特定特征的"}, "partnership": {"count": 1, "definition": "n. 合伙经营, 合作关系, 合..."}, "significance": {"count": 1, "definition": "n. 重要性, 含义"}, "phenomenon": {"count": 1, "definition": "n. 现象, 非凡的人"}, "uranium": {"count": 2, "definition": "n. 铀"}, "mineral": {"count": 2, "definition": "n. 矿物, 矿泉水"}, "drawn": {"count": 1, "definition": "adj. 憔悴的；v. 拉"}, "superior": {"count": 1, "definition": "adj. 优于他人的, 职位更高..."}, "ore": {"count": 1, "definition": "n. 矿石"}, "devoted": {"count": 2, "definition": "adj. 忠诚的"}, "radiation": {"count": 2, "definition": "n. 放射性物质的辐射, 辐射..."}, "obtain": {"count": 1, "definition": "v. 获得, 存在"}, "chemist": {"count": 2, "definition": "n. 药剂师, 药店, 化学家"}, "pupil": {"count": 1, "definition": "n. 学生, 瞳孔"}, "doctorate": {"count": 1, "definition": "n. 博士学位"}, "eve": {"count": 1, "definition": "n. 前夕, 夜晚"}, "appoint": {"count": 3, "definition": "v. 任命, 指定"}, "lecturer": {"count": 1, "definition": "n. 讲师, 大学讲师"}, "experimental": {"count": 1, "definition": "adj. 实验性的, 实验的"}, "demonstration": {"count": 1, "definition": "n. 示威, 演示, 证明, 表达"}, "bitter": {"count": 1, "definition": "adj. 苦味的, 充满怨恨的, ..."}, "blow": {"count": 1, "definition": "v. 吹气, 吹风, 被风吹动, ..."}, "henceforth": {"count": 1, "definition": "adv. 从今以后"}, "devote": {"count": 1, "definition": "v. 投入, 献给"}, "vacant": {"count": 1, "definition": "adj. 空的, 空缺的, 茫然的"}, "institute": {"count": 3, "definition": "n. 研究所；v. 建立"}, "earnest": {"count": 1, "definition": "adj. 认真的"}, "fame": {"count": 1, "definition": "n. 名声"}, "academy": {"count": 1, "definition": "n. 专科学校, 学会, 苏格兰中学..."}, "radioactive": {"count": 3, "definition": "adj. 放射性的"}, "triumphant": {"count": 1, "definition": "adj. 胜利的, 欢欣鼓舞的"}, "unite": {"count": 1, "definition": "v. 团结, 联合"}, "gram": {"count": 2, "definition": "n. 克, 字"}, "campaign": {"count": 1, "definition": "n. 活动, 战役；v. 进行活动"}, "satisfaction": {"count": 1, "definition": "n. 满足感, 满足, 补偿"}, "foundation": {"count": 1, "definition": "n. 基础, 基金会, 创立,..."}, "inauguration": {"count": 1, "definition": "n. 就职典礼, 开始"}, "outstanding": {"count": 1, "definition": "adj. 杰出的, 未支付的, 显著的"}, "accumulate": {"count": 1, "definition": "v. 积累"}, "abundant": {"count": 1, "definition": "adj. 丰富的"}, "decisive": {"count": 1, "definition": "adj. 决定性的, 果断的"}, "neutron": {"count": 1, "definition": "n. 中子"}, "jam": {"count": 1, "definition": "n. 果酱, 拥堵, 卡住, 经济拮据..."}, "artificial": {"count": 1, "definition": "adj. 人造的, 人为的, 假的"}, "exposure": {"count": 1, "definition": "n. 暴露, 曝光, 体验, 冻伤, 曝..."}, "tub": {"count": 1, "definition": "n. 大桶, 小盒, 浴缸"}, "isotope": {"count": 1, "definition": "n. 同位素"}, "immense": {"count": 1, "definition": "adj. 巨大的"}, "influence": {"count": 1, "definition": "n. 影响；v. 影响"}, "subsequent": {"count": 1, "definition": "adj. 随后的"}, "physicist": {"count": 1, "definition": "n. 物理学家"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {

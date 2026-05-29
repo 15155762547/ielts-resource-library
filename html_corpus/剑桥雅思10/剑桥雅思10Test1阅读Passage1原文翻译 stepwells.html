@@ -116,11 +116,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: var(--bg-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
             transition: all 0.2s;
             border: 1px solid transparent;
         }
@@ -140,8 +139,36 @@
             color: white;
         }
 
+        .vocab-item .word-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+            margin-right: 12px;
+            overflow: hidden;
+        }
+
         .vocab-item .word-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .vocab-item.active-filter .word-name {
+            color: white;
+        }
+
+        .vocab-item .word-def {
+            font-size: 11px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .vocab-item.active-filter .word-def {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .vocab-item .badge {
@@ -152,6 +179,7 @@
             border-radius: 99px;
             font-weight: 600;
         }
+
 
         /* Main Workspace */
         main {
@@ -418,6 +446,42 @@
             box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
         }
 
+        /* Tooltip style */
+        .vocab-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px) scale(0.95);
+            transition: opacity 0.15s, transform 0.15s;
+            max-width: 280px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vocab-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .vocab-tooltip .tooltip-word {
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .vocab-tooltip .tooltip-def {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+
         /* Sidebar toggle button (Mobile) */
         .menu-toggle {
             display: none;
@@ -568,15 +632,19 @@
         </main>
     </div>
 
+    <!-- Tooltip element -->
+    <div id="vocab-tooltip" class="vocab-tooltip"></div>
+
     <script>
         // Set vocabulary list and counts dynamically
-        const wordCounts = {"inhabitant": 1, "groundwater": 2, "bathe": 1, "irrigation": 1, "significance": 1, "utilitarian": 1, "architectural": 2, "gathering": 1, "leisure": 1, "relaxation": 1, "worship": 1, "suggest": 1, "comprise": 2, "descend": 5, "aquifer": 1, "recede": 1, "negotiate": 1, "crater": 1, "pave": 1, "slope": 1, "elaborate": 1, "steppe": 1, "lead": 1, "storey": 3, "pillar": 2, "pavilion": 1, "relentless": 1, "intricate": 3, "decorative": 1, "sculpture": 2, "embellish": 1, "comb": 1, "churn": 1, "construct": 2, "derelict": 1, "divert": 1, "drought": 1, "site": 1, "restoration": 1, "restore": 2, "silt": 1, "pristine": 1, "carve": 3, "niche": 1, "monument": 3, "temple": 2, "resemble": 1, "reservoir": 1, "pond": 1, "hallmark": 1, "architecture": 2, "stunning": 1, "formation": 1, "terrace": 1, "shrine": 1, "renowned": 1, "ruin": 1, "kilometer": 1, "steep": 1, "striking": 1, "overlook": 1, "highway": 1, "underwater": 1, "neglect": 1, "medieval": 1, "engineering": 1, "flock": 1, "gaze": 1, "marvel": 1, "reminder": 1, "ingenuity": 1};
+        const wordData = {"inhabitant": {"count": 1, "definition": "n. 居民"}, "groundwater": {"count": 2, "definition": "n. 地下水"}, "bathe": {"count": 1, "definition": "v. 用水洗, 给...洗澡, 游泳, 沐浴在；..."}, "irrigation": {"count": 1, "definition": "n. 灌溉, 冲洗"}, "significance": {"count": 1, "definition": "n. 重要性, 含义"}, "utilitarian": {"count": 1, "definition": "adj. 功利的, 功利主义的"}, "architectural": {"count": 2, "definition": "adj. 建筑的"}, "gathering": {"count": 1, "definition": "n. 聚会, 收集"}, "leisure": {"count": 1, "definition": "n. 闲暇, 休闲活动"}, "relaxation": {"count": 1, "definition": "n. 休闲, 轻松, 松弛, 放宽"}, "worship": {"count": 1, "definition": "n. 崇拜, 阁下；v. 崇拜, ..."}, "suggest": {"count": 1, "definition": "v. 建议, 推荐, 暗示"}, "comprise": {"count": 2, "definition": "v. 包含, 构成"}, "descend": {"count": 5, "definition": "v. 下降, 斜降, 降临"}, "aquifer": {"count": 1, "definition": "n. 含水层"}, "recede": {"count": 1, "definition": "vi. 后退, 减弱, 发际线后退, 后缩..."}, "negotiate": {"count": 1, "definition": "v. 谈判, 商定, 通过"}, "crater": {"count": 1, "definition": "n. 火山口, 弹坑"}, "pave": {"count": 1, "definition": "v. 铺设"}, "slope": {"count": 1, "definition": "n. 斜坡, 山坡, 坡度；vi. 倾斜"}, "elaborate": {"count": 1, "definition": "adj. 精心设计的；v. 详细说明..."}, "steppe": {"count": 1, "definition": "n. 草原"}, "lead": {"count": 1, "definition": "v. 带领, 连接, 通向, ..."}, "storey": {"count": 3, "definition": "n. 楼层, 层数"}, "pillar": {"count": 2, "definition": "n. 柱子, 纪念柱, 柱状物, 中坚力量..."}, "pavilion": {"count": 1, "definition": "n. 展馆, 看台, 场馆, 亭子"}, "relentless": {"count": 1, "definition": "adj. 不懈, 不屈"}, "intricate": {"count": 3, "definition": "adj. 复杂"}, "decorative": {"count": 1, "definition": "adj. 装饰性的"}, "sculpture": {"count": 2, "definition": "n. 雕塑作品, 雕塑艺术"}, "embellish": {"count": 1, "definition": "v. 装饰, 渲染"}, "comb": {"count": 1, "definition": "n. 梳子, 梳头, 蜂巢, 鸡冠；v. 梳, ..."}, "churn": {"count": 1, "definition": "v. 剧烈搅动, 翻江倒海, 使心烦意乱..."}, "construct": {"count": 2, "definition": "v. 建造, 组装, 构造；n. 构..."}, "derelict": {"count": 1, "definition": "adj. 废弃, 失职；n. 流浪者"}, "divert": {"count": 1, "definition": "v. 使转向, 转移用途, 转..."}, "drought": {"count": 1, "definition": "n. 干旱, 短缺"}, "site": {"count": 1, "definition": "n. 地点, 现场, 场所, *..."}, "restoration": {"count": 1, "definition": "n. 修复, 恢复, 归还, 复辟"}, "restore": {"count": 2, "definition": "v. 恢复, 修复, 归还"}, "silt": {"count": 1, "definition": "n. 淤泥；v. 使淤塞, 淤塞"}, "pristine": {"count": 1, "definition": "adj. 崭新, 原始"}, "carve": {"count": 3, "definition": "v. 雕刻, 切肉, 开创"}, "niche": {"count": 1, "definition": "n. 合适的位置, 利基市场, ..."}, "monument": {"count": 3, "definition": "n. 纪念碑, 历史建筑, 丰碑"}, "temple": {"count": 2, "definition": "n. 寺庙, 太阳穴"}, "resemble": {"count": 1, "definition": "v. 看起来像"}, "reservoir": {"count": 1, "definition": "n. 水库, 储备, 储液器"}, "pond": {"count": 1, "definition": "n. 池塘, 大西洋"}, "hallmark": {"count": 1, "definition": "n. 特征, 纯度印记；v. 加盖纯度印记"}, "architecture": {"count": 2, "definition": "n. 建筑设计艺术, 建筑风格*..."}, "stunning": {"count": 1, "definition": "adj. 惊艳的, 令人震惊的"}, "formation": {"count": 1, "definition": "n. 形成, 形成物, 排列"}, "terrace": {"count": 1, "definition": "n. 排屋, 露台, 看台, 梯田"}, "shrine": {"count": 1, "definition": "n. 圣地, 纪念地"}, "renowned": {"count": 1, "definition": "adj. 著名的"}, "ruin": {"count": 1, "definition": "v. 彻底毁坏, 使破产；n. ..."}, "kilometer": {"count": 1, "definition": "n. 千米"}, "steep": {"count": 1, "definition": "adj. 陡峭的, 急剧的, 过高..."}, "striking": {"count": 1, "definition": "adj. 引人注目的, 出众的"}, "overlook": {"count": 1, "definition": "v. 忽略, 忽视, 俯瞰, ..."}, "highway": {"count": 1, "definition": "n. 高速公路, 公路"}, "underwater": {"count": 1, "definition": "adv. 水面下的；adj. 水下的"}, "neglect": {"count": 1, "definition": "v. 忽视, 疏忽, 遗忘；n. 疏忽"}, "medieval": {"count": 1, "definition": "adj. 中世纪的"}, "engineering": {"count": 1, "definition": "n. 工程, 工程学"}, "flock": {"count": 1, "definition": "n. 兽群, 人群, 会众, 填充物, 绒屑；..."}, "gaze": {"count": 1, "definition": "v. 凝视；n. 凝视"}, "marvel": {"count": 1, "definition": "n. 奇迹；v. 惊叹"}, "reminder": {"count": 1, "definition": "n. 提醒物, 提醒"}, "ingenuity": {"count": 1, "definition": "n. 聪明才智"}}; // format: word -> (count, definition)
         let activeWord = null;
 
         // Initialize UI
         document.addEventListener('DOMContentLoaded', () => {
             renderVocabList();
             setupWordClickListeners();
+            setupTooltipListeners();
         });
 
         function toggleSidebar() {
@@ -603,21 +671,21 @@
             const listContainer = document.getElementById('vocab-list');
             listContainer.innerHTML = '';
             
-            const words = Object.keys(wordCounts).sort();
-            let totalMatch = 0;
+            const words = Object.keys(wordData).sort();
             
             words.forEach(word => {
                 if (filter && !word.includes(filter.toLowerCase())) return;
-                
-                totalMatch += wordCounts[word];
                 
                 const li = document.createElement('li');
                 li.className = 'vocab-item';
                 if (activeWord === word) li.classList.add('active-filter');
                 
                 li.innerHTML = `
-                    <span class="word-name">${word}</span>
-                    <span class="badge">${wordCounts[word]}</span>
+                    <div class="word-info">
+                        <span class="word-name">${word}</span>
+                        <span class="word-def" title="${wordData[word].definition}">${wordData[word].definition}</span>
+                    </div>
+                    <span class="badge">${wordData[word].count}</span>
                 `;
                 
                 li.onclick = (e) => {
@@ -643,6 +711,54 @@
                     selectWord(word);
                 };
             });
+        }
+
+        function setupTooltipListeners() {
+            const tooltip = document.getElementById('vocab-tooltip');
+            
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                el.addEventListener('mouseenter', (e) => {
+                    const word = el.getAttribute('data-word');
+                    const definition = wordData[word]?.definition || "暂无释义";
+                    
+                    tooltip.innerHTML = `
+                        <div class="tooltip-word">${word}</div>
+                        <div class="tooltip-def">${definition}</div>
+                    `;
+                    
+                    tooltip.classList.add('visible');
+                    positionTooltip(el, tooltip);
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    tooltip.classList.remove('visible');
+                });
+            });
+        }
+
+        function positionTooltip(targetEl, tooltip) {
+            const rect = targetEl.getBoundingClientRect();
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            
+            let x = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+            let y = rect.top + scrollTop - tooltipHeight - 10;
+            
+            // Boundary checks
+            if (x < 10) x = 10;
+            if (x + tooltipWidth > window.innerWidth - 10) {
+                x = window.innerWidth - tooltipWidth - 10;
+            }
+            
+            if (rect.top - tooltipHeight - 10 < 10) {
+                y = rect.bottom + scrollTop + 10;
+            }
+            
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
         }
 
         function selectWord(word) {
