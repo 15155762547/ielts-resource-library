@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The story of silk 丝绸的故事 - 剑桥雅思11 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思11</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The story of silk 丝绸的故事</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29973.html" target="_blank">https://www.laokaoya.com/29973.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Silk is a fine, <mark class="vocab-word" data-word="smooth">smooth</mark> material produced from the <mark class="vocab-word" data-word="cocoon">cocoons</mark> – soft <mark class="vocab-word" data-word="protective">protective</mark> shells – that are made by mulberry silkworms (insectlarvae).<mark class="vocab-word" data-word="legend">Legend</mark> has it that it was Lei Tzu, wife of the YellowEmperor, <mark class="vocab-word" data-word="ruler">ruler</mark> of <mark class="vocab-word" data-word="china">China</mark> in about 3000 BC, who discovered silkworms.One account of the <mark class="vocab-word" data-word="story">story</mark> goes that as she was taking a walk in her husband’s gardens, she discovered that silkworms were responsible for the <mark class="vocab-word" data-word="destruction">destruction</mark> of several mulberry <mark class="vocab-word" data-word="tree">trees</mark>.She collected a number of <mark class="vocab-word" data-word="cocoon">cocoons</mark> and sat down to have a rest.It just so happened that while she was sipping some tea, one of the <mark class="vocab-word" data-word="cocoon">cocoons</mark> that she had collected landed in the hot tea and started tounravelinto a fine <mark class="vocab-word" data-word="thread">thread</mark>.Lei Tzu found that she could <mark class="vocab-word" data-word="wind">wind</mark> this <mark class="vocab-word" data-word="thread">thread</mark> around her fingers.<mark class="vocab-word" data-word="subsequently">Subsequently</mark>, she <mark class="vocab-word" data-word="persuade">persuaded</mark> her husband to allow her to <mark class="vocab-word" data-word="rear">rear</mark> silkworms on a <mark class="vocab-word" data-word="grove">grove</mark> of mulberry <mark class="vocab-word" data-word="tree">trees</mark>.She also <mark class="vocab-word" data-word="devise">devised</mark> a specialreelto draw the fibres from thecocooninto a single <mark class="vocab-word" data-word="thread">thread</mark> so that they would be strong enough to be <mark class="vocab-word" data-word="woven">woven</mark> intofabric.While it is unknown just how much of this is true, it is certainly known that silkcultivationhas existed in <mark class="vocab-word" data-word="china">China</mark> for severalmillennia.</p><p>Originally,silkwormfarming was solelyrestrictedto women, and it was they who were responsible for the growing, <mark class="vocab-word" data-word="harvest">harvesting</mark> and <mark class="vocab-word" data-word="weave">weaving</mark>.Silk quickly grew into a symbol of status, and originally, only <mark class="vocab-word" data-word="royalty">royalty</mark> were <mark class="vocab-word" data-word="entitle">entitled</mark> to have <mark class="vocab-word" data-word="clothe">clothes</mark> made of silk.The rules were <mark class="vocab-word" data-word="gradual">gradually</mark> <mark class="vocab-word" data-word="relaxed">relaxed</mark> over the years until finally during the Qing <mark class="vocab-word" data-word="dynasty">Dynasty</mark> (1644-1911 AD), even <mark class="vocab-word" data-word="peasant">peasants</mark>, the lowest caste, were also <mark class="vocab-word" data-word="entitle">entitled</mark> to wear silk.Sometime during the Han <mark class="vocab-word" data-word="dynasty">Dynasty</mark> (206 BC-220 AD), silk was so prized that it was also used as a unit of currency.Government officials were paid their salary in silk, and farmers paid their taxes in grain and silk.Silk was also used asdiplomaticgifts by theemperor.Fishing lines, bowstrings, musical <mark class="vocab-word" data-word="instrument">instruments</mark> and paper were all made using silk.The earliestindicationof silk paper being used was discovered in the tomb of a <mark class="vocab-word" data-word="noble">noble</mark> who is estimated to have died around 168 AD.</p><p>Demand for thisexoticfabriceventuallycreated thelucrativetraderoutenow known as the Silk Road, taking silk westward and bringing gold, silver and wool to the East.It was named the Silk Road after its most preciouscommodity, which was considered to be worth more than gold.The Silk Road stretched over 6,000 kilometres from Eastern <mark class="vocab-word" data-word="china">China</mark> to theMediterraneanSea, following the Great Wall of <mark class="vocab-word" data-word="china">China</mark>, <mark class="vocab-word" data-word="climb">climbing</mark> the Pamir mountain range, <mark class="vocab-word" data-word="cross">crossing</mark> modern-day Afghanistan and going on to the Middle East, with a major trading market in Damascus.From there, themerchandisewas shipped across theMediterraneanSea.Few <mark class="vocab-word" data-word="merchant">merchants</mark> travelled the entireroute; <mark class="vocab-word" data-word="goods">goods</mark> were handled mostly by a series of middlemen.</p><p>With the mulberrysilkwormbeing native to <mark class="vocab-word" data-word="china">China</mark>, the country was the world’s <mark class="vocab-word" data-word="sole">sole</mark> producer of silk for many hundreds of years.The secret of silk-makingeventuallyreached the rest of the world via the Byzantine <mark class="vocab-word" data-word="empire">Empire</mark>, which ruled over theMediterraneanregion of southern Europe, North Africa and the Middle East during the period 330-1453 AD.<mark class="vocab-word" data-word="accord">According</mark> to another <mark class="vocab-word" data-word="legend">legend</mark>, <mark class="vocab-word" data-word="monk">monks</mark> working for the ByzantineemperorJustinian smuggledsilkwormeggs to Constantinople (Istanbul in modern-day <mark class="vocab-word" data-word="turkey">Turkey</mark>) in 550 AD, <mark class="vocab-word" data-word="conceal">concealed</mark> insidehollowbamboo walking <mark class="vocab-word" data-word="cane">canes</mark>.The Byzantines were as secretive as the <mark class="vocab-word" data-word="chinese">Chinese</mark>, however, and for many centuries the <mark class="vocab-word" data-word="weave">weaving</mark> and trading of silkfabricwas a strictimperialmonopoly.Then in the seventh century, the Arabs <mark class="vocab-word" data-word="conquer">conquered</mark> Persia, capturing their <mark class="vocab-word" data-word="magnificent">magnificent</mark> silks in the process.Silk production thus spread through Africa, Sicily and Spain as the Arabs swept through these lands.Andalusia in southern Spain was Europe’s main silk-producing centre in the tenth century.By the thirteenth century, however, Italy had become Europe’s leader in silk production and export.Venetian <mark class="vocab-word" data-word="merchant">merchants</mark> traded <mark class="vocab-word" data-word="extensive">extensively</mark> in silk and encouraged silk growers to <mark class="vocab-word" data-word="settle">settle</mark> in Italy.Even now, silk processed in the province of Como in northern Italy enjoys an <mark class="vocab-word" data-word="esteem">esteemed</mark> <mark class="vocab-word" data-word="reputation">reputation</mark>.</p><p>The nineteenth century and industrialisation saw the downfall of the European silk industry.Cheaper Japanese silk, trade in which was greatly <mark class="vocab-word" data-word="facilitate">facilitated</mark> by the opening of the Suez <mark class="vocab-word" data-word="canal">Canal</mark>, was one of the many <mark class="vocab-word" data-word="factor">factors</mark> driving the trend.Then in the twentieth century, new manmade fibres, such as <mark class="vocab-word" data-word="nylon">nylon</mark>, started to be used in what had <mark class="vocab-word" data-word="traditionally">traditionally</mark> been silk products, such as <mark class="vocab-word" data-word="stocking">stockings</mark> and <mark class="vocab-word" data-word="parachute">parachutes</mark>.The two world wars, whichinterruptedthe supply ofrawmaterial from Japan, also <mark class="vocab-word" data-word="stifle">stifled</mark> the European silk industry.After the Second World War, Japan’s silk production was <mark class="vocab-word" data-word="restore">restored</mark>, with improved production and quality ofrawsilk.Japan was to remain the world’s biggest producer ofrawsilk, and <mark class="vocab-word" data-word="practically">practically</mark> the only major exporter ofrawsilk, until the 1970s.However, in more recent <mark class="vocab-word" data-word="decade">decades</mark>, <mark class="vocab-word" data-word="china">China</mark> has <mark class="vocab-word" data-word="gradual">gradually</mark> <mark class="vocab-word" data-word="recapture">recaptured</mark> its position as the world’s biggest producer and exporter ofrawsilk and silkyarn.Today, around 125,000 <mark class="vocab-word" data-word="metric">metric</mark> <mark class="vocab-word" data-word="ton">tons</mark> of silk are produced in the world, and almost two thirds of that production takes place in <mark class="vocab-word" data-word="china">China</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>丝绸是一种精致，柔顺的布料，产自桑蚕（昆虫幼体）制作出的蚕茧-即其柔软的起保护作用的外壳。根据传说，是公元前3000年左右统治中国的黄帝的妻子嫘祖发现了桑蚕。故事是这样讲述的：当她在她丈夫的公园里散步时，发现桑蚕破坏了几棵桑树。她收集了一些蚕茧，并坐下休息一会儿。当她在喝茶的时候，一粒收集到的蚕茧碰巧掉进了热茶中，开始松散成一根细丝。嫘祖发现她可以将这跟细线缠绕到自己手指上。于是，她说服丈夫让她在一片桑树林里养蚕。她还发明了一种特殊的卷盘来将蚕茧中的纤维纺成丝线，以便它们足够坚韧可以纺成织物。虽然不知道这个故事里有多少是真实可信的，但可以确定的是，丝绸的生产已经在中国存在了好几千年。</p><p>一开始，桑蚕养殖仅限女性。她们负责养育、收获和纺织。丝绸很快变成地位的象征。最初，只有皇家可以穿丝绸制成的衣服。这些规矩随着时间发展逐渐放松。最终，到了清朝（公元1644年-1911年），即便是农民这一最低阶层也可以穿丝绸了。汉朝（公元前206年到公元后220年）的某个时期，丝绸是如此宝贵，以至于它还被当作货币单位使用。朝廷官员的俸禄是用丝绸支付的，农民则用谷物和丝绸来纳税。丝绸还被皇帝当成外交礼物使用。渔线、弓弦、乐器和纸张均由丝绸制成。使用丝制纸张的最早证据发现于一名贵族的墓中。据估计，他大约死于公元168年左右。</p><p>对这一异国织物的需求最终催生出一条利润丰厚的贸易路线，即现在所谓的丝绸之路。它向西运送丝绸，并将黄金、白银和羊毛带回到东方。丝绸之路因其最宝贵的商品而得名。它被视为比黄金更贵重。丝绸之路绵延6000多公里，从东方的中国一直到地中海地区，沿着长城，攀越帕米尔山脊，穿过今日的阿富汗，并延伸到中东。在大马士革有一个主要的交易场所。从那里开始，商品被装上船穿过地中海。很少有商人走完整条路线。货物大多是由一系列中间商交接传递的。</p><p>由于桑蚕是中国的本地物种，这个国家在好几百年的时间里都是世界上唯一的丝绸生产商。制造丝绸的秘密最终经由拜占庭帝国传播到世界其他地方。它于公元330年到1453年统治着南欧、北非和中东组成的地中海地区。根据另一个传说，为拜占庭皇帝Justinian服务的僧侣在公元550年将桑蚕卵藏在空心的竹子手杖里，偷偷带到了君士坦丁堡（今日土耳其的伊斯坦布尔）。然而，拜占庭人和中国人一样保守秘密。在很多世纪里，丝绸的纺织与贸易严格由国家垄断。然后在七世纪，阿拉伯人征服了波斯，并在此过程中劫掠了宝贵的丝绸。丝绸生产由此随着阿拉伯人对非洲、西西里和西班牙的扫荡而传播到这些地区。西班牙南部的安达卢西亚是十世纪欧洲的主要丝绸生产中心。然而，到了十三世纪，意大利成为欧洲丝绸生产和出口的领导者。威尼斯商人到处进行丝绸贸易，并鼓励丝绸生产者到意大利定居。即使是现在，意大利北部科莫省加工的丝绸仍然享有很高的声誉。</p><p>十九世纪和工业化见证了欧洲丝绸产业的衰落。更为廉价的日本丝绸是推动这一趋势的众多因素之一。苏伊士运河的开通极大地方便了这一贸易的进行。到了20世纪，尼龙这样的新型人造纤维开始被用于传统的丝绸制品中，例如袜子和降落伞。两次世界大战中断了日本的原材料供给，也扼杀了欧洲的丝绸产业。第二次世界大战结束后，日本的丝绸生产得以重建，生丝的制作工艺和品质都有所提升。直到20世纪70年代，日本仍然是世界上最大的生丝生产商，实际上也是唯一的主要生丝出口商。然而，到了近几十年，中国逐渐夺回它曾经的地位，成为世界上生丝和丝线的最大生厂商与出口者。今天，全世界大约生产125000吨的丝绸，几乎三分之二都来自中国。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Silk is a fine, <mark class="vocab-word" data-word="smooth">smooth</mark> material produced from the <mark class="vocab-word" data-word="cocoon">cocoons</mark> – soft <mark class="vocab-word" data-word="protective">protective</mark> shells – that are made by mulberry silkworms (insectlarvae).<mark class="vocab-word" data-word="legend">Legend</mark> has it that it was Lei Tzu, wife of the YellowEmperor, <mark class="vocab-word" data-word="ruler">ruler</mark> of <mark class="vocab-word" data-word="china">China</mark> in about 3000 BC, who discovered silkworms.One account of the <mark class="vocab-word" data-word="story">story</mark> goes that as she was taking a walk in her husband’s gardens, she discovered that silkworms were responsible for the <mark class="vocab-word" data-word="destruction">destruction</mark> of several mulberry <mark class="vocab-word" data-word="tree">trees</mark>.She collected a number of <mark class="vocab-word" data-word="cocoon">cocoons</mark> and sat down to have a rest.It just so happened that while she was sipping some tea, one of the <mark class="vocab-word" data-word="cocoon">cocoons</mark> that she had collected landed in the hot tea and started tounravelinto a fine <mark class="vocab-word" data-word="thread">thread</mark>.Lei Tzu found that she could <mark class="vocab-word" data-word="wind">wind</mark> this <mark class="vocab-word" data-word="thread">thread</mark> around her fingers.<mark class="vocab-word" data-word="subsequently">Subsequently</mark>, she <mark class="vocab-word" data-word="persuade">persuaded</mark> her husband to allow her to <mark class="vocab-word" data-word="rear">rear</mark> silkworms on a <mark class="vocab-word" data-word="grove">grove</mark> of mulberry <mark class="vocab-word" data-word="tree">trees</mark>.She also <mark class="vocab-word" data-word="devise">devised</mark> a specialreelto draw the fibres from thecocooninto a single <mark class="vocab-word" data-word="thread">thread</mark> so that they would be strong enough to be <mark class="vocab-word" data-word="woven">woven</mark> intofabric.While it is unknown just how much of this is true, it is certainly known that silkcultivationhas existed in <mark class="vocab-word" data-word="china">China</mark> for severalmillennia.</p></div>  <div class="parallel-zh"><p>丝绸是一种精致，柔顺的布料，产自桑蚕（昆虫幼体）制作出的蚕茧-即其柔软的起保护作用的外壳。根据传说，是公元前3000年左右统治中国的黄帝的妻子嫘祖发现了桑蚕。故事是这样讲述的：当她在她丈夫的公园里散步时，发现桑蚕破坏了几棵桑树。她收集了一些蚕茧，并坐下休息一会儿。当她在喝茶的时候，一粒收集到的蚕茧碰巧掉进了热茶中，开始松散成一根细丝。嫘祖发现她可以将这跟细线缠绕到自己手指上。于是，她说服丈夫让她在一片桑树林里养蚕。她还发明了一种特殊的卷盘来将蚕茧中的纤维纺成丝线，以便它们足够坚韧可以纺成织物。虽然不知道这个故事里有多少是真实可信的，但可以确定的是，丝绸的生产已经在中国存在了好几千年。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Originally,silkwormfarming was solelyrestrictedto women, and it was they who were responsible for the growing, <mark class="vocab-word" data-word="harvest">harvesting</mark> and <mark class="vocab-word" data-word="weave">weaving</mark>.Silk quickly grew into a symbol of status, and originally, only <mark class="vocab-word" data-word="royalty">royalty</mark> were <mark class="vocab-word" data-word="entitle">entitled</mark> to have <mark class="vocab-word" data-word="clothe">clothes</mark> made of silk.The rules were <mark class="vocab-word" data-word="gradual">gradually</mark> <mark class="vocab-word" data-word="relaxed">relaxed</mark> over the years until finally during the Qing <mark class="vocab-word" data-word="dynasty">Dynasty</mark> (1644-1911 AD), even <mark class="vocab-word" data-word="peasant">peasants</mark>, the lowest caste, were also <mark class="vocab-word" data-word="entitle">entitled</mark> to wear silk.Sometime during the Han <mark class="vocab-word" data-word="dynasty">Dynasty</mark> (206 BC-220 AD), silk was so prized that it was also used as a unit of currency.Government officials were paid their salary in silk, and farmers paid their taxes in grain and silk.Silk was also used asdiplomaticgifts by theemperor.Fishing lines, bowstrings, musical <mark class="vocab-word" data-word="instrument">instruments</mark> and paper were all made using silk.The earliestindicationof silk paper being used was discovered in the tomb of a <mark class="vocab-word" data-word="noble">noble</mark> who is estimated to have died around 168 AD.</p></div>  <div class="parallel-zh"><p>一开始，桑蚕养殖仅限女性。她们负责养育、收获和纺织。丝绸很快变成地位的象征。最初，只有皇家可以穿丝绸制成的衣服。这些规矩随着时间发展逐渐放松。最终，到了清朝（公元1644年-1911年），即便是农民这一最低阶层也可以穿丝绸了。汉朝（公元前206年到公元后220年）的某个时期，丝绸是如此宝贵，以至于它还被当作货币单位使用。朝廷官员的俸禄是用丝绸支付的，农民则用谷物和丝绸来纳税。丝绸还被皇帝当成外交礼物使用。渔线、弓弦、乐器和纸张均由丝绸制成。使用丝制纸张的最早证据发现于一名贵族的墓中。据估计，他大约死于公元168年左右。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Demand for thisexoticfabriceventuallycreated thelucrativetraderoutenow known as the Silk Road, taking silk westward and bringing gold, silver and wool to the East.It was named the Silk Road after its most preciouscommodity, which was considered to be worth more than gold.The Silk Road stretched over 6,000 kilometres from Eastern <mark class="vocab-word" data-word="china">China</mark> to theMediterraneanSea, following the Great Wall of <mark class="vocab-word" data-word="china">China</mark>, <mark class="vocab-word" data-word="climb">climbing</mark> the Pamir mountain range, <mark class="vocab-word" data-word="cross">crossing</mark> modern-day Afghanistan and going on to the Middle East, with a major trading market in Damascus.From there, themerchandisewas shipped across theMediterraneanSea.Few <mark class="vocab-word" data-word="merchant">merchants</mark> travelled the entireroute; <mark class="vocab-word" data-word="goods">goods</mark> were handled mostly by a series of middlemen.</p></div>  <div class="parallel-zh"><p>对这一异国织物的需求最终催生出一条利润丰厚的贸易路线，即现在所谓的丝绸之路。它向西运送丝绸，并将黄金、白银和羊毛带回到东方。丝绸之路因其最宝贵的商品而得名。它被视为比黄金更贵重。丝绸之路绵延6000多公里，从东方的中国一直到地中海地区，沿着长城，攀越帕米尔山脊，穿过今日的阿富汗，并延伸到中东。在大马士革有一个主要的交易场所。从那里开始，商品被装上船穿过地中海。很少有商人走完整条路线。货物大多是由一系列中间商交接传递的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>With the mulberrysilkwormbeing native to <mark class="vocab-word" data-word="china">China</mark>, the country was the world’s <mark class="vocab-word" data-word="sole">sole</mark> producer of silk for many hundreds of years.The secret of silk-makingeventuallyreached the rest of the world via the Byzantine <mark class="vocab-word" data-word="empire">Empire</mark>, which ruled over theMediterraneanregion of southern Europe, North Africa and the Middle East during the period 330-1453 AD.<mark class="vocab-word" data-word="accord">According</mark> to another <mark class="vocab-word" data-word="legend">legend</mark>, <mark class="vocab-word" data-word="monk">monks</mark> working for the ByzantineemperorJustinian smuggledsilkwormeggs to Constantinople (Istanbul in modern-day <mark class="vocab-word" data-word="turkey">Turkey</mark>) in 550 AD, <mark class="vocab-word" data-word="conceal">concealed</mark> insidehollowbamboo walking <mark class="vocab-word" data-word="cane">canes</mark>.The Byzantines were as secretive as the <mark class="vocab-word" data-word="chinese">Chinese</mark>, however, and for many centuries the <mark class="vocab-word" data-word="weave">weaving</mark> and trading of silkfabricwas a strictimperialmonopoly.Then in the seventh century, the Arabs <mark class="vocab-word" data-word="conquer">conquered</mark> Persia, capturing their <mark class="vocab-word" data-word="magnificent">magnificent</mark> silks in the process.Silk production thus spread through Africa, Sicily and Spain as the Arabs swept through these lands.Andalusia in southern Spain was Europe’s main silk-producing centre in the tenth century.By the thirteenth century, however, Italy had become Europe’s leader in silk production and export.Venetian <mark class="vocab-word" data-word="merchant">merchants</mark> traded <mark class="vocab-word" data-word="extensive">extensively</mark> in silk and encouraged silk growers to <mark class="vocab-word" data-word="settle">settle</mark> in Italy.Even now, silk processed in the province of Como in northern Italy enjoys an <mark class="vocab-word" data-word="esteem">esteemed</mark> <mark class="vocab-word" data-word="reputation">reputation</mark>.</p></div>  <div class="parallel-zh"><p>由于桑蚕是中国的本地物种，这个国家在好几百年的时间里都是世界上唯一的丝绸生产商。制造丝绸的秘密最终经由拜占庭帝国传播到世界其他地方。它于公元330年到1453年统治着南欧、北非和中东组成的地中海地区。根据另一个传说，为拜占庭皇帝Justinian服务的僧侣在公元550年将桑蚕卵藏在空心的竹子手杖里，偷偷带到了君士坦丁堡（今日土耳其的伊斯坦布尔）。然而，拜占庭人和中国人一样保守秘密。在很多世纪里，丝绸的纺织与贸易严格由国家垄断。然后在七世纪，阿拉伯人征服了波斯，并在此过程中劫掠了宝贵的丝绸。丝绸生产由此随着阿拉伯人对非洲、西西里和西班牙的扫荡而传播到这些地区。西班牙南部的安达卢西亚是十世纪欧洲的主要丝绸生产中心。然而，到了十三世纪，意大利成为欧洲丝绸生产和出口的领导者。威尼斯商人到处进行丝绸贸易，并鼓励丝绸生产者到意大利定居。即使是现在，意大利北部科莫省加工的丝绸仍然享有很高的声誉。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The nineteenth century and industrialisation saw the downfall of the European silk industry.Cheaper Japanese silk, trade in which was greatly <mark class="vocab-word" data-word="facilitate">facilitated</mark> by the opening of the Suez <mark class="vocab-word" data-word="canal">Canal</mark>, was one of the many <mark class="vocab-word" data-word="factor">factors</mark> driving the trend.Then in the twentieth century, new manmade fibres, such as <mark class="vocab-word" data-word="nylon">nylon</mark>, started to be used in what had <mark class="vocab-word" data-word="traditionally">traditionally</mark> been silk products, such as <mark class="vocab-word" data-word="stocking">stockings</mark> and <mark class="vocab-word" data-word="parachute">parachutes</mark>.The two world wars, whichinterruptedthe supply ofrawmaterial from Japan, also <mark class="vocab-word" data-word="stifle">stifled</mark> the European silk industry.After the Second World War, Japan’s silk production was <mark class="vocab-word" data-word="restore">restored</mark>, with improved production and quality ofrawsilk.Japan was to remain the world’s biggest producer ofrawsilk, and <mark class="vocab-word" data-word="practically">practically</mark> the only major exporter ofrawsilk, until the 1970s.However, in more recent <mark class="vocab-word" data-word="decade">decades</mark>, <mark class="vocab-word" data-word="china">China</mark> has <mark class="vocab-word" data-word="gradual">gradually</mark> <mark class="vocab-word" data-word="recapture">recaptured</mark> its position as the world’s biggest producer and exporter ofrawsilk and silkyarn.Today, around 125,000 <mark class="vocab-word" data-word="metric">metric</mark> <mark class="vocab-word" data-word="ton">tons</mark> of silk are produced in the world, and almost two thirds of that production takes place in <mark class="vocab-word" data-word="china">China</mark>.</p></div>  <div class="parallel-zh"><p>十九世纪和工业化见证了欧洲丝绸产业的衰落。更为廉价的日本丝绸是推动这一趋势的众多因素之一。苏伊士运河的开通极大地方便了这一贸易的进行。到了20世纪，尼龙这样的新型人造纤维开始被用于传统的丝绸制品中，例如袜子和降落伞。两次世界大战中断了日本的原材料供给，也扼杀了欧洲的丝绸产业。第二次世界大战结束后，日本的丝绸生产得以重建，生丝的制作工艺和品质都有所提升。直到20世纪70年代，日本仍然是世界上最大的生丝生产商，实际上也是唯一的主要生丝出口商。然而，到了近几十年，中国逐渐夺回它曾经的地位，成为世界上生丝和丝线的最大生厂商与出口者。今天，全世界大约生产125000吨的丝绸，几乎三分之二都来自中国。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"smooth": 1, "cocoon": 3, "protective": 1, "legend": 2, "ruler": 1, "china": 7, "story": 1, "destruction": 1, "tree": 2, "thread": 3, "wind": 1, "subsequently": 1, "persuade": 1, "rear": 1, "grove": 1, "devise": 1, "woven": 1, "harvest": 1, "weave": 2, "royalty": 1, "entitle": 2, "clothe": 1, "gradual": 2, "relaxed": 1, "dynasty": 2, "peasant": 1, "instrument": 1, "noble": 1, "climb": 1, "cross": 1, "merchant": 2, "goods": 1, "sole": 1, "empire": 1, "accord": 1, "monk": 1, "turkey": 1, "conceal": 1, "cane": 1, "chinese": 1, "conquer": 1, "magnificent": 1, "extensive": 1, "settle": 1, "esteem": 1, "reputation": 1, "facilitate": 1, "canal": 1, "factor": 1, "nylon": 1, "traditionally": 1, "stocking": 1, "parachute": 1, "stifle": 1, "restore": 1, "practically": 1, "decade": 1, "recapture": 1, "metric": 1, "ton": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materials to take us beyond concrete 混凝土的替代材料 - 剑桥雅思18 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思18</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Materials to take us beyond concrete 混凝土的替代材料</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/56570.html" target="_blank">https://www.laokaoya.com/56570.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="concrete">Concrete</mark> is the second most used substance in the global economy, after water – and one of the world’s biggest single sources of <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> gas <mark class="vocab-word" data-word="emission">emissions</mark>. The chemical process by which <mark class="vocab-word" data-word="cement">cement</mark>, the key <mark class="vocab-word" data-word="ingredient">ingredient</mark> of <mark class="vocab-word" data-word="concrete">concrete</mark>, is created results in large quantities of <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="dioxide">dioxide</mark>. The UN estimates that there will be 9.8 billion people living on the planet by mid-century. They will need somewhere to live. If <mark class="vocab-word" data-word="concrete">concrete</mark> is the only answer to the construction of new cities, then <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark> will <mark class="vocab-word" data-word="soar">soar</mark>, <mark class="vocab-word" data-word="aggravate">aggravating</mark> global warming. And so scientists have started <mark class="vocab-word" data-word="innovate">innovating</mark> with other materials, in a <mark class="vocab-word" data-word="scramble">scramble</mark> for alternatives to a <mark class="vocab-word" data-word="universal">universal</mark> <mark class="vocab-word" data-word="commodity">commodity</mark> that has underpinned our modern life for many years.</p><p>The problem with replacing <mark class="vocab-word" data-word="concrete">concrete</mark> is that it is so very good at what it does. Chris Cheeseman, an <mark class="vocab-word" data-word="engineering">engineering</mark> professor at <mark class="vocab-word" data-word="imperial">Imperial</mark> College London, says the key thing to consider is the extent to which <mark class="vocab-word" data-word="concrete">concrete</mark> is used around the world, and is likely to continue to be used. ‘<mark class="vocab-word" data-word="concrete">Concrete</mark> is not a high-carbon product. <mark class="vocab-word" data-word="cement">Cement</mark> is high <mark class="vocab-word" data-word="carbon">carbon</mark>, but <mark class="vocab-word" data-word="concrete">concrete</mark> is not. But it is the scale on which it is used that makes it high <mark class="vocab-word" data-word="carbon">carbon</mark>. The <mark class="vocab-word" data-word="sheer">sheer</mark> scale of <mark class="vocab-word" data-word="manufacture">manufacture</mark> is so huge, that is the issue.’</p><p>Not only are the <mark class="vocab-word" data-word="ingredient">ingredients</mark> of <mark class="vocab-word" data-word="concrete">concrete</mark> relatively cheap and found in <mark class="vocab-word" data-word="abundance">abundance</mark> in most places around the <mark class="vocab-word" data-word="globe">globe</mark>, the <mark class="vocab-word" data-word="stuff">stuff</mark> itself has <mark class="vocab-word" data-word="marvelous">marvelous</mark> properties: Portland <mark class="vocab-word" data-word="cement">cement</mark>, the <mark class="vocab-word" data-word="vital">vital</mark> component of <mark class="vocab-word" data-word="concrete">concrete</mark>, is mouldable and pourable, but quickly sets hard. Cheeseman also notes another advantage: <mark class="vocab-word" data-word="concrete">concrete</mark> and steel have similar <mark class="vocab-word" data-word="thermal">thermal</mark> <mark class="vocab-word" data-word="expansion">expansion</mark> properties, this article is from  website, so steel can be used to <mark class="vocab-word" data-word="reinforce">reinforce</mark> <mark class="vocab-word" data-word="concrete">concrete</mark>, making it far stronger and more flexible as a building material than it could be on its own. <mark class="vocab-word" data-word="accord">According</mark> to Cheeseman, all these <mark class="vocab-word" data-word="factor">factors</mark> together make <mark class="vocab-word" data-word="concrete">concrete</mark> hard to beat. ‘<mark class="vocab-word" data-word="concrete">Concrete</mark> is amazing <mark class="vocab-word" data-word="stuff">stuff</mark>. Making anything with similar properties is going to be very difficult.’</p><p>A possible alternative to <mark class="vocab-word" data-word="concrete">concrete</mark> is wood. Making buildings from wood may seem like a rather <mark class="vocab-word" data-word="medieval">medieval</mark> idea, but climate change is driving <mark class="vocab-word" data-word="architect">architects</mark> to turn to treated <mark class="vocab-word" data-word="timber">timber</mark> as a possible resource. Recent years have seen the emergence of tall buildings <mark class="vocab-word" data-word="construct">constructed</mark> almost entirely from <mark class="vocab-word" data-word="timber">timber</mark>. Vancouver, Vienna and Brumunddal in Norway are all home to <mark class="vocab-word" data-word="construct">constructed</mark> tall, wooden buildings.</p><p>Using wood to <mark class="vocab-word" data-word="construct">construct</mark> buildings, however, is not <mark class="vocab-word" data-word="straightforward">straightforward</mark>. Wood expands as it <mark class="vocab-word" data-word="absorb">absorbs</mark> <mark class="vocab-word" data-word="moisture">moisture</mark> from the air and is <mark class="vocab-word" data-word="susceptible">susceptible</mark> to <mark class="vocab-word" data-word="pest">pests</mark>, not to mention fire. But treating wood and combining it with other materials can improve its properties. Cross-laminated <mark class="vocab-word" data-word="timber">timber</mark> is engineered wood. An adhesive is used to stick layers of solid-sawn <mark class="vocab-word" data-word="timber">timber</mark> together, crosswise, to form building blocks. This material is light but has the strength of <mark class="vocab-word" data-word="concrete">concrete</mark> and steel. Construction experts say that wooden buildings can be <mark class="vocab-word" data-word="construct">constructed</mark> at a greater speed than ones of <mark class="vocab-word" data-word="concrete">concrete</mark> and steel and the process, it seems, is quieter.</p><p>Stora Enso is Europe’s biggest supplier of cross-laminated <mark class="vocab-word" data-word="timber">timber</mark>, and its vice-president Markus Mannstrom reports that the company is seeing increasing demand globally for building in wood, with climate change concerns the key driver. Finland, with its large forests, where Stora Enso is based, has been <mark class="vocab-word" data-word="lead">leading</mark> the way, but the company is seeing a rise in demand for its <mark class="vocab-word" data-word="timber">timber</mark> products across the world, including in Asia. Of course, using <mark class="vocab-word" data-word="timber">timber</mark> in a building also locks away the <mark class="vocab-word" data-word="carbon">carbon</mark> that it <mark class="vocab-word" data-word="absorb">absorbed</mark> as it grew. But even treated wood has its <mark class="vocab-word" data-word="limitation">limitations</mark> and only when a wider range of construction projects has been proven in practice will it be possible to see wood as a real alternative to <mark class="vocab-word" data-word="concrete">concrete</mark> in <mark class="vocab-word" data-word="construct">constructing</mark> tall buildings.</p><p>Fly <mark class="vocab-word" data-word="ash">ash</mark> and slag from iron <mark class="vocab-word" data-word="ore">ore</mark> are possible alternatives to <mark class="vocab-word" data-word="cement">cement</mark> in a <mark class="vocab-word" data-word="concrete">concrete</mark> mix. Fly <mark class="vocab-word" data-word="ash">ash</mark>, a byproduct of coal-burning power plants, can be <mark class="vocab-word" data-word="incorporate">incorporated</mark> into <mark class="vocab-word" data-word="concrete">concrete</mark> mixes to make up as much as 15 to 30% of the <mark class="vocab-word" data-word="cement">cement</mark>, without harming the strength or <mark class="vocab-word" data-word="durability">durability</mark> of the resulting mix. Iron-ore slag, a byproduct of the iron-ore <mark class="vocab-word" data-word="smelt">smelting</mark> process, can be used in a similar way. Their incorporation into <mark class="vocab-word" data-word="concrete">concrete</mark> mixes has the potential to reduce <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> gas <mark class="vocab-word" data-word="emission">emissions</mark>.</p><p>But Anna Surgenor, of the UK’s Green Building <mark class="vocab-word" data-word="council">Council</mark>, notes that although these waste products can save <mark class="vocab-word" data-word="carbon">carbon</mark> in the <mark class="vocab-word" data-word="concrete">concrete</mark> mix, their use is not always <mark class="vocab-word" data-word="straightforward">straightforward</mark>. It’s possible to replace the <mark class="vocab-word" data-word="cement">cement</mark> content in <mark class="vocab-word" data-word="concrete">concrete</mark> with waste products to lower the overall <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="impact">impact</mark>. But there are several <mark class="vocab-word" data-word="calculation">calculations</mark> that need to be considered across the entire life cycle of the building – these include <mark class="vocab-word" data-word="factor">factoring</mark> in where these materials are being shipped from. If they are transported over long distances, using <mark class="vocab-word" data-word="fossil">fossil</mark> fuels, the use of alternative materials might not make sense from an overall <mark class="vocab-word" data-word="carbon">carbon</mark> reduction <mark class="vocab-word" data-word="perspective">perspective</mark>.’</p><p>While these technologies are all <mark class="vocab-word" data-word="promising">promising</mark> ideas, they are either unproven or based on materials that are not <mark class="vocab-word" data-word="abundant">abundant</mark>. In their <mark class="vocab-word" data-word="overview">overview</mark> of <mark class="vocab-word" data-word="innovation">innovation</mark> in the <mark class="vocab-word" data-word="concrete">concrete</mark> industry, Felix Preston and Johanna Lehne of the UK’s Royal <mark class="vocab-word" data-word="institute">Institute</mark> of International Affairs reached the conclusion that, ‘Some novel <mark class="vocab-word" data-word="cement">cements</mark> have been discussed for more than a <mark class="vocab-word" data-word="decade">decade</mark> within the research community, without breaking through. At present, these alternatives are rarely as cost-effective as <mark class="vocab-word" data-word="conventional">conventional</mark> <mark class="vocab-word" data-word="cement">cement</mark>, and they face raw-material <mark class="vocab-word" data-word="shortage">shortages</mark> and <mark class="vocab-word" data-word="resistance">resistance</mark> from customers.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>混凝土是全球经济中使用量仅次于水的第二大物质，也是全球最大的温室气体排放单一来源之一。混凝土的关键成分-水泥的化学制程会产生大量二氧化碳。联合国预计，到本世纪中叶地球上将有98亿人口。他们需要地方居住。如果混凝土是新城市建造的唯一解决方案，那么碳排放将飙升，加剧全球变暖。因此，科学家们开始开发其他材料，以寻找替代这种长期以来支撑我们现代生活的通用商品的方法。</p><p>替代混凝土的问题在于它的表现太过出色。伦敦帝国理工学院的工程学教授克里斯·奇斯曼表示，关键要考虑的是混凝土在全球的使用范围，以及未来可能继续使用的范围。“混凝土并不是高碳产品。水泥才是高碳的，混凝土不是。但是它的高碳问题在于其使用规模。生产规模是如此巨大，这才是问题所在。”</p><p>混凝土的原材料不仅相对廉价且在全球大多数地方都能充分获得。它本身还具有神奇的特性：混凝土的关键成分—波特兰水泥可塑性强、易于倾注，还能迅速变硬。奇斯曼还指出了另一个优点：混凝土和钢材具有相似的热膨胀特性，因此可以使用钢材来加固混凝土，使其比独立使用时更加坚固和更具弹性，成为一种优秀的建筑材料。根据奇斯曼的说法，所有这些因素共同使得混凝土难以被替代。“混凝土是令人惊叹的物质。要制造出具有类似特性的任何东西都将非常困难。”</p><p>一种可能替代混凝土的材料是木材。用木材建造建筑物可能看起来有些像是中世纪的想法，但气候变化正在推动建筑师们将经过处理的木材作为一种可能的资源。近年来，几乎完全由木材建成的高层建筑越来越多。温哥华、维也纳和挪威的布鲁蒙达尔都有高层木制结构的建筑。</p><p>然而，使用木材建造建筑并不简单。木材会吸收空气中的水分膨胀，并容易受到害虫的侵害，更不用提发生火灾的风险了。但是通过对木材进行处理并与其他材料结合可以改善其性能。交叉层压木材是一种工程木材。使用胶粘剂将多层实木以交叉方式粘合在一起，形成建筑模块。这种材料虽然轻便，但具有混凝土和钢材的强度。建筑专家表示，与混凝土和钢材相比，木质建筑可以更快地建造，而且这个过程似乎更加安静。</p><p>斯多拉恩索（Stora Enso）是欧洲最大的交叉层压木材供应商，其副总裁马库斯·曼斯特罗姆（Markus Mannstrom）表示，公司观察到全球对木制建筑需求的日益增长。气候变化问题是其主要驱动因素。芬兰是斯多拉恩索所在地，拥有广阔的森林资源，一直走在木制建筑的前沿，但该公司也看到全球范围内，包括亚洲地区，对其木材产品的需求增长。当然，使用木制建筑还可以封存其生长过程中吸收的碳。然而，即使是经过处理的木材也有其局限性，只有在更广泛的建筑项目中经过实践验证后，才能将木材视为建造高层建筑的真正替代品。</p><p>煤灰和铁矿石渣可以作为混凝土中水泥的替代品。煤灰是燃煤电厂的副产品，可以加入混凝土中，占15%到30%的比例，而不会损害混凝土的强度和耐久性。铁矿石渣是铁矿石冶炼过程的副产品，可以以类似的方式使用。将它们纳入混凝土原材料有可能能够减少温室气体的排放。</p><p>但英国绿色建筑委员会的安娜·萨金纳指出，尽管这些废弃物可以用在混凝土中节省碳排放，但它们的使用并不总是简单明了的。可以用废弃物替代混凝土中的水泥，以降低整体碳足迹。但是，在整个建筑寿命周期中需要考虑多个因素，其中就包括这些材料的运输来源。如果它们经过长途运输并使用化石燃料，从减少整体碳排放的角度来看，使用替代材料可能并不合理。</p><p>虽然这些技术都有一定的前景，但它们要么尚未经过验证，要么需要稀缺的材料。在对混凝土行业创新的概述中，英国皇家国际事务研究所的费利克斯·普雷斯顿（Felix Preston）和约翰娜·莱恩（Johanna Lehne）得出结论：“一些新型水泥已经在研究界讨论了十多年，但尚未取得突破。目前，这些替代品很少像传统水泥一样具有成本效益，并且它们面临着原材料短缺和客户的抵制。”</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="concrete">Concrete</mark> is the second most used substance in the global economy, after water – and one of the world’s biggest single sources of <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> gas <mark class="vocab-word" data-word="emission">emissions</mark>. The chemical process by which <mark class="vocab-word" data-word="cement">cement</mark>, the key <mark class="vocab-word" data-word="ingredient">ingredient</mark> of <mark class="vocab-word" data-word="concrete">concrete</mark>, is created results in large quantities of <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="dioxide">dioxide</mark>. The UN estimates that there will be 9.8 billion people living on the planet by mid-century. They will need somewhere to live. If <mark class="vocab-word" data-word="concrete">concrete</mark> is the only answer to the construction of new cities, then <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark> will <mark class="vocab-word" data-word="soar">soar</mark>, <mark class="vocab-word" data-word="aggravate">aggravating</mark> global warming. And so scientists have started <mark class="vocab-word" data-word="innovate">innovating</mark> with other materials, in a <mark class="vocab-word" data-word="scramble">scramble</mark> for alternatives to a <mark class="vocab-word" data-word="universal">universal</mark> <mark class="vocab-word" data-word="commodity">commodity</mark> that has underpinned our modern life for many years.</p></div>  <div class="parallel-zh"><p>混凝土是全球经济中使用量仅次于水的第二大物质，也是全球最大的温室气体排放单一来源之一。混凝土的关键成分-水泥的化学制程会产生大量二氧化碳。联合国预计，到本世纪中叶地球上将有98亿人口。他们需要地方居住。如果混凝土是新城市建造的唯一解决方案，那么碳排放将飙升，加剧全球变暖。因此，科学家们开始开发其他材料，以寻找替代这种长期以来支撑我们现代生活的通用商品的方法。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The problem with replacing <mark class="vocab-word" data-word="concrete">concrete</mark> is that it is so very good at what it does. Chris Cheeseman, an <mark class="vocab-word" data-word="engineering">engineering</mark> professor at <mark class="vocab-word" data-word="imperial">Imperial</mark> College London, says the key thing to consider is the extent to which <mark class="vocab-word" data-word="concrete">concrete</mark> is used around the world, and is likely to continue to be used. ‘<mark class="vocab-word" data-word="concrete">Concrete</mark> is not a high-carbon product. <mark class="vocab-word" data-word="cement">Cement</mark> is high <mark class="vocab-word" data-word="carbon">carbon</mark>, but <mark class="vocab-word" data-word="concrete">concrete</mark> is not. But it is the scale on which it is used that makes it high <mark class="vocab-word" data-word="carbon">carbon</mark>. The <mark class="vocab-word" data-word="sheer">sheer</mark> scale of <mark class="vocab-word" data-word="manufacture">manufacture</mark> is so huge, that is the issue.’</p></div>  <div class="parallel-zh"><p>替代混凝土的问题在于它的表现太过出色。伦敦帝国理工学院的工程学教授克里斯·奇斯曼表示，关键要考虑的是混凝土在全球的使用范围，以及未来可能继续使用的范围。“混凝土并不是高碳产品。水泥才是高碳的，混凝土不是。但是它的高碳问题在于其使用规模。生产规模是如此巨大，这才是问题所在。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Not only are the <mark class="vocab-word" data-word="ingredient">ingredients</mark> of <mark class="vocab-word" data-word="concrete">concrete</mark> relatively cheap and found in <mark class="vocab-word" data-word="abundance">abundance</mark> in most places around the <mark class="vocab-word" data-word="globe">globe</mark>, the <mark class="vocab-word" data-word="stuff">stuff</mark> itself has <mark class="vocab-word" data-word="marvelous">marvelous</mark> properties: Portland <mark class="vocab-word" data-word="cement">cement</mark>, the <mark class="vocab-word" data-word="vital">vital</mark> component of <mark class="vocab-word" data-word="concrete">concrete</mark>, is mouldable and pourable, but quickly sets hard. Cheeseman also notes another advantage: <mark class="vocab-word" data-word="concrete">concrete</mark> and steel have similar <mark class="vocab-word" data-word="thermal">thermal</mark> <mark class="vocab-word" data-word="expansion">expansion</mark> properties, this article is from  website, so steel can be used to <mark class="vocab-word" data-word="reinforce">reinforce</mark> <mark class="vocab-word" data-word="concrete">concrete</mark>, making it far stronger and more flexible as a building material than it could be on its own. <mark class="vocab-word" data-word="accord">According</mark> to Cheeseman, all these <mark class="vocab-word" data-word="factor">factors</mark> together make <mark class="vocab-word" data-word="concrete">concrete</mark> hard to beat. ‘<mark class="vocab-word" data-word="concrete">Concrete</mark> is amazing <mark class="vocab-word" data-word="stuff">stuff</mark>. Making anything with similar properties is going to be very difficult.’</p></div>  <div class="parallel-zh"><p>混凝土的原材料不仅相对廉价且在全球大多数地方都能充分获得。它本身还具有神奇的特性：混凝土的关键成分—波特兰水泥可塑性强、易于倾注，还能迅速变硬。奇斯曼还指出了另一个优点：混凝土和钢材具有相似的热膨胀特性，因此可以使用钢材来加固混凝土，使其比独立使用时更加坚固和更具弹性，成为一种优秀的建筑材料。根据奇斯曼的说法，所有这些因素共同使得混凝土难以被替代。“混凝土是令人惊叹的物质。要制造出具有类似特性的任何东西都将非常困难。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A possible alternative to <mark class="vocab-word" data-word="concrete">concrete</mark> is wood. Making buildings from wood may seem like a rather <mark class="vocab-word" data-word="medieval">medieval</mark> idea, but climate change is driving <mark class="vocab-word" data-word="architect">architects</mark> to turn to treated <mark class="vocab-word" data-word="timber">timber</mark> as a possible resource. Recent years have seen the emergence of tall buildings <mark class="vocab-word" data-word="construct">constructed</mark> almost entirely from <mark class="vocab-word" data-word="timber">timber</mark>. Vancouver, Vienna and Brumunddal in Norway are all home to <mark class="vocab-word" data-word="construct">constructed</mark> tall, wooden buildings.</p></div>  <div class="parallel-zh"><p>一种可能替代混凝土的材料是木材。用木材建造建筑物可能看起来有些像是中世纪的想法，但气候变化正在推动建筑师们将经过处理的木材作为一种可能的资源。近年来，几乎完全由木材建成的高层建筑越来越多。温哥华、维也纳和挪威的布鲁蒙达尔都有高层木制结构的建筑。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Using wood to <mark class="vocab-word" data-word="construct">construct</mark> buildings, however, is not <mark class="vocab-word" data-word="straightforward">straightforward</mark>. Wood expands as it <mark class="vocab-word" data-word="absorb">absorbs</mark> <mark class="vocab-word" data-word="moisture">moisture</mark> from the air and is <mark class="vocab-word" data-word="susceptible">susceptible</mark> to <mark class="vocab-word" data-word="pest">pests</mark>, not to mention fire. But treating wood and combining it with other materials can improve its properties. Cross-laminated <mark class="vocab-word" data-word="timber">timber</mark> is engineered wood. An adhesive is used to stick layers of solid-sawn <mark class="vocab-word" data-word="timber">timber</mark> together, crosswise, to form building blocks. This material is light but has the strength of <mark class="vocab-word" data-word="concrete">concrete</mark> and steel. Construction experts say that wooden buildings can be <mark class="vocab-word" data-word="construct">constructed</mark> at a greater speed than ones of <mark class="vocab-word" data-word="concrete">concrete</mark> and steel and the process, it seems, is quieter.</p></div>  <div class="parallel-zh"><p>然而，使用木材建造建筑并不简单。木材会吸收空气中的水分膨胀，并容易受到害虫的侵害，更不用提发生火灾的风险了。但是通过对木材进行处理并与其他材料结合可以改善其性能。交叉层压木材是一种工程木材。使用胶粘剂将多层实木以交叉方式粘合在一起，形成建筑模块。这种材料虽然轻便，但具有混凝土和钢材的强度。建筑专家表示，与混凝土和钢材相比，木质建筑可以更快地建造，而且这个过程似乎更加安静。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Stora Enso is Europe’s biggest supplier of cross-laminated <mark class="vocab-word" data-word="timber">timber</mark>, and its vice-president Markus Mannstrom reports that the company is seeing increasing demand globally for building in wood, with climate change concerns the key driver. Finland, with its large forests, where Stora Enso is based, has been <mark class="vocab-word" data-word="lead">leading</mark> the way, but the company is seeing a rise in demand for its <mark class="vocab-word" data-word="timber">timber</mark> products across the world, including in Asia. Of course, using <mark class="vocab-word" data-word="timber">timber</mark> in a building also locks away the <mark class="vocab-word" data-word="carbon">carbon</mark> that it <mark class="vocab-word" data-word="absorb">absorbed</mark> as it grew. But even treated wood has its <mark class="vocab-word" data-word="limitation">limitations</mark> and only when a wider range of construction projects has been proven in practice will it be possible to see wood as a real alternative to <mark class="vocab-word" data-word="concrete">concrete</mark> in <mark class="vocab-word" data-word="construct">constructing</mark> tall buildings.</p></div>  <div class="parallel-zh"><p>斯多拉恩索（Stora Enso）是欧洲最大的交叉层压木材供应商，其副总裁马库斯·曼斯特罗姆（Markus Mannstrom）表示，公司观察到全球对木制建筑需求的日益增长。气候变化问题是其主要驱动因素。芬兰是斯多拉恩索所在地，拥有广阔的森林资源，一直走在木制建筑的前沿，但该公司也看到全球范围内，包括亚洲地区，对其木材产品的需求增长。当然，使用木制建筑还可以封存其生长过程中吸收的碳。然而，即使是经过处理的木材也有其局限性，只有在更广泛的建筑项目中经过实践验证后，才能将木材视为建造高层建筑的真正替代品。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Fly <mark class="vocab-word" data-word="ash">ash</mark> and slag from iron <mark class="vocab-word" data-word="ore">ore</mark> are possible alternatives to <mark class="vocab-word" data-word="cement">cement</mark> in a <mark class="vocab-word" data-word="concrete">concrete</mark> mix. Fly <mark class="vocab-word" data-word="ash">ash</mark>, a byproduct of coal-burning power plants, can be <mark class="vocab-word" data-word="incorporate">incorporated</mark> into <mark class="vocab-word" data-word="concrete">concrete</mark> mixes to make up as much as 15 to 30% of the <mark class="vocab-word" data-word="cement">cement</mark>, without harming the strength or <mark class="vocab-word" data-word="durability">durability</mark> of the resulting mix. Iron-ore slag, a byproduct of the iron-ore <mark class="vocab-word" data-word="smelt">smelting</mark> process, can be used in a similar way. Their incorporation into <mark class="vocab-word" data-word="concrete">concrete</mark> mixes has the potential to reduce <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> gas <mark class="vocab-word" data-word="emission">emissions</mark>.</p></div>  <div class="parallel-zh"><p>煤灰和铁矿石渣可以作为混凝土中水泥的替代品。煤灰是燃煤电厂的副产品，可以加入混凝土中，占15%到30%的比例，而不会损害混凝土的强度和耐久性。铁矿石渣是铁矿石冶炼过程的副产品，可以以类似的方式使用。将它们纳入混凝土原材料有可能能够减少温室气体的排放。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But Anna Surgenor, of the UK’s Green Building <mark class="vocab-word" data-word="council">Council</mark>, notes that although these waste products can save <mark class="vocab-word" data-word="carbon">carbon</mark> in the <mark class="vocab-word" data-word="concrete">concrete</mark> mix, their use is not always <mark class="vocab-word" data-word="straightforward">straightforward</mark>. It’s possible to replace the <mark class="vocab-word" data-word="cement">cement</mark> content in <mark class="vocab-word" data-word="concrete">concrete</mark> with waste products to lower the overall <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="impact">impact</mark>. But there are several <mark class="vocab-word" data-word="calculation">calculations</mark> that need to be considered across the entire life cycle of the building – these include <mark class="vocab-word" data-word="factor">factoring</mark> in where these materials are being shipped from. If they are transported over long distances, using <mark class="vocab-word" data-word="fossil">fossil</mark> fuels, the use of alternative materials might not make sense from an overall <mark class="vocab-word" data-word="carbon">carbon</mark> reduction <mark class="vocab-word" data-word="perspective">perspective</mark>.’</p></div>  <div class="parallel-zh"><p>但英国绿色建筑委员会的安娜·萨金纳指出，尽管这些废弃物可以用在混凝土中节省碳排放，但它们的使用并不总是简单明了的。可以用废弃物替代混凝土中的水泥，以降低整体碳足迹。但是，在整个建筑寿命周期中需要考虑多个因素，其中就包括这些材料的运输来源。如果它们经过长途运输并使用化石燃料，从减少整体碳排放的角度来看，使用替代材料可能并不合理。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While these technologies are all <mark class="vocab-word" data-word="promising">promising</mark> ideas, they are either unproven or based on materials that are not <mark class="vocab-word" data-word="abundant">abundant</mark>. In their <mark class="vocab-word" data-word="overview">overview</mark> of <mark class="vocab-word" data-word="innovation">innovation</mark> in the <mark class="vocab-word" data-word="concrete">concrete</mark> industry, Felix Preston and Johanna Lehne of the UK’s Royal <mark class="vocab-word" data-word="institute">Institute</mark> of International Affairs reached the conclusion that, ‘Some novel <mark class="vocab-word" data-word="cement">cements</mark> have been discussed for more than a <mark class="vocab-word" data-word="decade">decade</mark> within the research community, without breaking through. At present, these alternatives are rarely as cost-effective as <mark class="vocab-word" data-word="conventional">conventional</mark> <mark class="vocab-word" data-word="cement">cement</mark>, and they face raw-material <mark class="vocab-word" data-word="shortage">shortages</mark> and <mark class="vocab-word" data-word="resistance">resistance</mark> from customers.’</p></div>  <div class="parallel-zh"><p>虽然这些技术都有一定的前景，但它们要么尚未经过验证，要么需要稀缺的材料。在对混凝土行业创新的概述中，英国皇家国际事务研究所的费利克斯·普雷斯顿（Felix Preston）和约翰娜·莱恩（Johanna Lehne）得出结论：“一些新型水泥已经在研究界讨论了十多年，但尚未取得突破。目前，这些替代品很少像传统水泥一样具有成本效益，并且它们面临着原材料短缺和客户的抵制。”</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"concrete": 23, "greenhouse": 2, "emission": 3, "cement": 8, "ingredient": 2, "carbon": 8, "dioxide": 1, "soar": 1, "aggravate": 1, "innovate": 1, "scramble": 1, "universal": 1, "commodity": 1, "engineering": 1, "imperial": 1, "sheer": 1, "manufacture": 1, "abundance": 1, "globe": 1, "stuff": 2, "marvelous": 1, "vital": 1, "thermal": 1, "expansion": 1, "reinforce": 1, "accord": 1, "factor": 2, "medieval": 1, "architect": 1, "timber": 7, "construct": 5, "straightforward": 2, "absorb": 2, "moisture": 1, "susceptible": 1, "pest": 1, "lead": 1, "limitation": 1, "ash": 2, "ore": 1, "incorporate": 1, "durability": 1, "smelt": 1, "council": 1, "impact": 1, "calculation": 1, "fossil": 1, "perspective": 1, "promising": 1, "abundant": 1, "overview": 1, "innovation": 1, "institute": 1, "decade": 1, "conventional": 1, "shortage": 1, "resistance": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

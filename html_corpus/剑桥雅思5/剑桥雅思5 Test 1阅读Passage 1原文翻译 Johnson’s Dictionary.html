@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johnson’s Dictionary - 剑桥雅思5 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思5</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Johnson’s Dictionary</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/21815.html" target="_blank">https://www.laokaoya.com/21815.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>For the century before Johnson’s Dictionary was published in 1775, there had been concern about the state of the English language. There was no standard way of speaking or writing and no <mark class="vocab-word" data-word="agreement">agreement</mark> as to the best way of bringing some order to the <mark class="vocab-word" data-word="chaos">chaos</mark> of English spelling. Dr Johnson <mark class="vocab-word" data-word="provided">provided</mark> the solution.</p><p>There had, of course, been dictionaries in the past, the first of these being a little book of some 120 pages, <mark class="vocab-word" data-word="compile">compiled</mark> by a certain Robert Cawdray, published in 1604 under the title A Table Alphabeticall ‘of hard usual English words’. Like the various dictionaries that came after it during the seventeenth century, Cawdray’s tended to concentrate on ‘<mark class="vocab-word" data-word="scholarly">scholarly</mark>’ words; one function of the dictionary was to enable its student to <mark class="vocab-word" data-word="convey">convey</mark> an impression of fine learning.</p><p>Beyond the practical need to make order out of <mark class="vocab-word" data-word="chaos">chaos</mark>, the rise of dictionaries is associated with the rise of the English middle class, who were anxious to define and <mark class="vocab-word" data-word="circumscribe">circumscribe</mark> the various worlds to conquer- lexical as well as social and commercial. It is highly appropriate that Dr Samuel Johnson, the very model of an eighteenth-century <mark class="vocab-word" data-word="literary">literary</mark> man, as famous in his own time as in ours, should have published his Dictionary at the very beginning of the heyday of the middle class.</p><p>Johnson was a poet and <mark class="vocab-word" data-word="critic">critic</mark> who raised common sense to the heights of <mark class="vocab-word" data-word="genius">genius</mark>. His approach to the problems that had worried writers throughout the late seventeenth and early eighteenth centuries was intensely practical. Up until his time, the task of producing a dictionary on such a large scale had seemed impossible without the <mark class="vocab-word" data-word="establishment">establishment</mark> of an <mark class="vocab-word" data-word="academy">academy</mark> to make decisions about right and wrong <mark class="vocab-word" data-word="usage">usage</mark>. Johnson decided he did not need an <mark class="vocab-word" data-word="academy">academy</mark> to <mark class="vocab-word" data-word="settle">settle</mark> arguments about language; he would write a dictionary himself; and he would do it single-handed. Johnson signed the contract for the Dictionary with the bookseller Robert Dosley at a breakfast held at the Golden <mark class="vocab-word" data-word="anchor">Anchor</mark> <mark class="vocab-word" data-word="inn">Inn</mark> near Holborn Bar on 18 June 1764. He was to be paid ￡1,575 in <mark class="vocab-word" data-word="instalment">instalments</mark>, and from this he took money to rent 17 Gough Square, in which he set up his ‘dictionary <mark class="vocab-word" data-word="workshop">workshop</mark>’.</p><p><mark class="vocab-word" data-word="jam">James</mark> Boswell, his <mark class="vocab-word" data-word="biographer">biographer</mark>, described the garret where Johnson worked as ‘fitted up like a counting house’ with a long desk running down the middle at which the copying <mark class="vocab-word" data-word="clerk">clerks</mark> would work <mark class="vocab-word" data-word="standing">standing</mark> up. Johnson himself was stationed on a rickety chair at an ‘old crazy deal table’ surrounded by a <mark class="vocab-word" data-word="chaos">chaos</mark> of borrowed books. He was also helped by six assistants, two of whom died whilst the Dictionary was still in preparation.</p><p>The work was <mark class="vocab-word" data-word="immense">immense</mark>; filling about eighty large notebooks (and without a library to hand), Johnson wrote the definitions of over 40,000 words, and illustrated their many meanings with some 114,000 <mark class="vocab-word" data-word="quotation">quotations</mark> <mark class="vocab-word" data-word="drawn">drawn</mark> from English writing on every subject, from the Elizabethans to his own time. He did not expect to achieve complete originality. Working to a <mark class="vocab-word" data-word="deadline">deadline</mark>, he had to draw on the best of all previous dictionaries, and to make his work one of <mark class="vocab-word" data-word="heroic">heroic</mark> <mark class="vocab-word" data-word="synthesis">synthesis</mark>. In fact, it was very much more. Unlike his <mark class="vocab-word" data-word="predecessor">predecessors</mark>, Johnson treated English very <mark class="vocab-word" data-word="practically">practically</mark>, as a living language, with many different <mark class="vocab-word" data-word="shade">shades</mark> of meaning. He adopted his definitions on the principle of English common law-according to <mark class="vocab-word" data-word="precedent">precedent</mark>. After its publication, his Dictionary was not seriously rivalled for over a century.</p><p>After many vicissitudes the Dictionary was finally published on 15 April 1775. It was <mark class="vocab-word" data-word="instant">instantly</mark> recognised as a <mark class="vocab-word" data-word="landmark">landmark</mark> throughout Europe. ‘This very <mark class="vocab-word" data-word="noble">noble</mark> work,’ wrote the <mark class="vocab-word" data-word="lead">leading</mark> <mark class="vocab-word" data-word="italian">Italian</mark> <mark class="vocab-word" data-word="lexicographer">lexicographer</mark>, ‘will be a <mark class="vocab-word" data-word="perpetual">perpetual</mark> <mark class="vocab-word" data-word="monument">monument</mark> of <mark class="vocab-word" data-word="fame">Fame</mark> to the Author, an Honour to his own Country in particular, and a general Benefit to the <mark class="vocab-word" data-word="republic">republic</mark> of Letters throughout Europe.’ The fact that Johnson had taken on the Academies of Europe and <mark class="vocab-word" data-word="match">matched</mark> them (everyone knew that forty French <mark class="vocab-word" data-word="academic">academics</mark> had taken forty years to produce the first French national dictionary) was cause for much English celebration.</p><p>Johnson had worked for nine years, ‘with little <mark class="vocab-word" data-word="assistance">assistance</mark> of the <mark class="vocab-word" data-word="learned">learned</mark>, and without any <mark class="vocab-word" data-word="patronage">patronage</mark> of the great; not in the soft obscurities of <mark class="vocab-word" data-word="retirement">retirement</mark>, or under the shelter of <mark class="vocab-word" data-word="academic">academic</mark> bowers, but amidst <mark class="vocab-word" data-word="inconvenience">inconvenience</mark> and <mark class="vocab-word" data-word="distraction">distraction</mark>, in sickness and in <mark class="vocab-word" data-word="sorrow">sorrow</mark>’. For all its <mark class="vocab-word" data-word="fault">faults</mark> and eccentricities his two-volume work is a <mark class="vocab-word" data-word="masterpiece">masterpiece</mark> and a <mark class="vocab-word" data-word="landmark">landmark</mark> in his own words, ‘setting the orthography, displaying the <mark class="vocab-word" data-word="analogy">analogy</mark>, <mark class="vocab-word" data-word="regulate">regulating</mark> the structures, and <mark class="vocab-word" data-word="ascertain">ascertaining</mark> the significations of English words’. It is the <mark class="vocab-word" data-word="cornerstone">cornerstone</mark> of Standard English, an achievement which, in <mark class="vocab-word" data-word="jam">James</mark> Boswell’s words, ‘conferred <mark class="vocab-word" data-word="stability">stability</mark> on the language of his country’.</p><p>The Dictionary, together with his other writing, made Johnson famous and so well <mark class="vocab-word" data-word="esteem">esteemed</mark> that his friends were able to <mark class="vocab-word" data-word="prevail">prevail</mark> upon King George Ⅲ to offer him a <mark class="vocab-word" data-word="pension">pension</mark>. From then on, he was to become the Johnson of <mark class="vocab-word" data-word="folklore">folklore</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在1775年《约翰逊词典》出版之前的一个世纪，人们一直对英语的状态感到担忧。没有标准的口语或写作方式，在整合混乱英语拼写的最好方法方面也没有共识。约翰逊博士提供了解决方案。</p><p>当然，过去也有字典，其中第一本是约120页的小书，由某位罗伯特·考德瑞（Robert Cawdray）汇编而成，于1604年出版，标题为“ A table Alphabeticall of hard usual English words”。就像十七世纪在它之后出现的各种字典一样，考德瑞的字典倾向于集中在“学者”的单词上。词典的一个功能是使它的学生传达良好学习的印象。</p><p>除了摆脱混乱的实际需要外，词典的兴起与英国中产阶级的兴起有关，他们渴望定义和限制各种领域以方便征服，如词汇，社会和商业。塞缪尔·约翰逊博士（Samuel Johnson）是一位18世纪文学家的楷模，在他自己的时代和我们这个时代一样著名。因此，由他在中产阶级鼎盛时期刚刚开始的时候出版自己的字典十分合适。</p><p>约翰逊是一位诗人和评论家，他将常识提升到天才般的高度。在整个17世纪末和18世纪初期，他处理一直困扰着作家的问题的方法非常实用。直到他的时代，如果不建立一个学术机构来决定正确与错误的用法，那么大规模制作词典的任务似乎是不可能的。约翰逊认为他不需要一所学院来解决有关语言的争论。他会自己写出字典，而且十分轻松随意。约翰逊于1764 年6 月18日在Holborn Bar附近Golden Anchor Inn举行的早餐会上与书商Robert Dosley签署了字典的合同。他将获得1575 英镑的分期付款。他用这笔钱租了Gough Square 17号，在那里他建立了自己的“词典作坊” 。</p><p>他的传记作者詹姆斯·博斯韦尔（James Boswell）表示，约翰逊工作的阁楼装修的像会计室一样，中间放着一张长桌子，抄写的人员站在旁边工作。约翰逊本人坐在一张“旧交易桌”旁边摇摇欲坠的椅子上，周围是一堆胡乱堆放的借来的书。他还得到了六名助手的帮助，其中两名在《字典》仍在准备中时丧生。</p><p>这项工作是巨大的。约翰逊填满了大约80个大笔记本（没有可用的图书馆），写下了40,000多个单词的定义，并从伊丽莎白女王时代到他自己时代关于各个主题的英文写作中引述了114,000句话，说明了它们的许多含义。他没想过完全原创。由于最后期限的存在，他不得不借鉴以前所有字典中的精华，并使他的作品成为集大成者。实际上，还远远不止这些。与他的前任不同，约翰逊非常实用地将英语视为一种活着的语言，具有多种不同的含义。他在英国普通法依据先例的原则之上，提出自己的定义。出版后，他的字典在一个多世纪中都没有受到严重的竞争。</p><p>经过多次变动后，该词典终于在1775年4月15日出版。它一开始就被整个欧洲当成一座里程碑。一位著名的意大利字典作者写道：“这项非常高贵的作品将成为作者声誉的永恒丰碑，成为他自己国家的容易，并为整个欧洲的文字带来普遍的好处。“ 约翰逊完全比得上欧洲的学者（每个人都知道四十名法国学者用了四十年时间才完成第一本法语字典），这一事实值得英国庆祝。</p><p>约翰逊工作了九年，在这期间“很少有学识渊博的人帮助，也没有大人物的支持。不像退休后悠闲的生活，也不是在学术阴凉的庇护下，而是生活在不便与烦扰，疾病与悲伤中。尽管有着各种缺点和怪异，但他的两卷作品称得上是杰作和里程碑。用他自己的话说“它确立了拼写体系，展示出类比规则，调节结构，并确定英语单词的含义” 。这是标准英语的基石，用詹姆士·博斯韦尔（James Boswell）的话来说，这一成就“为其国家的语言赋予了稳定” 。</p><p>《词典》和他的其他著作使约翰逊出名，并受到如此尊敬，以至于他的朋友们能够说服乔治三世国王向他提供退休金。从那时起，他成为Johnson of folklore.</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>For the century before Johnson’s Dictionary was published in 1775, there had been concern about the state of the English language. There was no standard way of speaking or writing and no <mark class="vocab-word" data-word="agreement">agreement</mark> as to the best way of bringing some order to the <mark class="vocab-word" data-word="chaos">chaos</mark> of English spelling. Dr Johnson <mark class="vocab-word" data-word="provided">provided</mark> the solution.</p></div>  <div class="parallel-zh"><p>在1775年《约翰逊词典》出版之前的一个世纪，人们一直对英语的状态感到担忧。没有标准的口语或写作方式，在整合混乱英语拼写的最好方法方面也没有共识。约翰逊博士提供了解决方案。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There had, of course, been dictionaries in the past, the first of these being a little book of some 120 pages, <mark class="vocab-word" data-word="compile">compiled</mark> by a certain Robert Cawdray, published in 1604 under the title A Table Alphabeticall ‘of hard usual English words’. Like the various dictionaries that came after it during the seventeenth century, Cawdray’s tended to concentrate on ‘<mark class="vocab-word" data-word="scholarly">scholarly</mark>’ words; one function of the dictionary was to enable its student to <mark class="vocab-word" data-word="convey">convey</mark> an impression of fine learning.</p></div>  <div class="parallel-zh"><p>当然，过去也有字典，其中第一本是约120页的小书，由某位罗伯特·考德瑞（Robert Cawdray）汇编而成，于1604年出版，标题为“ A table Alphabeticall of hard usual English words”。就像十七世纪在它之后出现的各种字典一样，考德瑞的字典倾向于集中在“学者”的单词上。词典的一个功能是使它的学生传达良好学习的印象。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Beyond the practical need to make order out of <mark class="vocab-word" data-word="chaos">chaos</mark>, the rise of dictionaries is associated with the rise of the English middle class, who were anxious to define and <mark class="vocab-word" data-word="circumscribe">circumscribe</mark> the various worlds to conquer- lexical as well as social and commercial. It is highly appropriate that Dr Samuel Johnson, the very model of an eighteenth-century <mark class="vocab-word" data-word="literary">literary</mark> man, as famous in his own time as in ours, should have published his Dictionary at the very beginning of the heyday of the middle class.</p></div>  <div class="parallel-zh"><p>除了摆脱混乱的实际需要外，词典的兴起与英国中产阶级的兴起有关，他们渴望定义和限制各种领域以方便征服，如词汇，社会和商业。塞缪尔·约翰逊博士（Samuel Johnson）是一位18世纪文学家的楷模，在他自己的时代和我们这个时代一样著名。因此，由他在中产阶级鼎盛时期刚刚开始的时候出版自己的字典十分合适。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Johnson was a poet and <mark class="vocab-word" data-word="critic">critic</mark> who raised common sense to the heights of <mark class="vocab-word" data-word="genius">genius</mark>. His approach to the problems that had worried writers throughout the late seventeenth and early eighteenth centuries was intensely practical. Up until his time, the task of producing a dictionary on such a large scale had seemed impossible without the <mark class="vocab-word" data-word="establishment">establishment</mark> of an <mark class="vocab-word" data-word="academy">academy</mark> to make decisions about right and wrong <mark class="vocab-word" data-word="usage">usage</mark>. Johnson decided he did not need an <mark class="vocab-word" data-word="academy">academy</mark> to <mark class="vocab-word" data-word="settle">settle</mark> arguments about language; he would write a dictionary himself; and he would do it single-handed. Johnson signed the contract for the Dictionary with the bookseller Robert Dosley at a breakfast held at the Golden <mark class="vocab-word" data-word="anchor">Anchor</mark> <mark class="vocab-word" data-word="inn">Inn</mark> near Holborn Bar on 18 June 1764. He was to be paid ￡1,575 in <mark class="vocab-word" data-word="instalment">instalments</mark>, and from this he took money to rent 17 Gough Square, in which he set up his ‘dictionary <mark class="vocab-word" data-word="workshop">workshop</mark>’.</p></div>  <div class="parallel-zh"><p>约翰逊是一位诗人和评论家，他将常识提升到天才般的高度。在整个17世纪末和18世纪初期，他处理一直困扰着作家的问题的方法非常实用。直到他的时代，如果不建立一个学术机构来决定正确与错误的用法，那么大规模制作词典的任务似乎是不可能的。约翰逊认为他不需要一所学院来解决有关语言的争论。他会自己写出字典，而且十分轻松随意。约翰逊于1764 年6 月18日在Holborn Bar附近Golden Anchor Inn举行的早餐会上与书商Robert Dosley签署了字典的合同。他将获得1575 英镑的分期付款。他用这笔钱租了Gough Square 17号，在那里他建立了自己的“词典作坊” 。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="jam">James</mark> Boswell, his <mark class="vocab-word" data-word="biographer">biographer</mark>, described the garret where Johnson worked as ‘fitted up like a counting house’ with a long desk running down the middle at which the copying <mark class="vocab-word" data-word="clerk">clerks</mark> would work <mark class="vocab-word" data-word="standing">standing</mark> up. Johnson himself was stationed on a rickety chair at an ‘old crazy deal table’ surrounded by a <mark class="vocab-word" data-word="chaos">chaos</mark> of borrowed books. He was also helped by six assistants, two of whom died whilst the Dictionary was still in preparation.</p></div>  <div class="parallel-zh"><p>他的传记作者詹姆斯·博斯韦尔（James Boswell）表示，约翰逊工作的阁楼装修的像会计室一样，中间放着一张长桌子，抄写的人员站在旁边工作。约翰逊本人坐在一张“旧交易桌”旁边摇摇欲坠的椅子上，周围是一堆胡乱堆放的借来的书。他还得到了六名助手的帮助，其中两名在《字典》仍在准备中时丧生。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The work was <mark class="vocab-word" data-word="immense">immense</mark>; filling about eighty large notebooks (and without a library to hand), Johnson wrote the definitions of over 40,000 words, and illustrated their many meanings with some 114,000 <mark class="vocab-word" data-word="quotation">quotations</mark> <mark class="vocab-word" data-word="drawn">drawn</mark> from English writing on every subject, from the Elizabethans to his own time. He did not expect to achieve complete originality. Working to a <mark class="vocab-word" data-word="deadline">deadline</mark>, he had to draw on the best of all previous dictionaries, and to make his work one of <mark class="vocab-word" data-word="heroic">heroic</mark> <mark class="vocab-word" data-word="synthesis">synthesis</mark>. In fact, it was very much more. Unlike his <mark class="vocab-word" data-word="predecessor">predecessors</mark>, Johnson treated English very <mark class="vocab-word" data-word="practically">practically</mark>, as a living language, with many different <mark class="vocab-word" data-word="shade">shades</mark> of meaning. He adopted his definitions on the principle of English common law-according to <mark class="vocab-word" data-word="precedent">precedent</mark>. After its publication, his Dictionary was not seriously rivalled for over a century.</p></div>  <div class="parallel-zh"><p>这项工作是巨大的。约翰逊填满了大约80个大笔记本（没有可用的图书馆），写下了40,000多个单词的定义，并从伊丽莎白女王时代到他自己时代关于各个主题的英文写作中引述了114,000句话，说明了它们的许多含义。他没想过完全原创。由于最后期限的存在，他不得不借鉴以前所有字典中的精华，并使他的作品成为集大成者。实际上，还远远不止这些。与他的前任不同，约翰逊非常实用地将英语视为一种活着的语言，具有多种不同的含义。他在英国普通法依据先例的原则之上，提出自己的定义。出版后，他的字典在一个多世纪中都没有受到严重的竞争。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>After many vicissitudes the Dictionary was finally published on 15 April 1775. It was <mark class="vocab-word" data-word="instant">instantly</mark> recognised as a <mark class="vocab-word" data-word="landmark">landmark</mark> throughout Europe. ‘This very <mark class="vocab-word" data-word="noble">noble</mark> work,’ wrote the <mark class="vocab-word" data-word="lead">leading</mark> <mark class="vocab-word" data-word="italian">Italian</mark> <mark class="vocab-word" data-word="lexicographer">lexicographer</mark>, ‘will be a <mark class="vocab-word" data-word="perpetual">perpetual</mark> <mark class="vocab-word" data-word="monument">monument</mark> of <mark class="vocab-word" data-word="fame">Fame</mark> to the Author, an Honour to his own Country in particular, and a general Benefit to the <mark class="vocab-word" data-word="republic">republic</mark> of Letters throughout Europe.’ The fact that Johnson had taken on the Academies of Europe and <mark class="vocab-word" data-word="match">matched</mark> them (everyone knew that forty French <mark class="vocab-word" data-word="academic">academics</mark> had taken forty years to produce the first French national dictionary) was cause for much English celebration.</p></div>  <div class="parallel-zh"><p>经过多次变动后，该词典终于在1775年4月15日出版。它一开始就被整个欧洲当成一座里程碑。一位著名的意大利字典作者写道：“这项非常高贵的作品将成为作者声誉的永恒丰碑，成为他自己国家的容易，并为整个欧洲的文字带来普遍的好处。“ 约翰逊完全比得上欧洲的学者（每个人都知道四十名法国学者用了四十年时间才完成第一本法语字典），这一事实值得英国庆祝。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Johnson had worked for nine years, ‘with little <mark class="vocab-word" data-word="assistance">assistance</mark> of the <mark class="vocab-word" data-word="learned">learned</mark>, and without any <mark class="vocab-word" data-word="patronage">patronage</mark> of the great; not in the soft obscurities of <mark class="vocab-word" data-word="retirement">retirement</mark>, or under the shelter of <mark class="vocab-word" data-word="academic">academic</mark> bowers, but amidst <mark class="vocab-word" data-word="inconvenience">inconvenience</mark> and <mark class="vocab-word" data-word="distraction">distraction</mark>, in sickness and in <mark class="vocab-word" data-word="sorrow">sorrow</mark>’. For all its <mark class="vocab-word" data-word="fault">faults</mark> and eccentricities his two-volume work is a <mark class="vocab-word" data-word="masterpiece">masterpiece</mark> and a <mark class="vocab-word" data-word="landmark">landmark</mark> in his own words, ‘setting the orthography, displaying the <mark class="vocab-word" data-word="analogy">analogy</mark>, <mark class="vocab-word" data-word="regulate">regulating</mark> the structures, and <mark class="vocab-word" data-word="ascertain">ascertaining</mark> the significations of English words’. It is the <mark class="vocab-word" data-word="cornerstone">cornerstone</mark> of Standard English, an achievement which, in <mark class="vocab-word" data-word="jam">James</mark> Boswell’s words, ‘conferred <mark class="vocab-word" data-word="stability">stability</mark> on the language of his country’.</p></div>  <div class="parallel-zh"><p>约翰逊工作了九年，在这期间“很少有学识渊博的人帮助，也没有大人物的支持。不像退休后悠闲的生活，也不是在学术阴凉的庇护下，而是生活在不便与烦扰，疾病与悲伤中。尽管有着各种缺点和怪异，但他的两卷作品称得上是杰作和里程碑。用他自己的话说“它确立了拼写体系，展示出类比规则，调节结构，并确定英语单词的含义” 。这是标准英语的基石，用詹姆士·博斯韦尔（James Boswell）的话来说，这一成就“为其国家的语言赋予了稳定” 。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Dictionary, together with his other writing, made Johnson famous and so well <mark class="vocab-word" data-word="esteem">esteemed</mark> that his friends were able to <mark class="vocab-word" data-word="prevail">prevail</mark> upon King George Ⅲ to offer him a <mark class="vocab-word" data-word="pension">pension</mark>. From then on, he was to become the Johnson of <mark class="vocab-word" data-word="folklore">folklore</mark>.</p></div>  <div class="parallel-zh"><p>《词典》和他的其他著作使约翰逊出名，并受到如此尊敬，以至于他的朋友们能够说服乔治三世国王向他提供退休金。从那时起，他成为Johnson of folklore.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"agreement": 1, "chaos": 3, "provided": 1, "compile": 1, "scholarly": 1, "convey": 1, "circumscribe": 1, "literary": 1, "critic": 1, "genius": 1, "establishment": 1, "academy": 2, "usage": 1, "settle": 1, "anchor": 1, "inn": 1, "instalment": 1, "workshop": 1, "jam": 2, "biographer": 1, "clerk": 1, "standing": 1, "immense": 1, "quotation": 1, "drawn": 1, "deadline": 1, "heroic": 1, "synthesis": 1, "predecessor": 1, "practically": 1, "shade": 1, "precedent": 1, "instant": 1, "landmark": 2, "noble": 1, "lead": 1, "italian": 1, "lexicographer": 1, "perpetual": 1, "monument": 1, "fame": 1, "republic": 1, "match": 1, "academic": 2, "assistance": 1, "learned": 1, "patronage": 1, "retirement": 1, "inconvenience": 1, "distraction": 1, "sorrow": 1, "fault": 1, "masterpiece": 1, "analogy": 1, "regulate": 1, "ascertain": 1, "cornerstone": 1, "stability": 1, "esteem": 1, "prevail": 1, "pension": 1, "folklore": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

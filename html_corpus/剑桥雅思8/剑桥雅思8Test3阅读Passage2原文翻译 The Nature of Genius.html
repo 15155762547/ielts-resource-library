@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Nature of Genius - 剑桥雅思8 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>The Nature of Genius</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/25988.html" target="_blank">https://www.laokaoya.com/25988.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>There has always been an interest in <mark class="vocab-word" data-word="genius">geniuses</mark> and prodigies. The word ‘<mark class="vocab-word" data-word="genius">genius</mark>’, from the <mark class="vocab-word" data-word="latin">Latin</mark> gens (= family) and the term ‘<mark class="vocab-word" data-word="genius">genius</mark>’, meaning ‘begetter’, comes from the early Roman <mark class="vocab-word" data-word="cult">cult</mark> of a divinity as the head of the family. In its earliest form, <mark class="vocab-word" data-word="genius">genius</mark> was <mark class="vocab-word" data-word="concerned">concerned</mark> with the ability of the head of the family, the paterfamilias, to <mark class="vocab-word" data-word="perpetuate">perpetuate</mark> himself. <mark class="vocab-word" data-word="gradual">Gradually</mark>, <mark class="vocab-word" data-word="genius">genius</mark> came to represent a person’s characteristics and thence an individual’s highest <mark class="vocab-word" data-word="attribute">attributes</mark> <mark class="vocab-word" data-word="derive">derived</mark> from his ‘<mark class="vocab-word" data-word="genius">genius</mark>’ or guiding spirit. Today, people still look to stars or <mark class="vocab-word" data-word="gene">genes</mark>, <mark class="vocab-word" data-word="astrology">astrology</mark> or <mark class="vocab-word" data-word="genetics">genetics</mark>, in the hope of finding the source of <mark class="vocab-word" data-word="exceptional">exceptional</mark> abilities or personal characteristics.</p><p>The concept of <mark class="vocab-word" data-word="genius">genius</mark> and of gifts has become part of our <mark class="vocab-word" data-word="folk">folk</mark> culture, and attitudes are <mark class="vocab-word" data-word="ambivalent">ambivalent</mark> towards them. We <mark class="vocab-word" data-word="envy">envy</mark> the <mark class="vocab-word" data-word="gifted">gifted</mark> and mistrust them. In the <mark class="vocab-word" data-word="mythology">mythology</mark> of giftedness, it is popularly believed that if people are <mark class="vocab-word" data-word="talented">talented</mark> in one area, they must be <mark class="vocab-word" data-word="defective">defective</mark> in another, that <mark class="vocab-word" data-word="intellectual">intellectuals</mark> are impractical, that prodigies burn too brightly too soon and burn out, that <mark class="vocab-word" data-word="gifted">gifted</mark> people are <mark class="vocab-word" data-word="eccentric">eccentric</mark>, that they are physical weaklings, that there’s a thin line between <mark class="vocab-word" data-word="genius">genius</mark> and madness, that <mark class="vocab-word" data-word="genius">genius</mark> runs in families, that the <mark class="vocab-word" data-word="gifted">gifted</mark> are so clever they don’t need special help, that giftedness is the same as having a high IQ, that some races are more <mark class="vocab-word" data-word="intelligent">intelligent</mark> or musical or <mark class="vocab-word" data-word="mathematical">mathematical</mark> than others, that <mark class="vocab-word" data-word="genius">genius</mark> goes unrecognised and unrewarded, that adversity makes men wise or that people with gifts have a responsibility to use them. Language has been <mark class="vocab-word" data-word="enrich">enriched</mark> with such terms as ‘highbrow’, ‘egghead’, ‘blue-stocking’, ‘wiseacre’, ‘know-all’, ‘boffin’ and, for many, ‘<mark class="vocab-word" data-word="intellectual">intellectual</mark>’ is a term of denigration.</p><p>The nineteenth century saw <mark class="vocab-word" data-word="considerable">considerable</mark> interest in the nature of <mark class="vocab-word" data-word="genius">genius</mark>, and produced not a few studies of famous prodigies. Perhaps for us today, two of the most significant aspects of most of these studies of <mark class="vocab-word" data-word="genius">genius</mark> are the frequency with which early <mark class="vocab-word" data-word="encouragement">encouragement</mark> and teaching by parents and <mark class="vocab-word" data-word="tutor">tutors</mark> had <mark class="vocab-word" data-word="beneficial">beneficial</mark> effects on the <mark class="vocab-word" data-word="intellectual">intellectual</mark>, artistic or musical development of the children but caused great difficulties of adjustment later in their lives, and the frequency with which abilities went unrecognised by teachers and schools. However, this article is from  website, the difficulty with the evidence produced by these studies, <mark class="vocab-word" data-word="fascinating">fascinating</mark> as they are in collecting together <mark class="vocab-word" data-word="anecdote">anecdotes</mark> and apparent similarities and <mark class="vocab-word" data-word="exception">exceptions</mark>, is that they are not what we would today call norm-referenced. In other words, when, for instance, information is <mark class="vocab-word" data-word="collate">collated</mark> about early illnesses, methods of upbringing, schooling, etc. , we must also take into account information from other historical sources about how common or <mark class="vocab-word" data-word="exceptional">exceptional</mark> these were at the time. For instance, <mark class="vocab-word" data-word="infant">infant</mark> <mark class="vocab-word" data-word="mortality">mortality</mark> was high and life <mark class="vocab-word" data-word="expectancy">expectancy</mark> much shorter than today, home <mark class="vocab-word" data-word="tutor">tutoring</mark> was common in the families of the <mark class="vocab-word" data-word="nobility">nobility</mark> and wealthy, <mark class="vocab-word" data-word="bully">bullying</mark> and <mark class="vocab-word" data-word="corporal">corporal</mark> <mark class="vocab-word" data-word="punishment">punishment</mark> were common at the best independent schools and, for the most part, the cases studied were members of the <mark class="vocab-word" data-word="privileged">privileged</mark> classes. It was only with the growth of paediatrics and <mark class="vocab-word" data-word="psychology">psychology</mark> in the twentieth century that studies could be carried out on a more objective, if still not always very scientific, basis.</p><p><mark class="vocab-word" data-word="genius">Geniuses</mark>, however, they are defined, are but the <mark class="vocab-word" data-word="peak">peaks</mark> which stand out through the <mark class="vocab-word" data-word="mist">mist</mark> of history and are <mark class="vocab-word" data-word="visible">visible</mark> to the particular observer from his or her particular <mark class="vocab-word" data-word="vantage">vantage</mark> point. Change the observers and the <mark class="vocab-word" data-word="vantage">vantage</mark> points, clear away some of the <mark class="vocab-word" data-word="mist">mist</mark>, and a different lot of <mark class="vocab-word" data-word="peak">peaks</mark> appear. <mark class="vocab-word" data-word="genius">Genius</mark> is a term we apply to those whom we recognise for their <mark class="vocab-word" data-word="outstanding">outstanding</mark> achievements and who stand near the end of the continuum of human abilities which reaches back through the <mark class="vocab-word" data-word="mundane">mundane</mark> and <mark class="vocab-word" data-word="mediocre">mediocre</mark> to the <mark class="vocab-word" data-word="incapable">incapable</mark>. There is still much truth in Dr Samuel Johnson’s observation, ‘The true <mark class="vocab-word" data-word="genius">genius</mark> is a mind of large general powers, <mark class="vocab-word" data-word="accidental">accidentally</mark> <mark class="vocab-word" data-word="determined">determined</mark> to some particular direction’. We may disagree with the ‘general’, for we doubt if all musicians of <mark class="vocab-word" data-word="genius">genius</mark> could have become scientists of <mark class="vocab-word" data-word="genius">genius</mark> or <mark class="vocab-word" data-word="vice">vice</mark> versa, but there is no doubting the <mark class="vocab-word" data-word="accidental">accidental</mark> <mark class="vocab-word" data-word="determination">determination</mark> which <mark class="vocab-word" data-word="nurture">nurtured</mark> or <mark class="vocab-word" data-word="trigger">triggered</mark> their gifts into those channels into which they have poured their powers so successfully. Along the continuum of abilities are hundreds of thousands of <mark class="vocab-word" data-word="gifted">gifted</mark> men and women, boys and girls.</p><p>What we appreciate, enjoy or <mark class="vocab-word" data-word="marvel">marvel</mark> at in the works of <mark class="vocab-word" data-word="genius">genius</mark> or the achievements of prodigies are the <mark class="vocab-word" data-word="manifestation">manifestations</mark> of skills or abilities which are similar to, but so much <mark class="vocab-word" data-word="superior">superior</mark> to, our own. But that their minds are not different from our own is demonstrated by the fact that the hard-won discoveries of scientists like Kepler or Einstein become the <mark class="vocab-word" data-word="commonplace">commonplace</mark> knowledge of schoolchildren and the once <mark class="vocab-word" data-word="outrageous">outrageous</mark> shapes and colours of an artist like Paul Klee so soon appear on the <mark class="vocab-word" data-word="fabric">fabrics</mark> we wear. This does not minimise the supremacy of their achievements, which <mark class="vocab-word" data-word="outstrip">outstrip</mark> our own as the sub-four-minute milers <mark class="vocab-word" data-word="outstrip">outstrip</mark> our <mark class="vocab-word" data-word="jogging">jogging</mark>.</p><p>To think of <mark class="vocab-word" data-word="genius">geniuses</mark> and the <mark class="vocab-word" data-word="gifted">gifted</mark> as having uniquely different brains is only reasonable if we accept that each human brain is uniquely different. The purpose of instruction is to make us even more different from one another, and in the process of being educated we can learn from the achievements of those more <mark class="vocab-word" data-word="gifted">gifted</mark> than ourselves. But before we try to <mark class="vocab-word" data-word="emulate">emulate</mark> <mark class="vocab-word" data-word="genius">geniuses</mark> or encourage our children to do so we should note that some of the things we learn from them may prove unpalatable. We may <mark class="vocab-word" data-word="envy">envy</mark> their achievements and <mark class="vocab-word" data-word="fame">fame</mark>, but we should also recognise the price they may have paid in terms of perseverance, single-mindedness, <mark class="vocab-word" data-word="dedication">dedication</mark>, <mark class="vocab-word" data-word="restriction">restrictions</mark> on their personal lives, the demands upon their energies and time, and how often they had to display great courage to preserve their <mark class="vocab-word" data-word="integrity">integrity</mark> or to make their way to the top.</p><p><mark class="vocab-word" data-word="genius">Genius</mark> and giftedness are relative <mark class="vocab-word" data-word="descriptive">descriptive</mark> terms of no real substance. We may, at best, give them some <mark class="vocab-word" data-word="precision">precision</mark> by defining them and placing them in a context but, whatever we do, we should never <mark class="vocab-word" data-word="delude">delude</mark> ourselves into believing that <mark class="vocab-word" data-word="gifted">gifted</mark> children or <mark class="vocab-word" data-word="genius">geniuses</mark> are different from the rest of <mark class="vocab-word" data-word="humanity">humanity</mark>, save in the degree to which they have developed the performance of their abilities.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人们一直对天才和神童感兴趣。“genius”一词来自拉丁语gens（= family）和“genius”（意为“生子”）。它来自罗马人早期对一家之主神性的崇拜。天才最早的时候与一家之主使自己永存的能力有关。逐渐地，天才开始代表一个人的特征。因此一个人的最高属性源于他的“天才”或指导精神。如今，人们仍在寻找星象或基因，占星术或遗传学，以期找到卓越能力或个人特征的来源。</p><p>天才和天赋的概念已成为我们民间文化的一部分。人们对它们的态度也很矛盾。我们羡慕有天赋的人，不信任他们。在天才的神话中，人们普遍认为，如果人们在某个领域有才华，他们必定在另一个领域有缺陷，知识分子是不切实际的，天才们过早地燃烧并耗尽了精力，有天赋的人是古怪的，身体很虚弱，天才和疯狂之间的界限很窄，天才在家族中遗传，有天赋的人是如此聪明，他们不需要特殊的帮助，拥有天赋与拥有很高的智商一样，有些种族比其他人更聪明，或在音乐或数学更有优势，天才不被承认和很难得到奖励，逆境使人聪明，或者有天赋的人有责任使用它们。这些语言中充斥着“高傲”，“傻瓜”，“突破常规”，“ 自以为是”，“无所不知”，“ 书呆子”等词。对于许多人来说，“智力”是贬义词。</p><p>19世纪，人们对天才的本质产生了浓厚的兴趣，并产生了不少有关著名神童的研究。也许对今天的我们而言，这些天才研究中最重要的两个方面是：父母和家教早期的鼓励与教学对儿童的智力，艺术或音乐发展产生有益影响，但却给儿童适应日后生活造成了巨大困难的频率；以及能力不被教师和学校认可的频率。然而，虽然这些研究在收集轶事、相似性和例外性方面十分引人入胜，但其所给出的证据的缺陷在于它们并非我们今天所认可的规范参考。换句话说，例如，当整理有关早期疾病，养育方法，上学等的信息时，我们还必须考虑来自其他历史资料的信息来说明它们在当时是多么普遍或特殊。例如，婴儿死亡率很高，预期寿命比今天短得多，在贵族家庭中补习很普遍，在最好的私立学校中，欺负和体罚在十分常见。并且在大多数情况下，它们所研究的案例来自于特权阶级。随着二十世纪儿科和心理学的发展，研究才能在更客观的基础上进行，即使仍然不是很科学。</p><p>天才，无论它们如何定义，都不过是在历史的薄雾中脱颖而出的山峰。他们能被特点的观察者从特点的视角看到。改变观察者和观察位置，清除一些薄雾，然后就会出现许多不同的山峰。天才是一个术语，我们用它来形容那些因其杰出成就而得到认可，或者那些站在人类能力范围极限的人。塞缪尔·约翰逊（Samuel Johnson）博士的观察仍然有很多道理：“真正的天才具备杰出的普遍能力，无意中决定了某个特定方向”。我们可能会不同意“普遍”，因为我们怀疑是否所有的天才音乐家都可能成为天才科学家，反之亦然，但毫无疑问，偶然的决定使得他们的天赋进入能够成功发挥自己能力的渠道。成千上万的有才华的男人和女人，男孩和女孩分布在能力的光谱表上。</p><p>我们所欣赏，喜爱或惊叹的天才的作品或神童的成就是他们技能或能力的体现，这些技能与能力与我们自己的能力相似但非常优越。但是，开普勒或爱因斯坦这样的科学家来之不易的发现成为学生的常识，而保罗·克利这样的艺术家曾经令人发指的形状和颜色很快在我们所穿的衣服上出现，这一事实证明了他们的想法与我们的想法没有什么不同。但这并不能损害他们成就的至高无上性。他们超越我们，就像能够跑进4分钟以内的跑步选手超越我们慢跑的速度一样。</p><p>只有当我们承认每个人的大脑都具有独特的差异时，将天才视为具有独特大脑的人才合理。这一说法的目的是使我们彼此之间变得更加不同。在接受教育的过程中，我们可以从那些比我们更有天赋的人的成就中学习。但是，在我们尝试模仿天才或鼓励我们的孩子这样做之前，我们应该注意，我们从他们那里学到的一些东西可能令人不快。我们可能会羡慕他们的成就和名声，但我们也应该认识到他们在以下方面所付出的代价：毅力，一心一意，奉献，对个人生活的节制，对精力和时间的要求，必须经常展现极大的勇气以保持自己的正直，或登上成功的巅峰。</p><p>天才和天赋是没有什么实质内容的相对描述性术语。我们可能最多只能通过定义它们并将它们放在上下文中来赋予它们一些精确度，但是，无论我们做什么，我们都不应自欺欺人地相信有天赋的孩子或天才不同于其他人类，除非他们已经在某种程度上展现出自己的能力。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>There has always been an interest in <mark class="vocab-word" data-word="genius">geniuses</mark> and prodigies. The word ‘<mark class="vocab-word" data-word="genius">genius</mark>’, from the <mark class="vocab-word" data-word="latin">Latin</mark> gens (= family) and the term ‘<mark class="vocab-word" data-word="genius">genius</mark>’, meaning ‘begetter’, comes from the early Roman <mark class="vocab-word" data-word="cult">cult</mark> of a divinity as the head of the family. In its earliest form, <mark class="vocab-word" data-word="genius">genius</mark> was <mark class="vocab-word" data-word="concerned">concerned</mark> with the ability of the head of the family, the paterfamilias, to <mark class="vocab-word" data-word="perpetuate">perpetuate</mark> himself. <mark class="vocab-word" data-word="gradual">Gradually</mark>, <mark class="vocab-word" data-word="genius">genius</mark> came to represent a person’s characteristics and thence an individual’s highest <mark class="vocab-word" data-word="attribute">attributes</mark> <mark class="vocab-word" data-word="derive">derived</mark> from his ‘<mark class="vocab-word" data-word="genius">genius</mark>’ or guiding spirit. Today, people still look to stars or <mark class="vocab-word" data-word="gene">genes</mark>, <mark class="vocab-word" data-word="astrology">astrology</mark> or <mark class="vocab-word" data-word="genetics">genetics</mark>, in the hope of finding the source of <mark class="vocab-word" data-word="exceptional">exceptional</mark> abilities or personal characteristics.</p></div>  <div class="parallel-zh"><p>人们一直对天才和神童感兴趣。“genius”一词来自拉丁语gens（= family）和“genius”（意为“生子”）。它来自罗马人早期对一家之主神性的崇拜。天才最早的时候与一家之主使自己永存的能力有关。逐渐地，天才开始代表一个人的特征。因此一个人的最高属性源于他的“天才”或指导精神。如今，人们仍在寻找星象或基因，占星术或遗传学，以期找到卓越能力或个人特征的来源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The concept of <mark class="vocab-word" data-word="genius">genius</mark> and of gifts has become part of our <mark class="vocab-word" data-word="folk">folk</mark> culture, and attitudes are <mark class="vocab-word" data-word="ambivalent">ambivalent</mark> towards them. We <mark class="vocab-word" data-word="envy">envy</mark> the <mark class="vocab-word" data-word="gifted">gifted</mark> and mistrust them. In the <mark class="vocab-word" data-word="mythology">mythology</mark> of giftedness, it is popularly believed that if people are <mark class="vocab-word" data-word="talented">talented</mark> in one area, they must be <mark class="vocab-word" data-word="defective">defective</mark> in another, that <mark class="vocab-word" data-word="intellectual">intellectuals</mark> are impractical, that prodigies burn too brightly too soon and burn out, that <mark class="vocab-word" data-word="gifted">gifted</mark> people are <mark class="vocab-word" data-word="eccentric">eccentric</mark>, that they are physical weaklings, that there’s a thin line between <mark class="vocab-word" data-word="genius">genius</mark> and madness, that <mark class="vocab-word" data-word="genius">genius</mark> runs in families, that the <mark class="vocab-word" data-word="gifted">gifted</mark> are so clever they don’t need special help, that giftedness is the same as having a high IQ, that some races are more <mark class="vocab-word" data-word="intelligent">intelligent</mark> or musical or <mark class="vocab-word" data-word="mathematical">mathematical</mark> than others, that <mark class="vocab-word" data-word="genius">genius</mark> goes unrecognised and unrewarded, that adversity makes men wise or that people with gifts have a responsibility to use them. Language has been <mark class="vocab-word" data-word="enrich">enriched</mark> with such terms as ‘highbrow’, ‘egghead’, ‘blue-stocking’, ‘wiseacre’, ‘know-all’, ‘boffin’ and, for many, ‘<mark class="vocab-word" data-word="intellectual">intellectual</mark>’ is a term of denigration.</p></div>  <div class="parallel-zh"><p>天才和天赋的概念已成为我们民间文化的一部分。人们对它们的态度也很矛盾。我们羡慕有天赋的人，不信任他们。在天才的神话中，人们普遍认为，如果人们在某个领域有才华，他们必定在另一个领域有缺陷，知识分子是不切实际的，天才们过早地燃烧并耗尽了精力，有天赋的人是古怪的，身体很虚弱，天才和疯狂之间的界限很窄，天才在家族中遗传，有天赋的人是如此聪明，他们不需要特殊的帮助，拥有天赋与拥有很高的智商一样，有些种族比其他人更聪明，或在音乐或数学更有优势，天才不被承认和很难得到奖励，逆境使人聪明，或者有天赋的人有责任使用它们。这些语言中充斥着“高傲”，“傻瓜”，“突破常规”，“ 自以为是”，“无所不知”，“ 书呆子”等词。对于许多人来说，“智力”是贬义词。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The nineteenth century saw <mark class="vocab-word" data-word="considerable">considerable</mark> interest in the nature of <mark class="vocab-word" data-word="genius">genius</mark>, and produced not a few studies of famous prodigies. Perhaps for us today, two of the most significant aspects of most of these studies of <mark class="vocab-word" data-word="genius">genius</mark> are the frequency with which early <mark class="vocab-word" data-word="encouragement">encouragement</mark> and teaching by parents and <mark class="vocab-word" data-word="tutor">tutors</mark> had <mark class="vocab-word" data-word="beneficial">beneficial</mark> effects on the <mark class="vocab-word" data-word="intellectual">intellectual</mark>, artistic or musical development of the children but caused great difficulties of adjustment later in their lives, and the frequency with which abilities went unrecognised by teachers and schools. However, this article is from  website, the difficulty with the evidence produced by these studies, <mark class="vocab-word" data-word="fascinating">fascinating</mark> as they are in collecting together <mark class="vocab-word" data-word="anecdote">anecdotes</mark> and apparent similarities and <mark class="vocab-word" data-word="exception">exceptions</mark>, is that they are not what we would today call norm-referenced. In other words, when, for instance, information is <mark class="vocab-word" data-word="collate">collated</mark> about early illnesses, methods of upbringing, schooling, etc. , we must also take into account information from other historical sources about how common or <mark class="vocab-word" data-word="exceptional">exceptional</mark> these were at the time. For instance, <mark class="vocab-word" data-word="infant">infant</mark> <mark class="vocab-word" data-word="mortality">mortality</mark> was high and life <mark class="vocab-word" data-word="expectancy">expectancy</mark> much shorter than today, home <mark class="vocab-word" data-word="tutor">tutoring</mark> was common in the families of the <mark class="vocab-word" data-word="nobility">nobility</mark> and wealthy, <mark class="vocab-word" data-word="bully">bullying</mark> and <mark class="vocab-word" data-word="corporal">corporal</mark> <mark class="vocab-word" data-word="punishment">punishment</mark> were common at the best independent schools and, for the most part, the cases studied were members of the <mark class="vocab-word" data-word="privileged">privileged</mark> classes. It was only with the growth of paediatrics and <mark class="vocab-word" data-word="psychology">psychology</mark> in the twentieth century that studies could be carried out on a more objective, if still not always very scientific, basis.</p></div>  <div class="parallel-zh"><p>19世纪，人们对天才的本质产生了浓厚的兴趣，并产生了不少有关著名神童的研究。也许对今天的我们而言，这些天才研究中最重要的两个方面是：父母和家教早期的鼓励与教学对儿童的智力，艺术或音乐发展产生有益影响，但却给儿童适应日后生活造成了巨大困难的频率；以及能力不被教师和学校认可的频率。然而，虽然这些研究在收集轶事、相似性和例外性方面十分引人入胜，但其所给出的证据的缺陷在于它们并非我们今天所认可的规范参考。换句话说，例如，当整理有关早期疾病，养育方法，上学等的信息时，我们还必须考虑来自其他历史资料的信息来说明它们在当时是多么普遍或特殊。例如，婴儿死亡率很高，预期寿命比今天短得多，在贵族家庭中补习很普遍，在最好的私立学校中，欺负和体罚在十分常见。并且在大多数情况下，它们所研究的案例来自于特权阶级。随着二十世纪儿科和心理学的发展，研究才能在更客观的基础上进行，即使仍然不是很科学。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="genius">Geniuses</mark>, however, they are defined, are but the <mark class="vocab-word" data-word="peak">peaks</mark> which stand out through the <mark class="vocab-word" data-word="mist">mist</mark> of history and are <mark class="vocab-word" data-word="visible">visible</mark> to the particular observer from his or her particular <mark class="vocab-word" data-word="vantage">vantage</mark> point. Change the observers and the <mark class="vocab-word" data-word="vantage">vantage</mark> points, clear away some of the <mark class="vocab-word" data-word="mist">mist</mark>, and a different lot of <mark class="vocab-word" data-word="peak">peaks</mark> appear. <mark class="vocab-word" data-word="genius">Genius</mark> is a term we apply to those whom we recognise for their <mark class="vocab-word" data-word="outstanding">outstanding</mark> achievements and who stand near the end of the continuum of human abilities which reaches back through the <mark class="vocab-word" data-word="mundane">mundane</mark> and <mark class="vocab-word" data-word="mediocre">mediocre</mark> to the <mark class="vocab-word" data-word="incapable">incapable</mark>. There is still much truth in Dr Samuel Johnson’s observation, ‘The true <mark class="vocab-word" data-word="genius">genius</mark> is a mind of large general powers, <mark class="vocab-word" data-word="accidental">accidentally</mark> <mark class="vocab-word" data-word="determined">determined</mark> to some particular direction’. We may disagree with the ‘general’, for we doubt if all musicians of <mark class="vocab-word" data-word="genius">genius</mark> could have become scientists of <mark class="vocab-word" data-word="genius">genius</mark> or <mark class="vocab-word" data-word="vice">vice</mark> versa, but there is no doubting the <mark class="vocab-word" data-word="accidental">accidental</mark> <mark class="vocab-word" data-word="determination">determination</mark> which <mark class="vocab-word" data-word="nurture">nurtured</mark> or <mark class="vocab-word" data-word="trigger">triggered</mark> their gifts into those channels into which they have poured their powers so successfully. Along the continuum of abilities are hundreds of thousands of <mark class="vocab-word" data-word="gifted">gifted</mark> men and women, boys and girls.</p></div>  <div class="parallel-zh"><p>天才，无论它们如何定义，都不过是在历史的薄雾中脱颖而出的山峰。他们能被特点的观察者从特点的视角看到。改变观察者和观察位置，清除一些薄雾，然后就会出现许多不同的山峰。天才是一个术语，我们用它来形容那些因其杰出成就而得到认可，或者那些站在人类能力范围极限的人。塞缪尔·约翰逊（Samuel Johnson）博士的观察仍然有很多道理：“真正的天才具备杰出的普遍能力，无意中决定了某个特定方向”。我们可能会不同意“普遍”，因为我们怀疑是否所有的天才音乐家都可能成为天才科学家，反之亦然，但毫无疑问，偶然的决定使得他们的天赋进入能够成功发挥自己能力的渠道。成千上万的有才华的男人和女人，男孩和女孩分布在能力的光谱表上。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What we appreciate, enjoy or <mark class="vocab-word" data-word="marvel">marvel</mark> at in the works of <mark class="vocab-word" data-word="genius">genius</mark> or the achievements of prodigies are the <mark class="vocab-word" data-word="manifestation">manifestations</mark> of skills or abilities which are similar to, but so much <mark class="vocab-word" data-word="superior">superior</mark> to, our own. But that their minds are not different from our own is demonstrated by the fact that the hard-won discoveries of scientists like Kepler or Einstein become the <mark class="vocab-word" data-word="commonplace">commonplace</mark> knowledge of schoolchildren and the once <mark class="vocab-word" data-word="outrageous">outrageous</mark> shapes and colours of an artist like Paul Klee so soon appear on the <mark class="vocab-word" data-word="fabric">fabrics</mark> we wear. This does not minimise the supremacy of their achievements, which <mark class="vocab-word" data-word="outstrip">outstrip</mark> our own as the sub-four-minute milers <mark class="vocab-word" data-word="outstrip">outstrip</mark> our <mark class="vocab-word" data-word="jogging">jogging</mark>.</p></div>  <div class="parallel-zh"><p>我们所欣赏，喜爱或惊叹的天才的作品或神童的成就是他们技能或能力的体现，这些技能与能力与我们自己的能力相似但非常优越。但是，开普勒或爱因斯坦这样的科学家来之不易的发现成为学生的常识，而保罗·克利这样的艺术家曾经令人发指的形状和颜色很快在我们所穿的衣服上出现，这一事实证明了他们的想法与我们的想法没有什么不同。但这并不能损害他们成就的至高无上性。他们超越我们，就像能够跑进4分钟以内的跑步选手超越我们慢跑的速度一样。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>To think of <mark class="vocab-word" data-word="genius">geniuses</mark> and the <mark class="vocab-word" data-word="gifted">gifted</mark> as having uniquely different brains is only reasonable if we accept that each human brain is uniquely different. The purpose of instruction is to make us even more different from one another, and in the process of being educated we can learn from the achievements of those more <mark class="vocab-word" data-word="gifted">gifted</mark> than ourselves. But before we try to <mark class="vocab-word" data-word="emulate">emulate</mark> <mark class="vocab-word" data-word="genius">geniuses</mark> or encourage our children to do so we should note that some of the things we learn from them may prove unpalatable. We may <mark class="vocab-word" data-word="envy">envy</mark> their achievements and <mark class="vocab-word" data-word="fame">fame</mark>, but we should also recognise the price they may have paid in terms of perseverance, single-mindedness, <mark class="vocab-word" data-word="dedication">dedication</mark>, <mark class="vocab-word" data-word="restriction">restrictions</mark> on their personal lives, the demands upon their energies and time, and how often they had to display great courage to preserve their <mark class="vocab-word" data-word="integrity">integrity</mark> or to make their way to the top.</p></div>  <div class="parallel-zh"><p>只有当我们承认每个人的大脑都具有独特的差异时，将天才视为具有独特大脑的人才合理。这一说法的目的是使我们彼此之间变得更加不同。在接受教育的过程中，我们可以从那些比我们更有天赋的人的成就中学习。但是，在我们尝试模仿天才或鼓励我们的孩子这样做之前，我们应该注意，我们从他们那里学到的一些东西可能令人不快。我们可能会羡慕他们的成就和名声，但我们也应该认识到他们在以下方面所付出的代价：毅力，一心一意，奉献，对个人生活的节制，对精力和时间的要求，必须经常展现极大的勇气以保持自己的正直，或登上成功的巅峰。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="genius">Genius</mark> and giftedness are relative <mark class="vocab-word" data-word="descriptive">descriptive</mark> terms of no real substance. We may, at best, give them some <mark class="vocab-word" data-word="precision">precision</mark> by defining them and placing them in a context but, whatever we do, we should never <mark class="vocab-word" data-word="delude">delude</mark> ourselves into believing that <mark class="vocab-word" data-word="gifted">gifted</mark> children or <mark class="vocab-word" data-word="genius">geniuses</mark> are different from the rest of <mark class="vocab-word" data-word="humanity">humanity</mark>, save in the degree to which they have developed the performance of their abilities.</p></div>  <div class="parallel-zh"><p>天才和天赋是没有什么实质内容的相对描述性术语。我们可能最多只能通过定义它们并将它们放在上下文中来赋予它们一些精确度，但是，无论我们做什么，我们都不应自欺欺人地相信有天赋的孩子或天才不同于其他人类，除非他们已经在某种程度上展现出自己的能力。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"genius": 22, "latin": 1, "cult": 1, "concerned": 1, "perpetuate": 1, "gradual": 1, "attribute": 1, "derive": 1, "gene": 1, "astrology": 1, "genetics": 1, "exceptional": 2, "folk": 1, "ambivalent": 1, "envy": 2, "gifted": 7, "mythology": 1, "talented": 1, "defective": 1, "intellectual": 3, "eccentric": 1, "intelligent": 1, "mathematical": 1, "enrich": 1, "considerable": 1, "encouragement": 1, "tutor": 2, "beneficial": 1, "fascinating": 1, "anecdote": 1, "exception": 1, "collate": 1, "infant": 1, "mortality": 1, "expectancy": 1, "nobility": 1, "bully": 1, "corporal": 1, "punishment": 1, "privileged": 1, "psychology": 1, "peak": 2, "mist": 2, "visible": 1, "vantage": 2, "outstanding": 1, "mundane": 1, "mediocre": 1, "incapable": 1, "accidental": 2, "determined": 1, "vice": 1, "determination": 1, "nurture": 1, "trigger": 1, "marvel": 1, "manifestation": 1, "superior": 1, "commonplace": 1, "outrageous": 1, "fabric": 1, "outstrip": 2, "jogging": 1, "emulate": 1, "fame": 1, "dedication": 1, "restriction": 1, "integrity": 1, "descriptive": 1, "precision": 1, "delude": 1, "humanity": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The power of play 玩耍的作用 - 剑桥雅思14 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>The power of play 玩耍的作用</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39360.html" target="_blank">https://www.laokaoya.com/39360.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="virtually">Virtually</mark> every child, the world over, plays. The drive to play is so intense that children will do so in any <mark class="vocab-word" data-word="circumstance">circumstances</mark>, for instance when they have no real toys, or when parents do not actively encourage the behavior. In the eyes of a young child, running, pretending, and building are fun. Researchers and educators know that these playful activities benefit the development of the whole child across social, <mark class="vocab-word" data-word="cognitive">cognitive</mark>, physical, and emotional <mark class="vocab-word" data-word="domain">domains</mark>. Indeed, play is such an <mark class="vocab-word" data-word="instrumental">instrumental</mark> component to healthy child development that the <mark class="vocab-word" data-word="unite">United</mark> Nations High Commission on Human Rights (1989) recognized play as a fundamental right of every child.</p><p>Yet, while experts continue to expound a powerful argument for the importance of play in children’s lives, the actual time children spend playing continues to decrease. Today, children play eight hours less each week than their <mark class="vocab-word" data-word="counterpart">counterparts</mark> did two <mark class="vocab-word" data-word="decade">decades</mark> ago (Elkind 2008). Under pressure of rising <mark class="vocab-word" data-word="academic">academic</mark> standards, play is being replaced by test preparation in <mark class="vocab-word" data-word="kindergarten">kindergartens</mark> and <mark class="vocab-word" data-word="grade">grade</mark> schools, and parents who aim to give their preschoolers a leg up are led to believe that flashcards and educational ‘toys’ are the path to success. Our society has created a false dichotomy between play and learning.</p><p>Through play, children learn to <mark class="vocab-word" data-word="regulate">regulate</mark> their behavior, lay the <mark class="vocab-word" data-word="foundation">foundations</mark> for later learning in science and mathematics, figure out the complex <mark class="vocab-word" data-word="negotiation">negotiations</mark> of social relationships, build a <mark class="vocab-word" data-word="repertoire">repertoire</mark> of creative problem-solving skills, and so much more. There is also an important role for adults in guiding children through playful learning opportunities.</p><p>Full <mark class="vocab-word" data-word="consensus">consensus</mark> on a formal definition of play continues to <mark class="vocab-word" data-word="elude">elude</mark> the researchers and theorists who study it. Definitions range from <mark class="vocab-word" data-word="discrete">discrete</mark> descriptions of various types of play such as physical, construction, language, or <mark class="vocab-word" data-word="symbolic">symbolic</mark> play (Miller & Almon 2009), to lists of broad criteria, based on observations and attitudes, that are meant to capture the <mark class="vocab-word" data-word="essence">essence</mark> of all play behaviors (e.g. Rubin et al. 1983).</p><p>A majority of the <mark class="vocab-word" data-word="contemporary">contemporary</mark> definitions of play focus on several key criteria. The founder of the National <mark class="vocab-word" data-word="institute">Institute</mark> for Play, Stuart Brown, has described play as ‘anything that <mark class="vocab-word" data-word="spontaneous">spontaneously</mark> is done for its own <mark class="vocab-word" data-word="sake">sake</mark>’. More specifically, he says it ‘appears purposeless, produces pleasure and joy, [and] <mark class="vocab-word" data-word="lead">leads</mark> one to the next stage of <mark class="vocab-word" data-word="mastery">mastery</mark>’ (as quoted in Tippett 2008). Similarly, Miller and Almon (2009) say that play includes ‘activities that are freely chosen and directed by children and arise from <mark class="vocab-word" data-word="intrinsic">intrinsic</mark> <mark class="vocab-word" data-word="motivation">motivation</mark>’. Often, play is defined along a continuum as more or less playful using the following set of behavioral and dispositional criteria (e.g. Rubin et al. 1983):</p><p>Play is pleasurable: Children must enjoy the activity or it is not play. It is <mark class="vocab-word" data-word="intrinsically">intrinsically</mark> <mark class="vocab-word" data-word="motivated">motivated</mark>: Children engage in play simply for the <mark class="vocab-word" data-word="satisfaction">satisfaction</mark> the behavior itself brings. It has no extrinsically <mark class="vocab-word" data-word="motivated">motivated</mark> function or goal. Play is process <mark class="vocab-word" data-word="orient">oriented</mark>: When children play, the means are more important than the ends. It is freely chosen, <mark class="vocab-word" data-word="spontaneous">spontaneous</mark> and <mark class="vocab-word" data-word="voluntary">voluntary</mark>. If a child is pressured, they will likely not think of the activity as play. Play is actively engaged: Players must be physically and/or mentally <mark class="vocab-word" data-word="involved">involved</mark> in the activity. Play is non-literal. It involves make-believe.</p><p><mark class="vocab-word" data-word="accord">According</mark> to this view, children’s playful behaviors can range in degree from 0% to 100% playful. Rubin and colleagues did not <mark class="vocab-word" data-word="assign">assign</mark> greater weight to any one <mark class="vocab-word" data-word="dimension">dimension</mark> in determining playfulness; however, other researchers have <mark class="vocab-word" data-word="suggest">suggested</mark> that process <mark class="vocab-word" data-word="orientation">orientation</mark> and a lack of obvious <mark class="vocab-word" data-word="functional">functional</mark> purpose may be the most important aspects of play (e.g. Pellegrini 2009).</p><p>From the <mark class="vocab-word" data-word="perspective">perspective</mark> of a continuum, play can thus <mark class="vocab-word" data-word="blend">blend</mark> with other <mark class="vocab-word" data-word="motive">motives</mark> and attitudes that are less playful, such as work. Unlike play, work is typically not viewed as <mark class="vocab-word" data-word="enjoyable">enjoyable</mark> and it is extrinsically <mark class="vocab-word" data-word="motivated">motivated</mark> (i.e. it is goal <mark class="vocab-word" data-word="orient">oriented</mark>). Researcher Joan Goodman (1994) <mark class="vocab-word" data-word="suggest">suggested</mark> that <mark class="vocab-word" data-word="hybrid">hybrid</mark> forms of work and play are not a <mark class="vocab-word" data-word="detriment">detriment</mark> to learning; rather, they can provide <mark class="vocab-word" data-word="optimal">optimal</mark> contexts for learning. For example, a child may be engaged in a difficult, goal-directed activity set up by their teacher, but they may still be actively engaged and <mark class="vocab-word" data-word="intrinsically">intrinsically</mark> <mark class="vocab-word" data-word="motivated">motivated</mark>. At this mid-point between play and work, the child’s <mark class="vocab-word" data-word="motivation">motivation</mark>, coupled with <mark class="vocab-word" data-word="guidance">guidance</mark> from an adult, can create <mark class="vocab-word" data-word="robust">robust</mark> opportunities for playful learning.</p><p><mark class="vocab-word" data-word="critically">Critically</mark>, recent research supports the idea that adults can <mark class="vocab-word" data-word="facilitate">facilitate</mark> children’s learning while maintaining a playful approach in <mark class="vocab-word" data-word="interaction">interactions</mark> known as ‘guided play’ (Fisher et al. 2011). The adult’s role in play varies as a function of their educational goals and the child’s developmental level (Hirsch-Pasek et al. 2009).</p><p>Guided play takes two forms. At a very basic level, adults can <mark class="vocab-word" data-word="enrich">enrich</mark> the child’s environment by providing objects or experiences that promote aspects of a <mark class="vocab-word" data-word="curriculum">curriculum</mark>. In the more direct form of guided play, parents or other adults can support children’s play by joining in the fun as a co-player, raising <mark class="vocab-word" data-word="thoughtful">thoughtful</mark> questions, commenting on children’s discoveries, or encouraging further exploration or new <mark class="vocab-word" data-word="facet">facets</mark> to the child’s activity. Although playful learning can be somewhat structured, it must also be child-centered (Nicolopolou et al. 2006). Play should <mark class="vocab-word" data-word="stem">stem</mark> from the child’s own desire.</p><p>Both free and guided play are essential elements in a child-centered approach to playful learning. <mark class="vocab-word" data-word="intrinsically">Intrinsically</mark> <mark class="vocab-word" data-word="motivated">motivated</mark> free play provides the child with true <mark class="vocab-word" data-word="autonomy">autonomy</mark>, while guided play is an <mark class="vocab-word" data-word="avenue">avenue</mark> through which parents and educators can provide more targeted learning experiences. In either case, play should be actively engaged, it should be <mark class="vocab-word" data-word="predominantly">predominantly</mark> child-directed, and it must be fun.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>世界上几乎每个孩子都会玩耍嬉戏。玩耍的动力是如此强烈以至于孩子会在任何情况下这样做，即便他们没有真正的玩具，或者他们的父母并不主动鼓励这种行为。在小孩的眼里，奔跑、假扮和搭建都充满乐趣。研究者和教育家知道，这些玩耍活动对于孩子在社交、认知、身体和情感等领域的发展都有好处。事实上，玩耍对于孩子的健康发展是如此重要，以至于联合国人权高级委员会（1989）认为玩耍是每个孩子的基本权利。</p><p>然而，尽管专家不停地极力阐释玩耍在孩子生活中的重要性，但孩子实际用于玩耍的时间却在持续减少。如今，孩子每周用于玩耍的时间要比20年前少8个小时（Elkind 2008）。在不断提高的学业标准的压力之下，玩耍在幼儿园和小学正被准备考试所取代。那些希望助自己学龄前孩子一臂之力的家长们被引导相信，单词卡和具有教育意义的“玩具”才是通向成功的路径。我们的社会在玩耍与学习之间创造出一种错误的对立关系。</p><p>通过玩耍，孩子学着管理自己的行为，为日后科学与数学方面的学习打下基础，学会处理社交关系中复杂的沟通，积累创造性解决问题的技能，并获取许多其他好处。通过游戏化的学习机会，成人同样在引导孩子方面扮演着重要角色。</p><p>研究玩耍的学者和理论家仍然没能就玩耍的正式定义达成一致。这些定义从对各种游戏松散的描述，比如身体的，搭建的，语言的或者象征性的游戏（Miller & Almon 2009），到基于观察与态度的一系列广泛标准。它们想要抓住所有玩耍行为的本质（如Rubin et al. 1983）。</p><p>当代大多数关于玩耍的定义都聚焦于几个核心标准上。国家玩耍协会的创始人，Stuart Brown，将玩耍描述为“任何因其自身原因，自发性的行为”。更确切的说，他认为玩耍“似乎没有目的，产生快乐与愉悦，并通向自身掌控的下一阶段”（引用自Tippett 2008）。相似地，Miller与Almon（2009）认为玩耍包括“由孩子自由选择并进行的活动。这些活动源自他们自身内在的动力”。通常来说，玩耍根据下列行为与意向的标准，沿着按照好玩程度构成的连续体进行定义。</p><p>玩耍是愉快的：孩子必须享受该活动，否则的话，它就不是玩耍。它受内在驱动：孩子进行玩耍仅仅是为了这种行为自身带来的满足感。它没有外部驱动的作用或者目标。玩耍是过程导向的：当孩子玩耍时，方式比结果更重要。它是自由选择的、自发的、并且是自愿的。如果孩子受到压力，那么他们就不太可能认为该活动是玩耍。玩耍是主动参与的：玩家必须在身体上和/或精神上参与到该活动中。玩耍是非字面的。它包含想象。</p><p>根据这种观点，孩子的玩耍行为按照从0%到100%的好玩程度分布。Rubin和同事们在定义好玩性的时候并没有赋予任一维度更高的权重。然而，其他研究者认为，过程导向和缺乏明显的功能目标可能是玩耍最为重要的方面。</p><p>从连续体的角度来看，玩耍可以与其他不那么好玩的动机和态度混合在一起，比如工作。不像玩耍，工作通常被认为是无趣的，并且由外在动机驱动（即目标导向）。研究者Joan Goodman（1994）认为，工作与玩耍的混合形式对学习没有损害。相反，他们能够提供学习的最佳环境。例如，孩子可能参与到由老师设置的、具备一定难度的、并且是目标导向的某项活动，但他们仍然可能主动参与并且受内在动机驱使。在玩耍与工作的中间点，孩子的动机，再加上成人的指导，能够创造出游戏化学习的良好机会。</p><p>重要的是，最近的研究支持以下观点，即成人可以在维持玩耍路径的同时帮助孩子学习。这种互动被称为“引导式玩耍”（Fisher et al. 2011）。成人在玩耍中的角色根据他们教育目的功能的不同以及孩子发展阶段的不同而不同。</p><p>引导式玩耍有两种形式。在十分基础的层面，成人可以通过提供促进课程某方面的物品或经历来丰富儿童的环境。在引导式玩耍更为直接的形式中，父母或其他成人可以作为玩家融入其中来支持孩子的游戏。他们可以提出引人思考的问题，评论孩子的发现，或者在孩子活动中鼓励进一步的探索或添加新的部分。虽然引导式学习可以稍微结构化，但它必须以孩子为中心（Nicolopolou et al. 2006）。玩耍必须源自孩子自身的意愿。</p><p>自由式玩耍和引导式玩耍在以孩子为中心的游戏化学习中都是必不可少的元素。内在驱动的自由玩耍为孩子提供真正的自主权，而引导式玩耍则是一种路径。在其中，父母和教育者可以提供目的性更强的学习体验。无论在哪种情况下，玩耍都应该是主动参与的，以儿童为中心的，并且必须是有趣的。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="virtually">Virtually</mark> every child, the world over, plays. The drive to play is so intense that children will do so in any <mark class="vocab-word" data-word="circumstance">circumstances</mark>, for instance when they have no real toys, or when parents do not actively encourage the behavior. In the eyes of a young child, running, pretending, and building are fun. Researchers and educators know that these playful activities benefit the development of the whole child across social, <mark class="vocab-word" data-word="cognitive">cognitive</mark>, physical, and emotional <mark class="vocab-word" data-word="domain">domains</mark>. Indeed, play is such an <mark class="vocab-word" data-word="instrumental">instrumental</mark> component to healthy child development that the <mark class="vocab-word" data-word="unite">United</mark> Nations High Commission on Human Rights (1989) recognized play as a fundamental right of every child.</p></div>  <div class="parallel-zh"><p>世界上几乎每个孩子都会玩耍嬉戏。玩耍的动力是如此强烈以至于孩子会在任何情况下这样做，即便他们没有真正的玩具，或者他们的父母并不主动鼓励这种行为。在小孩的眼里，奔跑、假扮和搭建都充满乐趣。研究者和教育家知道，这些玩耍活动对于孩子在社交、认知、身体和情感等领域的发展都有好处。事实上，玩耍对于孩子的健康发展是如此重要，以至于联合国人权高级委员会（1989）认为玩耍是每个孩子的基本权利。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Yet, while experts continue to expound a powerful argument for the importance of play in children’s lives, the actual time children spend playing continues to decrease. Today, children play eight hours less each week than their <mark class="vocab-word" data-word="counterpart">counterparts</mark> did two <mark class="vocab-word" data-word="decade">decades</mark> ago (Elkind 2008). Under pressure of rising <mark class="vocab-word" data-word="academic">academic</mark> standards, play is being replaced by test preparation in <mark class="vocab-word" data-word="kindergarten">kindergartens</mark> and <mark class="vocab-word" data-word="grade">grade</mark> schools, and parents who aim to give their preschoolers a leg up are led to believe that flashcards and educational ‘toys’ are the path to success. Our society has created a false dichotomy between play and learning.</p></div>  <div class="parallel-zh"><p>然而，尽管专家不停地极力阐释玩耍在孩子生活中的重要性，但孩子实际用于玩耍的时间却在持续减少。如今，孩子每周用于玩耍的时间要比20年前少8个小时（Elkind 2008）。在不断提高的学业标准的压力之下，玩耍在幼儿园和小学正被准备考试所取代。那些希望助自己学龄前孩子一臂之力的家长们被引导相信，单词卡和具有教育意义的“玩具”才是通向成功的路径。我们的社会在玩耍与学习之间创造出一种错误的对立关系。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Through play, children learn to <mark class="vocab-word" data-word="regulate">regulate</mark> their behavior, lay the <mark class="vocab-word" data-word="foundation">foundations</mark> for later learning in science and mathematics, figure out the complex <mark class="vocab-word" data-word="negotiation">negotiations</mark> of social relationships, build a <mark class="vocab-word" data-word="repertoire">repertoire</mark> of creative problem-solving skills, and so much more. There is also an important role for adults in guiding children through playful learning opportunities.</p></div>  <div class="parallel-zh"><p>通过玩耍，孩子学着管理自己的行为，为日后科学与数学方面的学习打下基础，学会处理社交关系中复杂的沟通，积累创造性解决问题的技能，并获取许多其他好处。通过游戏化的学习机会，成人同样在引导孩子方面扮演着重要角色。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Full <mark class="vocab-word" data-word="consensus">consensus</mark> on a formal definition of play continues to <mark class="vocab-word" data-word="elude">elude</mark> the researchers and theorists who study it. Definitions range from <mark class="vocab-word" data-word="discrete">discrete</mark> descriptions of various types of play such as physical, construction, language, or <mark class="vocab-word" data-word="symbolic">symbolic</mark> play (Miller & Almon 2009), to lists of broad criteria, based on observations and attitudes, that are meant to capture the <mark class="vocab-word" data-word="essence">essence</mark> of all play behaviors (e.g. Rubin et al. 1983).</p></div>  <div class="parallel-zh"><p>研究玩耍的学者和理论家仍然没能就玩耍的正式定义达成一致。这些定义从对各种游戏松散的描述，比如身体的，搭建的，语言的或者象征性的游戏（Miller & Almon 2009），到基于观察与态度的一系列广泛标准。它们想要抓住所有玩耍行为的本质（如Rubin et al. 1983）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A majority of the <mark class="vocab-word" data-word="contemporary">contemporary</mark> definitions of play focus on several key criteria. The founder of the National <mark class="vocab-word" data-word="institute">Institute</mark> for Play, Stuart Brown, has described play as ‘anything that <mark class="vocab-word" data-word="spontaneous">spontaneously</mark> is done for its own <mark class="vocab-word" data-word="sake">sake</mark>’. More specifically, he says it ‘appears purposeless, produces pleasure and joy, [and] <mark class="vocab-word" data-word="lead">leads</mark> one to the next stage of <mark class="vocab-word" data-word="mastery">mastery</mark>’ (as quoted in Tippett 2008). Similarly, Miller and Almon (2009) say that play includes ‘activities that are freely chosen and directed by children and arise from <mark class="vocab-word" data-word="intrinsic">intrinsic</mark> <mark class="vocab-word" data-word="motivation">motivation</mark>’. Often, play is defined along a continuum as more or less playful using the following set of behavioral and dispositional criteria (e.g. Rubin et al. 1983):</p></div>  <div class="parallel-zh"><p>当代大多数关于玩耍的定义都聚焦于几个核心标准上。国家玩耍协会的创始人，Stuart Brown，将玩耍描述为“任何因其自身原因，自发性的行为”。更确切的说，他认为玩耍“似乎没有目的，产生快乐与愉悦，并通向自身掌控的下一阶段”（引用自Tippett 2008）。相似地，Miller与Almon（2009）认为玩耍包括“由孩子自由选择并进行的活动。这些活动源自他们自身内在的动力”。通常来说，玩耍根据下列行为与意向的标准，沿着按照好玩程度构成的连续体进行定义。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Play is pleasurable: Children must enjoy the activity or it is not play. It is <mark class="vocab-word" data-word="intrinsically">intrinsically</mark> <mark class="vocab-word" data-word="motivated">motivated</mark>: Children engage in play simply for the <mark class="vocab-word" data-word="satisfaction">satisfaction</mark> the behavior itself brings. It has no extrinsically <mark class="vocab-word" data-word="motivated">motivated</mark> function or goal. Play is process <mark class="vocab-word" data-word="orient">oriented</mark>: When children play, the means are more important than the ends. It is freely chosen, <mark class="vocab-word" data-word="spontaneous">spontaneous</mark> and <mark class="vocab-word" data-word="voluntary">voluntary</mark>. If a child is pressured, they will likely not think of the activity as play. Play is actively engaged: Players must be physically and/or mentally <mark class="vocab-word" data-word="involved">involved</mark> in the activity. Play is non-literal. It involves make-believe.</p></div>  <div class="parallel-zh"><p>玩耍是愉快的：孩子必须享受该活动，否则的话，它就不是玩耍。它受内在驱动：孩子进行玩耍仅仅是为了这种行为自身带来的满足感。它没有外部驱动的作用或者目标。玩耍是过程导向的：当孩子玩耍时，方式比结果更重要。它是自由选择的、自发的、并且是自愿的。如果孩子受到压力，那么他们就不太可能认为该活动是玩耍。玩耍是主动参与的：玩家必须在身体上和/或精神上参与到该活动中。玩耍是非字面的。它包含想象。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="accord">According</mark> to this view, children’s playful behaviors can range in degree from 0% to 100% playful. Rubin and colleagues did not <mark class="vocab-word" data-word="assign">assign</mark> greater weight to any one <mark class="vocab-word" data-word="dimension">dimension</mark> in determining playfulness; however, other researchers have <mark class="vocab-word" data-word="suggest">suggested</mark> that process <mark class="vocab-word" data-word="orientation">orientation</mark> and a lack of obvious <mark class="vocab-word" data-word="functional">functional</mark> purpose may be the most important aspects of play (e.g. Pellegrini 2009).</p></div>  <div class="parallel-zh"><p>根据这种观点，孩子的玩耍行为按照从0%到100%的好玩程度分布。Rubin和同事们在定义好玩性的时候并没有赋予任一维度更高的权重。然而，其他研究者认为，过程导向和缺乏明显的功能目标可能是玩耍最为重要的方面。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>From the <mark class="vocab-word" data-word="perspective">perspective</mark> of a continuum, play can thus <mark class="vocab-word" data-word="blend">blend</mark> with other <mark class="vocab-word" data-word="motive">motives</mark> and attitudes that are less playful, such as work. Unlike play, work is typically not viewed as <mark class="vocab-word" data-word="enjoyable">enjoyable</mark> and it is extrinsically <mark class="vocab-word" data-word="motivated">motivated</mark> (i.e. it is goal <mark class="vocab-word" data-word="orient">oriented</mark>). Researcher Joan Goodman (1994) <mark class="vocab-word" data-word="suggest">suggested</mark> that <mark class="vocab-word" data-word="hybrid">hybrid</mark> forms of work and play are not a <mark class="vocab-word" data-word="detriment">detriment</mark> to learning; rather, they can provide <mark class="vocab-word" data-word="optimal">optimal</mark> contexts for learning. For example, a child may be engaged in a difficult, goal-directed activity set up by their teacher, but they may still be actively engaged and <mark class="vocab-word" data-word="intrinsically">intrinsically</mark> <mark class="vocab-word" data-word="motivated">motivated</mark>. At this mid-point between play and work, the child’s <mark class="vocab-word" data-word="motivation">motivation</mark>, coupled with <mark class="vocab-word" data-word="guidance">guidance</mark> from an adult, can create <mark class="vocab-word" data-word="robust">robust</mark> opportunities for playful learning.</p></div>  <div class="parallel-zh"><p>从连续体的角度来看，玩耍可以与其他不那么好玩的动机和态度混合在一起，比如工作。不像玩耍，工作通常被认为是无趣的，并且由外在动机驱动（即目标导向）。研究者Joan Goodman（1994）认为，工作与玩耍的混合形式对学习没有损害。相反，他们能够提供学习的最佳环境。例如，孩子可能参与到由老师设置的、具备一定难度的、并且是目标导向的某项活动，但他们仍然可能主动参与并且受内在动机驱使。在玩耍与工作的中间点，孩子的动机，再加上成人的指导，能够创造出游戏化学习的良好机会。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="critically">Critically</mark>, recent research supports the idea that adults can <mark class="vocab-word" data-word="facilitate">facilitate</mark> children’s learning while maintaining a playful approach in <mark class="vocab-word" data-word="interaction">interactions</mark> known as ‘guided play’ (Fisher et al. 2011). The adult’s role in play varies as a function of their educational goals and the child’s developmental level (Hirsch-Pasek et al. 2009).</p></div>  <div class="parallel-zh"><p>重要的是，最近的研究支持以下观点，即成人可以在维持玩耍路径的同时帮助孩子学习。这种互动被称为“引导式玩耍”（Fisher et al. 2011）。成人在玩耍中的角色根据他们教育目的功能的不同以及孩子发展阶段的不同而不同。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Guided play takes two forms. At a very basic level, adults can <mark class="vocab-word" data-word="enrich">enrich</mark> the child’s environment by providing objects or experiences that promote aspects of a <mark class="vocab-word" data-word="curriculum">curriculum</mark>. In the more direct form of guided play, parents or other adults can support children’s play by joining in the fun as a co-player, raising <mark class="vocab-word" data-word="thoughtful">thoughtful</mark> questions, commenting on children’s discoveries, or encouraging further exploration or new <mark class="vocab-word" data-word="facet">facets</mark> to the child’s activity. Although playful learning can be somewhat structured, it must also be child-centered (Nicolopolou et al. 2006). Play should <mark class="vocab-word" data-word="stem">stem</mark> from the child’s own desire.</p></div>  <div class="parallel-zh"><p>引导式玩耍有两种形式。在十分基础的层面，成人可以通过提供促进课程某方面的物品或经历来丰富儿童的环境。在引导式玩耍更为直接的形式中，父母或其他成人可以作为玩家融入其中来支持孩子的游戏。他们可以提出引人思考的问题，评论孩子的发现，或者在孩子活动中鼓励进一步的探索或添加新的部分。虽然引导式学习可以稍微结构化，但它必须以孩子为中心（Nicolopolou et al. 2006）。玩耍必须源自孩子自身的意愿。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Both free and guided play are essential elements in a child-centered approach to playful learning. <mark class="vocab-word" data-word="intrinsically">Intrinsically</mark> <mark class="vocab-word" data-word="motivated">motivated</mark> free play provides the child with true <mark class="vocab-word" data-word="autonomy">autonomy</mark>, while guided play is an <mark class="vocab-word" data-word="avenue">avenue</mark> through which parents and educators can provide more targeted learning experiences. In either case, play should be actively engaged, it should be <mark class="vocab-word" data-word="predominantly">predominantly</mark> child-directed, and it must be fun.</p></div>  <div class="parallel-zh"><p>自由式玩耍和引导式玩耍在以孩子为中心的游戏化学习中都是必不可少的元素。内在驱动的自由玩耍为孩子提供真正的自主权，而引导式玩耍则是一种路径。在其中，父母和教育者可以提供目的性更强的学习体验。无论在哪种情况下，玩耍都应该是主动参与的，以儿童为中心的，并且必须是有趣的。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"virtually": 1, "circumstance": 1, "cognitive": 1, "domain": 1, "instrumental": 1, "unite": 1, "counterpart": 1, "decade": 1, "academic": 1, "kindergarten": 1, "grade": 1, "regulate": 1, "foundation": 1, "negotiation": 1, "repertoire": 1, "consensus": 1, "elude": 1, "discrete": 1, "symbolic": 1, "essence": 1, "contemporary": 1, "institute": 1, "spontaneous": 2, "sake": 1, "lead": 1, "mastery": 1, "intrinsic": 1, "motivation": 2, "intrinsically": 3, "motivated": 5, "satisfaction": 1, "orient": 2, "voluntary": 1, "involved": 1, "accord": 1, "assign": 1, "dimension": 1, "suggest": 2, "orientation": 1, "functional": 1, "perspective": 1, "blend": 1, "motive": 1, "enjoyable": 1, "hybrid": 1, "detriment": 1, "optimal": 1, "guidance": 1, "robust": 1, "critically": 1, "facilitate": 1, "interaction": 1, "enrich": 1, "curriculum": 1, "thoughtful": 1, "facet": 1, "stem": 1, "autonomy": 1, "avenue": 1, "predominantly": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

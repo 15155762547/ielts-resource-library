@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Birth of Scientific English - 剑桥雅思5 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思5</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>The Birth of Scientific English</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/22371.html" target="_blank">https://www.laokaoya.com/22371.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>World science is <mark class="vocab-word" data-word="dominate">dominated</mark> today by a small number of languages, including Japanese, German and French, but it is English which is probably the most popular global language of science. This is not just because of the importance of English-speaking countries such as the USA in scientific research; the scientists of many non-English-speaking countries find that they need to write their research papers in English to reach a wide international audience. Given the <mark class="vocab-word" data-word="prominence">prominence</mark> of scientific English today, it may seem surprising that no one really knew how to write science in English before the 17th century. Before that, <mark class="vocab-word" data-word="latin">Latin</mark> was regarded as the lingua franca1for European <mark class="vocab-word" data-word="intellectual">intellectuals</mark>.</p><p>The European <mark class="vocab-word" data-word="renaissance">Renaissance</mark> (c. 14th-16th century) is sometimes called the ‘<mark class="vocab-word" data-word="revival">revival</mark> of learning’, a time of <mark class="vocab-word" data-word="renew">renewed</mark> interest in the ‘lost knowledge’ of classical times. At the same time, however, <mark class="vocab-word" data-word="scholar">scholars</mark> also began to test and extend this knowledge. The emergent nation states of Europe developed competitive interests in world exploration and the development of trade. Such <mark class="vocab-word" data-word="expansion">expansion</mark>, which was to take the English language west to America and east to India, was supported by scientific developments such as the discovery of <mark class="vocab-word" data-word="magnetism">magnetism</mark> (and <mark class="vocab-word" data-word="hence">hence</mark> the invention of the <mark class="vocab-word" data-word="compass">compass</mark>), improvements in cartography and – perhaps the most important scientific revolution of them all – the new theories of <mark class="vocab-word" data-word="astronomy">astronomy</mark> and the movement of the Earth in relation to the planets and stars, developed by Copernicus (1473-1543).</p><p>England was one of the first countries where scientists adopted and publicised Copernican ideas with <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark>. Some of these <mark class="vocab-word" data-word="scholar">scholars</mark>, including two with interests in language -John Wallis and John Wilkins – helped found the Royal Society in 1660 in order to promote <mark class="vocab-word" data-word="empirical">empirical</mark> scientific research.</p><p>Across Europe similar academies and societies arose, creating new national traditions of science. In the initial stages of the scientific revolution, most publications in the national languages were popular works, <mark class="vocab-word" data-word="encyclopedia">encyclopedias</mark>, educational textbooks and <mark class="vocab-word" data-word="translation">translations</mark>. Original science was not done in English until the second half of the 17th century. For example, Newton published his <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="treatise">treatise</mark>, known as the Principia, in <mark class="vocab-word" data-word="latin">Latin</mark>, but published his later work on the properties of light – Opticks – in English.</p><p>There were several reasons why original science continued to be written in <mark class="vocab-word" data-word="latin">Latin</mark>. The first was simply a <mark class="vocab-word" data-word="matter">matter</mark> of audience. <mark class="vocab-word" data-word="latin">Latin</mark> was suitable for an international audience of <mark class="vocab-word" data-word="scholar">scholars</mark>, whereas English reached a socially wider, but more local, audience. <mark class="vocab-word" data-word="hence">Hence</mark>, popular science was written in English.</p><p>A second reason for writing in <mark class="vocab-word" data-word="latin">Latin</mark> may, <mark class="vocab-word" data-word="perverse">perversely</mark>, have been a concern for <mark class="vocab-word" data-word="secrecy">secrecy</mark>. Open publication had dangers in putting into the public <mark class="vocab-word" data-word="domain">domain</mark> <mark class="vocab-word" data-word="preliminary">preliminary</mark> ideas which had not yet been fully <mark class="vocab-word" data-word="exploit">exploited</mark> by their ‘author’. This growing concern about <mark class="vocab-word" data-word="intellectual">intellectual</mark> property rights was a feature of the period – it reflected both the humanist notion of the individual, <mark class="vocab-word" data-word="rational">rational</mark> scientist who invents and discovers through private <mark class="vocab-word" data-word="intellectual">intellectual</mark> labour, and the growing connection between original science and commercial <mark class="vocab-word" data-word="exploitation">exploitation</mark>. There was something of a social <mark class="vocab-word" data-word="distinction">distinction</mark> between ‘<mark class="vocab-word" data-word="scholar">scholars</mark> and gentlemen’ who understood <mark class="vocab-word" data-word="latin">Latin</mark>, and men of trade who lacked a classical education. And in the mid-17th century it was common practice for <mark class="vocab-word" data-word="mathematician">mathematicians</mark> to keep their discoveries and <mark class="vocab-word" data-word="proof">proofs</mark> secret, by writing them in <mark class="vocab-word" data-word="cipher">cipher</mark>, in <mark class="vocab-word" data-word="obscure">obscure</mark> languages, or in private messages <mark class="vocab-word" data-word="deposit">deposited</mark> in a <mark class="vocab-word" data-word="seal">sealed</mark> box with the Royal Society. Some scientists might have felt more comfortable with <mark class="vocab-word" data-word="latin">Latin</mark> <mark class="vocab-word" data-word="precisely">precisely</mark> because its audience, though international, was socially restricted. Doctors clung the most <mark class="vocab-word" data-word="keen">keenly</mark> to <mark class="vocab-word" data-word="latin">Latin</mark> as an ‘insider language’.</p><p>A third reason why the writing of original science in English was delayed may have been to do with the <mark class="vocab-word" data-word="linguistic">linguistic</mark> <mark class="vocab-word" data-word="inadequacy">inadequacy</mark> of English in the early modern period. English was not well equipped to deal with scientific arguments. First, it lacked the necessary technical <mark class="vocab-word" data-word="vocabulary">vocabulary</mark>. Second, it lacked the grammatical resources required to represent the world in an objective and <mark class="vocab-word" data-word="impersonal">impersonal</mark> way, and to discuss the relations, such as cause and effect, that might hold between complex and <mark class="vocab-word" data-word="hypothetical">hypothetical</mark> entities.</p><p><mark class="vocab-word" data-word="fortunate">Fortunately</mark>, several members of the Royal Society possessed an interest in language and became engaged in various <mark class="vocab-word" data-word="linguistic">linguistic</mark> projects. Although a <mark class="vocab-word" data-word="proposal">proposal</mark> in 1664 to establish a committee for improving the English language came to little, the society’s members did a great deal to <mark class="vocab-word" data-word="foster">foster</mark> the publication of science in English and to encourage the development of a suitable writing style. Many members of the Royal Society also published monographs in English. One of the first was by Robert Hooke, the society’s first <mark class="vocab-word" data-word="curator">curator</mark> of experiments, who described his experiments with <mark class="vocab-word" data-word="microscope">microscopes</mark> in Micrographia (1665). This work is largely narrative in style, based on a <mark class="vocab-word" data-word="transcript">transcript</mark> of <mark class="vocab-word" data-word="oral">oral</mark> <mark class="vocab-word" data-word="demonstration">demonstrations</mark> and lectures.</p><p>In 1665 a new scientific journal, <mark class="vocab-word" data-word="philosophical">Philosophical</mark> <mark class="vocab-word" data-word="transaction">Transactions</mark>, was <mark class="vocab-word" data-word="inaugurate">inaugurated</mark>. Perhaps the first international English-language scientific journal, it encouraged a new <mark class="vocab-word" data-word="genre">genre</mark> of scientific writing, that of short, focused accounts of particular experiments.</p><p>The 17th century was thus a <mark class="vocab-word" data-word="formative">formative</mark> period in the <mark class="vocab-word" data-word="establishment">establishment</mark> of scientific English. In the following century much of this <mark class="vocab-word" data-word="momentum">momentum</mark> was lost as German <mark class="vocab-word" data-word="established">established</mark> itself as the <mark class="vocab-word" data-word="lead">leading</mark> European language of science. It is estimated that by the end of the 18th century 401 German scientific journals had been <mark class="vocab-word" data-word="established">established</mark> as opposed to 96 in France and 50 in England. However, in the 19th century scientific English again enjoyed <mark class="vocab-word" data-word="substantial">substantial</mark> lexical growth as the industrial revolution created the need for new technical <mark class="vocab-word" data-word="vocabulary">vocabulary</mark>, and new, specialised, professional societies were <mark class="vocab-word" data-word="institute">instituted</mark> to promote and publish in the new disciplines.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>当今世界科学被少数语言所控制，包括日语，德语和法语，但英语可能是全球最受欢迎的科学语言。这不仅是因为诸如美国这样的英语国家在科学研究中的重要性。许多非英语国家的科学家发现，他们需要用英语撰写研究论文才能吸引广泛的国际受众。鉴于当今科学英语的突出地位，在17世纪之前还没有人真正知道如何用英语进行科学写作似乎令人惊讶。在此之前，拉丁语被认为是欧洲知识分子的通用语 。</p><p>欧洲文艺复兴时期（14至16世纪）有时也被称为“学习的复兴” 。在这期间，人们对遗失的古典知识重新产生兴趣。但是，与此同时，学者们也开始测试和扩充这些知识。欧洲新兴国家在探索世界和发展贸易中产生了竞争利益。 这种扩张将英语向西带到美国，向东带到了印度。它得到科学发展的支持，例如磁性的发现（以及指南针的发明），制图学的改进，以及哥白尼（1473-1543）提出的新天文学理论和地球相对于行星和恒星运动的理论。这可能是它们之中最为重要的科学革命。</p><p>英格兰是科学家热情接受并宣传哥白尼思想的最早国家之一。这些学者中的一些人，包括两位对语言感兴趣的学者-约翰·沃利斯（John Wallis）和约翰·威尔金斯（John Wilkins）-于1660 年帮助成立了皇家学会，以促进实证科学研究。</p><p>在整个欧洲，类似的学院和社团应运而生，创造出新的科学国家传统。在科学革命的初期，大多数使用本国语言出版的读物都是流行著作，百科全书，教育教科书和翻译。直到17世纪下半叶，原创科学才用英语完成。例如，牛顿用拉丁语发表了他被称为“原理”的数学论文，但随后关于关的特性的作品则是用英语完成的。</p><p>原创科学继续用拉丁文写作的原因有很多。首先是读者的问题。拉丁文适合国际学者群体，而英语虽然在社会上受众更多，却以本地人为主。因此，科普读物是用英语写作的。</p><p>用拉丁语写作的第二个原因可能与保密有关。公开出版存在将作者尚未完全开发的初步理论投入公共领域的风险。对知识产权日益增长的关注是这一时期的一个特征-它既反映了个人与通过智力劳动进行发明和探索的理性科学家的人道主义观念，又反映了原创科学与商业利用之间的日益紧密的联系。懂拉丁语的“学者和绅士”与缺乏古典教育的商人之间存在某种社会差别。在17世纪中叶，数学家通常通过以密码，晦涩的语言或私下写在皇家学会的密闭信箱中的信息来掩盖他们的发现和证明。某些科学家可能对拉丁语感到更自在，这是因为拉丁语的读者尽管是国际化的，但处于有限的社会阶层。医生最热衷于使用拉丁语作为“内部语言” 。</p><p>用英语进行原创科学写作的第三个原因可能与近代早期英语的语言不足有关。英语不能很好地处理科学论据。首先，它缺乏必要的技术词汇。其次，它缺乏以客观和非人格化的方式展现世界，以及讨论可能与复杂的实体和假设的实体之间关系（例如因果关系）所需要的语法资源。</p><p>幸运的是，皇家学会的几位成员对语言很感兴趣，并参与了各种语言项目。尽管在1664年建立一个委员会来提高英语水平的提议几乎没有结果，但是该学会的成员为促进用英语进行科学发现的出版和鼓励发展一种合适的写作风格做出了很多努力。皇家学会的许多成员还出版了英文专著。最早的作者之一是该学会的首任实验负责人罗伯特·胡克（Robert Hooke），他于1665年在Micrographia上描述了使用显微镜所进行的实验。该作品主要基于口语展示和讲座的文本，带有浓重的叙述风格。</p><p>1665年新的科学期刊，Philosophical Transaction，正式成立。也许是第一本国际英语科学杂志。它鼓励了一种新的科学写作形式，即简短而集中地描述特定的实验。</p><p>因此17世纪是科学英语地位的形成时期。在接下来的一个世纪里，随着德语成为欧洲主要的科学语言，这种动力大部分消失了。据估计，到18世纪末，有401本德语科学期刊，而法国只有96本，英国只有50本。但是，在19世纪，随着工业革命对新技术词汇的需求，科学英语又再次获得了可观的词汇增长，并且建立了新的、专业的学会来促进和出版新的学科。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>World science is <mark class="vocab-word" data-word="dominate">dominated</mark> today by a small number of languages, including Japanese, German and French, but it is English which is probably the most popular global language of science. This is not just because of the importance of English-speaking countries such as the USA in scientific research; the scientists of many non-English-speaking countries find that they need to write their research papers in English to reach a wide international audience. Given the <mark class="vocab-word" data-word="prominence">prominence</mark> of scientific English today, it may seem surprising that no one really knew how to write science in English before the 17th century. Before that, <mark class="vocab-word" data-word="latin">Latin</mark> was regarded as the lingua franca1for European <mark class="vocab-word" data-word="intellectual">intellectuals</mark>.</p></div>  <div class="parallel-zh"><p>当今世界科学被少数语言所控制，包括日语，德语和法语，但英语可能是全球最受欢迎的科学语言。这不仅是因为诸如美国这样的英语国家在科学研究中的重要性。许多非英语国家的科学家发现，他们需要用英语撰写研究论文才能吸引广泛的国际受众。鉴于当今科学英语的突出地位，在17世纪之前还没有人真正知道如何用英语进行科学写作似乎令人惊讶。在此之前，拉丁语被认为是欧洲知识分子的通用语 。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The European <mark class="vocab-word" data-word="renaissance">Renaissance</mark> (c. 14th-16th century) is sometimes called the ‘<mark class="vocab-word" data-word="revival">revival</mark> of learning’, a time of <mark class="vocab-word" data-word="renew">renewed</mark> interest in the ‘lost knowledge’ of classical times. At the same time, however, <mark class="vocab-word" data-word="scholar">scholars</mark> also began to test and extend this knowledge. The emergent nation states of Europe developed competitive interests in world exploration and the development of trade. Such <mark class="vocab-word" data-word="expansion">expansion</mark>, which was to take the English language west to America and east to India, was supported by scientific developments such as the discovery of <mark class="vocab-word" data-word="magnetism">magnetism</mark> (and <mark class="vocab-word" data-word="hence">hence</mark> the invention of the <mark class="vocab-word" data-word="compass">compass</mark>), improvements in cartography and – perhaps the most important scientific revolution of them all – the new theories of <mark class="vocab-word" data-word="astronomy">astronomy</mark> and the movement of the Earth in relation to the planets and stars, developed by Copernicus (1473-1543).</p></div>  <div class="parallel-zh"><p>欧洲文艺复兴时期（14至16世纪）有时也被称为“学习的复兴” 。在这期间，人们对遗失的古典知识重新产生兴趣。但是，与此同时，学者们也开始测试和扩充这些知识。欧洲新兴国家在探索世界和发展贸易中产生了竞争利益。 这种扩张将英语向西带到美国，向东带到了印度。它得到科学发展的支持，例如磁性的发现（以及指南针的发明），制图学的改进，以及哥白尼（1473-1543）提出的新天文学理论和地球相对于行星和恒星运动的理论。这可能是它们之中最为重要的科学革命。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>England was one of the first countries where scientists adopted and publicised Copernican ideas with <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark>. Some of these <mark class="vocab-word" data-word="scholar">scholars</mark>, including two with interests in language -John Wallis and John Wilkins – helped found the Royal Society in 1660 in order to promote <mark class="vocab-word" data-word="empirical">empirical</mark> scientific research.</p></div>  <div class="parallel-zh"><p>英格兰是科学家热情接受并宣传哥白尼思想的最早国家之一。这些学者中的一些人，包括两位对语言感兴趣的学者-约翰·沃利斯（John Wallis）和约翰·威尔金斯（John Wilkins）-于1660 年帮助成立了皇家学会，以促进实证科学研究。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Across Europe similar academies and societies arose, creating new national traditions of science. In the initial stages of the scientific revolution, most publications in the national languages were popular works, <mark class="vocab-word" data-word="encyclopedia">encyclopedias</mark>, educational textbooks and <mark class="vocab-word" data-word="translation">translations</mark>. Original science was not done in English until the second half of the 17th century. For example, Newton published his <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="treatise">treatise</mark>, known as the Principia, in <mark class="vocab-word" data-word="latin">Latin</mark>, but published his later work on the properties of light – Opticks – in English.</p></div>  <div class="parallel-zh"><p>在整个欧洲，类似的学院和社团应运而生，创造出新的科学国家传统。在科学革命的初期，大多数使用本国语言出版的读物都是流行著作，百科全书，教育教科书和翻译。直到17世纪下半叶，原创科学才用英语完成。例如，牛顿用拉丁语发表了他被称为“原理”的数学论文，但随后关于关的特性的作品则是用英语完成的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There were several reasons why original science continued to be written in <mark class="vocab-word" data-word="latin">Latin</mark>. The first was simply a <mark class="vocab-word" data-word="matter">matter</mark> of audience. <mark class="vocab-word" data-word="latin">Latin</mark> was suitable for an international audience of <mark class="vocab-word" data-word="scholar">scholars</mark>, whereas English reached a socially wider, but more local, audience. <mark class="vocab-word" data-word="hence">Hence</mark>, popular science was written in English.</p></div>  <div class="parallel-zh"><p>原创科学继续用拉丁文写作的原因有很多。首先是读者的问题。拉丁文适合国际学者群体，而英语虽然在社会上受众更多，却以本地人为主。因此，科普读物是用英语写作的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A second reason for writing in <mark class="vocab-word" data-word="latin">Latin</mark> may, <mark class="vocab-word" data-word="perverse">perversely</mark>, have been a concern for <mark class="vocab-word" data-word="secrecy">secrecy</mark>. Open publication had dangers in putting into the public <mark class="vocab-word" data-word="domain">domain</mark> <mark class="vocab-word" data-word="preliminary">preliminary</mark> ideas which had not yet been fully <mark class="vocab-word" data-word="exploit">exploited</mark> by their ‘author’. This growing concern about <mark class="vocab-word" data-word="intellectual">intellectual</mark> property rights was a feature of the period – it reflected both the humanist notion of the individual, <mark class="vocab-word" data-word="rational">rational</mark> scientist who invents and discovers through private <mark class="vocab-word" data-word="intellectual">intellectual</mark> labour, and the growing connection between original science and commercial <mark class="vocab-word" data-word="exploitation">exploitation</mark>. There was something of a social <mark class="vocab-word" data-word="distinction">distinction</mark> between ‘<mark class="vocab-word" data-word="scholar">scholars</mark> and gentlemen’ who understood <mark class="vocab-word" data-word="latin">Latin</mark>, and men of trade who lacked a classical education. And in the mid-17th century it was common practice for <mark class="vocab-word" data-word="mathematician">mathematicians</mark> to keep their discoveries and <mark class="vocab-word" data-word="proof">proofs</mark> secret, by writing them in <mark class="vocab-word" data-word="cipher">cipher</mark>, in <mark class="vocab-word" data-word="obscure">obscure</mark> languages, or in private messages <mark class="vocab-word" data-word="deposit">deposited</mark> in a <mark class="vocab-word" data-word="seal">sealed</mark> box with the Royal Society. Some scientists might have felt more comfortable with <mark class="vocab-word" data-word="latin">Latin</mark> <mark class="vocab-word" data-word="precisely">precisely</mark> because its audience, though international, was socially restricted. Doctors clung the most <mark class="vocab-word" data-word="keen">keenly</mark> to <mark class="vocab-word" data-word="latin">Latin</mark> as an ‘insider language’.</p></div>  <div class="parallel-zh"><p>用拉丁语写作的第二个原因可能与保密有关。公开出版存在将作者尚未完全开发的初步理论投入公共领域的风险。对知识产权日益增长的关注是这一时期的一个特征-它既反映了个人与通过智力劳动进行发明和探索的理性科学家的人道主义观念，又反映了原创科学与商业利用之间的日益紧密的联系。懂拉丁语的“学者和绅士”与缺乏古典教育的商人之间存在某种社会差别。在17世纪中叶，数学家通常通过以密码，晦涩的语言或私下写在皇家学会的密闭信箱中的信息来掩盖他们的发现和证明。某些科学家可能对拉丁语感到更自在，这是因为拉丁语的读者尽管是国际化的，但处于有限的社会阶层。医生最热衷于使用拉丁语作为“内部语言” 。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A third reason why the writing of original science in English was delayed may have been to do with the <mark class="vocab-word" data-word="linguistic">linguistic</mark> <mark class="vocab-word" data-word="inadequacy">inadequacy</mark> of English in the early modern period. English was not well equipped to deal with scientific arguments. First, it lacked the necessary technical <mark class="vocab-word" data-word="vocabulary">vocabulary</mark>. Second, it lacked the grammatical resources required to represent the world in an objective and <mark class="vocab-word" data-word="impersonal">impersonal</mark> way, and to discuss the relations, such as cause and effect, that might hold between complex and <mark class="vocab-word" data-word="hypothetical">hypothetical</mark> entities.</p></div>  <div class="parallel-zh"><p>用英语进行原创科学写作的第三个原因可能与近代早期英语的语言不足有关。英语不能很好地处理科学论据。首先，它缺乏必要的技术词汇。其次，它缺乏以客观和非人格化的方式展现世界，以及讨论可能与复杂的实体和假设的实体之间关系（例如因果关系）所需要的语法资源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="fortunate">Fortunately</mark>, several members of the Royal Society possessed an interest in language and became engaged in various <mark class="vocab-word" data-word="linguistic">linguistic</mark> projects. Although a <mark class="vocab-word" data-word="proposal">proposal</mark> in 1664 to establish a committee for improving the English language came to little, the society’s members did a great deal to <mark class="vocab-word" data-word="foster">foster</mark> the publication of science in English and to encourage the development of a suitable writing style. Many members of the Royal Society also published monographs in English. One of the first was by Robert Hooke, the society’s first <mark class="vocab-word" data-word="curator">curator</mark> of experiments, who described his experiments with <mark class="vocab-word" data-word="microscope">microscopes</mark> in Micrographia (1665). This work is largely narrative in style, based on a <mark class="vocab-word" data-word="transcript">transcript</mark> of <mark class="vocab-word" data-word="oral">oral</mark> <mark class="vocab-word" data-word="demonstration">demonstrations</mark> and lectures.</p></div>  <div class="parallel-zh"><p>幸运的是，皇家学会的几位成员对语言很感兴趣，并参与了各种语言项目。尽管在1664年建立一个委员会来提高英语水平的提议几乎没有结果，但是该学会的成员为促进用英语进行科学发现的出版和鼓励发展一种合适的写作风格做出了很多努力。皇家学会的许多成员还出版了英文专著。最早的作者之一是该学会的首任实验负责人罗伯特·胡克（Robert Hooke），他于1665年在Micrographia上描述了使用显微镜所进行的实验。该作品主要基于口语展示和讲座的文本，带有浓重的叙述风格。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 1665 a new scientific journal, <mark class="vocab-word" data-word="philosophical">Philosophical</mark> <mark class="vocab-word" data-word="transaction">Transactions</mark>, was <mark class="vocab-word" data-word="inaugurate">inaugurated</mark>. Perhaps the first international English-language scientific journal, it encouraged a new <mark class="vocab-word" data-word="genre">genre</mark> of scientific writing, that of short, focused accounts of particular experiments.</p></div>  <div class="parallel-zh"><p>1665年新的科学期刊，Philosophical Transaction，正式成立。也许是第一本国际英语科学杂志。它鼓励了一种新的科学写作形式，即简短而集中地描述特定的实验。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The 17th century was thus a <mark class="vocab-word" data-word="formative">formative</mark> period in the <mark class="vocab-word" data-word="establishment">establishment</mark> of scientific English. In the following century much of this <mark class="vocab-word" data-word="momentum">momentum</mark> was lost as German <mark class="vocab-word" data-word="established">established</mark> itself as the <mark class="vocab-word" data-word="lead">leading</mark> European language of science. It is estimated that by the end of the 18th century 401 German scientific journals had been <mark class="vocab-word" data-word="established">established</mark> as opposed to 96 in France and 50 in England. However, in the 19th century scientific English again enjoyed <mark class="vocab-word" data-word="substantial">substantial</mark> lexical growth as the industrial revolution created the need for new technical <mark class="vocab-word" data-word="vocabulary">vocabulary</mark>, and new, specialised, professional societies were <mark class="vocab-word" data-word="institute">instituted</mark> to promote and publish in the new disciplines.</p></div>  <div class="parallel-zh"><p>因此17世纪是科学英语地位的形成时期。在接下来的一个世纪里，随着德语成为欧洲主要的科学语言，这种动力大部分消失了。据估计，到18世纪末，有401本德语科学期刊，而法国只有96本，英国只有50本。但是，在19世纪，随着工业革命对新技术词汇的需求，科学英语又再次获得了可观的词汇增长，并且建立了新的、专业的学会来促进和出版新的学科。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"dominate": 1, "prominence": 1, "latin": 8, "intellectual": 3, "renaissance": 1, "revival": 1, "renew": 1, "scholar": 4, "expansion": 1, "magnetism": 1, "hence": 2, "compass": 1, "astronomy": 1, "enthusiasm": 1, "empirical": 1, "encyclopedia": 1, "translation": 1, "mathematical": 1, "treatise": 1, "matter": 1, "perverse": 1, "secrecy": 1, "domain": 1, "preliminary": 1, "exploit": 1, "rational": 1, "exploitation": 1, "distinction": 1, "mathematician": 1, "proof": 1, "cipher": 1, "obscure": 1, "deposit": 1, "seal": 1, "precisely": 1, "keen": 1, "linguistic": 2, "inadequacy": 1, "vocabulary": 2, "impersonal": 1, "hypothetical": 1, "fortunate": 1, "proposal": 1, "foster": 1, "curator": 1, "microscope": 1, "transcript": 1, "oral": 1, "demonstration": 1, "philosophical": 1, "transaction": 1, "inaugurate": 1, "genre": 1, "formative": 1, "establishment": 1, "momentum": 1, "established": 2, "lead": 1, "substantial": 1, "institute": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

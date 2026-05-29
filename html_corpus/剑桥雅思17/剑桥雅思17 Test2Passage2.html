@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A second attempt at domesticating the tomato 第二次驯化番茄 - 剑桥雅思17 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思17</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>A second attempt at domesticating the tomato 第二次驯化番茄</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/52190.html" target="_blank">https://www.laokaoya.com/52190.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>It took at least 3,000 years for humans to learn how to <mark class="vocab-word" data-word="domesticate">domesticate</mark> the wild tomato and <mark class="vocab-word" data-word="cultivate">cultivate</mark> it for food. Now two separate teams in Brazil and <mark class="vocab-word" data-word="china">China</mark> have done it all over again in less than three years. And they have done it better in some ways, as the re-domesticated tomatoes are more <mark class="vocab-word" data-word="nutritious">nutritious</mark> than the ones we eat at present.</p><p>This approach relies on the <mark class="vocab-word" data-word="revolutionary">revolutionary</mark> CRISPR genome editing technique, in which changes are <mark class="vocab-word" data-word="deliberate">deliberately</mark> made to the DNA of a living cell, allowing <mark class="vocab-word" data-word="genetic">genetic</mark> material to be added, removed or altered. The technique could not only improve <mark class="vocab-word" data-word="existing">existing</mark> crops, but could also be used to turn thousands of wild plants into useful and appealing foods. In fact, a third team in the US has already begun to do this with a relative of the tomato called the groundcherry.</p><p>This fast-track domestication could help make the world’s food supply healthier and far more <mark class="vocab-word" data-word="resistant">resistant</mark> to diseases, such as the <mark class="vocab-word" data-word="rust">rust</mark> <mark class="vocab-word" data-word="fungus">fungus</mark> <mark class="vocab-word" data-word="devastating">devastating</mark> <mark class="vocab-word" data-word="wheat">wheat</mark> crops.</p><p>‘This could transform what we eat,’ says Jorg Kudla at the University of Munster in Germany, a member of the Brazilian team. ‘There are 50,000 <mark class="vocab-word" data-word="edible">edible</mark> plants in the world, but 90 percent of our energy comes from just 15 crops.’</p><p>‘We can now <mark class="vocab-word" data-word="mimic">mimic</mark> the known domestication course of major crops like rice, <mark class="vocab-word" data-word="maize">maize</mark>, sorghum or others,’ says Caixia Gao of the <mark class="vocab-word" data-word="chinese">Chinese</mark> <mark class="vocab-word" data-word="academy">Academy</mark> of Sciences in Beijing. ‘Then we might try to <mark class="vocab-word" data-word="domesticate">domesticate</mark> plants that have never been <mark class="vocab-word" data-word="domesticate">domesticated</mark>.’</p><p>Wild tomatoes, which are native to the <mark class="vocab-word" data-word="andes">Andes</mark> region in South America, produce pea-sized fruits. Over many generations, peoples such as the Aztecs and Incas transformed the plant by selecting and <mark class="vocab-word" data-word="breed">breeding</mark> plants with <mark class="vocab-word" data-word="mutation">mutations</mark> in their <mark class="vocab-word" data-word="genetic">genetic</mark> structure, which resulted in <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark> such as larger fruit.</p><p>But every time a single plant with a <mark class="vocab-word" data-word="mutation">mutation</mark> is taken from a larger population for <mark class="vocab-word" data-word="breed">breeding</mark>, much <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="diversity">diversity</mark> is lost. And sometimes the <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="mutation">mutations</mark> come with less <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark>. For instance, the tomato <mark class="vocab-word" data-word="strain">strains</mark> grown for supermarkets have lost much of their flavour.</p><p>By comparing the genomes of modern plants to those of their wild relatives, <mark class="vocab-word" data-word="biologist">biologists</mark> have been working out what <mark class="vocab-word" data-word="genetic">genetic</mark> changes occurred as plants were <mark class="vocab-word" data-word="domesticate">domesticated</mark>. The teams in Brazil and <mark class="vocab-word" data-word="china">China</mark> have now used this knowledge to reintroduce these changes from <mark class="vocab-word" data-word="scratch">scratch</mark> while maintaining or even enhancing the <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark> of wild <mark class="vocab-word" data-word="strain">strains</mark>.</p><p>Kudla’s team made six changes <mark class="vocab-word" data-word="altogether">altogether</mark>. For instance, they <mark class="vocab-word" data-word="triple">tripled</mark> the size of fruit by editing a <mark class="vocab-word" data-word="gene">gene</mark> called FRUIT WEIGHT, and increased the number of tomatoes per truss by editing another called MULTIFLORA.</p><p>While the historical domestication of tomatoes reduced levels of the red <mark class="vocab-word" data-word="pigment">pigment</mark> lycopene – thought to have potential health benefits – the team in Brazil managed to <mark class="vocab-word" data-word="boost">boost</mark> it instead. The wild tomato has twice as much lycopene as <mark class="vocab-word" data-word="cultivate">cultivated</mark> ones; the newly <mark class="vocab-word" data-word="domesticate">domesticated</mark> one has five times as much.</p><p>‘They are quite <mark class="vocab-word" data-word="tasty">tasty</mark>,’ says Kudla. ‘A little bit strong. And very <mark class="vocab-word" data-word="aromatic">aromatic</mark>.’</p><p>The team in <mark class="vocab-word" data-word="china">China</mark> re-domesticated several <mark class="vocab-word" data-word="strain">strains</mark> of wild tomatoes with <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark> lost in <mark class="vocab-word" data-word="domesticate">domesticated</mark> tomatoes. In this way they managed to create a <mark class="vocab-word" data-word="strain">strain</mark> <mark class="vocab-word" data-word="resistant">resistant</mark> to a common disease called <mark class="vocab-word" data-word="bacterial">bacterial</mark> spot race, which can <mark class="vocab-word" data-word="devastate">devastate</mark> <mark class="vocab-word" data-word="yield">yields</mark>. They also created another <mark class="vocab-word" data-word="strain">strain</mark> that is more salt <mark class="vocab-word" data-word="tolerant">tolerant</mark> – and has higher levels of <mark class="vocab-word" data-word="vitamin">vitamin</mark> C.</p><p>Meanwhile, Joyce Van Eck at the Boyce Thompson <mark class="vocab-word" data-word="institute">Institute</mark> in New York state decided to use the same approach to <mark class="vocab-word" data-word="domesticate">domesticate</mark> the groundcherry or goldenberry (Physalis pruinosa) for the first time. This article is from  website. This fruit looks similar to the closely related <mark class="vocab-word" data-word="cape">Cape</mark> gooseberry (Physalis peruviana).</p><p>Groundcherries are already sold to a limited extent in the US but they are hard to produce because the plant has a <mark class="vocab-word" data-word="sprawl">sprawling</mark> growth habit and the small fruits fall off the branches when <mark class="vocab-word" data-word="ripe">ripe</mark>. Van Eck’s team has edited the plants to increase fruit size, make their growth more <mark class="vocab-word" data-word="compact">compact</mark> and to stop fruits dropping. ‘There’s potential for this to be a commercial crop,’ says Van Eck. But she adds that taking the work further would be expensive because of the need to pay for a licence for the CRISPR technology and get regulatory approval.</p><p>This approach could <mark class="vocab-word" data-word="boost">boost</mark> the use of many <mark class="vocab-word" data-word="obscure">obscure</mark> plants, says Jonathan Jones of the Sainsbury Lab in the UK. But it will be hard for new foods to grow so popular with farmers and consumers that they become new <mark class="vocab-word" data-word="staple">staple</mark> crops, he thinks.</p><p>The three teams already have their eye on other plants that could be ‘catapulted into the <mark class="vocab-word" data-word="mainstream">mainstream</mark>’, including foxtail, oat-grass and cowpea. By choosing wild plants that are <mark class="vocab-word" data-word="drought">drought</mark> or heat <mark class="vocab-word" data-word="tolerant">tolerant</mark>, says Gao, we could create crops that will <mark class="vocab-word" data-word="thrive">thrive</mark> even as the planet warms.</p><p>But Kudla didn’t want to <mark class="vocab-word" data-word="reveal">reveal</mark> which species were in his team’s sights, because CRISPR has made the process so easy. ‘Any one with the right skills could go to their lab and do this.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人们用了三千多年的时间才学会如何驯化野生番茄，将其培育成食物。如今，巴西和中国两只互相独立的队伍在不到三年的时间里就将这一过程重复了一遍。他们在一些方面甚至做的更好。再次驯化的番茄比我们现在吃的更有营养。</p><p>这一方法建立在革命性的CRISPR基因组编辑技术上。它可以对一个活体细胞的DNA进行有意识的更改，添加、移除或改变基因材料。该技术不仅可以提升现有的农作物，而且还能用来将数千种野生植物转变为有益且美味的食物。事实上，第三支来自美国的队伍已经开始对一种被称为“地樱桃”的番茄近亲进行常识。</p><p>这种快速的驯化可以帮助让世界食物供应变得更加健康，大大增强其对疾病的抵御能力，如大规模破坏小麦的锈病菌。</p><p>巴西团队中、来自德国明斯特大学的Jorg Kudla说道，“这可能彻底改变我们所吃的东西。世界上有50000种可供食用的植物，但我们能量的90%都来自于仅仅15种作物”。</p><p>北京中科院的Caixia Gao说：“我们如今可以模仿已知的主要作物的驯化过程，如水稻、玉米、高粱等。接下来，我们会尝试驯化之前从未被驯化的植物”。</p><p>野生西红柿原产于南美洲的安第斯地区，其果实只有豌豆大小。世世代代的当地居民，如阿兹台克人和印加人等，通过选育那些基因结构发生突变的植株改造这种植物。最终产生一些优良特征，如更大的果实等。</p><p>但每一次发生突变的单独植株从更大的族群中取出用于繁殖的时候，许多基因多样性就会丧失。有时候，令人满意的突变反而会带来更少的优良特性。例如，超市售卖的番茄品种就丧失了丰富的味道。</p><p>通过比较现代植物与它们野生近亲的基因结构，生物学家已经弄清楚植物驯化过程中基因所发生的改变。巴西和中国的团队如今利用这一知识重新诱发这些变化，同时保留甚至加强野生品种中令人满意的特性。</p><p>Kudla的团队一共做出了六处改变。例如，他们通过编辑一段被称为“果重”的基因，将果实的大小变为以前的三倍，通过编辑另一段叫作“多花”的基因，提升了每束番茄上的果实数量。</p><p>历史上番茄的驯化降低了其番茄红素的水平 – 该成分被认为可能对健康有益 – 而巴西的团队则设法提升了它。野生番茄的番茄红素含量是家养的两倍。新驯化的品种则是其五倍。</p><p>Kudla说，“他们很美味。口味稍微有些重，但香气四溢”。</p><p>中国的团队再次驯化了几种野生番茄，保留了之前驯化的番茄所丧失的优良特性。这样一来，他们培育出的番茄品种能够抵抗一种被称为“疮茄病”的常见病。这种病能够让番茄大幅减产。他们还培育出另外一种更加耐盐的品种，而且维生素C的含量更高。</p><p>与此同时，纽约州博伊斯汤普森研究所的Joyce Van Eck决定使用同样的方法首次对地樱桃，也就是黄金莓进行驯化。这种水果看起来与其近亲海角鹅莓十分类似。</p><p>地樱桃在美国其实已经有所销售，但数量有限。它们很难生产，因为该植物惯于四处蔓延生长，而小小的果实成熟之后就会从枝头掉落。Van Eck的团队对该植物的基因进行编辑，以提升果实的大小，让它们生长的更为紧凑一些，并防止果实脱落。Van Eck说，“它有潜力变成一种商业作物”。但她补充到，进一步推进现有的研究耗费巨大，因为需要购买CRISPR技术许可，并经过注册审批。</p><p>英国塞恩斯伯里实验室的Jonathan Jones说，这种方法可以促进人们利用许多鲜为人知的植物。但他认为，新型食物要想受到农民和消费者的欢迎，并成为新的主要作物则十分困难。</p><p>三个团队已经将注意力放在那些可能一跃成为主流的其他植物上，如狐尾草、燕麦草和豇豆。Gao说，通过选择耐旱或者耐热的野生植物，我们能够培育出在气候变暖的情况下仍然茁壮生长的农作物。</p><p>但Kudla不想透露其团队正在关注哪些品种，因为CRISPR使得这一过程变得如此简单。“任何拥有合适技能的人都可以到他们的实验室去做这件事”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>It took at least 3,000 years for humans to learn how to <mark class="vocab-word" data-word="domesticate">domesticate</mark> the wild tomato and <mark class="vocab-word" data-word="cultivate">cultivate</mark> it for food. Now two separate teams in Brazil and <mark class="vocab-word" data-word="china">China</mark> have done it all over again in less than three years. And they have done it better in some ways, as the re-domesticated tomatoes are more <mark class="vocab-word" data-word="nutritious">nutritious</mark> than the ones we eat at present.</p></div>  <div class="parallel-zh"><p>人们用了三千多年的时间才学会如何驯化野生番茄，将其培育成食物。如今，巴西和中国两只互相独立的队伍在不到三年的时间里就将这一过程重复了一遍。他们在一些方面甚至做的更好。再次驯化的番茄比我们现在吃的更有营养。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This approach relies on the <mark class="vocab-word" data-word="revolutionary">revolutionary</mark> CRISPR genome editing technique, in which changes are <mark class="vocab-word" data-word="deliberate">deliberately</mark> made to the DNA of a living cell, allowing <mark class="vocab-word" data-word="genetic">genetic</mark> material to be added, removed or altered. The technique could not only improve <mark class="vocab-word" data-word="existing">existing</mark> crops, but could also be used to turn thousands of wild plants into useful and appealing foods. In fact, a third team in the US has already begun to do this with a relative of the tomato called the groundcherry.</p></div>  <div class="parallel-zh"><p>这一方法建立在革命性的CRISPR基因组编辑技术上。它可以对一个活体细胞的DNA进行有意识的更改，添加、移除或改变基因材料。该技术不仅可以提升现有的农作物，而且还能用来将数千种野生植物转变为有益且美味的食物。事实上，第三支来自美国的队伍已经开始对一种被称为“地樱桃”的番茄近亲进行常识。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This fast-track domestication could help make the world’s food supply healthier and far more <mark class="vocab-word" data-word="resistant">resistant</mark> to diseases, such as the <mark class="vocab-word" data-word="rust">rust</mark> <mark class="vocab-word" data-word="fungus">fungus</mark> <mark class="vocab-word" data-word="devastating">devastating</mark> <mark class="vocab-word" data-word="wheat">wheat</mark> crops.</p></div>  <div class="parallel-zh"><p>这种快速的驯化可以帮助让世界食物供应变得更加健康，大大增强其对疾病的抵御能力，如大规模破坏小麦的锈病菌。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘This could transform what we eat,’ says Jorg Kudla at the University of Munster in Germany, a member of the Brazilian team. ‘There are 50,000 <mark class="vocab-word" data-word="edible">edible</mark> plants in the world, but 90 percent of our energy comes from just 15 crops.’</p></div>  <div class="parallel-zh"><p>巴西团队中、来自德国明斯特大学的Jorg Kudla说道，“这可能彻底改变我们所吃的东西。世界上有50000种可供食用的植物，但我们能量的90%都来自于仅仅15种作物”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘We can now <mark class="vocab-word" data-word="mimic">mimic</mark> the known domestication course of major crops like rice, <mark class="vocab-word" data-word="maize">maize</mark>, sorghum or others,’ says Caixia Gao of the <mark class="vocab-word" data-word="chinese">Chinese</mark> <mark class="vocab-word" data-word="academy">Academy</mark> of Sciences in Beijing. ‘Then we might try to <mark class="vocab-word" data-word="domesticate">domesticate</mark> plants that have never been <mark class="vocab-word" data-word="domesticate">domesticated</mark>.’</p></div>  <div class="parallel-zh"><p>北京中科院的Caixia Gao说：“我们如今可以模仿已知的主要作物的驯化过程，如水稻、玉米、高粱等。接下来，我们会尝试驯化之前从未被驯化的植物”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Wild tomatoes, which are native to the <mark class="vocab-word" data-word="andes">Andes</mark> region in South America, produce pea-sized fruits. Over many generations, peoples such as the Aztecs and Incas transformed the plant by selecting and <mark class="vocab-word" data-word="breed">breeding</mark> plants with <mark class="vocab-word" data-word="mutation">mutations</mark> in their <mark class="vocab-word" data-word="genetic">genetic</mark> structure, which resulted in <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark> such as larger fruit.</p></div>  <div class="parallel-zh"><p>野生西红柿原产于南美洲的安第斯地区，其果实只有豌豆大小。世世代代的当地居民，如阿兹台克人和印加人等，通过选育那些基因结构发生突变的植株改造这种植物。最终产生一些优良特征，如更大的果实等。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But every time a single plant with a <mark class="vocab-word" data-word="mutation">mutation</mark> is taken from a larger population for <mark class="vocab-word" data-word="breed">breeding</mark>, much <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="diversity">diversity</mark> is lost. And sometimes the <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="mutation">mutations</mark> come with less <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark>. For instance, the tomato <mark class="vocab-word" data-word="strain">strains</mark> grown for supermarkets have lost much of their flavour.</p></div>  <div class="parallel-zh"><p>但每一次发生突变的单独植株从更大的族群中取出用于繁殖的时候，许多基因多样性就会丧失。有时候，令人满意的突变反而会带来更少的优良特性。例如，超市售卖的番茄品种就丧失了丰富的味道。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>By comparing the genomes of modern plants to those of their wild relatives, <mark class="vocab-word" data-word="biologist">biologists</mark> have been working out what <mark class="vocab-word" data-word="genetic">genetic</mark> changes occurred as plants were <mark class="vocab-word" data-word="domesticate">domesticated</mark>. The teams in Brazil and <mark class="vocab-word" data-word="china">China</mark> have now used this knowledge to reintroduce these changes from <mark class="vocab-word" data-word="scratch">scratch</mark> while maintaining or even enhancing the <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark> of wild <mark class="vocab-word" data-word="strain">strains</mark>.</p></div>  <div class="parallel-zh"><p>通过比较现代植物与它们野生近亲的基因结构，生物学家已经弄清楚植物驯化过程中基因所发生的改变。巴西和中国的团队如今利用这一知识重新诱发这些变化，同时保留甚至加强野生品种中令人满意的特性。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Kudla’s team made six changes <mark class="vocab-word" data-word="altogether">altogether</mark>. For instance, they <mark class="vocab-word" data-word="triple">tripled</mark> the size of fruit by editing a <mark class="vocab-word" data-word="gene">gene</mark> called FRUIT WEIGHT, and increased the number of tomatoes per truss by editing another called MULTIFLORA.</p></div>  <div class="parallel-zh"><p>Kudla的团队一共做出了六处改变。例如，他们通过编辑一段被称为“果重”的基因，将果实的大小变为以前的三倍，通过编辑另一段叫作“多花”的基因，提升了每束番茄上的果实数量。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While the historical domestication of tomatoes reduced levels of the red <mark class="vocab-word" data-word="pigment">pigment</mark> lycopene – thought to have potential health benefits – the team in Brazil managed to <mark class="vocab-word" data-word="boost">boost</mark> it instead. The wild tomato has twice as much lycopene as <mark class="vocab-word" data-word="cultivate">cultivated</mark> ones; the newly <mark class="vocab-word" data-word="domesticate">domesticated</mark> one has five times as much.</p></div>  <div class="parallel-zh"><p>历史上番茄的驯化降低了其番茄红素的水平 – 该成分被认为可能对健康有益 – 而巴西的团队则设法提升了它。野生番茄的番茄红素含量是家养的两倍。新驯化的品种则是其五倍。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘They are quite <mark class="vocab-word" data-word="tasty">tasty</mark>,’ says Kudla. ‘A little bit strong. And very <mark class="vocab-word" data-word="aromatic">aromatic</mark>.’</p></div>  <div class="parallel-zh"><p>Kudla说，“他们很美味。口味稍微有些重，但香气四溢”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The team in <mark class="vocab-word" data-word="china">China</mark> re-domesticated several <mark class="vocab-word" data-word="strain">strains</mark> of wild tomatoes with <mark class="vocab-word" data-word="desirable">desirable</mark> <mark class="vocab-word" data-word="trait">traits</mark> lost in <mark class="vocab-word" data-word="domesticate">domesticated</mark> tomatoes. In this way they managed to create a <mark class="vocab-word" data-word="strain">strain</mark> <mark class="vocab-word" data-word="resistant">resistant</mark> to a common disease called <mark class="vocab-word" data-word="bacterial">bacterial</mark> spot race, which can <mark class="vocab-word" data-word="devastate">devastate</mark> <mark class="vocab-word" data-word="yield">yields</mark>. They also created another <mark class="vocab-word" data-word="strain">strain</mark> that is more salt <mark class="vocab-word" data-word="tolerant">tolerant</mark> – and has higher levels of <mark class="vocab-word" data-word="vitamin">vitamin</mark> C.</p></div>  <div class="parallel-zh"><p>中国的团队再次驯化了几种野生番茄，保留了之前驯化的番茄所丧失的优良特性。这样一来，他们培育出的番茄品种能够抵抗一种被称为“疮茄病”的常见病。这种病能够让番茄大幅减产。他们还培育出另外一种更加耐盐的品种，而且维生素C的含量更高。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Meanwhile, Joyce Van Eck at the Boyce Thompson <mark class="vocab-word" data-word="institute">Institute</mark> in New York state decided to use the same approach to <mark class="vocab-word" data-word="domesticate">domesticate</mark> the groundcherry or goldenberry (Physalis pruinosa) for the first time. This article is from  website. This fruit looks similar to the closely related <mark class="vocab-word" data-word="cape">Cape</mark> gooseberry (Physalis peruviana).</p></div>  <div class="parallel-zh"><p>与此同时，纽约州博伊斯汤普森研究所的Joyce Van Eck决定使用同样的方法首次对地樱桃，也就是黄金莓进行驯化。这种水果看起来与其近亲海角鹅莓十分类似。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Groundcherries are already sold to a limited extent in the US but they are hard to produce because the plant has a <mark class="vocab-word" data-word="sprawl">sprawling</mark> growth habit and the small fruits fall off the branches when <mark class="vocab-word" data-word="ripe">ripe</mark>. Van Eck’s team has edited the plants to increase fruit size, make their growth more <mark class="vocab-word" data-word="compact">compact</mark> and to stop fruits dropping. ‘There’s potential for this to be a commercial crop,’ says Van Eck. But she adds that taking the work further would be expensive because of the need to pay for a licence for the CRISPR technology and get regulatory approval.</p></div>  <div class="parallel-zh"><p>地樱桃在美国其实已经有所销售，但数量有限。它们很难生产，因为该植物惯于四处蔓延生长，而小小的果实成熟之后就会从枝头掉落。Van Eck的团队对该植物的基因进行编辑，以提升果实的大小，让它们生长的更为紧凑一些，并防止果实脱落。Van Eck说，“它有潜力变成一种商业作物”。但她补充到，进一步推进现有的研究耗费巨大，因为需要购买CRISPR技术许可，并经过注册审批。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This approach could <mark class="vocab-word" data-word="boost">boost</mark> the use of many <mark class="vocab-word" data-word="obscure">obscure</mark> plants, says Jonathan Jones of the Sainsbury Lab in the UK. But it will be hard for new foods to grow so popular with farmers and consumers that they become new <mark class="vocab-word" data-word="staple">staple</mark> crops, he thinks.</p></div>  <div class="parallel-zh"><p>英国塞恩斯伯里实验室的Jonathan Jones说，这种方法可以促进人们利用许多鲜为人知的植物。但他认为，新型食物要想受到农民和消费者的欢迎，并成为新的主要作物则十分困难。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The three teams already have their eye on other plants that could be ‘catapulted into the <mark class="vocab-word" data-word="mainstream">mainstream</mark>’, including foxtail, oat-grass and cowpea. By choosing wild plants that are <mark class="vocab-word" data-word="drought">drought</mark> or heat <mark class="vocab-word" data-word="tolerant">tolerant</mark>, says Gao, we could create crops that will <mark class="vocab-word" data-word="thrive">thrive</mark> even as the planet warms.</p></div>  <div class="parallel-zh"><p>三个团队已经将注意力放在那些可能一跃成为主流的其他植物上，如狐尾草、燕麦草和豇豆。Gao说，通过选择耐旱或者耐热的野生植物，我们能够培育出在气候变暖的情况下仍然茁壮生长的农作物。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But Kudla didn’t want to <mark class="vocab-word" data-word="reveal">reveal</mark> which species were in his team’s sights, because CRISPR has made the process so easy. ‘Any one with the right skills could go to their lab and do this.’</p></div>  <div class="parallel-zh"><p>但Kudla不想透露其团队正在关注哪些品种，因为CRISPR使得这一过程变得如此简单。“任何拥有合适技能的人都可以到他们的实验室去做这件事”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"domesticate": 7, "cultivate": 2, "china": 3, "nutritious": 1, "revolutionary": 1, "deliberate": 1, "genetic": 4, "existing": 1, "resistant": 2, "rust": 1, "fungus": 1, "devastating": 1, "wheat": 1, "edible": 1, "mimic": 1, "maize": 1, "chinese": 1, "academy": 1, "andes": 1, "breed": 2, "mutation": 3, "desirable": 5, "trait": 4, "diversity": 1, "strain": 5, "biologist": 1, "scratch": 1, "altogether": 1, "triple": 1, "gene": 1, "pigment": 1, "boost": 2, "tasty": 1, "aromatic": 1, "bacterial": 1, "devastate": 1, "yield": 1, "tolerant": 2, "vitamin": 1, "institute": 1, "cape": 1, "sprawl": 1, "ripe": 1, "compact": 1, "obscure": 1, "staple": 1, "mainstream": 1, "drought": 1, "thrive": 1, "reveal": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Young children’s sense of identity - 剑桥雅思9 Test 4 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Young children’s sense of identity</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/27549.html" target="_blank">https://www.laokaoya.com/27549.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>A sense of self develops in young children by degrees. The process can usefully be thought of in terms of the <mark class="vocab-word" data-word="gradual">gradual</mark> emergence of two somewhat separate features: theself as a subject, and theself as an object. William <mark class="vocab-word" data-word="jam">James</mark> introduced the <mark class="vocab-word" data-word="distinction">distinction</mark> in 1892, and contemporaries of his, such as Charles Cooley, added to the developing debate. Ever since then psychologists have continued building on the theory.</p><p><mark class="vocab-word" data-word="accord">According</mark> to <mark class="vocab-word" data-word="jam">James</mark>, a child’s first step on the road to self-understanding can be seen as the <mark class="vocab-word" data-word="recognition">recognition</mark> that he or she exists. This is an aspect of the self that he labelled ‘self-as-subject’, and he gave it various elements. These included an <mark class="vocab-word" data-word="awareness">awareness</mark> of one’s own agency (i.e. one’s power to act), and an <mark class="vocab-word" data-word="awareness">awareness</mark> of one’s distinctiveness from other people. These features <mark class="vocab-word" data-word="gradual">gradually</mark> emerge as <mark class="vocab-word" data-word="infant">infants</mark> explore their world and <mark class="vocab-word" data-word="interact">interact</mark> with caregivers. Cooley (1902) <mark class="vocab-word" data-word="suggest">suggested</mark> that a sense of the self-as-subject was <mark class="vocab-word" data-word="primarily">primarily</mark> <mark class="vocab-word" data-word="concerned">concerned</mark> with being able to exercise power. He <mark class="vocab-word" data-word="propose">proposed</mark> that the earliest examples of this are an <mark class="vocab-word" data-word="infant">infant</mark>’s attempts to control physical objects, such as toys or his or her own <mark class="vocab-word" data-word="limb">limbs</mark>. This is followed by attempts to affect the behavior of other people. For example, <mark class="vocab-word" data-word="infant">infants</mark> learn that when they cry or smile someone responds to them.</p><p>Another powerful source of information for <mark class="vocab-word" data-word="infant">infants</mark> about the effects they can have on the world around them is <mark class="vocab-word" data-word="provided">provided</mark> when others <mark class="vocab-word" data-word="mimic">mimic</mark> them. Many parents spend a lot of time, particularly in the early months, copying their <mark class="vocab-word" data-word="infant">infant</mark>’s vocalizations and expressions. In addition, young children enjoy looking in mirrors, where the movements they can see are <mark class="vocab-word" data-word="dependent">dependent</mark> upon their own movements. This is not to say that <mark class="vocab-word" data-word="infant">infants</mark> recognize the reflection as theirownimage (a later development). However, Lewis and Brooks-Gunn (1979) <mark class="vocab-word" data-word="suggest">suggest</mark> that <mark class="vocab-word" data-word="infant">infants</mark>’ developing understanding that the movements they see in the mirror are <mark class="vocab-word" data-word="contingent">contingent</mark> on their own, <mark class="vocab-word" data-word="lead">leads</mark> to a growing <mark class="vocab-word" data-word="awareness">awareness</mark> that they are <mark class="vocab-word" data-word="distinct">distinct</mark> from other people. This is because they, and only they, can change the reflection in the mirror.</p><p>This understanding that children gain of themselves as active agents continues to develop in their attempts to co-operate with others in play. Dunn (1988) points out that it is in such day-to-day relationships and <mark class="vocab-word" data-word="interaction">interactions</mark> that the child’s understanding of his- or herself emerges. <mark class="vocab-word" data-word="empirical">Empirical</mark> investigations of the self-as-subject in young children are, however, rather <mark class="vocab-word" data-word="scarce">scarce</mark> because of difficulties of communication: even if young <mark class="vocab-word" data-word="infant">infants</mark> can reflect on their experience, they certainly cannot express this aspect of the self directly.</p><p>Once children have acquired a certain level of self-awareness, they begin to place themselves in a whole series of categories, which together play such an important part in defining them uniquely as ‘themselves’. This second step in the development of a full sense of self is what <mark class="vocab-word" data-word="jam">James</mark> called the ‘self-as-object’. This has been seen by many to be the aspect of the self which is most <mark class="vocab-word" data-word="influence">influenced</mark> by social elements, since it is made up of social roles (such as student, brother, colleague) and characteristics which <mark class="vocab-word" data-word="derive">derive</mark> their meaning from comparison or <mark class="vocab-word" data-word="interaction">interaction</mark> with other people (such as trustworthiness, shyness, sporting ability).</p><p>Cooley and other researchers <mark class="vocab-word" data-word="suggest">suggested</mark> a close connection between a person’s own understanding of their identity and other people’s understanding of it. Cooley believed that people build up their sense of identity from the reactions of others to them, and from the view they believe others have of them. He called the self-as-object the ‘looking-glass self’, since people come to see themselves as they are reflected in others. Mead (1934) went even further, and saw the self and the social world as inextricably <mark class="vocab-word" data-word="bound">bound</mark> together: ‘The self is <mark class="vocab-word" data-word="essentially">essentially</mark> a social structure, and it arises in social experience … it is impossible to <mark class="vocab-word" data-word="conceive">conceive</mark> of a self arising outside of social experience.’</p><p>Lewis and Brooks-Gunn argued that an important development <mark class="vocab-word" data-word="milestone">milestone</mark> is reached when children become able to recognize themselves visually without the support of seeing <mark class="vocab-word" data-word="contingent">contingent</mark> movement. This <mark class="vocab-word" data-word="recognition">recognition</mark> occurs around their second birthday. In one experiment, Lewis and Brooks-Gunn (1979) dabbed some red powder on the noses of children who were playing in front of a mirror, and then observed how often they <mark class="vocab-word" data-word="touched">touched</mark> their noses. The psychologists reasoned that if the children knew what they usually looked like, they would be surprised by the unusual red mark and would start <mark class="vocab-word" data-word="touching">touching</mark> it. On the other hand, they found that children of 15 to 18 months are generally not able to recognize themselves unless other <mark class="vocab-word" data-word="cue">cues</mark> such as movement are present.</p><p>Finally, perhaps the most <mark class="vocab-word" data-word="graphic">graphic</mark> expressions of self-awareness in general can be seen in the displays of <mark class="vocab-word" data-word="rage">rage</mark> which are most common from 18 months to 3 years of age. In a <mark class="vocab-word" data-word="longitudinal">longitudinal</mark> study of groups of three or four children, Bronson (1975) found that the <mark class="vocab-word" data-word="intensity">intensity</mark> of the <mark class="vocab-word" data-word="frustration">frustration</mark> and anger in their <mark class="vocab-word" data-word="disagreement">disagreements</mark> increased sharply between the ages of 1 and 2 years. Often, the children’s <mark class="vocab-word" data-word="disagreement">disagreements</mark> <mark class="vocab-word" data-word="involved">involved</mark> a struggle over a toy that none of them had played with before or after the tug-of-war: the children seemed to be <mark class="vocab-word" data-word="dispute">disputing</mark> <mark class="vocab-word" data-word="ownership">ownership</mark> rather than wanting to play with it. Although it may be less <mark class="vocab-word" data-word="marked">marked</mark> in other societies, the link between the sense of ‘self’ and of ‘<mark class="vocab-word" data-word="ownership">ownership</mark>’ is a <mark class="vocab-word" data-word="notable">notable</mark> feature of childhood in Western societies.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>幼儿会逐步发展出自我意识。我们可以从两个某种程度上相互独立的特征的逐渐出现来考虑这一过程：作为主体的自我和作为客体的自我。威廉·詹姆斯（William James）在1892年引入这一区分，他同时代的人，例如查尔斯·库利（Charles Cooley），也加入这一场不断发展的辩论。从那时起，心理学家一直在持续构建该理论。</p><p>詹姆斯认为，孩子迈向自我认知的第一步可以看作是对自己存在的认可。这是自我的一个方面，他称之为“作为主体的自我”，并赋予了它各种要素。其中包括了解自己的代理机构（即自己的行为权），以及了解自己与众不同的特征。随着婴儿探索自己的世界并与照顾者互动，这些特征逐渐显现出来。Cooley（1902）提出，作为主体的自我认知主要与能够锻炼影响力有关。他提出，最早的例子是婴儿试图控制诸如玩具或自己的四肢之类的实在物体。随后是影响他人行为的尝试。例如，婴儿了解到，当他们哭泣或微笑时，有人会对他们做出反应。</p><p>当其他人模仿婴儿时，可以为婴儿提供有关其对周围世界的影响的另一个强大信息来源。许多父母花很多时间，尤其是在最初的几个月里，模仿婴儿的声音和表情。此外，年幼的孩子喜欢照镜子，他们看到的动作取决于自己的动作。这并不是说婴儿将镜子中的反射视为自己的图像（后来的发展）。刘易斯和布鲁克斯-古恩（Lewis and Brooks-Gunn，1979）认为，婴儿对镜子中运动的理解是独立的，这使他们逐渐意识到自己与众不同。因为他们，并且只有他们可以改变镜中的反射。</p><p>在与他人玩耍的过程中，儿童对自己作为积极行为者的理解不断发展。邓恩（Dunn，1988）指出，正是在这种日常关系和互动中，孩子才对自己产生了理解。然而，由于沟通困难，对幼儿自我主体的实证研究相当缺乏：即使幼儿可以反思自己的经历，他们也无法直接表达自我的这一方面。</p><p>一旦孩子获得了一定程度的自我意识，他们便开始将自己置于一系列的类别中，这些类别在他们获取有关“自己”的独特定义中发挥着重要作用。全面自我意识发展的第二步就是詹姆斯所说的“客体的自我”。许多人认为这一方面的自我受社会影响最大，因为它是由社会角色（例如学生，兄弟，同事）和通过与他人的比较或互动而得出的特征（例如诚信，害羞，运动能力）组成的。</p><p>Cooley和其他研究人员认为，一个人对自己身份的理解与他人对其身份的理解之间存在密切联系。Cooley相信人们会从他人对他们的反应中，以及他们所认为的其他人对他们的看法中建立身份认同。他将客体自我称为“照镜子的自我”，因为人们通过他人的反馈来认识自己。米德（Mead，1934）走得更远，他认为自我和社会世界密不可分地联系在一起：“自我本质上是一种社会结构，它诞生于社会经验之中……无法想象在社会经验之外产生的自我。”</p><p>ewis和Brooks-Gunn争辩说，发展过程中一项重要的里程碑是，儿童在看不到自己动作时却能在视觉上认识自己。这种认知出现在两岁左右。在一个实验中，刘易斯和布鲁克斯-古恩（Lewis and Brooks-Gunn，1979）在镜子前玩耍的孩子的鼻子上擦了一些红色粉末，然后观察他们多长时间触摸一次鼻子。心理学家认为，如果孩子们知道他们平时的模样，他们会对异常的红色标记感到惊讶并开始触摸它。另一方面，他们发现15到18个月大的孩子通常无法识别自己，除非存在动作之类的其他提示。</p><p>最后，或许普遍意义上自我认知最形象的表现体现在愤怒的展示上。这在18个月到3岁之间的孩子身上最为常见。在对三四个孩子构成的小组进行纵向研究时，Bronson（1975）发现，他们遇到分歧时，沮丧和愤怒的强度在1至2岁之间急剧增加。通常，孩子们的分歧涉及对他们在拔河之前或之后还没有玩过的玩具的争执：孩子们似乎在争辩所有权，而不是想玩它。尽管它在其他社会中可能没有那么明显，但是“自我认知”和“所有权”之间的联系是西方社会童年的显著特征。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>A sense of self develops in young children by degrees. The process can usefully be thought of in terms of the <mark class="vocab-word" data-word="gradual">gradual</mark> emergence of two somewhat separate features: theself as a subject, and theself as an object. William <mark class="vocab-word" data-word="jam">James</mark> introduced the <mark class="vocab-word" data-word="distinction">distinction</mark> in 1892, and contemporaries of his, such as Charles Cooley, added to the developing debate. Ever since then psychologists have continued building on the theory.</p></div>  <div class="parallel-zh"><p>幼儿会逐步发展出自我意识。我们可以从两个某种程度上相互独立的特征的逐渐出现来考虑这一过程：作为主体的自我和作为客体的自我。威廉·詹姆斯（William James）在1892年引入这一区分，他同时代的人，例如查尔斯·库利（Charles Cooley），也加入这一场不断发展的辩论。从那时起，心理学家一直在持续构建该理论。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="accord">According</mark> to <mark class="vocab-word" data-word="jam">James</mark>, a child’s first step on the road to self-understanding can be seen as the <mark class="vocab-word" data-word="recognition">recognition</mark> that he or she exists. This is an aspect of the self that he labelled ‘self-as-subject’, and he gave it various elements. These included an <mark class="vocab-word" data-word="awareness">awareness</mark> of one’s own agency (i.e. one’s power to act), and an <mark class="vocab-word" data-word="awareness">awareness</mark> of one’s distinctiveness from other people. These features <mark class="vocab-word" data-word="gradual">gradually</mark> emerge as <mark class="vocab-word" data-word="infant">infants</mark> explore their world and <mark class="vocab-word" data-word="interact">interact</mark> with caregivers. Cooley (1902) <mark class="vocab-word" data-word="suggest">suggested</mark> that a sense of the self-as-subject was <mark class="vocab-word" data-word="primarily">primarily</mark> <mark class="vocab-word" data-word="concerned">concerned</mark> with being able to exercise power. He <mark class="vocab-word" data-word="propose">proposed</mark> that the earliest examples of this are an <mark class="vocab-word" data-word="infant">infant</mark>’s attempts to control physical objects, such as toys or his or her own <mark class="vocab-word" data-word="limb">limbs</mark>. This is followed by attempts to affect the behavior of other people. For example, <mark class="vocab-word" data-word="infant">infants</mark> learn that when they cry or smile someone responds to them.</p></div>  <div class="parallel-zh"><p>詹姆斯认为，孩子迈向自我认知的第一步可以看作是对自己存在的认可。这是自我的一个方面，他称之为“作为主体的自我”，并赋予了它各种要素。其中包括了解自己的代理机构（即自己的行为权），以及了解自己与众不同的特征。随着婴儿探索自己的世界并与照顾者互动，这些特征逐渐显现出来。Cooley（1902）提出，作为主体的自我认知主要与能够锻炼影响力有关。他提出，最早的例子是婴儿试图控制诸如玩具或自己的四肢之类的实在物体。随后是影响他人行为的尝试。例如，婴儿了解到，当他们哭泣或微笑时，有人会对他们做出反应。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Another powerful source of information for <mark class="vocab-word" data-word="infant">infants</mark> about the effects they can have on the world around them is <mark class="vocab-word" data-word="provided">provided</mark> when others <mark class="vocab-word" data-word="mimic">mimic</mark> them. Many parents spend a lot of time, particularly in the early months, copying their <mark class="vocab-word" data-word="infant">infant</mark>’s vocalizations and expressions. In addition, young children enjoy looking in mirrors, where the movements they can see are <mark class="vocab-word" data-word="dependent">dependent</mark> upon their own movements. This is not to say that <mark class="vocab-word" data-word="infant">infants</mark> recognize the reflection as theirownimage (a later development). However, Lewis and Brooks-Gunn (1979) <mark class="vocab-word" data-word="suggest">suggest</mark> that <mark class="vocab-word" data-word="infant">infants</mark>’ developing understanding that the movements they see in the mirror are <mark class="vocab-word" data-word="contingent">contingent</mark> on their own, <mark class="vocab-word" data-word="lead">leads</mark> to a growing <mark class="vocab-word" data-word="awareness">awareness</mark> that they are <mark class="vocab-word" data-word="distinct">distinct</mark> from other people. This is because they, and only they, can change the reflection in the mirror.</p></div>  <div class="parallel-zh"><p>当其他人模仿婴儿时，可以为婴儿提供有关其对周围世界的影响的另一个强大信息来源。许多父母花很多时间，尤其是在最初的几个月里，模仿婴儿的声音和表情。此外，年幼的孩子喜欢照镜子，他们看到的动作取决于自己的动作。这并不是说婴儿将镜子中的反射视为自己的图像（后来的发展）。刘易斯和布鲁克斯-古恩（Lewis and Brooks-Gunn，1979）认为，婴儿对镜子中运动的理解是独立的，这使他们逐渐意识到自己与众不同。因为他们，并且只有他们可以改变镜中的反射。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This understanding that children gain of themselves as active agents continues to develop in their attempts to co-operate with others in play. Dunn (1988) points out that it is in such day-to-day relationships and <mark class="vocab-word" data-word="interaction">interactions</mark> that the child’s understanding of his- or herself emerges. <mark class="vocab-word" data-word="empirical">Empirical</mark> investigations of the self-as-subject in young children are, however, rather <mark class="vocab-word" data-word="scarce">scarce</mark> because of difficulties of communication: even if young <mark class="vocab-word" data-word="infant">infants</mark> can reflect on their experience, they certainly cannot express this aspect of the self directly.</p></div>  <div class="parallel-zh"><p>在与他人玩耍的过程中，儿童对自己作为积极行为者的理解不断发展。邓恩（Dunn，1988）指出，正是在这种日常关系和互动中，孩子才对自己产生了理解。然而，由于沟通困难，对幼儿自我主体的实证研究相当缺乏：即使幼儿可以反思自己的经历，他们也无法直接表达自我的这一方面。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Once children have acquired a certain level of self-awareness, they begin to place themselves in a whole series of categories, which together play such an important part in defining them uniquely as ‘themselves’. This second step in the development of a full sense of self is what <mark class="vocab-word" data-word="jam">James</mark> called the ‘self-as-object’. This has been seen by many to be the aspect of the self which is most <mark class="vocab-word" data-word="influence">influenced</mark> by social elements, since it is made up of social roles (such as student, brother, colleague) and characteristics which <mark class="vocab-word" data-word="derive">derive</mark> their meaning from comparison or <mark class="vocab-word" data-word="interaction">interaction</mark> with other people (such as trustworthiness, shyness, sporting ability).</p></div>  <div class="parallel-zh"><p>一旦孩子获得了一定程度的自我意识，他们便开始将自己置于一系列的类别中，这些类别在他们获取有关“自己”的独特定义中发挥着重要作用。全面自我意识发展的第二步就是詹姆斯所说的“客体的自我”。许多人认为这一方面的自我受社会影响最大，因为它是由社会角色（例如学生，兄弟，同事）和通过与他人的比较或互动而得出的特征（例如诚信，害羞，运动能力）组成的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Cooley and other researchers <mark class="vocab-word" data-word="suggest">suggested</mark> a close connection between a person’s own understanding of their identity and other people’s understanding of it. Cooley believed that people build up their sense of identity from the reactions of others to them, and from the view they believe others have of them. He called the self-as-object the ‘looking-glass self’, since people come to see themselves as they are reflected in others. Mead (1934) went even further, and saw the self and the social world as inextricably <mark class="vocab-word" data-word="bound">bound</mark> together: ‘The self is <mark class="vocab-word" data-word="essentially">essentially</mark> a social structure, and it arises in social experience … it is impossible to <mark class="vocab-word" data-word="conceive">conceive</mark> of a self arising outside of social experience.’</p></div>  <div class="parallel-zh"><p>Cooley和其他研究人员认为，一个人对自己身份的理解与他人对其身份的理解之间存在密切联系。Cooley相信人们会从他人对他们的反应中，以及他们所认为的其他人对他们的看法中建立身份认同。他将客体自我称为“照镜子的自我”，因为人们通过他人的反馈来认识自己。米德（Mead，1934）走得更远，他认为自我和社会世界密不可分地联系在一起：“自我本质上是一种社会结构，它诞生于社会经验之中……无法想象在社会经验之外产生的自我。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Lewis and Brooks-Gunn argued that an important development <mark class="vocab-word" data-word="milestone">milestone</mark> is reached when children become able to recognize themselves visually without the support of seeing <mark class="vocab-word" data-word="contingent">contingent</mark> movement. This <mark class="vocab-word" data-word="recognition">recognition</mark> occurs around their second birthday. In one experiment, Lewis and Brooks-Gunn (1979) dabbed some red powder on the noses of children who were playing in front of a mirror, and then observed how often they <mark class="vocab-word" data-word="touched">touched</mark> their noses. The psychologists reasoned that if the children knew what they usually looked like, they would be surprised by the unusual red mark and would start <mark class="vocab-word" data-word="touching">touching</mark> it. On the other hand, they found that children of 15 to 18 months are generally not able to recognize themselves unless other <mark class="vocab-word" data-word="cue">cues</mark> such as movement are present.</p></div>  <div class="parallel-zh"><p>ewis和Brooks-Gunn争辩说，发展过程中一项重要的里程碑是，儿童在看不到自己动作时却能在视觉上认识自己。这种认知出现在两岁左右。在一个实验中，刘易斯和布鲁克斯-古恩（Lewis and Brooks-Gunn，1979）在镜子前玩耍的孩子的鼻子上擦了一些红色粉末，然后观察他们多长时间触摸一次鼻子。心理学家认为，如果孩子们知道他们平时的模样，他们会对异常的红色标记感到惊讶并开始触摸它。另一方面，他们发现15到18个月大的孩子通常无法识别自己，除非存在动作之类的其他提示。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Finally, perhaps the most <mark class="vocab-word" data-word="graphic">graphic</mark> expressions of self-awareness in general can be seen in the displays of <mark class="vocab-word" data-word="rage">rage</mark> which are most common from 18 months to 3 years of age. In a <mark class="vocab-word" data-word="longitudinal">longitudinal</mark> study of groups of three or four children, Bronson (1975) found that the <mark class="vocab-word" data-word="intensity">intensity</mark> of the <mark class="vocab-word" data-word="frustration">frustration</mark> and anger in their <mark class="vocab-word" data-word="disagreement">disagreements</mark> increased sharply between the ages of 1 and 2 years. Often, the children’s <mark class="vocab-word" data-word="disagreement">disagreements</mark> <mark class="vocab-word" data-word="involved">involved</mark> a struggle over a toy that none of them had played with before or after the tug-of-war: the children seemed to be <mark class="vocab-word" data-word="dispute">disputing</mark> <mark class="vocab-word" data-word="ownership">ownership</mark> rather than wanting to play with it. Although it may be less <mark class="vocab-word" data-word="marked">marked</mark> in other societies, the link between the sense of ‘self’ and of ‘<mark class="vocab-word" data-word="ownership">ownership</mark>’ is a <mark class="vocab-word" data-word="notable">notable</mark> feature of childhood in Western societies.</p></div>  <div class="parallel-zh"><p>最后，或许普遍意义上自我认知最形象的表现体现在愤怒的展示上。这在18个月到3岁之间的孩子身上最为常见。在对三四个孩子构成的小组进行纵向研究时，Bronson（1975）发现，他们遇到分歧时，沮丧和愤怒的强度在1至2岁之间急剧增加。通常，孩子们的分歧涉及对他们在拔河之前或之后还没有玩过的玩具的争执：孩子们似乎在争辩所有权，而不是想玩它。尽管它在其他社会中可能没有那么明显，但是“自我认知”和“所有权”之间的联系是西方社会童年的显著特征。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"gradual": 2, "jam": 3, "distinction": 1, "accord": 1, "recognition": 2, "awareness": 3, "infant": 8, "interact": 1, "suggest": 3, "primarily": 1, "concerned": 1, "propose": 1, "limb": 1, "provided": 1, "mimic": 1, "dependent": 1, "contingent": 2, "lead": 1, "distinct": 1, "interaction": 2, "empirical": 1, "scarce": 1, "influence": 1, "derive": 1, "bound": 1, "essentially": 1, "conceive": 1, "milestone": 1, "touched": 1, "touching": 1, "cue": 1, "graphic": 1, "rage": 1, "longitudinal": 1, "intensity": 1, "frustration": 1, "disagreement": 2, "involved": 1, "dispute": 1, "ownership": 2, "marked": 1, "notable": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

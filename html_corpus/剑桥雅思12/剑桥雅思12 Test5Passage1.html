@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cork 木栓 - 剑桥雅思12 Test 5 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思12</span>
+                    <span class="badge-tag">Test 5</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>cork 木栓</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/30311.html" target="_blank">https://www.laokaoya.com/30311.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="cork">Cork</mark> – the thickbarkof the corkoaktree (Quercus suber) – is aremarkablematerial.It is tough,<mark class="vocab-word" data-word="elastic">elastic</mark>,<mark class="vocab-word" data-word="buoyant">buoyant</mark>, and fire-resistant, and suitable for a wide range of purposes.It has also been used for millennia: the ancient Egyptians <mark class="vocab-word" data-word="seal">sealed</mark> their sarcophagi (stone coffins) with <mark class="vocab-word" data-word="cork">cork</mark>, while the ancient Greeks and Romans used it for anything from <mark class="vocab-word" data-word="beehive">beehives</mark> to sandals.</p><p>And the corkoakitself is an extraordinary <mark class="vocab-word" data-word="tree">tree</mark>.Itsbarkgrows up to 20cm in thickness, <mark class="vocab-word" data-word="insulate">insulating</mark> the <mark class="vocab-word" data-word="tree">tree</mark> like a coat wrapped around thetrunkand branches and keeping the inside at a constant 20°C all year round.Developed most probably as a defence against forest <mark class="vocab-word" data-word="fir">fires</mark>, thebarkof the corkoakhas aparticularcellularstructure – with about 40 million cells percubiccentimetre – that technology has never succeeded in <mark class="vocab-word" data-word="replicate">replicating</mark>.The cells are filled with air, which is why <mark class="vocab-word" data-word="cork">cork</mark> is sobuoyant.It also has an <mark class="vocab-word" data-word="elasticity">elasticity</mark> that means you cansquashit and watch itspringback to its original size and shape when you release the pressure.</p><p><mark class="vocab-word" data-word="cork">Cork</mark> <mark class="vocab-word" data-word="oak">oaks</mark> grow in a number ofMediterraneancountries, including Portugal, Spain, Italy, Greece and Morocco.Theyflourishin warm, sunny climates where there is a minimum of 400 millimetres of rain per year, and not more than 800 millimetres.Like <mark class="vocab-word" data-word="grape">grape</mark> <mark class="vocab-word" data-word="vine">vines</mark>, the treesthrivein poor soil, putting down deep roots in search ofmoistureand <mark class="vocab-word" data-word="nutrient">nutrients</mark>.Southern Portugal’s Alentejo region meets all of these requirements, which explains why, by the early 20th century, this region had become the world’s largest producer of <mark class="vocab-word" data-word="cork">cork</mark>, and why today it accounts for roughly half of all <mark class="vocab-word" data-word="cork">cork</mark> production around the world.</p><p>Most <mark class="vocab-word" data-word="cork">cork</mark> forests are family-owned.Many of these family businesses, and indeed many of the <mark class="vocab-word" data-word="tree">trees</mark> themselves, are around 200 years old.<mark class="vocab-word" data-word="cork">Cork</mark> production is, above all, an exercise in <mark class="vocab-word" data-word="patience">patience</mark>.From the planting of a <mark class="vocab-word" data-word="cork">cork</mark> sapling to the first <mark class="vocab-word" data-word="harvest">harvest</mark> takes 25 years, and a gap ofapproximatelya <mark class="vocab-word" data-word="decade">decade</mark> must separate <mark class="vocab-word" data-word="harvest">harvests</mark> from an individual <mark class="vocab-word" data-word="tree">tree</mark>.And for top-quality <mark class="vocab-word" data-word="cork">cork</mark>, it’s necessary to wait a further 15 or 20 years.You even have to wait for the right kind of summer’s day to <mark class="vocab-word" data-word="harvest">harvest</mark> <mark class="vocab-word" data-word="cork">cork</mark>.If thebarkis stripped on a day when it’s too cold – or when the air isdamp– the <mark class="vocab-word" data-word="tree">tree</mark> will be damaged.</p><p><mark class="vocab-word" data-word="cork">Cork</mark> <mark class="vocab-word" data-word="harvest">harvesting</mark> is a very specialised profession.Nomechanicalmeans of stripping corkbarkhas been invented, so the job is done by teams of highly <mark class="vocab-word" data-word="skilled">skilled</mark> workers.First, they makeverticalcuts down thebarkusing small sharp axes, then <mark class="vocab-word" data-word="lever">lever</mark> it away in pieces as large as they can manage.The most skilful cork-strippers prise away a semi-circular <mark class="vocab-word" data-word="husk">husk</mark> that runs the length of thetrunkfrom just above ground level to the first branches.It is then dried on the ground for about four months, before being taken to factories, where it is boiled to kill any insects that might remain in the <mark class="vocab-word" data-word="cork">cork</mark>.Over 60% of <mark class="vocab-word" data-word="cork">cork</mark> then goes on to be made into traditional bottle stoppers, with most of the <mark class="vocab-word" data-word="remainder">remainder</mark> being used in the construction trade.Corkboard and <mark class="vocab-word" data-word="cork">cork</mark> <mark class="vocab-word" data-word="tile">tiles</mark> are ideal forthermalandacousticinsulation, while granules of <mark class="vocab-word" data-word="cork">cork</mark> are used in the <mark class="vocab-word" data-word="manufacture">manufacture</mark> of <mark class="vocab-word" data-word="concrete">concrete</mark>.</p><p>Recent years have seen the end of the virtualmonopolyof <mark class="vocab-word" data-word="cork">cork</mark> as the material for bottle stoppers, due to concerns about the effect it may have on the contents of the bottle.This is caused by a chemicalcompoundcalled 2,4,6-trichloroanisole (TCA), which forms through theinteractionof plant phenols, <mark class="vocab-word" data-word="chlorine">chlorine</mark> and mould.The tiniest concentrations – as little as three or four parts to atrillion– can <mark class="vocab-word" data-word="spoil">spoil</mark> the taste of the product contained in the bottle.The result has been a <mark class="vocab-word" data-word="gradual">gradual</mark> yet steady move first towardsplasticstoppers and, more recently, toaluminiumscrew caps.These <mark class="vocab-word" data-word="substitute">substitutes</mark> are cheaper to <mark class="vocab-word" data-word="manufacture">manufacture</mark> and, in the case of <mark class="vocab-word" data-word="screw">screw</mark> caps, more <mark class="vocab-word" data-word="convenient">convenient</mark> for the user.</p><p>The classic <mark class="vocab-word" data-word="cork">cork</mark> stopper does have several advantages, however.Firstly, its traditional image is more in keeping with that of the type of high quality <mark class="vocab-word" data-word="goods">goods</mark> with which it has long been associated.Secondly – and very importantly – <mark class="vocab-word" data-word="cork">cork</mark> is asustainableproduct that can be <mark class="vocab-word" data-word="recycle">recycled</mark> without difficulty.Moreover, <mark class="vocab-word" data-word="cork">cork</mark> forests are a resource which support localbiodiversity, and preventdesertificationin the regions where they are planted.So, given the current concerns about environmental issues, the future of this ancient material once again looks <mark class="vocab-word" data-word="promising">promising</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>木栓，即栓皮橡树（栓皮槠）厚实的树皮，是一种非凡的材料。它坚韧，有弹性，能浮起来，而且还防火，适用于各种目的。它已经被人们使用了数千年：埃及人用木栓来密封他们的石棺，而希腊人和罗马人则用它制作从蜂箱到凉鞋等各种物品。</p><p>栓皮橡树本身就是一种不同寻常的树木。它的树皮可以长到20厘米厚，像外衣一样将树干和枝杈包裹起来，保持内部温度全年恒定在20度。很有可能是为了对抗森林火灾才形成的特点，栓皮橡树的树皮有着一种独特的细胞结构-每立方厘米大约有4千万个细胞。这种结构从来都没有被技术成功的复制过。细胞中充满了空气，这也是为什么木栓浮力如此之大的原因。它同样富有弹性。这意味着你可以将它挤压变形。释放压力后，看着它恢复原来的形状和大小。</p><p>栓皮橡树生长在许多地中海国家，包括葡萄牙、西班牙、意大利、希腊和摩洛哥。它们在温暖、阳光充沛的地区中茂盛生长。那里每年降水量不小于400厘米，但又不多于800厘米。像葡萄藤一样，这些树木在贫瘠的土地中茁壮生长。它们的根系深入土地以寻找水分和养料。葡萄牙南部的Alentejo地区符合所有这些要求。这也是该地区在20世纪初成为世界上最大的木栓生产商的原因，以及为什么直到今天，它还占着全世界木栓产量的一半左右。</p><p>大多数栓皮森林为家族所有。许多这些家族企业，以及树木自身，都有着200年左右的历史。木栓生产是一种十分需要耐心的操作。从种下栓皮幼树到第一次收获需要25年，而且每棵树的收割要间隔大约10年。对于最高品质的木栓来说，必须继续等待15或20年才可以。人们甚至还要等待合适的夏日天气才能收割木栓。如果剥离树皮的天气太过寒冷，或者空气太过潮湿，树木就会被损坏。</p><p>木栓收割是一种高度专业化的职业。至今还没有发明机器剥离栓皮的方法，所以这些工作由技艺高超的工人完成。首先，他们用锋利的小型斧头在树皮上垂直切下，然后将它一点点的撬开。木片越大越好。技艺最纯熟的栓皮工人会撬出一片半圆形的树皮，其长度相当于地面到第一节树枝的树干长度。被放在地面上干燥4个月左右之后，它会被送到工厂里去。在那里通过加热煮沸来杀死可能残留在栓皮中的各种昆虫。60%以上的栓皮随后被用于制作传统瓶塞，剩下的大部分会被用于建筑行业。软木板和软木砖是理想的隔热、隔音材料，而软木颗粒则被用于混凝土的制造。</p><p>由于担心软木塞可能会影响瓶子中的液体，它作为瓶塞材料的实际垄断地位在最近几年迎来了终结。这是由一种叫做2,4,6-三聚苯甲醚的化合物引起的。这种化合物会在植物酚，氯和霉菌的相互作用中形成。哪怕是极其微小的浓度-低至每万亿三到四单位-也会破坏瓶中产品的口味。因此，人们先是逐渐却坚定的使用塑料瓶塞，最近又转向铝制螺旋盖。这些替代品不仅制造起来更为便宜，而且螺旋瓶盖对用户来说也更加方便。</p><p>然而，经典的软木瓶塞确实有几项优势。首先，它的传统形象与高品质物品更为匹配。这些东西与它长期联系在一起。其次并且很重要的是，木栓是一种可以轻易回收的可持续产品。第三，栓木森林的资源可以支持当地的生物多样性，并阻止其所种植地区的沙漠化。所以，考虑到当前对环境问题的担忧，这一古老材料的未来看起来再一次充满了希望。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="cork">Cork</mark> – the thickbarkof the corkoaktree (Quercus suber) – is aremarkablematerial.It is tough,<mark class="vocab-word" data-word="elastic">elastic</mark>,<mark class="vocab-word" data-word="buoyant">buoyant</mark>, and fire-resistant, and suitable for a wide range of purposes.It has also been used for millennia: the ancient Egyptians <mark class="vocab-word" data-word="seal">sealed</mark> their sarcophagi (stone coffins) with <mark class="vocab-word" data-word="cork">cork</mark>, while the ancient Greeks and Romans used it for anything from <mark class="vocab-word" data-word="beehive">beehives</mark> to sandals.</p></div>  <div class="parallel-zh"><p>木栓，即栓皮橡树（栓皮槠）厚实的树皮，是一种非凡的材料。它坚韧，有弹性，能浮起来，而且还防火，适用于各种目的。它已经被人们使用了数千年：埃及人用木栓来密封他们的石棺，而希腊人和罗马人则用它制作从蜂箱到凉鞋等各种物品。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>And the corkoakitself is an extraordinary <mark class="vocab-word" data-word="tree">tree</mark>.Itsbarkgrows up to 20cm in thickness, <mark class="vocab-word" data-word="insulate">insulating</mark> the <mark class="vocab-word" data-word="tree">tree</mark> like a coat wrapped around thetrunkand branches and keeping the inside at a constant 20°C all year round.Developed most probably as a defence against forest <mark class="vocab-word" data-word="fir">fires</mark>, thebarkof the corkoakhas aparticularcellularstructure – with about 40 million cells percubiccentimetre – that technology has never succeeded in <mark class="vocab-word" data-word="replicate">replicating</mark>.The cells are filled with air, which is why <mark class="vocab-word" data-word="cork">cork</mark> is sobuoyant.It also has an <mark class="vocab-word" data-word="elasticity">elasticity</mark> that means you cansquashit and watch itspringback to its original size and shape when you release the pressure.</p></div>  <div class="parallel-zh"><p>栓皮橡树本身就是一种不同寻常的树木。它的树皮可以长到20厘米厚，像外衣一样将树干和枝杈包裹起来，保持内部温度全年恒定在20度。很有可能是为了对抗森林火灾才形成的特点，栓皮橡树的树皮有着一种独特的细胞结构-每立方厘米大约有4千万个细胞。这种结构从来都没有被技术成功的复制过。细胞中充满了空气，这也是为什么木栓浮力如此之大的原因。它同样富有弹性。这意味着你可以将它挤压变形。释放压力后，看着它恢复原来的形状和大小。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="cork">Cork</mark> <mark class="vocab-word" data-word="oak">oaks</mark> grow in a number ofMediterraneancountries, including Portugal, Spain, Italy, Greece and Morocco.Theyflourishin warm, sunny climates where there is a minimum of 400 millimetres of rain per year, and not more than 800 millimetres.Like <mark class="vocab-word" data-word="grape">grape</mark> <mark class="vocab-word" data-word="vine">vines</mark>, the treesthrivein poor soil, putting down deep roots in search ofmoistureand <mark class="vocab-word" data-word="nutrient">nutrients</mark>.Southern Portugal’s Alentejo region meets all of these requirements, which explains why, by the early 20th century, this region had become the world’s largest producer of <mark class="vocab-word" data-word="cork">cork</mark>, and why today it accounts for roughly half of all <mark class="vocab-word" data-word="cork">cork</mark> production around the world.</p></div>  <div class="parallel-zh"><p>栓皮橡树生长在许多地中海国家，包括葡萄牙、西班牙、意大利、希腊和摩洛哥。它们在温暖、阳光充沛的地区中茂盛生长。那里每年降水量不小于400厘米，但又不多于800厘米。像葡萄藤一样，这些树木在贫瘠的土地中茁壮生长。它们的根系深入土地以寻找水分和养料。葡萄牙南部的Alentejo地区符合所有这些要求。这也是该地区在20世纪初成为世界上最大的木栓生产商的原因，以及为什么直到今天，它还占着全世界木栓产量的一半左右。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Most <mark class="vocab-word" data-word="cork">cork</mark> forests are family-owned.Many of these family businesses, and indeed many of the <mark class="vocab-word" data-word="tree">trees</mark> themselves, are around 200 years old.<mark class="vocab-word" data-word="cork">Cork</mark> production is, above all, an exercise in <mark class="vocab-word" data-word="patience">patience</mark>.From the planting of a <mark class="vocab-word" data-word="cork">cork</mark> sapling to the first <mark class="vocab-word" data-word="harvest">harvest</mark> takes 25 years, and a gap ofapproximatelya <mark class="vocab-word" data-word="decade">decade</mark> must separate <mark class="vocab-word" data-word="harvest">harvests</mark> from an individual <mark class="vocab-word" data-word="tree">tree</mark>.And for top-quality <mark class="vocab-word" data-word="cork">cork</mark>, it’s necessary to wait a further 15 or 20 years.You even have to wait for the right kind of summer’s day to <mark class="vocab-word" data-word="harvest">harvest</mark> <mark class="vocab-word" data-word="cork">cork</mark>.If thebarkis stripped on a day when it’s too cold – or when the air isdamp– the <mark class="vocab-word" data-word="tree">tree</mark> will be damaged.</p></div>  <div class="parallel-zh"><p>大多数栓皮森林为家族所有。许多这些家族企业，以及树木自身，都有着200年左右的历史。木栓生产是一种十分需要耐心的操作。从种下栓皮幼树到第一次收获需要25年，而且每棵树的收割要间隔大约10年。对于最高品质的木栓来说，必须继续等待15或20年才可以。人们甚至还要等待合适的夏日天气才能收割木栓。如果剥离树皮的天气太过寒冷，或者空气太过潮湿，树木就会被损坏。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="cork">Cork</mark> <mark class="vocab-word" data-word="harvest">harvesting</mark> is a very specialised profession.Nomechanicalmeans of stripping corkbarkhas been invented, so the job is done by teams of highly <mark class="vocab-word" data-word="skilled">skilled</mark> workers.First, they makeverticalcuts down thebarkusing small sharp axes, then <mark class="vocab-word" data-word="lever">lever</mark> it away in pieces as large as they can manage.The most skilful cork-strippers prise away a semi-circular <mark class="vocab-word" data-word="husk">husk</mark> that runs the length of thetrunkfrom just above ground level to the first branches.It is then dried on the ground for about four months, before being taken to factories, where it is boiled to kill any insects that might remain in the <mark class="vocab-word" data-word="cork">cork</mark>.Over 60% of <mark class="vocab-word" data-word="cork">cork</mark> then goes on to be made into traditional bottle stoppers, with most of the <mark class="vocab-word" data-word="remainder">remainder</mark> being used in the construction trade.Corkboard and <mark class="vocab-word" data-word="cork">cork</mark> <mark class="vocab-word" data-word="tile">tiles</mark> are ideal forthermalandacousticinsulation, while granules of <mark class="vocab-word" data-word="cork">cork</mark> are used in the <mark class="vocab-word" data-word="manufacture">manufacture</mark> of <mark class="vocab-word" data-word="concrete">concrete</mark>.</p></div>  <div class="parallel-zh"><p>木栓收割是一种高度专业化的职业。至今还没有发明机器剥离栓皮的方法，所以这些工作由技艺高超的工人完成。首先，他们用锋利的小型斧头在树皮上垂直切下，然后将它一点点的撬开。木片越大越好。技艺最纯熟的栓皮工人会撬出一片半圆形的树皮，其长度相当于地面到第一节树枝的树干长度。被放在地面上干燥4个月左右之后，它会被送到工厂里去。在那里通过加热煮沸来杀死可能残留在栓皮中的各种昆虫。60%以上的栓皮随后被用于制作传统瓶塞，剩下的大部分会被用于建筑行业。软木板和软木砖是理想的隔热、隔音材料，而软木颗粒则被用于混凝土的制造。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Recent years have seen the end of the virtualmonopolyof <mark class="vocab-word" data-word="cork">cork</mark> as the material for bottle stoppers, due to concerns about the effect it may have on the contents of the bottle.This is caused by a chemicalcompoundcalled 2,4,6-trichloroanisole (TCA), which forms through theinteractionof plant phenols, <mark class="vocab-word" data-word="chlorine">chlorine</mark> and mould.The tiniest concentrations – as little as three or four parts to atrillion– can <mark class="vocab-word" data-word="spoil">spoil</mark> the taste of the product contained in the bottle.The result has been a <mark class="vocab-word" data-word="gradual">gradual</mark> yet steady move first towardsplasticstoppers and, more recently, toaluminiumscrew caps.These <mark class="vocab-word" data-word="substitute">substitutes</mark> are cheaper to <mark class="vocab-word" data-word="manufacture">manufacture</mark> and, in the case of <mark class="vocab-word" data-word="screw">screw</mark> caps, more <mark class="vocab-word" data-word="convenient">convenient</mark> for the user.</p></div>  <div class="parallel-zh"><p>由于担心软木塞可能会影响瓶子中的液体，它作为瓶塞材料的实际垄断地位在最近几年迎来了终结。这是由一种叫做2,4,6-三聚苯甲醚的化合物引起的。这种化合物会在植物酚，氯和霉菌的相互作用中形成。哪怕是极其微小的浓度-低至每万亿三到四单位-也会破坏瓶中产品的口味。因此，人们先是逐渐却坚定的使用塑料瓶塞，最近又转向铝制螺旋盖。这些替代品不仅制造起来更为便宜，而且螺旋瓶盖对用户来说也更加方便。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The classic <mark class="vocab-word" data-word="cork">cork</mark> stopper does have several advantages, however.Firstly, its traditional image is more in keeping with that of the type of high quality <mark class="vocab-word" data-word="goods">goods</mark> with which it has long been associated.Secondly – and very importantly – <mark class="vocab-word" data-word="cork">cork</mark> is asustainableproduct that can be <mark class="vocab-word" data-word="recycle">recycled</mark> without difficulty.Moreover, <mark class="vocab-word" data-word="cork">cork</mark> forests are a resource which support localbiodiversity, and preventdesertificationin the regions where they are planted.So, given the current concerns about environmental issues, the future of this ancient material once again looks <mark class="vocab-word" data-word="promising">promising</mark>.</p></div>  <div class="parallel-zh"><p>然而，经典的软木瓶塞确实有几项优势。首先，它的传统形象与高品质物品更为匹配。这些东西与它长期联系在一起。其次并且很重要的是，木栓是一种可以轻易回收的可持续产品。第三，栓木森林的资源可以支持当地的生物多样性，并阻止其所种植地区的沙漠化。所以，考虑到当前对环境问题的担忧，这一古老材料的未来看起来再一次充满了希望。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"cork": 20, "elastic": 1, "buoyant": 1, "seal": 1, "beehive": 1, "tree": 5, "insulate": 1, "fir": 1, "replicate": 1, "elasticity": 1, "oak": 1, "grape": 1, "vine": 1, "nutrient": 1, "patience": 1, "harvest": 4, "decade": 1, "skilled": 1, "lever": 1, "husk": 1, "remainder": 1, "tile": 1, "manufacture": 2, "concrete": 1, "chlorine": 1, "spoil": 1, "gradual": 1, "substitute": 1, "screw": 1, "convenient": 1, "goods": 1, "recycle": 1, "promising": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

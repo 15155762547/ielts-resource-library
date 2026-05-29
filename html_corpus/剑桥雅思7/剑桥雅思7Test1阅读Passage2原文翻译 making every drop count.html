@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>making every drop count - 剑桥雅思7 Test 1 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>making every drop count</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24103.html" target="_blank">https://www.laokaoya.com/24103.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The history of human civilisation is <mark class="vocab-word" data-word="entwine">entwined</mark> with the history of the ways we have <mark class="vocab-word" data-word="learned">learned</mark> to <mark class="vocab-word" data-word="manipulate">manipulate</mark> water resources. As towns <mark class="vocab-word" data-word="gradual">gradually</mark> expanded, water was brought from increasingly remote sources, <mark class="vocab-word" data-word="lead">leading</mark> to <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> efforts such as <mark class="vocab-word" data-word="dam">dams</mark> and <mark class="vocab-word" data-word="aqueduct">aqueducts</mark>. At the height of the Roman <mark class="vocab-word" data-word="empire">Empire</mark>, nine major systems, with an <mark class="vocab-word" data-word="innovative">innovative</mark> <mark class="vocab-word" data-word="layout">layout</mark> of pipes and well-built <mark class="vocab-word" data-word="sewer">sewers</mark>, supplied the occupants of Rome with as much water per person as is <mark class="vocab-word" data-word="provided">provided</mark> in many parts of the industrial world today.</p><p>During the industrial revolution and population <mark class="vocab-word" data-word="explosion">explosion</mark> of the 19th and 20th centuries, the demand for water rose <mark class="vocab-word" data-word="dramatically">dramatically</mark>. <mark class="vocab-word" data-word="unprecedented">Unprecedented</mark> construction of tens of thousands of <mark class="vocab-word" data-word="monumental">monumental</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> projects designed to control floods, protect clean water supplies, and provide water for <mark class="vocab-word" data-word="irrigation">irrigation</mark> and <mark class="vocab-word" data-word="hydropower">hydropower</mark> brought great benefits to hundreds of millions of people. Food production has kept pace with <mark class="vocab-word" data-word="soar">soaring</mark> populations mainly because of the <mark class="vocab-word" data-word="expansion">expansion</mark> of <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="irrigation">irrigation</mark> systems that make possible the growth of 40 % of the world’s food. Nearly one fifth of all the electricity generated worldwide is produced by <mark class="vocab-word" data-word="turbine">turbines</mark> <mark class="vocab-word" data-word="spun">spun</mark> by the power of falling water.</p><p>Yet there is a dark side to this picture: despite our progress, half of the world’s population still suffers, with water services <mark class="vocab-word" data-word="inferior">inferior</mark> to those available to the ancient Greeks and Romans. As the <mark class="vocab-word" data-word="unite">United</mark> Nations report on access to water <mark class="vocab-word" data-word="reiterate">reiterated</mark> in November 2001, more than one billion people lack access to clean drinking water some two and a half billion do not have <mark class="vocab-word" data-word="adequate">adequate</mark> <mark class="vocab-word" data-word="sanitation">sanitation</mark> services. Preventable water-related diseases kill an estimated 10,000 to 20,000 children every day, and the latest evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that we are falling behind in efforts to solve these problems.</p><p>The consequences of our water policies extend beyond jeopardising human health. Tens of millions of people have been forced to move from their homes – often with little warning or <mark class="vocab-word" data-word="compensation">compensation</mark> – to make way for the <mark class="vocab-word" data-word="reservoir">reservoirs</mark> behind <mark class="vocab-word" data-word="dam">dams</mark>. More than 20 % of all <mark class="vocab-word" data-word="freshwater">freshwater</mark> fish species are now threatened or <mark class="vocab-word" data-word="endanger">endangered</mark> because <mark class="vocab-word" data-word="dam">dams</mark> and water withdrawals have destroyed the free-flowing river <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> where they <mark class="vocab-word" data-word="thrive">thrive</mark>. Certain <mark class="vocab-word" data-word="irrigation">irrigation</mark> practices <mark class="vocab-word" data-word="degrade">degrade</mark> soil quality and reduce <mark class="vocab-word" data-word="agricultural">agricultural</mark> <mark class="vocab-word" data-word="productivity">productivity</mark>. <mark class="vocab-word" data-word="groundwater">Groundwater</mark> <mark class="vocab-word" data-word="aquifer">aquifers</mark>* are being <mark class="vocab-word" data-word="pump">pumped</mark> down faster than they are naturally <mark class="vocab-word" data-word="replenish">replenished</mark> in parts of India, <mark class="vocab-word" data-word="china">China</mark>, the USA and elsewhere. And <mark class="vocab-word" data-word="dispute">disputes</mark> over shared water resources have led to <mark class="vocab-word" data-word="violence">violence</mark> and continue to raise local, national and even international <mark class="vocab-word" data-word="tension">tensions</mark>.</p><p>At the <mark class="vocab-word" data-word="outset">outset</mark> of the new <mark class="vocab-word" data-word="millennium">millennium</mark>, however, the way resource planners think about water is beginning to change. The focus is slowly shifting back to the <mark class="vocab-word" data-word="provision">provision</mark> of basic human and environmental needs as top priority – ensuring ‘some for all,’ instead of ‘more for some’. Some water experts are now <mark class="vocab-word" data-word="demanding">demanding</mark> that <mark class="vocab-word" data-word="existing">existing</mark> <mark class="vocab-word" data-word="infrastructure">infrastructure</mark> be used in smarter ways rather than building new facilities, which is increasingly considered the option of last, not first, <mark class="vocab-word" data-word="resort">resort</mark>. This shift in <mark class="vocab-word" data-word="philosophy">philosophy</mark> has not been <mark class="vocab-word" data-word="universal">universally</mark> accepted, and it comes with strong opposition from some <mark class="vocab-word" data-word="established">established</mark> water organisations. Nevertheless, it may be the only way to address successfully the pressing problems of providing everyone with clean water to drink, <mark class="vocab-word" data-word="adequate">adequate</mark> water to grow food and a life free from preventable water-related illness.</p><p><mark class="vocab-word" data-word="fortunate">Fortunately</mark> – and unexpectedly – the demand for water is not rising as rapidly as some <mark class="vocab-word" data-word="predict">predicted</mark>. As a result, the pressure to build new water <mark class="vocab-word" data-word="infrastructure">infrastructures</mark> has <mark class="vocab-word" data-word="diminish">diminished</mark> over the past two <mark class="vocab-word" data-word="decade">decades</mark>. Although population, industrial <mark class="vocab-word" data-word="output">output</mark> and economic <mark class="vocab-word" data-word="productivity">productivity</mark> have continued to <mark class="vocab-word" data-word="soar">soar</mark> in developed nations, the rate at which people <mark class="vocab-word" data-word="withdraw">withdraw</mark> water from <mark class="vocab-word" data-word="aquifer">aquifers</mark>, rivers and lakes has slowed. And in a few parts of the world, demand has actually fallen.</p><p>What explains this <mark class="vocab-word" data-word="remarkable">remarkable</mark> turn of events? Two <mark class="vocab-word" data-word="factor">factors</mark>: people have figured out how to use water more <mark class="vocab-word" data-word="efficiently">efficiently</mark>, and communities are rethinking their priorities for water use. Throughout the first three-quarters of the 20th century, the quantity of <mark class="vocab-word" data-word="freshwater">freshwater</mark> consumed per person doubled on average; in the USA, water withdrawals increased <mark class="vocab-word" data-word="tenfold">tenfold</mark> while the population quadrupled. But since 1980, the amount of water consumed per person has actually decreased, thanks to a range of new technologies that help to <mark class="vocab-word" data-word="conserve">conserve</mark> water in homes and industry. In 1965, for instance, Japan used <mark class="vocab-word" data-word="approximate">approximately</mark> 13 million <mark class="vocab-word" data-word="gallon">gallons</mark>* of water to produce $1 million of commercial <mark class="vocab-word" data-word="output">output</mark>; by 1989 this had dropped to 3.5 million <mark class="vocab-word" data-word="gallon">gallons</mark> (even <mark class="vocab-word" data-word="accounting">accounting</mark> for <mark class="vocab-word" data-word="inflation">inflation</mark>) – almost a quadrupling of water <mark class="vocab-word" data-word="productivity">productivity</mark>. In the USA, water withdrawals have fallen by more than 20 % from their <mark class="vocab-word" data-word="peak">peak</mark> in 1980.</p><p>On the other hand, <mark class="vocab-word" data-word="dam">dams</mark>, <mark class="vocab-word" data-word="aqueduct">aqueducts</mark> and other kinds of <mark class="vocab-word" data-word="infrastructure">infrastructure</mark> will still have to be built, particularly in developing countries where basic human needs have not been met. But such projects must be built to higher <mark class="vocab-word" data-word="specification">specifications</mark> and with more accountability to local people and their environment than in the past. And even in regions where new projects seem <mark class="vocab-word" data-word="warrant">warranted</mark>, we must find ways to meet demands with fewer resources, respecting <mark class="vocab-word" data-word="ecological">ecological</mark> criteria and to a smaller budget.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人类的历史与我们学习利用水资源的历史交织在一起。随着城镇的逐渐扩展，水源越来越远，带来了诸如水坝和水渠之类的复杂工程。在罗马帝国的鼎盛时期，创新的管道布局和精心设计的下水道构成的九大系统，为罗马的居民提供了与当今工业世界许多地方一样多的人均水量。</p><p>19世纪和20世纪工业革命和人口爆炸期间，水的需求量急剧上升。为了控制洪水，保护清洁水源以及为灌溉和水力发电供水，数以万计的史无前例的大型工程项目被建设起来，为数亿人民带来了巨大的利益。粮食生产与人口增长保持同步，这主要是因为人工灌溉系统的扩大使世界上40％的粮食增长成为可能。全世界发电量中有将近五分之一是水力推动的涡轮产生的。</p><p>然而，事实也有阴暗的一面：尽管我们取得了进步，但世界上一半的人口仍在遭受苦难，其供水服务不及古希腊人和罗马人。正如2001年11月联合国用水报告所重申的那样，超过10亿人无法获得清洁的饮用水，约有25亿人没有适当的卫生服务。可预防的与水有关的疾病估计每天导致10,000至20,000名儿童丧生。而最新证据表明，我们在解决这些问题所做的努力方面远远不够。</p><p>我们水资源政策的后果不仅仅危害人类健康。数以千万计的人被迫离开家园-往往没有任何警告或补偿-为水坝后面的水库腾出地方。由于水坝和取水破坏了自由流动的河流生态系统，超过20%的淡水鱼受到威胁或濒临灭绝。某些灌溉操作会降低土壤质量并降低农业生产力。在印度，中国，美国和其他地区，地下水的下降速度比自然补给的速度快。关于共享水资源的争端导致冲突，并继续加剧当地，国家乃至国际的紧张局势。</p><p>然而，在新千年开始之际，资源规划者关于水的想法正在发生改变。重点逐渐转移到将满足基本的人类和环境需求作为头等大事-确保“全民所有”，而不是“一些人更多” 。现在，一些水务专家要求以更智能的方式使用现有基础设施，而不是建造新设施。新设施越来越被认为是最后的选择，而不是第一选择。这种哲学上的转变尚未得到普遍接受，并且受到一些知名水务组织的强烈反对。然而，这可能是成功解决紧迫问题的唯一方法，以便为每个人提供清洁的饮用水，充足的水来种植食物以及远离可预防的水资源相关疾病的生活。</p><p>幸运并且出乎意料的是，对水的需求并未像某些人预测的那样迅速增长。结果在过去的二十年中，对建设新的水力基础设施的压力有所消失。尽管发达国家的人口，工业产出和经济生产效率继续飞速增长，但人们从蓄水层，河流和湖泊中取水的速度却有所放缓。在世界某系地区，需求实际上已经下降了。</p><p>两个因素可以解释这种非同寻常的事件变化：人们已经弄清楚如何更有效率地利用水，而社区也在重新考虑其用水的优先级。在20世纪的前四分之三，人均淡水消耗量平均增加了一倍。在美国，取水量增加了十倍，而人口增加了四倍。但是自1980年以来，由于一系列有助于节省家庭和工业用水的新技术，人均用水量实际上有所减少。例如，在1965年，日本使用大约1300万加仑的水来换取100万美元的商业产出。到了1989年，该数字下降到350万加仑（甚至计入通货膨胀）- 水的生产效率几乎提升了四倍。在美国，取水量比1980年的峰值下降了20％以上。</p><p>另一方面，仍然必须建造水坝，水渠和其他各类基础设施，特别是在发展中国家。那里人们的基本需求还没有得到满足。但是，与过去相比，此类项目必须按照更高的规格进行建设，并对当地人民及其环境承担更多责任。即使在似乎有必要进行新项目的地区，我们也必须找到相应的方法，以更少的资源满足需求，尊重生态标准，并降低预算。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The history of human civilisation is <mark class="vocab-word" data-word="entwine">entwined</mark> with the history of the ways we have <mark class="vocab-word" data-word="learned">learned</mark> to <mark class="vocab-word" data-word="manipulate">manipulate</mark> water resources. As towns <mark class="vocab-word" data-word="gradual">gradually</mark> expanded, water was brought from increasingly remote sources, <mark class="vocab-word" data-word="lead">leading</mark> to <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> efforts such as <mark class="vocab-word" data-word="dam">dams</mark> and <mark class="vocab-word" data-word="aqueduct">aqueducts</mark>. At the height of the Roman <mark class="vocab-word" data-word="empire">Empire</mark>, nine major systems, with an <mark class="vocab-word" data-word="innovative">innovative</mark> <mark class="vocab-word" data-word="layout">layout</mark> of pipes and well-built <mark class="vocab-word" data-word="sewer">sewers</mark>, supplied the occupants of Rome with as much water per person as is <mark class="vocab-word" data-word="provided">provided</mark> in many parts of the industrial world today.</p></div>  <div class="parallel-zh"><p>人类的历史与我们学习利用水资源的历史交织在一起。随着城镇的逐渐扩展，水源越来越远，带来了诸如水坝和水渠之类的复杂工程。在罗马帝国的鼎盛时期，创新的管道布局和精心设计的下水道构成的九大系统，为罗马的居民提供了与当今工业世界许多地方一样多的人均水量。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>During the industrial revolution and population <mark class="vocab-word" data-word="explosion">explosion</mark> of the 19th and 20th centuries, the demand for water rose <mark class="vocab-word" data-word="dramatically">dramatically</mark>. <mark class="vocab-word" data-word="unprecedented">Unprecedented</mark> construction of tens of thousands of <mark class="vocab-word" data-word="monumental">monumental</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> projects designed to control floods, protect clean water supplies, and provide water for <mark class="vocab-word" data-word="irrigation">irrigation</mark> and <mark class="vocab-word" data-word="hydropower">hydropower</mark> brought great benefits to hundreds of millions of people. Food production has kept pace with <mark class="vocab-word" data-word="soar">soaring</mark> populations mainly because of the <mark class="vocab-word" data-word="expansion">expansion</mark> of <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="irrigation">irrigation</mark> systems that make possible the growth of 40 % of the world’s food. Nearly one fifth of all the electricity generated worldwide is produced by <mark class="vocab-word" data-word="turbine">turbines</mark> <mark class="vocab-word" data-word="spun">spun</mark> by the power of falling water.</p></div>  <div class="parallel-zh"><p>19世纪和20世纪工业革命和人口爆炸期间，水的需求量急剧上升。为了控制洪水，保护清洁水源以及为灌溉和水力发电供水，数以万计的史无前例的大型工程项目被建设起来，为数亿人民带来了巨大的利益。粮食生产与人口增长保持同步，这主要是因为人工灌溉系统的扩大使世界上40％的粮食增长成为可能。全世界发电量中有将近五分之一是水力推动的涡轮产生的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Yet there is a dark side to this picture: despite our progress, half of the world’s population still suffers, with water services <mark class="vocab-word" data-word="inferior">inferior</mark> to those available to the ancient Greeks and Romans. As the <mark class="vocab-word" data-word="unite">United</mark> Nations report on access to water <mark class="vocab-word" data-word="reiterate">reiterated</mark> in November 2001, more than one billion people lack access to clean drinking water some two and a half billion do not have <mark class="vocab-word" data-word="adequate">adequate</mark> <mark class="vocab-word" data-word="sanitation">sanitation</mark> services. Preventable water-related diseases kill an estimated 10,000 to 20,000 children every day, and the latest evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that we are falling behind in efforts to solve these problems.</p></div>  <div class="parallel-zh"><p>然而，事实也有阴暗的一面：尽管我们取得了进步，但世界上一半的人口仍在遭受苦难，其供水服务不及古希腊人和罗马人。正如2001年11月联合国用水报告所重申的那样，超过10亿人无法获得清洁的饮用水，约有25亿人没有适当的卫生服务。可预防的与水有关的疾病估计每天导致10,000至20,000名儿童丧生。而最新证据表明，我们在解决这些问题所做的努力方面远远不够。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The consequences of our water policies extend beyond jeopardising human health. Tens of millions of people have been forced to move from their homes – often with little warning or <mark class="vocab-word" data-word="compensation">compensation</mark> – to make way for the <mark class="vocab-word" data-word="reservoir">reservoirs</mark> behind <mark class="vocab-word" data-word="dam">dams</mark>. More than 20 % of all <mark class="vocab-word" data-word="freshwater">freshwater</mark> fish species are now threatened or <mark class="vocab-word" data-word="endanger">endangered</mark> because <mark class="vocab-word" data-word="dam">dams</mark> and water withdrawals have destroyed the free-flowing river <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> where they <mark class="vocab-word" data-word="thrive">thrive</mark>. Certain <mark class="vocab-word" data-word="irrigation">irrigation</mark> practices <mark class="vocab-word" data-word="degrade">degrade</mark> soil quality and reduce <mark class="vocab-word" data-word="agricultural">agricultural</mark> <mark class="vocab-word" data-word="productivity">productivity</mark>. <mark class="vocab-word" data-word="groundwater">Groundwater</mark> <mark class="vocab-word" data-word="aquifer">aquifers</mark>* are being <mark class="vocab-word" data-word="pump">pumped</mark> down faster than they are naturally <mark class="vocab-word" data-word="replenish">replenished</mark> in parts of India, <mark class="vocab-word" data-word="china">China</mark>, the USA and elsewhere. And <mark class="vocab-word" data-word="dispute">disputes</mark> over shared water resources have led to <mark class="vocab-word" data-word="violence">violence</mark> and continue to raise local, national and even international <mark class="vocab-word" data-word="tension">tensions</mark>.</p></div>  <div class="parallel-zh"><p>我们水资源政策的后果不仅仅危害人类健康。数以千万计的人被迫离开家园-往往没有任何警告或补偿-为水坝后面的水库腾出地方。由于水坝和取水破坏了自由流动的河流生态系统，超过20%的淡水鱼受到威胁或濒临灭绝。某些灌溉操作会降低土壤质量并降低农业生产力。在印度，中国，美国和其他地区，地下水的下降速度比自然补给的速度快。关于共享水资源的争端导致冲突，并继续加剧当地，国家乃至国际的紧张局势。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At the <mark class="vocab-word" data-word="outset">outset</mark> of the new <mark class="vocab-word" data-word="millennium">millennium</mark>, however, the way resource planners think about water is beginning to change. The focus is slowly shifting back to the <mark class="vocab-word" data-word="provision">provision</mark> of basic human and environmental needs as top priority – ensuring ‘some for all,’ instead of ‘more for some’. Some water experts are now <mark class="vocab-word" data-word="demanding">demanding</mark> that <mark class="vocab-word" data-word="existing">existing</mark> <mark class="vocab-word" data-word="infrastructure">infrastructure</mark> be used in smarter ways rather than building new facilities, which is increasingly considered the option of last, not first, <mark class="vocab-word" data-word="resort">resort</mark>. This shift in <mark class="vocab-word" data-word="philosophy">philosophy</mark> has not been <mark class="vocab-word" data-word="universal">universally</mark> accepted, and it comes with strong opposition from some <mark class="vocab-word" data-word="established">established</mark> water organisations. Nevertheless, it may be the only way to address successfully the pressing problems of providing everyone with clean water to drink, <mark class="vocab-word" data-word="adequate">adequate</mark> water to grow food and a life free from preventable water-related illness.</p></div>  <div class="parallel-zh"><p>然而，在新千年开始之际，资源规划者关于水的想法正在发生改变。重点逐渐转移到将满足基本的人类和环境需求作为头等大事-确保“全民所有”，而不是“一些人更多” 。现在，一些水务专家要求以更智能的方式使用现有基础设施，而不是建造新设施。新设施越来越被认为是最后的选择，而不是第一选择。这种哲学上的转变尚未得到普遍接受，并且受到一些知名水务组织的强烈反对。然而，这可能是成功解决紧迫问题的唯一方法，以便为每个人提供清洁的饮用水，充足的水来种植食物以及远离可预防的水资源相关疾病的生活。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="fortunate">Fortunately</mark> – and unexpectedly – the demand for water is not rising as rapidly as some <mark class="vocab-word" data-word="predict">predicted</mark>. As a result, the pressure to build new water <mark class="vocab-word" data-word="infrastructure">infrastructures</mark> has <mark class="vocab-word" data-word="diminish">diminished</mark> over the past two <mark class="vocab-word" data-word="decade">decades</mark>. Although population, industrial <mark class="vocab-word" data-word="output">output</mark> and economic <mark class="vocab-word" data-word="productivity">productivity</mark> have continued to <mark class="vocab-word" data-word="soar">soar</mark> in developed nations, the rate at which people <mark class="vocab-word" data-word="withdraw">withdraw</mark> water from <mark class="vocab-word" data-word="aquifer">aquifers</mark>, rivers and lakes has slowed. And in a few parts of the world, demand has actually fallen.</p></div>  <div class="parallel-zh"><p>幸运并且出乎意料的是，对水的需求并未像某些人预测的那样迅速增长。结果在过去的二十年中，对建设新的水力基础设施的压力有所消失。尽管发达国家的人口，工业产出和经济生产效率继续飞速增长，但人们从蓄水层，河流和湖泊中取水的速度却有所放缓。在世界某系地区，需求实际上已经下降了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What explains this <mark class="vocab-word" data-word="remarkable">remarkable</mark> turn of events? Two <mark class="vocab-word" data-word="factor">factors</mark>: people have figured out how to use water more <mark class="vocab-word" data-word="efficiently">efficiently</mark>, and communities are rethinking their priorities for water use. Throughout the first three-quarters of the 20th century, the quantity of <mark class="vocab-word" data-word="freshwater">freshwater</mark> consumed per person doubled on average; in the USA, water withdrawals increased <mark class="vocab-word" data-word="tenfold">tenfold</mark> while the population quadrupled. But since 1980, the amount of water consumed per person has actually decreased, thanks to a range of new technologies that help to <mark class="vocab-word" data-word="conserve">conserve</mark> water in homes and industry. In 1965, for instance, Japan used <mark class="vocab-word" data-word="approximate">approximately</mark> 13 million <mark class="vocab-word" data-word="gallon">gallons</mark>* of water to produce $1 million of commercial <mark class="vocab-word" data-word="output">output</mark>; by 1989 this had dropped to 3.5 million <mark class="vocab-word" data-word="gallon">gallons</mark> (even <mark class="vocab-word" data-word="accounting">accounting</mark> for <mark class="vocab-word" data-word="inflation">inflation</mark>) – almost a quadrupling of water <mark class="vocab-word" data-word="productivity">productivity</mark>. In the USA, water withdrawals have fallen by more than 20 % from their <mark class="vocab-word" data-word="peak">peak</mark> in 1980.</p></div>  <div class="parallel-zh"><p>两个因素可以解释这种非同寻常的事件变化：人们已经弄清楚如何更有效率地利用水，而社区也在重新考虑其用水的优先级。在20世纪的前四分之三，人均淡水消耗量平均增加了一倍。在美国，取水量增加了十倍，而人口增加了四倍。但是自1980年以来，由于一系列有助于节省家庭和工业用水的新技术，人均用水量实际上有所减少。例如，在1965年，日本使用大约1300万加仑的水来换取100万美元的商业产出。到了1989年，该数字下降到350万加仑（甚至计入通货膨胀）- 水的生产效率几乎提升了四倍。在美国，取水量比1980年的峰值下降了20％以上。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>On the other hand, <mark class="vocab-word" data-word="dam">dams</mark>, <mark class="vocab-word" data-word="aqueduct">aqueducts</mark> and other kinds of <mark class="vocab-word" data-word="infrastructure">infrastructure</mark> will still have to be built, particularly in developing countries where basic human needs have not been met. But such projects must be built to higher <mark class="vocab-word" data-word="specification">specifications</mark> and with more accountability to local people and their environment than in the past. And even in regions where new projects seem <mark class="vocab-word" data-word="warrant">warranted</mark>, we must find ways to meet demands with fewer resources, respecting <mark class="vocab-word" data-word="ecological">ecological</mark> criteria and to a smaller budget.</p></div>  <div class="parallel-zh"><p>另一方面，仍然必须建造水坝，水渠和其他各类基础设施，特别是在发展中国家。那里人们的基本需求还没有得到满足。但是，与过去相比，此类项目必须按照更高的规格进行建设，并对当地人民及其环境承担更多责任。即使在似乎有必要进行新项目的地区，我们也必须找到相应的方法，以更少的资源满足需求，尊重生态标准，并降低预算。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"entwine": 1, "learned": 1, "manipulate": 1, "gradual": 1, "lead": 1, "sophisticated": 1, "engineering": 2, "dam": 4, "aqueduct": 2, "empire": 1, "innovative": 1, "layout": 1, "sewer": 1, "provided": 1, "explosion": 1, "dramatically": 1, "unprecedented": 1, "monumental": 1, "irrigation": 3, "hydropower": 1, "soar": 2, "expansion": 1, "artificial": 1, "turbine": 1, "spun": 1, "inferior": 1, "unite": 1, "reiterate": 1, "adequate": 2, "sanitation": 1, "suggest": 1, "compensation": 1, "reservoir": 1, "freshwater": 2, "endanger": 1, "ecosystem": 1, "thrive": 1, "degrade": 1, "agricultural": 1, "productivity": 3, "groundwater": 1, "aquifer": 2, "pump": 1, "replenish": 1, "china": 1, "dispute": 1, "violence": 1, "tension": 1, "outset": 1, "millennium": 1, "provision": 1, "demanding": 1, "existing": 1, "infrastructure": 3, "resort": 1, "philosophy": 1, "universal": 1, "established": 1, "fortunate": 1, "predict": 1, "diminish": 1, "decade": 1, "output": 2, "withdraw": 1, "remarkable": 1, "factor": 1, "efficiently": 1, "tenfold": 1, "conserve": 1, "approximate": 1, "gallon": 2, "accounting": 1, "inflation": 1, "peak": 1, "specification": 1, "warrant": 1, "ecological": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

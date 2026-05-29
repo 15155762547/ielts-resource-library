@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>what’s so funny - 剑桥雅思5 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思5</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>what’s so funny</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/22269.html" target="_blank">https://www.laokaoya.com/22269.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The joke comes over the headphones: ‘Which side of a dog has the most hair? The left.’ No, not funny. Try again. ‘Which side of a dog has the most hair? The outside.’ Hah! The punchline is silly yet <mark class="vocab-word" data-word="fitting">fitting</mark>, <mark class="vocab-word" data-word="tempt">tempting</mark> a smile, even a laugh. Laughter has always struck people as deeply <mark class="vocab-word" data-word="mysterious">mysterious</mark>, perhaps <mark class="vocab-word" data-word="pointless">pointless</mark>. The writer Arthur Koestler dubbed it the luxury <mark class="vocab-word" data-word="reflex">reflex</mark>: ‘unique in that it serves no apparent <mark class="vocab-word" data-word="biological">biological</mark> purpose’.</p><p>Theories about humour have an ancient <mark class="vocab-word" data-word="pedigree">pedigree</mark>. Plato expressed the idea that humour is simply a <mark class="vocab-word" data-word="delighted">delighted</mark> feeling of <mark class="vocab-word" data-word="superiority">superiority</mark> over others. Kant and Freud felt that joke-telling relies on building up a <mark class="vocab-word" data-word="psychic">psychic</mark> <mark class="vocab-word" data-word="tension">tension</mark> which is safely <mark class="vocab-word" data-word="puncture">punctured</mark> by the ludicrousness of the punchline. But most modern humour theorists have <mark class="vocab-word" data-word="settle">settled</mark> on some version of Aristotle’s belief that jokes are based on a reaction to or <mark class="vocab-word" data-word="resolution">resolution</mark> of <mark class="vocab-word" data-word="incongruity">incongruity</mark>, when the punchline is either a <mark class="vocab-word" data-word="nonsense">nonsense</mark> or, though appearing silly, has a clever second meaning.</p><p>Graeme Ritchie, a computational linguist in Edinburgh, studies the <mark class="vocab-word" data-word="linguistic">linguistic</mark> structure of jokes in order to understand not only humour but language understanding and reasoning in machines. He says that while there is no single <mark class="vocab-word" data-word="format">format</mark> for jokes, many <mark class="vocab-word" data-word="revolve">revolve</mark> around a sudden and surprising <mark class="vocab-word" data-word="conceptual">conceptual</mark> shift. A <mark class="vocab-word" data-word="comedian">comedian</mark> will present a situation followed by an unexpected <mark class="vocab-word" data-word="interpretation">interpretation</mark> that is also <mark class="vocab-word" data-word="apt">apt</mark>.</p><p>So even if a punchline sounds silly, the listener can see there is a clever <mark class="vocab-word" data-word="semantic">semantic</mark> fit and that sudden mental ‘Aha!’ is the <mark class="vocab-word" data-word="buzz">buzz</mark> that makes us laugh. Viewed from this angle, humour is just a form of creative <mark class="vocab-word" data-word="insight">insight</mark>, a sudden <mark class="vocab-word" data-word="leap">leap</mark> to a new <mark class="vocab-word" data-word="perspective">perspective</mark>.</p><p>However, there is another type of laughter, the laughter of social appeasement and it is important to understand this too. Play is a crucial part of development in most young <mark class="vocab-word" data-word="mammal">mammals</mark>. Rats produce <mark class="vocab-word" data-word="ultrasonic">ultrasonic</mark> squeaks to prevent their <mark class="vocab-word" data-word="scuffle">scuffles</mark> turning <mark class="vocab-word" data-word="nasty">nasty</mark>. <mark class="vocab-word" data-word="chimpanzee">Chimpanzees</mark> have a ‘play-face’ – a gaping expression accompanied by a <mark class="vocab-word" data-word="pant">panting</mark> ‘ah, ah’ noise. In humans, these signals have <mark class="vocab-word" data-word="mutate">mutated</mark> into smiles and laughs. Researchers believe social situations, rather than <mark class="vocab-word" data-word="cognitive">cognitive</mark> events such as jokes, <mark class="vocab-word" data-word="trigger">trigger</mark> these <mark class="vocab-word" data-word="instinctual">instinctual</mark> <mark class="vocab-word" data-word="marker">markers</mark> of play or appeasement. People laugh on fairground rides or when <mark class="vocab-word" data-word="tickle">tickled</mark> to flag a play situation, whether they feel <mark class="vocab-word" data-word="amused">amused</mark> or not.</p><p>Both social and <mark class="vocab-word" data-word="cognitive">cognitive</mark> types of laughter <mark class="vocab-word" data-word="tap">tap</mark> into the same <mark class="vocab-word" data-word="expressive">expressive</mark> <mark class="vocab-word" data-word="machinery">machinery</mark> in our brains, the emotion and motor <mark class="vocab-word" data-word="circuit">circuits</mark> that produce smiles and <mark class="vocab-word" data-word="excite">excited</mark> vocalisations. However, if <mark class="vocab-word" data-word="cognitive">cognitive</mark> laughter is the product of more general thought processes, it should result from more expansive brain activity.</p><p>Psychologist Vinod Goel <mark class="vocab-word" data-word="investigate">investigated</mark> humour using the new technique of ‘single event’ <mark class="vocab-word" data-word="functional">functional</mark> <mark class="vocab-word" data-word="magnetic">magnetic</mark> <mark class="vocab-word" data-word="resonance">resonance</mark> imaging (fMRI). An MRI <mark class="vocab-word" data-word="scanner">scanner</mark> uses <mark class="vocab-word" data-word="magnetic">magnetic</mark> fields and radio waves to track the changes in oxygenated blood that accompany mental activity. Until recently, MRI <mark class="vocab-word" data-word="scanner">scanners</mark> needed several minutes of activity and so could not be used to track rapid thought processes such as <mark class="vocab-word" data-word="comprehend">comprehending</mark> a joke. New developments now allow half-second ‘snapshots’ of all sorts of reasoning and problem-solving activities.</p><p>Although Goel felt being inside a brain <mark class="vocab-word" data-word="scanner">scanner</mark> was hardly the ideal place for appreciating a joke, he found evidence that understanding a joke involves a <mark class="vocab-word" data-word="widespread">widespread</mark> mental shift. His scans showed that at the beginning of a joke the listener’s prefrontal <mark class="vocab-word" data-word="cortex">cortex</mark> lit up, particularly the right prefrontal believed to be critical for problem solving. But there was also activity in the <mark class="vocab-word" data-word="temporal">temporal</mark> <mark class="vocab-word" data-word="lobe">lobes</mark> at the side of the head (consistent with attempts to <mark class="vocab-word" data-word="rouse">rouse</mark> stored knowledge) and in many other brain areas. Then when the punchline arrived, a new area sprang to life – the orbital prefrontal <mark class="vocab-word" data-word="cortex">cortex</mark>. This <mark class="vocab-word" data-word="patch">patch</mark> of brain <mark class="vocab-word" data-word="tuck">tucked</mark> behind the <mark class="vocab-word" data-word="orbit">orbits</mark> of the eyes is associated with evaluating information.</p><p>Making a rapid emotional assessment of the events of the moment is an extremely <mark class="vocab-word" data-word="demanding">demanding</mark> job for the brain, animal or human. Energy and <mark class="vocab-word" data-word="arousal">arousal</mark> levels may need to be retuned in the <mark class="vocab-word" data-word="blink">blink</mark> of an eye. These <mark class="vocab-word" data-word="abrupt">abrupt</mark> changes will produce either positive or <mark class="vocab-word" data-word="negative">negative</mark> feelings. The orbital <mark class="vocab-word" data-word="cortex">cortex</mark>, the region that becomes active in Goel’s experiment, seems the best <mark class="vocab-word" data-word="candidate">candidate</mark> for the <mark class="vocab-word" data-word="site">site</mark> that feeds such feelings into higher-level thought processes, with its close connections to the brain’s sub-cortical <mark class="vocab-word" data-word="arousal">arousal</mark> <mark class="vocab-word" data-word="apparatus">apparatus</mark> and centres of metabolic control.</p><p>All warm-blooded animals make constant tiny adjustments in <mark class="vocab-word" data-word="arousal">arousal</mark> in response to <mark class="vocab-word" data-word="external">external</mark> events, but humans, who have developed a much more <mark class="vocab-word" data-word="complicated">complicated</mark> internal life as a result of language, respond <mark class="vocab-word" data-word="emotionally">emotionally</mark> not only to their <mark class="vocab-word" data-word="surroundings">surroundings</mark>, but to their own thoughts. Whenever a sought-for answer <mark class="vocab-word" data-word="snap">snaps</mark> into place, there is a shudder of pleased <mark class="vocab-word" data-word="recognition">recognition</mark>. Creative discovery being pleasurable, humans have <mark class="vocab-word" data-word="learned">learned</mark> to find ways of milking this natural response. The fact that jokes <mark class="vocab-word" data-word="tap">tap</mark> into our general evaluative <mark class="vocab-word" data-word="machinery">machinery</mark> explains why the line between funny and <mark class="vocab-word" data-word="disgusting">disgusting</mark>, or funny and <mark class="vocab-word" data-word="frightening">frightening</mark>, can be so fine. Whether a joke gives pleasure or pain depends on a person’s <mark class="vocab-word" data-word="outlook">outlook</mark>.</p><p>Humour may be a luxury, but the <mark class="vocab-word" data-word="mechanism">mechanism</mark> behind it is no evolutionary accident. As Peter Derks, a psychologist at William and Mary College in Virginia, says: ‘I like to think of humour as the <mark class="vocab-word" data-word="distort">distorted</mark> mirror of the mind. It’s creative, perceptual, <mark class="vocab-word" data-word="analytical">analytical</mark> and <mark class="vocab-word" data-word="lingual">lingual</mark>. If we can figure out how the mind processes humour, then we’ll have a pretty good handle on how it works in general.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>电话对面的人讲了个笑话：“狗的哪一边头发最多？左边。”不，不好笑。再试一次。“狗的哪一边的头发最多？外边。”哈！笑话既愚蠢又贴切，让人微笑，甚至是大笑。笑声一直使人们感到十分神秘，甚至毫无意义。作家亚瑟·科斯特勒（Arthur Koestler）称其为奢侈的反射：“独特之处在于它没有明显的生物学目的”。</p><p>关于幽默的理论可以追溯到很久之前。柏拉图表达了这样的观点：幽默只是一种与众不同的优越感。康德和弗洛伊德认为，讲笑话是建立在一种心理张力上，这种紧张情绪可以被趣味横生的笑话所打破。但是，大多数现代幽默理论家都比较认同亚里士多德的某种观点，即笑话是基于对不一致的反应或解决。逗人发笑的地方虽然毫无意义或者显得很傻，但其具有巧妙的第二含义。</p><p>爱丁堡的计算机语言学家格雷姆·里奇（Graeme Ritchie）研究笑话的语言结构，从而理解幽默，以及机器中的语言领悟和推理。他说，虽然没有单一的笑话形式，但许多笑话都围绕着突然而令人惊讶的观念转变进行。喜剧演员将呈现一种情况，然后进行意外却适当的解释。</p><p>因此，即使笑话听起来很愚蠢，听众也可以看到有巧妙的语义匹配，而正是这种心理上突然的“啊哈！” 让我们笑出声来。从这个角度来看，幽默只是一种创造性洞察力的形式，是突然跃入新视野的一种方式。</p><p>但是，还有另一种笑，即社交情景下的笑声。了解这一点也很重要。玩耍是大多数年轻哺乳动物发育中至关重要的部分。老鼠发出吱吱声，以防止它们的扭打变得严重起来。黑猩猩有一张“玩笑脸”-表情张扬，伴随着喘息的“啊，啊”的声音。在人类中，这些信号变成了微笑和大笑。研究人员认为，社交环境而不是诸如玩笑之类的认知事件触发了这种玩耍中的本能标志。人们在游乐场或者被挑逗的时候笑出声来，而不论他们是否觉得很有意思。</p><p>社交和认知类型的笑都进入我们大脑中相同的表达机制，情感和运动回路产生笑容和激动的声音。但是，如果认知笑声是更普遍的思维过程的产物，它应该来自更广泛的大脑活动。</p><p>心理学家Vinod Goel使用“单一事件” 功能性磁共振成像（fMRI）的新技术研究了幽默。MRI扫描仪使用磁场和无线电波来跟踪伴随精神活动的血液含氧量的变化。直到最近为止，MRI扫描仪都需要活动几分钟才行，因此无法用于跟踪快速的思维过程，例如理解笑话。现在，技术进步让所有类型的推理和问题解决活动的半秒钟快照成为可能。</p><p>尽管Goel觉得脑部扫描仪并不是一个欣赏笑话的理想场所，但他发现有证据表明，理解笑话涉及广泛的心理转变。他的扫描显示，在笑话刚开始时，听众的前额叶皮层会亮起来，它被认为对解决问题至关重要。但是在头部侧面的颞叶（与试图激发储存的知识相一致）以及其他许多大脑区域也有活动。然后，当笑点到来时，一个崭新的区域出现了-眶前额叶皮层。这一藏在眼眶后面的大脑区域与评估信息有关。</p><p>对当下事件进行快速的情感评估对于动物或人类的大脑来说都是一项极为艰巨的工作。眨眼间可能需要重新调整精力和兴奋水平。这些突然的变化将产生积极或消极的感觉。轨道皮层，Goel实验中活跃的区域，似乎是将这种感觉馈入高级思维过程的最佳人选，它与大脑皮层下的兴奋装置和代谢控制中心紧密相连。</p><p>所有温血动物都会对外界事件做出不断的微小调整，但是由于语言的发展，大脑内部活动变得更加复杂的人类对周围环境和自己的思想都会产生情感上的反应。每当找到一直以来所寻求的答案时，人们就会感到欣喜若狂。创造性的发现是令人愉悦的，人类已经学会产生这种自然反应的方法。笑话进入了我们的普遍评估机制，这一事实解释了为什么可笑与令人厌恶或令人恐惧之间存在完好的分界线。开玩笑给人带来快乐还是痛苦取决于一个人的观念。</p><p>幽默也许是一种奢侈品，但其背后的机制绝非偶然。正如弗吉尼亚州玛丽学院的心理学家Peter Derks所说的那样，“我喜欢把幽默当作心灵扭曲的镜子。它具有创造力，感知力，分析能力和语言能力。如果我们能弄清大脑如何处理幽默，那么我们将对它的总体运作方式有一个很好的把握。”</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The joke comes over the headphones: ‘Which side of a dog has the most hair? The left.’ No, not funny. Try again. ‘Which side of a dog has the most hair? The outside.’ Hah! The punchline is silly yet <mark class="vocab-word" data-word="fitting">fitting</mark>, <mark class="vocab-word" data-word="tempt">tempting</mark> a smile, even a laugh. Laughter has always struck people as deeply <mark class="vocab-word" data-word="mysterious">mysterious</mark>, perhaps <mark class="vocab-word" data-word="pointless">pointless</mark>. The writer Arthur Koestler dubbed it the luxury <mark class="vocab-word" data-word="reflex">reflex</mark>: ‘unique in that it serves no apparent <mark class="vocab-word" data-word="biological">biological</mark> purpose’.</p></div>  <div class="parallel-zh"><p>电话对面的人讲了个笑话：“狗的哪一边头发最多？左边。”不，不好笑。再试一次。“狗的哪一边的头发最多？外边。”哈！笑话既愚蠢又贴切，让人微笑，甚至是大笑。笑声一直使人们感到十分神秘，甚至毫无意义。作家亚瑟·科斯特勒（Arthur Koestler）称其为奢侈的反射：“独特之处在于它没有明显的生物学目的”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Theories about humour have an ancient <mark class="vocab-word" data-word="pedigree">pedigree</mark>. Plato expressed the idea that humour is simply a <mark class="vocab-word" data-word="delighted">delighted</mark> feeling of <mark class="vocab-word" data-word="superiority">superiority</mark> over others. Kant and Freud felt that joke-telling relies on building up a <mark class="vocab-word" data-word="psychic">psychic</mark> <mark class="vocab-word" data-word="tension">tension</mark> which is safely <mark class="vocab-word" data-word="puncture">punctured</mark> by the ludicrousness of the punchline. But most modern humour theorists have <mark class="vocab-word" data-word="settle">settled</mark> on some version of Aristotle’s belief that jokes are based on a reaction to or <mark class="vocab-word" data-word="resolution">resolution</mark> of <mark class="vocab-word" data-word="incongruity">incongruity</mark>, when the punchline is either a <mark class="vocab-word" data-word="nonsense">nonsense</mark> or, though appearing silly, has a clever second meaning.</p></div>  <div class="parallel-zh"><p>关于幽默的理论可以追溯到很久之前。柏拉图表达了这样的观点：幽默只是一种与众不同的优越感。康德和弗洛伊德认为，讲笑话是建立在一种心理张力上，这种紧张情绪可以被趣味横生的笑话所打破。但是，大多数现代幽默理论家都比较认同亚里士多德的某种观点，即笑话是基于对不一致的反应或解决。逗人发笑的地方虽然毫无意义或者显得很傻，但其具有巧妙的第二含义。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Graeme Ritchie, a computational linguist in Edinburgh, studies the <mark class="vocab-word" data-word="linguistic">linguistic</mark> structure of jokes in order to understand not only humour but language understanding and reasoning in machines. He says that while there is no single <mark class="vocab-word" data-word="format">format</mark> for jokes, many <mark class="vocab-word" data-word="revolve">revolve</mark> around a sudden and surprising <mark class="vocab-word" data-word="conceptual">conceptual</mark> shift. A <mark class="vocab-word" data-word="comedian">comedian</mark> will present a situation followed by an unexpected <mark class="vocab-word" data-word="interpretation">interpretation</mark> that is also <mark class="vocab-word" data-word="apt">apt</mark>.</p></div>  <div class="parallel-zh"><p>爱丁堡的计算机语言学家格雷姆·里奇（Graeme Ritchie）研究笑话的语言结构，从而理解幽默，以及机器中的语言领悟和推理。他说，虽然没有单一的笑话形式，但许多笑话都围绕着突然而令人惊讶的观念转变进行。喜剧演员将呈现一种情况，然后进行意外却适当的解释。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>So even if a punchline sounds silly, the listener can see there is a clever <mark class="vocab-word" data-word="semantic">semantic</mark> fit and that sudden mental ‘Aha!’ is the <mark class="vocab-word" data-word="buzz">buzz</mark> that makes us laugh. Viewed from this angle, humour is just a form of creative <mark class="vocab-word" data-word="insight">insight</mark>, a sudden <mark class="vocab-word" data-word="leap">leap</mark> to a new <mark class="vocab-word" data-word="perspective">perspective</mark>.</p></div>  <div class="parallel-zh"><p>因此，即使笑话听起来很愚蠢，听众也可以看到有巧妙的语义匹配，而正是这种心理上突然的“啊哈！” 让我们笑出声来。从这个角度来看，幽默只是一种创造性洞察力的形式，是突然跃入新视野的一种方式。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, there is another type of laughter, the laughter of social appeasement and it is important to understand this too. Play is a crucial part of development in most young <mark class="vocab-word" data-word="mammal">mammals</mark>. Rats produce <mark class="vocab-word" data-word="ultrasonic">ultrasonic</mark> squeaks to prevent their <mark class="vocab-word" data-word="scuffle">scuffles</mark> turning <mark class="vocab-word" data-word="nasty">nasty</mark>. <mark class="vocab-word" data-word="chimpanzee">Chimpanzees</mark> have a ‘play-face’ – a gaping expression accompanied by a <mark class="vocab-word" data-word="pant">panting</mark> ‘ah, ah’ noise. In humans, these signals have <mark class="vocab-word" data-word="mutate">mutated</mark> into smiles and laughs. Researchers believe social situations, rather than <mark class="vocab-word" data-word="cognitive">cognitive</mark> events such as jokes, <mark class="vocab-word" data-word="trigger">trigger</mark> these <mark class="vocab-word" data-word="instinctual">instinctual</mark> <mark class="vocab-word" data-word="marker">markers</mark> of play or appeasement. People laugh on fairground rides or when <mark class="vocab-word" data-word="tickle">tickled</mark> to flag a play situation, whether they feel <mark class="vocab-word" data-word="amused">amused</mark> or not.</p></div>  <div class="parallel-zh"><p>但是，还有另一种笑，即社交情景下的笑声。了解这一点也很重要。玩耍是大多数年轻哺乳动物发育中至关重要的部分。老鼠发出吱吱声，以防止它们的扭打变得严重起来。黑猩猩有一张“玩笑脸”-表情张扬，伴随着喘息的“啊，啊”的声音。在人类中，这些信号变成了微笑和大笑。研究人员认为，社交环境而不是诸如玩笑之类的认知事件触发了这种玩耍中的本能标志。人们在游乐场或者被挑逗的时候笑出声来，而不论他们是否觉得很有意思。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Both social and <mark class="vocab-word" data-word="cognitive">cognitive</mark> types of laughter <mark class="vocab-word" data-word="tap">tap</mark> into the same <mark class="vocab-word" data-word="expressive">expressive</mark> <mark class="vocab-word" data-word="machinery">machinery</mark> in our brains, the emotion and motor <mark class="vocab-word" data-word="circuit">circuits</mark> that produce smiles and <mark class="vocab-word" data-word="excite">excited</mark> vocalisations. However, if <mark class="vocab-word" data-word="cognitive">cognitive</mark> laughter is the product of more general thought processes, it should result from more expansive brain activity.</p></div>  <div class="parallel-zh"><p>社交和认知类型的笑都进入我们大脑中相同的表达机制，情感和运动回路产生笑容和激动的声音。但是，如果认知笑声是更普遍的思维过程的产物，它应该来自更广泛的大脑活动。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Psychologist Vinod Goel <mark class="vocab-word" data-word="investigate">investigated</mark> humour using the new technique of ‘single event’ <mark class="vocab-word" data-word="functional">functional</mark> <mark class="vocab-word" data-word="magnetic">magnetic</mark> <mark class="vocab-word" data-word="resonance">resonance</mark> imaging (fMRI). An MRI <mark class="vocab-word" data-word="scanner">scanner</mark> uses <mark class="vocab-word" data-word="magnetic">magnetic</mark> fields and radio waves to track the changes in oxygenated blood that accompany mental activity. Until recently, MRI <mark class="vocab-word" data-word="scanner">scanners</mark> needed several minutes of activity and so could not be used to track rapid thought processes such as <mark class="vocab-word" data-word="comprehend">comprehending</mark> a joke. New developments now allow half-second ‘snapshots’ of all sorts of reasoning and problem-solving activities.</p></div>  <div class="parallel-zh"><p>心理学家Vinod Goel使用“单一事件” 功能性磁共振成像（fMRI）的新技术研究了幽默。MRI扫描仪使用磁场和无线电波来跟踪伴随精神活动的血液含氧量的变化。直到最近为止，MRI扫描仪都需要活动几分钟才行，因此无法用于跟踪快速的思维过程，例如理解笑话。现在，技术进步让所有类型的推理和问题解决活动的半秒钟快照成为可能。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Although Goel felt being inside a brain <mark class="vocab-word" data-word="scanner">scanner</mark> was hardly the ideal place for appreciating a joke, he found evidence that understanding a joke involves a <mark class="vocab-word" data-word="widespread">widespread</mark> mental shift. His scans showed that at the beginning of a joke the listener’s prefrontal <mark class="vocab-word" data-word="cortex">cortex</mark> lit up, particularly the right prefrontal believed to be critical for problem solving. But there was also activity in the <mark class="vocab-word" data-word="temporal">temporal</mark> <mark class="vocab-word" data-word="lobe">lobes</mark> at the side of the head (consistent with attempts to <mark class="vocab-word" data-word="rouse">rouse</mark> stored knowledge) and in many other brain areas. Then when the punchline arrived, a new area sprang to life – the orbital prefrontal <mark class="vocab-word" data-word="cortex">cortex</mark>. This <mark class="vocab-word" data-word="patch">patch</mark> of brain <mark class="vocab-word" data-word="tuck">tucked</mark> behind the <mark class="vocab-word" data-word="orbit">orbits</mark> of the eyes is associated with evaluating information.</p></div>  <div class="parallel-zh"><p>尽管Goel觉得脑部扫描仪并不是一个欣赏笑话的理想场所，但他发现有证据表明，理解笑话涉及广泛的心理转变。他的扫描显示，在笑话刚开始时，听众的前额叶皮层会亮起来，它被认为对解决问题至关重要。但是在头部侧面的颞叶（与试图激发储存的知识相一致）以及其他许多大脑区域也有活动。然后，当笑点到来时，一个崭新的区域出现了-眶前额叶皮层。这一藏在眼眶后面的大脑区域与评估信息有关。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Making a rapid emotional assessment of the events of the moment is an extremely <mark class="vocab-word" data-word="demanding">demanding</mark> job for the brain, animal or human. Energy and <mark class="vocab-word" data-word="arousal">arousal</mark> levels may need to be retuned in the <mark class="vocab-word" data-word="blink">blink</mark> of an eye. These <mark class="vocab-word" data-word="abrupt">abrupt</mark> changes will produce either positive or <mark class="vocab-word" data-word="negative">negative</mark> feelings. The orbital <mark class="vocab-word" data-word="cortex">cortex</mark>, the region that becomes active in Goel’s experiment, seems the best <mark class="vocab-word" data-word="candidate">candidate</mark> for the <mark class="vocab-word" data-word="site">site</mark> that feeds such feelings into higher-level thought processes, with its close connections to the brain’s sub-cortical <mark class="vocab-word" data-word="arousal">arousal</mark> <mark class="vocab-word" data-word="apparatus">apparatus</mark> and centres of metabolic control.</p></div>  <div class="parallel-zh"><p>对当下事件进行快速的情感评估对于动物或人类的大脑来说都是一项极为艰巨的工作。眨眼间可能需要重新调整精力和兴奋水平。这些突然的变化将产生积极或消极的感觉。轨道皮层，Goel实验中活跃的区域，似乎是将这种感觉馈入高级思维过程的最佳人选，它与大脑皮层下的兴奋装置和代谢控制中心紧密相连。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>All warm-blooded animals make constant tiny adjustments in <mark class="vocab-word" data-word="arousal">arousal</mark> in response to <mark class="vocab-word" data-word="external">external</mark> events, but humans, who have developed a much more <mark class="vocab-word" data-word="complicated">complicated</mark> internal life as a result of language, respond <mark class="vocab-word" data-word="emotionally">emotionally</mark> not only to their <mark class="vocab-word" data-word="surroundings">surroundings</mark>, but to their own thoughts. Whenever a sought-for answer <mark class="vocab-word" data-word="snap">snaps</mark> into place, there is a shudder of pleased <mark class="vocab-word" data-word="recognition">recognition</mark>. Creative discovery being pleasurable, humans have <mark class="vocab-word" data-word="learned">learned</mark> to find ways of milking this natural response. The fact that jokes <mark class="vocab-word" data-word="tap">tap</mark> into our general evaluative <mark class="vocab-word" data-word="machinery">machinery</mark> explains why the line between funny and <mark class="vocab-word" data-word="disgusting">disgusting</mark>, or funny and <mark class="vocab-word" data-word="frightening">frightening</mark>, can be so fine. Whether a joke gives pleasure or pain depends on a person’s <mark class="vocab-word" data-word="outlook">outlook</mark>.</p></div>  <div class="parallel-zh"><p>所有温血动物都会对外界事件做出不断的微小调整，但是由于语言的发展，大脑内部活动变得更加复杂的人类对周围环境和自己的思想都会产生情感上的反应。每当找到一直以来所寻求的答案时，人们就会感到欣喜若狂。创造性的发现是令人愉悦的，人类已经学会产生这种自然反应的方法。笑话进入了我们的普遍评估机制，这一事实解释了为什么可笑与令人厌恶或令人恐惧之间存在完好的分界线。开玩笑给人带来快乐还是痛苦取决于一个人的观念。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Humour may be a luxury, but the <mark class="vocab-word" data-word="mechanism">mechanism</mark> behind it is no evolutionary accident. As Peter Derks, a psychologist at William and Mary College in Virginia, says: ‘I like to think of humour as the <mark class="vocab-word" data-word="distort">distorted</mark> mirror of the mind. It’s creative, perceptual, <mark class="vocab-word" data-word="analytical">analytical</mark> and <mark class="vocab-word" data-word="lingual">lingual</mark>. If we can figure out how the mind processes humour, then we’ll have a pretty good handle on how it works in general.’</p></div>  <div class="parallel-zh"><p>幽默也许是一种奢侈品，但其背后的机制绝非偶然。正如弗吉尼亚州玛丽学院的心理学家Peter Derks所说的那样，“我喜欢把幽默当作心灵扭曲的镜子。它具有创造力，感知力，分析能力和语言能力。如果我们能弄清大脑如何处理幽默，那么我们将对它的总体运作方式有一个很好的把握。”</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"fitting": 1, "tempt": 1, "mysterious": 1, "pointless": 1, "reflex": 1, "biological": 1, "pedigree": 1, "delighted": 1, "superiority": 1, "psychic": 1, "tension": 1, "puncture": 1, "settle": 1, "resolution": 1, "incongruity": 1, "nonsense": 1, "linguistic": 1, "format": 1, "revolve": 1, "conceptual": 1, "comedian": 1, "interpretation": 1, "apt": 1, "semantic": 1, "buzz": 1, "insight": 1, "leap": 1, "perspective": 1, "mammal": 1, "ultrasonic": 1, "scuffle": 1, "nasty": 1, "chimpanzee": 1, "pant": 1, "mutate": 1, "cognitive": 3, "trigger": 1, "instinctual": 1, "marker": 1, "tickle": 1, "amused": 1, "tap": 2, "expressive": 1, "machinery": 2, "circuit": 1, "excite": 1, "investigate": 1, "functional": 1, "magnetic": 2, "resonance": 1, "scanner": 3, "comprehend": 1, "widespread": 1, "cortex": 3, "temporal": 1, "lobe": 1, "rouse": 1, "patch": 1, "tuck": 1, "orbit": 1, "demanding": 1, "arousal": 3, "blink": 1, "abrupt": 1, "negative": 1, "candidate": 1, "site": 1, "apparatus": 1, "external": 1, "complicated": 1, "emotionally": 1, "surroundings": 1, "snap": 1, "recognition": 1, "learned": 1, "disgusting": 1, "frightening": 1, "outlook": 1, "mechanism": 1, "distort": 1, "analytical": 1, "lingual": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

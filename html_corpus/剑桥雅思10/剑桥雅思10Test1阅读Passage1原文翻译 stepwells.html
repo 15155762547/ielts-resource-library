@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stepwells - 剑桥雅思10 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思10</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>stepwells</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/28632.html" target="_blank">https://www.laokaoya.com/28632.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>During the sixth and seventh centuries, the <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> of the modern-day states of Gujarat and Rajasthan in north-western India developed a method of gaining access to clean, fresh <mark class="vocab-word" data-word="groundwater">groundwater</mark> during the dry season for drinking, <mark class="vocab-word" data-word="bathe">bathing</mark>, watering animals and <mark class="vocab-word" data-word="irrigation">irrigation</mark>. However, the <mark class="vocab-word" data-word="significance">significance</mark> of this invention – the stepwell – goes beyond its <mark class="vocab-word" data-word="utilitarian">utilitarian</mark> application.</p><p>Unique to this region, stepwells are often <mark class="vocab-word" data-word="architectural">architecturally</mark> complex and vary widely in size and shape. During their heyday, they were places of <mark class="vocab-word" data-word="gathering">gathering</mark>, of <mark class="vocab-word" data-word="leisure">leisure</mark> and <mark class="vocab-word" data-word="relaxation">relaxation</mark> and of <mark class="vocab-word" data-word="worship">worship</mark> for villagers of all but the lowest classes. Most stepwells are found dotted round the desert areas of Gujarat (where they are called vav) and Rajasthan (where they are called baori), while a few also survive in Delhi. Some were located in or near villages as public spaces for the community; others were positioned beside roads as resting places for travellers.</p><p>As their name <mark class="vocab-word" data-word="suggest">suggests</mark>, stepwells <mark class="vocab-word" data-word="comprise">comprise</mark> a series of stone steps <mark class="vocab-word" data-word="descend">descending</mark> from ground level to the water source (normally an underground <mark class="vocab-word" data-word="aquifer">aquifer</mark>) as it <mark class="vocab-word" data-word="recede">recedes</mark> following the rains. When the water level was high, the user needed only to <mark class="vocab-word" data-word="descend">descend</mark> a few steps to reach it; when it was low, several levels would have to be <mark class="vocab-word" data-word="negotiate">negotiated</mark>.</p><p>Some wells are vast, open <mark class="vocab-word" data-word="crater">craters</mark> with hundreds of steps <mark class="vocab-word" data-word="pave">paving</mark> each <mark class="vocab-word" data-word="slope">sloping</mark> side, often in tiers. Others are more <mark class="vocab-word" data-word="elaborate">elaborate</mark>, with long <mark class="vocab-word" data-word="steppe">stepped</mark> passages <mark class="vocab-word" data-word="lead">leading</mark> to the water via several <mark class="vocab-word" data-word="storey">storeys</mark>. Built from stone and supported by <mark class="vocab-word" data-word="pillar">pillars</mark>, they also included <mark class="vocab-word" data-word="pavilion">pavilions</mark> that sheltered visitors from the <mark class="vocab-word" data-word="relentless">relentless</mark> heat. But perhaps the most impressive features are the <mark class="vocab-word" data-word="intricate">intricate</mark> <mark class="vocab-word" data-word="decorative">decorative</mark> <mark class="vocab-word" data-word="sculpture">sculptures</mark> that <mark class="vocab-word" data-word="embellish">embellish</mark> many step wells, showing activities from fighting and dancing to everyday acts such as women <mark class="vocab-word" data-word="comb">combing</mark> their hair or <mark class="vocab-word" data-word="churn">churning</mark> butter.</p><p>Down the centuries, thousands of wells were <mark class="vocab-word" data-word="construct">constructed</mark> throughout northwestern India, but the majority have now fallen into disuse; many are <mark class="vocab-word" data-word="derelict">derelict</mark> and dry, as <mark class="vocab-word" data-word="groundwater">groundwater</mark> has been <mark class="vocab-word" data-word="divert">diverted</mark> for industrial use and the wells no longer reach the water table. Their condition hasn’t been helped by recent dry spells: southern Rajasthan suffered an eight-year <mark class="vocab-word" data-word="drought">drought</mark> between 1996 and 2004.</p><p>However, some important <mark class="vocab-word" data-word="site">sites</mark> in Gujarat have recently undergone major <mark class="vocab-word" data-word="restoration">restoration</mark>, and the state government announced in June last year that it plans to <mark class="vocab-word" data-word="restore">restore</mark> the stepwells throughout the state.</p><p>In Patan, the state’s ancient capital, the stepwell of Rani Ki Vav (Queen’s Stepwell) is perhaps the finest current example. It was built by Queen Udayamati during the late 11th century, but became <mark class="vocab-word" data-word="silt">silted</mark> up following a flood during the 13th century. But the Archaeological Survey of India began <mark class="vocab-word" data-word="restore">restoring</mark> it in the 1960s, and today it is in <mark class="vocab-word" data-word="pristine">pristine</mark> condition. At 65 metres long, 20 metres wide and 27 metres deep, Rani Ki Vav features 500 <mark class="vocab-word" data-word="sculpture">sculptures</mark> <mark class="vocab-word" data-word="carve">carved</mark> into <mark class="vocab-word" data-word="niche">niches</mark> throughout the <mark class="vocab-word" data-word="monument">monument</mark>. Incredibly, in January 2001, this ancient structure survived an earthquake that measured 7.6 on the Richter scale.</p><p>Another example is the Surya Kund in Modhera, northern Gujarat, next to the Sun <mark class="vocab-word" data-word="temple">Temple</mark>, built by King Bhima I in 1026 to honour the sun god Surya. It actually <mark class="vocab-word" data-word="resemble">resembles</mark> a tank (kund means <mark class="vocab-word" data-word="reservoir">reservoir</mark> or <mark class="vocab-word" data-word="pond">pond</mark>) rather than a well, but displays the <mark class="vocab-word" data-word="hallmark">hallmarks</mark> of stepwell <mark class="vocab-word" data-word="architecture">architecture</mark>, including four sides of steps that <mark class="vocab-word" data-word="descend">descend</mark> to the bottom in a <mark class="vocab-word" data-word="stunning">stunning</mark> geometrical <mark class="vocab-word" data-word="formation">formation</mark>. The <mark class="vocab-word" data-word="terrace">terraces</mark> house 108 small, <mark class="vocab-word" data-word="intricate">intricately</mark> <mark class="vocab-word" data-word="carve">carved</mark> <mark class="vocab-word" data-word="shrine">shrines</mark> between the sets of steps.</p><p>Rajasthan also has a wealth of wells. The ancient city of Bundi, 200 kilometres south of Jaipur, is <mark class="vocab-word" data-word="renowned">renowned</mark> for its <mark class="vocab-word" data-word="architecture">architecture</mark>, including its stepwells. One of the larger examples is Raniji Ki Baori, which was built by the queen of the region, Nathavatji, in 1699. At 46 meters deep, 20 metres wide and 40 metres long, the <mark class="vocab-word" data-word="intricate">intricately</mark> <mark class="vocab-word" data-word="carve">carved</mark> <mark class="vocab-word" data-word="monument">monument</mark> is one of 21 baoris commissioned in the Bundi area by Nathavatji.</p><p>In the old <mark class="vocab-word" data-word="ruin">ruined</mark> town of Abhaneri, about 95 <mark class="vocab-word" data-word="kilometer">kilometers</mark> east of Jaipur, is Chand Baori, one of India’s oldest and deepest wells; aesthetically it’s perhaps one of the most dramatic. Built in around 850 AD next to the <mark class="vocab-word" data-word="temple">temple</mark> of Harshat Mata, the baori <mark class="vocab-word" data-word="comprise">comprises</mark> hundreds of zigzagging steps that run along three of its sides, <mark class="vocab-word" data-word="steep">steeply</mark> <mark class="vocab-word" data-word="descend">descending</mark> 11 <mark class="vocab-word" data-word="storey">storeys</mark>, resulting in a <mark class="vocab-word" data-word="striking">striking</mark> pattern when seen from afar. On the fourth side, verandas which are supported by ornate <mark class="vocab-word" data-word="pillar">pillars</mark> <mark class="vocab-word" data-word="overlook">overlook</mark> the steps.</p><p>Still in public use is Neemrana Ki Baoriy located just off the Jaipur-Delhi <mark class="vocab-word" data-word="highway">highway</mark>. <mark class="vocab-word" data-word="construct">Constructed</mark> in around 1700, it is nine <mark class="vocab-word" data-word="storey">storeys</mark> deep, with the last two being <mark class="vocab-word" data-word="underwater">underwater</mark>. At ground level, there are 86 colonnaded openings from where the visitor <mark class="vocab-word" data-word="descend">descends</mark> 170 steps to the deepest water source.</p><p>Neemrana Ki Baoriy</p><p>Today, following years of <mark class="vocab-word" data-word="neglect">neglect</mark>, many of these <mark class="vocab-word" data-word="monument">monuments</mark> to <mark class="vocab-word" data-word="medieval">medieval</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> have been saved by the Archaeological Survey of India, which has recognised the importance of preserving them as part of the country’s rich history. Tourists <mark class="vocab-word" data-word="flock">flock</mark> to wells in far-flung corners of northwestern India to <mark class="vocab-word" data-word="gaze">gaze</mark> in wonder at these <mark class="vocab-word" data-word="architectural">architectural</mark> <mark class="vocab-word" data-word="marvel">marvels</mark> from hundreds of years ago, which serve as a <mark class="vocab-word" data-word="reminder">reminder</mark> of both the <mark class="vocab-word" data-word="ingenuity">ingenuity</mark> and artistry of ancient civilisations and of the value of water to human existence.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在公元六世纪和七世纪，现代印度西北部的古吉拉特邦和拉贾斯坦邦的居民开发了一种在旱季获得清洁，新鲜的地下水以供饮用、沐浴、给动物饮水和灌溉的方法。但是，这一发明的意义（阶梯井）远不止于其功利性的应用。</p><p>阶梯井是该地区独有的，结构上通常很复杂，大小和形状差别很大。在它们的鼎盛时期，这里是除了最底层居民之外，所有村民聚会，休闲、放松和朝拜的地方。人们发现大多数阶梯井都分布在古吉拉特邦（在这里被称为vav）和拉贾斯坦邦（在这里它们被称为baori ）的沙漠地区周围。在德里也有少数存在。其中一些位于村庄内或附近，作为社区的公共空间；其他则被设置在道路旁，作为旅行者的休息场所。</p><p>顾名思义，由于水面会随着雨水而消退，阶梯井包括一系列从地面下到水源（通常为地下含水层）的台阶。当水位高时，用户仅需往下走几步即可达到。而当水位较低时，必须都走几个台阶。</p><p>一些水井的开口十分巨大，通常每个斜坡都有上百层台阶按阶层分布。其他的则比较复杂，有长长的台阶通道穿过几层楼通往水面。它们由石头建成，并通过柱子支撑，包括能够让游客躲避炎热的看台。但也许是最令人印象深刻的特征是许多阶梯井中都有着复杂的装饰性雕塑，展示战斗、跳舞、以及诸如女性梳理头发和搅动黄油的日常活动。</p><p>几个世纪以来，在印度的西北部建造了数千口水井，但现在大多数已经废弃。由于地下水被转用于工业用途，水井不再能达到地下水水位，因此许多水井都已干涸。最近的干旱也加重了这一情况：拉贾斯坦邦南部在1996年至2004年间遭受了八年干旱。</p><p>然而，古吉拉特邦的一些重要水井最近进行了重大修复。州政府于去年6月份宣布，计划恢复整个州的阶梯井。</p><p>在该州的古都帕坦（Patan），Rani Ki Vav（Queen’s Stepwell）的阶梯井也许是目前最好的例子。它是由乌达亚马蒂女王（Queen Udayamati）在11世纪后期建造的，但在13世纪的洪水之后就被淤塞了。但是印度考古调查局于20世纪60年代开始对其进行修复，如今它已恢复到原始状态。Rani Ki Vav长65米，宽20米，深27米。整个遗迹中拥有500座雕塑。令人难以置信的是，2001年1月，这座古建筑在里氏7.6级地震中幸存了下来。</p><p>另一个例子是位于古吉拉特邦北部Modhera的Surya Kund。它紧挨着由国王Bhima一世在1026为朝拜太阳神Surya而建造的太阳神神庙。它实际上类似于一个水箱（Kund的意思是水库或池塘），而不是一个水井。但它显示出阶梯井的结构特征，包括深入井底的，按照令人惊讶的几何结构所建立的四面台阶。台阶之间的露台设置着108个小巧精致的神社。</p><p>拉贾斯坦邦也有丰富的水井。Jaipur南面200公里处的古城Bundi因其建筑而闻名，这其中就包括阶梯井。一个较大的例子是Raniji Ki Baori。它由该地区的女王Nathavatji在1699年修建的。深46米，宽20米，长40米，它是Nathavatji在Bundi所修建的21个精致的建筑物之一。</p><p>在Japipur以东约95公里处的古老废墟小镇阿布哈内里内（Abhaneri），坐落着印度最古老最深的水井之一，Chand Baori；从美学上讲，它可能是最引人注目的一个。建于公元850年左右，位于Harshat Mata寺庙旁边，该水井在三面分布着数百个曲折的台阶，下降11层的高度。从远处看构成令人惊讶的图像。在第四面，由华丽支柱支撑的阳台俯瞰着这些台阶。</p><p>仍被公众使用，就位于 Jaipur-Delhi的高速公路旁。它建于1700年左右，深9层，最后两层位于水下。在地面上，有86个柱廊开口，游客从那里可以向下走过170个台阶到达最深的水源。</p><p>如今，在多年的忽视之后，印度考古调查局拯救了许多中世纪工程遗迹。人们已经意识到保存它们作为国家丰富历史一部分的重要性。游客涌向位于印度西北部遥远角落的水井，惊叹于几百年前的这些建筑奇观。这既使人想起了古代文明的创造力和艺术性，也让人明白水对人类生存的价值。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>During the sixth and seventh centuries, the <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> of the modern-day states of Gujarat and Rajasthan in north-western India developed a method of gaining access to clean, fresh <mark class="vocab-word" data-word="groundwater">groundwater</mark> during the dry season for drinking, <mark class="vocab-word" data-word="bathe">bathing</mark>, watering animals and <mark class="vocab-word" data-word="irrigation">irrigation</mark>. However, the <mark class="vocab-word" data-word="significance">significance</mark> of this invention – the stepwell – goes beyond its <mark class="vocab-word" data-word="utilitarian">utilitarian</mark> application.</p></div>  <div class="parallel-zh"><p>在公元六世纪和七世纪，现代印度西北部的古吉拉特邦和拉贾斯坦邦的居民开发了一种在旱季获得清洁，新鲜的地下水以供饮用、沐浴、给动物饮水和灌溉的方法。但是，这一发明的意义（阶梯井）远不止于其功利性的应用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Unique to this region, stepwells are often <mark class="vocab-word" data-word="architectural">architecturally</mark> complex and vary widely in size and shape. During their heyday, they were places of <mark class="vocab-word" data-word="gathering">gathering</mark>, of <mark class="vocab-word" data-word="leisure">leisure</mark> and <mark class="vocab-word" data-word="relaxation">relaxation</mark> and of <mark class="vocab-word" data-word="worship">worship</mark> for villagers of all but the lowest classes. Most stepwells are found dotted round the desert areas of Gujarat (where they are called vav) and Rajasthan (where they are called baori), while a few also survive in Delhi. Some were located in or near villages as public spaces for the community; others were positioned beside roads as resting places for travellers.</p></div>  <div class="parallel-zh"><p>阶梯井是该地区独有的，结构上通常很复杂，大小和形状差别很大。在它们的鼎盛时期，这里是除了最底层居民之外，所有村民聚会，休闲、放松和朝拜的地方。人们发现大多数阶梯井都分布在古吉拉特邦（在这里被称为vav）和拉贾斯坦邦（在这里它们被称为baori ）的沙漠地区周围。在德里也有少数存在。其中一些位于村庄内或附近，作为社区的公共空间；其他则被设置在道路旁，作为旅行者的休息场所。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As their name <mark class="vocab-word" data-word="suggest">suggests</mark>, stepwells <mark class="vocab-word" data-word="comprise">comprise</mark> a series of stone steps <mark class="vocab-word" data-word="descend">descending</mark> from ground level to the water source (normally an underground <mark class="vocab-word" data-word="aquifer">aquifer</mark>) as it <mark class="vocab-word" data-word="recede">recedes</mark> following the rains. When the water level was high, the user needed only to <mark class="vocab-word" data-word="descend">descend</mark> a few steps to reach it; when it was low, several levels would have to be <mark class="vocab-word" data-word="negotiate">negotiated</mark>.</p></div>  <div class="parallel-zh"><p>顾名思义，由于水面会随着雨水而消退，阶梯井包括一系列从地面下到水源（通常为地下含水层）的台阶。当水位高时，用户仅需往下走几步即可达到。而当水位较低时，必须都走几个台阶。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Some wells are vast, open <mark class="vocab-word" data-word="crater">craters</mark> with hundreds of steps <mark class="vocab-word" data-word="pave">paving</mark> each <mark class="vocab-word" data-word="slope">sloping</mark> side, often in tiers. Others are more <mark class="vocab-word" data-word="elaborate">elaborate</mark>, with long <mark class="vocab-word" data-word="steppe">stepped</mark> passages <mark class="vocab-word" data-word="lead">leading</mark> to the water via several <mark class="vocab-word" data-word="storey">storeys</mark>. Built from stone and supported by <mark class="vocab-word" data-word="pillar">pillars</mark>, they also included <mark class="vocab-word" data-word="pavilion">pavilions</mark> that sheltered visitors from the <mark class="vocab-word" data-word="relentless">relentless</mark> heat. But perhaps the most impressive features are the <mark class="vocab-word" data-word="intricate">intricate</mark> <mark class="vocab-word" data-word="decorative">decorative</mark> <mark class="vocab-word" data-word="sculpture">sculptures</mark> that <mark class="vocab-word" data-word="embellish">embellish</mark> many step wells, showing activities from fighting and dancing to everyday acts such as women <mark class="vocab-word" data-word="comb">combing</mark> their hair or <mark class="vocab-word" data-word="churn">churning</mark> butter.</p></div>  <div class="parallel-zh"><p>一些水井的开口十分巨大，通常每个斜坡都有上百层台阶按阶层分布。其他的则比较复杂，有长长的台阶通道穿过几层楼通往水面。它们由石头建成，并通过柱子支撑，包括能够让游客躲避炎热的看台。但也许是最令人印象深刻的特征是许多阶梯井中都有着复杂的装饰性雕塑，展示战斗、跳舞、以及诸如女性梳理头发和搅动黄油的日常活动。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Down the centuries, thousands of wells were <mark class="vocab-word" data-word="construct">constructed</mark> throughout northwestern India, but the majority have now fallen into disuse; many are <mark class="vocab-word" data-word="derelict">derelict</mark> and dry, as <mark class="vocab-word" data-word="groundwater">groundwater</mark> has been <mark class="vocab-word" data-word="divert">diverted</mark> for industrial use and the wells no longer reach the water table. Their condition hasn’t been helped by recent dry spells: southern Rajasthan suffered an eight-year <mark class="vocab-word" data-word="drought">drought</mark> between 1996 and 2004.</p></div>  <div class="parallel-zh"><p>几个世纪以来，在印度的西北部建造了数千口水井，但现在大多数已经废弃。由于地下水被转用于工业用途，水井不再能达到地下水水位，因此许多水井都已干涸。最近的干旱也加重了这一情况：拉贾斯坦邦南部在1996年至2004年间遭受了八年干旱。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, some important <mark class="vocab-word" data-word="site">sites</mark> in Gujarat have recently undergone major <mark class="vocab-word" data-word="restoration">restoration</mark>, and the state government announced in June last year that it plans to <mark class="vocab-word" data-word="restore">restore</mark> the stepwells throughout the state.</p></div>  <div class="parallel-zh"><p>然而，古吉拉特邦的一些重要水井最近进行了重大修复。州政府于去年6月份宣布，计划恢复整个州的阶梯井。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In Patan, the state’s ancient capital, the stepwell of Rani Ki Vav (Queen’s Stepwell) is perhaps the finest current example. It was built by Queen Udayamati during the late 11th century, but became <mark class="vocab-word" data-word="silt">silted</mark> up following a flood during the 13th century. But the Archaeological Survey of India began <mark class="vocab-word" data-word="restore">restoring</mark> it in the 1960s, and today it is in <mark class="vocab-word" data-word="pristine">pristine</mark> condition. At 65 metres long, 20 metres wide and 27 metres deep, Rani Ki Vav features 500 <mark class="vocab-word" data-word="sculpture">sculptures</mark> <mark class="vocab-word" data-word="carve">carved</mark> into <mark class="vocab-word" data-word="niche">niches</mark> throughout the <mark class="vocab-word" data-word="monument">monument</mark>. Incredibly, in January 2001, this ancient structure survived an earthquake that measured 7.6 on the Richter scale.</p></div>  <div class="parallel-zh"><p>在该州的古都帕坦（Patan），Rani Ki Vav（Queen’s Stepwell）的阶梯井也许是目前最好的例子。它是由乌达亚马蒂女王（Queen Udayamati）在11世纪后期建造的，但在13世纪的洪水之后就被淤塞了。但是印度考古调查局于20世纪60年代开始对其进行修复，如今它已恢复到原始状态。Rani Ki Vav长65米，宽20米，深27米。整个遗迹中拥有500座雕塑。令人难以置信的是，2001年1月，这座古建筑在里氏7.6级地震中幸存了下来。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Another example is the Surya Kund in Modhera, northern Gujarat, next to the Sun <mark class="vocab-word" data-word="temple">Temple</mark>, built by King Bhima I in 1026 to honour the sun god Surya. It actually <mark class="vocab-word" data-word="resemble">resembles</mark> a tank (kund means <mark class="vocab-word" data-word="reservoir">reservoir</mark> or <mark class="vocab-word" data-word="pond">pond</mark>) rather than a well, but displays the <mark class="vocab-word" data-word="hallmark">hallmarks</mark> of stepwell <mark class="vocab-word" data-word="architecture">architecture</mark>, including four sides of steps that <mark class="vocab-word" data-word="descend">descend</mark> to the bottom in a <mark class="vocab-word" data-word="stunning">stunning</mark> geometrical <mark class="vocab-word" data-word="formation">formation</mark>. The <mark class="vocab-word" data-word="terrace">terraces</mark> house 108 small, <mark class="vocab-word" data-word="intricate">intricately</mark> <mark class="vocab-word" data-word="carve">carved</mark> <mark class="vocab-word" data-word="shrine">shrines</mark> between the sets of steps.</p></div>  <div class="parallel-zh"><p>另一个例子是位于古吉拉特邦北部Modhera的Surya Kund。它紧挨着由国王Bhima一世在1026为朝拜太阳神Surya而建造的太阳神神庙。它实际上类似于一个水箱（Kund的意思是水库或池塘），而不是一个水井。但它显示出阶梯井的结构特征，包括深入井底的，按照令人惊讶的几何结构所建立的四面台阶。台阶之间的露台设置着108个小巧精致的神社。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Rajasthan also has a wealth of wells. The ancient city of Bundi, 200 kilometres south of Jaipur, is <mark class="vocab-word" data-word="renowned">renowned</mark> for its <mark class="vocab-word" data-word="architecture">architecture</mark>, including its stepwells. One of the larger examples is Raniji Ki Baori, which was built by the queen of the region, Nathavatji, in 1699. At 46 meters deep, 20 metres wide and 40 metres long, the <mark class="vocab-word" data-word="intricate">intricately</mark> <mark class="vocab-word" data-word="carve">carved</mark> <mark class="vocab-word" data-word="monument">monument</mark> is one of 21 baoris commissioned in the Bundi area by Nathavatji.</p></div>  <div class="parallel-zh"><p>拉贾斯坦邦也有丰富的水井。Jaipur南面200公里处的古城Bundi因其建筑而闻名，这其中就包括阶梯井。一个较大的例子是Raniji Ki Baori。它由该地区的女王Nathavatji在1699年修建的。深46米，宽20米，长40米，它是Nathavatji在Bundi所修建的21个精致的建筑物之一。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In the old <mark class="vocab-word" data-word="ruin">ruined</mark> town of Abhaneri, about 95 <mark class="vocab-word" data-word="kilometer">kilometers</mark> east of Jaipur, is Chand Baori, one of India’s oldest and deepest wells; aesthetically it’s perhaps one of the most dramatic. Built in around 850 AD next to the <mark class="vocab-word" data-word="temple">temple</mark> of Harshat Mata, the baori <mark class="vocab-word" data-word="comprise">comprises</mark> hundreds of zigzagging steps that run along three of its sides, <mark class="vocab-word" data-word="steep">steeply</mark> <mark class="vocab-word" data-word="descend">descending</mark> 11 <mark class="vocab-word" data-word="storey">storeys</mark>, resulting in a <mark class="vocab-word" data-word="striking">striking</mark> pattern when seen from afar. On the fourth side, verandas which are supported by ornate <mark class="vocab-word" data-word="pillar">pillars</mark> <mark class="vocab-word" data-word="overlook">overlook</mark> the steps.</p></div>  <div class="parallel-zh"><p>在Japipur以东约95公里处的古老废墟小镇阿布哈内里内（Abhaneri），坐落着印度最古老最深的水井之一，Chand Baori；从美学上讲，它可能是最引人注目的一个。建于公元850年左右，位于Harshat Mata寺庙旁边，该水井在三面分布着数百个曲折的台阶，下降11层的高度。从远处看构成令人惊讶的图像。在第四面，由华丽支柱支撑的阳台俯瞰着这些台阶。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Still in public use is Neemrana Ki Baoriy located just off the Jaipur-Delhi <mark class="vocab-word" data-word="highway">highway</mark>. <mark class="vocab-word" data-word="construct">Constructed</mark> in around 1700, it is nine <mark class="vocab-word" data-word="storey">storeys</mark> deep, with the last two being <mark class="vocab-word" data-word="underwater">underwater</mark>. At ground level, there are 86 colonnaded openings from where the visitor <mark class="vocab-word" data-word="descend">descends</mark> 170 steps to the deepest water source.</p><p>Neemrana Ki Baoriy</p></div>  <div class="parallel-zh"><p>仍被公众使用，就位于 Jaipur-Delhi的高速公路旁。它建于1700年左右，深9层，最后两层位于水下。在地面上，有86个柱廊开口，游客从那里可以向下走过170个台阶到达最深的水源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Today, following years of <mark class="vocab-word" data-word="neglect">neglect</mark>, many of these <mark class="vocab-word" data-word="monument">monuments</mark> to <mark class="vocab-word" data-word="medieval">medieval</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> have been saved by the Archaeological Survey of India, which has recognised the importance of preserving them as part of the country’s rich history. Tourists <mark class="vocab-word" data-word="flock">flock</mark> to wells in far-flung corners of northwestern India to <mark class="vocab-word" data-word="gaze">gaze</mark> in wonder at these <mark class="vocab-word" data-word="architectural">architectural</mark> <mark class="vocab-word" data-word="marvel">marvels</mark> from hundreds of years ago, which serve as a <mark class="vocab-word" data-word="reminder">reminder</mark> of both the <mark class="vocab-word" data-word="ingenuity">ingenuity</mark> and artistry of ancient civilisations and of the value of water to human existence.</p></div>  <div class="parallel-zh"><p>如今，在多年的忽视之后，印度考古调查局拯救了许多中世纪工程遗迹。人们已经意识到保存它们作为国家丰富历史一部分的重要性。游客涌向位于印度西北部遥远角落的水井，惊叹于几百年前的这些建筑奇观。这既使人想起了古代文明的创造力和艺术性，也让人明白水对人类生存的价值。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"inhabitant": 1, "groundwater": 2, "bathe": 1, "irrigation": 1, "significance": 1, "utilitarian": 1, "architectural": 2, "gathering": 1, "leisure": 1, "relaxation": 1, "worship": 1, "suggest": 1, "comprise": 2, "descend": 5, "aquifer": 1, "recede": 1, "negotiate": 1, "crater": 1, "pave": 1, "slope": 1, "elaborate": 1, "steppe": 1, "lead": 1, "storey": 3, "pillar": 2, "pavilion": 1, "relentless": 1, "intricate": 3, "decorative": 1, "sculpture": 2, "embellish": 1, "comb": 1, "churn": 1, "construct": 2, "derelict": 1, "divert": 1, "drought": 1, "site": 1, "restoration": 1, "restore": 2, "silt": 1, "pristine": 1, "carve": 3, "niche": 1, "monument": 3, "temple": 2, "resemble": 1, "reservoir": 1, "pond": 1, "hallmark": 1, "architecture": 2, "stunning": 1, "formation": 1, "terrace": 1, "shrine": 1, "renowned": 1, "ruin": 1, "kilometer": 1, "steep": 1, "striking": 1, "overlook": 1, "highway": 1, "underwater": 1, "neglect": 1, "medieval": 1, "engineering": 1, "flock": 1, "gaze": 1, "marvel": 1, "reminder": 1, "ingenuity": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

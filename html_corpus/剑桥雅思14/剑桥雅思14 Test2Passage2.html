@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back to the future of skyscraper design 摩天大楼设计 - 剑桥雅思14 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Back to the future of skyscraper design 摩天大楼设计</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39180.html" target="_blank">https://www.laokaoya.com/39180.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The <mark class="vocab-word" data-word="recovery">Recovery</mark> of Natural Environments in <mark class="vocab-word" data-word="architecture">Architecture</mark> by Professor Alan Short is the culmination of 30 years of research and award-winning green building design by Short and colleagues in <mark class="vocab-word" data-word="architecture">Architecture</mark>, <mark class="vocab-word" data-word="engineering">Engineering</mark>, <mark class="vocab-word" data-word="applied">Applied</mark> Maths and Earth Sciences at the University of Cambridge.</p><p>‘The <mark class="vocab-word" data-word="crisis">crisis</mark> in building design is already here,’ said Short. ‘Policy makers think you can solve energy and building problems with <mark class="vocab-word" data-word="gadget">gadgets</mark>. You can’t. As global temperatures continue to rise, we are going to continue to <mark class="vocab-word" data-word="squander">squander</mark> more and more energy on keeping our buildings <mark class="vocab-word" data-word="mechanical">mechanically</mark> cool until we have run out of <mark class="vocab-word" data-word="capacity">capacity</mark>.’</p><p>Short is calling for a <mark class="vocab-word" data-word="sweep">sweeping</mark> reinvention of how <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> and major public buildings are designed – to end the <mark class="vocab-word" data-word="reliance">reliance</mark> on <mark class="vocab-word" data-word="seal">sealed</mark> buildings which exist <mark class="vocab-word" data-word="solely">solely</mark> via the life support’ system of vast air <mark class="vocab-word" data-word="conditioning">conditioning</mark> units.</p><p>Instead, he shows it is entirely possible to <mark class="vocab-word" data-word="accommodate">accommodate</mark> natural <mark class="vocab-word" data-word="ventilation">ventilation</mark> and cooling in large buildings by looking into the past, before the <mark class="vocab-word" data-word="widespread">widespread</mark> introduction of air <mark class="vocab-word" data-word="conditioning">conditioning</mark> systems, which were ‘<mark class="vocab-word" data-word="relentless">relentlessly</mark> and <mark class="vocab-word" data-word="aggressively">aggressively</mark> marketed’ by their inventors.</p><p>Short points out that to make most <mark class="vocab-word" data-word="contemporary">contemporary</mark> buildings <mark class="vocab-word" data-word="habitable">habitable</mark>, they have to be <mark class="vocab-word" data-word="seal">sealed</mark> and air conditioned. The energy use and <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark> this generates is <mark class="vocab-word" data-word="spectacular">spectacular</mark> and largely unnecessary. Buildings in the West account for 40-50% of electricity <mark class="vocab-word" data-word="usage">usage</mark>, generating <mark class="vocab-word" data-word="substantial">substantial</mark> <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark>, and the rest of the world is <mark class="vocab-word" data-word="catch">catching</mark> up at a <mark class="vocab-word" data-word="frightening">frightening</mark> rate. Short regards glass, steel and air-conditioned <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> as symbols of status, rather than practical ways of meeting our requirements.</p><p>Short’s book highlights a developing and <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> art and science of <mark class="vocab-word" data-word="ventilate">ventilating</mark> buildings through the 19th and earlier-20th centuries, including the design of <mark class="vocab-word" data-word="ingenious">ingeniously</mark> <mark class="vocab-word" data-word="ventilate">ventilated</mark> hospitals. Of particular interest were those built to the designs of John Shaw Billings, including the first Johns Hopkins Hospital in the US city of Baltimore (1873-1889).</p><p>‘We spent three years digitally modelling Billings’ final designs,’ says Short. ‘We put <mark class="vocab-word" data-word="pathogen">pathogens</mark>* in the airstreams, modelled for someone with <mark class="vocab-word" data-word="tuberculosis">tuberculosis</mark> (TB) <mark class="vocab-word" data-word="cough">coughing</mark> in the <mark class="vocab-word" data-word="ward">wards</mark> and we found the <mark class="vocab-word" data-word="ventilation">ventilation</mark> systems in the room would have kept other patients safe from harm.</p><p>‘We discovered that 19th-century hospital <mark class="vocab-word" data-word="ward">wards</mark> could generate up to 24 air changes an hour – that’s similar to the performance of a modern-day, computer-controlled operating theatre. We believe you could build <mark class="vocab-word" data-word="ward">wards</mark> based on these principles now.</p><p>Single rooms are not appropriate for all patients. <mark class="vocab-word" data-word="communal">Communal</mark> <mark class="vocab-word" data-word="ward">wards</mark> appropriate for certain patients – older people with dementia, for example – would work just as well in today’s hospitals, at a <mark class="vocab-word" data-word="fraction">fraction</mark> of the energy cost.’</p><p>Professor Short <mark class="vocab-word" data-word="contend">contends</mark> the mindset and skill-sets behind these designs have been completely lost, <mark class="vocab-word" data-word="lament">lamenting</mark> the disappearance of expertly designed theatres, <mark class="vocab-word" data-word="opera">opera</mark> houses, and other buildings where up to half the volume of the building was given over to ensuring everyone got fresh air.</p><p>Much of the <mark class="vocab-word" data-word="ingenuity">ingenuity</mark> present in 19th-century hospital and building design was driven by a panicked public clamouring for buildings that could protect against what was thought to be the <mark class="vocab-word" data-word="lethal">lethal</mark> <mark class="vocab-word" data-word="threat">threat</mark> of miasmas – <mark class="vocab-word" data-word="toxic">toxic</mark> air that spread disease. Miasmas were feared as the <mark class="vocab-word" data-word="principal">principal</mark> agents of disease and <mark class="vocab-word" data-word="epidemic">epidemics</mark> for centuries, and were used to explain the spread of infection from the Middle Ages right through to the <mark class="vocab-word" data-word="cholera">cholera</mark> <mark class="vocab-word" data-word="outbreak">outbreaks</mark> in London and Paris during the 1850s. <mark class="vocab-word" data-word="foul">Foul</mark> air, rather than <mark class="vocab-word" data-word="germ">germs</mark>, was believed to be the main driver of ‘hospital <mark class="vocab-word" data-word="fever">fever</mark>’, <mark class="vocab-word" data-word="lead">leading</mark> to disease and <mark class="vocab-word" data-word="frequent">frequent</mark> death. The <mark class="vocab-word" data-word="prosperous">prosperous</mark> <mark class="vocab-word" data-word="steer">steered</mark> clear of hospitals.</p><p>While miasma theory has been long since <mark class="vocab-word" data-word="disprove">disproved</mark>, Short has for the last 30 years <mark class="vocab-word" data-word="advocate">advocated</mark> a return to some of the building design principles produced in its wake.</p><p>Today, huge amounts of a building’s space and construction cost are given over to air <mark class="vocab-word" data-word="conditioning">conditioning</mark>. ‘But I have designed and built a series of buildings over the past three <mark class="vocab-word" data-word="decade">decades</mark> which have tried to reinvent some of these ideas and then measure what happens.</p><p>‘To go forward into our new low-energy, low-carbon future, we would be well advised to look back at design before our high-energy, high-carbon present appeared. What is surprising is what a rich <mark class="vocab-word" data-word="legacy">legacy</mark> we have abandoned.’</p><p>Successful examples of Short’s approach include the Queen’s Building at De Montfort University in Leicester. Containing as many as 2,000 staff and students, the entire building is naturally <mark class="vocab-word" data-word="ventilate">ventilated</mark>, <mark class="vocab-word" data-word="passive">passively</mark> cooled and naturally lit, including the two largest auditoria, each seating more than 150 people. The award-winning building uses a <mark class="vocab-word" data-word="fraction">fraction</mark> of the electricity of <mark class="vocab-word" data-word="comparable">comparable</mark> buildings in the UK.</p><p>Short <mark class="vocab-word" data-word="contend">contends</mark> that glass <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> in London and around the world will become a <mark class="vocab-word" data-word="liability">liability</mark> over the next 20 or 30 years if climate modelling <mark class="vocab-word" data-word="prediction">predictions</mark> and energy price rises come to pass as expected.</p><p>He is <mark class="vocab-word" data-word="convince">convinced</mark> that <mark class="vocab-word" data-word="sufficient">sufficiently</mark> cooled <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> using the natural environment can be produced in almost any climate. He and his team have worked on <mark class="vocab-word" data-word="hybrid">hybrid</mark> buildings in the <mark class="vocab-word" data-word="harsh">harsh</mark> climates of Beijing and Chicago – built with natural <mark class="vocab-word" data-word="ventilation">ventilation</mark> assisted by back-up air <mark class="vocab-word" data-word="conditioning">conditioning</mark> – which, surprisingly perhaps, can be switched off more than half the time on milder days and during the <mark class="vocab-word" data-word="spring">spring</mark> and autumn.</p><p>Short looks at how we might reimagine the cities, offices and homes of the future. Maybe it’s time we changed our <mark class="vocab-word" data-word="outlook">outlook</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>Alan Short教授所著的《自然环境在建筑中的复苏》是三十年研究的集大成之作，也是Short及其剑桥大学建筑学、工程学、应用数学和地球科学领域内的同事们共同完成的荣获大奖的环保建筑设计。</p><p>“建筑设计中的危机已经显现， ” Short这样说。“政策制定者们以为用小零件小设备就能解决能源和建筑问题。其实并不能。随着全球温度持续上升，我们将继续用机械方法挥霍越来越多的能量， 使建筑物内保持凉爽，直到我们再也无能为力为止。</p><p>Short正在呼吁对摩天大楼和大型公共建筑的设计方式进行一场彻底的重塑 – 来结束对封闭式建筑的依赖，它们的存在完全是依靠大型空调设备来提供“生命支持”的。</p><p>与之相反，他证明了：完全有可能在大型建筑中容纳天然的通风和冷却系统，办法就是回溯到过去那个还没有大规模引人空调系统的时代，这些空调系统就是其发明者所“毫不留情、大刀阔斧地”大肆进行宣传推广的。</p><p>Short指出：要让大多数当代建筑里可以住人，它们必须封闭起来、进行空气调控。这种做法所造成的能源消耗和碳排放是极为壮观的，在很大程度上并没有必要。西方建筑物要占用电量的40—50%，产生了巨量的碳排放，而世界上的其他地方正以一种令人惊恐的速度追赶上来。Short认为，由玻璃，钢铁和空调组成的摩天大楼是社会地位的象征，而不是满足我们需要的实用方式。</p><p>Short的书重点阐述了在19世纪和20世纪初期这个阶段里，为建筑物通风的艺术与科学一直在发展进步、日趋复杂完善，这其中包括通风系统设计精妙的医院。格外引人注目的是那些依照John Shaw Billings的设计搭建而成的建筑，包括位于美国巴尔的摩市的第一家约翰霍普金斯医院（1873—1889）。</p><p>“我们花了三年的时间用数字化模拟修建了Billins最后的那些设计方案，” Short这样说。“我们在气流中放入了病原体，以此模仿病房中正在咳嗽的肺结核病患，结果我们发现：房间里的通风系统能保护其他病人不受侵害。”</p><p>“我们发现19世纪的医院病房在1小时内能够制造多达24次的空气交换 – 类似于一家现代化的、由电脑中控的手术室可达成的效果。我们相信你现在完全可以基于这些原理来建造病房。</p><p>单人间并非适合于所有的病人。对某些病患比较合适的公共病房 – 例如患痴呆的较年长病人 – 在今天的医院里也同样适用，所消耗的能量却只有一丁点儿。”</p><p>Short 教授感到这些设计背后的思维理念和精巧技艺已经完全丢失了，他痛惜那些消失了的、经由专家精心设计建造的手术室、歌剧院和其他同类建筑，这些建筑中多达一半的空间都用于确保每个人都能获得新鲜空气。</p><p>存在于19世纪的医院和其他建筑中的那种精巧设计在很大程度上是被恐慌的公众所催生的，这些人大声疾呼，要求建筑物能给他们提供保护，使自己不受当时被认为是致命威胁的瘴气 – 会传播疾病的有毒气体 – 所侵袭。几个世纪以来，瘴气一直被看作疾病和传染病的主要致病源而深受畏俱，从中世纪以来直到19世纪50年代爆发在伦敦和巴黎的大霍乱，人们都用瘴气来解释感染的传播原因。污秽的空气，而非病菌，被认为是“医院热病”的主要元凶，引发了疾病与频繁的死亡。富人都对医院唯恐避之不及。</p><p>虽然瘴气理论很久以前就被证明了是错的，但Short在过去三十年间一直在支持重拾一些建筑设计原理，而这些原理正是在这一错误理论的催生下才发展起来的。</p><p>今天，一栋建筑的大量空间和建造费用都奉献给了空调系统。“但是我在过去三十年间设计和主持建成了一系列楼宇，尝试重新用上我所说的这些理念，然后测试了接下来的效果”。</p><p>“要向前去到我们全新的低能源、低碳排的未来，一个非常明智的做法就是回首过去，向我们高能源、 高碳排的当下出现之前的那个时代去学习。令人惊异的是我们抛弃了一份多么丰厚的遗产”。</p><p>Short所倡导的方法的成功案例之一是位于莱斯特的德蒙特福德大学的女王大楼。 楼内能容纳2000名员工和学生，整栋建筑都依靠自然通风、非人工手段制冷和天然照明，其中两座分别能坐下150多人的最大的礼堂也不例外。这座曾经获奖的建筑所使用的电量与英国其他同类建筑的用电量相比只是九牛一毛。</p><p>Short认为，如果气候模型预测的情况和能源价格上涨真的如人们所预期的那样到来了的话，那么在接下来的二十或三十年间，伦敦乃至全球的玻璃摩天高楼都将会成为沉重的累赘。</p><p>他坚信：利用自然环境而进行充足制冷的高楼大厦在几乎任何气候里都是可以建成并运转的。他和他的团队在北京和芝加哥的严酷气候里在各种各样的建筑上都进行过试验 – 这些建筑里设立了天然通风系统，同时辅以备用空调设备 – 也许会令人大吃一惊的是，在比较温和的日子里以及在春秋季节，这些空调有一半以上的时间都可以关闭不用。</p><p>Short所着眼的是我们也许可以重新设计未来的城市、办公室和家庭。也许是时候改变我们的看法了。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="recovery">Recovery</mark> of Natural Environments in <mark class="vocab-word" data-word="architecture">Architecture</mark> by Professor Alan Short is the culmination of 30 years of research and award-winning green building design by Short and colleagues in <mark class="vocab-word" data-word="architecture">Architecture</mark>, <mark class="vocab-word" data-word="engineering">Engineering</mark>, <mark class="vocab-word" data-word="applied">Applied</mark> Maths and Earth Sciences at the University of Cambridge.</p></div>  <div class="parallel-zh"><p>Alan Short教授所著的《自然环境在建筑中的复苏》是三十年研究的集大成之作，也是Short及其剑桥大学建筑学、工程学、应用数学和地球科学领域内的同事们共同完成的荣获大奖的环保建筑设计。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘The <mark class="vocab-word" data-word="crisis">crisis</mark> in building design is already here,’ said Short. ‘Policy makers think you can solve energy and building problems with <mark class="vocab-word" data-word="gadget">gadgets</mark>. You can’t. As global temperatures continue to rise, we are going to continue to <mark class="vocab-word" data-word="squander">squander</mark> more and more energy on keeping our buildings <mark class="vocab-word" data-word="mechanical">mechanically</mark> cool until we have run out of <mark class="vocab-word" data-word="capacity">capacity</mark>.’</p></div>  <div class="parallel-zh"><p>“建筑设计中的危机已经显现， ” Short这样说。“政策制定者们以为用小零件小设备就能解决能源和建筑问题。其实并不能。随着全球温度持续上升，我们将继续用机械方法挥霍越来越多的能量， 使建筑物内保持凉爽，直到我们再也无能为力为止。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Short is calling for a <mark class="vocab-word" data-word="sweep">sweeping</mark> reinvention of how <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> and major public buildings are designed – to end the <mark class="vocab-word" data-word="reliance">reliance</mark> on <mark class="vocab-word" data-word="seal">sealed</mark> buildings which exist <mark class="vocab-word" data-word="solely">solely</mark> via the life support’ system of vast air <mark class="vocab-word" data-word="conditioning">conditioning</mark> units.</p></div>  <div class="parallel-zh"><p>Short正在呼吁对摩天大楼和大型公共建筑的设计方式进行一场彻底的重塑 – 来结束对封闭式建筑的依赖，它们的存在完全是依靠大型空调设备来提供“生命支持”的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Instead, he shows it is entirely possible to <mark class="vocab-word" data-word="accommodate">accommodate</mark> natural <mark class="vocab-word" data-word="ventilation">ventilation</mark> and cooling in large buildings by looking into the past, before the <mark class="vocab-word" data-word="widespread">widespread</mark> introduction of air <mark class="vocab-word" data-word="conditioning">conditioning</mark> systems, which were ‘<mark class="vocab-word" data-word="relentless">relentlessly</mark> and <mark class="vocab-word" data-word="aggressively">aggressively</mark> marketed’ by their inventors.</p></div>  <div class="parallel-zh"><p>与之相反，他证明了：完全有可能在大型建筑中容纳天然的通风和冷却系统，办法就是回溯到过去那个还没有大规模引人空调系统的时代，这些空调系统就是其发明者所“毫不留情、大刀阔斧地”大肆进行宣传推广的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Short points out that to make most <mark class="vocab-word" data-word="contemporary">contemporary</mark> buildings <mark class="vocab-word" data-word="habitable">habitable</mark>, they have to be <mark class="vocab-word" data-word="seal">sealed</mark> and air conditioned. The energy use and <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark> this generates is <mark class="vocab-word" data-word="spectacular">spectacular</mark> and largely unnecessary. Buildings in the West account for 40-50% of electricity <mark class="vocab-word" data-word="usage">usage</mark>, generating <mark class="vocab-word" data-word="substantial">substantial</mark> <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark>, and the rest of the world is <mark class="vocab-word" data-word="catch">catching</mark> up at a <mark class="vocab-word" data-word="frightening">frightening</mark> rate. Short regards glass, steel and air-conditioned <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> as symbols of status, rather than practical ways of meeting our requirements.</p></div>  <div class="parallel-zh"><p>Short指出：要让大多数当代建筑里可以住人，它们必须封闭起来、进行空气调控。这种做法所造成的能源消耗和碳排放是极为壮观的，在很大程度上并没有必要。西方建筑物要占用电量的40—50%，产生了巨量的碳排放，而世界上的其他地方正以一种令人惊恐的速度追赶上来。Short认为，由玻璃，钢铁和空调组成的摩天大楼是社会地位的象征，而不是满足我们需要的实用方式。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Short’s book highlights a developing and <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> art and science of <mark class="vocab-word" data-word="ventilate">ventilating</mark> buildings through the 19th and earlier-20th centuries, including the design of <mark class="vocab-word" data-word="ingenious">ingeniously</mark> <mark class="vocab-word" data-word="ventilate">ventilated</mark> hospitals. Of particular interest were those built to the designs of John Shaw Billings, including the first Johns Hopkins Hospital in the US city of Baltimore (1873-1889).</p></div>  <div class="parallel-zh"><p>Short的书重点阐述了在19世纪和20世纪初期这个阶段里，为建筑物通风的艺术与科学一直在发展进步、日趋复杂完善，这其中包括通风系统设计精妙的医院。格外引人注目的是那些依照John Shaw Billings的设计搭建而成的建筑，包括位于美国巴尔的摩市的第一家约翰霍普金斯医院（1873—1889）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘We spent three years digitally modelling Billings’ final designs,’ says Short. ‘We put <mark class="vocab-word" data-word="pathogen">pathogens</mark>* in the airstreams, modelled for someone with <mark class="vocab-word" data-word="tuberculosis">tuberculosis</mark> (TB) <mark class="vocab-word" data-word="cough">coughing</mark> in the <mark class="vocab-word" data-word="ward">wards</mark> and we found the <mark class="vocab-word" data-word="ventilation">ventilation</mark> systems in the room would have kept other patients safe from harm.</p></div>  <div class="parallel-zh"><p>“我们花了三年的时间用数字化模拟修建了Billins最后的那些设计方案，” Short这样说。“我们在气流中放入了病原体，以此模仿病房中正在咳嗽的肺结核病患，结果我们发现：房间里的通风系统能保护其他病人不受侵害。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘We discovered that 19th-century hospital <mark class="vocab-word" data-word="ward">wards</mark> could generate up to 24 air changes an hour – that’s similar to the performance of a modern-day, computer-controlled operating theatre. We believe you could build <mark class="vocab-word" data-word="ward">wards</mark> based on these principles now.</p></div>  <div class="parallel-zh"><p>“我们发现19世纪的医院病房在1小时内能够制造多达24次的空气交换 – 类似于一家现代化的、由电脑中控的手术室可达成的效果。我们相信你现在完全可以基于这些原理来建造病房。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Single rooms are not appropriate for all patients. <mark class="vocab-word" data-word="communal">Communal</mark> <mark class="vocab-word" data-word="ward">wards</mark> appropriate for certain patients – older people with dementia, for example – would work just as well in today’s hospitals, at a <mark class="vocab-word" data-word="fraction">fraction</mark> of the energy cost.’</p></div>  <div class="parallel-zh"><p>单人间并非适合于所有的病人。对某些病患比较合适的公共病房 – 例如患痴呆的较年长病人 – 在今天的医院里也同样适用，所消耗的能量却只有一丁点儿。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Professor Short <mark class="vocab-word" data-word="contend">contends</mark> the mindset and skill-sets behind these designs have been completely lost, <mark class="vocab-word" data-word="lament">lamenting</mark> the disappearance of expertly designed theatres, <mark class="vocab-word" data-word="opera">opera</mark> houses, and other buildings where up to half the volume of the building was given over to ensuring everyone got fresh air.</p></div>  <div class="parallel-zh"><p>Short 教授感到这些设计背后的思维理念和精巧技艺已经完全丢失了，他痛惜那些消失了的、经由专家精心设计建造的手术室、歌剧院和其他同类建筑，这些建筑中多达一半的空间都用于确保每个人都能获得新鲜空气。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Much of the <mark class="vocab-word" data-word="ingenuity">ingenuity</mark> present in 19th-century hospital and building design was driven by a panicked public clamouring for buildings that could protect against what was thought to be the <mark class="vocab-word" data-word="lethal">lethal</mark> <mark class="vocab-word" data-word="threat">threat</mark> of miasmas – <mark class="vocab-word" data-word="toxic">toxic</mark> air that spread disease. Miasmas were feared as the <mark class="vocab-word" data-word="principal">principal</mark> agents of disease and <mark class="vocab-word" data-word="epidemic">epidemics</mark> for centuries, and were used to explain the spread of infection from the Middle Ages right through to the <mark class="vocab-word" data-word="cholera">cholera</mark> <mark class="vocab-word" data-word="outbreak">outbreaks</mark> in London and Paris during the 1850s. <mark class="vocab-word" data-word="foul">Foul</mark> air, rather than <mark class="vocab-word" data-word="germ">germs</mark>, was believed to be the main driver of ‘hospital <mark class="vocab-word" data-word="fever">fever</mark>’, <mark class="vocab-word" data-word="lead">leading</mark> to disease and <mark class="vocab-word" data-word="frequent">frequent</mark> death. The <mark class="vocab-word" data-word="prosperous">prosperous</mark> <mark class="vocab-word" data-word="steer">steered</mark> clear of hospitals.</p></div>  <div class="parallel-zh"><p>存在于19世纪的医院和其他建筑中的那种精巧设计在很大程度上是被恐慌的公众所催生的，这些人大声疾呼，要求建筑物能给他们提供保护，使自己不受当时被认为是致命威胁的瘴气 – 会传播疾病的有毒气体 – 所侵袭。几个世纪以来，瘴气一直被看作疾病和传染病的主要致病源而深受畏俱，从中世纪以来直到19世纪50年代爆发在伦敦和巴黎的大霍乱，人们都用瘴气来解释感染的传播原因。污秽的空气，而非病菌，被认为是“医院热病”的主要元凶，引发了疾病与频繁的死亡。富人都对医院唯恐避之不及。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While miasma theory has been long since <mark class="vocab-word" data-word="disprove">disproved</mark>, Short has for the last 30 years <mark class="vocab-word" data-word="advocate">advocated</mark> a return to some of the building design principles produced in its wake.</p></div>  <div class="parallel-zh"><p>虽然瘴气理论很久以前就被证明了是错的，但Short在过去三十年间一直在支持重拾一些建筑设计原理，而这些原理正是在这一错误理论的催生下才发展起来的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Today, huge amounts of a building’s space and construction cost are given over to air <mark class="vocab-word" data-word="conditioning">conditioning</mark>. ‘But I have designed and built a series of buildings over the past three <mark class="vocab-word" data-word="decade">decades</mark> which have tried to reinvent some of these ideas and then measure what happens.</p></div>  <div class="parallel-zh"><p>今天，一栋建筑的大量空间和建造费用都奉献给了空调系统。“但是我在过去三十年间设计和主持建成了一系列楼宇，尝试重新用上我所说的这些理念，然后测试了接下来的效果”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘To go forward into our new low-energy, low-carbon future, we would be well advised to look back at design before our high-energy, high-carbon present appeared. What is surprising is what a rich <mark class="vocab-word" data-word="legacy">legacy</mark> we have abandoned.’</p></div>  <div class="parallel-zh"><p>“要向前去到我们全新的低能源、低碳排的未来，一个非常明智的做法就是回首过去，向我们高能源、 高碳排的当下出现之前的那个时代去学习。令人惊异的是我们抛弃了一份多么丰厚的遗产”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Successful examples of Short’s approach include the Queen’s Building at De Montfort University in Leicester. Containing as many as 2,000 staff and students, the entire building is naturally <mark class="vocab-word" data-word="ventilate">ventilated</mark>, <mark class="vocab-word" data-word="passive">passively</mark> cooled and naturally lit, including the two largest auditoria, each seating more than 150 people. The award-winning building uses a <mark class="vocab-word" data-word="fraction">fraction</mark> of the electricity of <mark class="vocab-word" data-word="comparable">comparable</mark> buildings in the UK.</p></div>  <div class="parallel-zh"><p>Short所倡导的方法的成功案例之一是位于莱斯特的德蒙特福德大学的女王大楼。 楼内能容纳2000名员工和学生，整栋建筑都依靠自然通风、非人工手段制冷和天然照明，其中两座分别能坐下150多人的最大的礼堂也不例外。这座曾经获奖的建筑所使用的电量与英国其他同类建筑的用电量相比只是九牛一毛。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Short <mark class="vocab-word" data-word="contend">contends</mark> that glass <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> in London and around the world will become a <mark class="vocab-word" data-word="liability">liability</mark> over the next 20 or 30 years if climate modelling <mark class="vocab-word" data-word="prediction">predictions</mark> and energy price rises come to pass as expected.</p></div>  <div class="parallel-zh"><p>Short认为，如果气候模型预测的情况和能源价格上涨真的如人们所预期的那样到来了的话，那么在接下来的二十或三十年间，伦敦乃至全球的玻璃摩天高楼都将会成为沉重的累赘。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>He is <mark class="vocab-word" data-word="convince">convinced</mark> that <mark class="vocab-word" data-word="sufficient">sufficiently</mark> cooled <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> using the natural environment can be produced in almost any climate. He and his team have worked on <mark class="vocab-word" data-word="hybrid">hybrid</mark> buildings in the <mark class="vocab-word" data-word="harsh">harsh</mark> climates of Beijing and Chicago – built with natural <mark class="vocab-word" data-word="ventilation">ventilation</mark> assisted by back-up air <mark class="vocab-word" data-word="conditioning">conditioning</mark> – which, surprisingly perhaps, can be switched off more than half the time on milder days and during the <mark class="vocab-word" data-word="spring">spring</mark> and autumn.</p></div>  <div class="parallel-zh"><p>他坚信：利用自然环境而进行充足制冷的高楼大厦在几乎任何气候里都是可以建成并运转的。他和他的团队在北京和芝加哥的严酷气候里在各种各样的建筑上都进行过试验 – 这些建筑里设立了天然通风系统，同时辅以备用空调设备 – 也许会令人大吃一惊的是，在比较温和的日子里以及在春秋季节，这些空调有一半以上的时间都可以关闭不用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Short looks at how we might reimagine the cities, offices and homes of the future. Maybe it’s time we changed our <mark class="vocab-word" data-word="outlook">outlook</mark>.</p></div>  <div class="parallel-zh"><p>Short所着眼的是我们也许可以重新设计未来的城市、办公室和家庭。也许是时候改变我们的看法了。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"recovery": 1, "architecture": 2, "engineering": 1, "applied": 1, "crisis": 1, "gadget": 1, "squander": 1, "mechanical": 1, "capacity": 1, "sweep": 1, "skyscraper": 4, "reliance": 1, "seal": 2, "solely": 1, "conditioning": 4, "accommodate": 1, "ventilation": 3, "widespread": 1, "relentless": 1, "aggressively": 1, "contemporary": 1, "habitable": 1, "carbon": 2, "emission": 2, "spectacular": 1, "usage": 1, "substantial": 1, "catch": 1, "frightening": 1, "sophisticated": 1, "ventilate": 3, "ingenious": 1, "pathogen": 1, "tuberculosis": 1, "cough": 1, "ward": 4, "communal": 1, "fraction": 2, "contend": 2, "lament": 1, "opera": 1, "ingenuity": 1, "lethal": 1, "threat": 1, "toxic": 1, "principal": 1, "epidemic": 1, "cholera": 1, "outbreak": 1, "foul": 1, "germ": 1, "fever": 1, "lead": 1, "frequent": 1, "prosperous": 1, "steer": 1, "disprove": 1, "advocate": 1, "decade": 1, "legacy": 1, "passive": 1, "comparable": 1, "liability": 1, "prediction": 1, "convince": 1, "sufficient": 1, "hybrid": 1, "harsh": 1, "spring": 1, "outlook": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

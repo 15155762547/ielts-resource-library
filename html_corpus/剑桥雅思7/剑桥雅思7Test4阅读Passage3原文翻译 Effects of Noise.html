@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effects of Noise - 剑桥雅思7 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Effects of Noise</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24776.html" target="_blank">https://www.laokaoya.com/24776.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>In general, it is <mark class="vocab-word" data-word="plausible">plausible</mark> to suppose that we should prefer peace and quiet to noise. And yet most of us have had the experience of having to <mark class="vocab-word" data-word="adjust">adjust</mark> to sleeping in the mountains or the countryside because it was initially ‘too quiet’, an experience that <mark class="vocab-word" data-word="suggest">suggests</mark> that humans are capable of adapting to a wide range of noise levels. Research supports this view. For example, Glass and Singer (1972) <mark class="vocab-word" data-word="exposed">exposed</mark> people to short <mark class="vocab-word" data-word="burst">bursts</mark> of very loud noise and then measured their ability to work out problems and their <mark class="vocab-word" data-word="physiological">physiological</mark> reactions to the noise. The noise was quite <mark class="vocab-word" data-word="disruptive">disruptive</mark> at first, but after about four minutes the subjects were doing just as well on their tasks as control subjects who were not <mark class="vocab-word" data-word="exposed">exposed</mark> to noise. Their <mark class="vocab-word" data-word="physiological">physiological</mark> <mark class="vocab-word" data-word="arousal">arousal</mark> also declined quickly to the same levels as those of the control subjects.</p><p>But there are limits to <mark class="vocab-word" data-word="adaptation">adaptation</mark> and loud noise becomes more <mark class="vocab-word" data-word="troublesome">troublesome</mark> if the person is required to concentrate on more than one task. For example, high noise levels <mark class="vocab-word" data-word="interfere">interfered</mark> with the performance of subjects who were required to monitor three <mark class="vocab-word" data-word="dial">dials</mark> at a time, a task not unlike that of an <mark class="vocab-word" data-word="aeroplane">aeroplane</mark> <mark class="vocab-word" data-word="pilot">pilot</mark> or an air-traffic controller (Broadbent, 1957). Similarly, this article is from  website. noise did not affect a subject’s ability to track a moving line with a <mark class="vocab-word" data-word="steer">steering</mark> wheel, but it did <mark class="vocab-word" data-word="interfere">interfere</mark> with the subject’s ability to repeat numbers while tracking (Finkelman and Glass, 1970).</p><p>Probably the most significant finding from research on noise is that its predictability is more important than how loud it is. We are much more able to ‘tune out’ <mark class="vocab-word" data-word="chronic">chronic</mark> background noise, even if it is quite loud, than to work under <mark class="vocab-word" data-word="circumstance">circumstances</mark> with unexpected <mark class="vocab-word" data-word="intrusion">intrusions</mark> of noise. In the Glass and Singer study, in which subjects were <mark class="vocab-word" data-word="exposed">exposed</mark> to <mark class="vocab-word" data-word="burst">bursts</mark> of noise as they worked on a task, some subjects heard loud <mark class="vocab-word" data-word="burst">bursts</mark> and others heard soft <mark class="vocab-word" data-word="burst">bursts</mark>. For some subjects, the <mark class="vocab-word" data-word="burst">bursts</mark> were spaced exactly one minute apart (<mark class="vocab-word" data-word="predictable">predictable</mark> noise); others heard the same amount of noise overall, but the <mark class="vocab-word" data-word="burst">bursts</mark> occurred at <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="interval">intervals</mark> (unpredictable noise). Subjects reported finding the <mark class="vocab-word" data-word="predictable">predictable</mark> and unpredictable noise equally annoying, and all subjects <mark class="vocab-word" data-word="perform">performed</mark> at about the same level during the noise <mark class="vocab-word" data-word="portion">portion</mark> of the experiment. But the different noise conditions had quite different after-effects when the subjects were required to proofread written material under conditions of no noise. As shown in Table 1 the unpredictable noise produced more errors in the later proofreading task than <mark class="vocab-word" data-word="predictable">predictable</mark> noise; and soft, unpredictable noise actually produced slightly more errors on this task than the loud, <mark class="vocab-word" data-word="predictable">predictable</mark> noise.</p><p>Apparently, unpredictable noise produces more <mark class="vocab-word" data-word="fatigue">fatigue</mark> than <mark class="vocab-word" data-word="predictable">predictable</mark> noise, but it takes a while for this <mark class="vocab-word" data-word="fatigue">fatigue</mark> to take its <mark class="vocab-word" data-word="toll">toll</mark> on performance.</p><p>Predictability is not the only <mark class="vocab-word" data-word="variable">variable</mark> that reduces or <mark class="vocab-word" data-word="eliminate">eliminates</mark> the <mark class="vocab-word" data-word="negative">negative</mark> effects of noise. Another is control. If the individual knows that he or she can control the noise, this seems to <mark class="vocab-word" data-word="eliminate">eliminate</mark> both its <mark class="vocab-word" data-word="negative">negative</mark> effects at the time and its after-effects. This is true even if the individual never actually exercises his or her option to turn the noise off (Glass and Singer, 1972). Just the knowledge that one has control is <mark class="vocab-word" data-word="sufficient">sufficient</mark>.</p><p>The studies discussed so far <mark class="vocab-word" data-word="exposed">exposed</mark> people to noise for only short periods and only <mark class="vocab-word" data-word="transient">transient</mark> effects were studied. But the major worry about noisy environments is that living day after day with <mark class="vocab-word" data-word="chronic">chronic</mark> noise may produce serious, <mark class="vocab-word" data-word="lasting">lasting</mark> effects. One study, <mark class="vocab-word" data-word="suggest">suggesting</mark> that this worry is a <mark class="vocab-word" data-word="realistic">realistic</mark> one, compared <mark class="vocab-word" data-word="elementary">elementary</mark> school <mark class="vocab-word" data-word="pupil">pupils</mark> who attended schools near Los Angeles’s busiest airport with students who attended schools in quiet neighbourhoods (Cohen et al., 1980). It was found that children from the noisy schools had higher blood pressure and were more easily <mark class="vocab-word" data-word="distract">distracted</mark> than those who attended the quiet schools. Moreover, there was no evidence of adaptability to the noise. In fact, the longer the children had attended the noisy schools, the more distractible they became. The effects also seem to be long <mark class="vocab-word" data-word="lasting">lasting</mark>. A follow-up study showed that children who were moved to less noisy classrooms still showed greater distractibility one year later than students who had always been in the quiet schools (Cohen et al, 1981). It should be noted that the two groups of children had been carefully <mark class="vocab-word" data-word="match">matched</mark> by the investigators so that they were <mark class="vocab-word" data-word="comparable">comparable</mark> in age, ethnicity, race, and social class.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>大体而言，认为我们应该更喜欢安静与祥和而不是噪音很合理。然而，我们中许多人都有过因为山区或乡村太过安静，而不得不努力适应睡眠的情况。这表明，人类能够适应大范围的噪音水平。研究支持这种观点。例如，格拉斯和辛格(Glass and Singer，1972)将人们暴露于阵阵短促巨大的噪音中，然后测量他们解决问题的能力以及对噪音的生理反应。起初，噪音的干扰非常大。但是大约四分钟后，这些受试者在任务上的表现与不受噪音影响的对照受试者一样好。他们的生理反应也迅速下降到与对照组相同的水平。</p><p>但是，适应能力有其极限。如果人们需要专心于不止一项工作，嘈杂的声音就会变得麻烦许多。例如，较高的噪音水平干扰了需要同时监视三个拨盘的受试者的表现。这项任务与飞机驾驶员或空中交通管制员的任务没有太大区别(Broadbent，1957)。同样，噪音也不会影响受试者使用方向盘跟踪运动曲线的能力，但是会干扰受试者在跟踪的同时重复数字的能力(Finkelman和Glass，1970)。</p><p>噪音研究的最重要发现可能是其可预测性比大小更重要。即使是在声音很大的情况下，我们也能够屏蔽长期的背景噪音，但我们却无法在意料之外的噪音干扰下工作。在格拉斯和辛格（Glass and Singer）的研究中，受试者在工作时暴露于噪音之下。一些受试者听到很大的声音，而另一些则听到轻柔的声音。对于某些受试者，声音的频率恰好是一分钟一次（可预测的噪音）。其他人听到的噪音总量相同，但间隔随机（不可预测的噪声）。受试者的报告发现，可预测和不可预测的噪音同样令人讨厌，并且在实验的噪音部分，所有受试者的表现大致相同。但是，当受试者被要求在无噪音的条件下校对书面材料时，不同的噪声条件具有非常不同的事后效应。如表1所示，不可预测的噪音在后来的校对任务中比可预测的噪音产生更多的错误。柔和的、无法预测的噪音实际上比响亮的、可预测的噪声在这个任务上产生的错误更多。</p><p>显然，不可预测的噪音比可预测的噪音产生更多的疲劳，但是这种疲劳需要一些时间才会影响人们的表现。</p><p>可预测性不是减少或消除噪音负面影响的唯一变量。另一个变量是控制。如果一个人知道他或她可以控制噪音，这似乎可以消除当时和事后的负面影响。即使这个人从未真正行使过消除噪音的选择也同样如此(Glass and Singer，1972)。仅仅知道他拥有控制权就足够了。</p><p>到目前为止讨论的研究仅将人们暴露在噪音之中很短的时间，并且只研究了短暂的影响。但是，对于嘈杂环境的主要担忧是，日复一日地长期生活在噪音之中可能会产生严重而持久的影响。一项研究表明，这种担忧十分现实。它比较了在洛杉矶最繁忙的机场旁上小学的学生与在安静环境下上小学的学生(Cohen等人，1980)。研究发现，与那些安静学校的孩子相比，嘈杂学校孩子的血压更高，更容易分心。而且没有证据表明对噪声存在适应性。实际上，孩子们进入嘈杂学校的时间越长，他们的注意力就变得越分散。其影响似乎也历久不衰。一项后续的研究表明，与一直在安静的学校里学习的学生相比，被转移到不那么吵闹的教室里的孩子在一年之后仍然容易注意力涣散(Cohen等，1981)。应当指出的是，调查人员对这两组孩子进行了仔细的匹配，以使他们在年龄，种族，人种和社会阶层上都具有可比性。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>In general, it is <mark class="vocab-word" data-word="plausible">plausible</mark> to suppose that we should prefer peace and quiet to noise. And yet most of us have had the experience of having to <mark class="vocab-word" data-word="adjust">adjust</mark> to sleeping in the mountains or the countryside because it was initially ‘too quiet’, an experience that <mark class="vocab-word" data-word="suggest">suggests</mark> that humans are capable of adapting to a wide range of noise levels. Research supports this view. For example, Glass and Singer (1972) <mark class="vocab-word" data-word="exposed">exposed</mark> people to short <mark class="vocab-word" data-word="burst">bursts</mark> of very loud noise and then measured their ability to work out problems and their <mark class="vocab-word" data-word="physiological">physiological</mark> reactions to the noise. The noise was quite <mark class="vocab-word" data-word="disruptive">disruptive</mark> at first, but after about four minutes the subjects were doing just as well on their tasks as control subjects who were not <mark class="vocab-word" data-word="exposed">exposed</mark> to noise. Their <mark class="vocab-word" data-word="physiological">physiological</mark> <mark class="vocab-word" data-word="arousal">arousal</mark> also declined quickly to the same levels as those of the control subjects.</p></div>  <div class="parallel-zh"><p>大体而言，认为我们应该更喜欢安静与祥和而不是噪音很合理。然而，我们中许多人都有过因为山区或乡村太过安静，而不得不努力适应睡眠的情况。这表明，人类能够适应大范围的噪音水平。研究支持这种观点。例如，格拉斯和辛格(Glass and Singer，1972)将人们暴露于阵阵短促巨大的噪音中，然后测量他们解决问题的能力以及对噪音的生理反应。起初，噪音的干扰非常大。但是大约四分钟后，这些受试者在任务上的表现与不受噪音影响的对照受试者一样好。他们的生理反应也迅速下降到与对照组相同的水平。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But there are limits to <mark class="vocab-word" data-word="adaptation">adaptation</mark> and loud noise becomes more <mark class="vocab-word" data-word="troublesome">troublesome</mark> if the person is required to concentrate on more than one task. For example, high noise levels <mark class="vocab-word" data-word="interfere">interfered</mark> with the performance of subjects who were required to monitor three <mark class="vocab-word" data-word="dial">dials</mark> at a time, a task not unlike that of an <mark class="vocab-word" data-word="aeroplane">aeroplane</mark> <mark class="vocab-word" data-word="pilot">pilot</mark> or an air-traffic controller (Broadbent, 1957). Similarly, this article is from  website. noise did not affect a subject’s ability to track a moving line with a <mark class="vocab-word" data-word="steer">steering</mark> wheel, but it did <mark class="vocab-word" data-word="interfere">interfere</mark> with the subject’s ability to repeat numbers while tracking (Finkelman and Glass, 1970).</p></div>  <div class="parallel-zh"><p>但是，适应能力有其极限。如果人们需要专心于不止一项工作，嘈杂的声音就会变得麻烦许多。例如，较高的噪音水平干扰了需要同时监视三个拨盘的受试者的表现。这项任务与飞机驾驶员或空中交通管制员的任务没有太大区别(Broadbent，1957)。同样，噪音也不会影响受试者使用方向盘跟踪运动曲线的能力，但是会干扰受试者在跟踪的同时重复数字的能力(Finkelman和Glass，1970)。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Probably the most significant finding from research on noise is that its predictability is more important than how loud it is. We are much more able to ‘tune out’ <mark class="vocab-word" data-word="chronic">chronic</mark> background noise, even if it is quite loud, than to work under <mark class="vocab-word" data-word="circumstance">circumstances</mark> with unexpected <mark class="vocab-word" data-word="intrusion">intrusions</mark> of noise. In the Glass and Singer study, in which subjects were <mark class="vocab-word" data-word="exposed">exposed</mark> to <mark class="vocab-word" data-word="burst">bursts</mark> of noise as they worked on a task, some subjects heard loud <mark class="vocab-word" data-word="burst">bursts</mark> and others heard soft <mark class="vocab-word" data-word="burst">bursts</mark>. For some subjects, the <mark class="vocab-word" data-word="burst">bursts</mark> were spaced exactly one minute apart (<mark class="vocab-word" data-word="predictable">predictable</mark> noise); others heard the same amount of noise overall, but the <mark class="vocab-word" data-word="burst">bursts</mark> occurred at <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="interval">intervals</mark> (unpredictable noise). Subjects reported finding the <mark class="vocab-word" data-word="predictable">predictable</mark> and unpredictable noise equally annoying, and all subjects <mark class="vocab-word" data-word="perform">performed</mark> at about the same level during the noise <mark class="vocab-word" data-word="portion">portion</mark> of the experiment. But the different noise conditions had quite different after-effects when the subjects were required to proofread written material under conditions of no noise. As shown in Table 1 the unpredictable noise produced more errors in the later proofreading task than <mark class="vocab-word" data-word="predictable">predictable</mark> noise; and soft, unpredictable noise actually produced slightly more errors on this task than the loud, <mark class="vocab-word" data-word="predictable">predictable</mark> noise.</p></div>  <div class="parallel-zh"><p>噪音研究的最重要发现可能是其可预测性比大小更重要。即使是在声音很大的情况下，我们也能够屏蔽长期的背景噪音，但我们却无法在意料之外的噪音干扰下工作。在格拉斯和辛格（Glass and Singer）的研究中，受试者在工作时暴露于噪音之下。一些受试者听到很大的声音，而另一些则听到轻柔的声音。对于某些受试者，声音的频率恰好是一分钟一次（可预测的噪音）。其他人听到的噪音总量相同，但间隔随机（不可预测的噪声）。受试者的报告发现，可预测和不可预测的噪音同样令人讨厌，并且在实验的噪音部分，所有受试者的表现大致相同。但是，当受试者被要求在无噪音的条件下校对书面材料时，不同的噪声条件具有非常不同的事后效应。如表1所示，不可预测的噪音在后来的校对任务中比可预测的噪音产生更多的错误。柔和的、无法预测的噪音实际上比响亮的、可预测的噪声在这个任务上产生的错误更多。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Apparently, unpredictable noise produces more <mark class="vocab-word" data-word="fatigue">fatigue</mark> than <mark class="vocab-word" data-word="predictable">predictable</mark> noise, but it takes a while for this <mark class="vocab-word" data-word="fatigue">fatigue</mark> to take its <mark class="vocab-word" data-word="toll">toll</mark> on performance.</p></div>  <div class="parallel-zh"><p>显然，不可预测的噪音比可预测的噪音产生更多的疲劳，但是这种疲劳需要一些时间才会影响人们的表现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Predictability is not the only <mark class="vocab-word" data-word="variable">variable</mark> that reduces or <mark class="vocab-word" data-word="eliminate">eliminates</mark> the <mark class="vocab-word" data-word="negative">negative</mark> effects of noise. Another is control. If the individual knows that he or she can control the noise, this seems to <mark class="vocab-word" data-word="eliminate">eliminate</mark> both its <mark class="vocab-word" data-word="negative">negative</mark> effects at the time and its after-effects. This is true even if the individual never actually exercises his or her option to turn the noise off (Glass and Singer, 1972). Just the knowledge that one has control is <mark class="vocab-word" data-word="sufficient">sufficient</mark>.</p></div>  <div class="parallel-zh"><p>可预测性不是减少或消除噪音负面影响的唯一变量。另一个变量是控制。如果一个人知道他或她可以控制噪音，这似乎可以消除当时和事后的负面影响。即使这个人从未真正行使过消除噪音的选择也同样如此(Glass and Singer，1972)。仅仅知道他拥有控制权就足够了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The studies discussed so far <mark class="vocab-word" data-word="exposed">exposed</mark> people to noise for only short periods and only <mark class="vocab-word" data-word="transient">transient</mark> effects were studied. But the major worry about noisy environments is that living day after day with <mark class="vocab-word" data-word="chronic">chronic</mark> noise may produce serious, <mark class="vocab-word" data-word="lasting">lasting</mark> effects. One study, <mark class="vocab-word" data-word="suggest">suggesting</mark> that this worry is a <mark class="vocab-word" data-word="realistic">realistic</mark> one, compared <mark class="vocab-word" data-word="elementary">elementary</mark> school <mark class="vocab-word" data-word="pupil">pupils</mark> who attended schools near Los Angeles’s busiest airport with students who attended schools in quiet neighbourhoods (Cohen et al., 1980). It was found that children from the noisy schools had higher blood pressure and were more easily <mark class="vocab-word" data-word="distract">distracted</mark> than those who attended the quiet schools. Moreover, there was no evidence of adaptability to the noise. In fact, the longer the children had attended the noisy schools, the more distractible they became. The effects also seem to be long <mark class="vocab-word" data-word="lasting">lasting</mark>. A follow-up study showed that children who were moved to less noisy classrooms still showed greater distractibility one year later than students who had always been in the quiet schools (Cohen et al, 1981). It should be noted that the two groups of children had been carefully <mark class="vocab-word" data-word="match">matched</mark> by the investigators so that they were <mark class="vocab-word" data-word="comparable">comparable</mark> in age, ethnicity, race, and social class.</p></div>  <div class="parallel-zh"><p>到目前为止讨论的研究仅将人们暴露在噪音之中很短的时间，并且只研究了短暂的影响。但是，对于嘈杂环境的主要担忧是，日复一日地长期生活在噪音之中可能会产生严重而持久的影响。一项研究表明，这种担忧十分现实。它比较了在洛杉矶最繁忙的机场旁上小学的学生与在安静环境下上小学的学生(Cohen等人，1980)。研究发现，与那些安静学校的孩子相比，嘈杂学校孩子的血压更高，更容易分心。而且没有证据表明对噪声存在适应性。实际上，孩子们进入嘈杂学校的时间越长，他们的注意力就变得越分散。其影响似乎也历久不衰。一项后续的研究表明，与一直在安静的学校里学习的学生相比，被转移到不那么吵闹的教室里的孩子在一年之后仍然容易注意力涣散(Cohen等，1981)。应当指出的是，调查人员对这两组孩子进行了仔细的匹配，以使他们在年龄，种族，人种和社会阶层上都具有可比性。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"plausible": 1, "adjust": 1, "suggest": 2, "exposed": 4, "burst": 6, "physiological": 2, "disruptive": 1, "arousal": 1, "adaptation": 1, "troublesome": 1, "interfere": 2, "dial": 1, "aeroplane": 1, "pilot": 1, "steer": 1, "chronic": 2, "circumstance": 1, "intrusion": 1, "predictable": 5, "random": 1, "interval": 1, "perform": 1, "portion": 1, "fatigue": 2, "toll": 1, "variable": 1, "eliminate": 2, "negative": 2, "sufficient": 1, "transient": 1, "lasting": 2, "realistic": 1, "elementary": 1, "pupil": 1, "distract": 1, "match": 1, "comparable": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

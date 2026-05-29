@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Context, Meaning and Scope of Tourism - 剑桥雅思10 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思10</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The Context, Meaning and Scope of Tourism</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29130.html" target="_blank">https://www.laokaoya.com/29130.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Travel has existed since the beginning of time, when <mark class="vocab-word" data-word="primitive">primitive</mark> man set out, often <mark class="vocab-word" data-word="traverse">traversing</mark> great distances in search of game, which <mark class="vocab-word" data-word="provided">provided</mark> the food and <mark class="vocab-word" data-word="clothe">clothing</mark> necessary for his <mark class="vocab-word" data-word="survival">survival</mark>. Throughout the course of history, people have travelled for purposes of trade, religious <mark class="vocab-word" data-word="conviction">conviction</mark>, economic gain, war, <mark class="vocab-word" data-word="migration">migration</mark> and other equally <mark class="vocab-word" data-word="compelling">compelling</mark> <mark class="vocab-word" data-word="motivation">motivations</mark>. In the Roman <mark class="vocab-word" data-word="era">era</mark>, wealthy <mark class="vocab-word" data-word="aristocrat">aristocrats</mark> and high government officials also travelled for pleasure. <mark class="vocab-word" data-word="seaside">Seaside</mark> <mark class="vocab-word" data-word="resort">resorts</mark> located at Pompeii and Herculaneum afforded citizens the opportunity to escape to their vacation <mark class="vocab-word" data-word="villa">villas</mark> in order to avoid the summer heat of Rome. Travel, except during the Dark Ages, has continued to grow and, throughout recorded history, has played a <mark class="vocab-word" data-word="vital">vital</mark> role in the development of civilisations and their economies.</p><p><mark class="vocab-word" data-word="tourism">Tourism</mark> in the mass form as we know it today is a <mark class="vocab-word" data-word="distinct">distinctly</mark> twentieth-century <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>. <mark class="vocab-word" data-word="historian">Historians</mark> <mark class="vocab-word" data-word="suggest">suggest</mark> that the <mark class="vocab-word" data-word="advent">advent</mark> of mass <mark class="vocab-word" data-word="tourism">tourism</mark> began in England during the industrial revolution with the rise of the middle class and the <mark class="vocab-word" data-word="availability">availability</mark> of relatively inexpensive <mark class="vocab-word" data-word="transportation">transportation</mark>. The creation of the commercial airline industry following the Second World War and the <mark class="vocab-word" data-word="subsequent">subsequent</mark> development of the <mark class="vocab-word" data-word="jet">jet</mark> aircraft in the 1950s signalled the rapid growth and <mark class="vocab-word" data-word="expansion">expansion</mark> of international travel. This growth led to the development of a major new industry: <mark class="vocab-word" data-word="tourism">tourism</mark>. In turn, international <mark class="vocab-word" data-word="tourism">tourism</mark> became the concern of a number of world governments since it not only <mark class="vocab-word" data-word="provided">provided</mark> new employment opportunities but also produced a means of earning foreign exchange.</p><p><mark class="vocab-word" data-word="tourism">Tourism</mark> today has grown significantly in both economic and social importance. In most industrialised countries over the past few years the fastest growth has been seen in the area of services. One of the largest <mark class="vocab-word" data-word="segment">segments</mark> of the service industry, although largely unrecognised as an <mark class="vocab-word" data-word="entity">entity</mark> in some of these countries, is travel and <mark class="vocab-word" data-word="tourism">tourism</mark>. <mark class="vocab-word" data-word="accord">According</mark> to the World Travel and <mark class="vocab-word" data-word="tourism">Tourism</mark> <mark class="vocab-word" data-word="council">Council</mark> (1992), Travel and <mark class="vocab-word" data-word="tourism">tourism</mark> is the largest industry in the world on <mark class="vocab-word" data-word="virtually">virtually</mark> any economic measure including value-added capital investment, employment and tax contributions’. In 1992, the industry’s <mark class="vocab-word" data-word="gross">gross</mark> <mark class="vocab-word" data-word="output">output</mark> was estimated to be $3.5 <mark class="vocab-word" data-word="trillion">trillion</mark>, over 12 per cent of all consumer spending. The travel and <mark class="vocab-word" data-word="tourism">tourism</mark> industry is the world’s largest employer with almost 130 million jobs, or almost 7 percent of all employees. This industry is the world’s <mark class="vocab-word" data-word="lead">leading</mark> industrial <mark class="vocab-word" data-word="contributor">contributor</mark>, producing over 6 per cent of the world’s <mark class="vocab-word" data-word="gross">gross</mark> national product and <mark class="vocab-word" data-word="accounting">accounting</mark> for capital investment in <mark class="vocab-word" data-word="excess">excess</mark> of $422 billion in direct, <mark class="vocab-word" data-word="indirect">indirect</mark> and personal taxes cadi year. Thus, <mark class="vocab-word" data-word="tourism">tourism</mark> has a <mark class="vocab-word" data-word="profound">profound</mark> <mark class="vocab-word" data-word="impact">impact</mark> both on the world economy and, because of the educative effect of travel and the effects on employment, on society itself.</p><p>However, the major problems of the travel and <mark class="vocab-word" data-word="tourism">tourism</mark> industry that have hidden, or <mark class="vocab-word" data-word="obscure">obscured</mark>, its economic <mark class="vocab-word" data-word="impact">impact</mark> are the <mark class="vocab-word" data-word="diversity">diversity</mark> and fragmentation of the industry itself. The travel industry includes: hotels, <mark class="vocab-word" data-word="motel">motels</mark> and other types of <mark class="vocab-word" data-word="accommodation">accommodation</mark>; restaurants and other food services; <mark class="vocab-word" data-word="transportation">transportation</mark> services and facilities; <mark class="vocab-word" data-word="amusement">amusements</mark>, attractions and other <mark class="vocab-word" data-word="leisure">leisure</mark> facilities; gift shops and a large number of other <mark class="vocab-word" data-word="enterprise">enterprises</mark>. Since many of these businesses also serve local <mark class="vocab-word" data-word="resident">residents</mark>, the <mark class="vocab-word" data-word="impact">impact</mark> of spending by visitors can easily be <mark class="vocab-word" data-word="overlook">overlooked</mark> or <mark class="vocab-word" data-word="underestimate">underestimated</mark>. In addition, Meis (1992) points out that the <mark class="vocab-word" data-word="tourism">tourism</mark> industry involves concepts that have remained <mark class="vocab-word" data-word="amorphous">amorphous</mark> to both <mark class="vocab-word" data-word="analyst">analysts</mark> and decision makers. Moreover, in all nations this problem has made it difficult for the industry to develop any type of reliable or <mark class="vocab-word" data-word="credible">credible</mark> <mark class="vocab-word" data-word="tourism">tourism</mark> information base in order to estimate the contribution it makes to regional, national and global <mark class="vocab-word" data-word="economics">economics</mark>. However, the nature of this very <mark class="vocab-word" data-word="diversity">diversity</mark> makes travel and <mark class="vocab-word" data-word="tourism">tourism</mark> ideal vehicles for economic development in a wide variety of countries, regions or communities.</p><p>Once the <mark class="vocab-word" data-word="exclusive">exclusive</mark> province of the wealthy, travel and <mark class="vocab-word" data-word="tourism">tourism</mark> have become an institutionalised way of life for most of the population. In fact, McIntosh and Goeldner (1990) <mark class="vocab-word" data-word="suggest">suggest</mark> that <mark class="vocab-word" data-word="tourism">tourism</mark> has become the largest <mark class="vocab-word" data-word="commodity">commodity</mark> in international trade for many nations and, for a significant number of other countries, it ranks second or third. For example, <mark class="vocab-word" data-word="tourism">tourism</mark> is the major source of income in Bermuda, Greece, Italy, Spain, Switzerland and most Caribbean countries. In addition, Hawkins and Ritchie, quoting from data published by the American Express Company, <mark class="vocab-word" data-word="suggest">suggest</mark> that the travel and <mark class="vocab-word" data-word="tourism">tourism</mark> industry is the number one ranked employer in the Bahamas, Brazil, Canada, France, (the former) West Germany, Hong Kong, Italy, Jamaica, Japan, Singapore, the <mark class="vocab-word" data-word="unite">United</mark> <mark class="vocab-word" data-word="kingdom">Kingdom</mark> and the <mark class="vocab-word" data-word="unite">United</mark> States. However, because of problems of definition, which directly affect statistical measurement, it is not possible with any degree of <mark class="vocab-word" data-word="certainty">certainty</mark> to provide <mark class="vocab-word" data-word="precise">precise</mark>, <mark class="vocab-word" data-word="valid">valid</mark> or reliable data about the extent of world-wide <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="participation">participation</mark> or its economic <mark class="vocab-word" data-word="impact">impact</mark>. In many cases, similar difficulties arise when attempts are made to measure <mark class="vocab-word" data-word="domestic">domestic</mark> <mark class="vocab-word" data-word="tourism">tourism</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>旅游自古就有。当时原始人动身走过漫漫长路搜寻生存所必须的，能够为他们提供食物和衣物的猎物。历史长河之中，人们出于贸易、宗教信仰、经历利益、战争、移民和其他同样引人注目的因素而出行。在罗马时代，富裕的贵族和高级政府官员也乐在其中。位于庞贝和赫库兰尼姆的海滨度假胜地为市民提供休闲场所，从而避免罗马夏季的炎热。 除黑暗时代之外，旅行持续增长。在有记录的历史中，旅行对文明及其经济的发展起到至关重要的作用。</p><p>我们今天所熟知的大众旅游是一种二十世纪才有的现象。历史学家认为，随着中产阶级的崛起和相对便宜的交通的普及，大众旅游业开始在工业革命期间的英格兰出现。第二次世界大战之后商用航空产业的出现和随后20世纪50年代喷气式飞机的发明标志着国际旅游的迅速增长和扩张。这一增长导致了一种全新支柱产业的出现：旅游业。反过来，因为国际旅游业不仅提供新的就业机会，而且创造出一条赚取外汇的路径，它也成为众多国家政府所关注的问题。</p><p>当今旅游业在经济和社会意义上都取得了显著增长。在过去的几年中，大多数工业化国家增长速度最快的就是服务业。虽然在其中一些国家并未作为实体行业而受到认可，但服务业最大的组成部分之一正是旅游观光行业。根据世界旅行和旅游理事会（1992）的数据，无论以任何经济指标衡量（包括增值资本投资，就业和税收贡献等），旅游观光业都是世界上最大的产业。1992年，该行业的总产值估计为3.5万亿美元，占所有消费者支出的12％以上。旅游观光业是世界上最大的雇主，提供近1.3亿个工作岗位，约占所有雇员的7％。这个行业还是世界领先的工业产值贡献者，占世界国民生产总值的6％以上。每年在直接，间接和个人税收中，其资本投资就超过4220亿美元。因此，旅游业不仅对世界经济拥有深远影响，而且由于旅行的教育作用和对就业的影响，它对社会本身也有举足轻重的意义。</p><p>然而，旅游观光业本身多样化和分散性的问题掩盖或模糊了其经济影响力。旅游产业包括：酒店，汽车旅馆和其他类型的住宿；餐厅和其他食品服务；交通运输服务和设施；娱乐、景点和其他休闲设施；礼品店等众多企业。由于这些企业中的还有许多为当地居民服务，因此游客的消费影响很容易被忽视或低估。此外，Meis（1992）指出，旅游产业所涉及到的一些概念无论是对分析师还是决策者来说都仍然十分模糊。在所有国家中，这一问题使得该产业很难开发出任何类型的可靠或可信的旅游信息数据库，以评估它对地区、国家，乃至全球经济的贡献。但是，正是这一多样性的本质使得旅游业成为众多国家、地区和社区进行经济发展的理想载体。</p><p>虽然旅游曾经是富裕阶层的专属领域，但它现在已经成为大多数人习以为常的生活方式。McIntosh和Goeldner（1990）指出，实际上，旅游业已成为许多国家国际贸易中最大的商品，并在许多其他国家中排名第二或第三。例如，旅游是百慕大、希腊、意大利、西班牙、瑞士和大多数加勒比海国家的主要收入来源。此外，Hawkins和Ritchie引用美国运通公司（American Express Company）公布的数据称，旅游业是巴哈马、巴西、加拿大、法国、西德、香港、意大利、牙买加、日本、新加坡、英国和美国提供就业岗位最多的行业。但是，由于定义问题直接影响统计方法，因此无法在任何程度上确切给出世界范围内旅游业参与度及其经济影响的准确、有效或可靠数据。许多情况下，试图衡量国内旅游业时也会遇到类似的困难。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Travel has existed since the beginning of time, when <mark class="vocab-word" data-word="primitive">primitive</mark> man set out, often <mark class="vocab-word" data-word="traverse">traversing</mark> great distances in search of game, which <mark class="vocab-word" data-word="provided">provided</mark> the food and <mark class="vocab-word" data-word="clothe">clothing</mark> necessary for his <mark class="vocab-word" data-word="survival">survival</mark>. Throughout the course of history, people have travelled for purposes of trade, religious <mark class="vocab-word" data-word="conviction">conviction</mark>, economic gain, war, <mark class="vocab-word" data-word="migration">migration</mark> and other equally <mark class="vocab-word" data-word="compelling">compelling</mark> <mark class="vocab-word" data-word="motivation">motivations</mark>. In the Roman <mark class="vocab-word" data-word="era">era</mark>, wealthy <mark class="vocab-word" data-word="aristocrat">aristocrats</mark> and high government officials also travelled for pleasure. <mark class="vocab-word" data-word="seaside">Seaside</mark> <mark class="vocab-word" data-word="resort">resorts</mark> located at Pompeii and Herculaneum afforded citizens the opportunity to escape to their vacation <mark class="vocab-word" data-word="villa">villas</mark> in order to avoid the summer heat of Rome. Travel, except during the Dark Ages, has continued to grow and, throughout recorded history, has played a <mark class="vocab-word" data-word="vital">vital</mark> role in the development of civilisations and their economies.</p></div>  <div class="parallel-zh"><p>旅游自古就有。当时原始人动身走过漫漫长路搜寻生存所必须的，能够为他们提供食物和衣物的猎物。历史长河之中，人们出于贸易、宗教信仰、经历利益、战争、移民和其他同样引人注目的因素而出行。在罗马时代，富裕的贵族和高级政府官员也乐在其中。位于庞贝和赫库兰尼姆的海滨度假胜地为市民提供休闲场所，从而避免罗马夏季的炎热。 除黑暗时代之外，旅行持续增长。在有记录的历史中，旅行对文明及其经济的发展起到至关重要的作用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="tourism">Tourism</mark> in the mass form as we know it today is a <mark class="vocab-word" data-word="distinct">distinctly</mark> twentieth-century <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>. <mark class="vocab-word" data-word="historian">Historians</mark> <mark class="vocab-word" data-word="suggest">suggest</mark> that the <mark class="vocab-word" data-word="advent">advent</mark> of mass <mark class="vocab-word" data-word="tourism">tourism</mark> began in England during the industrial revolution with the rise of the middle class and the <mark class="vocab-word" data-word="availability">availability</mark> of relatively inexpensive <mark class="vocab-word" data-word="transportation">transportation</mark>. The creation of the commercial airline industry following the Second World War and the <mark class="vocab-word" data-word="subsequent">subsequent</mark> development of the <mark class="vocab-word" data-word="jet">jet</mark> aircraft in the 1950s signalled the rapid growth and <mark class="vocab-word" data-word="expansion">expansion</mark> of international travel. This growth led to the development of a major new industry: <mark class="vocab-word" data-word="tourism">tourism</mark>. In turn, international <mark class="vocab-word" data-word="tourism">tourism</mark> became the concern of a number of world governments since it not only <mark class="vocab-word" data-word="provided">provided</mark> new employment opportunities but also produced a means of earning foreign exchange.</p></div>  <div class="parallel-zh"><p>我们今天所熟知的大众旅游是一种二十世纪才有的现象。历史学家认为，随着中产阶级的崛起和相对便宜的交通的普及，大众旅游业开始在工业革命期间的英格兰出现。第二次世界大战之后商用航空产业的出现和随后20世纪50年代喷气式飞机的发明标志着国际旅游的迅速增长和扩张。这一增长导致了一种全新支柱产业的出现：旅游业。反过来，因为国际旅游业不仅提供新的就业机会，而且创造出一条赚取外汇的路径，它也成为众多国家政府所关注的问题。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="tourism">Tourism</mark> today has grown significantly in both economic and social importance. In most industrialised countries over the past few years the fastest growth has been seen in the area of services. One of the largest <mark class="vocab-word" data-word="segment">segments</mark> of the service industry, although largely unrecognised as an <mark class="vocab-word" data-word="entity">entity</mark> in some of these countries, is travel and <mark class="vocab-word" data-word="tourism">tourism</mark>. <mark class="vocab-word" data-word="accord">According</mark> to the World Travel and <mark class="vocab-word" data-word="tourism">Tourism</mark> <mark class="vocab-word" data-word="council">Council</mark> (1992), Travel and <mark class="vocab-word" data-word="tourism">tourism</mark> is the largest industry in the world on <mark class="vocab-word" data-word="virtually">virtually</mark> any economic measure including value-added capital investment, employment and tax contributions’. In 1992, the industry’s <mark class="vocab-word" data-word="gross">gross</mark> <mark class="vocab-word" data-word="output">output</mark> was estimated to be $3.5 <mark class="vocab-word" data-word="trillion">trillion</mark>, over 12 per cent of all consumer spending. The travel and <mark class="vocab-word" data-word="tourism">tourism</mark> industry is the world’s largest employer with almost 130 million jobs, or almost 7 percent of all employees. This industry is the world’s <mark class="vocab-word" data-word="lead">leading</mark> industrial <mark class="vocab-word" data-word="contributor">contributor</mark>, producing over 6 per cent of the world’s <mark class="vocab-word" data-word="gross">gross</mark> national product and <mark class="vocab-word" data-word="accounting">accounting</mark> for capital investment in <mark class="vocab-word" data-word="excess">excess</mark> of $422 billion in direct, <mark class="vocab-word" data-word="indirect">indirect</mark> and personal taxes cadi year. Thus, <mark class="vocab-word" data-word="tourism">tourism</mark> has a <mark class="vocab-word" data-word="profound">profound</mark> <mark class="vocab-word" data-word="impact">impact</mark> both on the world economy and, because of the educative effect of travel and the effects on employment, on society itself.</p></div>  <div class="parallel-zh"><p>当今旅游业在经济和社会意义上都取得了显著增长。在过去的几年中，大多数工业化国家增长速度最快的就是服务业。虽然在其中一些国家并未作为实体行业而受到认可，但服务业最大的组成部分之一正是旅游观光行业。根据世界旅行和旅游理事会（1992）的数据，无论以任何经济指标衡量（包括增值资本投资，就业和税收贡献等），旅游观光业都是世界上最大的产业。1992年，该行业的总产值估计为3.5万亿美元，占所有消费者支出的12％以上。旅游观光业是世界上最大的雇主，提供近1.3亿个工作岗位，约占所有雇员的7％。这个行业还是世界领先的工业产值贡献者，占世界国民生产总值的6％以上。每年在直接，间接和个人税收中，其资本投资就超过4220亿美元。因此，旅游业不仅对世界经济拥有深远影响，而且由于旅行的教育作用和对就业的影响，它对社会本身也有举足轻重的意义。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, the major problems of the travel and <mark class="vocab-word" data-word="tourism">tourism</mark> industry that have hidden, or <mark class="vocab-word" data-word="obscure">obscured</mark>, its economic <mark class="vocab-word" data-word="impact">impact</mark> are the <mark class="vocab-word" data-word="diversity">diversity</mark> and fragmentation of the industry itself. The travel industry includes: hotels, <mark class="vocab-word" data-word="motel">motels</mark> and other types of <mark class="vocab-word" data-word="accommodation">accommodation</mark>; restaurants and other food services; <mark class="vocab-word" data-word="transportation">transportation</mark> services and facilities; <mark class="vocab-word" data-word="amusement">amusements</mark>, attractions and other <mark class="vocab-word" data-word="leisure">leisure</mark> facilities; gift shops and a large number of other <mark class="vocab-word" data-word="enterprise">enterprises</mark>. Since many of these businesses also serve local <mark class="vocab-word" data-word="resident">residents</mark>, the <mark class="vocab-word" data-word="impact">impact</mark> of spending by visitors can easily be <mark class="vocab-word" data-word="overlook">overlooked</mark> or <mark class="vocab-word" data-word="underestimate">underestimated</mark>. In addition, Meis (1992) points out that the <mark class="vocab-word" data-word="tourism">tourism</mark> industry involves concepts that have remained <mark class="vocab-word" data-word="amorphous">amorphous</mark> to both <mark class="vocab-word" data-word="analyst">analysts</mark> and decision makers. Moreover, in all nations this problem has made it difficult for the industry to develop any type of reliable or <mark class="vocab-word" data-word="credible">credible</mark> <mark class="vocab-word" data-word="tourism">tourism</mark> information base in order to estimate the contribution it makes to regional, national and global <mark class="vocab-word" data-word="economics">economics</mark>. However, the nature of this very <mark class="vocab-word" data-word="diversity">diversity</mark> makes travel and <mark class="vocab-word" data-word="tourism">tourism</mark> ideal vehicles for economic development in a wide variety of countries, regions or communities.</p></div>  <div class="parallel-zh"><p>然而，旅游观光业本身多样化和分散性的问题掩盖或模糊了其经济影响力。旅游产业包括：酒店，汽车旅馆和其他类型的住宿；餐厅和其他食品服务；交通运输服务和设施；娱乐、景点和其他休闲设施；礼品店等众多企业。由于这些企业中的还有许多为当地居民服务，因此游客的消费影响很容易被忽视或低估。此外，Meis（1992）指出，旅游产业所涉及到的一些概念无论是对分析师还是决策者来说都仍然十分模糊。在所有国家中，这一问题使得该产业很难开发出任何类型的可靠或可信的旅游信息数据库，以评估它对地区、国家，乃至全球经济的贡献。但是，正是这一多样性的本质使得旅游业成为众多国家、地区和社区进行经济发展的理想载体。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Once the <mark class="vocab-word" data-word="exclusive">exclusive</mark> province of the wealthy, travel and <mark class="vocab-word" data-word="tourism">tourism</mark> have become an institutionalised way of life for most of the population. In fact, McIntosh and Goeldner (1990) <mark class="vocab-word" data-word="suggest">suggest</mark> that <mark class="vocab-word" data-word="tourism">tourism</mark> has become the largest <mark class="vocab-word" data-word="commodity">commodity</mark> in international trade for many nations and, for a significant number of other countries, it ranks second or third. For example, <mark class="vocab-word" data-word="tourism">tourism</mark> is the major source of income in Bermuda, Greece, Italy, Spain, Switzerland and most Caribbean countries. In addition, Hawkins and Ritchie, quoting from data published by the American Express Company, <mark class="vocab-word" data-word="suggest">suggest</mark> that the travel and <mark class="vocab-word" data-word="tourism">tourism</mark> industry is the number one ranked employer in the Bahamas, Brazil, Canada, France, (the former) West Germany, Hong Kong, Italy, Jamaica, Japan, Singapore, the <mark class="vocab-word" data-word="unite">United</mark> <mark class="vocab-word" data-word="kingdom">Kingdom</mark> and the <mark class="vocab-word" data-word="unite">United</mark> States. However, because of problems of definition, which directly affect statistical measurement, it is not possible with any degree of <mark class="vocab-word" data-word="certainty">certainty</mark> to provide <mark class="vocab-word" data-word="precise">precise</mark>, <mark class="vocab-word" data-word="valid">valid</mark> or reliable data about the extent of world-wide <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="participation">participation</mark> or its economic <mark class="vocab-word" data-word="impact">impact</mark>. In many cases, similar difficulties arise when attempts are made to measure <mark class="vocab-word" data-word="domestic">domestic</mark> <mark class="vocab-word" data-word="tourism">tourism</mark>.</p></div>  <div class="parallel-zh"><p>虽然旅游曾经是富裕阶层的专属领域，但它现在已经成为大多数人习以为常的生活方式。McIntosh和Goeldner（1990）指出，实际上，旅游业已成为许多国家国际贸易中最大的商品，并在许多其他国家中排名第二或第三。例如，旅游是百慕大、希腊、意大利、西班牙、瑞士和大多数加勒比海国家的主要收入来源。此外，Hawkins和Ritchie引用美国运通公司（American Express Company）公布的数据称，旅游业是巴哈马、巴西、加拿大、法国、西德、香港、意大利、牙买加、日本、新加坡、英国和美国提供就业岗位最多的行业。但是，由于定义问题直接影响统计方法，因此无法在任何程度上确切给出世界范围内旅游业参与度及其经济影响的准确、有效或可靠数据。许多情况下，试图衡量国内旅游业时也会遇到类似的困难。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"primitive": 1, "traverse": 1, "provided": 2, "clothe": 1, "survival": 1, "conviction": 1, "migration": 1, "compelling": 1, "motivation": 1, "era": 1, "aristocrat": 1, "seaside": 1, "resort": 1, "villa": 1, "vital": 1, "tourism": 20, "distinct": 1, "phenomenon": 1, "historian": 1, "suggest": 3, "advent": 1, "availability": 1, "transportation": 2, "subsequent": 1, "jet": 1, "expansion": 1, "segment": 1, "entity": 1, "accord": 1, "council": 1, "virtually": 1, "gross": 2, "output": 1, "trillion": 1, "lead": 1, "contributor": 1, "accounting": 1, "excess": 1, "indirect": 1, "profound": 1, "impact": 4, "obscure": 1, "diversity": 2, "motel": 1, "accommodation": 1, "amusement": 1, "leisure": 1, "enterprise": 1, "resident": 1, "overlook": 1, "underestimate": 1, "amorphous": 1, "analyst": 1, "credible": 1, "economics": 1, "exclusive": 1, "commodity": 1, "unite": 2, "kingdom": 1, "certainty": 1, "precise": 1, "valid": 1, "participation": 1, "domestic": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

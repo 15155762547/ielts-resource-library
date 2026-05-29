@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Impact of wilderness tourism - 剑桥雅思5 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思5</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The Impact of wilderness tourism</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/22841.html" target="_blank">https://www.laokaoya.com/22841.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The market for <mark class="vocab-word" data-word="tourism">tourism</mark> in remote areas is <mark class="vocab-word" data-word="boom">booming</mark> as never before. Countries all across the world are actively promoting their ‘<mark class="vocab-word" data-word="wilderness">wilderness</mark>’ regions – such as mountains, <mark class="vocab-word" data-word="arctic">Arctic</mark> lands, deserts, small islands and <mark class="vocab-word" data-word="wetland">wetlands</mark> – to high-spending tourists. The attraction of these areas is obvious: by definition, <mark class="vocab-word" data-word="wilderness">wilderness</mark> <mark class="vocab-word" data-word="tourism">tourism</mark> requires little or no initial investment. But that does not mean that there is no cost. As the 1992 <mark class="vocab-word" data-word="unite">United</mark> Nations Conference on Environment and Development recognized, these regions are <mark class="vocab-word" data-word="fragile">fragile</mark> (i.e. highly <mark class="vocab-word" data-word="vulnerable">vulnerable</mark> to <mark class="vocab-word" data-word="abnormal">abnormal</mark> pressures)not just in terms of their <mark class="vocab-word" data-word="ecology">ecology</mark>, but also in terms of the culture of their <mark class="vocab-word" data-word="inhabitant">inhabitants</mark>. The three most significant types of <mark class="vocab-word" data-word="fragile">fragile</mark> environment in these respects, and also in terms of the <mark class="vocab-word" data-word="proportion">proportion</mark> of the Earth’s surface they cover, are deserts, mountains and <mark class="vocab-word" data-word="arctic">Arctic</mark> areas. An important characteristic is their <mark class="vocab-word" data-word="marked">marked</mark> seasonality, with <mark class="vocab-word" data-word="harsh">harsh</mark> conditions <mark class="vocab-word" data-word="prevail">prevailing</mark> for many months each year. <mark class="vocab-word" data-word="consequently">Consequently</mark>, most human activities, including <mark class="vocab-word" data-word="tourism">tourism</mark>, are limited to quite clearly defined parts of the year.</p><p>Tourists are <mark class="vocab-word" data-word="drawn">drawn</mark> to these regions by their natural landscape beauty and the unique cultures of their <mark class="vocab-word" data-word="indigenous">indigenous</mark> people. And poor governments in these <mark class="vocab-word" data-word="isolated">isolated</mark> areas have welcomed the new <mark class="vocab-word" data-word="breed">breed</mark> of ‘adventure tourist’, grateful for the hard currency they bring. This article is from  website. For several years now, <mark class="vocab-word" data-word="tourism">tourism</mark> has been the prime source of foreign exchange in Nepal and Bhutan. <mark class="vocab-word" data-word="tourism">Tourism</mark> is also a key element in the economies of <mark class="vocab-word" data-word="arctic">Arctic</mark> zones such as Lapland and Alaska and in desert areas such as Ayers Rock in Australia and Arizona’s <mark class="vocab-word" data-word="monument">Monument</mark> Valley.</p><p>Once a location is <mark class="vocab-word" data-word="established">established</mark> as a main tourist destination, the effects on the local community are <mark class="vocab-word" data-word="profound">profound</mark>. When hill-farmers, for example, can make more money in a few weeks working as <mark class="vocab-word" data-word="porter">porters</mark> for foreign trekkers than they can in a year working in their fields, it is not surprising that many of them give up their farm-work, which is thus left to other members of the family. In some hill-regions, this has led to a serious decline in farm <mark class="vocab-word" data-word="output">output</mark> and a change in the local diet, because there is <mark class="vocab-word" data-word="insufficient">insufficient</mark> labour to maintain <mark class="vocab-word" data-word="terrace">terraces</mark> and <mark class="vocab-word" data-word="irrigation">irrigation</mark> systems and tend to crops. The result has been that many people in these regions have turned to outside supplies of rice and other foods.</p><p>In <mark class="vocab-word" data-word="arctic">Arctic</mark> and desert societies, year-round <mark class="vocab-word" data-word="survival">survival</mark> has <mark class="vocab-word" data-word="traditionally">traditionally</mark> depended on hunting animals and fish and collecting fruit over a relatively short season. However, as some <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> become <mark class="vocab-word" data-word="involved">involved</mark> in <mark class="vocab-word" data-word="tourism">tourism</mark>, they no longer have time to collect wild food; this has led to increasing <mark class="vocab-word" data-word="dependence">dependence</mark> on bought food and stores. <mark class="vocab-word" data-word="tourism">Tourism</mark> is not always the <mark class="vocab-word" data-word="culprit">culprit</mark> behind such changes. All kinds of <mark class="vocab-word" data-word="wage">wage</mark> labour, or government <mark class="vocab-word" data-word="handout">handouts</mark>, tend to <mark class="vocab-word" data-word="undermine">undermine</mark> traditional <mark class="vocab-word" data-word="survival">survival</mark> systems. Whatever the cause, the <mark class="vocab-word" data-word="dilemma">dilemma</mark> is always the same: what happens if these new, <mark class="vocab-word" data-word="external">external</mark> sources of income dry up?</p><p>The physical <mark class="vocab-word" data-word="impact">impact</mark> of visitors is another serious problem associated with the growth in adventure <mark class="vocab-word" data-word="tourism">tourism</mark>. Much attention has focused on <mark class="vocab-word" data-word="erosion">erosion</mark> along major <mark class="vocab-word" data-word="trail">trails</mark>, but perhaps more important are the <mark class="vocab-word" data-word="deforestation">deforestation</mark> and <mark class="vocab-word" data-word="impact">impacts</mark> on water supplies arising from the need to provide tourists with cooked food and hot showers. In both mountains and deserts, slow-growing <mark class="vocab-word" data-word="tree">trees</mark> are often the main sources of fuel and water supplies may be limited or <mark class="vocab-word" data-word="vulnerable">vulnerable</mark> to <mark class="vocab-word" data-word="degradation">degradation</mark> through heavy use.</p><p>Stories about the problems of <mark class="vocab-word" data-word="tourism">tourism</mark> have become legion in the last few years. Yet it does not have to be a problem. Although <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="inevitably">inevitably</mark> affects the region in which it takes place, the costs to these <mark class="vocab-word" data-word="fragile">fragile</mark> environments and their local cultures can be <mark class="vocab-word" data-word="minimize">minimized</mark>. Indeed, it can even be a vehicle for <mark class="vocab-word" data-word="reinvigorate">reinvigorating</mark> local cultures, as has happened with the Sherpas of Nepal’s Khumbu Valley and in some <mark class="vocab-word" data-word="alpine">Alpine</mark> villages. And a growing number of adventure <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="operator">operators</mark> are trying to ensure that their activities benefit the local population and environment over the long term.</p><p>In the Swiss Alps, communities have decided that their future depends on <mark class="vocab-word" data-word="integrate">integrating</mark> <mark class="vocab-word" data-word="tourism">tourism</mark> more effectively with the local economy. Local concern about the rising number of second home developments in the Swiss Pays d’Enhaut resulted in limits being <mark class="vocab-word" data-word="impose">imposed</mark> on their growth. There has also been a <mark class="vocab-word" data-word="renaissance">renaissance</mark> in <mark class="vocab-word" data-word="communal">communal</mark> cheese production in the area, providing the locals with a reliable source of income that does not depend on outside visitors.</p><p>Many of the <mark class="vocab-word" data-word="arctic">Arctic</mark> tourist destinations have been <mark class="vocab-word" data-word="exploit">exploited</mark> by outside companies, who employ <mark class="vocab-word" data-word="transient">transient</mark> workers and <mark class="vocab-word" data-word="repatriate">repatriate</mark> most of the profits to their home base. But some <mark class="vocab-word" data-word="arctic">Arctic</mark> communities are now operating tour businesses themselves, <mark class="vocab-word" data-word="thereby">thereby</mark> ensuring that the benefits <mark class="vocab-word" data-word="accrue">accrue</mark> locally. For instance, a native <mark class="vocab-word" data-word="corporation">corporation</mark> in Alaska, employing local people, is running an air tour from Anchorage to Kotzebue, where tourists eat <mark class="vocab-word" data-word="arctic">Arctic</mark> food, walk on the <mark class="vocab-word" data-word="tundra">tundra</mark> and watch local musicians and dancers.</p><p>Native people in the desert regions of the American Southwest have followed similar strategies, encouraging tourists to visit their pueblos and <mark class="vocab-word" data-word="reservation">reservations</mark> to purchase high-quality handicrafts and artwork. The Acoma and San Ildefonso pueblos have <mark class="vocab-word" data-word="established">established</mark> highly <mark class="vocab-word" data-word="profitable">profitable</mark> <mark class="vocab-word" data-word="pottery">pottery</mark> businesses, while the Navajo and Hopi groups have been similarly successful with <mark class="vocab-word" data-word="jewelry">jewelry</mark>.</p><p>Too many people living in <mark class="vocab-word" data-word="fragile">fragile</mark> environments have lost control over their economies, their culture and their environment when <mark class="vocab-word" data-word="tourism">tourism</mark> has <mark class="vocab-word" data-word="penetrate">penetrated</mark> their homelands. <mark class="vocab-word" data-word="merely">Merely</mark> restricting <mark class="vocab-word" data-word="tourism">tourism</mark> cannot be the solution to the <mark class="vocab-word" data-word="imbalance">imbalance</mark>, because people’s desire to see new places will not just disappear. Instead, communities in <mark class="vocab-word" data-word="fragile">fragile</mark> environments must achieve greater control over <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="venture">ventures</mark> in their regions, in order to balance their needs and <mark class="vocab-word" data-word="aspiration">aspirations</mark> with the demands of <mark class="vocab-word" data-word="tourism">tourism</mark>. A growing number of communities are demonstrating that, with firm <mark class="vocab-word" data-word="communal">communal</mark> decision-making, this is possible. The critical question now is whether this can become the <mark class="vocab-word" data-word="norm">norm</mark>, rather than the <mark class="vocab-word" data-word="exception">exception</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>偏远地区的旅游市场正变的空前繁荣。世界各地的国家都在积极向高消费游客推广其“荒野”地区，例如山脉，北极地区，沙漠，小岛和湿地。这些地区的吸引力是显而易见的：按照定义，荒野旅游几乎或完全不需要初期投资。但这并不意味着没有成本。正如1992年联合国环境与发展会议意识到的，这些地区在他们的生态环境和居民文化方面都十分脆弱（非常容易受到外界压力的影响） 。在这些方面以及就它们所覆盖的地球表面的比例而言，三种最重要的脆弱环境类型是沙漠，山脉和北极地区。一个重要的特征是其明显的季节性，每年都有数月处在极其恶劣的条件下。因此，大多数人类活动，包括旅游业，都局限于一年中特定的部分。</p><p>游客因其自然景观的优美和土著人民独特的文化而被这些地区吸引。这些偏远地区的贫穷政府欢迎新型的“冒险旅行者”，为他们带来的硬通货而充满感激。几年来，旅游业一直是尼泊尔和不丹外汇的主要来源。旅游业在拉普兰和阿拉斯加等北极地区以及澳大利亚艾尔斯岩和亚利桑那州的纪念碑谷等沙漠地区的经济中也很重要。</p><p>一旦一个地点被确立为主要的旅游目的地，它对当地社区的影响将是深远的。例如，当山区农民在担任外国徒步旅行者的搬运工几个星期就能赚到比在田间工作一年更多的钱时，他们中的许多人放弃农业劳动，将其留给其他家庭成员就不足为奇了。在一些丘陵地区，由于没有足够的劳动力维持梯田和灌溉系统并照顾农作物，农业产量严重下降，并导致当地饮食的变化。结果是这些地区的许多人需要外部供应大米和其他食物。</p><p>在北极和沙漠地区，一整年的生存传统上依赖于在相对较短的季节里猎杀动物和鱼类并收集果实。但是，随着一些居民开始涉足旅游业，他们不再有时间收集野生食物。这导致他们对购买食品和商店的依赖性越来越大。旅游业并不总是这种变化背后的罪魁祸首。各种各样的工资劳动或政府补助，往往会破坏传统的生存制度。无论原因是什么，困境始终是相同的：如果这些新的外部收入来源枯竭，会发生什么？</p><p>游客自身的影响是另一个与冒险旅游的发展相关的严重问题。大多数注意力都集中在主要步道的侵蚀上，但也许更重要的是由于需要为游客提供熟食和热水淋浴而造成的森林砍伐和对水供应的影响。在山区和沙漠中，生长缓慢的树木通常是燃料的主要来源，并且供水可能受到限制，或者容易因大量使用而退化。</p><p>最近几年里，有关旅游业问题的故事层出不穷。但这并不一定是问题。尽管旅游业不可避免地会影响其发生的地区，但可以将对这些脆弱环境及其当地文化的影响降到最低。确实，它甚至可以成为振兴当地文化的工具，就像尼泊尔昆布山谷的Sherpas和某些Alpine村庄那样。越来越多的冒险旅游经营者试图确保他们的活动从长远来看会使当地人口和环境受益。</p><p>在瑞士阿尔卑斯山，社区认为他们的未来取决于更有效地将旅游业与当地经济相结合。当地人对瑞士Pays d’Enhaut第二套住房开发数量的增加感到担忧，导致其发展受到限制。该地区的集体奶酪生产也正在复兴，这为当地人提供了可靠的收入来源，而这些收入不依赖外部访客。</p><p>许多北极旅游胜地已被外部公司开发，这些公司雇用临时工并将大部分利润汇回本国。但是，一些北极社区现在自己经营旅游业务，从而确保了收益在当地积累。例如，阿拉斯加的一家本地公司雇用当地人，正在运营一条从安克雷奇（Anchorage）到科泽布（Kotzebue）的空中旅行线路，游客在这里吃北极食物，在冻原上行走并观看当地音乐家和舞者的表演。</p><p>美国西南部沙漠地区的原住民也采取了类似的策略，鼓励游客参观他们的普韦布洛村落和保留区，并购买高品质的手工艺品和艺术品。Acoma和San Ildefonso村庄建立了利润很高的陶器企业，而纳瓦霍和霍皮基团已经在珠宝方面取得类似的成功。</p><p>当旅游业渗透到他们的家园时，太多生活在脆弱环境中的人失去了其对经济，文化和环境的控制。仅仅限制旅游业并不能解决不平衡的问题，因为人们对新地方的渴望并不会消失。取而代之的是，处于脆弱环境中的社区必须更好地控制其所在地的旅游企业，以平衡他们与旅游业的需求。越来越多的社区表明，通过坚定的社区决策，这是可能的。现在的关键问题是，这是否可以成为常态，而不是例外。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The market for <mark class="vocab-word" data-word="tourism">tourism</mark> in remote areas is <mark class="vocab-word" data-word="boom">booming</mark> as never before. Countries all across the world are actively promoting their ‘<mark class="vocab-word" data-word="wilderness">wilderness</mark>’ regions – such as mountains, <mark class="vocab-word" data-word="arctic">Arctic</mark> lands, deserts, small islands and <mark class="vocab-word" data-word="wetland">wetlands</mark> – to high-spending tourists. The attraction of these areas is obvious: by definition, <mark class="vocab-word" data-word="wilderness">wilderness</mark> <mark class="vocab-word" data-word="tourism">tourism</mark> requires little or no initial investment. But that does not mean that there is no cost. As the 1992 <mark class="vocab-word" data-word="unite">United</mark> Nations Conference on Environment and Development recognized, these regions are <mark class="vocab-word" data-word="fragile">fragile</mark> (i.e. highly <mark class="vocab-word" data-word="vulnerable">vulnerable</mark> to <mark class="vocab-word" data-word="abnormal">abnormal</mark> pressures)not just in terms of their <mark class="vocab-word" data-word="ecology">ecology</mark>, but also in terms of the culture of their <mark class="vocab-word" data-word="inhabitant">inhabitants</mark>. The three most significant types of <mark class="vocab-word" data-word="fragile">fragile</mark> environment in these respects, and also in terms of the <mark class="vocab-word" data-word="proportion">proportion</mark> of the Earth’s surface they cover, are deserts, mountains and <mark class="vocab-word" data-word="arctic">Arctic</mark> areas. An important characteristic is their <mark class="vocab-word" data-word="marked">marked</mark> seasonality, with <mark class="vocab-word" data-word="harsh">harsh</mark> conditions <mark class="vocab-word" data-word="prevail">prevailing</mark> for many months each year. <mark class="vocab-word" data-word="consequently">Consequently</mark>, most human activities, including <mark class="vocab-word" data-word="tourism">tourism</mark>, are limited to quite clearly defined parts of the year.</p></div>  <div class="parallel-zh"><p>偏远地区的旅游市场正变的空前繁荣。世界各地的国家都在积极向高消费游客推广其“荒野”地区，例如山脉，北极地区，沙漠，小岛和湿地。这些地区的吸引力是显而易见的：按照定义，荒野旅游几乎或完全不需要初期投资。但这并不意味着没有成本。正如1992年联合国环境与发展会议意识到的，这些地区在他们的生态环境和居民文化方面都十分脆弱（非常容易受到外界压力的影响） 。在这些方面以及就它们所覆盖的地球表面的比例而言，三种最重要的脆弱环境类型是沙漠，山脉和北极地区。一个重要的特征是其明显的季节性，每年都有数月处在极其恶劣的条件下。因此，大多数人类活动，包括旅游业，都局限于一年中特定的部分。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Tourists are <mark class="vocab-word" data-word="drawn">drawn</mark> to these regions by their natural landscape beauty and the unique cultures of their <mark class="vocab-word" data-word="indigenous">indigenous</mark> people. And poor governments in these <mark class="vocab-word" data-word="isolated">isolated</mark> areas have welcomed the new <mark class="vocab-word" data-word="breed">breed</mark> of ‘adventure tourist’, grateful for the hard currency they bring. This article is from  website. For several years now, <mark class="vocab-word" data-word="tourism">tourism</mark> has been the prime source of foreign exchange in Nepal and Bhutan. <mark class="vocab-word" data-word="tourism">Tourism</mark> is also a key element in the economies of <mark class="vocab-word" data-word="arctic">Arctic</mark> zones such as Lapland and Alaska and in desert areas such as Ayers Rock in Australia and Arizona’s <mark class="vocab-word" data-word="monument">Monument</mark> Valley.</p></div>  <div class="parallel-zh"><p>游客因其自然景观的优美和土著人民独特的文化而被这些地区吸引。这些偏远地区的贫穷政府欢迎新型的“冒险旅行者”，为他们带来的硬通货而充满感激。几年来，旅游业一直是尼泊尔和不丹外汇的主要来源。旅游业在拉普兰和阿拉斯加等北极地区以及澳大利亚艾尔斯岩和亚利桑那州的纪念碑谷等沙漠地区的经济中也很重要。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Once a location is <mark class="vocab-word" data-word="established">established</mark> as a main tourist destination, the effects on the local community are <mark class="vocab-word" data-word="profound">profound</mark>. When hill-farmers, for example, can make more money in a few weeks working as <mark class="vocab-word" data-word="porter">porters</mark> for foreign trekkers than they can in a year working in their fields, it is not surprising that many of them give up their farm-work, which is thus left to other members of the family. In some hill-regions, this has led to a serious decline in farm <mark class="vocab-word" data-word="output">output</mark> and a change in the local diet, because there is <mark class="vocab-word" data-word="insufficient">insufficient</mark> labour to maintain <mark class="vocab-word" data-word="terrace">terraces</mark> and <mark class="vocab-word" data-word="irrigation">irrigation</mark> systems and tend to crops. The result has been that many people in these regions have turned to outside supplies of rice and other foods.</p></div>  <div class="parallel-zh"><p>一旦一个地点被确立为主要的旅游目的地，它对当地社区的影响将是深远的。例如，当山区农民在担任外国徒步旅行者的搬运工几个星期就能赚到比在田间工作一年更多的钱时，他们中的许多人放弃农业劳动，将其留给其他家庭成员就不足为奇了。在一些丘陵地区，由于没有足够的劳动力维持梯田和灌溉系统并照顾农作物，农业产量严重下降，并导致当地饮食的变化。结果是这些地区的许多人需要外部供应大米和其他食物。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In <mark class="vocab-word" data-word="arctic">Arctic</mark> and desert societies, year-round <mark class="vocab-word" data-word="survival">survival</mark> has <mark class="vocab-word" data-word="traditionally">traditionally</mark> depended on hunting animals and fish and collecting fruit over a relatively short season. However, as some <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> become <mark class="vocab-word" data-word="involved">involved</mark> in <mark class="vocab-word" data-word="tourism">tourism</mark>, they no longer have time to collect wild food; this has led to increasing <mark class="vocab-word" data-word="dependence">dependence</mark> on bought food and stores. <mark class="vocab-word" data-word="tourism">Tourism</mark> is not always the <mark class="vocab-word" data-word="culprit">culprit</mark> behind such changes. All kinds of <mark class="vocab-word" data-word="wage">wage</mark> labour, or government <mark class="vocab-word" data-word="handout">handouts</mark>, tend to <mark class="vocab-word" data-word="undermine">undermine</mark> traditional <mark class="vocab-word" data-word="survival">survival</mark> systems. Whatever the cause, the <mark class="vocab-word" data-word="dilemma">dilemma</mark> is always the same: what happens if these new, <mark class="vocab-word" data-word="external">external</mark> sources of income dry up?</p></div>  <div class="parallel-zh"><p>在北极和沙漠地区，一整年的生存传统上依赖于在相对较短的季节里猎杀动物和鱼类并收集果实。但是，随着一些居民开始涉足旅游业，他们不再有时间收集野生食物。这导致他们对购买食品和商店的依赖性越来越大。旅游业并不总是这种变化背后的罪魁祸首。各种各样的工资劳动或政府补助，往往会破坏传统的生存制度。无论原因是什么，困境始终是相同的：如果这些新的外部收入来源枯竭，会发生什么？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The physical <mark class="vocab-word" data-word="impact">impact</mark> of visitors is another serious problem associated with the growth in adventure <mark class="vocab-word" data-word="tourism">tourism</mark>. Much attention has focused on <mark class="vocab-word" data-word="erosion">erosion</mark> along major <mark class="vocab-word" data-word="trail">trails</mark>, but perhaps more important are the <mark class="vocab-word" data-word="deforestation">deforestation</mark> and <mark class="vocab-word" data-word="impact">impacts</mark> on water supplies arising from the need to provide tourists with cooked food and hot showers. In both mountains and deserts, slow-growing <mark class="vocab-word" data-word="tree">trees</mark> are often the main sources of fuel and water supplies may be limited or <mark class="vocab-word" data-word="vulnerable">vulnerable</mark> to <mark class="vocab-word" data-word="degradation">degradation</mark> through heavy use.</p></div>  <div class="parallel-zh"><p>游客自身的影响是另一个与冒险旅游的发展相关的严重问题。大多数注意力都集中在主要步道的侵蚀上，但也许更重要的是由于需要为游客提供熟食和热水淋浴而造成的森林砍伐和对水供应的影响。在山区和沙漠中，生长缓慢的树木通常是燃料的主要来源，并且供水可能受到限制，或者容易因大量使用而退化。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Stories about the problems of <mark class="vocab-word" data-word="tourism">tourism</mark> have become legion in the last few years. Yet it does not have to be a problem. Although <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="inevitably">inevitably</mark> affects the region in which it takes place, the costs to these <mark class="vocab-word" data-word="fragile">fragile</mark> environments and their local cultures can be <mark class="vocab-word" data-word="minimize">minimized</mark>. Indeed, it can even be a vehicle for <mark class="vocab-word" data-word="reinvigorate">reinvigorating</mark> local cultures, as has happened with the Sherpas of Nepal’s Khumbu Valley and in some <mark class="vocab-word" data-word="alpine">Alpine</mark> villages. And a growing number of adventure <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="operator">operators</mark> are trying to ensure that their activities benefit the local population and environment over the long term.</p></div>  <div class="parallel-zh"><p>最近几年里，有关旅游业问题的故事层出不穷。但这并不一定是问题。尽管旅游业不可避免地会影响其发生的地区，但可以将对这些脆弱环境及其当地文化的影响降到最低。确实，它甚至可以成为振兴当地文化的工具，就像尼泊尔昆布山谷的Sherpas和某些Alpine村庄那样。越来越多的冒险旅游经营者试图确保他们的活动从长远来看会使当地人口和环境受益。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In the Swiss Alps, communities have decided that their future depends on <mark class="vocab-word" data-word="integrate">integrating</mark> <mark class="vocab-word" data-word="tourism">tourism</mark> more effectively with the local economy. Local concern about the rising number of second home developments in the Swiss Pays d’Enhaut resulted in limits being <mark class="vocab-word" data-word="impose">imposed</mark> on their growth. There has also been a <mark class="vocab-word" data-word="renaissance">renaissance</mark> in <mark class="vocab-word" data-word="communal">communal</mark> cheese production in the area, providing the locals with a reliable source of income that does not depend on outside visitors.</p></div>  <div class="parallel-zh"><p>在瑞士阿尔卑斯山，社区认为他们的未来取决于更有效地将旅游业与当地经济相结合。当地人对瑞士Pays d’Enhaut第二套住房开发数量的增加感到担忧，导致其发展受到限制。该地区的集体奶酪生产也正在复兴，这为当地人提供了可靠的收入来源，而这些收入不依赖外部访客。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many of the <mark class="vocab-word" data-word="arctic">Arctic</mark> tourist destinations have been <mark class="vocab-word" data-word="exploit">exploited</mark> by outside companies, who employ <mark class="vocab-word" data-word="transient">transient</mark> workers and <mark class="vocab-word" data-word="repatriate">repatriate</mark> most of the profits to their home base. But some <mark class="vocab-word" data-word="arctic">Arctic</mark> communities are now operating tour businesses themselves, <mark class="vocab-word" data-word="thereby">thereby</mark> ensuring that the benefits <mark class="vocab-word" data-word="accrue">accrue</mark> locally. For instance, a native <mark class="vocab-word" data-word="corporation">corporation</mark> in Alaska, employing local people, is running an air tour from Anchorage to Kotzebue, where tourists eat <mark class="vocab-word" data-word="arctic">Arctic</mark> food, walk on the <mark class="vocab-word" data-word="tundra">tundra</mark> and watch local musicians and dancers.</p></div>  <div class="parallel-zh"><p>许多北极旅游胜地已被外部公司开发，这些公司雇用临时工并将大部分利润汇回本国。但是，一些北极社区现在自己经营旅游业务，从而确保了收益在当地积累。例如，阿拉斯加的一家本地公司雇用当地人，正在运营一条从安克雷奇（Anchorage）到科泽布（Kotzebue）的空中旅行线路，游客在这里吃北极食物，在冻原上行走并观看当地音乐家和舞者的表演。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Native people in the desert regions of the American Southwest have followed similar strategies, encouraging tourists to visit their pueblos and <mark class="vocab-word" data-word="reservation">reservations</mark> to purchase high-quality handicrafts and artwork. The Acoma and San Ildefonso pueblos have <mark class="vocab-word" data-word="established">established</mark> highly <mark class="vocab-word" data-word="profitable">profitable</mark> <mark class="vocab-word" data-word="pottery">pottery</mark> businesses, while the Navajo and Hopi groups have been similarly successful with <mark class="vocab-word" data-word="jewelry">jewelry</mark>.</p></div>  <div class="parallel-zh"><p>美国西南部沙漠地区的原住民也采取了类似的策略，鼓励游客参观他们的普韦布洛村落和保留区，并购买高品质的手工艺品和艺术品。Acoma和San Ildefonso村庄建立了利润很高的陶器企业，而纳瓦霍和霍皮基团已经在珠宝方面取得类似的成功。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Too many people living in <mark class="vocab-word" data-word="fragile">fragile</mark> environments have lost control over their economies, their culture and their environment when <mark class="vocab-word" data-word="tourism">tourism</mark> has <mark class="vocab-word" data-word="penetrate">penetrated</mark> their homelands. <mark class="vocab-word" data-word="merely">Merely</mark> restricting <mark class="vocab-word" data-word="tourism">tourism</mark> cannot be the solution to the <mark class="vocab-word" data-word="imbalance">imbalance</mark>, because people’s desire to see new places will not just disappear. Instead, communities in <mark class="vocab-word" data-word="fragile">fragile</mark> environments must achieve greater control over <mark class="vocab-word" data-word="tourism">tourism</mark> <mark class="vocab-word" data-word="venture">ventures</mark> in their regions, in order to balance their needs and <mark class="vocab-word" data-word="aspiration">aspirations</mark> with the demands of <mark class="vocab-word" data-word="tourism">tourism</mark>. A growing number of communities are demonstrating that, with firm <mark class="vocab-word" data-word="communal">communal</mark> decision-making, this is possible. The critical question now is whether this can become the <mark class="vocab-word" data-word="norm">norm</mark>, rather than the <mark class="vocab-word" data-word="exception">exception</mark>.</p></div>  <div class="parallel-zh"><p>当旅游业渗透到他们的家园时，太多生活在脆弱环境中的人失去了其对经济，文化和环境的控制。仅仅限制旅游业并不能解决不平衡的问题，因为人们对新地方的渴望并不会消失。取而代之的是，处于脆弱环境中的社区必须更好地控制其所在地的旅游企业，以平衡他们与旅游业的需求。越来越多的社区表明，通过坚定的社区决策，这是可能的。现在的关键问题是，这是否可以成为常态，而不是例外。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"tourism": 16, "boom": 1, "wilderness": 2, "arctic": 7, "wetland": 1, "unite": 1, "fragile": 5, "vulnerable": 2, "abnormal": 1, "ecology": 1, "inhabitant": 2, "proportion": 1, "marked": 1, "harsh": 1, "prevail": 1, "consequently": 1, "drawn": 1, "indigenous": 1, "isolated": 1, "breed": 1, "monument": 1, "established": 2, "profound": 1, "porter": 1, "output": 1, "insufficient": 1, "terrace": 1, "irrigation": 1, "survival": 2, "traditionally": 1, "involved": 1, "dependence": 1, "culprit": 1, "wage": 1, "handout": 1, "undermine": 1, "dilemma": 1, "external": 1, "impact": 2, "erosion": 1, "trail": 1, "deforestation": 1, "tree": 1, "degradation": 1, "inevitably": 1, "minimize": 1, "reinvigorate": 1, "alpine": 1, "operator": 1, "integrate": 1, "impose": 1, "renaissance": 1, "communal": 2, "exploit": 1, "transient": 1, "repatriate": 1, "thereby": 1, "accrue": 1, "corporation": 1, "tundra": 1, "reservation": 1, "profitable": 1, "pottery": 1, "jewelry": 1, "penetrate": 1, "merely": 1, "imbalance": 1, "venture": 1, "aspiration": 1, "norm": 1, "exception": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

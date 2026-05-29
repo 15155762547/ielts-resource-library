@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotoring Sales - 剑桥雅思6 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思6</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Dotoring Sales</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/23837.html" target="_blank">https://www.laokaoya.com/23837.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="pharmaceutical">Pharmaceuticals</mark> is one of the most <mark class="vocab-word" data-word="profitable">profitable</mark> industries in North America. But do the drugs industry’s sales and marketing strategies go too far?</p><p>A few months ago Kim Schaefer, sales <mark class="vocab-word" data-word="representative">representative</mark> of a major global <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> company, walked into a medical center in New York to bring information and free samples of her company’s latest products. That day she was lucky – a doctor was available to see her. ‘The last rep offered me a trip to Florida. What do you have?’ the <mark class="vocab-word" data-word="physician">physician</mark> asked. He was only half joking.</p><p>What was on offer that day was a pair of tickets for a New York musical. But on any given day, what Schaefer can offer is typical for today’s drugs rep – a car <mark class="vocab-word" data-word="trunk">trunk</mark> full of promotional gifts and <mark class="vocab-word" data-word="gadget">gadgets</mark>, a budget that could buy lunches and dinners for a small country, hundreds of free drug samples and the freedom to give a <mark class="vocab-word" data-word="physician">physician</mark> $200 to <mark class="vocab-word" data-word="prescribe">prescribe</mark> her new product to the next six patients who fit the drug’s profile. And she also has a few $1,000 honoraria to offer in exchange for doctors’ <mark class="vocab-word" data-word="attendance">attendance</mark> at her company’s next educational lecture.</p><p>Selling <mark class="vocab-word" data-word="pharmaceutical">pharmaceuticals</mark> is a daily exercise in <mark class="vocab-word" data-word="ethical">ethical</mark> judgment. Salespeople like Schaefer walk the line between the common practice of buying a <mark class="vocab-word" data-word="prospect">prospect</mark>’s time with a free meal, and <mark class="vocab-word" data-word="bribe">bribing</mark> doctors to <mark class="vocab-word" data-word="prescribe">prescribe</mark> their drugs. They work in an industry highly criticized for its sales and marketing practices, but find themselves in the middle of the age-old chicken-or-egg question – businesses won’t use strategies that don’t work, so are doctors to blame for the <mark class="vocab-word" data-word="escalate">escalating</mark> <mark class="vocab-word" data-word="extravagance">extravagance</mark> of <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> marketing? Or is it the industry’s responsibility to decide the boundaries?</p><p>The <mark class="vocab-word" data-word="explosion">explosion</mark> in the <mark class="vocab-word" data-word="sheer">sheer</mark> number of salespeople in the field – and the amount of funding used to promote their causes – forces close examination of the pressures, <mark class="vocab-word" data-word="influence">influences</mark> and relationships between drug reps and doctors. Salespeople provide much-needed information and education to <mark class="vocab-word" data-word="physician">physicians</mark>. In many cases the <mark class="vocab-word" data-word="glossy">glossy</mark> <mark class="vocab-word" data-word="brochure">brochures</mark>, article reprints and <mark class="vocab-word" data-word="prescription">prescriptions</mark> they deliver are primary sources of drug education for healthcare givers. With the huge investment the industry has placed in face-to-face selling, salespeople have <mark class="vocab-word" data-word="essentially">essentially</mark> become specialists in one drug or group of drugs – a <mark class="vocab-word" data-word="tremendous">tremendous</mark> advantage in getting the attention of busy doctors in need of quick information.</p><p>But the sales push rarely stops in the office. The flashy <mark class="vocab-word" data-word="brochure">brochures</mark> and <mark class="vocab-word" data-word="pamphlet">pamphlets</mark> left by the sales reps are often followed up with meals at expensive restaurants, meetings in warm and sunny places, and an inundation of promotional <mark class="vocab-word" data-word="gadget">gadgets</mark>. Rarely do patients watch a doctor write with a pen that isn’t emblazoned with a drug’s name, or see a nurse use a <mark class="vocab-word" data-word="tablet">tablet</mark> not <mark class="vocab-word" data-word="bearing">bearing</mark> a <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> company’s <mark class="vocab-word" data-word="logo">logo</mark>. Millions of dollars are spent by <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> companies on promotional products like coffee <mark class="vocab-word" data-word="mug">mugs</mark>, shirts, umbrellas, and golf balls. Money well spent? It’s hard to tell. ‘I’ve been the <mark class="vocab-word" data-word="recipient">recipient</mark> of golf balls from one company and I use them, but it doesn’t make me <mark class="vocab-word" data-word="prescribe">prescribe</mark> their medicine,’ says one doctor. ‘I tend to think I’m not <mark class="vocab-word" data-word="influence">influenced</mark> by what they give me.’</p><p>Free samples of new and expensive drugs might be the single most effective way of getting doctors and patients to become <mark class="vocab-word" data-word="loyal">loyal</mark> to a product. Salespeople hand out hundreds of dollars’ worth of samples each week- $7.2 billion worth of them in one year. Though few <mark class="vocab-word" data-word="comprehensive">comprehensive</mark> studies have been conducted, one by the University of Washington <mark class="vocab-word" data-word="investigate">investigated</mark> how drug sample <mark class="vocab-word" data-word="availability">availability</mark> affected what <mark class="vocab-word" data-word="physician">physicians</mark> <mark class="vocab-word" data-word="prescribe">prescribe</mark>. A total of 131 doctors self-reported their <mark class="vocab-word" data-word="prescribe">prescribing</mark> patterns – the conclusion was that the <mark class="vocab-word" data-word="availability">availability</mark> of samples led them to <mark class="vocab-word" data-word="dispense">dispense</mark> and <mark class="vocab-word" data-word="prescribe">prescribe</mark> drugs that <mark class="vocab-word" data-word="differ">differed</mark> from their preferred drug choice.</p><p>The bottom line is that <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> companies as a whole invest more in marketing than they do in research and development. And patients are the ones who pay – in the form of sky-rocketing <mark class="vocab-word" data-word="prescription">prescription</mark> prices – for every pen that’s handed out, every free theatre ticket, and every <mark class="vocab-word" data-word="steak">steak</mark> dinner eaten. In the end the fact <mark class="vocab-word" data-word="remains">remains</mark> that <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> companies have every right to make a profit and will continue to find new ways to increase sales. But as the medical world continues to <mark class="vocab-word" data-word="grapple">grapple</mark> with what’s acceptable and what’s not, it is clear that companies must continue to be heavily <mark class="vocab-word" data-word="scrutinize">scrutinized</mark> for their sales and marketing strategies.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>制药业是北美最赚钱的产业之一。但是，制药行业的销售和营销策略是否太过分了？</p><p>几个月前金·舍费尔，一名全球主要制药公司的销售代表，走进纽约一个医疗中心带来其公司最新产品的信息和免费样本。那天她很幸运-有一个医生有空见她。医生问：“上一位医药代表为我提供了去佛罗里达的旅行。你有什么？’ 。他不仅仅是开玩笑。</p><p>那天提供的物品是纽约音乐剧的两张门票 。但是在任何一天，舍费尔所能提供的都是当今药品代表的典型举动-装满促销礼品和小配件的汽车后备箱，可以为一个小国购买午餐和晚餐的预算，数百个免费药品样品以及给予一名医生200美元的自由，只要他愿意将她的新产品开给接下来六名符合该药物资料的患者。她还提供几千美元的酬金，以换取医生参加她公司下一次的教育讲座。</p><p>销售药品的工作每天都处于道德审判之下。像舍费尔这样的推销员的行为从用免费午餐购买潜在客户的时间，到贿赂医生让他来开自己的药。他们在一个因销售和市场营销行为而备受批评的行业中工作，但发现自己陷入了古老的“先有鸡还是先有蛋”的问题。企业不会使用无效的策略，因此，难道说医生也应为药品销售日益猖獗的行为负责？还是说决定行为边界完全是该行业自己的责任？</p><p>行业中销售人员数量和用于推动他们行为的资金的爆炸性增长，迫使我们仔细审查其压力，影响，以及医生和药品代表之间的关系。销售人员向医生提供他们急需的信息和教育。许多情况下，它们送出的有光泽的小册子，再版的文章和处方是医疗保健人员有关药物教育的主要来源。由于该行业在面对面销售方面的巨额投资，销售人员本质上已经成为一种药物或一组药物的专家-这在吸引需要快速信息的繁忙医生的注意力方面具有巨大优势。</p><p>但是，销售很少止于办公室内。销售代表留下的浮华的小册子通常伴随着在昂贵的餐厅用餐，在温暖和阳光充足的地方开会，以及大量小物品。很少有患者看到医生用不带药物名称的笔写字，或者看到护士使用不带有制药公司标志的平板电脑。制药公司在诸如咖啡杯，衬衫，雨伞和高尔夫球等促销产品上花费数百万美元。钱花得好吗？很难说。一位医生说：“我收到一家医药公司的高尔夫球，我使用它们，但这并不能使我开出它们的药。我倾向于认为我不受他们给我的东西的影响。”</p><p>免费获得昂贵新药的样本可能是使医生和患者忠于某种产品的最有效方法。销售人员每周派发价值数百美元的样品-一年就是72亿美元。尽管很少有全面的研究，但华盛顿大学的一项研究调查了药物样本的可获得性如何影响医生的处方。共有131位医生主动报告了他们开处方的方式-结论是样品的可获得性导致他们开出与自己偏爱的药物不同的处方。</p><p>底线是，制药公司作为一个整体在市场营销方面的投资超过了研发方面的投资。而且，患者以支付高昂的处方价格的形式为每支钢笔，每张免费剧院票和每顿牛排晚餐付费。最终，事实仍然是制药公司完全有权利获得利润，并将继续寻找增加销售额的新方法。但是，随着医学界继续努力确定哪些行为可接受，哪些行为不可接受，公司显然必须继续对其销售和营销策略进行严格审查。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="pharmaceutical">Pharmaceuticals</mark> is one of the most <mark class="vocab-word" data-word="profitable">profitable</mark> industries in North America. But do the drugs industry’s sales and marketing strategies go too far?</p></div>  <div class="parallel-zh"><p>制药业是北美最赚钱的产业之一。但是，制药行业的销售和营销策略是否太过分了？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A few months ago Kim Schaefer, sales <mark class="vocab-word" data-word="representative">representative</mark> of a major global <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> company, walked into a medical center in New York to bring information and free samples of her company’s latest products. That day she was lucky – a doctor was available to see her. ‘The last rep offered me a trip to Florida. What do you have?’ the <mark class="vocab-word" data-word="physician">physician</mark> asked. He was only half joking.</p></div>  <div class="parallel-zh"><p>几个月前金·舍费尔，一名全球主要制药公司的销售代表，走进纽约一个医疗中心带来其公司最新产品的信息和免费样本。那天她很幸运-有一个医生有空见她。医生问：“上一位医药代表为我提供了去佛罗里达的旅行。你有什么？’ 。他不仅仅是开玩笑。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What was on offer that day was a pair of tickets for a New York musical. But on any given day, what Schaefer can offer is typical for today’s drugs rep – a car <mark class="vocab-word" data-word="trunk">trunk</mark> full of promotional gifts and <mark class="vocab-word" data-word="gadget">gadgets</mark>, a budget that could buy lunches and dinners for a small country, hundreds of free drug samples and the freedom to give a <mark class="vocab-word" data-word="physician">physician</mark> $200 to <mark class="vocab-word" data-word="prescribe">prescribe</mark> her new product to the next six patients who fit the drug’s profile. And she also has a few $1,000 honoraria to offer in exchange for doctors’ <mark class="vocab-word" data-word="attendance">attendance</mark> at her company’s next educational lecture.</p></div>  <div class="parallel-zh"><p>那天提供的物品是纽约音乐剧的两张门票 。但是在任何一天，舍费尔所能提供的都是当今药品代表的典型举动-装满促销礼品和小配件的汽车后备箱，可以为一个小国购买午餐和晚餐的预算，数百个免费药品样品以及给予一名医生200美元的自由，只要他愿意将她的新产品开给接下来六名符合该药物资料的患者。她还提供几千美元的酬金，以换取医生参加她公司下一次的教育讲座。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Selling <mark class="vocab-word" data-word="pharmaceutical">pharmaceuticals</mark> is a daily exercise in <mark class="vocab-word" data-word="ethical">ethical</mark> judgment. Salespeople like Schaefer walk the line between the common practice of buying a <mark class="vocab-word" data-word="prospect">prospect</mark>’s time with a free meal, and <mark class="vocab-word" data-word="bribe">bribing</mark> doctors to <mark class="vocab-word" data-word="prescribe">prescribe</mark> their drugs. They work in an industry highly criticized for its sales and marketing practices, but find themselves in the middle of the age-old chicken-or-egg question – businesses won’t use strategies that don’t work, so are doctors to blame for the <mark class="vocab-word" data-word="escalate">escalating</mark> <mark class="vocab-word" data-word="extravagance">extravagance</mark> of <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> marketing? Or is it the industry’s responsibility to decide the boundaries?</p></div>  <div class="parallel-zh"><p>销售药品的工作每天都处于道德审判之下。像舍费尔这样的推销员的行为从用免费午餐购买潜在客户的时间，到贿赂医生让他来开自己的药。他们在一个因销售和市场营销行为而备受批评的行业中工作，但发现自己陷入了古老的“先有鸡还是先有蛋”的问题。企业不会使用无效的策略，因此，难道说医生也应为药品销售日益猖獗的行为负责？还是说决定行为边界完全是该行业自己的责任？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="explosion">explosion</mark> in the <mark class="vocab-word" data-word="sheer">sheer</mark> number of salespeople in the field – and the amount of funding used to promote their causes – forces close examination of the pressures, <mark class="vocab-word" data-word="influence">influences</mark> and relationships between drug reps and doctors. Salespeople provide much-needed information and education to <mark class="vocab-word" data-word="physician">physicians</mark>. In many cases the <mark class="vocab-word" data-word="glossy">glossy</mark> <mark class="vocab-word" data-word="brochure">brochures</mark>, article reprints and <mark class="vocab-word" data-word="prescription">prescriptions</mark> they deliver are primary sources of drug education for healthcare givers. With the huge investment the industry has placed in face-to-face selling, salespeople have <mark class="vocab-word" data-word="essentially">essentially</mark> become specialists in one drug or group of drugs – a <mark class="vocab-word" data-word="tremendous">tremendous</mark> advantage in getting the attention of busy doctors in need of quick information.</p></div>  <div class="parallel-zh"><p>行业中销售人员数量和用于推动他们行为的资金的爆炸性增长，迫使我们仔细审查其压力，影响，以及医生和药品代表之间的关系。销售人员向医生提供他们急需的信息和教育。许多情况下，它们送出的有光泽的小册子，再版的文章和处方是医疗保健人员有关药物教育的主要来源。由于该行业在面对面销售方面的巨额投资，销售人员本质上已经成为一种药物或一组药物的专家-这在吸引需要快速信息的繁忙医生的注意力方面具有巨大优势。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But the sales push rarely stops in the office. The flashy <mark class="vocab-word" data-word="brochure">brochures</mark> and <mark class="vocab-word" data-word="pamphlet">pamphlets</mark> left by the sales reps are often followed up with meals at expensive restaurants, meetings in warm and sunny places, and an inundation of promotional <mark class="vocab-word" data-word="gadget">gadgets</mark>. Rarely do patients watch a doctor write with a pen that isn’t emblazoned with a drug’s name, or see a nurse use a <mark class="vocab-word" data-word="tablet">tablet</mark> not <mark class="vocab-word" data-word="bearing">bearing</mark> a <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> company’s <mark class="vocab-word" data-word="logo">logo</mark>. Millions of dollars are spent by <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> companies on promotional products like coffee <mark class="vocab-word" data-word="mug">mugs</mark>, shirts, umbrellas, and golf balls. Money well spent? It’s hard to tell. ‘I’ve been the <mark class="vocab-word" data-word="recipient">recipient</mark> of golf balls from one company and I use them, but it doesn’t make me <mark class="vocab-word" data-word="prescribe">prescribe</mark> their medicine,’ says one doctor. ‘I tend to think I’m not <mark class="vocab-word" data-word="influence">influenced</mark> by what they give me.’</p></div>  <div class="parallel-zh"><p>但是，销售很少止于办公室内。销售代表留下的浮华的小册子通常伴随着在昂贵的餐厅用餐，在温暖和阳光充足的地方开会，以及大量小物品。很少有患者看到医生用不带药物名称的笔写字，或者看到护士使用不带有制药公司标志的平板电脑。制药公司在诸如咖啡杯，衬衫，雨伞和高尔夫球等促销产品上花费数百万美元。钱花得好吗？很难说。一位医生说：“我收到一家医药公司的高尔夫球，我使用它们，但这并不能使我开出它们的药。我倾向于认为我不受他们给我的东西的影响。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Free samples of new and expensive drugs might be the single most effective way of getting doctors and patients to become <mark class="vocab-word" data-word="loyal">loyal</mark> to a product. Salespeople hand out hundreds of dollars’ worth of samples each week- $7.2 billion worth of them in one year. Though few <mark class="vocab-word" data-word="comprehensive">comprehensive</mark> studies have been conducted, one by the University of Washington <mark class="vocab-word" data-word="investigate">investigated</mark> how drug sample <mark class="vocab-word" data-word="availability">availability</mark> affected what <mark class="vocab-word" data-word="physician">physicians</mark> <mark class="vocab-word" data-word="prescribe">prescribe</mark>. A total of 131 doctors self-reported their <mark class="vocab-word" data-word="prescribe">prescribing</mark> patterns – the conclusion was that the <mark class="vocab-word" data-word="availability">availability</mark> of samples led them to <mark class="vocab-word" data-word="dispense">dispense</mark> and <mark class="vocab-word" data-word="prescribe">prescribe</mark> drugs that <mark class="vocab-word" data-word="differ">differed</mark> from their preferred drug choice.</p></div>  <div class="parallel-zh"><p>免费获得昂贵新药的样本可能是使医生和患者忠于某种产品的最有效方法。销售人员每周派发价值数百美元的样品-一年就是72亿美元。尽管很少有全面的研究，但华盛顿大学的一项研究调查了药物样本的可获得性如何影响医生的处方。共有131位医生主动报告了他们开处方的方式-结论是样品的可获得性导致他们开出与自己偏爱的药物不同的处方。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The bottom line is that <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> companies as a whole invest more in marketing than they do in research and development. And patients are the ones who pay – in the form of sky-rocketing <mark class="vocab-word" data-word="prescription">prescription</mark> prices – for every pen that’s handed out, every free theatre ticket, and every <mark class="vocab-word" data-word="steak">steak</mark> dinner eaten. In the end the fact <mark class="vocab-word" data-word="remains">remains</mark> that <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> companies have every right to make a profit and will continue to find new ways to increase sales. But as the medical world continues to <mark class="vocab-word" data-word="grapple">grapple</mark> with what’s acceptable and what’s not, it is clear that companies must continue to be heavily <mark class="vocab-word" data-word="scrutinize">scrutinized</mark> for their sales and marketing strategies.</p></div>  <div class="parallel-zh"><p>底线是，制药公司作为一个整体在市场营销方面的投资超过了研发方面的投资。而且，患者以支付高昂的处方价格的形式为每支钢笔，每张免费剧院票和每顿牛排晚餐付费。最终，事实仍然是制药公司完全有权利获得利润，并将继续寻找增加销售额的新方法。但是，随着医学界继续努力确定哪些行为可接受，哪些行为不可接受，公司显然必须继续对其销售和营销策略进行严格审查。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"pharmaceutical": 8, "profitable": 1, "representative": 1, "physician": 4, "trunk": 1, "gadget": 2, "prescribe": 6, "attendance": 1, "ethical": 1, "prospect": 1, "bribe": 1, "escalate": 1, "extravagance": 1, "explosion": 1, "sheer": 1, "influence": 2, "glossy": 1, "brochure": 2, "prescription": 2, "essentially": 1, "tremendous": 1, "pamphlet": 1, "tablet": 1, "bearing": 1, "logo": 1, "mug": 1, "recipient": 1, "loyal": 1, "comprehensive": 1, "investigate": 1, "availability": 2, "dispense": 1, "differ": 1, "steak": 1, "remains": 1, "grapple": 1, "scrutinize": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

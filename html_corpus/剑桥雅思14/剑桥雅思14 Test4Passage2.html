@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why zoos are good 动物园的好处 - 剑桥雅思14 Test 4 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Why zoos are good 动物园的好处</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39466.html" target="_blank">https://www.laokaoya.com/39466.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>In my view, it is perfectly possible for many species of animals living in zoos or wildlife parks to have a quality of life as high as, or higher than, in the wild. Animals in good zoos get a <mark class="vocab-word" data-word="varied">varied</mark> and high-quality diet with all the <mark class="vocab-word" data-word="supplement">supplements</mark> required, and any illnesses they might have will be treated. Their movement might be somewhat restricted, but they have a safe environment in which to live, and they are <mark class="vocab-word" data-word="spare">spared</mark> <mark class="vocab-word" data-word="bully">bullying</mark> and social ostracism by others of their kind. They do not suffer from the <mark class="vocab-word" data-word="threat">threat</mark> or stress of <mark class="vocab-word" data-word="predator">predators</mark>, or the <mark class="vocab-word" data-word="irritation">irritation</mark> and pain of <mark class="vocab-word" data-word="parasite">parasites</mark> or injuries. The average <mark class="vocab-word" data-word="captive">captive</mark> animal will have a greater life <mark class="vocab-word" data-word="expectancy">expectancy</mark> compared with its wild <mark class="vocab-word" data-word="counterpart">counterpart</mark>, and will not die of <mark class="vocab-word" data-word="drought">drought</mark>, of <mark class="vocab-word" data-word="starvation">starvation</mark> or in the <mark class="vocab-word" data-word="jaw">jaws</mark> of a <mark class="vocab-word" data-word="predator">predator</mark>. A lot of very <mark class="vocab-word" data-word="nasty">nasty</mark> things happen to truly ‘wild’ animals that simply don’t happen in good zoos, and to view a life that is ‘free’ as one that is <mark class="vocab-word" data-word="automatically">automatically</mark> ‘good’ is, I think, an error. Furthermore, zoos serve several key purposes.</p><p>Firstly, zoos aid <mark class="vocab-word" data-word="conservation">conservation</mark>. <mark class="vocab-word" data-word="colossal">Colossal</mark> numbers of species are becoming <mark class="vocab-word" data-word="extinct">extinct</mark> across the world, and many more are increasingly threatened and therefore risk <mark class="vocab-word" data-word="extinction">extinction</mark>. Moreover, some of these collapses have been sudden, dramatic and unexpected, or were simply discovered very late in the day. A species protected in <mark class="vocab-word" data-word="captivity">captivity</mark> can be bred up to provide a <mark class="vocab-word" data-word="reservoir">reservoir</mark> population against a population crash or <mark class="vocab-word" data-word="extinction">extinction</mark> in the wild. A good number of species only exist in <mark class="vocab-word" data-word="captivity">captivity</mark>, with many of these living in zoos. Still more only exist in the wild because they have been reintroduced from zoos, or have wild populations that have been <mark class="vocab-word" data-word="boost">boosted</mark> by <mark class="vocab-word" data-word="captive">captive</mark> bred animals. Without these efforts there would be fewer species alive today. Although reintroduction successes are few and far between, the numbers are increasing, and the very fact that species have been saved or reintroduced as a result of <mark class="vocab-word" data-word="captive">captive</mark> <mark class="vocab-word" data-word="breed">breeding</mark> proves the value of such <mark class="vocab-word" data-word="initiative">initiatives</mark>.</p><p>Zoos also provide education. Many children and adults, especially those in cities, will never see a wild animal beyond a fox or <mark class="vocab-word" data-word="pigeon">pigeon</mark>. While it is true that television documentaries are becoming ever more detailed and impressive, and many natural history <mark class="vocab-word" data-word="specimen">specimens</mark> are on display in museums, there really is nothing to compare with seeing a living creature in the <mark class="vocab-word" data-word="flesh">flesh</mark>, hearing it, smelling it, watching what it does and having the time to <mark class="vocab-word" data-word="absorb">absorb</mark> details. That alone will bring a greater understanding and <mark class="vocab-word" data-word="perspective">perspective</mark> to many, and <mark class="vocab-word" data-word="hopeful">hopefully</mark> give them a greater <mark class="vocab-word" data-word="appreciation">appreciation</mark> for wildlife, <mark class="vocab-word" data-word="conservation">conservation</mark> efforts and how they can contribute.</p><p>In addition to this, there is also the education that can take place in zoos through signs, talks and <mark class="vocab-word" data-word="presentation">presentations</mark> which directly communicate information to visitors about the animals they are seeing and their place in the world. This was an area where zoos used to be <mark class="vocab-word" data-word="lacking">lacking</mark>, but they are now increasingly <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> in their communication and outreach work. Many zoos also work directly to educate <mark class="vocab-word" data-word="conservation">conservation</mark> workers in other countries, or send their animal keepers abroad to contribute their knowledge and skills to those working in zoos and reserves, <mark class="vocab-word" data-word="thereby">thereby</mark> helping to improve conditions and reintroductions all over the world.</p><p>Zoos also play a key role in research. If we are to save wild species and <mark class="vocab-word" data-word="restore">restore</mark> and repair <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> we need to know about how key species live, act and react. Being able to <mark class="vocab-word" data-word="undertake">undertake</mark> research on animals in zoos where there is less risk and fewer <mark class="vocab-word" data-word="variable">variables</mark> means real changes can be effected on wild populations. Finding out about, for example, the oestrus cycle of an animal or its <mark class="vocab-word" data-word="breed">breeding</mark> rate helps us manage wild populations. Procedures such as capturing and moving at-risk or dangerous individuals are <mark class="vocab-word" data-word="bolster">bolstered</mark> by knowledge gained in zoos about <mark class="vocab-word" data-word="dose">doses</mark> for anaesthetics, and by experience in handling and transporting animals. This can make a real difference to <mark class="vocab-word" data-word="conservation">conservation</mark> efforts and to the reduction of human-animal conflicts, and can provide a knowledge base for helping with the increasing <mark class="vocab-word" data-word="threat">threats</mark> of <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="destruction">destruction</mark> and other problems.</p><p>In conclusion, considering the many <mark class="vocab-word" data-word="ongoing">ongoing</mark> global <mark class="vocab-word" data-word="threat">threats</mark> to the environment, it is hard for me to see zoos as anything other than essential to the <mark class="vocab-word" data-word="long-term">long-term</mark> <mark class="vocab-word" data-word="survival">survival</mark> of numerous species. They are <mark class="vocab-word" data-word="vital">vital</mark> not just in terms of protecting animals, but as a means of learning about them to aid those still in the wild, as well as educating and informing the general population about these animals and their world so that they can assist or at least accept the need to be more environmentally <mark class="vocab-word" data-word="conscious">conscious</mark>. Without them, the world would be, and would increasingly become, a much poorer place.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在我看来，许多生活在动物园或者野生动物园的动物完全有可能拥有跟生活在野外一样高、甚至更高的生活质量。优秀动物园里，动物的饮食多样，品质上乘，包含所有他们需要的补充剂，并且它们可能染上的任何疾病都会得到治疗。它们的活动或许会在某种程度上受限，但他们拥有安全的生活环境，免受物种中其他个体的欺凌和排斥。它们不用承受捕食者的威胁和压力，也远离寄生虫或受伤带来的刺激和痛苦。与生活在野外的同伴相比，圈养动物的平均寿命更长，不会死于干旱、饥饿或者捕食者的嘴下。许多真正“野生”动物身上发生的痛苦的事情并不会出现在优秀的动物园里。我认为，将“自由”的生活当作自然而然的“善”是种错误。此外，动物园还服务于几个关键目标。</p><p>首先，动物园有利于动物保护。世界上大量的物种正在灭绝。更多的物种受到日益严重的威胁，并且因此面临着灭绝的风险。此外，一些灭绝发生的十分突然、剧烈并且出乎意料，或者只是到很晚的时候才被发现。圈养中受到保护的动物可以繁衍后代提供储备种群，以对抗野外中的数量骤降或者灭绝。许多物种都只存在于圈养状态，其中不少都生活在动物园里。更多的物种依然存在于野外只是因为它们从动物园里被放归回去，或者圈养繁育的动物提升了野生的数量。没有这些努力的话，如今现存的物种会更少。虽然放归成功的案例很少，但其数量正在增加。并且物种通过圈养哺育得到拯救或者被放归野外的事实本身就证明了这种措施的价值。</p><p>动物园同样提供教育机会。许多孩子和成人，尤其是那些生活在城市里的，除了狐狸和鸽子之外根本见不到野生动物。虽然电视纪录片确实变得越来越细致、越来越令人赞叹，并且许多自然历史标本也在博物馆中展出，但没有任何东西能真正比得上看到活生生的动物，听到它的声音，闻到它的气味，观察它的动作，以及花时间了解细节。单单这样就能让许多人增进对它们的理解，并有希望让他们更加欣赏野生动物，知道为保护它们所做的努力，明白自己能够如何做出贡献。</p><p>除此之外，动物园还可以通过标识、谈话和讲演提供教育。这些方法可以直接向游客传递关于他们正在观赏的动物的信息，以及它们在世界上的位置。在这方面，动物园之前做的不够，但它们如今在沟通和推广上愈发精细。许多动物园也直接为其他国家的动物保护工作者提供培训，或者将它们的动物饲养员送到国外，用他们的知识和技能帮助正在那些动物园或者保护区里工作的人，从而帮助提升全世界的条件和放归工作。</p><p>动物园在研究方面也起着关键作用。如果我们打算拯救野生动物，重建和修复生态系统，我们需要知道关键物种如何生存、活动以及回应。能够在动物园这样一个风险较低，变量较少的地方对动物展开研究，意味着我们可以对野生族群产生真正的改变。例如，查明动物的发情周期或者它的繁殖率有助于我们管理野生族群的数量。诸如捕捉并转移处于风险之中或者存在危险的个体这样的操作，就通过在动物园获取的、关于麻醉剂量的知识，以及处理和运输动物的经验得到了改善。这真正改变了保护工作，减少了人类和动物之间的冲突，并为解决栖息地日益遭到破坏威胁以及其他问题提供了知识基础。</p><p>总的来说，考虑到许多正在发生的全球性环境威胁，我认为动物园对于大量物种的长期生存至关重要。它们不仅在动物保护方面十分关键，而且也是了解它们以帮助那些仍然生活在野外的动物的一种方式。它们同时还可以教授大众关于这些动物和它们世界的知识，以便他们能够帮助、或者至少是接受需要更强的环境意识这一观念。如果没有它们的话，世界会变的越来越贫乏。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>In my view, it is perfectly possible for many species of animals living in zoos or wildlife parks to have a quality of life as high as, or higher than, in the wild. Animals in good zoos get a <mark class="vocab-word" data-word="varied">varied</mark> and high-quality diet with all the <mark class="vocab-word" data-word="supplement">supplements</mark> required, and any illnesses they might have will be treated. Their movement might be somewhat restricted, but they have a safe environment in which to live, and they are <mark class="vocab-word" data-word="spare">spared</mark> <mark class="vocab-word" data-word="bully">bullying</mark> and social ostracism by others of their kind. They do not suffer from the <mark class="vocab-word" data-word="threat">threat</mark> or stress of <mark class="vocab-word" data-word="predator">predators</mark>, or the <mark class="vocab-word" data-word="irritation">irritation</mark> and pain of <mark class="vocab-word" data-word="parasite">parasites</mark> or injuries. The average <mark class="vocab-word" data-word="captive">captive</mark> animal will have a greater life <mark class="vocab-word" data-word="expectancy">expectancy</mark> compared with its wild <mark class="vocab-word" data-word="counterpart">counterpart</mark>, and will not die of <mark class="vocab-word" data-word="drought">drought</mark>, of <mark class="vocab-word" data-word="starvation">starvation</mark> or in the <mark class="vocab-word" data-word="jaw">jaws</mark> of a <mark class="vocab-word" data-word="predator">predator</mark>. A lot of very <mark class="vocab-word" data-word="nasty">nasty</mark> things happen to truly ‘wild’ animals that simply don’t happen in good zoos, and to view a life that is ‘free’ as one that is <mark class="vocab-word" data-word="automatically">automatically</mark> ‘good’ is, I think, an error. Furthermore, zoos serve several key purposes.</p></div>  <div class="parallel-zh"><p>在我看来，许多生活在动物园或者野生动物园的动物完全有可能拥有跟生活在野外一样高、甚至更高的生活质量。优秀动物园里，动物的饮食多样，品质上乘，包含所有他们需要的补充剂，并且它们可能染上的任何疾病都会得到治疗。它们的活动或许会在某种程度上受限，但他们拥有安全的生活环境，免受物种中其他个体的欺凌和排斥。它们不用承受捕食者的威胁和压力，也远离寄生虫或受伤带来的刺激和痛苦。与生活在野外的同伴相比，圈养动物的平均寿命更长，不会死于干旱、饥饿或者捕食者的嘴下。许多真正“野生”动物身上发生的痛苦的事情并不会出现在优秀的动物园里。我认为，将“自由”的生活当作自然而然的“善”是种错误。此外，动物园还服务于几个关键目标。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Firstly, zoos aid <mark class="vocab-word" data-word="conservation">conservation</mark>. <mark class="vocab-word" data-word="colossal">Colossal</mark> numbers of species are becoming <mark class="vocab-word" data-word="extinct">extinct</mark> across the world, and many more are increasingly threatened and therefore risk <mark class="vocab-word" data-word="extinction">extinction</mark>. Moreover, some of these collapses have been sudden, dramatic and unexpected, or were simply discovered very late in the day. A species protected in <mark class="vocab-word" data-word="captivity">captivity</mark> can be bred up to provide a <mark class="vocab-word" data-word="reservoir">reservoir</mark> population against a population crash or <mark class="vocab-word" data-word="extinction">extinction</mark> in the wild. A good number of species only exist in <mark class="vocab-word" data-word="captivity">captivity</mark>, with many of these living in zoos. Still more only exist in the wild because they have been reintroduced from zoos, or have wild populations that have been <mark class="vocab-word" data-word="boost">boosted</mark> by <mark class="vocab-word" data-word="captive">captive</mark> bred animals. Without these efforts there would be fewer species alive today. Although reintroduction successes are few and far between, the numbers are increasing, and the very fact that species have been saved or reintroduced as a result of <mark class="vocab-word" data-word="captive">captive</mark> <mark class="vocab-word" data-word="breed">breeding</mark> proves the value of such <mark class="vocab-word" data-word="initiative">initiatives</mark>.</p></div>  <div class="parallel-zh"><p>首先，动物园有利于动物保护。世界上大量的物种正在灭绝。更多的物种受到日益严重的威胁，并且因此面临着灭绝的风险。此外，一些灭绝发生的十分突然、剧烈并且出乎意料，或者只是到很晚的时候才被发现。圈养中受到保护的动物可以繁衍后代提供储备种群，以对抗野外中的数量骤降或者灭绝。许多物种都只存在于圈养状态，其中不少都生活在动物园里。更多的物种依然存在于野外只是因为它们从动物园里被放归回去，或者圈养繁育的动物提升了野生的数量。没有这些努力的话，如今现存的物种会更少。虽然放归成功的案例很少，但其数量正在增加。并且物种通过圈养哺育得到拯救或者被放归野外的事实本身就证明了这种措施的价值。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Zoos also provide education. Many children and adults, especially those in cities, will never see a wild animal beyond a fox or <mark class="vocab-word" data-word="pigeon">pigeon</mark>. While it is true that television documentaries are becoming ever more detailed and impressive, and many natural history <mark class="vocab-word" data-word="specimen">specimens</mark> are on display in museums, there really is nothing to compare with seeing a living creature in the <mark class="vocab-word" data-word="flesh">flesh</mark>, hearing it, smelling it, watching what it does and having the time to <mark class="vocab-word" data-word="absorb">absorb</mark> details. That alone will bring a greater understanding and <mark class="vocab-word" data-word="perspective">perspective</mark> to many, and <mark class="vocab-word" data-word="hopeful">hopefully</mark> give them a greater <mark class="vocab-word" data-word="appreciation">appreciation</mark> for wildlife, <mark class="vocab-word" data-word="conservation">conservation</mark> efforts and how they can contribute.</p></div>  <div class="parallel-zh"><p>动物园同样提供教育机会。许多孩子和成人，尤其是那些生活在城市里的，除了狐狸和鸽子之外根本见不到野生动物。虽然电视纪录片确实变得越来越细致、越来越令人赞叹，并且许多自然历史标本也在博物馆中展出，但没有任何东西能真正比得上看到活生生的动物，听到它的声音，闻到它的气味，观察它的动作，以及花时间了解细节。单单这样就能让许多人增进对它们的理解，并有希望让他们更加欣赏野生动物，知道为保护它们所做的努力，明白自己能够如何做出贡献。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In addition to this, there is also the education that can take place in zoos through signs, talks and <mark class="vocab-word" data-word="presentation">presentations</mark> which directly communicate information to visitors about the animals they are seeing and their place in the world. This was an area where zoos used to be <mark class="vocab-word" data-word="lacking">lacking</mark>, but they are now increasingly <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> in their communication and outreach work. Many zoos also work directly to educate <mark class="vocab-word" data-word="conservation">conservation</mark> workers in other countries, or send their animal keepers abroad to contribute their knowledge and skills to those working in zoos and reserves, <mark class="vocab-word" data-word="thereby">thereby</mark> helping to improve conditions and reintroductions all over the world.</p></div>  <div class="parallel-zh"><p>除此之外，动物园还可以通过标识、谈话和讲演提供教育。这些方法可以直接向游客传递关于他们正在观赏的动物的信息，以及它们在世界上的位置。在这方面，动物园之前做的不够，但它们如今在沟通和推广上愈发精细。许多动物园也直接为其他国家的动物保护工作者提供培训，或者将它们的动物饲养员送到国外，用他们的知识和技能帮助正在那些动物园或者保护区里工作的人，从而帮助提升全世界的条件和放归工作。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Zoos also play a key role in research. If we are to save wild species and <mark class="vocab-word" data-word="restore">restore</mark> and repair <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> we need to know about how key species live, act and react. Being able to <mark class="vocab-word" data-word="undertake">undertake</mark> research on animals in zoos where there is less risk and fewer <mark class="vocab-word" data-word="variable">variables</mark> means real changes can be effected on wild populations. Finding out about, for example, the oestrus cycle of an animal or its <mark class="vocab-word" data-word="breed">breeding</mark> rate helps us manage wild populations. Procedures such as capturing and moving at-risk or dangerous individuals are <mark class="vocab-word" data-word="bolster">bolstered</mark> by knowledge gained in zoos about <mark class="vocab-word" data-word="dose">doses</mark> for anaesthetics, and by experience in handling and transporting animals. This can make a real difference to <mark class="vocab-word" data-word="conservation">conservation</mark> efforts and to the reduction of human-animal conflicts, and can provide a knowledge base for helping with the increasing <mark class="vocab-word" data-word="threat">threats</mark> of <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="destruction">destruction</mark> and other problems.</p></div>  <div class="parallel-zh"><p>动物园在研究方面也起着关键作用。如果我们打算拯救野生动物，重建和修复生态系统，我们需要知道关键物种如何生存、活动以及回应。能够在动物园这样一个风险较低，变量较少的地方对动物展开研究，意味着我们可以对野生族群产生真正的改变。例如，查明动物的发情周期或者它的繁殖率有助于我们管理野生族群的数量。诸如捕捉并转移处于风险之中或者存在危险的个体这样的操作，就通过在动物园获取的、关于麻醉剂量的知识，以及处理和运输动物的经验得到了改善。这真正改变了保护工作，减少了人类和动物之间的冲突，并为解决栖息地日益遭到破坏威胁以及其他问题提供了知识基础。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In conclusion, considering the many <mark class="vocab-word" data-word="ongoing">ongoing</mark> global <mark class="vocab-word" data-word="threat">threats</mark> to the environment, it is hard for me to see zoos as anything other than essential to the <mark class="vocab-word" data-word="long-term">long-term</mark> <mark class="vocab-word" data-word="survival">survival</mark> of numerous species. They are <mark class="vocab-word" data-word="vital">vital</mark> not just in terms of protecting animals, but as a means of learning about them to aid those still in the wild, as well as educating and informing the general population about these animals and their world so that they can assist or at least accept the need to be more environmentally <mark class="vocab-word" data-word="conscious">conscious</mark>. Without them, the world would be, and would increasingly become, a much poorer place.</p></div>  <div class="parallel-zh"><p>总的来说，考虑到许多正在发生的全球性环境威胁，我认为动物园对于大量物种的长期生存至关重要。它们不仅在动物保护方面十分关键，而且也是了解它们以帮助那些仍然生活在野外的动物的一种方式。它们同时还可以教授大众关于这些动物和它们世界的知识，以便他们能够帮助、或者至少是接受需要更强的环境意识这一观念。如果没有它们的话，世界会变的越来越贫乏。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"varied": 1, "supplement": 1, "spare": 1, "bully": 1, "threat": 3, "predator": 2, "irritation": 1, "parasite": 1, "captive": 3, "expectancy": 1, "counterpart": 1, "drought": 1, "starvation": 1, "jaw": 1, "nasty": 1, "automatically": 1, "conservation": 4, "colossal": 1, "extinct": 1, "extinction": 2, "captivity": 2, "reservoir": 1, "boost": 1, "breed": 2, "initiative": 1, "pigeon": 1, "specimen": 1, "flesh": 1, "absorb": 1, "perspective": 1, "hopeful": 1, "appreciation": 1, "presentation": 1, "lacking": 1, "sophisticated": 1, "thereby": 1, "restore": 1, "ecosystem": 1, "undertake": 1, "variable": 1, "bolster": 1, "dose": 1, "habitat": 1, "destruction": 1, "ongoing": 1, "long-term": 1, "survival": 1, "vital": 1, "conscious": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

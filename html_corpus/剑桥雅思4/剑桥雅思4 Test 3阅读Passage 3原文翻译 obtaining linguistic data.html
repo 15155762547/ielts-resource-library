@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>obtaining linguistic data - 剑桥雅思4 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思4</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>obtaining linguistic data</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/21507.html" target="_blank">https://www.laokaoya.com/21507.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Many procedures are available for <mark class="vocab-word" data-word="obtain">obtaining</mark> data about a language. They range from a carefully planned, <mark class="vocab-word" data-word="intensive">intensive</mark> field investigation in a foreign country to a <mark class="vocab-word" data-word="casual">casual</mark> <mark class="vocab-word" data-word="introspection">introspection</mark> about one’s mother tongue carried out in an armchair at home.</p><p>In all cases, someone has to act as a source of language data – an <mark class="vocab-word" data-word="informant">informant</mark>. <mark class="vocab-word" data-word="informant">Informants</mark> are (<mark class="vocab-word" data-word="ideally">ideally</mark>) native speakers of a language, who provide <mark class="vocab-word" data-word="utterance">utterances</mark> for analysis and other kinds of information about the language (e.g. <mark class="vocab-word" data-word="translation">translations</mark>, comments about correctness, or judgements on <mark class="vocab-word" data-word="usage">usage</mark>). Often, when studying their mother tongue, linguists act as their own <mark class="vocab-word" data-word="informant">informants</mark>, judging the <mark class="vocab-word" data-word="ambiguity">ambiguity</mark>, acceptability, or other properties of <mark class="vocab-word" data-word="utterance">utterances</mark> against their own <mark class="vocab-word" data-word="intuition">intuitions</mark>. The <mark class="vocab-word" data-word="convenience">convenience</mark> of this approach makes it widely used, and it is considered the <mark class="vocab-word" data-word="norm">norm</mark> in the <mark class="vocab-word" data-word="generative">generative</mark> approach to <mark class="vocab-word" data-word="linguistics">linguistics</mark>. But a linguist’s personal judgements are often <mark class="vocab-word" data-word="uncertain">uncertain</mark>, or disagree with the judgements of other linguists, at which point <mark class="vocab-word" data-word="recourse">recourse</mark> is needed to more objective methods of <mark class="vocab-word" data-word="enquiry">enquiry</mark>, using non-linguists as <mark class="vocab-word" data-word="informant">informants</mark>. The <mark class="vocab-word" data-word="latter">latter</mark> procedure is unavoidable when working on foreign languages, or child speech.</p><p>Many <mark class="vocab-word" data-word="factor">factors</mark> must be considered when selecting <mark class="vocab-word" data-word="informant">informants</mark> – whether one is working with single speakers (a common situation when languages have not been described before), two people <mark class="vocab-word" data-word="interact">interacting</mark>, small groups or <mark class="vocab-word" data-word="large-scale">large-scale</mark> samples. Age, sex, social background and other aspects of identity are important, as these <mark class="vocab-word" data-word="factor">factors</mark> are known to <mark class="vocab-word" data-word="influence">influence</mark> the kind of language used. The topic of conversation and the characteristics of the social setting (e.g. the level of <mark class="vocab-word" data-word="formality">formality</mark>) are also highly relevant, as are the personal qualities of the <mark class="vocab-word" data-word="informant">informants</mark> (e.g. their <mark class="vocab-word" data-word="fluency">fluency</mark> and <mark class="vocab-word" data-word="consistency">consistency</mark>). For larger studies, <mark class="vocab-word" data-word="scrupulous">scrupulous</mark> attention has been paid to the sampling theory employed, and in all cases, decisions have to be made about the best investigative techniques to use.</p><p>Today, researchers often tape-record <mark class="vocab-word" data-word="informant">informants</mark>. This enables the linguist’s claims about the language to be <mark class="vocab-word" data-word="checked">checked</mark>, and provides a way of making those claims more <mark class="vocab-word" data-word="accurate">accurate</mark> (‘difficult’ pieces of speech can be listened to <mark class="vocab-word" data-word="repeatedly">repeatedly</mark>). But <mark class="vocab-word" data-word="obtain">obtaining</mark> naturalistic, good-quality data is never easy. People talk <mark class="vocab-word" data-word="abnormal">abnormally</mark> when they know they are being recorded, and sound quality can be poor. A variety of tape-recording procedures have thus been <mark class="vocab-word" data-word="devise">devised</mark> to minimise the ‘observer’s <mark class="vocab-word" data-word="paradox">paradox</mark>’ (how to observe the way people behave when they are not being observed). Some recordings are made without the speakers being aware of the fact – a procedure that <mark class="vocab-word" data-word="obtain">obtains</mark> very natural data, though <mark class="vocab-word" data-word="ethical">ethical</mark> <mark class="vocab-word" data-word="objection">objections</mark> must be <mark class="vocab-word" data-word="anticipate">anticipated</mark>. <mark class="vocab-word" data-word="alternatively">Alternatively</mark>, attempts can be made to make the speaker forget about the recording, such as keeping the <mark class="vocab-word" data-word="tape">tape</mark> <mark class="vocab-word" data-word="recorder">recorder</mark> out of sight, or using radio <mark class="vocab-word" data-word="microphone">microphones</mark>. A useful technique is to introduce a topic that quickly involves the speaker, and <mark class="vocab-word" data-word="stimulate">stimulates</mark> a natural language style (e.g. asking older <mark class="vocab-word" data-word="informant">informants</mark> about how times have changed in their <mark class="vocab-word" data-word="locality">locality</mark>).</p><p>An <mark class="vocab-word" data-word="audio">audio</mark> <mark class="vocab-word" data-word="tape">tape</mark> recording does not solve all the linguist’s problems, however. Speech is often unclear and <mark class="vocab-word" data-word="ambiguous">ambiguous</mark>. Where possible, therefore, the recording has to be <mark class="vocab-word" data-word="supplement">supplemented</mark> by the observer’s written comments on the <mark class="vocab-word" data-word="non-verbal">non-verbal</mark> behaviour of the participants, and about the context in general. A <mark class="vocab-word" data-word="facial">facial</mark> expression, for example, can <mark class="vocab-word" data-word="dramatically">dramatically</mark> alter the meaning of what is said. Video recordings avoid these problems to a large extent, but even they have <mark class="vocab-word" data-word="limitation">limitations</mark> (the camera cannot be everywhere), and <mark class="vocab-word" data-word="transcription">transcriptions</mark> always benefit from any additional <mark class="vocab-word" data-word="commentary">commentary</mark> <mark class="vocab-word" data-word="provided">provided</mark> by an observer.</p><p>Linguists also make great use of structured sessions, in which they systematically ask their <mark class="vocab-word" data-word="informant">informants</mark> for <mark class="vocab-word" data-word="utterance">utterances</mark> that describe certain <mark class="vocab-word" data-word="action">actions</mark>, objects or behaviour. With a <mark class="vocab-word" data-word="bilingual">bilingual</mark> <mark class="vocab-word" data-word="informant">informant</mark>, or through use of an <mark class="vocab-word" data-word="interpreter">interpreter</mark>, it is possible to use <mark class="vocab-word" data-word="translation">translation</mark> techniques (‘How do you say table in your language?’). A large number of points can be covered in a short time, using interview worksheets and <mark class="vocab-word" data-word="questionnaire">questionnaires</mark>. Often, the researcher wishes to <mark class="vocab-word" data-word="obtain">obtain</mark> information about just a single <mark class="vocab-word" data-word="variable">variable</mark>, in which case a restricted set of questions may be used: a particular feature of <mark class="vocab-word" data-word="pronunciation">pronunciation</mark>, for example, can be <mark class="vocab-word" data-word="elicit">elicited</mark> by asking the <mark class="vocab-word" data-word="informant">informant</mark> to say a restricted set of words. There are also several direct methods of <mark class="vocab-word" data-word="elicitation">elicitation</mark>, such as asking <mark class="vocab-word" data-word="informant">informants</mark> to fill in the blanks in a <mark class="vocab-word" data-word="substitution">substitution</mark> frame (e.g. /__ see a car), or feeding them the wrong <mark class="vocab-word" data-word="stimulus">stimulus</mark> for correction (‘Is it possible to say I no can see?’).</p><p>A <mark class="vocab-word" data-word="representative">representative</mark> sample of language, <mark class="vocab-word" data-word="compile">compiled</mark> for the purpose of <mark class="vocab-word" data-word="linguistic">linguistic</mark> analysis, is known as a <mark class="vocab-word" data-word="corpus">corpus</mark>. A <mark class="vocab-word" data-word="corpus">corpus</mark> enables the linguist to make <mark class="vocab-word" data-word="unbiased">unbiased</mark> statements about frequency of <mark class="vocab-word" data-word="usage">usage</mark>, and it provides <mark class="vocab-word" data-word="accessible">accessible</mark> data for the use of different researchers. Its range and size are <mark class="vocab-word" data-word="variable">variable</mark>. Some corpora attempt to cover the language as a whole, taking extracts from many kinds of text; others are extremely <mark class="vocab-word" data-word="selective">selective</mark>, providing a collection of material that deals only with a particular <mark class="vocab-word" data-word="linguistic">linguistic</mark> feature. The size of the <mark class="vocab-word" data-word="corpus">corpus</mark> depends on practical <mark class="vocab-word" data-word="factor">factors</mark>, such as the time available to collect, process and store the data: it can take up to several hours to provide an <mark class="vocab-word" data-word="accurate">accurate</mark> <mark class="vocab-word" data-word="transcription">transcription</mark> of a few minutes of speech. Sometimes a small sample of data will be enough to decide a <mark class="vocab-word" data-word="linguistic">linguistic</mark> <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>; by contrast, corpora in major research projects can total millions of words. An important principle is that all corpora, what-ever their size, are <mark class="vocab-word" data-word="inevitably">inevitably</mark> limited in their <mark class="vocab-word" data-word="coverage">coverage</mark>, and always need to be <mark class="vocab-word" data-word="supplement">supplemented</mark> by data <mark class="vocab-word" data-word="derive">derived</mark> from the <mark class="vocab-word" data-word="intuition">intuitions</mark> of native speakers of the language, through either <mark class="vocab-word" data-word="introspection">introspection</mark> or experimentation.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>许多步骤可用于获取有关语言的数据。从在国外精心计划，深入的野外调查到在家里的扶手椅上对自己的母语进行随意的内省，其范围十分广泛。</p><p>在所有情况下，都必须有人充当语言数据的来源-信息提供者。信息提供者（理想地）是该语言的母语使用者，他们提供话语用于分析和其他有关该语言的信息（例如，翻译，对正确性的评论或对使用的判断）。通常，在研究母语时，语言学家会充当自己的信息提供者，克服自己直觉的影响来判断话语的模糊性，可接受性或其他性质。这种方法因其便利性被广泛使用，并且被认为是语言学生成方法中的规范。但是语言学家的个人判断通常是不确定的，或者与其他语言学家的判断不一致，这时需要使用非语言学家作为信息提供者，采用更为客观的询问方法。研究外语或者儿童语言时，后一种方式是不可避免的。</p><p>选择信息提供者时，必须考虑许多因素-一个人是在与单个说话者进行研究（当语言之前没有被描述过一种普遍情况），还是两个人互动，又或者是小组或大型样本。年龄，性别，社会背景和身份认同的其他方面都很重要，因为众所周知这些因素会影响所用语言的种类。谈话的话题和社会环境的特征（例如，正式程度）也高度相关，信息提供者的个人素质（例如，他们的流利程度和连贯性）也是如此。对于较大的研究，它们所采用的抽样理论通常经过仔细的考虑，并且在所有情况下，都必须对将要使用的最佳调查技术做决定。</p><p>现在研究人员经常使用录音带记录信息提供者。这使得语言学家对语言的主张得以检查，并提供了一种使这些主张更加准确的方法（可以反复听“难”的语音）。但是获取自然，高质量的数据绝非易事。人们在知道自己正在被录音时说话会比较反常，而且音质可能很差。因此，已经设计出各种磁带记录步骤以最小化“观察者悖论”的存在（如何观察人们在不被观察时的行为方式）。某些录音是在发言者没有意识到这一事实的情况下进行的，该过程获得非常自然的数据，尽管必须考虑到道德上的反对。或者，可以尝试让说话者忘掉录音的事情，例如将录音机放在视线以外，或使用无线麦克风。一种有用的方法是引入一个说话者能够迅速参与进来的主题，并激发一种自然的语言风格（例如，向年长的信息提供者询问当地时间如何变化）。</p><p>但是  ，录音带并不能解决所有语言学家的问题。言语常常不清晰，模棱两可。因此，在可能的情况下，录音必须由观察者对参与者的非语言行为以及一般情况加以书面评论进行补充。例如，面部表情可以大大改变所说内容的含义。录像在很大程度上避免了这些问题，但是即使它们也有局限性（摄像机不能无处不在），并且转录总是可以从观察者所提供的任何附加评论中受益。</p><p>语言学家还充分利用结构化的会话。在这种会话中，他们系统地要求信息提供者用语言描述某些动作，对象或行为。双语信息提供者的存在或者口译员的使用，使得翻译方法称为可能（“你在你的语言中如何表达“stable”）。使用访谈工作表和问卷调查，可以在短时间内涵盖大量要点。研究人员经常希望获取有关单个变量的信息。在这种情况下，可以使用一组受限的问题：例如，可以通过要求信息提供者说出一组受限的单词来得出发音的特定特征。也有几种直接的启发方法，例如要求信息提供者补完句子（例如我 __看到汽车），或向他们提供错误的刺激以求纠正（“是否可以说I no can see ？）。</p><p>为语言分析目的而编纂的，某种语言具有代表性的样本被称为语料库。语料库使语言学家能够对使用频率做出公正的论述，并提供可访问的数据供不同研究人员使用。其范围和大小是可变的。一些语料库尝试从多种文本中摘录，以涵盖整个语言。其他的则是非常有选择性的，提供了仅涉及特定语言特点的材料的集合。语料库的大小取决于实际因素，例如可用于收集，处理和存储数据的时间：可能需要花费几个小时才能准确记录几分钟的语音。有时，少量的数据样本就足以决定语言假设。相比之下，大型研究项目中的语料库可以涵盖数百万个单词。一个重要的原则是，无论大小如何，所有语料库的覆盖范围都不可避免地受到限制，并且总是需要通过内省或实验，从母语人士的直觉中获得的数据进行补充。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Many procedures are available for <mark class="vocab-word" data-word="obtain">obtaining</mark> data about a language. They range from a carefully planned, <mark class="vocab-word" data-word="intensive">intensive</mark> field investigation in a foreign country to a <mark class="vocab-word" data-word="casual">casual</mark> <mark class="vocab-word" data-word="introspection">introspection</mark> about one’s mother tongue carried out in an armchair at home.</p></div>  <div class="parallel-zh"><p>许多步骤可用于获取有关语言的数据。从在国外精心计划，深入的野外调查到在家里的扶手椅上对自己的母语进行随意的内省，其范围十分广泛。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In all cases, someone has to act as a source of language data – an <mark class="vocab-word" data-word="informant">informant</mark>. <mark class="vocab-word" data-word="informant">Informants</mark> are (<mark class="vocab-word" data-word="ideally">ideally</mark>) native speakers of a language, who provide <mark class="vocab-word" data-word="utterance">utterances</mark> for analysis and other kinds of information about the language (e.g. <mark class="vocab-word" data-word="translation">translations</mark>, comments about correctness, or judgements on <mark class="vocab-word" data-word="usage">usage</mark>). Often, when studying their mother tongue, linguists act as their own <mark class="vocab-word" data-word="informant">informants</mark>, judging the <mark class="vocab-word" data-word="ambiguity">ambiguity</mark>, acceptability, or other properties of <mark class="vocab-word" data-word="utterance">utterances</mark> against their own <mark class="vocab-word" data-word="intuition">intuitions</mark>. The <mark class="vocab-word" data-word="convenience">convenience</mark> of this approach makes it widely used, and it is considered the <mark class="vocab-word" data-word="norm">norm</mark> in the <mark class="vocab-word" data-word="generative">generative</mark> approach to <mark class="vocab-word" data-word="linguistics">linguistics</mark>. But a linguist’s personal judgements are often <mark class="vocab-word" data-word="uncertain">uncertain</mark>, or disagree with the judgements of other linguists, at which point <mark class="vocab-word" data-word="recourse">recourse</mark> is needed to more objective methods of <mark class="vocab-word" data-word="enquiry">enquiry</mark>, using non-linguists as <mark class="vocab-word" data-word="informant">informants</mark>. The <mark class="vocab-word" data-word="latter">latter</mark> procedure is unavoidable when working on foreign languages, or child speech.</p></div>  <div class="parallel-zh"><p>在所有情况下，都必须有人充当语言数据的来源-信息提供者。信息提供者（理想地）是该语言的母语使用者，他们提供话语用于分析和其他有关该语言的信息（例如，翻译，对正确性的评论或对使用的判断）。通常，在研究母语时，语言学家会充当自己的信息提供者，克服自己直觉的影响来判断话语的模糊性，可接受性或其他性质。这种方法因其便利性被广泛使用，并且被认为是语言学生成方法中的规范。但是语言学家的个人判断通常是不确定的，或者与其他语言学家的判断不一致，这时需要使用非语言学家作为信息提供者，采用更为客观的询问方法。研究外语或者儿童语言时，后一种方式是不可避免的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many <mark class="vocab-word" data-word="factor">factors</mark> must be considered when selecting <mark class="vocab-word" data-word="informant">informants</mark> – whether one is working with single speakers (a common situation when languages have not been described before), two people <mark class="vocab-word" data-word="interact">interacting</mark>, small groups or <mark class="vocab-word" data-word="large-scale">large-scale</mark> samples. Age, sex, social background and other aspects of identity are important, as these <mark class="vocab-word" data-word="factor">factors</mark> are known to <mark class="vocab-word" data-word="influence">influence</mark> the kind of language used. The topic of conversation and the characteristics of the social setting (e.g. the level of <mark class="vocab-word" data-word="formality">formality</mark>) are also highly relevant, as are the personal qualities of the <mark class="vocab-word" data-word="informant">informants</mark> (e.g. their <mark class="vocab-word" data-word="fluency">fluency</mark> and <mark class="vocab-word" data-word="consistency">consistency</mark>). For larger studies, <mark class="vocab-word" data-word="scrupulous">scrupulous</mark> attention has been paid to the sampling theory employed, and in all cases, decisions have to be made about the best investigative techniques to use.</p></div>  <div class="parallel-zh"><p>选择信息提供者时，必须考虑许多因素-一个人是在与单个说话者进行研究（当语言之前没有被描述过一种普遍情况），还是两个人互动，又或者是小组或大型样本。年龄，性别，社会背景和身份认同的其他方面都很重要，因为众所周知这些因素会影响所用语言的种类。谈话的话题和社会环境的特征（例如，正式程度）也高度相关，信息提供者的个人素质（例如，他们的流利程度和连贯性）也是如此。对于较大的研究，它们所采用的抽样理论通常经过仔细的考虑，并且在所有情况下，都必须对将要使用的最佳调查技术做决定。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Today, researchers often tape-record <mark class="vocab-word" data-word="informant">informants</mark>. This enables the linguist’s claims about the language to be <mark class="vocab-word" data-word="checked">checked</mark>, and provides a way of making those claims more <mark class="vocab-word" data-word="accurate">accurate</mark> (‘difficult’ pieces of speech can be listened to <mark class="vocab-word" data-word="repeatedly">repeatedly</mark>). But <mark class="vocab-word" data-word="obtain">obtaining</mark> naturalistic, good-quality data is never easy. People talk <mark class="vocab-word" data-word="abnormal">abnormally</mark> when they know they are being recorded, and sound quality can be poor. A variety of tape-recording procedures have thus been <mark class="vocab-word" data-word="devise">devised</mark> to minimise the ‘observer’s <mark class="vocab-word" data-word="paradox">paradox</mark>’ (how to observe the way people behave when they are not being observed). Some recordings are made without the speakers being aware of the fact – a procedure that <mark class="vocab-word" data-word="obtain">obtains</mark> very natural data, though <mark class="vocab-word" data-word="ethical">ethical</mark> <mark class="vocab-word" data-word="objection">objections</mark> must be <mark class="vocab-word" data-word="anticipate">anticipated</mark>. <mark class="vocab-word" data-word="alternatively">Alternatively</mark>, attempts can be made to make the speaker forget about the recording, such as keeping the <mark class="vocab-word" data-word="tape">tape</mark> <mark class="vocab-word" data-word="recorder">recorder</mark> out of sight, or using radio <mark class="vocab-word" data-word="microphone">microphones</mark>. A useful technique is to introduce a topic that quickly involves the speaker, and <mark class="vocab-word" data-word="stimulate">stimulates</mark> a natural language style (e.g. asking older <mark class="vocab-word" data-word="informant">informants</mark> about how times have changed in their <mark class="vocab-word" data-word="locality">locality</mark>).</p></div>  <div class="parallel-zh"><p>现在研究人员经常使用录音带记录信息提供者。这使得语言学家对语言的主张得以检查，并提供了一种使这些主张更加准确的方法（可以反复听“难”的语音）。但是获取自然，高质量的数据绝非易事。人们在知道自己正在被录音时说话会比较反常，而且音质可能很差。因此，已经设计出各种磁带记录步骤以最小化“观察者悖论”的存在（如何观察人们在不被观察时的行为方式）。某些录音是在发言者没有意识到这一事实的情况下进行的，该过程获得非常自然的数据，尽管必须考虑到道德上的反对。或者，可以尝试让说话者忘掉录音的事情，例如将录音机放在视线以外，或使用无线麦克风。一种有用的方法是引入一个说话者能够迅速参与进来的主题，并激发一种自然的语言风格（例如，向年长的信息提供者询问当地时间如何变化）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>An <mark class="vocab-word" data-word="audio">audio</mark> <mark class="vocab-word" data-word="tape">tape</mark> recording does not solve all the linguist’s problems, however. Speech is often unclear and <mark class="vocab-word" data-word="ambiguous">ambiguous</mark>. Where possible, therefore, the recording has to be <mark class="vocab-word" data-word="supplement">supplemented</mark> by the observer’s written comments on the <mark class="vocab-word" data-word="non-verbal">non-verbal</mark> behaviour of the participants, and about the context in general. A <mark class="vocab-word" data-word="facial">facial</mark> expression, for example, can <mark class="vocab-word" data-word="dramatically">dramatically</mark> alter the meaning of what is said. Video recordings avoid these problems to a large extent, but even they have <mark class="vocab-word" data-word="limitation">limitations</mark> (the camera cannot be everywhere), and <mark class="vocab-word" data-word="transcription">transcriptions</mark> always benefit from any additional <mark class="vocab-word" data-word="commentary">commentary</mark> <mark class="vocab-word" data-word="provided">provided</mark> by an observer.</p></div>  <div class="parallel-zh"><p>但是  ，录音带并不能解决所有语言学家的问题。言语常常不清晰，模棱两可。因此，在可能的情况下，录音必须由观察者对参与者的非语言行为以及一般情况加以书面评论进行补充。例如，面部表情可以大大改变所说内容的含义。录像在很大程度上避免了这些问题，但是即使它们也有局限性（摄像机不能无处不在），并且转录总是可以从观察者所提供的任何附加评论中受益。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Linguists also make great use of structured sessions, in which they systematically ask their <mark class="vocab-word" data-word="informant">informants</mark> for <mark class="vocab-word" data-word="utterance">utterances</mark> that describe certain <mark class="vocab-word" data-word="action">actions</mark>, objects or behaviour. With a <mark class="vocab-word" data-word="bilingual">bilingual</mark> <mark class="vocab-word" data-word="informant">informant</mark>, or through use of an <mark class="vocab-word" data-word="interpreter">interpreter</mark>, it is possible to use <mark class="vocab-word" data-word="translation">translation</mark> techniques (‘How do you say table in your language?’). A large number of points can be covered in a short time, using interview worksheets and <mark class="vocab-word" data-word="questionnaire">questionnaires</mark>. Often, the researcher wishes to <mark class="vocab-word" data-word="obtain">obtain</mark> information about just a single <mark class="vocab-word" data-word="variable">variable</mark>, in which case a restricted set of questions may be used: a particular feature of <mark class="vocab-word" data-word="pronunciation">pronunciation</mark>, for example, can be <mark class="vocab-word" data-word="elicit">elicited</mark> by asking the <mark class="vocab-word" data-word="informant">informant</mark> to say a restricted set of words. There are also several direct methods of <mark class="vocab-word" data-word="elicitation">elicitation</mark>, such as asking <mark class="vocab-word" data-word="informant">informants</mark> to fill in the blanks in a <mark class="vocab-word" data-word="substitution">substitution</mark> frame (e.g. /__ see a car), or feeding them the wrong <mark class="vocab-word" data-word="stimulus">stimulus</mark> for correction (‘Is it possible to say I no can see?’).</p></div>  <div class="parallel-zh"><p>语言学家还充分利用结构化的会话。在这种会话中，他们系统地要求信息提供者用语言描述某些动作，对象或行为。双语信息提供者的存在或者口译员的使用，使得翻译方法称为可能（“你在你的语言中如何表达“stable”）。使用访谈工作表和问卷调查，可以在短时间内涵盖大量要点。研究人员经常希望获取有关单个变量的信息。在这种情况下，可以使用一组受限的问题：例如，可以通过要求信息提供者说出一组受限的单词来得出发音的特定特征。也有几种直接的启发方法，例如要求信息提供者补完句子（例如我 __看到汽车），或向他们提供错误的刺激以求纠正（“是否可以说I no can see ？）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A <mark class="vocab-word" data-word="representative">representative</mark> sample of language, <mark class="vocab-word" data-word="compile">compiled</mark> for the purpose of <mark class="vocab-word" data-word="linguistic">linguistic</mark> analysis, is known as a <mark class="vocab-word" data-word="corpus">corpus</mark>. A <mark class="vocab-word" data-word="corpus">corpus</mark> enables the linguist to make <mark class="vocab-word" data-word="unbiased">unbiased</mark> statements about frequency of <mark class="vocab-word" data-word="usage">usage</mark>, and it provides <mark class="vocab-word" data-word="accessible">accessible</mark> data for the use of different researchers. Its range and size are <mark class="vocab-word" data-word="variable">variable</mark>. Some corpora attempt to cover the language as a whole, taking extracts from many kinds of text; others are extremely <mark class="vocab-word" data-word="selective">selective</mark>, providing a collection of material that deals only with a particular <mark class="vocab-word" data-word="linguistic">linguistic</mark> feature. The size of the <mark class="vocab-word" data-word="corpus">corpus</mark> depends on practical <mark class="vocab-word" data-word="factor">factors</mark>, such as the time available to collect, process and store the data: it can take up to several hours to provide an <mark class="vocab-word" data-word="accurate">accurate</mark> <mark class="vocab-word" data-word="transcription">transcription</mark> of a few minutes of speech. Sometimes a small sample of data will be enough to decide a <mark class="vocab-word" data-word="linguistic">linguistic</mark> <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>; by contrast, corpora in major research projects can total millions of words. An important principle is that all corpora, what-ever their size, are <mark class="vocab-word" data-word="inevitably">inevitably</mark> limited in their <mark class="vocab-word" data-word="coverage">coverage</mark>, and always need to be <mark class="vocab-word" data-word="supplement">supplemented</mark> by data <mark class="vocab-word" data-word="derive">derived</mark> from the <mark class="vocab-word" data-word="intuition">intuitions</mark> of native speakers of the language, through either <mark class="vocab-word" data-word="introspection">introspection</mark> or experimentation.</p></div>  <div class="parallel-zh"><p>为语言分析目的而编纂的，某种语言具有代表性的样本被称为语料库。语料库使语言学家能够对使用频率做出公正的论述，并提供可访问的数据供不同研究人员使用。其范围和大小是可变的。一些语料库尝试从多种文本中摘录，以涵盖整个语言。其他的则是非常有选择性的，提供了仅涉及特定语言特点的材料的集合。语料库的大小取决于实际因素，例如可用于收集，处理和存储数据的时间：可能需要花费几个小时才能准确记录几分钟的语音。有时，少量的数据样本就足以决定语言假设。相比之下，大型研究项目中的语料库可以涵盖数百万个单词。一个重要的原则是，无论大小如何，所有语料库的覆盖范围都不可避免地受到限制，并且总是需要通过内省或实验，从母语人士的直觉中获得的数据进行补充。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"obtain": 4, "intensive": 1, "casual": 1, "introspection": 2, "informant": 12, "ideally": 1, "utterance": 3, "translation": 2, "usage": 2, "ambiguity": 1, "intuition": 2, "convenience": 1, "norm": 1, "generative": 1, "linguistics": 1, "uncertain": 1, "recourse": 1, "enquiry": 1, "latter": 1, "factor": 3, "interact": 1, "large-scale": 1, "influence": 1, "formality": 1, "fluency": 1, "consistency": 1, "scrupulous": 1, "checked": 1, "accurate": 2, "repeatedly": 1, "abnormal": 1, "devise": 1, "paradox": 1, "ethical": 1, "objection": 1, "anticipate": 1, "alternatively": 1, "tape": 2, "recorder": 1, "microphone": 1, "stimulate": 1, "locality": 1, "audio": 1, "ambiguous": 1, "supplement": 2, "non-verbal": 1, "facial": 1, "dramatically": 1, "limitation": 1, "transcription": 2, "commentary": 1, "provided": 1, "action": 1, "bilingual": 1, "interpreter": 1, "questionnaire": 1, "variable": 2, "pronunciation": 1, "elicit": 1, "elicitation": 1, "substitution": 1, "stimulus": 1, "representative": 1, "compile": 1, "linguistic": 3, "corpus": 3, "unbiased": 1, "accessible": 1, "selective": 1, "hypothesis": 1, "inevitably": 1, "coverage": 1, "derive": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

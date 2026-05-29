@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chelsea Rochman 海洋废弃物 - 剑桥雅思14 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Chelsea Rochman 海洋废弃物</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39472.html" target="_blank">https://www.laokaoya.com/39472.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Chelsea Rochman, an ecologist at the University of California, Davis, has been trying to answer a <mark class="vocab-word" data-word="dismal">dismal</mark> question: Is everything terrible, or are things just very, very bad?</p><p>Rochman is a member of the National Center for <mark class="vocab-word" data-word="ecological">Ecological</mark> Analysis and <mark class="vocab-word" data-word="synthesis">Synthesis</mark> marine-debris working group, a collection of scientists who study, among other things, the growing problem of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark>, also known as ocean trash. Plenty of studies have sounded alarm <mark class="vocab-word" data-word="bell">bells</mark> about the state of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark>; in a recent paper published in the journal <mark class="vocab-word" data-word="ecology">Ecology</mark>, Rochman and her colleagues set out to determine how many of those <mark class="vocab-word" data-word="perceive">perceived</mark> risks are real.</p><p>Often, Rochman says, scientists will end a paper by <mark class="vocab-word" data-word="speculate">speculating</mark> about the broader <mark class="vocab-word" data-word="impact">impacts</mark> of what they’ve found. For example, a study could show that certain seabirds eat plastic bags, and go on to warn that whole bird populations are at risk of dying out. ‘But the truth was that nobody had yet tested those <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="threat">threats</mark>,’ Rochman says. ‘There wasn’t a lot of information.’</p><p>Rochman and her colleagues examined more than a hundred papers on the <mark class="vocab-word" data-word="impact">impacts</mark> of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark> that were published through 2013. Within each paper, they asked what <mark class="vocab-word" data-word="threat">threats</mark> scientists had studied -366 <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="threat">threats</mark> in all – and what they’d actually found.</p><p>In 83 percent of cases, the <mark class="vocab-word" data-word="perceive">perceived</mark> dangers of ocean trash were proven true. In the remaining cases, the working group found the studies had weaknesses in design and content which affected the <mark class="vocab-word" data-word="validity">validity</mark> of their conclusions – they lacked a control group, for example, or used <mark class="vocab-word" data-word="faulty">faulty</mark> <mark class="vocab-word" data-word="statistic">statistics</mark>.</p><p><mark class="vocab-word" data-word="striking">Strikingly</mark>, Rochman says, only one well-designed study failed to find the effect it was looking for, an investigation of <mark class="vocab-word" data-word="mussel">mussels</mark> <mark class="vocab-word" data-word="ingest">ingesting</mark> <mark class="vocab-word" data-word="microscopic">microscopic</mark> plastic bits. The plastic moved from the <mark class="vocab-word" data-word="mussel">mussels</mark>’ stomachs to their <mark class="vocab-word" data-word="bloodstream">bloodstreams</mark>, scientists found, and stayed there for weeks – but didn’t seem to stress out the <mark class="vocab-word" data-word="shellfish">shellfish</mark>.</p><p>While <mark class="vocab-word" data-word="mussel">mussels</mark> may be fine eating trash, though, the analysis also gave a clearer picture of the many ways that ocean <mark class="vocab-word" data-word="debris">debris</mark> is <mark class="vocab-word" data-word="bothersome">bothersome</mark>.</p><p>Within the studies they looked at, most of the proven <mark class="vocab-word" data-word="threat">threats</mark> came from plastic <mark class="vocab-word" data-word="debris">debris</mark>, rather than other materials like metal or wood. Most of the dangers also <mark class="vocab-word" data-word="involved">involved</mark> large pieces of <mark class="vocab-word" data-word="debris">debris</mark> – animals getting <mark class="vocab-word" data-word="entangle">entangled</mark> in trash, for example, or eating it and <mark class="vocab-word" data-word="severely">severely</mark> injuring themselves.</p><p>But a lot of ocean <mark class="vocab-word" data-word="debris">debris</mark> is ‘microplastic’, or pieces smaller than five <mark class="vocab-word" data-word="millimeter">millimeters</mark>. These may be <mark class="vocab-word" data-word="ingredient">ingredients</mark> used in <mark class="vocab-word" data-word="cosmetic">cosmetics</mark> and toiletries, <mark class="vocab-word" data-word="fiber">fibers</mark> <mark class="vocab-word" data-word="shed">shed</mark> by <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="clothe">clothing</mark> in the wash, or <mark class="vocab-word" data-word="erode">eroded</mark> <mark class="vocab-word" data-word="remnant">remnants</mark> of larger <mark class="vocab-word" data-word="debris">debris</mark>. Compared to the number of studies <mark class="vocab-word" data-word="investigate">investigating</mark> <mark class="vocab-word" data-word="large-scale">large-scale</mark> <mark class="vocab-word" data-word="debris">debris</mark>, Rochman’s group found little research on the effects of these tiny bits. ‘There are a lot of open questions still for microplastic,’ Rochman says, though she notes that more papers on the subject have been published since 2013, the cutoff point for the group’s analysis.</p><p>There are also, she adds, a lot of open questions about the ways that ocean <mark class="vocab-word" data-word="debris">debris</mark> can <mark class="vocab-word" data-word="lead">lead</mark> to sea-creature death. Many studies have looked at how plastic affects an individual animal, or that animal’s <mark class="vocab-word" data-word="tissue">tissues</mark> or cells, rather than whole populations. And in the lab, scientists often use higher concentrations of plastic than what’s really in the ocean. None of that tells us how many birds or fish or sea <mark class="vocab-word" data-word="turtle">turtles</mark> could die from plastic pollution – or how deaths in one species could affect that animal’s <mark class="vocab-word" data-word="predator">predators</mark>, or the rest of the <mark class="vocab-word" data-word="ecosystem">ecosystem</mark>.</p><p>‘We need to be asking more <mark class="vocab-word" data-word="ecological">ecologically</mark> relevant questions,’ Rochman says. Usually, scientists don’t know exactly how disasters such as a <mark class="vocab-word" data-word="tanker">tanker</mark> <mark class="vocab-word" data-word="accidental">accidentally</mark> <mark class="vocab-word" data-word="spill">spilling</mark> its whole <mark class="vocab-word" data-word="cargo">cargo</mark> of oil and <mark class="vocab-word" data-word="pollute">polluting</mark> huge areas of the ocean will affect the environment until after they’ve happened. ‘We don’t ask the right questions early enough,’ she says. But if ecologists can understand how the slow-moving effect of ocean trash is damaging <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>, they might be able to prevent things from getting worse.</p><p>Asking the right questions can help policy makers, and the public, figure out where to focus their attention. The problems that look or sound most dramatic may not be the best places to start. For example, the name of the ‘Great Pacific <mark class="vocab-word" data-word="garbage">Garbage</mark> <mark class="vocab-word" data-word="patch">Patch</mark>’ – a collection of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark> in the northern Pacific Ocean – might conjure up a vast, floating trash island. In reality though, much of the <mark class="vocab-word" data-word="debris">debris</mark> is tiny or below the surface; a person could sail through the area without seeing any trash at all. A Dutch group called ‘The Ocean Cleanup’ is currently working on plans to put <mark class="vocab-word" data-word="mechanical">mechanical</mark> devices in the Pacific <mark class="vocab-word" data-word="garbage">Garbage</mark> <mark class="vocab-word" data-word="patch">Patch</mark> and similar areas to <mark class="vocab-word" data-word="suck">suck</mark> up plastic. But a recent paper used <mark class="vocab-word" data-word="simulation">simulations</mark> to show that strategically positioning the cleanup devices closer to <mark class="vocab-word" data-word="shore">shore</mark> would more effectively reduce pollution over the long term.</p><p>‘I think clearing up some of these misperceptions is really important,’ Rochman says. Among scientists as well as in the media, she says, ‘A lot of the images about strandings and entanglement and all of that cause the <mark class="vocab-word" data-word="perception">perception</mark> that plastic <mark class="vocab-word" data-word="debris">debris</mark> is killing everything in the ocean.’ Interrogating the <mark class="vocab-word" data-word="existing">existing</mark> scientific literature can help ecologists figure out which problems really need addressing, and which ones they’d be better off – like the <mark class="vocab-word" data-word="mussel">mussels</mark> – <mark class="vocab-word" data-word="absorb">absorbing</mark> and ignoring.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>加利福尼亚大学戴维斯分校的生态学家Chelsea Rochman一直在努力回答一个令人沮丧的问题：万事万物都很糟糕吗？还是事情仅仅是非常、非常坏而已？</p><p>Rochman是国家生态分析与整合中心海洋废弃物工作组的成员之一。组成该工作组的科学家们在众多问题之中研究海洋废弃物，也就是海洋垃圾日益增长的问题。大量研究对海洋垃圾的状态发出警报。在最近一篇发表于《生态学》杂志的论文中，Rochman和她的同事着手确定那些认知中的风险有多少是真实存在的。</p><p>Rochman说，科学家经常会在论文结尾推测他们所做发现的更广阔影响。例如，一项研究可能显示特定的海鸟会吃塑料袋，进而警告整个鸟群都存在灭绝的风险。“但事实是，没有人检测过那些认知中的威胁”，Rochman说，“这方面并没有很多的信息”。</p><p>Rochman和她的同事检验了2013年全年发表的有关海洋垃圾影响的一百多篇论文。每篇文章中，他们探询科学家研究的威胁是什么 – 共有366种威胁被注意到 – 以及他们实际发现了什么。</p><p>83%的案例中，海洋垃圾的潜在威胁被证明是真实存在的。在剩下的案例中，工作组发现这些研究的设计和内容存在缺陷，会影响结论的有效性。例如，它们缺乏控制组，或使用存在错误的统计数据。</p><p>Rochman说，令人震惊的是，只有一项设计良好的研究没能发现它想要发现的影响。它是一项有关贻贝摄入微小塑料片的调查。 科学家发现，塑料从贻贝的胃部移动到血液中，并在那里停留数周的时间，但这似乎没有使该甲壳生物感到什么压力。</p><p>虽然贻贝吃垃圾可能没有什么问题，但分析还是明确指出海洋垃圾令人烦恼的许多方面。</p><p>在他们检验的研究中，大多数被证实的威胁来自塑料废弃物，而不是诸如金属或者木头等其他材料。大部分危险同时也包括大件垃圾 – 例如，动物可能被垃圾缠住，或者误食之后给自己造成严重伤害。</p><p>但许多海洋垃圾都是微型塑料，或者小于5厘米的碎片。这些可能是化妆品或者洗漱用品的原料，合成衣物洗涤过程中脱落的纤维，或者更大一些垃圾被腐蚀之后的残留。Rochaman的团队发现，与调查大规模垃圾的研究数量相比，对这些微小垃圾影响的研究很少。“针对微小塑料，仍然有许多等待解答的问题”，Rochman说，尽管她注意到从2013年开始（其团队分析的截止点），有更多关于该主题的论文被发表出来。</p><p>她补充到，在海洋垃圾如何导致海洋生物死亡方面也有许多等待回答的问题。许多研究关注塑料如何影响个体动物，或者该动物的组织或细胞，而不是整个群体。实验室中，科学家经常使用比海洋真实情况聚集程度更高的塑料。所有这些都不能告诉我们有多少鸟类、鱼类或者海龟死于塑料污染 – 或者某一物种的死亡如何影响该动物的捕食者，或者生态系统中的其他物种。</p><p>“我们需要提出更多与生态学相关的问题”，Rochman说。对于油轮意外泄露整船石油并污染大面积海洋这种灾难来说，科学家直到发生之后才能确切的知道它们对环境的影响。“我们没能及早提出正确的问题”，她说。但如果生态学家能够理解海洋垃圾的影响如何正在缓慢地破坏生态系统，他们可能能够阻止事情变得更坏。</p><p>提出正确的问题可以帮助政策制定者和公众弄清楚应该将自己的注意力放在哪里。看起来或者听起来最严重的问题可能并不是最佳的着手指出。例如，“太平洋大垃圾带”这样的名字 – 太平洋北部的一批垃圾 – 可能让人想起巨大的、漂浮着的垃圾岛屿。但实际上，这些垃圾中的大部分都很微小或者位于海洋表面之下。一个人可以乘船穿过该区域而看不到任何垃圾。一个叫做“海洋清理”的荷兰团体目前正在制定计划。他们打算在太平洋垃圾带和类似的区域中放置机械装置以吸附塑料。但近期的一篇论文通过模拟表明，长期来看，有策略地将清洁装置放在靠近海岸的地方可以更加有效的减少污染。</p><p>“我认为清理这些错误的认知十分重要”，Rochman说。在科学家和媒体之中，她说，“大量关于搁浅和被困的图片造成塑料垃圾正在杀死海洋中一些生物的看法”。审视现存的科学文献能够帮助生态学家搞明白哪些问题真的需要解决，而哪些问题（比如贻贝）他们最好了解和忽略。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Chelsea Rochman, an ecologist at the University of California, Davis, has been trying to answer a <mark class="vocab-word" data-word="dismal">dismal</mark> question: Is everything terrible, or are things just very, very bad?</p></div>  <div class="parallel-zh"><p>加利福尼亚大学戴维斯分校的生态学家Chelsea Rochman一直在努力回答一个令人沮丧的问题：万事万物都很糟糕吗？还是事情仅仅是非常、非常坏而已？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Rochman is a member of the National Center for <mark class="vocab-word" data-word="ecological">Ecological</mark> Analysis and <mark class="vocab-word" data-word="synthesis">Synthesis</mark> marine-debris working group, a collection of scientists who study, among other things, the growing problem of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark>, also known as ocean trash. Plenty of studies have sounded alarm <mark class="vocab-word" data-word="bell">bells</mark> about the state of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark>; in a recent paper published in the journal <mark class="vocab-word" data-word="ecology">Ecology</mark>, Rochman and her colleagues set out to determine how many of those <mark class="vocab-word" data-word="perceive">perceived</mark> risks are real.</p></div>  <div class="parallel-zh"><p>Rochman是国家生态分析与整合中心海洋废弃物工作组的成员之一。组成该工作组的科学家们在众多问题之中研究海洋废弃物，也就是海洋垃圾日益增长的问题。大量研究对海洋垃圾的状态发出警报。在最近一篇发表于《生态学》杂志的论文中，Rochman和她的同事着手确定那些认知中的风险有多少是真实存在的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Often, Rochman says, scientists will end a paper by <mark class="vocab-word" data-word="speculate">speculating</mark> about the broader <mark class="vocab-word" data-word="impact">impacts</mark> of what they’ve found. For example, a study could show that certain seabirds eat plastic bags, and go on to warn that whole bird populations are at risk of dying out. ‘But the truth was that nobody had yet tested those <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="threat">threats</mark>,’ Rochman says. ‘There wasn’t a lot of information.’</p></div>  <div class="parallel-zh"><p>Rochman说，科学家经常会在论文结尾推测他们所做发现的更广阔影响。例如，一项研究可能显示特定的海鸟会吃塑料袋，进而警告整个鸟群都存在灭绝的风险。“但事实是，没有人检测过那些认知中的威胁”，Rochman说，“这方面并没有很多的信息”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Rochman and her colleagues examined more than a hundred papers on the <mark class="vocab-word" data-word="impact">impacts</mark> of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark> that were published through 2013. Within each paper, they asked what <mark class="vocab-word" data-word="threat">threats</mark> scientists had studied -366 <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="threat">threats</mark> in all – and what they’d actually found.</p></div>  <div class="parallel-zh"><p>Rochman和她的同事检验了2013年全年发表的有关海洋垃圾影响的一百多篇论文。每篇文章中，他们探询科学家研究的威胁是什么 – 共有366种威胁被注意到 – 以及他们实际发现了什么。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 83 percent of cases, the <mark class="vocab-word" data-word="perceive">perceived</mark> dangers of ocean trash were proven true. In the remaining cases, the working group found the studies had weaknesses in design and content which affected the <mark class="vocab-word" data-word="validity">validity</mark> of their conclusions – they lacked a control group, for example, or used <mark class="vocab-word" data-word="faulty">faulty</mark> <mark class="vocab-word" data-word="statistic">statistics</mark>.</p></div>  <div class="parallel-zh"><p>83%的案例中，海洋垃圾的潜在威胁被证明是真实存在的。在剩下的案例中，工作组发现这些研究的设计和内容存在缺陷，会影响结论的有效性。例如，它们缺乏控制组，或使用存在错误的统计数据。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="striking">Strikingly</mark>, Rochman says, only one well-designed study failed to find the effect it was looking for, an investigation of <mark class="vocab-word" data-word="mussel">mussels</mark> <mark class="vocab-word" data-word="ingest">ingesting</mark> <mark class="vocab-word" data-word="microscopic">microscopic</mark> plastic bits. The plastic moved from the <mark class="vocab-word" data-word="mussel">mussels</mark>’ stomachs to their <mark class="vocab-word" data-word="bloodstream">bloodstreams</mark>, scientists found, and stayed there for weeks – but didn’t seem to stress out the <mark class="vocab-word" data-word="shellfish">shellfish</mark>.</p></div>  <div class="parallel-zh"><p>Rochman说，令人震惊的是，只有一项设计良好的研究没能发现它想要发现的影响。它是一项有关贻贝摄入微小塑料片的调查。 科学家发现，塑料从贻贝的胃部移动到血液中，并在那里停留数周的时间，但这似乎没有使该甲壳生物感到什么压力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While <mark class="vocab-word" data-word="mussel">mussels</mark> may be fine eating trash, though, the analysis also gave a clearer picture of the many ways that ocean <mark class="vocab-word" data-word="debris">debris</mark> is <mark class="vocab-word" data-word="bothersome">bothersome</mark>.</p></div>  <div class="parallel-zh"><p>虽然贻贝吃垃圾可能没有什么问题，但分析还是明确指出海洋垃圾令人烦恼的许多方面。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Within the studies they looked at, most of the proven <mark class="vocab-word" data-word="threat">threats</mark> came from plastic <mark class="vocab-word" data-word="debris">debris</mark>, rather than other materials like metal or wood. Most of the dangers also <mark class="vocab-word" data-word="involved">involved</mark> large pieces of <mark class="vocab-word" data-word="debris">debris</mark> – animals getting <mark class="vocab-word" data-word="entangle">entangled</mark> in trash, for example, or eating it and <mark class="vocab-word" data-word="severely">severely</mark> injuring themselves.</p></div>  <div class="parallel-zh"><p>在他们检验的研究中，大多数被证实的威胁来自塑料废弃物，而不是诸如金属或者木头等其他材料。大部分危险同时也包括大件垃圾 – 例如，动物可能被垃圾缠住，或者误食之后给自己造成严重伤害。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But a lot of ocean <mark class="vocab-word" data-word="debris">debris</mark> is ‘microplastic’, or pieces smaller than five <mark class="vocab-word" data-word="millimeter">millimeters</mark>. These may be <mark class="vocab-word" data-word="ingredient">ingredients</mark> used in <mark class="vocab-word" data-word="cosmetic">cosmetics</mark> and toiletries, <mark class="vocab-word" data-word="fiber">fibers</mark> <mark class="vocab-word" data-word="shed">shed</mark> by <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="clothe">clothing</mark> in the wash, or <mark class="vocab-word" data-word="erode">eroded</mark> <mark class="vocab-word" data-word="remnant">remnants</mark> of larger <mark class="vocab-word" data-word="debris">debris</mark>. Compared to the number of studies <mark class="vocab-word" data-word="investigate">investigating</mark> <mark class="vocab-word" data-word="large-scale">large-scale</mark> <mark class="vocab-word" data-word="debris">debris</mark>, Rochman’s group found little research on the effects of these tiny bits. ‘There are a lot of open questions still for microplastic,’ Rochman says, though she notes that more papers on the subject have been published since 2013, the cutoff point for the group’s analysis.</p></div>  <div class="parallel-zh"><p>但许多海洋垃圾都是微型塑料，或者小于5厘米的碎片。这些可能是化妆品或者洗漱用品的原料，合成衣物洗涤过程中脱落的纤维，或者更大一些垃圾被腐蚀之后的残留。Rochaman的团队发现，与调查大规模垃圾的研究数量相比，对这些微小垃圾影响的研究很少。“针对微小塑料，仍然有许多等待解答的问题”，Rochman说，尽管她注意到从2013年开始（其团队分析的截止点），有更多关于该主题的论文被发表出来。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There are also, she adds, a lot of open questions about the ways that ocean <mark class="vocab-word" data-word="debris">debris</mark> can <mark class="vocab-word" data-word="lead">lead</mark> to sea-creature death. Many studies have looked at how plastic affects an individual animal, or that animal’s <mark class="vocab-word" data-word="tissue">tissues</mark> or cells, rather than whole populations. And in the lab, scientists often use higher concentrations of plastic than what’s really in the ocean. None of that tells us how many birds or fish or sea <mark class="vocab-word" data-word="turtle">turtles</mark> could die from plastic pollution – or how deaths in one species could affect that animal’s <mark class="vocab-word" data-word="predator">predators</mark>, or the rest of the <mark class="vocab-word" data-word="ecosystem">ecosystem</mark>.</p></div>  <div class="parallel-zh"><p>她补充到，在海洋垃圾如何导致海洋生物死亡方面也有许多等待回答的问题。许多研究关注塑料如何影响个体动物，或者该动物的组织或细胞，而不是整个群体。实验室中，科学家经常使用比海洋真实情况聚集程度更高的塑料。所有这些都不能告诉我们有多少鸟类、鱼类或者海龟死于塑料污染 – 或者某一物种的死亡如何影响该动物的捕食者，或者生态系统中的其他物种。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘We need to be asking more <mark class="vocab-word" data-word="ecological">ecologically</mark> relevant questions,’ Rochman says. Usually, scientists don’t know exactly how disasters such as a <mark class="vocab-word" data-word="tanker">tanker</mark> <mark class="vocab-word" data-word="accidental">accidentally</mark> <mark class="vocab-word" data-word="spill">spilling</mark> its whole <mark class="vocab-word" data-word="cargo">cargo</mark> of oil and <mark class="vocab-word" data-word="pollute">polluting</mark> huge areas of the ocean will affect the environment until after they’ve happened. ‘We don’t ask the right questions early enough,’ she says. But if ecologists can understand how the slow-moving effect of ocean trash is damaging <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>, they might be able to prevent things from getting worse.</p></div>  <div class="parallel-zh"><p>“我们需要提出更多与生态学相关的问题”，Rochman说。对于油轮意外泄露整船石油并污染大面积海洋这种灾难来说，科学家直到发生之后才能确切的知道它们对环境的影响。“我们没能及早提出正确的问题”，她说。但如果生态学家能够理解海洋垃圾的影响如何正在缓慢地破坏生态系统，他们可能能够阻止事情变得更坏。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Asking the right questions can help policy makers, and the public, figure out where to focus their attention. The problems that look or sound most dramatic may not be the best places to start. For example, the name of the ‘Great Pacific <mark class="vocab-word" data-word="garbage">Garbage</mark> <mark class="vocab-word" data-word="patch">Patch</mark>’ – a collection of <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="debris">debris</mark> in the northern Pacific Ocean – might conjure up a vast, floating trash island. In reality though, much of the <mark class="vocab-word" data-word="debris">debris</mark> is tiny or below the surface; a person could sail through the area without seeing any trash at all. A Dutch group called ‘The Ocean Cleanup’ is currently working on plans to put <mark class="vocab-word" data-word="mechanical">mechanical</mark> devices in the Pacific <mark class="vocab-word" data-word="garbage">Garbage</mark> <mark class="vocab-word" data-word="patch">Patch</mark> and similar areas to <mark class="vocab-word" data-word="suck">suck</mark> up plastic. But a recent paper used <mark class="vocab-word" data-word="simulation">simulations</mark> to show that strategically positioning the cleanup devices closer to <mark class="vocab-word" data-word="shore">shore</mark> would more effectively reduce pollution over the long term.</p></div>  <div class="parallel-zh"><p>提出正确的问题可以帮助政策制定者和公众弄清楚应该将自己的注意力放在哪里。看起来或者听起来最严重的问题可能并不是最佳的着手指出。例如，“太平洋大垃圾带”这样的名字 – 太平洋北部的一批垃圾 – 可能让人想起巨大的、漂浮着的垃圾岛屿。但实际上，这些垃圾中的大部分都很微小或者位于海洋表面之下。一个人可以乘船穿过该区域而看不到任何垃圾。一个叫做“海洋清理”的荷兰团体目前正在制定计划。他们打算在太平洋垃圾带和类似的区域中放置机械装置以吸附塑料。但近期的一篇论文通过模拟表明，长期来看，有策略地将清洁装置放在靠近海岸的地方可以更加有效的减少污染。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘I think clearing up some of these misperceptions is really important,’ Rochman says. Among scientists as well as in the media, she says, ‘A lot of the images about strandings and entanglement and all of that cause the <mark class="vocab-word" data-word="perception">perception</mark> that plastic <mark class="vocab-word" data-word="debris">debris</mark> is killing everything in the ocean.’ Interrogating the <mark class="vocab-word" data-word="existing">existing</mark> scientific literature can help ecologists figure out which problems really need addressing, and which ones they’d be better off – like the <mark class="vocab-word" data-word="mussel">mussels</mark> – <mark class="vocab-word" data-word="absorb">absorbing</mark> and ignoring.</p></div>  <div class="parallel-zh"><p>“我认为清理这些错误的认知十分重要”，Rochman说。在科学家和媒体之中，她说，“大量关于搁浅和被困的图片造成塑料垃圾正在杀死海洋中一些生物的看法”。审视现存的科学文献能够帮助生态学家搞明白哪些问题真的需要解决，而哪些问题（比如贻贝）他们最好了解和忽略。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"dismal": 1, "ecological": 2, "synthesis": 1, "marine": 4, "debris": 13, "bell": 1, "ecology": 1, "perceive": 4, "speculate": 1, "impact": 2, "threat": 4, "validity": 1, "faulty": 1, "statistic": 1, "striking": 1, "mussel": 4, "ingest": 1, "microscopic": 1, "bloodstream": 1, "shellfish": 1, "bothersome": 1, "involved": 1, "entangle": 1, "severely": 1, "millimeter": 1, "ingredient": 1, "cosmetic": 1, "fiber": 1, "shed": 1, "synthetic": 1, "clothe": 1, "erode": 1, "remnant": 1, "investigate": 1, "large-scale": 1, "lead": 1, "tissue": 1, "turtle": 1, "predator": 1, "ecosystem": 2, "tanker": 1, "accidental": 1, "spill": 1, "cargo": 1, "pollute": 1, "garbage": 2, "patch": 2, "mechanical": 1, "suck": 1, "simulation": 1, "shore": 1, "perception": 1, "existing": 1, "absorb": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

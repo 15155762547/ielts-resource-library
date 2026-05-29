@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ant Intelligence - 剑桥雅思7 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Ant Intelligence</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24440.html" target="_blank">https://www.laokaoya.com/24440.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>When we think of <mark class="vocab-word" data-word="intelligent">intelligent</mark> members of the animal <mark class="vocab-word" data-word="kingdom">kingdom</mark>, the creatures that <mark class="vocab-word" data-word="spring">spring</mark> immediately to mind are <mark class="vocab-word" data-word="ape">apes</mark> and monkeys. But in fact the social lives of some members of the insect <mark class="vocab-word" data-word="kingdom">kingdom</mark> are <mark class="vocab-word" data-word="sufficient">sufficiently</mark> complex to <mark class="vocab-word" data-word="suggest">suggest</mark> more than a <mark class="vocab-word" data-word="hint">hint</mark> of intelligence. Among these, the world of the ant has come in for <mark class="vocab-word" data-word="considerable">considerable</mark> <mark class="vocab-word" data-word="scrutiny">scrutiny</mark> lately, and the idea that ants demonstrate <mark class="vocab-word" data-word="spark">sparks</mark> of <mark class="vocab-word" data-word="cognition">cognition</mark> has certainly not been rejected by those <mark class="vocab-word" data-word="involved">involved</mark> in these investigations.</p><p>Ants store food, <mark class="vocab-word" data-word="repel">repel</mark> attackers and use chemical signals to contact one another in case of attack. Such chemical communication can be compared to the human use of visual and auditory channels (as in religious chants, advertising images and <mark class="vocab-word" data-word="jingle">jingles</mark>, political <mark class="vocab-word" data-word="slogan">slogans</mark> and <mark class="vocab-word" data-word="martial">martial</mark> music) to <mark class="vocab-word" data-word="arouse">arouse</mark> and <mark class="vocab-word" data-word="propagate">propagate</mark> moods and attitudes. The <mark class="vocab-word" data-word="biologist">biologist</mark> Lewis Thomas wrote, ‘Ants are so much like human beings as to be an <mark class="vocab-word" data-word="embarrassment">embarrassment</mark>. They farm fungi, raise aphids* as <mark class="vocab-word" data-word="livestock">livestock</mark>, launch armies to war, use chemical <mark class="vocab-word" data-word="spray">sprays</mark> to alarm and confuse enemies, capture slaves, engage in child labour, exchange information ceaselessly. They do everything but watch television.</p><p>However, in ants there is no cultural <mark class="vocab-word" data-word="transmission">transmission</mark> everything must be <mark class="vocab-word" data-word="encode">encoded</mark> in the <mark class="vocab-word" data-word="gene">genes</mark> – whereas in humans the opposite is true. Only basic <mark class="vocab-word" data-word="instinct">instincts</mark> are carried in the <mark class="vocab-word" data-word="gene">genes</mark> of a newborn baby, other skills being <mark class="vocab-word" data-word="learned">learned</mark> from others in the community as the child grows up. It may seem that this cultural <mark class="vocab-word" data-word="continuity">continuity</mark> gives us a huge advantage over ants. They have never mastered fire nor progressed. Their <mark class="vocab-word" data-word="fungus">fungus</mark> farming and aphid <mark class="vocab-word" data-word="herd">herding</mark> <mark class="vocab-word" data-word="craft">crafts</mark> are <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> when compared to the <mark class="vocab-word" data-word="agricultural">agricultural</mark> skills of humans five thousand years ago but have been totally overtaken by modern human agribusiness.</p><p>Or have they? The farming methods of ants are at least <mark class="vocab-word" data-word="sustainable">sustainable</mark>. They do not <mark class="vocab-word" data-word="ruin">ruin</mark> environments or use enormous amounts of energy. Moreover, recent evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that the crop farming of ants may be more <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> and <mark class="vocab-word" data-word="adaptable">adaptable</mark> than was thought.</p><p>Ants were farmers fifty million years before humans were. Ants can’t <mark class="vocab-word" data-word="digest">digest</mark> the <mark class="vocab-word" data-word="cellulose">cellulose</mark> in leaves – but some fungi can. The ants therefore <mark class="vocab-word" data-word="cultivate">cultivate</mark> these fungi in their <mark class="vocab-word" data-word="nest">nests</mark>, bringing them leaves to feed on, and then use them as a source of food. Farmer ants <mark class="vocab-word" data-word="secrete">secrete</mark> <mark class="vocab-word" data-word="antibiotic">antibiotics</mark> to control other fungi that might act as ‘<mark class="vocab-word" data-word="weed">weeds</mark>’, and spread waste to fertilise the crop.</p><p>It was once thought that the <mark class="vocab-word" data-word="fungus">fungus</mark> that ants <mark class="vocab-word" data-word="cultivate">cultivate</mark> was a single type that they had <mark class="vocab-word" data-word="propagate">propagated</mark>, <mark class="vocab-word" data-word="essentially">essentially</mark> unchanged from the <mark class="vocab-word" data-word="distant">distant</mark> past. Not so. Ulrich Mueller of Maryland and his colleagues genetically screened 862 different types of fungi taken from ants’ <mark class="vocab-word" data-word="nest">nests</mark>. These turned out to be highly <mark class="vocab-word" data-word="diverse">diverse</mark>: it seems that ants are <mark class="vocab-word" data-word="continually">continually</mark> <mark class="vocab-word" data-word="domesticate">domesticating</mark> new species. Even more <mark class="vocab-word" data-word="impressively">impressively</mark>, DNA analysis of the fungi <mark class="vocab-word" data-word="suggest">suggests</mark> that the ants improve or modify the fungi by regularly swapping and sharing <mark class="vocab-word" data-word="strain">strains</mark> with neighbouring ant colonies.</p><p>Whereas <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> man had no <mark class="vocab-word" data-word="exposure">exposure</mark> to <mark class="vocab-word" data-word="urban">urban</mark> lifestyles – the forcing house of intelligence – the evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that ants have lived in <mark class="vocab-word" data-word="urban">urban</mark> settings for close on a hundred million years, developing and maintaining underground cities of specialised <mark class="vocab-word" data-word="chamber">chambers</mark> and <mark class="vocab-word" data-word="tunnel">tunnels</mark>.</p><p>When we survey Mexico City, Tokyo, Los Angeles, we are <mark class="vocab-word" data-word="amazed">amazed</mark> at what has been <mark class="vocab-word" data-word="accomplish">accomplished</mark> by humans. Yet Hoelldobler and Wilson’s <mark class="vocab-word" data-word="magnificent">magnificent</mark> work for ant lovers, The Ants, describes a supercolony of the ant Formica yessensis on the Ishikari Coast of Hokkaido. This ‘megalopolis’ was reported to be <mark class="vocab-word" data-word="compose">composed</mark> of 360 million workers and a million queens living in 4,500<mark class="vocab-word" data-word="interconnect">interconnected</mark> <mark class="vocab-word" data-word="nest">nests</mark> across a <mark class="vocab-word" data-word="territory">territory</mark> of 2.7 square kilometres.</p><p>Such <mark class="vocab-word" data-word="endure">enduring</mark> and <mark class="vocab-word" data-word="intricate">intricately</mark> meshed levels of technical achievement <mark class="vocab-word" data-word="outstrip">outstrip</mark> by far anything achieved by our <mark class="vocab-word" data-word="distant">distant</mark> <mark class="vocab-word" data-word="ancestor">ancestors</mark>. We <mark class="vocab-word" data-word="hail">hail</mark> as <mark class="vocab-word" data-word="masterpiece">masterpieces</mark> the <mark class="vocab-word" data-word="cave">cave</mark> paintings in southern France and elsewhere, dating back some 20,000 years. Ant societies existed in something like their present form more than seventy million years ago. Beside this, <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> man looks technologically <mark class="vocab-word" data-word="primitive">primitive</mark>. Is this then some kind of intelligence, <mark class="vocab-word" data-word="albeit">albeit</mark> of a different kind?</p><p>Research conducted at Oxford, Sussex and Zürich Universities has shown that when desert ants return from a <mark class="vocab-word" data-word="forage">foraging</mark> trip, they <mark class="vocab-word" data-word="navigate">navigate</mark> by <mark class="vocab-word" data-word="integrate">integrating</mark> <mark class="vocab-word" data-word="bearing">bearings</mark> and distances, which they <mark class="vocab-word" data-word="continuously">continuously</mark> update in their heads. They combine the evidence of visual <mark class="vocab-word" data-word="landmark">landmarks</mark> with a mental library of local directions, all within a <mark class="vocab-word" data-word="framework">framework</mark> which is <mark class="vocab-word" data-word="consult">consulted</mark> and updated. So ants can learn too.</p><p>And in a twelve-year programme of work, Ryabko and Reznikova have found evidence that ants can <mark class="vocab-word" data-word="transmit">transmit</mark> very complex messages. <mark class="vocab-word" data-word="scout">Scouts</mark> who had located food in a <mark class="vocab-word" data-word="maze">maze</mark> returned to mobilise their <mark class="vocab-word" data-word="forage">foraging</mark> teams. They engaged in contact sessions, at the end of which the <mark class="vocab-word" data-word="scout">scout</mark> was removed in order to observe what her team might do. Often the foragers <mark class="vocab-word" data-word="proceed">proceeded</mark> to the exact spot in the <mark class="vocab-word" data-word="maze">maze</mark> where the food had been. <mark class="vocab-word" data-word="elaborate">Elaborate</mark> <mark class="vocab-word" data-word="precaution">precautions</mark> were taken to prevent the <mark class="vocab-word" data-word="forage">foraging</mark> team using odour <mark class="vocab-word" data-word="clue">clues</mark>. Discussion now centres on whether the route through the <mark class="vocab-word" data-word="maze">maze</mark> is communicated as a ‘left-right’ <mark class="vocab-word" data-word="sequence">sequence</mark> of turns or as a ‘<mark class="vocab-word" data-word="compass">compass</mark> <mark class="vocab-word" data-word="bearing">bearing</mark> and distance’ message.</p><p>During the course of this <mark class="vocab-word" data-word="exhaustive">exhaustive</mark> study, Reznikova has grown so attached to her laboratory ants that she feels she knows them as individuals – even without the paint spots used to mark them. It’s no surprise that Edward Wilson, in his essay, ‘In the company of ants’, advises readers who ask what to do with the ants in their kitchen to: ‘Watch where you step. Be careful of little lives.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>当我们思考动物界的聪明成员时，立即想到的动物往往是猿和猴子。但事实上，昆虫王国一些成员的社会生活足够复杂，暗示着智力存在的证据。其中，蚂蚁世界最近接受了严格的检验。参与这些调查的人完全没有抵触蚂蚁表现出认知火花的想法。</p><p>‘蚂蚁储存食物，击退袭击者，并在发起攻击时使用化学信号相互联系。这种化学交流可以与人类使用视觉和听觉通道（例如宗教圣歌，广告图像和叮当声，政治口号和军事音乐）进行比较，以唤起并传播情绪和态度。生物学家路易斯·托马斯（Lewis Thomas）写道：“蚂蚁与人类的相似程度甚至有些尴尬。他们耕种真菌，饲养蚜虫作为牲畜，发动军队进行战争，使用化学喷雾警告和迷惑敌人，俘虏奴隶，使用童工，不断交流信息。他们除了看电视外什么都做。</p><p>“ 然而，蚂蚁不存在文化的传播-所有的一切都被编写在基因之中-而人类则相反。新生婴儿的基因只带有基本的本能，随着孩子的成长，他们会从社区中其他人那里学习其他技能。这种文化上的连续性似乎给了我们比蚂蚁更大的优势。它们从来没有掌握过火,也没有进步。与五千年前人类的农业技能相比，它们的真菌和蚜虫养殖操作十分复杂，但这已经被现代人类农业完全超越。</p><p>他们确实超过了吗？蚂蚁的耕种方法至少是可持续的。他们不会破坏环境或使用大量能源。此外，最近的证据表明，蚂蚁的农作物种植可能比人们想象的更复杂，更具有适应性。</p><p>蚂蚁在人类诞生五千万年前就是农民。蚂蚁不能消化树叶中的纤维素，但是一些真菌可以。因此，蚂蚁在它们的巢穴中培育这些真菌，使它们以叶子为食，然后将其用作食物来源。农民蚂蚁分泌抗生素来控制其他可能跟杂草一样的真菌，并散布垃圾作为作物的肥料。</p><p>曾经有人认为，蚂蚁培育的真菌只有一种类型，与遥远的过去相比基本上没有变化。并非如此。马里兰州的乌尔里希·穆勒（Ulrich Mueller）和他的同事们对蚂蚁巢中取出的862种不同类型的真菌进行了基因检测。结果证明它们是高度多样化的：蚂蚁似乎正在不断驯化新物种。甚至更令人印象深刻的是，真菌的DNA分析表明，蚂蚁通过与相邻蚁群定期交换和共享菌株来改善和修正真菌。</p><p>史前人类没有接触过城市生活方式-，而这是智力出现的重要推动因素，但证据表明，蚂蚁在城市环境中生活了近一亿年，发展并维护着拥有固定用途的房间和隧道的地下城市。</p><p>当我们调查墨西哥城，东京，洛杉矶时，我们对人类所取得的成就感到惊讶。然而对蚂蚁爱好者来说，Hoelldobler 和Wilson宏伟的作品，The Ants，介绍了Hokkaido Ishikari海岸Formica yessensis蚂蚁的超级巢穴。据报道，这个“大都市” 由3.6亿名工人和100万名女王组成，它们居住在4500个相连的巢穴中，占地2.7平方公里。</p><p>如此持久而错综复杂的技术成就远远超过了我们遥远的祖先。我们赞扬2万年前法国南部和其他地区的洞穴壁画。而蚂蚁社会在七千万多年前就以他们现在的形式存在。除此之外，史前人在技术上看起来很原始。尽管类型不同，这是某种智力的表现吗？</p><p>牛津大学，苏塞克斯大学和苏黎世大学进行的研究表明，当沙漠蚂蚁从觅食之旅中返回时，它们通过整合方位和距离来导航，并不断在大脑中更新。他们将视觉地标证据与大脑中储存的本地方向相结合，所有这些都在一个经过查询和更新的框架内进行。所以蚂蚁也可以学习。</p><p>在长达十二年的研究项目中，里亚布科和雷兹尼科娃发现了证据，证明蚂蚁可以传递非常复杂的信息。在迷宫中找到食物的侦察兵返回，动员他们的觅食队。它们进行接触会议。随后，侦察员被移除，以观察其团队接下来的行为。觅食者常常走到迷宫中放置食物的确切地点。研究人员采取了精心的预防措施，以防止觅食团队使用气味线索。现在讨论的中心在于穿过迷宫的路径究竟是通过左右转弯序列进行交流的，还是通过方向与距离信息来传达的。</p><p>在这项详尽的研究过程中，雷兹尼科娃深深地被其实验室的蚂蚁所吸引，以至于她觉得自己认识其中的每一只-即使没有用来标记它们的油漆斑点。爱德华·威尔逊（Edward Wilson）在其论文“在蚂蚁的陪伴下”建议那些询问如何处理厨房中蚂蚁的读者：“注意脚下，小心这些微小的生命”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>When we think of <mark class="vocab-word" data-word="intelligent">intelligent</mark> members of the animal <mark class="vocab-word" data-word="kingdom">kingdom</mark>, the creatures that <mark class="vocab-word" data-word="spring">spring</mark> immediately to mind are <mark class="vocab-word" data-word="ape">apes</mark> and monkeys. But in fact the social lives of some members of the insect <mark class="vocab-word" data-word="kingdom">kingdom</mark> are <mark class="vocab-word" data-word="sufficient">sufficiently</mark> complex to <mark class="vocab-word" data-word="suggest">suggest</mark> more than a <mark class="vocab-word" data-word="hint">hint</mark> of intelligence. Among these, the world of the ant has come in for <mark class="vocab-word" data-word="considerable">considerable</mark> <mark class="vocab-word" data-word="scrutiny">scrutiny</mark> lately, and the idea that ants demonstrate <mark class="vocab-word" data-word="spark">sparks</mark> of <mark class="vocab-word" data-word="cognition">cognition</mark> has certainly not been rejected by those <mark class="vocab-word" data-word="involved">involved</mark> in these investigations.</p></div>  <div class="parallel-zh"><p>当我们思考动物界的聪明成员时，立即想到的动物往往是猿和猴子。但事实上，昆虫王国一些成员的社会生活足够复杂，暗示着智力存在的证据。其中，蚂蚁世界最近接受了严格的检验。参与这些调查的人完全没有抵触蚂蚁表现出认知火花的想法。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Ants store food, <mark class="vocab-word" data-word="repel">repel</mark> attackers and use chemical signals to contact one another in case of attack. Such chemical communication can be compared to the human use of visual and auditory channels (as in religious chants, advertising images and <mark class="vocab-word" data-word="jingle">jingles</mark>, political <mark class="vocab-word" data-word="slogan">slogans</mark> and <mark class="vocab-word" data-word="martial">martial</mark> music) to <mark class="vocab-word" data-word="arouse">arouse</mark> and <mark class="vocab-word" data-word="propagate">propagate</mark> moods and attitudes. The <mark class="vocab-word" data-word="biologist">biologist</mark> Lewis Thomas wrote, ‘Ants are so much like human beings as to be an <mark class="vocab-word" data-word="embarrassment">embarrassment</mark>. They farm fungi, raise aphids* as <mark class="vocab-word" data-word="livestock">livestock</mark>, launch armies to war, use chemical <mark class="vocab-word" data-word="spray">sprays</mark> to alarm and confuse enemies, capture slaves, engage in child labour, exchange information ceaselessly. They do everything but watch television.</p></div>  <div class="parallel-zh"><p>‘蚂蚁储存食物，击退袭击者，并在发起攻击时使用化学信号相互联系。这种化学交流可以与人类使用视觉和听觉通道（例如宗教圣歌，广告图像和叮当声，政治口号和军事音乐）进行比较，以唤起并传播情绪和态度。生物学家路易斯·托马斯（Lewis Thomas）写道：“蚂蚁与人类的相似程度甚至有些尴尬。他们耕种真菌，饲养蚜虫作为牲畜，发动军队进行战争，使用化学喷雾警告和迷惑敌人，俘虏奴隶，使用童工，不断交流信息。他们除了看电视外什么都做。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, in ants there is no cultural <mark class="vocab-word" data-word="transmission">transmission</mark> everything must be <mark class="vocab-word" data-word="encode">encoded</mark> in the <mark class="vocab-word" data-word="gene">genes</mark> – whereas in humans the opposite is true. Only basic <mark class="vocab-word" data-word="instinct">instincts</mark> are carried in the <mark class="vocab-word" data-word="gene">genes</mark> of a newborn baby, other skills being <mark class="vocab-word" data-word="learned">learned</mark> from others in the community as the child grows up. It may seem that this cultural <mark class="vocab-word" data-word="continuity">continuity</mark> gives us a huge advantage over ants. They have never mastered fire nor progressed. Their <mark class="vocab-word" data-word="fungus">fungus</mark> farming and aphid <mark class="vocab-word" data-word="herd">herding</mark> <mark class="vocab-word" data-word="craft">crafts</mark> are <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> when compared to the <mark class="vocab-word" data-word="agricultural">agricultural</mark> skills of humans five thousand years ago but have been totally overtaken by modern human agribusiness.</p></div>  <div class="parallel-zh"><p>“ 然而，蚂蚁不存在文化的传播-所有的一切都被编写在基因之中-而人类则相反。新生婴儿的基因只带有基本的本能，随着孩子的成长，他们会从社区中其他人那里学习其他技能。这种文化上的连续性似乎给了我们比蚂蚁更大的优势。它们从来没有掌握过火,也没有进步。与五千年前人类的农业技能相比，它们的真菌和蚜虫养殖操作十分复杂，但这已经被现代人类农业完全超越。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Or have they? The farming methods of ants are at least <mark class="vocab-word" data-word="sustainable">sustainable</mark>. They do not <mark class="vocab-word" data-word="ruin">ruin</mark> environments or use enormous amounts of energy. Moreover, recent evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that the crop farming of ants may be more <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> and <mark class="vocab-word" data-word="adaptable">adaptable</mark> than was thought.</p></div>  <div class="parallel-zh"><p>他们确实超过了吗？蚂蚁的耕种方法至少是可持续的。他们不会破坏环境或使用大量能源。此外，最近的证据表明，蚂蚁的农作物种植可能比人们想象的更复杂，更具有适应性。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Ants were farmers fifty million years before humans were. Ants can’t <mark class="vocab-word" data-word="digest">digest</mark> the <mark class="vocab-word" data-word="cellulose">cellulose</mark> in leaves – but some fungi can. The ants therefore <mark class="vocab-word" data-word="cultivate">cultivate</mark> these fungi in their <mark class="vocab-word" data-word="nest">nests</mark>, bringing them leaves to feed on, and then use them as a source of food. Farmer ants <mark class="vocab-word" data-word="secrete">secrete</mark> <mark class="vocab-word" data-word="antibiotic">antibiotics</mark> to control other fungi that might act as ‘<mark class="vocab-word" data-word="weed">weeds</mark>’, and spread waste to fertilise the crop.</p></div>  <div class="parallel-zh"><p>蚂蚁在人类诞生五千万年前就是农民。蚂蚁不能消化树叶中的纤维素，但是一些真菌可以。因此，蚂蚁在它们的巢穴中培育这些真菌，使它们以叶子为食，然后将其用作食物来源。农民蚂蚁分泌抗生素来控制其他可能跟杂草一样的真菌，并散布垃圾作为作物的肥料。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It was once thought that the <mark class="vocab-word" data-word="fungus">fungus</mark> that ants <mark class="vocab-word" data-word="cultivate">cultivate</mark> was a single type that they had <mark class="vocab-word" data-word="propagate">propagated</mark>, <mark class="vocab-word" data-word="essentially">essentially</mark> unchanged from the <mark class="vocab-word" data-word="distant">distant</mark> past. Not so. Ulrich Mueller of Maryland and his colleagues genetically screened 862 different types of fungi taken from ants’ <mark class="vocab-word" data-word="nest">nests</mark>. These turned out to be highly <mark class="vocab-word" data-word="diverse">diverse</mark>: it seems that ants are <mark class="vocab-word" data-word="continually">continually</mark> <mark class="vocab-word" data-word="domesticate">domesticating</mark> new species. Even more <mark class="vocab-word" data-word="impressively">impressively</mark>, DNA analysis of the fungi <mark class="vocab-word" data-word="suggest">suggests</mark> that the ants improve or modify the fungi by regularly swapping and sharing <mark class="vocab-word" data-word="strain">strains</mark> with neighbouring ant colonies.</p></div>  <div class="parallel-zh"><p>曾经有人认为，蚂蚁培育的真菌只有一种类型，与遥远的过去相比基本上没有变化。并非如此。马里兰州的乌尔里希·穆勒（Ulrich Mueller）和他的同事们对蚂蚁巢中取出的862种不同类型的真菌进行了基因检测。结果证明它们是高度多样化的：蚂蚁似乎正在不断驯化新物种。甚至更令人印象深刻的是，真菌的DNA分析表明，蚂蚁通过与相邻蚁群定期交换和共享菌株来改善和修正真菌。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Whereas <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> man had no <mark class="vocab-word" data-word="exposure">exposure</mark> to <mark class="vocab-word" data-word="urban">urban</mark> lifestyles – the forcing house of intelligence – the evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that ants have lived in <mark class="vocab-word" data-word="urban">urban</mark> settings for close on a hundred million years, developing and maintaining underground cities of specialised <mark class="vocab-word" data-word="chamber">chambers</mark> and <mark class="vocab-word" data-word="tunnel">tunnels</mark>.</p></div>  <div class="parallel-zh"><p>史前人类没有接触过城市生活方式-，而这是智力出现的重要推动因素，但证据表明，蚂蚁在城市环境中生活了近一亿年，发展并维护着拥有固定用途的房间和隧道的地下城市。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>When we survey Mexico City, Tokyo, Los Angeles, we are <mark class="vocab-word" data-word="amazed">amazed</mark> at what has been <mark class="vocab-word" data-word="accomplish">accomplished</mark> by humans. Yet Hoelldobler and Wilson’s <mark class="vocab-word" data-word="magnificent">magnificent</mark> work for ant lovers, The Ants, describes a supercolony of the ant Formica yessensis on the Ishikari Coast of Hokkaido. This ‘megalopolis’ was reported to be <mark class="vocab-word" data-word="compose">composed</mark> of 360 million workers and a million queens living in 4,500<mark class="vocab-word" data-word="interconnect">interconnected</mark> <mark class="vocab-word" data-word="nest">nests</mark> across a <mark class="vocab-word" data-word="territory">territory</mark> of 2.7 square kilometres.</p></div>  <div class="parallel-zh"><p>当我们调查墨西哥城，东京，洛杉矶时，我们对人类所取得的成就感到惊讶。然而对蚂蚁爱好者来说，Hoelldobler 和Wilson宏伟的作品，The Ants，介绍了Hokkaido Ishikari海岸Formica yessensis蚂蚁的超级巢穴。据报道，这个“大都市” 由3.6亿名工人和100万名女王组成，它们居住在4500个相连的巢穴中，占地2.7平方公里。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Such <mark class="vocab-word" data-word="endure">enduring</mark> and <mark class="vocab-word" data-word="intricate">intricately</mark> meshed levels of technical achievement <mark class="vocab-word" data-word="outstrip">outstrip</mark> by far anything achieved by our <mark class="vocab-word" data-word="distant">distant</mark> <mark class="vocab-word" data-word="ancestor">ancestors</mark>. We <mark class="vocab-word" data-word="hail">hail</mark> as <mark class="vocab-word" data-word="masterpiece">masterpieces</mark> the <mark class="vocab-word" data-word="cave">cave</mark> paintings in southern France and elsewhere, dating back some 20,000 years. Ant societies existed in something like their present form more than seventy million years ago. Beside this, <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> man looks technologically <mark class="vocab-word" data-word="primitive">primitive</mark>. Is this then some kind of intelligence, <mark class="vocab-word" data-word="albeit">albeit</mark> of a different kind?</p></div>  <div class="parallel-zh"><p>如此持久而错综复杂的技术成就远远超过了我们遥远的祖先。我们赞扬2万年前法国南部和其他地区的洞穴壁画。而蚂蚁社会在七千万多年前就以他们现在的形式存在。除此之外，史前人在技术上看起来很原始。尽管类型不同，这是某种智力的表现吗？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Research conducted at Oxford, Sussex and Zürich Universities has shown that when desert ants return from a <mark class="vocab-word" data-word="forage">foraging</mark> trip, they <mark class="vocab-word" data-word="navigate">navigate</mark> by <mark class="vocab-word" data-word="integrate">integrating</mark> <mark class="vocab-word" data-word="bearing">bearings</mark> and distances, which they <mark class="vocab-word" data-word="continuously">continuously</mark> update in their heads. They combine the evidence of visual <mark class="vocab-word" data-word="landmark">landmarks</mark> with a mental library of local directions, all within a <mark class="vocab-word" data-word="framework">framework</mark> which is <mark class="vocab-word" data-word="consult">consulted</mark> and updated. So ants can learn too.</p></div>  <div class="parallel-zh"><p>牛津大学，苏塞克斯大学和苏黎世大学进行的研究表明，当沙漠蚂蚁从觅食之旅中返回时，它们通过整合方位和距离来导航，并不断在大脑中更新。他们将视觉地标证据与大脑中储存的本地方向相结合，所有这些都在一个经过查询和更新的框架内进行。所以蚂蚁也可以学习。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>And in a twelve-year programme of work, Ryabko and Reznikova have found evidence that ants can <mark class="vocab-word" data-word="transmit">transmit</mark> very complex messages. <mark class="vocab-word" data-word="scout">Scouts</mark> who had located food in a <mark class="vocab-word" data-word="maze">maze</mark> returned to mobilise their <mark class="vocab-word" data-word="forage">foraging</mark> teams. They engaged in contact sessions, at the end of which the <mark class="vocab-word" data-word="scout">scout</mark> was removed in order to observe what her team might do. Often the foragers <mark class="vocab-word" data-word="proceed">proceeded</mark> to the exact spot in the <mark class="vocab-word" data-word="maze">maze</mark> where the food had been. <mark class="vocab-word" data-word="elaborate">Elaborate</mark> <mark class="vocab-word" data-word="precaution">precautions</mark> were taken to prevent the <mark class="vocab-word" data-word="forage">foraging</mark> team using odour <mark class="vocab-word" data-word="clue">clues</mark>. Discussion now centres on whether the route through the <mark class="vocab-word" data-word="maze">maze</mark> is communicated as a ‘left-right’ <mark class="vocab-word" data-word="sequence">sequence</mark> of turns or as a ‘<mark class="vocab-word" data-word="compass">compass</mark> <mark class="vocab-word" data-word="bearing">bearing</mark> and distance’ message.</p></div>  <div class="parallel-zh"><p>在长达十二年的研究项目中，里亚布科和雷兹尼科娃发现了证据，证明蚂蚁可以传递非常复杂的信息。在迷宫中找到食物的侦察兵返回，动员他们的觅食队。它们进行接触会议。随后，侦察员被移除，以观察其团队接下来的行为。觅食者常常走到迷宫中放置食物的确切地点。研究人员采取了精心的预防措施，以防止觅食团队使用气味线索。现在讨论的中心在于穿过迷宫的路径究竟是通过左右转弯序列进行交流的，还是通过方向与距离信息来传达的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>During the course of this <mark class="vocab-word" data-word="exhaustive">exhaustive</mark> study, Reznikova has grown so attached to her laboratory ants that she feels she knows them as individuals – even without the paint spots used to mark them. It’s no surprise that Edward Wilson, in his essay, ‘In the company of ants’, advises readers who ask what to do with the ants in their kitchen to: ‘Watch where you step. Be careful of little lives.’</p></div>  <div class="parallel-zh"><p>在这项详尽的研究过程中，雷兹尼科娃深深地被其实验室的蚂蚁所吸引，以至于她觉得自己认识其中的每一只-即使没有用来标记它们的油漆斑点。爱德华·威尔逊（Edward Wilson）在其论文“在蚂蚁的陪伴下”建议那些询问如何处理厨房中蚂蚁的读者：“注意脚下，小心这些微小的生命”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"intelligent": 1, "kingdom": 2, "spring": 1, "ape": 1, "sufficient": 1, "suggest": 4, "hint": 1, "considerable": 1, "scrutiny": 1, "spark": 1, "cognition": 1, "involved": 1, "repel": 1, "jingle": 1, "slogan": 1, "martial": 1, "arouse": 1, "propagate": 2, "biologist": 1, "embarrassment": 1, "livestock": 1, "spray": 1, "transmission": 1, "encode": 1, "gene": 2, "instinct": 1, "learned": 1, "continuity": 1, "fungus": 2, "herd": 1, "craft": 1, "sophisticated": 2, "agricultural": 1, "sustainable": 1, "ruin": 1, "adaptable": 1, "digest": 1, "cellulose": 1, "cultivate": 2, "nest": 3, "secrete": 1, "antibiotic": 1, "weed": 1, "essentially": 1, "distant": 2, "diverse": 1, "continually": 1, "domesticate": 1, "impressively": 1, "strain": 1, "prehistoric": 2, "exposure": 1, "urban": 2, "chamber": 1, "tunnel": 1, "amazed": 1, "accomplish": 1, "magnificent": 1, "compose": 1, "interconnect": 1, "territory": 1, "endure": 1, "intricate": 1, "outstrip": 1, "ancestor": 1, "hail": 1, "masterpiece": 1, "cave": 1, "primitive": 1, "albeit": 1, "forage": 3, "navigate": 1, "integrate": 1, "bearing": 2, "continuously": 1, "landmark": 1, "framework": 1, "consult": 1, "transmit": 1, "scout": 2, "maze": 3, "proceed": 1, "elaborate": 1, "precaution": 1, "clue": 1, "sequence": 1, "compass": 1, "exhaustive": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

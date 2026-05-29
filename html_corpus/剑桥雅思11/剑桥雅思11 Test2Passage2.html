@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>： - 剑桥雅思11 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思11</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>：</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29752.html" target="_blank">https://www.laokaoya.com/29752.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="easter">Easter</mark> Island, or Rapu Nui as it is known locally, is home to several hundred ancient human <mark class="vocab-word" data-word="statue">statues</mark> – the moai.After this remotePacificisland was <mark class="vocab-word" data-word="settle">settled</mark> by the Polynesians, it remainedisolatedfor centuries.All the energy and resources that went into the moai – some of which are ten metres tall and weigh over 7,000 kilos – came from the island itself.Yet when Dutch <mark class="vocab-word" data-word="explorer">explorers</mark> landed in 1722, they met a Stone Age culture.The moai were <mark class="vocab-word" data-word="carve">carved</mark> with stone tools, then transported for many kilometres, without the use of animals or wheels, to <mark class="vocab-word" data-word="massive">massive</mark> stone <mark class="vocab-word" data-word="platform">platforms</mark>.The identity of the moai builders was in doubt until well into the twentieth century.Thor Heyerdahl, the Norwegian ethnographer and adventurer, thought the <mark class="vocab-word" data-word="statue">statues</mark> had been created by pre-Inca peoples from Peru.Bestselling Swiss author Erich von Däniken believed they were built by <mark class="vocab-word" data-word="strand">stranded</mark> <mark class="vocab-word" data-word="extraterrestrial">extraterrestrials</mark>.Modern science –<mark class="vocab-word" data-word="linguistic">linguistic</mark>,archaeologicalandgeneticevidence – has <mark class="vocab-word" data-word="definitive">definitively</mark> proved the moai builders were Polynesians, but not how they moved their creations.Local <mark class="vocab-word" data-word="folklore">folklore</mark> maintains that the <mark class="vocab-word" data-word="statue">statues</mark> walked, while researchers have tended to assume the <mark class="vocab-word" data-word="ancestor">ancestors</mark> dragged the <mark class="vocab-word" data-word="statue">statues</mark> somehow, using ropes and <mark class="vocab-word" data-word="log">logs</mark>.</p><p>When the Europeans arrived, Rapa Nui was <mark class="vocab-word" data-word="grassland">grassland</mark>, with only a few scrawny <mark class="vocab-word" data-word="tree">trees</mark>.In the 1970s and 1980s, though, researchers foundpollenpreserved in lake <mark class="vocab-word" data-word="sediment">sediments</mark>, which proved the island had been covered inlushpalm forests for thousands of years.Only after the Polynesians arrived did those forests disappear.US scientist <mark class="vocab-word" data-word="jar">Jared</mark> Diamond believes that the Rapanui people – <mark class="vocab-word" data-word="descendant">descendants</mark> of Polynesian <mark class="vocab-word" data-word="settler">settlers</mark> – <mark class="vocab-word" data-word="wreck">wrecked</mark> their own environment.They had <mark class="vocab-word" data-word="unfortunate">unfortunately</mark> <mark class="vocab-word" data-word="settle">settled</mark> on an extremelyfragileisland – dry, cool, and too remote to be properly fertilised by windblownvolcanicash.When the islanders cleared the forests for firewood and farming, the forests didn’t grow back.As <mark class="vocab-word" data-word="tree">trees</mark> becamescarceand they could no longerconstructwooden <mark class="vocab-word" data-word="canoe">canoes</mark> for fishing, they ate birds.Soilerosiondecreased their crop <mark class="vocab-word" data-word="yield">yields</mark>.Before Europeans arrived, the Rapanui had <mark class="vocab-word" data-word="descend">descended</mark> into civil war and cannibalism, he maintains.The collapse of theirisolatedcivilisation, Diamond writes, is a ‘worst-casescenariofor what may lie ahead of us in our own future’.</p><p>The moai, he thinks,acceleratedthe self-destruction.Diamond interprets them as power displays byrivalchieftains who, trapped on a remote little island, lacked other ways of <mark class="vocab-word" data-word="assert">asserting</mark> theirdominance.They competed by building ever bigger figures.Diamond thinks they laid the moai on wooden <mark class="vocab-word" data-word="sledge">sledges</mark>, <mark class="vocab-word" data-word="haul">hauled</mark> overlograils, but that required both a lot of wood and a lot of people.To feed the people, even more land had to be cleared.When the wood was gone and civil war began, the islanders began <mark class="vocab-word" data-word="topple">toppling</mark> the moai.By the nineteenth century none were <mark class="vocab-word" data-word="standing">standing</mark>.</p><p>Archaeologists Terry Hunt of the University of Hawaii and Carl Lipo of California State University agree that <mark class="vocab-word" data-word="easter">Easter</mark> Island lost itslushforests and that it was an ‘ecologicalcatastrophe‘ – but they believe the islanders themselves weren’t to blame.And the moai certainly weren’t.Archaeologicalexcavationsindicatethat the Rapanui went toheroicefforts to protect the resources of their wind-lashed,infertilefields.They built thousands of <mark class="vocab-word" data-word="circular">circular</mark> stone windbreaks and gardened inside them, and used brokenvolcanicrocks to keep the soilmoist.In short, Hunt and Lipo argue, theprehistoricRapanui were <mark class="vocab-word" data-word="pioneer">pioneers</mark> ofsustainablefarming.</p><p>Hunt and Lipo <mark class="vocab-word" data-word="contend">contend</mark> that moai-building was an activity that helped keep the peace between islanders.They also believe that moving the moai required few people and no wood, because they were walked <mark class="vocab-word" data-word="upright">upright</mark>.On that issue, Hunt and Lipo say,archaeologicalevidence backs up Rapanui <mark class="vocab-word" data-word="folklore">folklore</mark>.Recent experimentsindicatethat as few as 18 people could, with three strong ropes and a bit of practice, easilymanoeuvrea 1,000 kg moaireplicaa few hundred metres.The figures’ fat bellies <mark class="vocab-word" data-word="tilt">tilted</mark> them forward, and a D-shaped base allowed handlers to roll and rock them side to side.</p><p>Moreover, Hunt and Lipo are <mark class="vocab-word" data-word="convince">convinced</mark> that the <mark class="vocab-word" data-word="settler">settlers</mark> were not <mark class="vocab-word" data-word="wholly">wholly</mark> responsible for the loss of the island’s <mark class="vocab-word" data-word="tree">trees</mark>.Archaeologicalfinds of <mark class="vocab-word" data-word="nut">nuts</mark> from theextinctEaster Island <mark class="vocab-word" data-word="palm">palm</mark> show tiny <mark class="vocab-word" data-word="groove">grooves</mark>, made by the teeth of Polynesian rats.The rats arrived along with the <mark class="vocab-word" data-word="settler">settlers</mark>, and in just a few years, Hunt and Lipo calculate, they would have <mark class="vocab-word" data-word="overrun">overrun</mark> the island.They would have prevented the reseeding of the slow-growing <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark> and <mark class="vocab-word" data-word="thereby">thereby</mark> <mark class="vocab-word" data-word="doomed">doomed</mark> Rapa Nui’s forest, even without the <mark class="vocab-word" data-word="settler">settlers</mark>’ <mark class="vocab-word" data-word="campaign">campaign</mark> ofdeforestation.No doubt the rats ate birds’ eggs too.Hunt and Lipo also see no evidence that Rapanui civilisation collapsed when the <mark class="vocab-word" data-word="palm">palm</mark> forest did.They think its population grew rapidly and then remained more or lessstableuntil the arrival of the Europeans, who introduced <mark class="vocab-word" data-word="deadly">deadly</mark> diseases to which islanders had noimmunity.Then in the nineteenth century slave traders <mark class="vocab-word" data-word="decimate">decimated</mark> the population, which shrivelled to 111 people by 1877.</p><p>Hunt and Lipo’s vision, therefore, is one of an island <mark class="vocab-word" data-word="populate">populated</mark> by peaceful andingeniousmoai builders and careful <mark class="vocab-word" data-word="steward">stewards</mark> of the land, rather than byrecklessdestroyers <mark class="vocab-word" data-word="ruin">ruining</mark> their own environment and society.‘Rather than a case of <mark class="vocab-word" data-word="abject">abject</mark> failure, Rapu Nui is an unlikely <mark class="vocab-word" data-word="story">story</mark> of success’, they claim.<mark class="vocab-word" data-word="whichever">Whichever</mark> is the case, there are surely some valuable lessons which the world at large can learn from the <mark class="vocab-word" data-word="story">story</mark> of Rapa Nui.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>复活节岛，也被当地人成为拉帕努伊岛，是数百个古代人类雕像（摩艾像）的所在地。这个遥远的太平洋岛屿在被波利尼西亚人定居之后，在好几个世纪里都保持着与世隔绝的状态。所有用于建造摩艾像的能源和资源都来自岛屿本身。其中一些摩艾像有10米高，重量超过700公斤。然而，当荷兰探索者在1722年踏上该岛屿时，他们见到的是尚处于石器时代的文明。摩艾像用石头工具雕刻，然后在不使用动物或轮子的情况下，运输好几公里，到达巨大的石头平台上。摩艾像建造者的身份直到20世纪都处于争议之中。挪威人种研究者、探险家Thor Heyerdahl认为，雕像由来自秘鲁的前印加时代的人建立。瑞士畅销书作家Erich von Däniken认为他们由滞留的外星人建造。现代科学-语言学，考古学和基因学的证据-证明摩艾像的建造者确实是波利尼西亚人，但尚不清楚他们如何移动自己的作品。当地人认为雕像会自己走动，而研究者则倾向于假定他们的祖先利用绳子和滚木以某种方式拖拽雕像。</p><p>当欧洲人到来的时候，拉帕努伊岛是一片草地，只有少许几棵枯瘦的树木。然而，20世纪70年代和80年代，研究者在湖泊沉积物中发现了花粉。这证明岛屿曾经在上千年的时间里被茂密的棕榈树林所覆盖。只是在波利尼西亚人到达之后，这些森林才消失。美国科学家Jared Diamond认为拉帕努伊人-波利尼西亚定居者的后代-破坏了他们自己的环境。他们不幸定居在一个生态环境极度脆弱的岛屿上-干燥，寒冷，太过遥远以至于无法受益于风吹来的火山灰从而变得富饶。当岛上居民为了柴火和农耕而清除森林时，森林无法恢复。随着树木变得稀少，他们无法继续建造木制独木舟来捕鱼，只能以鸟类为食。水土流失降低了他们的粮食产量。他认为，在欧洲人到达之前，拉帕努伊人沦落到内战和以人为食的地步。Diamond写到，他们孤立文明的崩溃，是我们自己的未来可能出现的最坏情况。</p><p>他认为，摩艾像加速了这一自我毁灭的过程。Diamond将它们解释为敌对首领之间的力量展示。他们被困在遥远的小岛上，缺乏其他方式来维护自己的统治。他们通过建造更大的雕像来互相竞争。Diamond认为，他们将摩艾像置于木制的雪橇上，在原木轨道上拖动。但这需要大量的木头和人力。为了供养这些人，更多的土地被清理出来。当木头用完，内战开启的时候，岛上居民开始推翻摩艾像。到19世纪时，已经没有任何摩艾像站立着了。</p><p>夏威夷大学考古学家Terry Hunt与加利福尼亚州州立大学Carl Lipo同意复活节岛失去了茂密的森林，而这是一场生态灾难。但他们认为这并不是岛上居民的错，也当然不是摩艾像的错。考古发掘表明拉帕努伊人做出了巨大的努力来保护他们受狂风席卷并且不肥沃的土地资源。他们建造了上千个环形石头防风林，在其中耕作，并利用破碎的火山岩来保持土壤湿润。简而言之，Hunt和Lipo认为，史前的拉帕努伊人是可持续农业的先驱者。</p><p>Hunt和Lipo认为摩艾像的建造是一项帮助维持岛屿居民之间和平的活动。他们也认为，移动摩艾像并不需要多少人力，也不需要木头，因为他们可以直立行走。Hunt和Lipo说，在这个问题上，考古证据支持拉帕努伊人的民间传说。最近的实验表明，3条结实的绳子再加上一些练习，只要18个人就可以轻易控制一座1000公斤的摩艾像复制品移动几百米。雕像硕大的腹部使它们向前倾斜，而D型底座让操作人员可以把他们从一侧滚向另外一侧。</p><p>此外，Hunt和Lipo坚信，定居者并不应该承担岛屿上树木消失的全部责任。考古研究发现，已经灭绝的复活节岛棕榈树的坚果上有微小的凹槽。这是由波利尼西亚老鼠的牙齿造成的。老鼠与定居者一同来到这里。Hunt和Lip计算，在几年的时间里，它们就充斥了整个岛屿。它们会阻碍生长缓慢的棕榈树再次播种。因此，即便没有定居者对森林的砍伐，它们也注定导致拉帕努伊岛森林的毁灭。毫无疑问，老鼠也会吃鸟蛋。Hunt和Lipo也没有发现任何证据表明，拉帕努伊文明随着森林的毁灭而崩溃。他们认为，其人口迅速增长，并在欧洲人到达之前保持稳定。欧洲人带来了致命的病毒，而岛上居民对此没有任何免疫能力。随后，19世纪里，奴隶贩子大量屠杀居民，导致其人口在1877年时缩减到了111人。</p><p>因此，在Hunt和Lipo看来，这个岛屿居住着和平而具有独创精神的摩艾像建造者，他们小心翼翼地维护土地，并没有不计后果的破坏自己的环境和社会。他们认为：“拉帕努伊是一个不太可能发生的成功故事，而非凄惨的失败”。无论事实如何，世界一定可以从拉帕努伊的故事中学到一些宝贵经验。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="easter">Easter</mark> Island, or Rapu Nui as it is known locally, is home to several hundred ancient human <mark class="vocab-word" data-word="statue">statues</mark> – the moai.After this remotePacificisland was <mark class="vocab-word" data-word="settle">settled</mark> by the Polynesians, it remainedisolatedfor centuries.All the energy and resources that went into the moai – some of which are ten metres tall and weigh over 7,000 kilos – came from the island itself.Yet when Dutch <mark class="vocab-word" data-word="explorer">explorers</mark> landed in 1722, they met a Stone Age culture.The moai were <mark class="vocab-word" data-word="carve">carved</mark> with stone tools, then transported for many kilometres, without the use of animals or wheels, to <mark class="vocab-word" data-word="massive">massive</mark> stone <mark class="vocab-word" data-word="platform">platforms</mark>.The identity of the moai builders was in doubt until well into the twentieth century.Thor Heyerdahl, the Norwegian ethnographer and adventurer, thought the <mark class="vocab-word" data-word="statue">statues</mark> had been created by pre-Inca peoples from Peru.Bestselling Swiss author Erich von Däniken believed they were built by <mark class="vocab-word" data-word="strand">stranded</mark> <mark class="vocab-word" data-word="extraterrestrial">extraterrestrials</mark>.Modern science –<mark class="vocab-word" data-word="linguistic">linguistic</mark>,archaeologicalandgeneticevidence – has <mark class="vocab-word" data-word="definitive">definitively</mark> proved the moai builders were Polynesians, but not how they moved their creations.Local <mark class="vocab-word" data-word="folklore">folklore</mark> maintains that the <mark class="vocab-word" data-word="statue">statues</mark> walked, while researchers have tended to assume the <mark class="vocab-word" data-word="ancestor">ancestors</mark> dragged the <mark class="vocab-word" data-word="statue">statues</mark> somehow, using ropes and <mark class="vocab-word" data-word="log">logs</mark>.</p></div>  <div class="parallel-zh"><p>复活节岛，也被当地人成为拉帕努伊岛，是数百个古代人类雕像（摩艾像）的所在地。这个遥远的太平洋岛屿在被波利尼西亚人定居之后，在好几个世纪里都保持着与世隔绝的状态。所有用于建造摩艾像的能源和资源都来自岛屿本身。其中一些摩艾像有10米高，重量超过700公斤。然而，当荷兰探索者在1722年踏上该岛屿时，他们见到的是尚处于石器时代的文明。摩艾像用石头工具雕刻，然后在不使用动物或轮子的情况下，运输好几公里，到达巨大的石头平台上。摩艾像建造者的身份直到20世纪都处于争议之中。挪威人种研究者、探险家Thor Heyerdahl认为，雕像由来自秘鲁的前印加时代的人建立。瑞士畅销书作家Erich von Däniken认为他们由滞留的外星人建造。现代科学-语言学，考古学和基因学的证据-证明摩艾像的建造者确实是波利尼西亚人，但尚不清楚他们如何移动自己的作品。当地人认为雕像会自己走动，而研究者则倾向于假定他们的祖先利用绳子和滚木以某种方式拖拽雕像。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>When the Europeans arrived, Rapa Nui was <mark class="vocab-word" data-word="grassland">grassland</mark>, with only a few scrawny <mark class="vocab-word" data-word="tree">trees</mark>.In the 1970s and 1980s, though, researchers foundpollenpreserved in lake <mark class="vocab-word" data-word="sediment">sediments</mark>, which proved the island had been covered inlushpalm forests for thousands of years.Only after the Polynesians arrived did those forests disappear.US scientist <mark class="vocab-word" data-word="jar">Jared</mark> Diamond believes that the Rapanui people – <mark class="vocab-word" data-word="descendant">descendants</mark> of Polynesian <mark class="vocab-word" data-word="settler">settlers</mark> – <mark class="vocab-word" data-word="wreck">wrecked</mark> their own environment.They had <mark class="vocab-word" data-word="unfortunate">unfortunately</mark> <mark class="vocab-word" data-word="settle">settled</mark> on an extremelyfragileisland – dry, cool, and too remote to be properly fertilised by windblownvolcanicash.When the islanders cleared the forests for firewood and farming, the forests didn’t grow back.As <mark class="vocab-word" data-word="tree">trees</mark> becamescarceand they could no longerconstructwooden <mark class="vocab-word" data-word="canoe">canoes</mark> for fishing, they ate birds.Soilerosiondecreased their crop <mark class="vocab-word" data-word="yield">yields</mark>.Before Europeans arrived, the Rapanui had <mark class="vocab-word" data-word="descend">descended</mark> into civil war and cannibalism, he maintains.The collapse of theirisolatedcivilisation, Diamond writes, is a ‘worst-casescenariofor what may lie ahead of us in our own future’.</p></div>  <div class="parallel-zh"><p>当欧洲人到来的时候，拉帕努伊岛是一片草地，只有少许几棵枯瘦的树木。然而，20世纪70年代和80年代，研究者在湖泊沉积物中发现了花粉。这证明岛屿曾经在上千年的时间里被茂密的棕榈树林所覆盖。只是在波利尼西亚人到达之后，这些森林才消失。美国科学家Jared Diamond认为拉帕努伊人-波利尼西亚定居者的后代-破坏了他们自己的环境。他们不幸定居在一个生态环境极度脆弱的岛屿上-干燥，寒冷，太过遥远以至于无法受益于风吹来的火山灰从而变得富饶。当岛上居民为了柴火和农耕而清除森林时，森林无法恢复。随着树木变得稀少，他们无法继续建造木制独木舟来捕鱼，只能以鸟类为食。水土流失降低了他们的粮食产量。他认为，在欧洲人到达之前，拉帕努伊人沦落到内战和以人为食的地步。Diamond写到，他们孤立文明的崩溃，是我们自己的未来可能出现的最坏情况。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The moai, he thinks,acceleratedthe self-destruction.Diamond interprets them as power displays byrivalchieftains who, trapped on a remote little island, lacked other ways of <mark class="vocab-word" data-word="assert">asserting</mark> theirdominance.They competed by building ever bigger figures.Diamond thinks they laid the moai on wooden <mark class="vocab-word" data-word="sledge">sledges</mark>, <mark class="vocab-word" data-word="haul">hauled</mark> overlograils, but that required both a lot of wood and a lot of people.To feed the people, even more land had to be cleared.When the wood was gone and civil war began, the islanders began <mark class="vocab-word" data-word="topple">toppling</mark> the moai.By the nineteenth century none were <mark class="vocab-word" data-word="standing">standing</mark>.</p></div>  <div class="parallel-zh"><p>他认为，摩艾像加速了这一自我毁灭的过程。Diamond将它们解释为敌对首领之间的力量展示。他们被困在遥远的小岛上，缺乏其他方式来维护自己的统治。他们通过建造更大的雕像来互相竞争。Diamond认为，他们将摩艾像置于木制的雪橇上，在原木轨道上拖动。但这需要大量的木头和人力。为了供养这些人，更多的土地被清理出来。当木头用完，内战开启的时候，岛上居民开始推翻摩艾像。到19世纪时，已经没有任何摩艾像站立着了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Archaeologists Terry Hunt of the University of Hawaii and Carl Lipo of California State University agree that <mark class="vocab-word" data-word="easter">Easter</mark> Island lost itslushforests and that it was an ‘ecologicalcatastrophe‘ – but they believe the islanders themselves weren’t to blame.And the moai certainly weren’t.Archaeologicalexcavationsindicatethat the Rapanui went toheroicefforts to protect the resources of their wind-lashed,infertilefields.They built thousands of <mark class="vocab-word" data-word="circular">circular</mark> stone windbreaks and gardened inside them, and used brokenvolcanicrocks to keep the soilmoist.In short, Hunt and Lipo argue, theprehistoricRapanui were <mark class="vocab-word" data-word="pioneer">pioneers</mark> ofsustainablefarming.</p></div>  <div class="parallel-zh"><p>夏威夷大学考古学家Terry Hunt与加利福尼亚州州立大学Carl Lipo同意复活节岛失去了茂密的森林，而这是一场生态灾难。但他们认为这并不是岛上居民的错，也当然不是摩艾像的错。考古发掘表明拉帕努伊人做出了巨大的努力来保护他们受狂风席卷并且不肥沃的土地资源。他们建造了上千个环形石头防风林，在其中耕作，并利用破碎的火山岩来保持土壤湿润。简而言之，Hunt和Lipo认为，史前的拉帕努伊人是可持续农业的先驱者。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Hunt and Lipo <mark class="vocab-word" data-word="contend">contend</mark> that moai-building was an activity that helped keep the peace between islanders.They also believe that moving the moai required few people and no wood, because they were walked <mark class="vocab-word" data-word="upright">upright</mark>.On that issue, Hunt and Lipo say,archaeologicalevidence backs up Rapanui <mark class="vocab-word" data-word="folklore">folklore</mark>.Recent experimentsindicatethat as few as 18 people could, with three strong ropes and a bit of practice, easilymanoeuvrea 1,000 kg moaireplicaa few hundred metres.The figures’ fat bellies <mark class="vocab-word" data-word="tilt">tilted</mark> them forward, and a D-shaped base allowed handlers to roll and rock them side to side.</p></div>  <div class="parallel-zh"><p>Hunt和Lipo认为摩艾像的建造是一项帮助维持岛屿居民之间和平的活动。他们也认为，移动摩艾像并不需要多少人力，也不需要木头，因为他们可以直立行走。Hunt和Lipo说，在这个问题上，考古证据支持拉帕努伊人的民间传说。最近的实验表明，3条结实的绳子再加上一些练习，只要18个人就可以轻易控制一座1000公斤的摩艾像复制品移动几百米。雕像硕大的腹部使它们向前倾斜，而D型底座让操作人员可以把他们从一侧滚向另外一侧。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Moreover, Hunt and Lipo are <mark class="vocab-word" data-word="convince">convinced</mark> that the <mark class="vocab-word" data-word="settler">settlers</mark> were not <mark class="vocab-word" data-word="wholly">wholly</mark> responsible for the loss of the island’s <mark class="vocab-word" data-word="tree">trees</mark>.Archaeologicalfinds of <mark class="vocab-word" data-word="nut">nuts</mark> from theextinctEaster Island <mark class="vocab-word" data-word="palm">palm</mark> show tiny <mark class="vocab-word" data-word="groove">grooves</mark>, made by the teeth of Polynesian rats.The rats arrived along with the <mark class="vocab-word" data-word="settler">settlers</mark>, and in just a few years, Hunt and Lipo calculate, they would have <mark class="vocab-word" data-word="overrun">overrun</mark> the island.They would have prevented the reseeding of the slow-growing <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark> and <mark class="vocab-word" data-word="thereby">thereby</mark> <mark class="vocab-word" data-word="doomed">doomed</mark> Rapa Nui’s forest, even without the <mark class="vocab-word" data-word="settler">settlers</mark>’ <mark class="vocab-word" data-word="campaign">campaign</mark> ofdeforestation.No doubt the rats ate birds’ eggs too.Hunt and Lipo also see no evidence that Rapanui civilisation collapsed when the <mark class="vocab-word" data-word="palm">palm</mark> forest did.They think its population grew rapidly and then remained more or lessstableuntil the arrival of the Europeans, who introduced <mark class="vocab-word" data-word="deadly">deadly</mark> diseases to which islanders had noimmunity.Then in the nineteenth century slave traders <mark class="vocab-word" data-word="decimate">decimated</mark> the population, which shrivelled to 111 people by 1877.</p></div>  <div class="parallel-zh"><p>此外，Hunt和Lipo坚信，定居者并不应该承担岛屿上树木消失的全部责任。考古研究发现，已经灭绝的复活节岛棕榈树的坚果上有微小的凹槽。这是由波利尼西亚老鼠的牙齿造成的。老鼠与定居者一同来到这里。Hunt和Lip计算，在几年的时间里，它们就充斥了整个岛屿。它们会阻碍生长缓慢的棕榈树再次播种。因此，即便没有定居者对森林的砍伐，它们也注定导致拉帕努伊岛森林的毁灭。毫无疑问，老鼠也会吃鸟蛋。Hunt和Lipo也没有发现任何证据表明，拉帕努伊文明随着森林的毁灭而崩溃。他们认为，其人口迅速增长，并在欧洲人到达之前保持稳定。欧洲人带来了致命的病毒，而岛上居民对此没有任何免疫能力。随后，19世纪里，奴隶贩子大量屠杀居民，导致其人口在1877年时缩减到了111人。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Hunt and Lipo’s vision, therefore, is one of an island <mark class="vocab-word" data-word="populate">populated</mark> by peaceful andingeniousmoai builders and careful <mark class="vocab-word" data-word="steward">stewards</mark> of the land, rather than byrecklessdestroyers <mark class="vocab-word" data-word="ruin">ruining</mark> their own environment and society.‘Rather than a case of <mark class="vocab-word" data-word="abject">abject</mark> failure, Rapu Nui is an unlikely <mark class="vocab-word" data-word="story">story</mark> of success’, they claim.<mark class="vocab-word" data-word="whichever">Whichever</mark> is the case, there are surely some valuable lessons which the world at large can learn from the <mark class="vocab-word" data-word="story">story</mark> of Rapa Nui.</p></div>  <div class="parallel-zh"><p>因此，在Hunt和Lipo看来，这个岛屿居住着和平而具有独创精神的摩艾像建造者，他们小心翼翼地维护土地，并没有不计后果的破坏自己的环境和社会。他们认为：“拉帕努伊是一个不太可能发生的成功故事，而非凄惨的失败”。无论事实如何，世界一定可以从拉帕努伊的故事中学到一些宝贵经验。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"easter": 2, "statue": 4, "settle": 2, "explorer": 1, "carve": 1, "massive": 1, "platform": 1, "strand": 1, "extraterrestrial": 1, "linguistic": 1, "definitive": 1, "folklore": 2, "ancestor": 1, "log": 1, "grassland": 1, "tree": 4, "sediment": 1, "jar": 1, "descendant": 1, "settler": 4, "wreck": 1, "unfortunate": 1, "canoe": 1, "yield": 1, "descend": 1, "assert": 1, "sledge": 1, "haul": 1, "topple": 1, "standing": 1, "circular": 1, "pioneer": 1, "contend": 1, "upright": 1, "tilt": 1, "convince": 1, "wholly": 1, "nut": 1, "palm": 3, "groove": 1, "overrun": 1, "thereby": 1, "doomed": 1, "campaign": 1, "deadly": 1, "decimate": 1, "populate": 1, "steward": 1, "ruin": 1, "abject": 1, "story": 2, "whichever": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

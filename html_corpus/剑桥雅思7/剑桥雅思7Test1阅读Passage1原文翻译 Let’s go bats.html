@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let’s go bats - 剑桥雅思7 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Let’s go bats</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24028.html" target="_blank">https://www.laokaoya.com/24028.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="bat">Bats</mark> have a problem: how to find their way around in the dark. They hunt at night, and cannot use light to help them find <mark class="vocab-word" data-word="prey">prey</mark> and avoid <mark class="vocab-word" data-word="obstacle">obstacles</mark>. You might say that this is a problem of their own making, one that they could avoid simply by changing their habits and hunting by day. But the <mark class="vocab-word" data-word="daytime">daytime</mark> economy is already heavily <mark class="vocab-word" data-word="exploit">exploited</mark> by other creatures such as birds. Given that there is a living to be made at night, and given that alternative <mark class="vocab-word" data-word="daytime">daytime</mark> trades are <mark class="vocab-word" data-word="thorough">thoroughly</mark> occupied, natural selection has favoured <mark class="vocab-word" data-word="bat">bats</mark> that make a go of the night-hunting trade. It is <mark class="vocab-word" data-word="probable">probable</mark> that the <mark class="vocab-word" data-word="nocturnal">nocturnal</mark> trades go way back in the ancestry of all <mark class="vocab-word" data-word="mammal">mammals</mark>. In the time when the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark> <mark class="vocab-word" data-word="dominate">dominated</mark> the <mark class="vocab-word" data-word="daytime">daytime</mark> economy, our <mark class="vocab-word" data-word="mammalian">mammalian</mark> <mark class="vocab-word" data-word="ancestor">ancestors</mark> probably only managed to survive at all because they found ways of <mark class="vocab-word" data-word="scrap">scraping</mark> a living at night. Only after the <mark class="vocab-word" data-word="mysterious">mysterious</mark> mass <mark class="vocab-word" data-word="extinction">extinction</mark> of the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark> about 65 million years ago were our <mark class="vocab-word" data-word="ancestor">ancestors</mark> able to emerge into the <mark class="vocab-word" data-word="daylight">daylight</mark> in any <mark class="vocab-word" data-word="substantial">substantial</mark> numbers.</p><p><mark class="vocab-word" data-word="bat">Bats</mark> have an <mark class="vocab-word" data-word="engineering">engineering</mark> problem: how to find their way and find their <mark class="vocab-word" data-word="prey">prey</mark> in the <mark class="vocab-word" data-word="absence">absence</mark> of light. <mark class="vocab-word" data-word="bat">Bats</mark> are not the only creatures to face this difficulty today. Obviously the night-flying insects that they <mark class="vocab-word" data-word="prey">prey</mark> on must find their way about somehow. Deep-sea fish and whales have little or no light by day or by night. Fish and <mark class="vocab-word" data-word="dolphin">dolphins</mark> that live in extremely <mark class="vocab-word" data-word="muddy">muddy</mark> water cannot see because, although there is light, it is <mark class="vocab-word" data-word="obstruct">obstructed</mark> and <mark class="vocab-word" data-word="scatter">scattered</mark> by the <mark class="vocab-word" data-word="dirt">dirt</mark> in the water. Plenty of other modern animals make their living in conditions where seeing is difficult or impossible.</p><p>Given the questions of how to manoeuvre in the dark, what solutions might an engineer consider? The first one that might occur to him is to <mark class="vocab-word" data-word="manufacture">manufacture</mark> light, to use a <mark class="vocab-word" data-word="lantern">lantern</mark> or a searchlight. Fireflies and some fish (usually with the help of <mark class="vocab-word" data-word="bacteria">bacteria</mark>) have the power to <mark class="vocab-word" data-word="manufacture">manufacture</mark> their own light, but the process seems to consume a large amount of energy. Fireflies use their light for attracting <mark class="vocab-word" data-word="mate">mates</mark>. This doesn’t require a <mark class="vocab-word" data-word="prohibitive">prohibitive</mark> amount of energy: a male’s tiny pinprick of light can be seen by a female from some distance on a dark night, since her eyes are <mark class="vocab-word" data-word="exposed">exposed</mark> directly to the light source itself. However, using light to find one’s own way around requires <mark class="vocab-word" data-word="vastly">vastly</mark> more energy, since the eyes have to detect the tiny <mark class="vocab-word" data-word="fraction">fraction</mark> of the light that <mark class="vocab-word" data-word="bounce">bounces</mark> off each part of the scene. The light source must therefore be <mark class="vocab-word" data-word="immense">immensely</mark> brighter if it is to be used as a headlight to <mark class="vocab-word" data-word="illuminate">illuminate</mark> the path, than if it is to be used as a signal to others. In any event, whether or not the reason is the energy expense, it seems to be the case that, with the possible <mark class="vocab-word" data-word="exception">exception</mark> of some <mark class="vocab-word" data-word="weird">weird</mark> deep-sea fish, no animal apart from man uses <mark class="vocab-word" data-word="manufacture">manufactured</mark> light to find its way about.</p><p>What else might the engineer think of? well, blind humans sometimes seem to have an uncanny sense of <mark class="vocab-word" data-word="obstacle">obstacles</mark> in their path. It has been given the name ‘<mark class="vocab-word" data-word="facial">facial</mark> vision’, because blind people have reported that it feels a bit like the sense of touch, on the face. One report tells of a totally blind boy who could ride his <mark class="vocab-word" data-word="tricycle">tricycle</mark> at good speed round the block near his home, using <mark class="vocab-word" data-word="facial">facial</mark> vision. Experiments showed that, in fact, <mark class="vocab-word" data-word="facial">facial</mark> vision is nothing to do with touch or the front of the face, although the <mark class="vocab-word" data-word="sensation">sensation</mark> may be referred to the front of the face, like the referred pain in a <mark class="vocab-word" data-word="phantom">phantom</mark> <mark class="vocab-word" data-word="limb">limb</mark>. The <mark class="vocab-word" data-word="sensation">sensation</mark> of <mark class="vocab-word" data-word="facial">facial</mark> vision, it turns out, really goes in through the ears. Blind people, without even being aware of the fact, are actually using <mark class="vocab-word" data-word="echo">echoes</mark> of their own <mark class="vocab-word" data-word="footstep">footsteps</mark> and of other sounds, to sense the presence of <mark class="vocab-word" data-word="obstacle">obstacles</mark>. Before this was discovered, engineers had already built <mark class="vocab-word" data-word="instrument">instruments</mark> to <mark class="vocab-word" data-word="exploit">exploit</mark> the principle, for example to measure the depth of the sea under a ship. After this technique had been invented, it was only a <mark class="vocab-word" data-word="matter">matter</mark> of time before weapons designers adapted it for the detection of <mark class="vocab-word" data-word="submarine">submarines</mark>. Both sides in the Second world war relied heavily on these devices, under such codenames as Asdic (British) and <mark class="vocab-word" data-word="sonar">Sonar</mark> (American), as well as <mark class="vocab-word" data-word="radar">Radar</mark> (American) or RDF (British), which uses radio <mark class="vocab-word" data-word="echo">echoes</mark> rather than sound <mark class="vocab-word" data-word="echo">echoes</mark>.</p><p>The <mark class="vocab-word" data-word="sonar">Sonar</mark> and <mark class="vocab-word" data-word="radar">Radar</mark> <mark class="vocab-word" data-word="pioneer">pioneers</mark> didn’t know it then, but all the world now knows that <mark class="vocab-word" data-word="bat">bats</mark>, or rather natural selection working on <mark class="vocab-word" data-word="bat">bats</mark>, had perfected the system tens of millions of years earlier, and their ‘<mark class="vocab-word" data-word="radar">radar</mark>’ achieves <mark class="vocab-word" data-word="feat">feats</mark> of detection and <mark class="vocab-word" data-word="navigation">navigation</mark> that would strike an engineer <mark class="vocab-word" data-word="dumb">dumb</mark> with <mark class="vocab-word" data-word="admiration">admiration</mark>. It is technically <mark class="vocab-word" data-word="incorrect">incorrect</mark> to talk about <mark class="vocab-word" data-word="bat">bat</mark> ‘<mark class="vocab-word" data-word="radar">radar</mark>’, since they do not use radio waves. It is <mark class="vocab-word" data-word="sonar">sonar</mark>. But the <mark class="vocab-word" data-word="underlying">underlying</mark> <mark class="vocab-word" data-word="mathematical">mathematical</mark> theories of <mark class="vocab-word" data-word="radar">radar</mark> and <mark class="vocab-word" data-word="sonar">sonar</mark> are very similar, and much of our scientific understanding of the details of what <mark class="vocab-word" data-word="bat">bats</mark> are doing has come from applying <mark class="vocab-word" data-word="radar">radar</mark> theory to them. The American zoologist Donald Griffin, who was largely responsible for the discovery of <mark class="vocab-word" data-word="sonar">sonar</mark> in <mark class="vocab-word" data-word="bat">bats</mark>, coined the term ‘<mark class="vocab-word" data-word="echolocation">echolocation</mark>’ to cover both <mark class="vocab-word" data-word="sonar">sonar</mark> and <mark class="vocab-word" data-word="radar">radar</mark>, whether used by animals or by human <mark class="vocab-word" data-word="instrument">instruments</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>蝙蝠有一个问题：如何在黑暗中找到自己的出路。他们在夜间狩猎，无法利用光来帮助他们寻找猎物并避开障碍物。你可能会说这是他们自己造成的问题，他们可以简单地通过改变习惯和白天捕猎来避免。但是白天的资源已经被鸟类等其他生物大量利用。鉴于夜间仍有生计，而白天的替代性食物资源已被完全占领，因此自然选择偏爱那些从事夜间狩猎的蝙蝠。夜行性活动很可能可以追溯到所有哺乳动物的祖先。在恐龙主导白天经济的时候，我们哺乳动物的祖先可能就是因为找到了在夜间谋生的方法，才勉强存活下来。仅在大约6500万年前恐龙神秘灭绝之后，我们的祖先才能够在白天大量出现。</p><p>蝙蝠有一个实践上的问题：如何在没有光照的情况下找到自己的路径并找到猎物。蝙蝠并不是今天面临这一困难的唯一生物。显然，它们捕食的在夜间飞行的昆虫也必须找到某种方式。无论白天还是晚上，深海鱼类和鲸鱼几乎都没有光照。生活在极其泥泞的水中的鱼和海豚也看不见。因为尽管光线充足，但它被水中的污物阻挡和分散。还有许多其他现代动物生活在视线受阻或完全看不见的环境中。</p><p>面对如何在黑暗中进行机动的问题，工程师会考虑哪些解决方案？他想到的第一个方法可能是使用灯笼或者探照灯来制造光。萤火虫和一些鱼（通常在细菌的帮助下）具有制造自己的光的能力，但该过程似乎消耗大量能量。萤火虫用它们的灯光吸引伴侣。这不需要消耗过多的能量：在漆黑的夜晚，雌性可以相隔一定距离看到雄性微弱的光亮，因为她的眼睛直接暴露在光源本身下。但是，使用光来寻找自己的路径需要更多的能量，因为眼睛必须检测从场景各个部分反射回来的微弱的光线。因此，如果将光源用作前照灯来照亮路径，则它必须比用作信号时更亮才行。无论如何，无论原因是不是能源消耗，似乎除了一些奇怪的深海鱼，人类以外的任何动物都不会利用人造光来寻找路径。</p><p>工程师还会想到什么？好吧，盲人有时似乎在前进的道路上有种不可思议的障碍感。它之所以被称为“面部视觉”，是因为盲人报告说它有点像脸部的触摸感。一份报告讲述了一个完全失明的男孩，他可以利用面部视觉骑三轮车告诉绕过他家附近的街区。实验表明，实际上，面部视觉与触摸或脸前无关，尽管感觉可能来自脸的前面，就像幻肢中提到的疼痛一样。事实证明，面部视觉其实是通过耳朵感受到的。盲人甚至没有意识到这一事实。他们实际上是在利用自己脚步声和其他声音的回声来感知障碍物的存在。在发现这一点之前，工程师已经制造了利用该原理的仪器，例如，测量船下海的深度。在发明了这项技术之后，武器设计者将其改装用于探测潜艇只是一个时间问题。第二次世界大战中双方都严重依赖这些设备，其代号为Asdic（英国）和Sonar（美国），以及Radar（美国）或RDF（英国）。它们使用无线电回声而不是声音回声。</p><p>声纳和雷达的先驱者当时还不知道，但是现在全世界都知道蝙蝠，或者说是自然选择的蝙蝠，已经在几千万年前完善了该系统。他们的“雷达”所实现的探测壮举和导航工作令工程师钦佩。谈论蝙蝠“雷达”在技术上是不正确的，因为它们不使用无线电波，而使用声波。但是雷达和声纳的基础数学理论非常相似，我们对蝙蝠行为细节的科学理解主要来自将雷达理论应用于它们。发现蝙蝠声纳的美国动物学家唐纳德·格里芬（Donald Griffin）创造了“回声定位”一词，以涵盖动物或人类使用的声纳和雷达。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="bat">Bats</mark> have a problem: how to find their way around in the dark. They hunt at night, and cannot use light to help them find <mark class="vocab-word" data-word="prey">prey</mark> and avoid <mark class="vocab-word" data-word="obstacle">obstacles</mark>. You might say that this is a problem of their own making, one that they could avoid simply by changing their habits and hunting by day. But the <mark class="vocab-word" data-word="daytime">daytime</mark> economy is already heavily <mark class="vocab-word" data-word="exploit">exploited</mark> by other creatures such as birds. Given that there is a living to be made at night, and given that alternative <mark class="vocab-word" data-word="daytime">daytime</mark> trades are <mark class="vocab-word" data-word="thorough">thoroughly</mark> occupied, natural selection has favoured <mark class="vocab-word" data-word="bat">bats</mark> that make a go of the night-hunting trade. It is <mark class="vocab-word" data-word="probable">probable</mark> that the <mark class="vocab-word" data-word="nocturnal">nocturnal</mark> trades go way back in the ancestry of all <mark class="vocab-word" data-word="mammal">mammals</mark>. In the time when the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark> <mark class="vocab-word" data-word="dominate">dominated</mark> the <mark class="vocab-word" data-word="daytime">daytime</mark> economy, our <mark class="vocab-word" data-word="mammalian">mammalian</mark> <mark class="vocab-word" data-word="ancestor">ancestors</mark> probably only managed to survive at all because they found ways of <mark class="vocab-word" data-word="scrap">scraping</mark> a living at night. Only after the <mark class="vocab-word" data-word="mysterious">mysterious</mark> mass <mark class="vocab-word" data-word="extinction">extinction</mark> of the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark> about 65 million years ago were our <mark class="vocab-word" data-word="ancestor">ancestors</mark> able to emerge into the <mark class="vocab-word" data-word="daylight">daylight</mark> in any <mark class="vocab-word" data-word="substantial">substantial</mark> numbers.</p></div>  <div class="parallel-zh"><p>蝙蝠有一个问题：如何在黑暗中找到自己的出路。他们在夜间狩猎，无法利用光来帮助他们寻找猎物并避开障碍物。你可能会说这是他们自己造成的问题，他们可以简单地通过改变习惯和白天捕猎来避免。但是白天的资源已经被鸟类等其他生物大量利用。鉴于夜间仍有生计，而白天的替代性食物资源已被完全占领，因此自然选择偏爱那些从事夜间狩猎的蝙蝠。夜行性活动很可能可以追溯到所有哺乳动物的祖先。在恐龙主导白天经济的时候，我们哺乳动物的祖先可能就是因为找到了在夜间谋生的方法，才勉强存活下来。仅在大约6500万年前恐龙神秘灭绝之后，我们的祖先才能够在白天大量出现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="bat">Bats</mark> have an <mark class="vocab-word" data-word="engineering">engineering</mark> problem: how to find their way and find their <mark class="vocab-word" data-word="prey">prey</mark> in the <mark class="vocab-word" data-word="absence">absence</mark> of light. <mark class="vocab-word" data-word="bat">Bats</mark> are not the only creatures to face this difficulty today. Obviously the night-flying insects that they <mark class="vocab-word" data-word="prey">prey</mark> on must find their way about somehow. Deep-sea fish and whales have little or no light by day or by night. Fish and <mark class="vocab-word" data-word="dolphin">dolphins</mark> that live in extremely <mark class="vocab-word" data-word="muddy">muddy</mark> water cannot see because, although there is light, it is <mark class="vocab-word" data-word="obstruct">obstructed</mark> and <mark class="vocab-word" data-word="scatter">scattered</mark> by the <mark class="vocab-word" data-word="dirt">dirt</mark> in the water. Plenty of other modern animals make their living in conditions where seeing is difficult or impossible.</p></div>  <div class="parallel-zh"><p>蝙蝠有一个实践上的问题：如何在没有光照的情况下找到自己的路径并找到猎物。蝙蝠并不是今天面临这一困难的唯一生物。显然，它们捕食的在夜间飞行的昆虫也必须找到某种方式。无论白天还是晚上，深海鱼类和鲸鱼几乎都没有光照。生活在极其泥泞的水中的鱼和海豚也看不见。因为尽管光线充足，但它被水中的污物阻挡和分散。还有许多其他现代动物生活在视线受阻或完全看不见的环境中。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Given the questions of how to manoeuvre in the dark, what solutions might an engineer consider? The first one that might occur to him is to <mark class="vocab-word" data-word="manufacture">manufacture</mark> light, to use a <mark class="vocab-word" data-word="lantern">lantern</mark> or a searchlight. Fireflies and some fish (usually with the help of <mark class="vocab-word" data-word="bacteria">bacteria</mark>) have the power to <mark class="vocab-word" data-word="manufacture">manufacture</mark> their own light, but the process seems to consume a large amount of energy. Fireflies use their light for attracting <mark class="vocab-word" data-word="mate">mates</mark>. This doesn’t require a <mark class="vocab-word" data-word="prohibitive">prohibitive</mark> amount of energy: a male’s tiny pinprick of light can be seen by a female from some distance on a dark night, since her eyes are <mark class="vocab-word" data-word="exposed">exposed</mark> directly to the light source itself. However, using light to find one’s own way around requires <mark class="vocab-word" data-word="vastly">vastly</mark> more energy, since the eyes have to detect the tiny <mark class="vocab-word" data-word="fraction">fraction</mark> of the light that <mark class="vocab-word" data-word="bounce">bounces</mark> off each part of the scene. The light source must therefore be <mark class="vocab-word" data-word="immense">immensely</mark> brighter if it is to be used as a headlight to <mark class="vocab-word" data-word="illuminate">illuminate</mark> the path, than if it is to be used as a signal to others. In any event, whether or not the reason is the energy expense, it seems to be the case that, with the possible <mark class="vocab-word" data-word="exception">exception</mark> of some <mark class="vocab-word" data-word="weird">weird</mark> deep-sea fish, no animal apart from man uses <mark class="vocab-word" data-word="manufacture">manufactured</mark> light to find its way about.</p></div>  <div class="parallel-zh"><p>面对如何在黑暗中进行机动的问题，工程师会考虑哪些解决方案？他想到的第一个方法可能是使用灯笼或者探照灯来制造光。萤火虫和一些鱼（通常在细菌的帮助下）具有制造自己的光的能力，但该过程似乎消耗大量能量。萤火虫用它们的灯光吸引伴侣。这不需要消耗过多的能量：在漆黑的夜晚，雌性可以相隔一定距离看到雄性微弱的光亮，因为她的眼睛直接暴露在光源本身下。但是，使用光来寻找自己的路径需要更多的能量，因为眼睛必须检测从场景各个部分反射回来的微弱的光线。因此，如果将光源用作前照灯来照亮路径，则它必须比用作信号时更亮才行。无论如何，无论原因是不是能源消耗，似乎除了一些奇怪的深海鱼，人类以外的任何动物都不会利用人造光来寻找路径。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What else might the engineer think of? well, blind humans sometimes seem to have an uncanny sense of <mark class="vocab-word" data-word="obstacle">obstacles</mark> in their path. It has been given the name ‘<mark class="vocab-word" data-word="facial">facial</mark> vision’, because blind people have reported that it feels a bit like the sense of touch, on the face. One report tells of a totally blind boy who could ride his <mark class="vocab-word" data-word="tricycle">tricycle</mark> at good speed round the block near his home, using <mark class="vocab-word" data-word="facial">facial</mark> vision. Experiments showed that, in fact, <mark class="vocab-word" data-word="facial">facial</mark> vision is nothing to do with touch or the front of the face, although the <mark class="vocab-word" data-word="sensation">sensation</mark> may be referred to the front of the face, like the referred pain in a <mark class="vocab-word" data-word="phantom">phantom</mark> <mark class="vocab-word" data-word="limb">limb</mark>. The <mark class="vocab-word" data-word="sensation">sensation</mark> of <mark class="vocab-word" data-word="facial">facial</mark> vision, it turns out, really goes in through the ears. Blind people, without even being aware of the fact, are actually using <mark class="vocab-word" data-word="echo">echoes</mark> of their own <mark class="vocab-word" data-word="footstep">footsteps</mark> and of other sounds, to sense the presence of <mark class="vocab-word" data-word="obstacle">obstacles</mark>. Before this was discovered, engineers had already built <mark class="vocab-word" data-word="instrument">instruments</mark> to <mark class="vocab-word" data-word="exploit">exploit</mark> the principle, for example to measure the depth of the sea under a ship. After this technique had been invented, it was only a <mark class="vocab-word" data-word="matter">matter</mark> of time before weapons designers adapted it for the detection of <mark class="vocab-word" data-word="submarine">submarines</mark>. Both sides in the Second world war relied heavily on these devices, under such codenames as Asdic (British) and <mark class="vocab-word" data-word="sonar">Sonar</mark> (American), as well as <mark class="vocab-word" data-word="radar">Radar</mark> (American) or RDF (British), which uses radio <mark class="vocab-word" data-word="echo">echoes</mark> rather than sound <mark class="vocab-word" data-word="echo">echoes</mark>.</p></div>  <div class="parallel-zh"><p>工程师还会想到什么？好吧，盲人有时似乎在前进的道路上有种不可思议的障碍感。它之所以被称为“面部视觉”，是因为盲人报告说它有点像脸部的触摸感。一份报告讲述了一个完全失明的男孩，他可以利用面部视觉骑三轮车告诉绕过他家附近的街区。实验表明，实际上，面部视觉与触摸或脸前无关，尽管感觉可能来自脸的前面，就像幻肢中提到的疼痛一样。事实证明，面部视觉其实是通过耳朵感受到的。盲人甚至没有意识到这一事实。他们实际上是在利用自己脚步声和其他声音的回声来感知障碍物的存在。在发现这一点之前，工程师已经制造了利用该原理的仪器，例如，测量船下海的深度。在发明了这项技术之后，武器设计者将其改装用于探测潜艇只是一个时间问题。第二次世界大战中双方都严重依赖这些设备，其代号为Asdic（英国）和Sonar（美国），以及Radar（美国）或RDF（英国）。它们使用无线电回声而不是声音回声。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="sonar">Sonar</mark> and <mark class="vocab-word" data-word="radar">Radar</mark> <mark class="vocab-word" data-word="pioneer">pioneers</mark> didn’t know it then, but all the world now knows that <mark class="vocab-word" data-word="bat">bats</mark>, or rather natural selection working on <mark class="vocab-word" data-word="bat">bats</mark>, had perfected the system tens of millions of years earlier, and their ‘<mark class="vocab-word" data-word="radar">radar</mark>’ achieves <mark class="vocab-word" data-word="feat">feats</mark> of detection and <mark class="vocab-word" data-word="navigation">navigation</mark> that would strike an engineer <mark class="vocab-word" data-word="dumb">dumb</mark> with <mark class="vocab-word" data-word="admiration">admiration</mark>. It is technically <mark class="vocab-word" data-word="incorrect">incorrect</mark> to talk about <mark class="vocab-word" data-word="bat">bat</mark> ‘<mark class="vocab-word" data-word="radar">radar</mark>’, since they do not use radio waves. It is <mark class="vocab-word" data-word="sonar">sonar</mark>. But the <mark class="vocab-word" data-word="underlying">underlying</mark> <mark class="vocab-word" data-word="mathematical">mathematical</mark> theories of <mark class="vocab-word" data-word="radar">radar</mark> and <mark class="vocab-word" data-word="sonar">sonar</mark> are very similar, and much of our scientific understanding of the details of what <mark class="vocab-word" data-word="bat">bats</mark> are doing has come from applying <mark class="vocab-word" data-word="radar">radar</mark> theory to them. The American zoologist Donald Griffin, who was largely responsible for the discovery of <mark class="vocab-word" data-word="sonar">sonar</mark> in <mark class="vocab-word" data-word="bat">bats</mark>, coined the term ‘<mark class="vocab-word" data-word="echolocation">echolocation</mark>’ to cover both <mark class="vocab-word" data-word="sonar">sonar</mark> and <mark class="vocab-word" data-word="radar">radar</mark>, whether used by animals or by human <mark class="vocab-word" data-word="instrument">instruments</mark>.</p></div>  <div class="parallel-zh"><p>声纳和雷达的先驱者当时还不知道，但是现在全世界都知道蝙蝠，或者说是自然选择的蝙蝠，已经在几千万年前完善了该系统。他们的“雷达”所实现的探测壮举和导航工作令工程师钦佩。谈论蝙蝠“雷达”在技术上是不正确的，因为它们不使用无线电波，而使用声波。但是雷达和声纳的基础数学理论非常相似，我们对蝙蝠行为细节的科学理解主要来自将雷达理论应用于它们。发现蝙蝠声纳的美国动物学家唐纳德·格里芬（Donald Griffin）创造了“回声定位”一词，以涵盖动物或人类使用的声纳和雷达。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"bat": 9, "prey": 3, "obstacle": 3, "daytime": 3, "exploit": 2, "thorough": 1, "probable": 1, "nocturnal": 1, "mammal": 1, "dinosaur": 2, "dominate": 1, "mammalian": 1, "ancestor": 2, "scrap": 1, "mysterious": 1, "extinction": 1, "daylight": 1, "substantial": 1, "engineering": 1, "absence": 1, "dolphin": 1, "muddy": 1, "obstruct": 1, "scatter": 1, "dirt": 1, "manufacture": 3, "lantern": 1, "bacteria": 1, "mate": 1, "prohibitive": 1, "exposed": 1, "vastly": 1, "fraction": 1, "bounce": 1, "immense": 1, "illuminate": 1, "exception": 1, "weird": 1, "facial": 4, "tricycle": 1, "sensation": 2, "phantom": 1, "limb": 1, "echo": 3, "footstep": 1, "instrument": 2, "matter": 1, "submarine": 1, "sonar": 6, "radar": 7, "pioneer": 1, "feat": 1, "navigation": 1, "dumb": 1, "admiration": 1, "incorrect": 1, "underlying": 1, "mathematical": 1, "echolocation": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silbo Gomero – the whistle language of the Canary Islands 加那利群岛的口哨语言 - 剑桥雅思15 Test 4 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Silbo Gomero – the whistle language of the Canary Islands 加那利群岛的口哨语言</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/40081.html" target="_blank">https://www.laokaoya.com/40081.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>La Gomera is one of the <mark class="vocab-word" data-word="canary">Canary</mark> Islands <mark class="vocab-word" data-word="situated">situated</mark> in the <mark class="vocab-word" data-word="atlantic">Atlantic</mark> Ocean off the northwest coast of Africa. This small volcanic island is <mark class="vocab-word" data-word="mountainous">mountainous</mark>, with <mark class="vocab-word" data-word="steep">steep</mark> rocky <mark class="vocab-word" data-word="slope">slopes</mark> and deep, wooded ravines, rising to 1,487 metres at its highest <mark class="vocab-word" data-word="peak">peak</mark>. It is also home to the best known of the world’s <mark class="vocab-word" data-word="whistle">whistle</mark> ‘languages’, a means of transmitting information over long distances which is perfectly adapted to the extreme <mark class="vocab-word" data-word="terrain">terrain</mark> of the island.</p><p>This ‘language’, known as ‘Silbo’ or ‘Silbo Gomero’ – from the <mark class="vocab-word" data-word="spanish">Spanish</mark> word for ‘<mark class="vocab-word" data-word="whistle">whistle</mark>’- is now shedding light on the language-processing abilities of the human brain, <mark class="vocab-word" data-word="accord">according</mark> to scientists. Researchers say that Silbo <mark class="vocab-word" data-word="activate">activates</mark> parts of the brain normally associated with spoken language, <mark class="vocab-word" data-word="suggest">suggesting</mark> that the brain is remarkably flexible in its ability to interpret sounds as language.</p><p>‘Science has developed the idea of brain areas that are <mark class="vocab-word" data-word="dedicated">dedicated</mark> to language, and we are starting to understand the <mark class="vocab-word" data-word="scope">scope</mark> of signals that can be recognised as language,’ says David Corina, co-author of a recent study and associate professor of <mark class="vocab-word" data-word="psychology">psychology</mark> at the University of Washington in Seattle.</p><p>Silbo is a <mark class="vocab-word" data-word="substitute">substitute</mark> for <mark class="vocab-word" data-word="spanish">Spanish</mark>, with individual words recoded into <mark class="vocab-word" data-word="whistle">whistles</mark> which have high- and low-frequency <mark class="vocab-word" data-word="tone">tones</mark>. A whistler – or silbador – puts a finger in his or her mouth to increase the <mark class="vocab-word" data-word="whistle">whistle</mark>’s <mark class="vocab-word" data-word="pitch">pitch</mark>, while the other hand can be cupped to <mark class="vocab-word" data-word="adjust">adjust</mark> the direction of the sound. ‘There is much more <mark class="vocab-word" data-word="ambiguity">ambiguity</mark> in the <mark class="vocab-word" data-word="whistle">whistled</mark> signal than in the spoken signal’, explains <mark class="vocab-word" data-word="lead">lead</mark> researcher Manuel Carreiras, <mark class="vocab-word" data-word="psychology">psychology</mark> professor at the University of La Laguna on the <mark class="vocab-word" data-word="canary">Canary</mark> island of Tenerife. Because <mark class="vocab-word" data-word="whistle">whistled</mark> ‘words’ can be hard to <mark class="vocab-word" data-word="distinguish">distinguish</mark>, silbadores rely on <mark class="vocab-word" data-word="repetition">repetition</mark>, as well as <mark class="vocab-word" data-word="awareness">awareness</mark> of context, to make themselves understood.</p><p>The silbadores of Gomera are <mark class="vocab-word" data-word="traditionally">traditionally</mark> <mark class="vocab-word" data-word="shepherd">shepherds</mark> and other <mark class="vocab-word" data-word="isolated">isolated</mark> mountain <mark class="vocab-word" data-word="folk">folk</mark>, and their novel means of staying in touch allows them to communicate over distances of up to 10 kilometres. Carreiras explains that silbadores are able to pass a surprising amount of information via their <mark class="vocab-word" data-word="whistle">whistles</mark>. ‘In daily life they use <mark class="vocab-word" data-word="whistle">whistles</mark> to communicate short commands, but any <mark class="vocab-word" data-word="spanish">Spanish</mark> sentence could be <mark class="vocab-word" data-word="whistle">whistled</mark>.’ Silbo has proved particularly useful when <mark class="vocab-word" data-word="fir">fires</mark> have occurred on the island and rapid communication across large areas has been <mark class="vocab-word" data-word="vital">vital</mark>.</p><p>The study team used neuroimaging equipment to contrast the brain activity of silbadores while listening to <mark class="vocab-word" data-word="whistle">whistled</mark> and spoken <mark class="vocab-word" data-word="spanish">Spanish</mark>. Results showed the left <mark class="vocab-word" data-word="temporal">temporal</mark> <mark class="vocab-word" data-word="lobe">lobe</mark> of the brain, which is usually associated with spoken language, was engaged during the <mark class="vocab-word" data-word="processing">processing</mark> of Silbo. The researchers found that other key regions in the brain’s frontal <mark class="vocab-word" data-word="lobe">lobe</mark> also responded to the <mark class="vocab-word" data-word="whistle">whistles</mark>, including those <mark class="vocab-word" data-word="activate">activated</mark> in response to sign language among <mark class="vocab-word" data-word="deaf">deaf</mark> people. When the experiments were repeated with non-whistlers, however, activation was observed in all areas of the brain.</p><p>‘Our results provide more evidence about the <mark class="vocab-word" data-word="flexibility">flexibility</mark> of human <mark class="vocab-word" data-word="capacity">capacity</mark> for language in a variety of forms,’ Corina says. ‘These data <mark class="vocab-word" data-word="suggest">suggest</mark> that left-hemisphere language regions are uniquely adapted for communicative purposes, independent of the modality of signal. The non- Silbo speakers were not recognising Silbo as a language. They had nothing to grab onto, so multiple areas of their brains were <mark class="vocab-word" data-word="activate">activated</mark>.’</p><p>Carreiras says the origins of Silbo Gomero remain <mark class="vocab-word" data-word="obscure">obscure</mark>, but that <mark class="vocab-word" data-word="indigenous">indigenous</mark> <mark class="vocab-word" data-word="canary">Canary</mark> Islanders, who were of North African origin, already had a <mark class="vocab-word" data-word="whistle">whistled</mark> language when Spain <mark class="vocab-word" data-word="conquer">conquered</mark> the volcanic islands in the 15th century. <mark class="vocab-word" data-word="whistle">Whistled</mark> languages survive today in Papua New <mark class="vocab-word" data-word="guinea">Guinea</mark>, Mexico, Vietnam, Guyana, <mark class="vocab-word" data-word="china">China</mark>, Nepal, Senegal, and a few <mark class="vocab-word" data-word="mountainous">mountainous</mark> pockets in southern Europe. There are thought to be as many as 70 <mark class="vocab-word" data-word="whistle">whistled</mark> languages still in use, though only 12 have been described and studied scientifically. This form of communication is an <mark class="vocab-word" data-word="adaptation">adaptation</mark> found among cultures where people are often <mark class="vocab-word" data-word="isolated">isolated</mark> from each other, <mark class="vocab-word" data-word="accord">according</mark> to Julien Meyer, a researcher at the <mark class="vocab-word" data-word="institute">Institute</mark> of Human Sciences in Lyon, France. ‘They are mostly used in mountains or <mark class="vocab-word" data-word="dense">dense</mark> forests, ‘ he says. ‘<mark class="vocab-word" data-word="whistle">Whistled</mark> languages are quite clearly defined and represent an original <mark class="vocab-word" data-word="adaptation">adaptation</mark> of the spoken language for the needs of <mark class="vocab-word" data-word="isolated">isolated</mark> human groups.”</p><p>But with modern communication technology now widely available, researchers say <mark class="vocab-word" data-word="whistle">whistled</mark> languages like Silbo are threatened with <mark class="vocab-word" data-word="extinction">extinction</mark>. With <mark class="vocab-word" data-word="dwindle">dwindling</mark> numbers of Gomera islanders still <mark class="vocab-word" data-word="fluent">fluent</mark> in the language, Canaries’ authorities are taking steps to try to ensure its <mark class="vocab-word" data-word="survival">survival</mark>. Since 1999, Silbo Gomero has been taught in all of the island’s <mark class="vocab-word" data-word="elementary">elementary</mark> schools. In addition, locals are seeking <mark class="vocab-word" data-word="assistance">assistance</mark> from the <mark class="vocab-word" data-word="unite">United</mark> Nations Educational, Scientific and Cultural Organization (UNESCO). ‘The local authorities are trying to get an award from the organisation to declare [Silbo Gomero] as something that should be preserved for <mark class="vocab-word" data-word="humanity">humanity</mark>,’ Carreiras adds.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>戈梅拉岛是加纳利群岛中的一座岛屿，位于靠近非洲西北岸的大西洋上。这座小型火山岛上山峰众多，有着陡峭的岩石斜坡和丛林密布的、深邃的溪谷，最高处可达1487米。它也是世界上最著名的口哨语言的故乡，一种完美地适应了该岛屿极端地形的、远距离传播信息的方式。</p><p>据科学家说，这一被称为“Silbo”或“Silbo Gemero”的语言 – 该名称来自西班牙语，意思是“口哨” – 如今正在揭示人类大脑处理语言的能力。研究者说，Silbo激活大脑中通常与口头语言联系在一起的部分，表明大脑在将声音解析成语言的能力方面具有很高的灵活性。</p><p>“科学研究中已有这样的观念，即特定的大脑区域专门负责语言功能。我们也开始理解能够被识别为语言的信号范围”，最近一项研究的合作作者、西雅图华盛顿大学的心理学教授David Corina说。</p><p>Silbo是西班牙语的替代品，每个单词被重新编码为高低频率不同的口哨声。吹哨人（也被叫做silbador）将手指放进嘴里提升口哨的音高，另一只手掌则可以模拟杯子的形状以调整声音的方向。“与说话信号相比，口哨信号要模糊许多”，位于加那利群岛特内里费岛拉拉古纳大学的心理学教授、首席研究员Manuel Carreiras解释道。由于口哨词汇很难分辨，所以吹哨人依赖重复，以及对语境的意识来表达自己的意思。</p><p>戈梅拉岛的传统吹哨人多为牧羊人和其他与世隔绝的山区居民。他们保持联系的新奇方式让他们可以在最多相隔10公里的情况下互相交流。Carreiras解释说，吹哨人能够通过口哨传递惊人数量的信息。“在日常生活中，他们使用口哨来传递简短的命令，但任何西班牙句子都能够被吹出来”。当岛上发生火灾，大面积区域的信息迅速传递至关重要时，Silbo被证明特别有用。</p><p>研究团队使用神经成像设备对比了吹哨人听到吹出来和说出来的西班牙语时大脑活动的不同。结果表明，大脑左侧颞叶（通常与口头语言相关）在处理Silbo的时候被激活。研究者发现，大脑额叶的其他关键区域也会对哨声产生反应，包括那些应对盲人手语时会被激活的区域。然而，当对非吹哨人进行重复实验室，大脑所有区域都可以观察到激活反应。</p><p>“我们的研究结果提供了更多的证据，证明人类在处理各种形式的语言上具有灵活性”，Corina说，“这些数据表明，左半球的语言区域出于交流目的进行了独特的更改，不受信号形式的影响。非哨语使用者不会将Silbo当作一种语言。他们没有可供抓取的信号，所以他们大脑的多个区域都被激活了”。</p><p>Carreiras说，Silbo Gomero的起源仍属未知，但源于非洲北部的加纳里群岛的本土居民，在西班牙人于15世纪征服这些火山岛的时候，就已经拥有了一门口哨语言。口哨语言如今仍然存在于巴布新几内亚、墨西哥、越南、圭亚那、中国、尼泊尔、塞内加尔，以及欧洲南部的一些地区。据认为，目前仍在使用的口哨语言多达70种，虽然其中只有12种被科学地描述和研究过。法国里昂人类科学研究所的研究员Julien Meyer表示，这种形式的交流是对人们互相隔绝的文化的一种适应。“它们大多在山区和茂密的森林中使用”，他说，“口哨语言定义清晰，代表着为满足孤立的人类群体的需求而对口头语言的一种原始改编”。</p><p>不过，如今随着现代通信技术的广泛应用，研究者表示，诸如Silbo这样的口哨语言面临着灭绝的危险。随着戈梅拉岛上仍然能够熟练使用该语言的人越来越少，加那利政府当局正采取措施努力保证它的延续。1999年以来，该岛屿上的所有小学都开设了Silbo Gomero这门语言课。除此之外，当地人还寻求联合国教科文组织的帮助。“当地政府正试图从该组织获得认证，以宣布Silbo Gemero是某种出于人类整体利益应该被保护的东西”，Carreiras补充到。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>La Gomera is one of the <mark class="vocab-word" data-word="canary">Canary</mark> Islands <mark class="vocab-word" data-word="situated">situated</mark> in the <mark class="vocab-word" data-word="atlantic">Atlantic</mark> Ocean off the northwest coast of Africa. This small volcanic island is <mark class="vocab-word" data-word="mountainous">mountainous</mark>, with <mark class="vocab-word" data-word="steep">steep</mark> rocky <mark class="vocab-word" data-word="slope">slopes</mark> and deep, wooded ravines, rising to 1,487 metres at its highest <mark class="vocab-word" data-word="peak">peak</mark>. It is also home to the best known of the world’s <mark class="vocab-word" data-word="whistle">whistle</mark> ‘languages’, a means of transmitting information over long distances which is perfectly adapted to the extreme <mark class="vocab-word" data-word="terrain">terrain</mark> of the island.</p></div>  <div class="parallel-zh"><p>戈梅拉岛是加纳利群岛中的一座岛屿，位于靠近非洲西北岸的大西洋上。这座小型火山岛上山峰众多，有着陡峭的岩石斜坡和丛林密布的、深邃的溪谷，最高处可达1487米。它也是世界上最著名的口哨语言的故乡，一种完美地适应了该岛屿极端地形的、远距离传播信息的方式。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This ‘language’, known as ‘Silbo’ or ‘Silbo Gomero’ – from the <mark class="vocab-word" data-word="spanish">Spanish</mark> word for ‘<mark class="vocab-word" data-word="whistle">whistle</mark>’- is now shedding light on the language-processing abilities of the human brain, <mark class="vocab-word" data-word="accord">according</mark> to scientists. Researchers say that Silbo <mark class="vocab-word" data-word="activate">activates</mark> parts of the brain normally associated with spoken language, <mark class="vocab-word" data-word="suggest">suggesting</mark> that the brain is remarkably flexible in its ability to interpret sounds as language.</p></div>  <div class="parallel-zh"><p>据科学家说，这一被称为“Silbo”或“Silbo Gemero”的语言 – 该名称来自西班牙语，意思是“口哨” – 如今正在揭示人类大脑处理语言的能力。研究者说，Silbo激活大脑中通常与口头语言联系在一起的部分，表明大脑在将声音解析成语言的能力方面具有很高的灵活性。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘Science has developed the idea of brain areas that are <mark class="vocab-word" data-word="dedicated">dedicated</mark> to language, and we are starting to understand the <mark class="vocab-word" data-word="scope">scope</mark> of signals that can be recognised as language,’ says David Corina, co-author of a recent study and associate professor of <mark class="vocab-word" data-word="psychology">psychology</mark> at the University of Washington in Seattle.</p></div>  <div class="parallel-zh"><p>“科学研究中已有这样的观念，即特定的大脑区域专门负责语言功能。我们也开始理解能够被识别为语言的信号范围”，最近一项研究的合作作者、西雅图华盛顿大学的心理学教授David Corina说。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Silbo is a <mark class="vocab-word" data-word="substitute">substitute</mark> for <mark class="vocab-word" data-word="spanish">Spanish</mark>, with individual words recoded into <mark class="vocab-word" data-word="whistle">whistles</mark> which have high- and low-frequency <mark class="vocab-word" data-word="tone">tones</mark>. A whistler – or silbador – puts a finger in his or her mouth to increase the <mark class="vocab-word" data-word="whistle">whistle</mark>’s <mark class="vocab-word" data-word="pitch">pitch</mark>, while the other hand can be cupped to <mark class="vocab-word" data-word="adjust">adjust</mark> the direction of the sound. ‘There is much more <mark class="vocab-word" data-word="ambiguity">ambiguity</mark> in the <mark class="vocab-word" data-word="whistle">whistled</mark> signal than in the spoken signal’, explains <mark class="vocab-word" data-word="lead">lead</mark> researcher Manuel Carreiras, <mark class="vocab-word" data-word="psychology">psychology</mark> professor at the University of La Laguna on the <mark class="vocab-word" data-word="canary">Canary</mark> island of Tenerife. Because <mark class="vocab-word" data-word="whistle">whistled</mark> ‘words’ can be hard to <mark class="vocab-word" data-word="distinguish">distinguish</mark>, silbadores rely on <mark class="vocab-word" data-word="repetition">repetition</mark>, as well as <mark class="vocab-word" data-word="awareness">awareness</mark> of context, to make themselves understood.</p></div>  <div class="parallel-zh"><p>Silbo是西班牙语的替代品，每个单词被重新编码为高低频率不同的口哨声。吹哨人（也被叫做silbador）将手指放进嘴里提升口哨的音高，另一只手掌则可以模拟杯子的形状以调整声音的方向。“与说话信号相比，口哨信号要模糊许多”，位于加那利群岛特内里费岛拉拉古纳大学的心理学教授、首席研究员Manuel Carreiras解释道。由于口哨词汇很难分辨，所以吹哨人依赖重复，以及对语境的意识来表达自己的意思。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The silbadores of Gomera are <mark class="vocab-word" data-word="traditionally">traditionally</mark> <mark class="vocab-word" data-word="shepherd">shepherds</mark> and other <mark class="vocab-word" data-word="isolated">isolated</mark> mountain <mark class="vocab-word" data-word="folk">folk</mark>, and their novel means of staying in touch allows them to communicate over distances of up to 10 kilometres. Carreiras explains that silbadores are able to pass a surprising amount of information via their <mark class="vocab-word" data-word="whistle">whistles</mark>. ‘In daily life they use <mark class="vocab-word" data-word="whistle">whistles</mark> to communicate short commands, but any <mark class="vocab-word" data-word="spanish">Spanish</mark> sentence could be <mark class="vocab-word" data-word="whistle">whistled</mark>.’ Silbo has proved particularly useful when <mark class="vocab-word" data-word="fir">fires</mark> have occurred on the island and rapid communication across large areas has been <mark class="vocab-word" data-word="vital">vital</mark>.</p></div>  <div class="parallel-zh"><p>戈梅拉岛的传统吹哨人多为牧羊人和其他与世隔绝的山区居民。他们保持联系的新奇方式让他们可以在最多相隔10公里的情况下互相交流。Carreiras解释说，吹哨人能够通过口哨传递惊人数量的信息。“在日常生活中，他们使用口哨来传递简短的命令，但任何西班牙句子都能够被吹出来”。当岛上发生火灾，大面积区域的信息迅速传递至关重要时，Silbo被证明特别有用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The study team used neuroimaging equipment to contrast the brain activity of silbadores while listening to <mark class="vocab-word" data-word="whistle">whistled</mark> and spoken <mark class="vocab-word" data-word="spanish">Spanish</mark>. Results showed the left <mark class="vocab-word" data-word="temporal">temporal</mark> <mark class="vocab-word" data-word="lobe">lobe</mark> of the brain, which is usually associated with spoken language, was engaged during the <mark class="vocab-word" data-word="processing">processing</mark> of Silbo. The researchers found that other key regions in the brain’s frontal <mark class="vocab-word" data-word="lobe">lobe</mark> also responded to the <mark class="vocab-word" data-word="whistle">whistles</mark>, including those <mark class="vocab-word" data-word="activate">activated</mark> in response to sign language among <mark class="vocab-word" data-word="deaf">deaf</mark> people. When the experiments were repeated with non-whistlers, however, activation was observed in all areas of the brain.</p></div>  <div class="parallel-zh"><p>研究团队使用神经成像设备对比了吹哨人听到吹出来和说出来的西班牙语时大脑活动的不同。结果表明，大脑左侧颞叶（通常与口头语言相关）在处理Silbo的时候被激活。研究者发现，大脑额叶的其他关键区域也会对哨声产生反应，包括那些应对盲人手语时会被激活的区域。然而，当对非吹哨人进行重复实验室，大脑所有区域都可以观察到激活反应。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘Our results provide more evidence about the <mark class="vocab-word" data-word="flexibility">flexibility</mark> of human <mark class="vocab-word" data-word="capacity">capacity</mark> for language in a variety of forms,’ Corina says. ‘These data <mark class="vocab-word" data-word="suggest">suggest</mark> that left-hemisphere language regions are uniquely adapted for communicative purposes, independent of the modality of signal. The non- Silbo speakers were not recognising Silbo as a language. They had nothing to grab onto, so multiple areas of their brains were <mark class="vocab-word" data-word="activate">activated</mark>.’</p></div>  <div class="parallel-zh"><p>“我们的研究结果提供了更多的证据，证明人类在处理各种形式的语言上具有灵活性”，Corina说，“这些数据表明，左半球的语言区域出于交流目的进行了独特的更改，不受信号形式的影响。非哨语使用者不会将Silbo当作一种语言。他们没有可供抓取的信号，所以他们大脑的多个区域都被激活了”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Carreiras says the origins of Silbo Gomero remain <mark class="vocab-word" data-word="obscure">obscure</mark>, but that <mark class="vocab-word" data-word="indigenous">indigenous</mark> <mark class="vocab-word" data-word="canary">Canary</mark> Islanders, who were of North African origin, already had a <mark class="vocab-word" data-word="whistle">whistled</mark> language when Spain <mark class="vocab-word" data-word="conquer">conquered</mark> the volcanic islands in the 15th century. <mark class="vocab-word" data-word="whistle">Whistled</mark> languages survive today in Papua New <mark class="vocab-word" data-word="guinea">Guinea</mark>, Mexico, Vietnam, Guyana, <mark class="vocab-word" data-word="china">China</mark>, Nepal, Senegal, and a few <mark class="vocab-word" data-word="mountainous">mountainous</mark> pockets in southern Europe. There are thought to be as many as 70 <mark class="vocab-word" data-word="whistle">whistled</mark> languages still in use, though only 12 have been described and studied scientifically. This form of communication is an <mark class="vocab-word" data-word="adaptation">adaptation</mark> found among cultures where people are often <mark class="vocab-word" data-word="isolated">isolated</mark> from each other, <mark class="vocab-word" data-word="accord">according</mark> to Julien Meyer, a researcher at the <mark class="vocab-word" data-word="institute">Institute</mark> of Human Sciences in Lyon, France. ‘They are mostly used in mountains or <mark class="vocab-word" data-word="dense">dense</mark> forests, ‘ he says. ‘<mark class="vocab-word" data-word="whistle">Whistled</mark> languages are quite clearly defined and represent an original <mark class="vocab-word" data-word="adaptation">adaptation</mark> of the spoken language for the needs of <mark class="vocab-word" data-word="isolated">isolated</mark> human groups.”</p></div>  <div class="parallel-zh"><p>Carreiras说，Silbo Gomero的起源仍属未知，但源于非洲北部的加纳里群岛的本土居民，在西班牙人于15世纪征服这些火山岛的时候，就已经拥有了一门口哨语言。口哨语言如今仍然存在于巴布新几内亚、墨西哥、越南、圭亚那、中国、尼泊尔、塞内加尔，以及欧洲南部的一些地区。据认为，目前仍在使用的口哨语言多达70种，虽然其中只有12种被科学地描述和研究过。法国里昂人类科学研究所的研究员Julien Meyer表示，这种形式的交流是对人们互相隔绝的文化的一种适应。“它们大多在山区和茂密的森林中使用”，他说，“口哨语言定义清晰，代表着为满足孤立的人类群体的需求而对口头语言的一种原始改编”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But with modern communication technology now widely available, researchers say <mark class="vocab-word" data-word="whistle">whistled</mark> languages like Silbo are threatened with <mark class="vocab-word" data-word="extinction">extinction</mark>. With <mark class="vocab-word" data-word="dwindle">dwindling</mark> numbers of Gomera islanders still <mark class="vocab-word" data-word="fluent">fluent</mark> in the language, Canaries’ authorities are taking steps to try to ensure its <mark class="vocab-word" data-word="survival">survival</mark>. Since 1999, Silbo Gomero has been taught in all of the island’s <mark class="vocab-word" data-word="elementary">elementary</mark> schools. In addition, locals are seeking <mark class="vocab-word" data-word="assistance">assistance</mark> from the <mark class="vocab-word" data-word="unite">United</mark> Nations Educational, Scientific and Cultural Organization (UNESCO). ‘The local authorities are trying to get an award from the organisation to declare [Silbo Gomero] as something that should be preserved for <mark class="vocab-word" data-word="humanity">humanity</mark>,’ Carreiras adds.</p></div>  <div class="parallel-zh"><p>不过，如今随着现代通信技术的广泛应用，研究者表示，诸如Silbo这样的口哨语言面临着灭绝的危险。随着戈梅拉岛上仍然能够熟练使用该语言的人越来越少，加那利政府当局正采取措施努力保证它的延续。1999年以来，该岛屿上的所有小学都开设了Silbo Gomero这门语言课。除此之外，当地人还寻求联合国教科文组织的帮助。“当地政府正试图从该组织获得认证，以宣布Silbo Gemero是某种出于人类整体利益应该被保护的东西”，Carreiras补充到。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"canary": 3, "situated": 1, "atlantic": 1, "mountainous": 2, "steep": 1, "slope": 1, "peak": 1, "whistle": 16, "terrain": 1, "spanish": 4, "accord": 2, "activate": 3, "suggest": 2, "dedicated": 1, "scope": 1, "psychology": 2, "substitute": 1, "tone": 1, "pitch": 1, "adjust": 1, "ambiguity": 1, "lead": 1, "distinguish": 1, "repetition": 1, "awareness": 1, "traditionally": 1, "shepherd": 1, "isolated": 3, "folk": 1, "fir": 1, "vital": 1, "temporal": 1, "lobe": 2, "processing": 1, "deaf": 1, "flexibility": 1, "capacity": 1, "obscure": 1, "indigenous": 1, "conquer": 1, "guinea": 1, "china": 1, "adaptation": 2, "institute": 1, "dense": 1, "extinction": 1, "dwindle": 1, "fluent": 1, "survival": 1, "elementary": 1, "assistance": 1, "unite": 1, "humanity": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

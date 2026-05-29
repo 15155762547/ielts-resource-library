@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is there anybody out there - 剑桥雅思9 Test 1 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Is there anybody out there</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26524.html" target="_blank">https://www.laokaoya.com/26524.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The question of whether we are alone in the Universe has <mark class="vocab-word" data-word="haunt">haunted</mark> <mark class="vocab-word" data-word="humanity">humanity</mark> for centuries, but we may now stand <mark class="vocab-word" data-word="poise">poised</mark> on the <mark class="vocab-word" data-word="brick">brick</mark> of the answer to that question, as the search for radio signals from other <mark class="vocab-word" data-word="intelligent">intelligent</mark> <mark class="vocab-word" data-word="civilization">civilizations</mark>. This search, often known by the <mark class="vocab-word" data-word="acronym">acronym</mark> SETI (search for extra-terrestrial intelligence), is a difficult one. Although groups around the world have been searching <mark class="vocab-word" data-word="intermittent">intermittently</mark> for three <mark class="vocab-word" data-word="decade">decades</mark>, it is only now that we have reached the level of technology where we can make a <mark class="vocab-word" data-word="determined">determined</mark> attempt to search all nearby stars for any sign of life.</p><p>The primary reason for the search is basic <mark class="vocab-word" data-word="curiosity">curiosity</mark>—the same <mark class="vocab-word" data-word="curiosity">curiosity</mark> about the natural world that drives all pure science. We want to know whether life <mark class="vocab-word" data-word="evolve">evolves</mark> naturally if given the right conditions, or whether there is something very special about the Earth to have <mark class="vocab-word" data-word="foster">fostered</mark> the variety of life forms that we see around us on the planet. The simple detection of a radio signal will be <mark class="vocab-word" data-word="sufficient">sufficient</mark> to answer this most basic of all the questions. In this sense, SETI is another cog in the <mark class="vocab-word" data-word="machinery">machinery</mark> of pure science which is <mark class="vocab-word" data-word="continually">continually</mark> pushing out the <mark class="vocab-word" data-word="horizon">horizon</mark> of our knowledge. However, there are other reasons for being interested in whether life exists elsewhere. For example, we have had <mark class="vocab-word" data-word="civilization">civilization</mark> on Earth for perhaps only a few thousand years, and the <mark class="vocab-word" data-word="threat">threats</mark> of the nuclear war and pollution over the last few <mark class="vocab-word" data-word="decade">decades</mark> have told us that our <mark class="vocab-word" data-word="survival">survival</mark> may be tenuous. Will we last another two thousand years or will we <mark class="vocab-word" data-word="wipe">wipe</mark> ourselves out? Since the <mark class="vocab-word" data-word="lifetime">lifetime</mark> of a planet like ours is several billion years, we can expect that, if other <mark class="vocab-word" data-word="civilization">civilizations</mark> do survive in our <mark class="vocab-word" data-word="galaxy">galaxy</mark>, their ages will range from zero to several billion years. Thus any <mark class="vocab-word" data-word="mere">mere</mark> existence of such a <mark class="vocab-word" data-word="civilization">civilization</mark> will tell us that <mark class="vocab-word" data-word="long-term">long-term</mark> <mark class="vocab-word" data-word="survival">survival</mark> is possible, and gives us some cause for <mark class="vocab-word" data-word="optimism">optimism</mark>. It is even possible that the older <mark class="vocab-word" data-word="civilization">civilization</mark> may pass on the benefits of their experience in dealing with <mark class="vocab-word" data-word="threat">threats</mark> to <mark class="vocab-word" data-word="survival">survival</mark> such as nuclear war and global pollution, and other <mark class="vocab-word" data-word="threat">threats</mark> that we <mark class="vocab-word" data-word="haven">haven</mark>’t yet discovered.</p><p>In discussing whether we are alone, most SETI scientists adopt two ground rules. First, UFOs (Unidentified Flying Objects) are generally ignored since most scientists don’t consider the evidence for them to be strong enough to bear serious consideration although it is also important to keep an open mind in case any really <mark class="vocab-word" data-word="convincing">convincing</mark> evidence emerges in the future. Second, we make a very <mark class="vocab-word" data-word="conservative">conservative</mark> <mark class="vocab-word" data-word="assumption">assumption</mark> that we are looking for a life form that is pretty well like us, since if it <mark class="vocab-word" data-word="differ">differs</mark> <mark class="vocab-word" data-word="radical">radically</mark> from us we may well not recognize it as a life form, quite apart from whether we are able to communicate with it. In other words, the life form we are looking for may well have two green heads and seven fingers, but it will nevertheless <mark class="vocab-word" data-word="resemble">resemble</mark> us in that it should communicate with its fellows, be interested in the Universe, live on a planet <mark class="vocab-word" data-word="orbit">orbiting</mark> a star like our Sun, and perhaps most restrictively, have a chemistry, like us, based on <mark class="vocab-word" data-word="carbon">carbon</mark> and water.</p><p>Even when we make these <mark class="vocab-word" data-word="assumption">assumptions</mark>, our understanding of other life forms is still <mark class="vocab-word" data-word="severely">severely</mark> limited. We do not even know, for example, how many stars have planets, and we certainly do not know how likely it is that life will arise naturally, given the right conditions. However, when we look at the 100 billion stars in our <mark class="vocab-word" data-word="galaxy">galaxy</mark> (the milky way), and 100 billion galaxies in the observable Universe, it seems inconceivable that at least one of these planets does not have a life form on it: in fact, the best educated guess we can make, using the little we do know about the conditions for carbon-based life, <mark class="vocab-word" data-word="lead">leads</mark> us to estimate that perhaps one in 100,000 stars might have a life-bearing planet <mark class="vocab-word" data-word="orbit">orbiting</mark> it. That means that our nearest neighbours are perhaps 100 light years away, which is almost next door in <mark class="vocab-word" data-word="astronomical">astronomical</mark> terms.</p><p>An <mark class="vocab-word" data-word="alien">alien</mark> <mark class="vocab-word" data-word="civilization">civilization</mark> could choose many different ways of sending information across the <mark class="vocab-word" data-word="galaxy">galaxy</mark>, but many of these either require too much energy, or else are <mark class="vocab-word" data-word="severely">severely</mark> attenuated while <mark class="vocab-word" data-word="traverse">traversing</mark> the vast distances across the <mark class="vocab-word" data-word="galaxy">galaxy</mark>. It turns out that, for a given amount of transmitted power, radio waves in the frequency range 1000 to 3000 MHz travel the greatest distance, and so all searches to date have concentrated on looking for radio waves in this frequency range. So far there have been a number of searches by various groups around the world, including Australian searches using the radio <mark class="vocab-word" data-word="telescope">telescope</mark> at Parkes, New South Wales. Until now there have not been any detections from the few hundred stars which have been searched. The scale of the searches has been increased <mark class="vocab-word" data-word="dramatically">dramatically</mark> since 1992, when the US <mark class="vocab-word" data-word="congress">Congress</mark> NASA 110 million per year for ten years to conduct a <mark class="vocab-word" data-word="thorough">thorough</mark> search for extra <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> life. Much of the money in this project is being spent on the developing the special <mark class="vocab-word" data-word="hardware">hardware</mark> needed to search many frequencies at once. The project has two parts. One part is a targeted search using the world’s largest radio <mark class="vocab-word" data-word="telescope">telescopes</mark>, the America-operated <mark class="vocab-word" data-word="telescope">telescope</mark> in Arecibo, Puerto Rico and the French <mark class="vocab-word" data-word="telescope">telescope</mark> in Nancy in France. This part of the project is searching the nearest 1000 likely stars with high <mark class="vocab-word" data-word="sensitivity">sensitivity</mark> for signals in the frequency range 1000 to 3000 MHz. The other part of the project is an undirected search which is monitoring all of space with a lower <mark class="vocab-word" data-word="sensitivity">sensitivity</mark>, using the smaller <mark class="vocab-word" data-word="antenna">antennas</mark> of NASA’s Deep Space Network.</p><p>There is <mark class="vocab-word" data-word="considerable">considerable</mark> debate over how we should react if we detect a signal from an <mark class="vocab-word" data-word="alien">alien</mark> <mark class="vocab-word" data-word="civilization">civilization</mark>. Everybody agrees that we should not reply immediately. Quite apart from the impracticality of sending a reply over such large distances at short notice, it raises a host of <mark class="vocab-word" data-word="ethical">ethical</mark> questions that would have to be addressed by the global community before any reply could be sent. Would the human race face the culture shock if faced with a <mark class="vocab-word" data-word="superior">superior</mark> and much older <mark class="vocab-word" data-word="civilization">civilization</mark>? Luckily, there is no urgency about this. The stars being searched are hundreds of light years away, so it takes hundreds of years for their signal to reach us, and a further few hundreds for our reply to reach them. It’s not important, then, if there’s a delay of a few years, or <mark class="vocab-word" data-word="decade">decades</mark>. While the human race debates the question of whether to reply, and perhaps carefully drafts a reply.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>关于我们是否在宇宙中独自存在的问题困扰着人类已有数百年之久。但随着对来自其他文明无线电信号的寻找，我们现在可能正处于解决该问题的边缘。这种搜索通常以缩写词SETI（search for extra-terrestrial intelligence）而闻名，是一项困难的工作。尽管世界各地的团体已经断断续续搜索了三十年，但直到现在我们才达到相应的技术水平，使我们可以坚定地尝试搜索所有附近的恒星以寻找生命迹象。</p><p>进行搜索的主要原因是基本的好奇心-对自然世界的好奇心驱使所有科学向前发展。我们想知道，我们在宇宙中是否独自存在；我们想知道，如果条件合适生命是否会自然进化，或者地球上是否存在某种特殊的事物，从而孕育了我们在地球上看到的各种生命形式。无线电信号的简单检测就足以回答所有这些最基本的问题。从这个意义上讲，SETI是纯科学机器中的另一个齿轮，它正在不断推动我们知识的发展。但是，还有其他原因让我们对其他地方是否存在生命感兴趣。例如，我们在地球上的文明可能只有几千年的历史，而在过去的几十年中核战争和污染的威胁告诉我们，我们的生存可能十分脆弱。我们会再延续2000年，还是会导致自我毁灭？由于像地球这样的行星的寿命高达数十亿年，我们可以预期，如果其他文明确实在我们的银河系中生存下来，它们的年龄将在零到数十亿年之间。因此，我们听到的任何其他文明的年龄都可能比我们自身要古老的多。这样一个文明存在本身就可以告诉我们长期生存是可能的，并赋予我们一些乐观的理由。在应对生存威胁（例如核战争和全球污染）以及我们尚未发现的其他威胁时，更古老的文明甚至可能会传授他们的一些经验。</p><p>在讨论我们是否独自存在时，大多数SETI科学家采用两个基本规则。首先，UFO（不明飞行物）通常被忽略，因为大多数科学家认为它们所提供的证据不足以进行认真考虑（尽管在将来出现任何真正令人信服的证据时保持开放的态度也很重要）。其次，我们做出一个非常保守的假设，即我们正在寻找一种与我们十分相似的生命形式，因为如果它与我们截然不同，我们很可能不认为它是一种生命形式。而不是我们是否能够与它交流。换句话说，我们正在寻找的生命形式可能有两个绿色的脑袋和七个手指，但是它仍然与我们相似，因为它应该与它的同伴交流，对宇宙感兴趣，生活在一个绕着类似于太阳这样的恒星运转的行星上，并且，或许最具限制性的条件是拥有跟我们相同的化学结构，建立在碳和水之上。</p><p>即使我们做出这些假设，我们对其他生命形式的理解仍然受到严重限制。例如，我们甚至不知道有多少颗恒星拥有行星，而且我们当然也不知道在适当的条件下自然产生生命的可能性。但是，当我们观察银河系中的1000亿颗恒星和可观察到的宇宙中的1000亿个星系时，似乎无法想象这些行星中没有一个拥有生命：事实上，我们对碳基生命的诞生条件了解很少，我们可以做出的最好的有猜测让我们估计，每十万颗恒星中可能有一颗有生命的行星正围绕它运行。这意味着我们与最近的邻居可能相距100光年。在天文学意义上，这几乎就是隔壁。</p><p>外星文明可以选择许多不同的方式在银河系之间发送信息，但是其中许多要么需要太多能量，要么在穿越星系的巨大距离时会严重衰减。事实证明，对于给定的发射功率，在1000到3000 MHz频率范围内的无线电波传播的距离最远。因此迄今为止，所有的搜索都集中在寻找该频率范围内的无线电波。目前，世界各地的各种团体进行了许多搜索，包括澳大利亚使用新南威尔士州帕克斯市的射电望远镜进行搜索。到现在为止，还没有从已经搜索的几百颗恒星中找到任何发现。自1992年以来，搜索的规模已急剧增加，当时美国国会给NASA每年1亿美元，连续十年进行深入的地外生命的搜索。该项目中的大部分资金都花在了开发可同时搜索多个频率所需的特殊硬件上。该项目分为两个部分。一部分是采用世界上最大的射电望远镜进行有目的的搜索。该项目的这一部分以较高的敏感度正在搜索最近1000个恒星，以寻找1000至3000MHz频率范围内的信号。该项目的另一部分是不定向搜索。它使用NASA深空网络的小型天线以较低的灵敏度监视所有空间。</p><p>关于如果我们检测到来自外来文明的信号时该如何应对，存在着很多争论。所有人都同意我们不应该立即答复。除了在这么短的时间内跨越如此巨大的距离发送答复不切实际之外，它还提出了许多国际社会在发送任何答复之前必须解决的道德问题。如果人类面临着优越而古老的文明，人类会面对文化的冲击吗？幸运的是，这一问题并不紧迫。被搜寻的恒星距离我们有数百光年，因此它们的信号到达我们也需要数百年，而我们的回复还需要数百年才能抵达它们那里。因此，有几年或几十年的延迟并不重要。在人类辩论是否应回答的问题时，也许还要仔细起草答复。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The question of whether we are alone in the Universe has <mark class="vocab-word" data-word="haunt">haunted</mark> <mark class="vocab-word" data-word="humanity">humanity</mark> for centuries, but we may now stand <mark class="vocab-word" data-word="poise">poised</mark> on the <mark class="vocab-word" data-word="brick">brick</mark> of the answer to that question, as the search for radio signals from other <mark class="vocab-word" data-word="intelligent">intelligent</mark> <mark class="vocab-word" data-word="civilization">civilizations</mark>. This search, often known by the <mark class="vocab-word" data-word="acronym">acronym</mark> SETI (search for extra-terrestrial intelligence), is a difficult one. Although groups around the world have been searching <mark class="vocab-word" data-word="intermittent">intermittently</mark> for three <mark class="vocab-word" data-word="decade">decades</mark>, it is only now that we have reached the level of technology where we can make a <mark class="vocab-word" data-word="determined">determined</mark> attempt to search all nearby stars for any sign of life.</p></div>  <div class="parallel-zh"><p>关于我们是否在宇宙中独自存在的问题困扰着人类已有数百年之久。但随着对来自其他文明无线电信号的寻找，我们现在可能正处于解决该问题的边缘。这种搜索通常以缩写词SETI（search for extra-terrestrial intelligence）而闻名，是一项困难的工作。尽管世界各地的团体已经断断续续搜索了三十年，但直到现在我们才达到相应的技术水平，使我们可以坚定地尝试搜索所有附近的恒星以寻找生命迹象。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The primary reason for the search is basic <mark class="vocab-word" data-word="curiosity">curiosity</mark>—the same <mark class="vocab-word" data-word="curiosity">curiosity</mark> about the natural world that drives all pure science. We want to know whether life <mark class="vocab-word" data-word="evolve">evolves</mark> naturally if given the right conditions, or whether there is something very special about the Earth to have <mark class="vocab-word" data-word="foster">fostered</mark> the variety of life forms that we see around us on the planet. The simple detection of a radio signal will be <mark class="vocab-word" data-word="sufficient">sufficient</mark> to answer this most basic of all the questions. In this sense, SETI is another cog in the <mark class="vocab-word" data-word="machinery">machinery</mark> of pure science which is <mark class="vocab-word" data-word="continually">continually</mark> pushing out the <mark class="vocab-word" data-word="horizon">horizon</mark> of our knowledge. However, there are other reasons for being interested in whether life exists elsewhere. For example, we have had <mark class="vocab-word" data-word="civilization">civilization</mark> on Earth for perhaps only a few thousand years, and the <mark class="vocab-word" data-word="threat">threats</mark> of the nuclear war and pollution over the last few <mark class="vocab-word" data-word="decade">decades</mark> have told us that our <mark class="vocab-word" data-word="survival">survival</mark> may be tenuous. Will we last another two thousand years or will we <mark class="vocab-word" data-word="wipe">wipe</mark> ourselves out? Since the <mark class="vocab-word" data-word="lifetime">lifetime</mark> of a planet like ours is several billion years, we can expect that, if other <mark class="vocab-word" data-word="civilization">civilizations</mark> do survive in our <mark class="vocab-word" data-word="galaxy">galaxy</mark>, their ages will range from zero to several billion years. Thus any <mark class="vocab-word" data-word="mere">mere</mark> existence of such a <mark class="vocab-word" data-word="civilization">civilization</mark> will tell us that <mark class="vocab-word" data-word="long-term">long-term</mark> <mark class="vocab-word" data-word="survival">survival</mark> is possible, and gives us some cause for <mark class="vocab-word" data-word="optimism">optimism</mark>. It is even possible that the older <mark class="vocab-word" data-word="civilization">civilization</mark> may pass on the benefits of their experience in dealing with <mark class="vocab-word" data-word="threat">threats</mark> to <mark class="vocab-word" data-word="survival">survival</mark> such as nuclear war and global pollution, and other <mark class="vocab-word" data-word="threat">threats</mark> that we <mark class="vocab-word" data-word="haven">haven</mark>’t yet discovered.</p></div>  <div class="parallel-zh"><p>进行搜索的主要原因是基本的好奇心-对自然世界的好奇心驱使所有科学向前发展。我们想知道，我们在宇宙中是否独自存在；我们想知道，如果条件合适生命是否会自然进化，或者地球上是否存在某种特殊的事物，从而孕育了我们在地球上看到的各种生命形式。无线电信号的简单检测就足以回答所有这些最基本的问题。从这个意义上讲，SETI是纯科学机器中的另一个齿轮，它正在不断推动我们知识的发展。但是，还有其他原因让我们对其他地方是否存在生命感兴趣。例如，我们在地球上的文明可能只有几千年的历史，而在过去的几十年中核战争和污染的威胁告诉我们，我们的生存可能十分脆弱。我们会再延续2000年，还是会导致自我毁灭？由于像地球这样的行星的寿命高达数十亿年，我们可以预期，如果其他文明确实在我们的银河系中生存下来，它们的年龄将在零到数十亿年之间。因此，我们听到的任何其他文明的年龄都可能比我们自身要古老的多。这样一个文明存在本身就可以告诉我们长期生存是可能的，并赋予我们一些乐观的理由。在应对生存威胁（例如核战争和全球污染）以及我们尚未发现的其他威胁时，更古老的文明甚至可能会传授他们的一些经验。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In discussing whether we are alone, most SETI scientists adopt two ground rules. First, UFOs (Unidentified Flying Objects) are generally ignored since most scientists don’t consider the evidence for them to be strong enough to bear serious consideration although it is also important to keep an open mind in case any really <mark class="vocab-word" data-word="convincing">convincing</mark> evidence emerges in the future. Second, we make a very <mark class="vocab-word" data-word="conservative">conservative</mark> <mark class="vocab-word" data-word="assumption">assumption</mark> that we are looking for a life form that is pretty well like us, since if it <mark class="vocab-word" data-word="differ">differs</mark> <mark class="vocab-word" data-word="radical">radically</mark> from us we may well not recognize it as a life form, quite apart from whether we are able to communicate with it. In other words, the life form we are looking for may well have two green heads and seven fingers, but it will nevertheless <mark class="vocab-word" data-word="resemble">resemble</mark> us in that it should communicate with its fellows, be interested in the Universe, live on a planet <mark class="vocab-word" data-word="orbit">orbiting</mark> a star like our Sun, and perhaps most restrictively, have a chemistry, like us, based on <mark class="vocab-word" data-word="carbon">carbon</mark> and water.</p></div>  <div class="parallel-zh"><p>在讨论我们是否独自存在时，大多数SETI科学家采用两个基本规则。首先，UFO（不明飞行物）通常被忽略，因为大多数科学家认为它们所提供的证据不足以进行认真考虑（尽管在将来出现任何真正令人信服的证据时保持开放的态度也很重要）。其次，我们做出一个非常保守的假设，即我们正在寻找一种与我们十分相似的生命形式，因为如果它与我们截然不同，我们很可能不认为它是一种生命形式。而不是我们是否能够与它交流。换句话说，我们正在寻找的生命形式可能有两个绿色的脑袋和七个手指，但是它仍然与我们相似，因为它应该与它的同伴交流，对宇宙感兴趣，生活在一个绕着类似于太阳这样的恒星运转的行星上，并且，或许最具限制性的条件是拥有跟我们相同的化学结构，建立在碳和水之上。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Even when we make these <mark class="vocab-word" data-word="assumption">assumptions</mark>, our understanding of other life forms is still <mark class="vocab-word" data-word="severely">severely</mark> limited. We do not even know, for example, how many stars have planets, and we certainly do not know how likely it is that life will arise naturally, given the right conditions. However, when we look at the 100 billion stars in our <mark class="vocab-word" data-word="galaxy">galaxy</mark> (the milky way), and 100 billion galaxies in the observable Universe, it seems inconceivable that at least one of these planets does not have a life form on it: in fact, the best educated guess we can make, using the little we do know about the conditions for carbon-based life, <mark class="vocab-word" data-word="lead">leads</mark> us to estimate that perhaps one in 100,000 stars might have a life-bearing planet <mark class="vocab-word" data-word="orbit">orbiting</mark> it. That means that our nearest neighbours are perhaps 100 light years away, which is almost next door in <mark class="vocab-word" data-word="astronomical">astronomical</mark> terms.</p></div>  <div class="parallel-zh"><p>即使我们做出这些假设，我们对其他生命形式的理解仍然受到严重限制。例如，我们甚至不知道有多少颗恒星拥有行星，而且我们当然也不知道在适当的条件下自然产生生命的可能性。但是，当我们观察银河系中的1000亿颗恒星和可观察到的宇宙中的1000亿个星系时，似乎无法想象这些行星中没有一个拥有生命：事实上，我们对碳基生命的诞生条件了解很少，我们可以做出的最好的有猜测让我们估计，每十万颗恒星中可能有一颗有生命的行星正围绕它运行。这意味着我们与最近的邻居可能相距100光年。在天文学意义上，这几乎就是隔壁。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>An <mark class="vocab-word" data-word="alien">alien</mark> <mark class="vocab-word" data-word="civilization">civilization</mark> could choose many different ways of sending information across the <mark class="vocab-word" data-word="galaxy">galaxy</mark>, but many of these either require too much energy, or else are <mark class="vocab-word" data-word="severely">severely</mark> attenuated while <mark class="vocab-word" data-word="traverse">traversing</mark> the vast distances across the <mark class="vocab-word" data-word="galaxy">galaxy</mark>. It turns out that, for a given amount of transmitted power, radio waves in the frequency range 1000 to 3000 MHz travel the greatest distance, and so all searches to date have concentrated on looking for radio waves in this frequency range. So far there have been a number of searches by various groups around the world, including Australian searches using the radio <mark class="vocab-word" data-word="telescope">telescope</mark> at Parkes, New South Wales. Until now there have not been any detections from the few hundred stars which have been searched. The scale of the searches has been increased <mark class="vocab-word" data-word="dramatically">dramatically</mark> since 1992, when the US <mark class="vocab-word" data-word="congress">Congress</mark> NASA 110 million per year for ten years to conduct a <mark class="vocab-word" data-word="thorough">thorough</mark> search for extra <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> life. Much of the money in this project is being spent on the developing the special <mark class="vocab-word" data-word="hardware">hardware</mark> needed to search many frequencies at once. The project has two parts. One part is a targeted search using the world’s largest radio <mark class="vocab-word" data-word="telescope">telescopes</mark>, the America-operated <mark class="vocab-word" data-word="telescope">telescope</mark> in Arecibo, Puerto Rico and the French <mark class="vocab-word" data-word="telescope">telescope</mark> in Nancy in France. This part of the project is searching the nearest 1000 likely stars with high <mark class="vocab-word" data-word="sensitivity">sensitivity</mark> for signals in the frequency range 1000 to 3000 MHz. The other part of the project is an undirected search which is monitoring all of space with a lower <mark class="vocab-word" data-word="sensitivity">sensitivity</mark>, using the smaller <mark class="vocab-word" data-word="antenna">antennas</mark> of NASA’s Deep Space Network.</p></div>  <div class="parallel-zh"><p>外星文明可以选择许多不同的方式在银河系之间发送信息，但是其中许多要么需要太多能量，要么在穿越星系的巨大距离时会严重衰减。事实证明，对于给定的发射功率，在1000到3000 MHz频率范围内的无线电波传播的距离最远。因此迄今为止，所有的搜索都集中在寻找该频率范围内的无线电波。目前，世界各地的各种团体进行了许多搜索，包括澳大利亚使用新南威尔士州帕克斯市的射电望远镜进行搜索。到现在为止，还没有从已经搜索的几百颗恒星中找到任何发现。自1992年以来，搜索的规模已急剧增加，当时美国国会给NASA每年1亿美元，连续十年进行深入的地外生命的搜索。该项目中的大部分资金都花在了开发可同时搜索多个频率所需的特殊硬件上。该项目分为两个部分。一部分是采用世界上最大的射电望远镜进行有目的的搜索。该项目的这一部分以较高的敏感度正在搜索最近1000个恒星，以寻找1000至3000MHz频率范围内的信号。该项目的另一部分是不定向搜索。它使用NASA深空网络的小型天线以较低的灵敏度监视所有空间。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There is <mark class="vocab-word" data-word="considerable">considerable</mark> debate over how we should react if we detect a signal from an <mark class="vocab-word" data-word="alien">alien</mark> <mark class="vocab-word" data-word="civilization">civilization</mark>. Everybody agrees that we should not reply immediately. Quite apart from the impracticality of sending a reply over such large distances at short notice, it raises a host of <mark class="vocab-word" data-word="ethical">ethical</mark> questions that would have to be addressed by the global community before any reply could be sent. Would the human race face the culture shock if faced with a <mark class="vocab-word" data-word="superior">superior</mark> and much older <mark class="vocab-word" data-word="civilization">civilization</mark>? Luckily, there is no urgency about this. The stars being searched are hundreds of light years away, so it takes hundreds of years for their signal to reach us, and a further few hundreds for our reply to reach them. It’s not important, then, if there’s a delay of a few years, or <mark class="vocab-word" data-word="decade">decades</mark>. While the human race debates the question of whether to reply, and perhaps carefully drafts a reply.</p></div>  <div class="parallel-zh"><p>关于如果我们检测到来自外来文明的信号时该如何应对，存在着很多争论。所有人都同意我们不应该立即答复。除了在这么短的时间内跨越如此巨大的距离发送答复不切实际之外，它还提出了许多国际社会在发送任何答复之前必须解决的道德问题。如果人类面临着优越而古老的文明，人类会面对文化的冲击吗？幸运的是，这一问题并不紧迫。被搜寻的恒星距离我们有数百光年，因此它们的信号到达我们也需要数百年，而我们的回复还需要数百年才能抵达它们那里。因此，有几年或几十年的延迟并不重要。在人类辩论是否应回答的问题时，也许还要仔细起草答复。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"haunt": 1, "humanity": 1, "poise": 1, "brick": 1, "intelligent": 1, "civilization": 8, "acronym": 1, "intermittent": 1, "decade": 3, "determined": 1, "curiosity": 2, "evolve": 1, "foster": 1, "sufficient": 1, "machinery": 1, "continually": 1, "horizon": 1, "threat": 3, "survival": 3, "wipe": 1, "lifetime": 1, "galaxy": 4, "mere": 1, "long-term": 1, "optimism": 1, "haven": 1, "convincing": 1, "conservative": 1, "assumption": 2, "differ": 1, "radical": 1, "resemble": 1, "orbit": 2, "carbon": 1, "severely": 2, "lead": 1, "astronomical": 1, "alien": 2, "traverse": 1, "telescope": 4, "dramatically": 1, "congress": 1, "thorough": 1, "terrestrial": 1, "hardware": 1, "sensitivity": 2, "antenna": 1, "considerable": 1, "ethical": 1, "superior": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

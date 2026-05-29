@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A neuroscientist reveals how to think differently - 剑桥雅思9 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>A neuroscientist reveals how to think differently</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26863.html" target="_blank">https://www.laokaoya.com/26863.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>In the last <mark class="vocab-word" data-word="decade">decade</mark> a revolution has occurred in the way that scientists think about the brain. We now know that the decisions humans make can be <mark class="vocab-word" data-word="trace">traced</mark> to the <mark class="vocab-word" data-word="fir">firing</mark> patterns of <mark class="vocab-word" data-word="neuron">neurons</mark> in specific parts of the brain. These discoveries have led to the field known asneuroeconomics, which studies the brain’s secrets to success in an economic environment that demands <mark class="vocab-word" data-word="innovation">innovation</mark> and being able to do things differently from competitors. A brain that can do this is an iconoclastic one. <mark class="vocab-word" data-word="briefly">Briefly</mark>, aniconoclastis a person who does something that others say can’t be done.</p><p>This definition implies that iconoclasts are different from other people, but more <mark class="vocab-word" data-word="precisely">precisely</mark>, it is the brains that are different in three <mark class="vocab-word" data-word="distinct">distinct</mark> ways: <mark class="vocab-word" data-word="perception">perception</mark>, fear response, and social intelligence. Each of these three functions <mark class="vocab-word" data-word="utilize">utilizes</mark> a different <mark class="vocab-word" data-word="circuit">circuit</mark> in the brain. Naysayers might <mark class="vocab-word" data-word="suggest">suggest</mark> that the brain is <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> that thinking in an original, even <mark class="vocab-word" data-word="revolutionary">revolutionary</mark>, way is more a <mark class="vocab-word" data-word="matter">matter</mark> of personality than brain function. But the field of neuroeconomics was born out of the <mark class="vocab-word" data-word="realization">realization</mark> that the physical working of the brain place <mark class="vocab-word" data-word="limitation">limitations</mark> on the way we make decisions. By understanding these <mark class="vocab-word" data-word="constraint">constraints</mark>, we begin to understand why some people <mark class="vocab-word" data-word="march">march</mark> to a different drumbeat.</p><p>The first thing to realize is that the brain suffers from limited resources. It has a <mark class="vocab-word" data-word="fixed">fixed</mark> energy budget, about the same as a 40 <mark class="vocab-word" data-word="watt">watt</mark> light <mark class="vocab-word" data-word="bulb">bulb</mark>, so it has <mark class="vocab-word" data-word="evolve">evolved</mark> to work as <mark class="vocab-word" data-word="efficiently">efficiently</mark> as possible. This is where most people are <mark class="vocab-word" data-word="impede">impeded</mark> from being an iconoclast. For example, when <mark class="vocab-word" data-word="confront">confronted</mark> with information streaming from the eyes, the brain will interpret this information in the quickest way possible. Thus it will draw on both past experience and any other source of information, such as what other people say, to make sense of what it is seeing. This happens all the time. The brain takes <mark class="vocab-word" data-word="shortcut">shortcuts</mark> that work so well we hardly ever aware of them. We think our <mark class="vocab-word" data-word="perception">perceptions</mark> of the world are real, but they are only <mark class="vocab-word" data-word="biological">biological</mark> and <mark class="vocab-word" data-word="electrical">electrical</mark> rumblings. <mark class="vocab-word" data-word="perception">Perception</mark> is not simply a product of what your eyes or ears <mark class="vocab-word" data-word="transmit">transmit</mark> to your brain. More than the physical reality of <mark class="vocab-word" data-word="photon">photons</mark> or sound waves, <mark class="vocab-word" data-word="perception">perception</mark> is a product of the brain.</p><p><mark class="vocab-word" data-word="perception">Perception</mark> is central to iconoclasm. Iconoclasts see things differently to other people. Their brains do not fail into <mark class="vocab-word" data-word="efficiency">efficiency</mark> <mark class="vocab-word" data-word="pitfall">pitfalls</mark> as much as the average person’s brain. Iconoclasts, either because they were born that way or through learning, have found ways to work around the perceptual <mark class="vocab-word" data-word="shortcut">shortcut</mark> that <mark class="vocab-word" data-word="plague">plague</mark> most people. <mark class="vocab-word" data-word="perception">Perception</mark> is not something that is hardwired into the brain. It is a <mark class="vocab-word" data-word="learned">learned</mark> process, which is both a <mark class="vocab-word" data-word="curse">curse</mark> and an opportunity for change. The brain faces the fundamental problem of interpreting physical stimuli from the sense. Everything the brain sees, hears, or touches has multiple <mark class="vocab-word" data-word="interpretation">interpretations</mark>. The one that is <mark class="vocab-word" data-word="ultimate">ultimately</mark> chosen is simply the brain’s best theory. In technical terms, these <mark class="vocab-word" data-word="conjecture">conjectures</mark> have their basis in the statistical <mark class="vocab-word" data-word="likelihood">likelihood</mark> of one <mark class="vocab-word" data-word="interpretation">interpretation</mark> over another and are heavily <mark class="vocab-word" data-word="influence">influenced</mark> by past experience and, importantly for potential iconoclasts, what other people say.</p><p>The best way to see things differently to other people is to <mark class="vocab-word" data-word="bombard">bombard</mark> the brain with things it has never encountered before. <mark class="vocab-word" data-word="novelty">Novelty</mark> releases the perceptual process from the chains of past experience and forces the brain to make new judgments. Successful iconoclasts have an extraordinary <mark class="vocab-word" data-word="willingness">willingness</mark> to be <mark class="vocab-word" data-word="exposed">exposed</mark> to what is fresh and different. Observation of iconoclasts shows that they <mark class="vocab-word" data-word="embrace">embrace</mark> <mark class="vocab-word" data-word="novelty">novelty</mark> while most people avoid things that are different.</p><p>The problem with <mark class="vocab-word" data-word="novelty">novelty</mark>, however, is that it tends to <mark class="vocab-word" data-word="trigger">trigger</mark> the brain’s fear system. Fear is a major <mark class="vocab-word" data-word="impediment">impediment</mark> to thinking like an iconoclast and stops the average person in his tracks. There are many types of fear, but the two that <mark class="vocab-word" data-word="inhibit">inhibit</mark> iconoclastic thinking and people generally find difficult to deal with arefear of <mark class="vocab-word" data-word="uncertainty">uncertainty</mark> and fear of public ridicule.These may seem like <mark class="vocab-word" data-word="trivial">trivial</mark> phobia. But fear of public speaking, which everyone must do from time to time, <mark class="vocab-word" data-word="afflict">afflicts</mark> one-third of the population. This makes it too common to be considered a mental <mark class="vocab-word" data-word="disorder">disorder</mark>. It is simply a common <mark class="vocab-word" data-word="variant">variant</mark> of human nature, one which iconoclasts do not let <mark class="vocab-word" data-word="inhibit">inhibit</mark> their reactions.</p><p>Finally, to be successful iconoclasts, individuals must sell their ideas to other people. This is where socialintelligencecomes in. Social intelligence is the ability to understand and manage people in a business setting. In the last <mark class="vocab-word" data-word="decade">decade</mark> there has been an <mark class="vocab-word" data-word="explosion">explosion</mark> of knowledge about the social brain and how the brain works when groups <mark class="vocab-word" data-word="coordinate">coordinate</mark> decision making. <mark class="vocab-word" data-word="neuroscience">Neuroscience</mark> has <mark class="vocab-word" data-word="reveal">revealed</mark> which brain <mark class="vocab-word" data-word="circuit">circuits</mark> are responsible for functions like understanding what other people think, <mark class="vocab-word" data-word="empathy">empathy</mark>, fairness, and social identity. These brain regions play key roles in whether people <mark class="vocab-word" data-word="convince">convince</mark> others of their ideas. <mark class="vocab-word" data-word="perception">Perception</mark> is important in social <mark class="vocab-word" data-word="cognition">cognition</mark> too. The <mark class="vocab-word" data-word="perception">perception</mark> of someone’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark>, or <mark class="vocab-word" data-word="reputation">reputation</mark>, can make or break a deal. Understanding how <mark class="vocab-word" data-word="perception">perception</mark> becomes interviewed with social decision making shows why successful iconoclasts are so rare.</p><p>Iconoclasts create new opportunities in every area from artistic expression to technology to business. They supply <mark class="vocab-word" data-word="creativity">creativity</mark> and <mark class="vocab-word" data-word="innovation">innovation</mark> not easily <mark class="vocab-word" data-word="accomplish">accomplished</mark> by committees. Rules aren’t important to them. Iconoclasts face <mark class="vocab-word" data-word="alienation">alienation</mark> and failure, but can also be a major <mark class="vocab-word" data-word="asset">asset</mark> to any organization. It is crucial for success in any field to understand how the iconoclastic mind works.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在过去十年里，科学家思考大脑的方式发生了一场革命。我们现在知道，人类做出的决定可以追溯到大脑特定部位的神经元放电模式。这些发现导致神经经济学领域的出现。该领域研究大脑在需要创新的经济领域取得成功的秘密。能够做到这一点的大脑具有叛逆的特点。简而言之，叛逆者是做别人认为无法做到的事情的人。</p><p>这个定义意味着叛逆者与他人不同。但是更确切地说，是他们的大脑在三个截然不同的领域与他人不同：感知，恐惧反应和社会智慧。这三种功能中的每一种都利用大脑中的不同回路。反对者可能认为，大脑无关紧要，以创新甚至是革命性的方式思考更多的是性格而非大脑的作用。但正是因为认识到大脑的客观运转限制着我们的决策方式，神经经济学才由此诞生。 通过了解这些约束，我们开始理解为什么有些人会产生不同的想法。</p><p>首先要意识到的是，大脑拥有的资源有限。它具有固定的能量预算，大约与40瓦的灯泡相同，因此它已经进化为尽可能高效地工作。也正是这一点阻碍大多数人成为叛逆者。例如，当面对来自眼睛的信息流时，大脑将以最快的方式解读该信息。因此，它将利用过去的经验和任何其他信息来源（例如别人说的话）来理解所看到的内容。这事儿一直发生。大脑采取行之有效的捷径，以至于我们几乎没有意识到它们的存在。我们认为我们对世界的看法是真实的，但它其实仅仅是生物和电子的回响。感知不仅仅是眼睛或耳朵传输到大脑的产物。相比于光子或声波的物理现实，感知更多的是大脑的产物。</p><p>感知对于离经叛道至关重要。叛逆者对事物的看法与其他人不同。他们的大脑不会像普通人的大脑那样陷入效率陷阱。叛逆者，无论是因为他们出生如此还是后天习得，已经找到了绕过困扰大多数人的感知捷径的方法。感知不是大脑连接的硬件。这是一个学习的过程，既是诅咒，也是变革的机会。大脑面临着从感觉上解释身体刺激的根本问题。大脑看到，听到或触摸的一切都有多种解释。最终选择的只是大脑的最佳理论。用技术术语来说，这些猜想是建立在一种解释优于另一种解释的统计学可能性的基础之上的，并且受过去经验和其他人的观点的影响很大。这点对于潜在的叛逆者而言十分重要。</p><p>获取与众不同的思维方式的最好办法是用从未经历过的事物轰炸大脑。新鲜事物从过去经验的锁链中释放出感知过程，并迫使大脑做出新的判断。成功的叛逆者非常愿意接触新鲜和不同的事物。对叛逆者的观察表明，他们拥抱新鲜事物，而大多数人则会避免与众不同的东西。</p><p>但是，新鲜事物的问题在于，它往往会触发大脑的恐惧系统。恐惧是像叛逆者那样思考的主要障碍，它将普通人困在既定轨道上。恐惧有多种类型，但抑制反传统思维并且人们发现很难处理的两种是：对不确定的恐惧和对公众嘲笑的恐惧。这看起来可能像是微不足道的东西。但对公开演讲的恐惧困扰着三分之一的人口，而每个人又都得时不时做公开演讲。正是因为这种现象太过常见，人们很难将其看作一种精神疾病。这使得人们普遍认为它是一种精神障碍。它只是人类本性的一种常见变化，而叛逆者则不会让其阻碍他们的反应。</p><p>最后，要成为成功的叛逆者，一个人必须向他人兜售自己的想法。这就轮到社交智慧登场了。社交智慧是在商业环境中理解和管理人的能力。在过去的十年中，人们对社会型大脑的认知突飞猛进，对这种大脑在团队协作共同决策时所起的作用也了如指掌。神经科学已经揭示了哪些大脑回路负责诸如理解他人想法，同理心，公平和社会认同等功能。这些大脑区域在人们是否能说服他人相信自己的想法方面起着关键作用。感知在社会认知中也很重要。对某人热情，或声誉的看法，可以成就或破坏异一场交易。若能了解感知与社会决策交缠的关系，就能明白为什么成功的叛逆者如此稀少。</p><p>从艺术表现到技术，再到商业，叛逆者在各个领域创造新的机会。他们所提供的创造力和创新是其他人所无法轻易企及的。规则对他们并不重要。叛逆者面临着疏远和失败，但对于任何组织来说他们也是一项重要的资产。了解叛逆者的大脑如何工作对于在任何领域取得成功至关重要。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>In the last <mark class="vocab-word" data-word="decade">decade</mark> a revolution has occurred in the way that scientists think about the brain. We now know that the decisions humans make can be <mark class="vocab-word" data-word="trace">traced</mark> to the <mark class="vocab-word" data-word="fir">firing</mark> patterns of <mark class="vocab-word" data-word="neuron">neurons</mark> in specific parts of the brain. These discoveries have led to the field known asneuroeconomics, which studies the brain’s secrets to success in an economic environment that demands <mark class="vocab-word" data-word="innovation">innovation</mark> and being able to do things differently from competitors. A brain that can do this is an iconoclastic one. <mark class="vocab-word" data-word="briefly">Briefly</mark>, aniconoclastis a person who does something that others say can’t be done.</p></div>  <div class="parallel-zh"><p>在过去十年里，科学家思考大脑的方式发生了一场革命。我们现在知道，人类做出的决定可以追溯到大脑特定部位的神经元放电模式。这些发现导致神经经济学领域的出现。该领域研究大脑在需要创新的经济领域取得成功的秘密。能够做到这一点的大脑具有叛逆的特点。简而言之，叛逆者是做别人认为无法做到的事情的人。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This definition implies that iconoclasts are different from other people, but more <mark class="vocab-word" data-word="precisely">precisely</mark>, it is the brains that are different in three <mark class="vocab-word" data-word="distinct">distinct</mark> ways: <mark class="vocab-word" data-word="perception">perception</mark>, fear response, and social intelligence. Each of these three functions <mark class="vocab-word" data-word="utilize">utilizes</mark> a different <mark class="vocab-word" data-word="circuit">circuit</mark> in the brain. Naysayers might <mark class="vocab-word" data-word="suggest">suggest</mark> that the brain is <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> that thinking in an original, even <mark class="vocab-word" data-word="revolutionary">revolutionary</mark>, way is more a <mark class="vocab-word" data-word="matter">matter</mark> of personality than brain function. But the field of neuroeconomics was born out of the <mark class="vocab-word" data-word="realization">realization</mark> that the physical working of the brain place <mark class="vocab-word" data-word="limitation">limitations</mark> on the way we make decisions. By understanding these <mark class="vocab-word" data-word="constraint">constraints</mark>, we begin to understand why some people <mark class="vocab-word" data-word="march">march</mark> to a different drumbeat.</p></div>  <div class="parallel-zh"><p>这个定义意味着叛逆者与他人不同。但是更确切地说，是他们的大脑在三个截然不同的领域与他人不同：感知，恐惧反应和社会智慧。这三种功能中的每一种都利用大脑中的不同回路。反对者可能认为，大脑无关紧要，以创新甚至是革命性的方式思考更多的是性格而非大脑的作用。但正是因为认识到大脑的客观运转限制着我们的决策方式，神经经济学才由此诞生。 通过了解这些约束，我们开始理解为什么有些人会产生不同的想法。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The first thing to realize is that the brain suffers from limited resources. It has a <mark class="vocab-word" data-word="fixed">fixed</mark> energy budget, about the same as a 40 <mark class="vocab-word" data-word="watt">watt</mark> light <mark class="vocab-word" data-word="bulb">bulb</mark>, so it has <mark class="vocab-word" data-word="evolve">evolved</mark> to work as <mark class="vocab-word" data-word="efficiently">efficiently</mark> as possible. This is where most people are <mark class="vocab-word" data-word="impede">impeded</mark> from being an iconoclast. For example, when <mark class="vocab-word" data-word="confront">confronted</mark> with information streaming from the eyes, the brain will interpret this information in the quickest way possible. Thus it will draw on both past experience and any other source of information, such as what other people say, to make sense of what it is seeing. This happens all the time. The brain takes <mark class="vocab-word" data-word="shortcut">shortcuts</mark> that work so well we hardly ever aware of them. We think our <mark class="vocab-word" data-word="perception">perceptions</mark> of the world are real, but they are only <mark class="vocab-word" data-word="biological">biological</mark> and <mark class="vocab-word" data-word="electrical">electrical</mark> rumblings. <mark class="vocab-word" data-word="perception">Perception</mark> is not simply a product of what your eyes or ears <mark class="vocab-word" data-word="transmit">transmit</mark> to your brain. More than the physical reality of <mark class="vocab-word" data-word="photon">photons</mark> or sound waves, <mark class="vocab-word" data-word="perception">perception</mark> is a product of the brain.</p></div>  <div class="parallel-zh"><p>首先要意识到的是，大脑拥有的资源有限。它具有固定的能量预算，大约与40瓦的灯泡相同，因此它已经进化为尽可能高效地工作。也正是这一点阻碍大多数人成为叛逆者。例如，当面对来自眼睛的信息流时，大脑将以最快的方式解读该信息。因此，它将利用过去的经验和任何其他信息来源（例如别人说的话）来理解所看到的内容。这事儿一直发生。大脑采取行之有效的捷径，以至于我们几乎没有意识到它们的存在。我们认为我们对世界的看法是真实的，但它其实仅仅是生物和电子的回响。感知不仅仅是眼睛或耳朵传输到大脑的产物。相比于光子或声波的物理现实，感知更多的是大脑的产物。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="perception">Perception</mark> is central to iconoclasm. Iconoclasts see things differently to other people. Their brains do not fail into <mark class="vocab-word" data-word="efficiency">efficiency</mark> <mark class="vocab-word" data-word="pitfall">pitfalls</mark> as much as the average person’s brain. Iconoclasts, either because they were born that way or through learning, have found ways to work around the perceptual <mark class="vocab-word" data-word="shortcut">shortcut</mark> that <mark class="vocab-word" data-word="plague">plague</mark> most people. <mark class="vocab-word" data-word="perception">Perception</mark> is not something that is hardwired into the brain. It is a <mark class="vocab-word" data-word="learned">learned</mark> process, which is both a <mark class="vocab-word" data-word="curse">curse</mark> and an opportunity for change. The brain faces the fundamental problem of interpreting physical stimuli from the sense. Everything the brain sees, hears, or touches has multiple <mark class="vocab-word" data-word="interpretation">interpretations</mark>. The one that is <mark class="vocab-word" data-word="ultimate">ultimately</mark> chosen is simply the brain’s best theory. In technical terms, these <mark class="vocab-word" data-word="conjecture">conjectures</mark> have their basis in the statistical <mark class="vocab-word" data-word="likelihood">likelihood</mark> of one <mark class="vocab-word" data-word="interpretation">interpretation</mark> over another and are heavily <mark class="vocab-word" data-word="influence">influenced</mark> by past experience and, importantly for potential iconoclasts, what other people say.</p></div>  <div class="parallel-zh"><p>感知对于离经叛道至关重要。叛逆者对事物的看法与其他人不同。他们的大脑不会像普通人的大脑那样陷入效率陷阱。叛逆者，无论是因为他们出生如此还是后天习得，已经找到了绕过困扰大多数人的感知捷径的方法。感知不是大脑连接的硬件。这是一个学习的过程，既是诅咒，也是变革的机会。大脑面临着从感觉上解释身体刺激的根本问题。大脑看到，听到或触摸的一切都有多种解释。最终选择的只是大脑的最佳理论。用技术术语来说，这些猜想是建立在一种解释优于另一种解释的统计学可能性的基础之上的，并且受过去经验和其他人的观点的影响很大。这点对于潜在的叛逆者而言十分重要。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The best way to see things differently to other people is to <mark class="vocab-word" data-word="bombard">bombard</mark> the brain with things it has never encountered before. <mark class="vocab-word" data-word="novelty">Novelty</mark> releases the perceptual process from the chains of past experience and forces the brain to make new judgments. Successful iconoclasts have an extraordinary <mark class="vocab-word" data-word="willingness">willingness</mark> to be <mark class="vocab-word" data-word="exposed">exposed</mark> to what is fresh and different. Observation of iconoclasts shows that they <mark class="vocab-word" data-word="embrace">embrace</mark> <mark class="vocab-word" data-word="novelty">novelty</mark> while most people avoid things that are different.</p></div>  <div class="parallel-zh"><p>获取与众不同的思维方式的最好办法是用从未经历过的事物轰炸大脑。新鲜事物从过去经验的锁链中释放出感知过程，并迫使大脑做出新的判断。成功的叛逆者非常愿意接触新鲜和不同的事物。对叛逆者的观察表明，他们拥抱新鲜事物，而大多数人则会避免与众不同的东西。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The problem with <mark class="vocab-word" data-word="novelty">novelty</mark>, however, is that it tends to <mark class="vocab-word" data-word="trigger">trigger</mark> the brain’s fear system. Fear is a major <mark class="vocab-word" data-word="impediment">impediment</mark> to thinking like an iconoclast and stops the average person in his tracks. There are many types of fear, but the two that <mark class="vocab-word" data-word="inhibit">inhibit</mark> iconoclastic thinking and people generally find difficult to deal with arefear of <mark class="vocab-word" data-word="uncertainty">uncertainty</mark> and fear of public ridicule.These may seem like <mark class="vocab-word" data-word="trivial">trivial</mark> phobia. But fear of public speaking, which everyone must do from time to time, <mark class="vocab-word" data-word="afflict">afflicts</mark> one-third of the population. This makes it too common to be considered a mental <mark class="vocab-word" data-word="disorder">disorder</mark>. It is simply a common <mark class="vocab-word" data-word="variant">variant</mark> of human nature, one which iconoclasts do not let <mark class="vocab-word" data-word="inhibit">inhibit</mark> their reactions.</p></div>  <div class="parallel-zh"><p>但是，新鲜事物的问题在于，它往往会触发大脑的恐惧系统。恐惧是像叛逆者那样思考的主要障碍，它将普通人困在既定轨道上。恐惧有多种类型，但抑制反传统思维并且人们发现很难处理的两种是：对不确定的恐惧和对公众嘲笑的恐惧。这看起来可能像是微不足道的东西。但对公开演讲的恐惧困扰着三分之一的人口，而每个人又都得时不时做公开演讲。正是因为这种现象太过常见，人们很难将其看作一种精神疾病。这使得人们普遍认为它是一种精神障碍。它只是人类本性的一种常见变化，而叛逆者则不会让其阻碍他们的反应。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Finally, to be successful iconoclasts, individuals must sell their ideas to other people. This is where socialintelligencecomes in. Social intelligence is the ability to understand and manage people in a business setting. In the last <mark class="vocab-word" data-word="decade">decade</mark> there has been an <mark class="vocab-word" data-word="explosion">explosion</mark> of knowledge about the social brain and how the brain works when groups <mark class="vocab-word" data-word="coordinate">coordinate</mark> decision making. <mark class="vocab-word" data-word="neuroscience">Neuroscience</mark> has <mark class="vocab-word" data-word="reveal">revealed</mark> which brain <mark class="vocab-word" data-word="circuit">circuits</mark> are responsible for functions like understanding what other people think, <mark class="vocab-word" data-word="empathy">empathy</mark>, fairness, and social identity. These brain regions play key roles in whether people <mark class="vocab-word" data-word="convince">convince</mark> others of their ideas. <mark class="vocab-word" data-word="perception">Perception</mark> is important in social <mark class="vocab-word" data-word="cognition">cognition</mark> too. The <mark class="vocab-word" data-word="perception">perception</mark> of someone’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark>, or <mark class="vocab-word" data-word="reputation">reputation</mark>, can make or break a deal. Understanding how <mark class="vocab-word" data-word="perception">perception</mark> becomes interviewed with social decision making shows why successful iconoclasts are so rare.</p></div>  <div class="parallel-zh"><p>最后，要成为成功的叛逆者，一个人必须向他人兜售自己的想法。这就轮到社交智慧登场了。社交智慧是在商业环境中理解和管理人的能力。在过去的十年中，人们对社会型大脑的认知突飞猛进，对这种大脑在团队协作共同决策时所起的作用也了如指掌。神经科学已经揭示了哪些大脑回路负责诸如理解他人想法，同理心，公平和社会认同等功能。这些大脑区域在人们是否能说服他人相信自己的想法方面起着关键作用。感知在社会认知中也很重要。对某人热情，或声誉的看法，可以成就或破坏异一场交易。若能了解感知与社会决策交缠的关系，就能明白为什么成功的叛逆者如此稀少。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Iconoclasts create new opportunities in every area from artistic expression to technology to business. They supply <mark class="vocab-word" data-word="creativity">creativity</mark> and <mark class="vocab-word" data-word="innovation">innovation</mark> not easily <mark class="vocab-word" data-word="accomplish">accomplished</mark> by committees. Rules aren’t important to them. Iconoclasts face <mark class="vocab-word" data-word="alienation">alienation</mark> and failure, but can also be a major <mark class="vocab-word" data-word="asset">asset</mark> to any organization. It is crucial for success in any field to understand how the iconoclastic mind works.</p></div>  <div class="parallel-zh"><p>从艺术表现到技术，再到商业，叛逆者在各个领域创造新的机会。他们所提供的创造力和创新是其他人所无法轻易企及的。规则对他们并不重要。叛逆者面临着疏远和失败，但对于任何组织来说他们也是一项重要的资产。了解叛逆者的大脑如何工作对于在任何领域取得成功至关重要。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"decade": 2, "trace": 1, "fir": 1, "neuron": 1, "innovation": 2, "briefly": 1, "precisely": 1, "distinct": 1, "perception": 9, "utilize": 1, "circuit": 2, "suggest": 1, "irrelevant": 1, "revolutionary": 1, "matter": 1, "realization": 1, "limitation": 1, "constraint": 1, "march": 1, "fixed": 1, "watt": 1, "bulb": 1, "evolve": 1, "efficiently": 1, "impede": 1, "confront": 1, "shortcut": 2, "biological": 1, "electrical": 1, "transmit": 1, "photon": 1, "efficiency": 1, "pitfall": 1, "plague": 1, "learned": 1, "curse": 1, "interpretation": 2, "ultimate": 1, "conjecture": 1, "likelihood": 1, "influence": 1, "bombard": 1, "novelty": 3, "willingness": 1, "exposed": 1, "embrace": 1, "trigger": 1, "impediment": 1, "inhibit": 2, "uncertainty": 1, "trivial": 1, "afflict": 1, "disorder": 1, "variant": 1, "explosion": 1, "coordinate": 1, "neuroscience": 1, "reveal": 1, "empathy": 1, "convince": 1, "cognition": 1, "enthusiasm": 1, "reputation": 1, "creativity": 1, "accomplish": 1, "alienation": 1, "asset": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

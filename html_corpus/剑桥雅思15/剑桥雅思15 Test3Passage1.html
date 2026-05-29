@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Henry Moore  亨利·摩尔 - 剑桥雅思15 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Henry Moore  亨利·摩尔</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39976.html" target="_blank">https://www.laokaoya.com/39976.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Henry Moore was born in Castleford, a small town near Leeds in the north of England. He was the seventh child of Raymond Moore and his wife Mary Baker. He studied at Castleford <mark class="vocab-word" data-word="grammar">Grammar</mark> School from 1909 to 1915, where his early interest in art was encouraged by his teacher Alice Gostick. After leaving school, Moore <mark class="vocab-word" data-word="hop">hoped</mark> to become a <mark class="vocab-word" data-word="sculptor">sculptor</mark>, but instead he complied with his father’s wish that he train as a schoolteacher. He had to abandon his training in 1917 when he was sent to France to fight in the First World War.</p><p>After the war, Moore <mark class="vocab-word" data-word="enroll">enrolled</mark> at the Leeds School of Art, where he studied for two years. In his first year, he spent most of his time drawing. Although he wanted to study <mark class="vocab-word" data-word="sculpture">sculpture</mark>, no teacher was <mark class="vocab-word" data-word="appoint">appointed</mark> until his second year. At the end of that year, he passed the <mark class="vocab-word" data-word="sculpture">sculpture</mark> examination and was awarded a <mark class="vocab-word" data-word="scholarship">scholarship</mark> to the Royal College of Art in London. In September 1921, he moved to London and began three years of <mark class="vocab-word" data-word="advanced">advanced</mark> study in <mark class="vocab-word" data-word="sculpture">sculpture</mark>.</p><p><mark class="vocab-word" data-word="alongside">Alongside</mark> the instruction he received at the Royal College, Moore visited many of the London museums, particularly the British Museum, which had a wide-ranging collection of ancient <mark class="vocab-word" data-word="sculpture">sculpture</mark>. During these visits, he discovered the power and beauty of ancient Egyptian and African <mark class="vocab-word" data-word="sculpture">sculpture</mark>. As he became increasingly interested in these ‘<mark class="vocab-word" data-word="primitive">primitive</mark>’ forms of art, he turned away from European sculptural traditions.</p><p>After graduating, Moore spent the first six months of 1925 travelling in France. When he visited the Trocadero Museum in Paris, he was impressed by a cast of a Mayan <mark class="vocab-word" data-word="sculpture">sculpture</mark> of the rain spirit. It was a male <mark class="vocab-word" data-word="recline">reclining</mark> figure with its knees <mark class="vocab-word" data-word="drawn">drawn</mark> up together, and its head at a right angle to its body. Moore became <mark class="vocab-word" data-word="fascinate">fascinated</mark> with this stone <mark class="vocab-word" data-word="sculpture">sculpture</mark>, which he thought had a power and originality that no other stone <mark class="vocab-word" data-word="sculpture">sculpture</mark> possessed. He himself started <mark class="vocab-word" data-word="carve">carving</mark> a variety of subjects in stone, including depictions of <mark class="vocab-word" data-word="recline">reclining</mark> women, mother-and-child groups, and <mark class="vocab-word" data-word="mask">masks</mark>.</p><p>Moore’s <mark class="vocab-word" data-word="exceptional">exceptional</mark> talent soon gained <mark class="vocab-word" data-word="recognition">recognition</mark>, and in 1926 he started work as a <mark class="vocab-word" data-word="sculpture">sculpture</mark> instructor at the Royal College. In 1933, he became a member of a group of young artists called Unit One. The aim of the group was to <mark class="vocab-word" data-word="convince">convince</mark> the English public of the <mark class="vocab-word" data-word="merit">merits</mark> of the emerging international movement in modern art and <mark class="vocab-word" data-word="architecture">architecture</mark>.</p><p>Around this time, Moore moved away from the human figure to experiment with <mark class="vocab-word" data-word="abstract">abstract</mark> shapes. In 1931, he held an exhibition at the Leicester Galleries in London. His work was enthusiastically welcomed by fellow <mark class="vocab-word" data-word="sculptor">sculptors</mark>, but the reviews in the press were extremely <mark class="vocab-word" data-word="negative">negative</mark> and turned Moore into a <mark class="vocab-word" data-word="notorious">notorious</mark> figure. There were calls for his resignation from the Royal College, and the following year, when his contract <mark class="vocab-word" data-word="expire">expired</mark>, he left to start a <mark class="vocab-word" data-word="sculpture">sculpture</mark> department at the Chelsea School of Art in London.</p><p>Throughout the 1930s, Moore did not show any <mark class="vocab-word" data-word="inclination">inclination</mark> to please the British public. He became interested in the paintings of the <mark class="vocab-word" data-word="spanish">Spanish</mark> artist Pablo Picasso, whose work inspired him to <mark class="vocab-word" data-word="distort">distort</mark> the human body in a <mark class="vocab-word" data-word="radical">radical</mark> way. At times, he seemed to abandon the human figure <mark class="vocab-word" data-word="altogether">altogether</mark>. The pages of his sketchbooks from this period show his ideas for <mark class="vocab-word" data-word="abstract">abstract</mark> <mark class="vocab-word" data-word="sculpture">sculptures</mark> that <mark class="vocab-word" data-word="bore">bore</mark> little <mark class="vocab-word" data-word="resemblance">resemblance</mark> to the human form.</p><p>In 1940, during the Second World War, Moore stopped teaching at the Chelsea School and moved to a farmhouse about 20 miles north of London. A <mark class="vocab-word" data-word="shortage">shortage</mark> of materials forced him to focus on drawing. He did numerous small <mark class="vocab-word" data-word="sketch">sketches</mark> of Londoners, later turning these ideas into large coloured drawings in his studio. In 1942, he returned to Castleford to make a series of <mark class="vocab-word" data-word="sketch">sketches</mark> of the miners who worked there.</p><p>In 1944, Harlow, a town near London, offered Moore a commission for a <mark class="vocab-word" data-word="sculpture">sculpture</mark> <mark class="vocab-word" data-word="depict">depicting</mark> a family. The resulting work signifies a dramatic change in Moore’s style, away from the experimentation of the 1930s towards a more natural and <mark class="vocab-word" data-word="humanistic">humanistic</mark> subject <mark class="vocab-word" data-word="matter">matter</mark>. He did dozens of studies in <mark class="vocab-word" data-word="clay">clay</mark> for the <mark class="vocab-word" data-word="sculpture">sculpture</mark>, and these were cast in <mark class="vocab-word" data-word="bronze">bronze</mark> and issued in editions of seven to nine copies each. In this way, Moore’s work became available to collectors all over the world. The <mark class="vocab-word" data-word="boost">boost</mark> to his income enabled him to take on <mark class="vocab-word" data-word="ambitious">ambitious</mark> projects and start working on the scale he felt his <mark class="vocab-word" data-word="sculpture">sculpture</mark> demanded.</p><p><mark class="vocab-word" data-word="critic">Critics</mark> who had begun to think that Moore had become less <mark class="vocab-word" data-word="revolutionary">revolutionary</mark> were proven wrong by the appearance, in 1950, of the first of Moore’s series of <mark class="vocab-word" data-word="standing">standing</mark> figures in <mark class="vocab-word" data-word="bronze">bronze</mark>, with their <mark class="vocab-word" data-word="harsh">harsh</mark> and <mark class="vocab-word" data-word="angular">angular</mark> <mark class="vocab-word" data-word="pierce">pierced</mark> forms and <mark class="vocab-word" data-word="distinct">distinct</mark> impression of <mark class="vocab-word" data-word="menace">menace</mark>. Moore also <mark class="vocab-word" data-word="varied">varied</mark> his subject <mark class="vocab-word" data-word="matter">matter</mark> in the 1950s with such works asWarrior with ShieldandFalling <mark class="vocab-word" data-word="warrior">Warrior</mark>. These were rare examples of Moore’s use of the male figure and owe something to his visit to Greece in 1951, when he had the opportunity to study ancient works of art.</p><p>In his final years, Moore created the Henry Moore <mark class="vocab-word" data-word="foundation">Foundation</mark> to promote art <mark class="vocab-word" data-word="appreciation">appreciation</mark> and to display his work. Moore was the first modern English <mark class="vocab-word" data-word="sculptor">sculptor</mark> to achieve international critical <mark class="vocab-word" data-word="acclaim">acclaim</mark> and he is still regarded as one of the most important <mark class="vocab-word" data-word="sculptor">sculptors</mark> of the 20th century.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>亨利·摩尔出生在英格兰北部利兹附近的一座叫作卡斯尔福德的小镇里。他是雷蒙德·摩尔与其妻子玛丽·贝克的第7个孩子。他于1909年到1915年期间在卡斯尔福德的文法学校学习。在那里，他对艺术的早期兴趣得到其老师Alice Gostick的鼓励。离开学校之后，摩尔希望成为一名雕塑家，但他还是遵从他父亲的希望，接受成为一名学校老师的培训。1917年，因被派往法国参加第一次世界大战，他不得不放弃了自己的培训。</p><p>战后，摩尔进入利兹艺术学院，并在那里学习了两年的时间。第一年里，他将大部分时间都用在绘画上。虽然他想要学习雕塑，但直到第二年学校才给他安排老师。在那年结束的时候，他通过雕塑考试，并且获得伦敦皇家艺术学院的奖学金。1921年9月，他搬到伦敦，开始了雕塑方面为期三年的进一步学习。</p><p>在皇家艺术学院接受指导期间，摩尔参观了许多伦敦的博物馆，尤其是大英博物馆。那里收藏着大量的古代雕塑。在这些参观中，他体会到古埃及和非洲雕塑的力量与美感。随着他对这些原始形态的艺术愈发感兴趣，他逐渐背离了欧洲雕塑的传统。</p><p>毕业之后，摩尔将1925年的上半年都用于在法国旅行。当他参观巴黎特罗卡德罗博物馆时，玛雅雨神雕塑的造型给他留下了深刻的印象。那是一名斜倚着的男性，膝盖并拢，头与身体成直角。摩尔迷上了这座石像。他认为它拥有其他石像所没有的力量与独创性。他自己也开始用石头雕刻各种形象，包括斜躺着的女性，母子群，以及面具。</p><p>摩尔非凡的天赋很快得到认可。1926年他开始担任皇家艺术学院的雕塑老师。1933年，他成为一个名为“Unit One”的青年艺术家团体的成员。该团体旨在让英国公众接受现代艺术与建筑领域新兴国际运动的优点。</p><p>在这个时期，摩尔开始从人像转为实验抽象的形状。1931年，他在伦敦莱彻斯特美术馆举办了一场展览。其作品受到雕塑家同行的热情欢迎，但媒体的评价却极为负面，这使得摩尔声名狼藉。有人要求他从皇家艺术学院辞职。第二年，当他合同到期时，他离开这所学校，在伦敦切尔西艺术学院成立了雕塑系。</p><p>整个20世纪30年代，摩尔没有展现出任何取悦英国公众的倾向。他对西班牙艺术家巴勃罗·毕加索的画作产生兴趣。其作品启发他以一种激进的方式扭曲人类形体。有时，他甚至似乎完全放弃了人类的形象。他这一时期的速写本显示，他对于抽象雕塑的想法与人类形态几乎没有什么相似之处。</p><p>1940年，第二次世界大战期间，摩尔停止了自己在切尔西学院的教学工作，搬到伦敦北部大约20英里处的一座农场。材料的缺乏迫使他将注意力放在绘画上。他画了大量的、有关伦敦居民的小幅素描，并随后在其工作室里将这些想法变为大型彩色画作。1942年，他回到卡斯尔福德，为在那里工作的旷工创作了一系列素描。</p><p>1944年，伦敦附近的一座城镇-哈洛-委托摩尔创作一座描绘家庭的雕塑。最终的作品标志着摩尔风格的剧烈变化，从20世纪30年代的实验性质转变为一种更加自然、更加带有人文特质的主题。他对雕塑所需的粘土进行了数十次研究。它们被塑造成青铜色，每个版本拥有7-9个副本。以这种方式，全世界的收藏者都可以接触到摩尔的作品。收入的增加使他能够从事更为宏大的项目，并开始按照他认为雕塑所需要的大小进行创作。</p><p>1950年，随着摩尔第一批青铜站立人像的出现，那些认为摩尔不再具备革命性的批评家被证明是错误的。这些雕像有着粗糙、棱角分明的尖刺造型，给人留下明显的危险印象。摩尔在20世纪50年代创作出诸如《带盾勇士》和《坠落的勇士》等作品来丰富自己的主题。这些是摩尔使用男性形象的罕见例子，其原因可以归为他在1951年前往希腊的访问，当时他有机会去研究古代艺术作品。</p><p>在他生命的最后几年里，摩尔创立了亨利·摩尔基金会来推进艺术欣赏并展示他的作品。摩尔是首位获得国际赞誉的现代英国雕塑家。他如今仍然被认为是20世纪最为重要的雕塑家之一。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Henry Moore was born in Castleford, a small town near Leeds in the north of England. He was the seventh child of Raymond Moore and his wife Mary Baker. He studied at Castleford <mark class="vocab-word" data-word="grammar">Grammar</mark> School from 1909 to 1915, where his early interest in art was encouraged by his teacher Alice Gostick. After leaving school, Moore <mark class="vocab-word" data-word="hop">hoped</mark> to become a <mark class="vocab-word" data-word="sculptor">sculptor</mark>, but instead he complied with his father’s wish that he train as a schoolteacher. He had to abandon his training in 1917 when he was sent to France to fight in the First World War.</p></div>  <div class="parallel-zh"><p>亨利·摩尔出生在英格兰北部利兹附近的一座叫作卡斯尔福德的小镇里。他是雷蒙德·摩尔与其妻子玛丽·贝克的第7个孩子。他于1909年到1915年期间在卡斯尔福德的文法学校学习。在那里，他对艺术的早期兴趣得到其老师Alice Gostick的鼓励。离开学校之后，摩尔希望成为一名雕塑家，但他还是遵从他父亲的希望，接受成为一名学校老师的培训。1917年，因被派往法国参加第一次世界大战，他不得不放弃了自己的培训。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>After the war, Moore <mark class="vocab-word" data-word="enroll">enrolled</mark> at the Leeds School of Art, where he studied for two years. In his first year, he spent most of his time drawing. Although he wanted to study <mark class="vocab-word" data-word="sculpture">sculpture</mark>, no teacher was <mark class="vocab-word" data-word="appoint">appointed</mark> until his second year. At the end of that year, he passed the <mark class="vocab-word" data-word="sculpture">sculpture</mark> examination and was awarded a <mark class="vocab-word" data-word="scholarship">scholarship</mark> to the Royal College of Art in London. In September 1921, he moved to London and began three years of <mark class="vocab-word" data-word="advanced">advanced</mark> study in <mark class="vocab-word" data-word="sculpture">sculpture</mark>.</p></div>  <div class="parallel-zh"><p>战后，摩尔进入利兹艺术学院，并在那里学习了两年的时间。第一年里，他将大部分时间都用在绘画上。虽然他想要学习雕塑，但直到第二年学校才给他安排老师。在那年结束的时候，他通过雕塑考试，并且获得伦敦皇家艺术学院的奖学金。1921年9月，他搬到伦敦，开始了雕塑方面为期三年的进一步学习。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="alongside">Alongside</mark> the instruction he received at the Royal College, Moore visited many of the London museums, particularly the British Museum, which had a wide-ranging collection of ancient <mark class="vocab-word" data-word="sculpture">sculpture</mark>. During these visits, he discovered the power and beauty of ancient Egyptian and African <mark class="vocab-word" data-word="sculpture">sculpture</mark>. As he became increasingly interested in these ‘<mark class="vocab-word" data-word="primitive">primitive</mark>’ forms of art, he turned away from European sculptural traditions.</p></div>  <div class="parallel-zh"><p>在皇家艺术学院接受指导期间，摩尔参观了许多伦敦的博物馆，尤其是大英博物馆。那里收藏着大量的古代雕塑。在这些参观中，他体会到古埃及和非洲雕塑的力量与美感。随着他对这些原始形态的艺术愈发感兴趣，他逐渐背离了欧洲雕塑的传统。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>After graduating, Moore spent the first six months of 1925 travelling in France. When he visited the Trocadero Museum in Paris, he was impressed by a cast of a Mayan <mark class="vocab-word" data-word="sculpture">sculpture</mark> of the rain spirit. It was a male <mark class="vocab-word" data-word="recline">reclining</mark> figure with its knees <mark class="vocab-word" data-word="drawn">drawn</mark> up together, and its head at a right angle to its body. Moore became <mark class="vocab-word" data-word="fascinate">fascinated</mark> with this stone <mark class="vocab-word" data-word="sculpture">sculpture</mark>, which he thought had a power and originality that no other stone <mark class="vocab-word" data-word="sculpture">sculpture</mark> possessed. He himself started <mark class="vocab-word" data-word="carve">carving</mark> a variety of subjects in stone, including depictions of <mark class="vocab-word" data-word="recline">reclining</mark> women, mother-and-child groups, and <mark class="vocab-word" data-word="mask">masks</mark>.</p></div>  <div class="parallel-zh"><p>毕业之后，摩尔将1925年的上半年都用于在法国旅行。当他参观巴黎特罗卡德罗博物馆时，玛雅雨神雕塑的造型给他留下了深刻的印象。那是一名斜倚着的男性，膝盖并拢，头与身体成直角。摩尔迷上了这座石像。他认为它拥有其他石像所没有的力量与独创性。他自己也开始用石头雕刻各种形象，包括斜躺着的女性，母子群，以及面具。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Moore’s <mark class="vocab-word" data-word="exceptional">exceptional</mark> talent soon gained <mark class="vocab-word" data-word="recognition">recognition</mark>, and in 1926 he started work as a <mark class="vocab-word" data-word="sculpture">sculpture</mark> instructor at the Royal College. In 1933, he became a member of a group of young artists called Unit One. The aim of the group was to <mark class="vocab-word" data-word="convince">convince</mark> the English public of the <mark class="vocab-word" data-word="merit">merits</mark> of the emerging international movement in modern art and <mark class="vocab-word" data-word="architecture">architecture</mark>.</p></div>  <div class="parallel-zh"><p>摩尔非凡的天赋很快得到认可。1926年他开始担任皇家艺术学院的雕塑老师。1933年，他成为一个名为“Unit One”的青年艺术家团体的成员。该团体旨在让英国公众接受现代艺术与建筑领域新兴国际运动的优点。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Around this time, Moore moved away from the human figure to experiment with <mark class="vocab-word" data-word="abstract">abstract</mark> shapes. In 1931, he held an exhibition at the Leicester Galleries in London. His work was enthusiastically welcomed by fellow <mark class="vocab-word" data-word="sculptor">sculptors</mark>, but the reviews in the press were extremely <mark class="vocab-word" data-word="negative">negative</mark> and turned Moore into a <mark class="vocab-word" data-word="notorious">notorious</mark> figure. There were calls for his resignation from the Royal College, and the following year, when his contract <mark class="vocab-word" data-word="expire">expired</mark>, he left to start a <mark class="vocab-word" data-word="sculpture">sculpture</mark> department at the Chelsea School of Art in London.</p></div>  <div class="parallel-zh"><p>在这个时期，摩尔开始从人像转为实验抽象的形状。1931年，他在伦敦莱彻斯特美术馆举办了一场展览。其作品受到雕塑家同行的热情欢迎，但媒体的评价却极为负面，这使得摩尔声名狼藉。有人要求他从皇家艺术学院辞职。第二年，当他合同到期时，他离开这所学校，在伦敦切尔西艺术学院成立了雕塑系。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Throughout the 1930s, Moore did not show any <mark class="vocab-word" data-word="inclination">inclination</mark> to please the British public. He became interested in the paintings of the <mark class="vocab-word" data-word="spanish">Spanish</mark> artist Pablo Picasso, whose work inspired him to <mark class="vocab-word" data-word="distort">distort</mark> the human body in a <mark class="vocab-word" data-word="radical">radical</mark> way. At times, he seemed to abandon the human figure <mark class="vocab-word" data-word="altogether">altogether</mark>. The pages of his sketchbooks from this period show his ideas for <mark class="vocab-word" data-word="abstract">abstract</mark> <mark class="vocab-word" data-word="sculpture">sculptures</mark> that <mark class="vocab-word" data-word="bore">bore</mark> little <mark class="vocab-word" data-word="resemblance">resemblance</mark> to the human form.</p></div>  <div class="parallel-zh"><p>整个20世纪30年代，摩尔没有展现出任何取悦英国公众的倾向。他对西班牙艺术家巴勃罗·毕加索的画作产生兴趣。其作品启发他以一种激进的方式扭曲人类形体。有时，他甚至似乎完全放弃了人类的形象。他这一时期的速写本显示，他对于抽象雕塑的想法与人类形态几乎没有什么相似之处。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 1940, during the Second World War, Moore stopped teaching at the Chelsea School and moved to a farmhouse about 20 miles north of London. A <mark class="vocab-word" data-word="shortage">shortage</mark> of materials forced him to focus on drawing. He did numerous small <mark class="vocab-word" data-word="sketch">sketches</mark> of Londoners, later turning these ideas into large coloured drawings in his studio. In 1942, he returned to Castleford to make a series of <mark class="vocab-word" data-word="sketch">sketches</mark> of the miners who worked there.</p></div>  <div class="parallel-zh"><p>1940年，第二次世界大战期间，摩尔停止了自己在切尔西学院的教学工作，搬到伦敦北部大约20英里处的一座农场。材料的缺乏迫使他将注意力放在绘画上。他画了大量的、有关伦敦居民的小幅素描，并随后在其工作室里将这些想法变为大型彩色画作。1942年，他回到卡斯尔福德，为在那里工作的旷工创作了一系列素描。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 1944, Harlow, a town near London, offered Moore a commission for a <mark class="vocab-word" data-word="sculpture">sculpture</mark> <mark class="vocab-word" data-word="depict">depicting</mark> a family. The resulting work signifies a dramatic change in Moore’s style, away from the experimentation of the 1930s towards a more natural and <mark class="vocab-word" data-word="humanistic">humanistic</mark> subject <mark class="vocab-word" data-word="matter">matter</mark>. He did dozens of studies in <mark class="vocab-word" data-word="clay">clay</mark> for the <mark class="vocab-word" data-word="sculpture">sculpture</mark>, and these were cast in <mark class="vocab-word" data-word="bronze">bronze</mark> and issued in editions of seven to nine copies each. In this way, Moore’s work became available to collectors all over the world. The <mark class="vocab-word" data-word="boost">boost</mark> to his income enabled him to take on <mark class="vocab-word" data-word="ambitious">ambitious</mark> projects and start working on the scale he felt his <mark class="vocab-word" data-word="sculpture">sculpture</mark> demanded.</p></div>  <div class="parallel-zh"><p>1944年，伦敦附近的一座城镇-哈洛-委托摩尔创作一座描绘家庭的雕塑。最终的作品标志着摩尔风格的剧烈变化，从20世纪30年代的实验性质转变为一种更加自然、更加带有人文特质的主题。他对雕塑所需的粘土进行了数十次研究。它们被塑造成青铜色，每个版本拥有7-9个副本。以这种方式，全世界的收藏者都可以接触到摩尔的作品。收入的增加使他能够从事更为宏大的项目，并开始按照他认为雕塑所需要的大小进行创作。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="critic">Critics</mark> who had begun to think that Moore had become less <mark class="vocab-word" data-word="revolutionary">revolutionary</mark> were proven wrong by the appearance, in 1950, of the first of Moore’s series of <mark class="vocab-word" data-word="standing">standing</mark> figures in <mark class="vocab-word" data-word="bronze">bronze</mark>, with their <mark class="vocab-word" data-word="harsh">harsh</mark> and <mark class="vocab-word" data-word="angular">angular</mark> <mark class="vocab-word" data-word="pierce">pierced</mark> forms and <mark class="vocab-word" data-word="distinct">distinct</mark> impression of <mark class="vocab-word" data-word="menace">menace</mark>. Moore also <mark class="vocab-word" data-word="varied">varied</mark> his subject <mark class="vocab-word" data-word="matter">matter</mark> in the 1950s with such works asWarrior with ShieldandFalling <mark class="vocab-word" data-word="warrior">Warrior</mark>. These were rare examples of Moore’s use of the male figure and owe something to his visit to Greece in 1951, when he had the opportunity to study ancient works of art.</p></div>  <div class="parallel-zh"><p>1950年，随着摩尔第一批青铜站立人像的出现，那些认为摩尔不再具备革命性的批评家被证明是错误的。这些雕像有着粗糙、棱角分明的尖刺造型，给人留下明显的危险印象。摩尔在20世纪50年代创作出诸如《带盾勇士》和《坠落的勇士》等作品来丰富自己的主题。这些是摩尔使用男性形象的罕见例子，其原因可以归为他在1951年前往希腊的访问，当时他有机会去研究古代艺术作品。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In his final years, Moore created the Henry Moore <mark class="vocab-word" data-word="foundation">Foundation</mark> to promote art <mark class="vocab-word" data-word="appreciation">appreciation</mark> and to display his work. Moore was the first modern English <mark class="vocab-word" data-word="sculptor">sculptor</mark> to achieve international critical <mark class="vocab-word" data-word="acclaim">acclaim</mark> and he is still regarded as one of the most important <mark class="vocab-word" data-word="sculptor">sculptors</mark> of the 20th century.</p></div>  <div class="parallel-zh"><p>在他生命的最后几年里，摩尔创立了亨利·摩尔基金会来推进艺术欣赏并展示他的作品。摩尔是首位获得国际赞誉的现代英国雕塑家。他如今仍然被认为是20世纪最为重要的雕塑家之一。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"grammar": 1, "hop": 1, "sculptor": 4, "enroll": 1, "sculpture": 14, "appoint": 1, "scholarship": 1, "advanced": 1, "alongside": 1, "primitive": 1, "recline": 2, "drawn": 1, "fascinate": 1, "carve": 1, "mask": 1, "exceptional": 1, "recognition": 1, "convince": 1, "merit": 1, "architecture": 1, "abstract": 2, "negative": 1, "notorious": 1, "expire": 1, "inclination": 1, "spanish": 1, "distort": 1, "radical": 1, "altogether": 1, "bore": 1, "resemblance": 1, "shortage": 1, "sketch": 2, "depict": 1, "humanistic": 1, "matter": 2, "clay": 1, "bronze": 2, "boost": 1, "ambitious": 1, "critic": 1, "revolutionary": 1, "standing": 1, "harsh": 1, "angular": 1, "pierce": 1, "distinct": 1, "menace": 1, "varied": 1, "warrior": 1, "foundation": 1, "appreciation": 1, "acclaim": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

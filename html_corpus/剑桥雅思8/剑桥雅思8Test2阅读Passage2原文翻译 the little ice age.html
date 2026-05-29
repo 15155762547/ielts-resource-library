@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the little ice age - 剑桥雅思8 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>the little ice age</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/25354.html" target="_blank">https://www.laokaoya.com/25354.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>This book will provide a detailed examination of the Little Ice Age and other <mark class="vocab-word" data-word="climatic">climatic</mark> shifts, but, before I <mark class="vocab-word" data-word="embark">embark</mark> on that, let me provide a historical context. We tend to think of climate – as opposed to weather – as something unchanging, yet <mark class="vocab-word" data-word="humanity">humanity</mark> has been at the <mark class="vocab-word" data-word="mercy">mercy</mark> of climate change for its entire existence, with at least eight <mark class="vocab-word" data-word="glacial">glacial</mark> episodes in the past 730, 000 years. Our <mark class="vocab-word" data-word="ancestor">ancestors</mark> adapted to the <mark class="vocab-word" data-word="universal">universal</mark> but <mark class="vocab-word" data-word="irregular">irregular</mark> global warming since the end of the last great Ice Age, around 10, 000years ago, with <mark class="vocab-word" data-word="dazzling">dazzling</mark> opportunism. They developed strategies for surviving <mark class="vocab-word" data-word="harsh">harsh</mark> <mark class="vocab-word" data-word="drought">drought</mark> cycles, <mark class="vocab-word" data-word="decade">decades</mark> of heavy <mark class="vocab-word" data-word="rainfall">rainfall</mark> or unaccustomed cold; adopted <mark class="vocab-word" data-word="agriculture">agriculture</mark> and stock-raising, which revolutionised human life; and founded the world’s first pre-industrial civilisations in Egypt, <mark class="vocab-word" data-word="mesopotamia">Mesopotamia</mark> and the Americas. But the price of sudden climate change, in <mark class="vocab-word" data-word="famine">famine</mark>, disease and suffering, was often high.</p><p>The Little Ice Age lasted from roughly 1300 until the middle of the nineteenth century. Only two centuries ago, Europe experienced a cycle of <mark class="vocab-word" data-word="bitter">bitterly</mark> cold winters; mountain <mark class="vocab-word" data-word="glacier">glaciers</mark> in the Swiss Alps were the lowest in recorded memory, and pack ice surrounded Iceland for much of the year. The <mark class="vocab-word" data-word="climatic">climatic</mark> events of the Little Ice Age did more than help shape the modern world. They are the deeply important context for the current <mark class="vocab-word" data-word="unprecedented">unprecedented</mark> global warming. The Little Ice Age was far from a deep freeze, however; rather an <mark class="vocab-word" data-word="irregular">irregular</mark> seesaw of rapid <mark class="vocab-word" data-word="climatic">climatic</mark> shifts, few <mark class="vocab-word" data-word="lasting">lasting</mark> more than a quarter-century, driven by complex and still little understood <mark class="vocab-word" data-word="interaction">interactions</mark> between the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark> and the ocean. The seesaw brought cycles of intensely cold winters and <mark class="vocab-word" data-word="easter">easterly</mark> <mark class="vocab-word" data-word="wind">winds</mark>, then switched <mark class="vocab-word" data-word="abrupt">abruptly</mark> to years of heavy <mark class="vocab-word" data-word="spring">spring</mark> and early summer rains, <mark class="vocab-word" data-word="mild">mild</mark> winters, and <mark class="vocab-word" data-word="frequent">frequent</mark> <mark class="vocab-word" data-word="atlantic">Atlantic</mark> storms, or to periods of <mark class="vocab-word" data-word="drought">droughts</mark>, light northeasterly <mark class="vocab-word" data-word="wind">winds</mark>, and summer heat waves.</p><p>Reconstructing the climate changes of the past is extremely difficult, because <mark class="vocab-word" data-word="systematic">systematic</mark> weather observations began only a few centuries ago, in Europe and North America. Records from India and <mark class="vocab-word" data-word="tropical">tropical</mark> Africa are even more recent. For the time before records began, we have only ‘<mark class="vocab-word" data-word="proxy">proxy</mark> records’ reconstructed largely from <mark class="vocab-word" data-word="tree">tree</mark> rings and ice <mark class="vocab-word" data-word="core">cores</mark>, <mark class="vocab-word" data-word="supplement">supplemented</mark> by a few incomplete written accounts. We now have hundreds of tree-ring records from throughout the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark>, and many from south of the <mark class="vocab-word" data-word="equator">equator</mark>, too, amplified with a growing body of temperature data from ice <mark class="vocab-word" data-word="core">cores</mark> <mark class="vocab-word" data-word="drill">drilled</mark> in <mark class="vocab-word" data-word="antarctica">Antarctica</mark>, Greenland, the Peruvian <mark class="vocab-word" data-word="andes">Andes</mark>, and other locations. We are close to a knowledge of annual summer and winter temperature <mark class="vocab-word" data-word="variation">variations</mark> over much of the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark> going back 600 years.</p><p>This book is a narrative history of <mark class="vocab-word" data-word="climatic">climatic</mark> shifts during the past ten centuries, and some of the ways in which people in Europe adapted to them. Part One describes the <mark class="vocab-word" data-word="medieval">Medieval</mark> Warm Period, roughly 900 to 1200. During these three centuries, Norse voyagers from Northern Europe explored northern seas, <mark class="vocab-word" data-word="settle">settled</mark> Greenland, and visited North America. It was not a time of uniform <mark class="vocab-word" data-word="warmth">warmth</mark>, for then, as always since the Great Ice Age, there were constant shifts in <mark class="vocab-word" data-word="rainfall">rainfall</mark> and temperature. Mean European temperatures were about the same as today, perhaps slightly cooler.</p><p>It is known that the Little Ice Age cooling began in Greenland and the <mark class="vocab-word" data-word="arctic">Arctic</mark> in about 1200. As the <mark class="vocab-word" data-word="arctic">Arctic</mark> ice pack spread southward, Norse <mark class="vocab-word" data-word="voyage">voyages</mark> to the west were rerouted into the open <mark class="vocab-word" data-word="atlantic">Atlantic</mark>, then ended <mark class="vocab-word" data-word="altogether">altogether</mark>. Storminess increased in the North <mark class="vocab-word" data-word="atlantic">Atlantic</mark> and North Sea. Colder, much wetter weather <mark class="vocab-word" data-word="descend">descended</mark> on Europe between 1315 and 1319, when thousands <mark class="vocab-word" data-word="perish">perished</mark> in a continent-wide <mark class="vocab-word" data-word="famine">famine</mark>. By 1400, the weather had become decidedly more unpredictable and stormier, with sudden shifts and lower temperatures that <mark class="vocab-word" data-word="culminate">culminated</mark> in the cold <mark class="vocab-word" data-word="decade">decades</mark> of the late sixteenth century. Fish were a <mark class="vocab-word" data-word="vital">vital</mark> <mark class="vocab-word" data-word="commodity">commodity</mark> in growing towns and cities, where food supplies were a constant concern. Dried <mark class="vocab-word" data-word="cod">cod</mark> and <mark class="vocab-word" data-word="herring">herring</mark> were already the <mark class="vocab-word" data-word="staple">staples</mark> of the European fish trade, but changes in water temperatures forced fishing <mark class="vocab-word" data-word="fleet">fleets</mark> to work further <mark class="vocab-word" data-word="offshore">offshore</mark>. The Basques, Dutch, and English developed the first <mark class="vocab-word" data-word="offshore">offshore</mark> fishing boats adapted to a colder and stormier <mark class="vocab-word" data-word="atlantic">Atlantic</mark>. A <mark class="vocab-word" data-word="gradual">gradual</mark> <mark class="vocab-word" data-word="agricultural">agricultural</mark> revolution in northern Europe stemmed from concerns over food supplies at a time of rising populations. The revolution <mark class="vocab-word" data-word="involved">involved</mark> <mark class="vocab-word" data-word="intensive">intensive</mark> commercial farming and the growing of animal <mark class="vocab-word" data-word="fodder">fodder</mark> on land not previously used for crops. The increased <mark class="vocab-word" data-word="productivity">productivity</mark> from farmland made some countries <mark class="vocab-word" data-word="self-sufficient">self-sufficient</mark> in grain and <mark class="vocab-word" data-word="livestock">livestock</mark> and offered effective protection against <mark class="vocab-word" data-word="famine">famine</mark>.</p><p>Global temperatures began to rise slowly after 1850, with the beginning of the Modern Warm Period. There was a vast <mark class="vocab-word" data-word="migration">migration</mark> from Europe by land-hungry farmers and others, to which the <mark class="vocab-word" data-word="famine">famine</mark> caused by the Irish potato <mark class="vocab-word" data-word="blight">blight</mark> contributed, to North America, Australia, New Zealand, and southern Africa. Millions of <mark class="vocab-word" data-word="hectare">hectares</mark> of forest and woodland fell before the newcomers’ axes between 1850 and 1890, as <mark class="vocab-word" data-word="intensive">intensive</mark> European farming methods expanded across the world. The <mark class="vocab-word" data-word="unprecedented">unprecedented</mark> land <mark class="vocab-word" data-word="clearance">clearance</mark> released vast quantities of <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="dioxide">dioxide</mark> into the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark>, <mark class="vocab-word" data-word="trigger">triggering</mark> for the first time humanly caused global warming. Temperatures <mark class="vocab-word" data-word="climb">climbed</mark> more rapidly in the twentieth century as the use of <mark class="vocab-word" data-word="fossil">fossil</mark> fuels <mark class="vocab-word" data-word="proliferate">proliferated</mark> and <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> gas levels continued to <mark class="vocab-word" data-word="soar">soar</mark>. The rise has been even steeper since the early 1980s. The Little Ice Age has given way to a new <mark class="vocab-word" data-word="climatic">climatic</mark> <mark class="vocab-word" data-word="regime">regime</mark>, <mark class="vocab-word" data-word="marked">marked</mark> by <mark class="vocab-word" data-word="prolonged">prolonged</mark> and steady warming. At the same time, extreme weather events like Category 5 <mark class="vocab-word" data-word="hurricane">hurricanes</mark> are becoming more <mark class="vocab-word" data-word="frequent">frequent</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>本书将详细探讨小冰河时代和其他气候变化，但在我着手探讨之前，请让我先描述一下历史背景。我们倾向于将气候（与天气相对）视为不变的东西，但是人类在整个生存过程中一直受气候变化的支配。在过去的730000年中至少发生了八次冰川事件。自大约十万年前上一个大冰河时代结束以来，我们的祖先以令人眼花缭乱的机会主义适应了普遍但不规则的全球变暖。他们制定了应对严酷干旱，数十年暴雨或令人不适的严寒的策略；采用农业和畜牧业彻底改变了人类生活；并在埃及，美索不达米亚和美洲建立了世界上第一批前工业化文明 。但突然的气候变化所造成的代价（饥荒，疾病和苦难）往往很高。</p><p>小冰河时代大约从1300持续到19 世纪中叶。仅仅两个世纪前，欧洲经历了严寒的冬季。瑞士阿尔卑斯山的高山冰川处于有记录以来的最低点，而冰块在一年中的大部分时间里都包围着冰岛。小冰河时代的气候事件不仅仅帮助塑造了现代世界。它们还是当前史无前例的全球变暖的极为重要的背景。然而，小冰河世纪并非极度寒冷，而是一种不规则的、交互的迅速气候变化。它们的持续时间很少超过四分之一世纪，由大气与海洋之间复杂而我们又知之甚少的相互作用驱动。它带来周期性的寒冷冬季和东风，然后突然转变为多年的漫长春季，初夏降雨，温和冬季和频繁的大西洋风暴，或者转为干旱，东北风和夏季热浪。</p><p>重构过去的气候变化极为困难，因为系统的天气观测仅在几个世纪前才在欧洲和北美开始。来自印度和热带非洲的记录就更近了。在记录开始之前的时间里，我们仅能从年轮和冰芯中重建“代理记录”，并辅以一些不完整的书面记录。现在，我们有来自整个北半球的数百个年轮记录，而且也有来自赤道以南的许多年轮记录。它们与来自南极，格陵兰，秘鲁安第斯山脉和其他地区的冰芯温度数据一起增长。我们就快知道北半球过去600年间每年夏季和冬季的温度变化。</p><p>这本书是过去十个世纪气候变化与欧洲人适应气候变化方法的叙事历史。第一部分描述了从大约900至1200年的中世纪温暖时期。在这三个世纪中，来自北欧的挪威航海家们探索了北海，在格陵兰定居，并访问了北美。那不是一个一直温暖的时期。自从大冰河世纪以来，降雨量和温度一直在不断变化。欧洲平均温度与今天大致相同，可能略低。</p><p>据了解，小冰期大约于1200年在格陵兰岛和北极开始。随着北极冰块向南蔓延，从挪威向西的航线已改道到开放的大西洋，随后彻底终结。北大西洋和北海的暴风雨增加。1315年至1319年间，欧洲出现了更冷，更潮湿的天气，成千上万的人死于整个大洲的饥荒。到1400年，天气变得更加不可预测、更加狂暴，突然的变化和更低的温度最终导致了16世纪后期的严寒。在不断增长的城镇和城市中，鱼是至关重要的商品，那里的粮食供应一直是人们关注的问题。鳕鱼和鲱鱼干已经成为欧洲鱼类贸易的主流，但是水温的变化迫使捕捞船队进一步远离海岸。巴斯克人，荷兰人和英国人发明了第一批能够适应更为寒冷和更为狂暴的大西洋的近海渔船。在欧洲北部的渐进农业革命起源于人们在人口增长时期对粮食供应的担心。革命涉及集约化商业耕作，以及在以前不用于种植农作物的土地上种植动物饲料。农田生产力的提高使一些国家的粮食和牲畜自给自足，并为对抗饥荒提供了有效的保护手段。</p><p>随着现代温暖时期的开始，全球温度于1850年之后开始缓慢上升。由于爱尔兰马铃薯疫病所造成的饥荒，渴望土地的农民和其他人从欧洲大量迁徙到北美，澳大利亚，新西兰和非洲南部。在1850年至1890年之间，随着集约化的欧洲耕种方法在世界范围内传播，数百万公顷的森林和林地倒在了新移民的斧子之下。前所未有的土地清理工作将大量二氧化碳释放到大气中，这是人类首次造成全球变暖。随着二十世纪化石燃料使用的激增和温室气体水平的持续飙升，温度上升地更快。自20世纪80年代初以来，上升幅度甚至更大。小冰河时代已经让位于一种新的气候体制，其特征是持续不断而稳定的变暖。同时，诸如5类飓风之类的极端天气事件变得越来越频繁。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>This book will provide a detailed examination of the Little Ice Age and other <mark class="vocab-word" data-word="climatic">climatic</mark> shifts, but, before I <mark class="vocab-word" data-word="embark">embark</mark> on that, let me provide a historical context. We tend to think of climate – as opposed to weather – as something unchanging, yet <mark class="vocab-word" data-word="humanity">humanity</mark> has been at the <mark class="vocab-word" data-word="mercy">mercy</mark> of climate change for its entire existence, with at least eight <mark class="vocab-word" data-word="glacial">glacial</mark> episodes in the past 730, 000 years. Our <mark class="vocab-word" data-word="ancestor">ancestors</mark> adapted to the <mark class="vocab-word" data-word="universal">universal</mark> but <mark class="vocab-word" data-word="irregular">irregular</mark> global warming since the end of the last great Ice Age, around 10, 000years ago, with <mark class="vocab-word" data-word="dazzling">dazzling</mark> opportunism. They developed strategies for surviving <mark class="vocab-word" data-word="harsh">harsh</mark> <mark class="vocab-word" data-word="drought">drought</mark> cycles, <mark class="vocab-word" data-word="decade">decades</mark> of heavy <mark class="vocab-word" data-word="rainfall">rainfall</mark> or unaccustomed cold; adopted <mark class="vocab-word" data-word="agriculture">agriculture</mark> and stock-raising, which revolutionised human life; and founded the world’s first pre-industrial civilisations in Egypt, <mark class="vocab-word" data-word="mesopotamia">Mesopotamia</mark> and the Americas. But the price of sudden climate change, in <mark class="vocab-word" data-word="famine">famine</mark>, disease and suffering, was often high.</p></div>  <div class="parallel-zh"><p>本书将详细探讨小冰河时代和其他气候变化，但在我着手探讨之前，请让我先描述一下历史背景。我们倾向于将气候（与天气相对）视为不变的东西，但是人类在整个生存过程中一直受气候变化的支配。在过去的730000年中至少发生了八次冰川事件。自大约十万年前上一个大冰河时代结束以来，我们的祖先以令人眼花缭乱的机会主义适应了普遍但不规则的全球变暖。他们制定了应对严酷干旱，数十年暴雨或令人不适的严寒的策略；采用农业和畜牧业彻底改变了人类生活；并在埃及，美索不达米亚和美洲建立了世界上第一批前工业化文明 。但突然的气候变化所造成的代价（饥荒，疾病和苦难）往往很高。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Little Ice Age lasted from roughly 1300 until the middle of the nineteenth century. Only two centuries ago, Europe experienced a cycle of <mark class="vocab-word" data-word="bitter">bitterly</mark> cold winters; mountain <mark class="vocab-word" data-word="glacier">glaciers</mark> in the Swiss Alps were the lowest in recorded memory, and pack ice surrounded Iceland for much of the year. The <mark class="vocab-word" data-word="climatic">climatic</mark> events of the Little Ice Age did more than help shape the modern world. They are the deeply important context for the current <mark class="vocab-word" data-word="unprecedented">unprecedented</mark> global warming. The Little Ice Age was far from a deep freeze, however; rather an <mark class="vocab-word" data-word="irregular">irregular</mark> seesaw of rapid <mark class="vocab-word" data-word="climatic">climatic</mark> shifts, few <mark class="vocab-word" data-word="lasting">lasting</mark> more than a quarter-century, driven by complex and still little understood <mark class="vocab-word" data-word="interaction">interactions</mark> between the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark> and the ocean. The seesaw brought cycles of intensely cold winters and <mark class="vocab-word" data-word="easter">easterly</mark> <mark class="vocab-word" data-word="wind">winds</mark>, then switched <mark class="vocab-word" data-word="abrupt">abruptly</mark> to years of heavy <mark class="vocab-word" data-word="spring">spring</mark> and early summer rains, <mark class="vocab-word" data-word="mild">mild</mark> winters, and <mark class="vocab-word" data-word="frequent">frequent</mark> <mark class="vocab-word" data-word="atlantic">Atlantic</mark> storms, or to periods of <mark class="vocab-word" data-word="drought">droughts</mark>, light northeasterly <mark class="vocab-word" data-word="wind">winds</mark>, and summer heat waves.</p></div>  <div class="parallel-zh"><p>小冰河时代大约从1300持续到19 世纪中叶。仅仅两个世纪前，欧洲经历了严寒的冬季。瑞士阿尔卑斯山的高山冰川处于有记录以来的最低点，而冰块在一年中的大部分时间里都包围着冰岛。小冰河时代的气候事件不仅仅帮助塑造了现代世界。它们还是当前史无前例的全球变暖的极为重要的背景。然而，小冰河世纪并非极度寒冷，而是一种不规则的、交互的迅速气候变化。它们的持续时间很少超过四分之一世纪，由大气与海洋之间复杂而我们又知之甚少的相互作用驱动。它带来周期性的寒冷冬季和东风，然后突然转变为多年的漫长春季，初夏降雨，温和冬季和频繁的大西洋风暴，或者转为干旱，东北风和夏季热浪。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Reconstructing the climate changes of the past is extremely difficult, because <mark class="vocab-word" data-word="systematic">systematic</mark> weather observations began only a few centuries ago, in Europe and North America. Records from India and <mark class="vocab-word" data-word="tropical">tropical</mark> Africa are even more recent. For the time before records began, we have only ‘<mark class="vocab-word" data-word="proxy">proxy</mark> records’ reconstructed largely from <mark class="vocab-word" data-word="tree">tree</mark> rings and ice <mark class="vocab-word" data-word="core">cores</mark>, <mark class="vocab-word" data-word="supplement">supplemented</mark> by a few incomplete written accounts. We now have hundreds of tree-ring records from throughout the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark>, and many from south of the <mark class="vocab-word" data-word="equator">equator</mark>, too, amplified with a growing body of temperature data from ice <mark class="vocab-word" data-word="core">cores</mark> <mark class="vocab-word" data-word="drill">drilled</mark> in <mark class="vocab-word" data-word="antarctica">Antarctica</mark>, Greenland, the Peruvian <mark class="vocab-word" data-word="andes">Andes</mark>, and other locations. We are close to a knowledge of annual summer and winter temperature <mark class="vocab-word" data-word="variation">variations</mark> over much of the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark> going back 600 years.</p></div>  <div class="parallel-zh"><p>重构过去的气候变化极为困难，因为系统的天气观测仅在几个世纪前才在欧洲和北美开始。来自印度和热带非洲的记录就更近了。在记录开始之前的时间里，我们仅能从年轮和冰芯中重建“代理记录”，并辅以一些不完整的书面记录。现在，我们有来自整个北半球的数百个年轮记录，而且也有来自赤道以南的许多年轮记录。它们与来自南极，格陵兰，秘鲁安第斯山脉和其他地区的冰芯温度数据一起增长。我们就快知道北半球过去600年间每年夏季和冬季的温度变化。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This book is a narrative history of <mark class="vocab-word" data-word="climatic">climatic</mark> shifts during the past ten centuries, and some of the ways in which people in Europe adapted to them. Part One describes the <mark class="vocab-word" data-word="medieval">Medieval</mark> Warm Period, roughly 900 to 1200. During these three centuries, Norse voyagers from Northern Europe explored northern seas, <mark class="vocab-word" data-word="settle">settled</mark> Greenland, and visited North America. It was not a time of uniform <mark class="vocab-word" data-word="warmth">warmth</mark>, for then, as always since the Great Ice Age, there were constant shifts in <mark class="vocab-word" data-word="rainfall">rainfall</mark> and temperature. Mean European temperatures were about the same as today, perhaps slightly cooler.</p></div>  <div class="parallel-zh"><p>这本书是过去十个世纪气候变化与欧洲人适应气候变化方法的叙事历史。第一部分描述了从大约900至1200年的中世纪温暖时期。在这三个世纪中，来自北欧的挪威航海家们探索了北海，在格陵兰定居，并访问了北美。那不是一个一直温暖的时期。自从大冰河世纪以来，降雨量和温度一直在不断变化。欧洲平均温度与今天大致相同，可能略低。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It is known that the Little Ice Age cooling began in Greenland and the <mark class="vocab-word" data-word="arctic">Arctic</mark> in about 1200. As the <mark class="vocab-word" data-word="arctic">Arctic</mark> ice pack spread southward, Norse <mark class="vocab-word" data-word="voyage">voyages</mark> to the west were rerouted into the open <mark class="vocab-word" data-word="atlantic">Atlantic</mark>, then ended <mark class="vocab-word" data-word="altogether">altogether</mark>. Storminess increased in the North <mark class="vocab-word" data-word="atlantic">Atlantic</mark> and North Sea. Colder, much wetter weather <mark class="vocab-word" data-word="descend">descended</mark> on Europe between 1315 and 1319, when thousands <mark class="vocab-word" data-word="perish">perished</mark> in a continent-wide <mark class="vocab-word" data-word="famine">famine</mark>. By 1400, the weather had become decidedly more unpredictable and stormier, with sudden shifts and lower temperatures that <mark class="vocab-word" data-word="culminate">culminated</mark> in the cold <mark class="vocab-word" data-word="decade">decades</mark> of the late sixteenth century. Fish were a <mark class="vocab-word" data-word="vital">vital</mark> <mark class="vocab-word" data-word="commodity">commodity</mark> in growing towns and cities, where food supplies were a constant concern. Dried <mark class="vocab-word" data-word="cod">cod</mark> and <mark class="vocab-word" data-word="herring">herring</mark> were already the <mark class="vocab-word" data-word="staple">staples</mark> of the European fish trade, but changes in water temperatures forced fishing <mark class="vocab-word" data-word="fleet">fleets</mark> to work further <mark class="vocab-word" data-word="offshore">offshore</mark>. The Basques, Dutch, and English developed the first <mark class="vocab-word" data-word="offshore">offshore</mark> fishing boats adapted to a colder and stormier <mark class="vocab-word" data-word="atlantic">Atlantic</mark>. A <mark class="vocab-word" data-word="gradual">gradual</mark> <mark class="vocab-word" data-word="agricultural">agricultural</mark> revolution in northern Europe stemmed from concerns over food supplies at a time of rising populations. The revolution <mark class="vocab-word" data-word="involved">involved</mark> <mark class="vocab-word" data-word="intensive">intensive</mark> commercial farming and the growing of animal <mark class="vocab-word" data-word="fodder">fodder</mark> on land not previously used for crops. The increased <mark class="vocab-word" data-word="productivity">productivity</mark> from farmland made some countries <mark class="vocab-word" data-word="self-sufficient">self-sufficient</mark> in grain and <mark class="vocab-word" data-word="livestock">livestock</mark> and offered effective protection against <mark class="vocab-word" data-word="famine">famine</mark>.</p></div>  <div class="parallel-zh"><p>据了解，小冰期大约于1200年在格陵兰岛和北极开始。随着北极冰块向南蔓延，从挪威向西的航线已改道到开放的大西洋，随后彻底终结。北大西洋和北海的暴风雨增加。1315年至1319年间，欧洲出现了更冷，更潮湿的天气，成千上万的人死于整个大洲的饥荒。到1400年，天气变得更加不可预测、更加狂暴，突然的变化和更低的温度最终导致了16世纪后期的严寒。在不断增长的城镇和城市中，鱼是至关重要的商品，那里的粮食供应一直是人们关注的问题。鳕鱼和鲱鱼干已经成为欧洲鱼类贸易的主流，但是水温的变化迫使捕捞船队进一步远离海岸。巴斯克人，荷兰人和英国人发明了第一批能够适应更为寒冷和更为狂暴的大西洋的近海渔船。在欧洲北部的渐进农业革命起源于人们在人口增长时期对粮食供应的担心。革命涉及集约化商业耕作，以及在以前不用于种植农作物的土地上种植动物饲料。农田生产力的提高使一些国家的粮食和牲畜自给自足，并为对抗饥荒提供了有效的保护手段。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Global temperatures began to rise slowly after 1850, with the beginning of the Modern Warm Period. There was a vast <mark class="vocab-word" data-word="migration">migration</mark> from Europe by land-hungry farmers and others, to which the <mark class="vocab-word" data-word="famine">famine</mark> caused by the Irish potato <mark class="vocab-word" data-word="blight">blight</mark> contributed, to North America, Australia, New Zealand, and southern Africa. Millions of <mark class="vocab-word" data-word="hectare">hectares</mark> of forest and woodland fell before the newcomers’ axes between 1850 and 1890, as <mark class="vocab-word" data-word="intensive">intensive</mark> European farming methods expanded across the world. The <mark class="vocab-word" data-word="unprecedented">unprecedented</mark> land <mark class="vocab-word" data-word="clearance">clearance</mark> released vast quantities of <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="dioxide">dioxide</mark> into the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark>, <mark class="vocab-word" data-word="trigger">triggering</mark> for the first time humanly caused global warming. Temperatures <mark class="vocab-word" data-word="climb">climbed</mark> more rapidly in the twentieth century as the use of <mark class="vocab-word" data-word="fossil">fossil</mark> fuels <mark class="vocab-word" data-word="proliferate">proliferated</mark> and <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> gas levels continued to <mark class="vocab-word" data-word="soar">soar</mark>. The rise has been even steeper since the early 1980s. The Little Ice Age has given way to a new <mark class="vocab-word" data-word="climatic">climatic</mark> <mark class="vocab-word" data-word="regime">regime</mark>, <mark class="vocab-word" data-word="marked">marked</mark> by <mark class="vocab-word" data-word="prolonged">prolonged</mark> and steady warming. At the same time, extreme weather events like Category 5 <mark class="vocab-word" data-word="hurricane">hurricanes</mark> are becoming more <mark class="vocab-word" data-word="frequent">frequent</mark>.</p></div>  <div class="parallel-zh"><p>随着现代温暖时期的开始，全球温度于1850年之后开始缓慢上升。由于爱尔兰马铃薯疫病所造成的饥荒，渴望土地的农民和其他人从欧洲大量迁徙到北美，澳大利亚，新西兰和非洲南部。在1850年至1890年之间，随着集约化的欧洲耕种方法在世界范围内传播，数百万公顷的森林和林地倒在了新移民的斧子之下。前所未有的土地清理工作将大量二氧化碳释放到大气中，这是人类首次造成全球变暖。随着二十世纪化石燃料使用的激增和温室气体水平的持续飙升，温度上升地更快。自20世纪80年代初以来，上升幅度甚至更大。小冰河时代已经让位于一种新的气候体制，其特征是持续不断而稳定的变暖。同时，诸如5类飓风之类的极端天气事件变得越来越频繁。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"climatic": 5, "embark": 1, "humanity": 1, "mercy": 1, "glacial": 1, "ancestor": 1, "universal": 1, "irregular": 2, "dazzling": 1, "harsh": 1, "drought": 2, "decade": 2, "rainfall": 2, "agriculture": 1, "mesopotamia": 1, "famine": 4, "bitter": 1, "glacier": 1, "unprecedented": 2, "lasting": 1, "interaction": 1, "atmosphere": 2, "easter": 1, "wind": 2, "abrupt": 1, "spring": 1, "mild": 1, "frequent": 2, "atlantic": 4, "systematic": 1, "tropical": 1, "proxy": 1, "tree": 1, "core": 2, "supplement": 1, "hemisphere": 2, "equator": 1, "drill": 1, "antarctica": 1, "andes": 1, "variation": 1, "medieval": 1, "settle": 1, "warmth": 1, "arctic": 2, "voyage": 1, "altogether": 1, "descend": 1, "perish": 1, "culminate": 1, "vital": 1, "commodity": 1, "cod": 1, "herring": 1, "staple": 1, "fleet": 1, "offshore": 2, "gradual": 1, "agricultural": 1, "involved": 1, "intensive": 2, "fodder": 1, "productivity": 1, "self-sufficient": 1, "livestock": 1, "migration": 1, "blight": 1, "hectare": 1, "clearance": 1, "carbon": 1, "dioxide": 1, "trigger": 1, "climb": 1, "fossil": 1, "proliferate": 1, "greenhouse": 1, "soar": 1, "regime": 1, "marked": 1, "prolonged": 1, "hurricane": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

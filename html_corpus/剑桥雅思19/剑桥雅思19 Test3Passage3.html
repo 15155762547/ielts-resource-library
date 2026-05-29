@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is the era of artificial speech translation upon us 人工智能语言翻译 - 剑桥雅思19 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思19</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Is the era of artificial speech translation upon us 人工智能语言翻译</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/59658.html" target="_blank">https://www.laokaoya.com/59658.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Noise, Alex Waibel tells me, is one of the major challenges that <mark class="vocab-word" data-word="artificial">artificial</mark> speech <mark class="vocab-word" data-word="translation">translation</mark> has to meet. A device may be able to recognise speech in a laboratory, or a meeting room, but will struggle to <mark class="vocab-word" data-word="cope">cope</mark> with the kind of background noise I can hear in my office <mark class="vocab-word" data-word="surrounding">surrounding</mark> Professor Waibel as he speaks to me from Kyoto station in Japan. I’m struggling to follow him in English, on a scratchy line that reminds me we are nearly 10,000 kilometres apart – and that distance is still an <mark class="vocab-word" data-word="obstacle">obstacle</mark> to communication even if you’re speaking the same language, as we are. We <mark class="vocab-word" data-word="haven">haven</mark>’t reached the future yet. If we had, Waibel would have been able to speak more comfortably in his native German and I would have been able to hear his words in English.</p><p>At Karlsruhe <mark class="vocab-word" data-word="institute">Institute</mark> of Technology, where he is a professor of computer science, Waibel and his colleagues already give lectures in German that their students can follow in English via an electronic translator. The system generates text that students can read on their laptops or hones, so the process is somewhat similar to <mark class="vocab-word" data-word="subtitle">subtitling</mark>. It helps that <mark class="vocab-word" data-word="lecturer">lecturers</mark> speak clearly, don’t have to compete with background <mark class="vocab-word" data-word="chatter">chatter</mark>, and say much the same thing each year.</p><p>The idea of <mark class="vocab-word" data-word="artificial">artificial</mark> speech <mark class="vocab-word" data-word="translation">translation</mark> has been around for a long time. Douglas Adams’ science <mark class="vocab-word" data-word="fiction">fiction</mark> novel, The Hitchhiker’s Guide to the <mark class="vocab-word" data-word="galaxy">Galaxy</mark>, published in 1979, featured a life form called the ‘Babel fish’ which, when placed in the ear, enabled a listener to understand any language in the universe. It came to represent one of those devices that technology enthusiasts dream of long before they become <mark class="vocab-word" data-word="practically">practically</mark> realisable, like TVs <mark class="vocab-word" data-word="flat">flat</mark> enough to hang on walls: objects that we once could only dream of having but that are now <mark class="vocab-word" data-word="commonplace">commonplace</mark>. Now devices that look like <mark class="vocab-word" data-word="prototype">prototype</mark> Babel fish have started to appear, riding a wave of advances in <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="translation">translation</mark> and voice <mark class="vocab-word" data-word="recognition">recognition</mark>.</p><p>At this stage, however, they seem to be regarded as eye-catching novelties rather than steps towards what Waibel calls ‘making a language-transparent society’. They tend to be <mark class="vocab-word" data-word="domestic">domestic</mark> devices or applications suitable for hotel <mark class="vocab-word" data-word="check-in">check-ins</mark>, for example, providing a practical alternative to speaking traveller’s English. The <mark class="vocab-word" data-word="efficiency">efficiency</mark> of the translator is less important than the social function. However, ‘Professionals are less <mark class="vocab-word" data-word="incline">inclined</mark> to be patient in a conversation,’founder and CEO at <mark class="vocab-word" data-word="waver">Waverly</mark> Labs, Andrew Ochoa, observes. To redress this, <mark class="vocab-word" data-word="waver">Waverly</mark> is now preparing a new model for professional applications, which <mark class="vocab-word" data-word="entail">entails</mark> performance improvements in speech <mark class="vocab-word" data-word="recognition">recognition</mark>, <mark class="vocab-word" data-word="translation">translation</mark> <mark class="vocab-word" data-word="accuracy">accuracy</mark> and the time it takes to deliver the translated speech.</p><p>For a conversation, both speakers need to have devices called <mark class="vocab-word" data-word="pilot">Pilots</mark> (translator earpieces) in their ears. ‘We find that there’s a barrier with sharing one of the earphones with a stranger,’ says Ochoa. That can’t have been totally unexpected. The problem would be solved if earpiece translators became <mark class="vocab-word" data-word="sufficient">sufficiently</mark> <mark class="vocab-word" data-word="prevalent">prevalent</mark> that strangers would be likely to already have their own in their ears. Whether that happens, and how quickly, will probably depend not so much on the earpieces themselves, but on the <mark class="vocab-word" data-word="prevalence">prevalence</mark> of voice-controlled devices and <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="translation">translation</mark> in general.</p><p>Waibel highlights the <mark class="vocab-word" data-word="significance">significance</mark> of certain Asian nations, noting that voice <mark class="vocab-word" data-word="translation">translation</mark> has really taken off in countries such as Japan with a range of systems. This article is from  website. There is still a long way to go, though. A <mark class="vocab-word" data-word="translation">translation</mark> system needs to be <mark class="vocab-word" data-word="simultaneous">simultaneous</mark>, like the translator’s voice speaking over the foreign politician being interviewed on the TV, rather than in sections that <mark class="vocab-word" data-word="oblige">oblige</mark> speakers to pause after every few remarks and wait for the <mark class="vocab-word" data-word="translation">translation</mark> to be delivered. It needs to work offline, for situations where internet access isn’t possible, and to address <mark class="vocab-word" data-word="apprehension">apprehensions</mark> about the amount of private speech data <mark class="vocab-word" data-word="accumulate">accumulating</mark> in the cloud, having been sent to <mark class="vocab-word" data-word="server">servers</mark> for <mark class="vocab-word" data-word="processing">processing</mark>.</p><p>Systems not only need to <mark class="vocab-word" data-word="cope">cope</mark> with physical challenges such as noise, they will also need to be socially aware by addressing people in the right way. Some cultural traditions demand <mark class="vocab-word" data-word="solemn">solemn</mark> respect for <mark class="vocab-word" data-word="academic">academic</mark> status, for example, and it is only polite to respect this. Etiquette-sensitive <mark class="vocab-word" data-word="artificial">artificial</mark> translators could <mark class="vocab-word" data-word="relieve">relieve</mark> people of the need to know these <mark class="vocab-word" data-word="differ">differing</mark> cultural <mark class="vocab-word" data-word="norm">norms</mark>. At the same time, they might help to preserve local customs, slowing the spread of habits associated with international English, such as its readiness to get on first-name terms.</p><p>Professors and other professionals will not outsource language <mark class="vocab-word" data-word="awareness">awareness</mark> to software, though. If the technology <mark class="vocab-word" data-word="mature">matures</mark> into seamless, <mark class="vocab-word" data-word="ubiquitous">ubiquitous</mark> <mark class="vocab-word" data-word="artificial">artificial</mark> speech <mark class="vocab-word" data-word="translation">translation</mark>, it will actually add value to language skills. Whether it will help people conduct their family lives or relationships is open to question – though one <mark class="vocab-word" data-word="noteworthy">noteworthy</mark> possibility is that it could overcome the language barriers that often arise between generations after <mark class="vocab-word" data-word="migration">migration</mark>, leaving children and their grandparents without a shared language.</p><p>Whatever uses it is put to, though, it will never be as good as the real thing. Even if voicemorphing technology <mark class="vocab-word" data-word="simulate">simulates</mark> the speaker’s voice, their lip movements won’t <mark class="vocab-word" data-word="match">match</mark>, and they will look like they are in a dubbed movie. The contrast will underline the value of shared languages, and the value of learning them. Sharing a language can promote a sense of <mark class="vocab-word" data-word="belonging">belonging</mark> and community, as with the international scientists who use English as a lingua franca, where their <mark class="vocab-word" data-word="predecessor">predecessors</mark> used <mark class="vocab-word" data-word="latin">Latin</mark>. Though the practical need for a common language will <mark class="vocab-word" data-word="diminish">diminish</mark>, the social value of sharing one will <mark class="vocab-word" data-word="persist">persist</mark>. And software will never be a <mark class="vocab-word" data-word="substitute">substitute</mark> for the <mark class="vocab-word" data-word="subtle">subtle</mark> but <mark class="vocab-word" data-word="vital">vital</mark> understanding that comes with knowledge of a language.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>亚历克斯·魏贝尔（Alex Waibel）告诉我，噪音是人工智能语音翻译面临的主要挑战之一。一个设备或许能在实验室或会议室中识别语音，但却很难应对我在办公室里听到的那种背景噪音——此时魏贝尔教授正在日本京都车站与我通话。我们之间的线路杂音不断，我听他讲英文也很吃力，这提醒我我们相距将近一万公里——即使我们说的是同一种语言，这种距离依然是沟通的一大障碍。我们还未真正进入“未来”。如果已经实现了，他就可以更轻松地用母语德语讲话，而我也能直接听到英文翻译。</p><p>在他任教的卡尔斯鲁厄理工学院，魏贝尔和他的同事已经能用德语授课，而学生则可以通过电子翻译系统用英文实时跟上讲课内容。该系统会生成文本，供学生在笔记本电脑或手机上阅读，过程有点类似于字幕显示。讲师的发音清晰、不会被背景交谈声干扰、并且每年讲的内容大致相同——这些因素都使系统运行更加顺畅。</p><p>人工语音翻译这一构想早已出现。1979年，道格拉斯·亚当斯（Douglas Adams）出版的科幻小说《银河系漫游指南》中，就设想了一种叫“巴别鱼”的生命体，只要把它放进耳朵里，听者就能听懂宇宙中任何一种语言。它成了技术爱好者心中那类梦寐以求、在实际可实现之前就被幻想出来的装置之一，比如曾经只能想象现在却已经普及的壁挂式超薄电视。如今，一些看起来像“巴别鱼”原型的设备已经开始出现，这得益于人工智能翻译和语音识别技术的不断进步。</p><p>不过，目前这些设备更多被视为吸引眼球的新奇产品，而非魏贝尔所说的“建立语言无障碍社会”的真正一步。这类产品多用于家庭或旅游场景，比如代替旅行者用英文办理酒店入住手续。在这种情况下，翻译器的效率远不如其社交功能重要。然而，Waverly Labs 的创始人兼首席执行官安德鲁·奥乔亚（Andrew Ochoa）指出：“专业人士在对话中往往没有那么多耐心。”为了解决这个问题，Waverly 正在开发一款面向专业用途的新型号，重点提升语音识别能力、翻译准确率，以及翻译语音的响应速度。</p><p>在对话过程中，双方都需要佩戴名为 Pilot 的翻译耳机。“我们发现，人们不太愿意把耳机分一只给陌生人使用，”奥乔亚说。这种情况并不令人意外。如果翻译耳机普及到一定程度，使得陌生人本身就很可能随身佩戴自己的设备，这个问题也就迎刃而解了。至于这种普及是否会实现，以及何时能实现，这可能更多地取决于语音控制设备和人工智能翻译技术整体的普及程度，而不仅仅是耳机本身。</p><p>魏贝尔特别指出一些亚洲国家的重要性，称语音翻译技术在像日本这样的国家已经有了显著发展，并推出了多种系统。然而，这项技术仍然有很长的路要走。一个理想的翻译系统应当是“同声传译”型的，就像我们在电视上看到的、翻译人员的声音直接覆盖在受访的外国政客发言上，而不是把讲话分成一段段，让说话者每几句就停下来等待翻译完成。此外，它还需要在离线环境下也能运行，以应对没有网络的情况；并且要解决人们对于大量私人语音数据被上传到云端服务器进行处理所产生的隐私担忧。</p><p>语音翻译系统不仅要应对噪音等物理挑战，还需要具备一定的“社交意识”，能够以合适的方式与人交流。例如，在某些文化传统中，人们非常重视学术地位，对此表达恰当的尊重才是礼貌之举。具备礼仪敏感性的人工翻译器可以帮助人们在不熟悉各种不同的文化规范时也能得体交流。同时，它们还有助于保护本地风俗，减少那些与国际英语一同传播的习惯，比如英语中习以为常的直呼其名的做法。</p><p>不过，教授和其他专业人士不会把语言完全交由软件处理。如果人工智能语音翻译技术能够发展成无缝衔接、普遍存在的工具，它反而会让语言能力变得更有价值。至于这项技术是否能够真正帮助人们在家庭生活或人际关系中沟通，还有待观察——不过有一个值得注意的可能性是，它也许能跨越因移民而产生的代际语言障碍，让孩子与祖辈之间不再因为缺乏共同语言而难以交流。</p><p>无论这种技术将被应用于哪些方面，它都永远无法完全替代真正的语言交流。即使变声技术能够模拟说话者的声音，他们的唇部动作也无法匹配，这会让他们看起来像一部配音电影里的角色。这种差异反而会凸显共同语言的价值，以及学习语言的重要性。共同语言能够促进归属感和社群意识，就像如今的国际科学家们使用英语作为通用语一样，他们的前辈曾使用拉丁语。尽管对通用语言的实际需求可能会减少，共用一种语言所带来的社会价值依然会存在。而软件永远无法取代掌握一门语言所获得的那种微妙却至关重要的理解力。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Noise, Alex Waibel tells me, is one of the major challenges that <mark class="vocab-word" data-word="artificial">artificial</mark> speech <mark class="vocab-word" data-word="translation">translation</mark> has to meet. A device may be able to recognise speech in a laboratory, or a meeting room, but will struggle to <mark class="vocab-word" data-word="cope">cope</mark> with the kind of background noise I can hear in my office <mark class="vocab-word" data-word="surrounding">surrounding</mark> Professor Waibel as he speaks to me from Kyoto station in Japan. I’m struggling to follow him in English, on a scratchy line that reminds me we are nearly 10,000 kilometres apart – and that distance is still an <mark class="vocab-word" data-word="obstacle">obstacle</mark> to communication even if you’re speaking the same language, as we are. We <mark class="vocab-word" data-word="haven">haven</mark>’t reached the future yet. If we had, Waibel would have been able to speak more comfortably in his native German and I would have been able to hear his words in English.</p></div>  <div class="parallel-zh"><p>亚历克斯·魏贝尔（Alex Waibel）告诉我，噪音是人工智能语音翻译面临的主要挑战之一。一个设备或许能在实验室或会议室中识别语音，但却很难应对我在办公室里听到的那种背景噪音——此时魏贝尔教授正在日本京都车站与我通话。我们之间的线路杂音不断，我听他讲英文也很吃力，这提醒我我们相距将近一万公里——即使我们说的是同一种语言，这种距离依然是沟通的一大障碍。我们还未真正进入“未来”。如果已经实现了，他就可以更轻松地用母语德语讲话，而我也能直接听到英文翻译。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At Karlsruhe <mark class="vocab-word" data-word="institute">Institute</mark> of Technology, where he is a professor of computer science, Waibel and his colleagues already give lectures in German that their students can follow in English via an electronic translator. The system generates text that students can read on their laptops or hones, so the process is somewhat similar to <mark class="vocab-word" data-word="subtitle">subtitling</mark>. It helps that <mark class="vocab-word" data-word="lecturer">lecturers</mark> speak clearly, don’t have to compete with background <mark class="vocab-word" data-word="chatter">chatter</mark>, and say much the same thing each year.</p></div>  <div class="parallel-zh"><p>在他任教的卡尔斯鲁厄理工学院，魏贝尔和他的同事已经能用德语授课，而学生则可以通过电子翻译系统用英文实时跟上讲课内容。该系统会生成文本，供学生在笔记本电脑或手机上阅读，过程有点类似于字幕显示。讲师的发音清晰、不会被背景交谈声干扰、并且每年讲的内容大致相同——这些因素都使系统运行更加顺畅。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The idea of <mark class="vocab-word" data-word="artificial">artificial</mark> speech <mark class="vocab-word" data-word="translation">translation</mark> has been around for a long time. Douglas Adams’ science <mark class="vocab-word" data-word="fiction">fiction</mark> novel, The Hitchhiker’s Guide to the <mark class="vocab-word" data-word="galaxy">Galaxy</mark>, published in 1979, featured a life form called the ‘Babel fish’ which, when placed in the ear, enabled a listener to understand any language in the universe. It came to represent one of those devices that technology enthusiasts dream of long before they become <mark class="vocab-word" data-word="practically">practically</mark> realisable, like TVs <mark class="vocab-word" data-word="flat">flat</mark> enough to hang on walls: objects that we once could only dream of having but that are now <mark class="vocab-word" data-word="commonplace">commonplace</mark>. Now devices that look like <mark class="vocab-word" data-word="prototype">prototype</mark> Babel fish have started to appear, riding a wave of advances in <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="translation">translation</mark> and voice <mark class="vocab-word" data-word="recognition">recognition</mark>.</p></div>  <div class="parallel-zh"><p>人工语音翻译这一构想早已出现。1979年，道格拉斯·亚当斯（Douglas Adams）出版的科幻小说《银河系漫游指南》中，就设想了一种叫“巴别鱼”的生命体，只要把它放进耳朵里，听者就能听懂宇宙中任何一种语言。它成了技术爱好者心中那类梦寐以求、在实际可实现之前就被幻想出来的装置之一，比如曾经只能想象现在却已经普及的壁挂式超薄电视。如今，一些看起来像“巴别鱼”原型的设备已经开始出现，这得益于人工智能翻译和语音识别技术的不断进步。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At this stage, however, they seem to be regarded as eye-catching novelties rather than steps towards what Waibel calls ‘making a language-transparent society’. They tend to be <mark class="vocab-word" data-word="domestic">domestic</mark> devices or applications suitable for hotel <mark class="vocab-word" data-word="check-in">check-ins</mark>, for example, providing a practical alternative to speaking traveller’s English. The <mark class="vocab-word" data-word="efficiency">efficiency</mark> of the translator is less important than the social function. However, ‘Professionals are less <mark class="vocab-word" data-word="incline">inclined</mark> to be patient in a conversation,’founder and CEO at <mark class="vocab-word" data-word="waver">Waverly</mark> Labs, Andrew Ochoa, observes. To redress this, <mark class="vocab-word" data-word="waver">Waverly</mark> is now preparing a new model for professional applications, which <mark class="vocab-word" data-word="entail">entails</mark> performance improvements in speech <mark class="vocab-word" data-word="recognition">recognition</mark>, <mark class="vocab-word" data-word="translation">translation</mark> <mark class="vocab-word" data-word="accuracy">accuracy</mark> and the time it takes to deliver the translated speech.</p></div>  <div class="parallel-zh"><p>不过，目前这些设备更多被视为吸引眼球的新奇产品，而非魏贝尔所说的“建立语言无障碍社会”的真正一步。这类产品多用于家庭或旅游场景，比如代替旅行者用英文办理酒店入住手续。在这种情况下，翻译器的效率远不如其社交功能重要。然而，Waverly Labs 的创始人兼首席执行官安德鲁·奥乔亚（Andrew Ochoa）指出：“专业人士在对话中往往没有那么多耐心。”为了解决这个问题，Waverly 正在开发一款面向专业用途的新型号，重点提升语音识别能力、翻译准确率，以及翻译语音的响应速度。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>For a conversation, both speakers need to have devices called <mark class="vocab-word" data-word="pilot">Pilots</mark> (translator earpieces) in their ears. ‘We find that there’s a barrier with sharing one of the earphones with a stranger,’ says Ochoa. That can’t have been totally unexpected. The problem would be solved if earpiece translators became <mark class="vocab-word" data-word="sufficient">sufficiently</mark> <mark class="vocab-word" data-word="prevalent">prevalent</mark> that strangers would be likely to already have their own in their ears. Whether that happens, and how quickly, will probably depend not so much on the earpieces themselves, but on the <mark class="vocab-word" data-word="prevalence">prevalence</mark> of voice-controlled devices and <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="translation">translation</mark> in general.</p></div>  <div class="parallel-zh"><p>在对话过程中，双方都需要佩戴名为 Pilot 的翻译耳机。“我们发现，人们不太愿意把耳机分一只给陌生人使用，”奥乔亚说。这种情况并不令人意外。如果翻译耳机普及到一定程度，使得陌生人本身就很可能随身佩戴自己的设备，这个问题也就迎刃而解了。至于这种普及是否会实现，以及何时能实现，这可能更多地取决于语音控制设备和人工智能翻译技术整体的普及程度，而不仅仅是耳机本身。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Waibel highlights the <mark class="vocab-word" data-word="significance">significance</mark> of certain Asian nations, noting that voice <mark class="vocab-word" data-word="translation">translation</mark> has really taken off in countries such as Japan with a range of systems. This article is from  website. There is still a long way to go, though. A <mark class="vocab-word" data-word="translation">translation</mark> system needs to be <mark class="vocab-word" data-word="simultaneous">simultaneous</mark>, like the translator’s voice speaking over the foreign politician being interviewed on the TV, rather than in sections that <mark class="vocab-word" data-word="oblige">oblige</mark> speakers to pause after every few remarks and wait for the <mark class="vocab-word" data-word="translation">translation</mark> to be delivered. It needs to work offline, for situations where internet access isn’t possible, and to address <mark class="vocab-word" data-word="apprehension">apprehensions</mark> about the amount of private speech data <mark class="vocab-word" data-word="accumulate">accumulating</mark> in the cloud, having been sent to <mark class="vocab-word" data-word="server">servers</mark> for <mark class="vocab-word" data-word="processing">processing</mark>.</p></div>  <div class="parallel-zh"><p>魏贝尔特别指出一些亚洲国家的重要性，称语音翻译技术在像日本这样的国家已经有了显著发展，并推出了多种系统。然而，这项技术仍然有很长的路要走。一个理想的翻译系统应当是“同声传译”型的，就像我们在电视上看到的、翻译人员的声音直接覆盖在受访的外国政客发言上，而不是把讲话分成一段段，让说话者每几句就停下来等待翻译完成。此外，它还需要在离线环境下也能运行，以应对没有网络的情况；并且要解决人们对于大量私人语音数据被上传到云端服务器进行处理所产生的隐私担忧。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Systems not only need to <mark class="vocab-word" data-word="cope">cope</mark> with physical challenges such as noise, they will also need to be socially aware by addressing people in the right way. Some cultural traditions demand <mark class="vocab-word" data-word="solemn">solemn</mark> respect for <mark class="vocab-word" data-word="academic">academic</mark> status, for example, and it is only polite to respect this. Etiquette-sensitive <mark class="vocab-word" data-word="artificial">artificial</mark> translators could <mark class="vocab-word" data-word="relieve">relieve</mark> people of the need to know these <mark class="vocab-word" data-word="differ">differing</mark> cultural <mark class="vocab-word" data-word="norm">norms</mark>. At the same time, they might help to preserve local customs, slowing the spread of habits associated with international English, such as its readiness to get on first-name terms.</p></div>  <div class="parallel-zh"><p>语音翻译系统不仅要应对噪音等物理挑战，还需要具备一定的“社交意识”，能够以合适的方式与人交流。例如，在某些文化传统中，人们非常重视学术地位，对此表达恰当的尊重才是礼貌之举。具备礼仪敏感性的人工翻译器可以帮助人们在不熟悉各种不同的文化规范时也能得体交流。同时，它们还有助于保护本地风俗，减少那些与国际英语一同传播的习惯，比如英语中习以为常的直呼其名的做法。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Professors and other professionals will not outsource language <mark class="vocab-word" data-word="awareness">awareness</mark> to software, though. If the technology <mark class="vocab-word" data-word="mature">matures</mark> into seamless, <mark class="vocab-word" data-word="ubiquitous">ubiquitous</mark> <mark class="vocab-word" data-word="artificial">artificial</mark> speech <mark class="vocab-word" data-word="translation">translation</mark>, it will actually add value to language skills. Whether it will help people conduct their family lives or relationships is open to question – though one <mark class="vocab-word" data-word="noteworthy">noteworthy</mark> possibility is that it could overcome the language barriers that often arise between generations after <mark class="vocab-word" data-word="migration">migration</mark>, leaving children and their grandparents without a shared language.</p></div>  <div class="parallel-zh"><p>不过，教授和其他专业人士不会把语言完全交由软件处理。如果人工智能语音翻译技术能够发展成无缝衔接、普遍存在的工具，它反而会让语言能力变得更有价值。至于这项技术是否能够真正帮助人们在家庭生活或人际关系中沟通，还有待观察——不过有一个值得注意的可能性是，它也许能跨越因移民而产生的代际语言障碍，让孩子与祖辈之间不再因为缺乏共同语言而难以交流。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Whatever uses it is put to, though, it will never be as good as the real thing. Even if voicemorphing technology <mark class="vocab-word" data-word="simulate">simulates</mark> the speaker’s voice, their lip movements won’t <mark class="vocab-word" data-word="match">match</mark>, and they will look like they are in a dubbed movie. The contrast will underline the value of shared languages, and the value of learning them. Sharing a language can promote a sense of <mark class="vocab-word" data-word="belonging">belonging</mark> and community, as with the international scientists who use English as a lingua franca, where their <mark class="vocab-word" data-word="predecessor">predecessors</mark> used <mark class="vocab-word" data-word="latin">Latin</mark>. Though the practical need for a common language will <mark class="vocab-word" data-word="diminish">diminish</mark>, the social value of sharing one will <mark class="vocab-word" data-word="persist">persist</mark>. And software will never be a <mark class="vocab-word" data-word="substitute">substitute</mark> for the <mark class="vocab-word" data-word="subtle">subtle</mark> but <mark class="vocab-word" data-word="vital">vital</mark> understanding that comes with knowledge of a language.</p></div>  <div class="parallel-zh"><p>无论这种技术将被应用于哪些方面，它都永远无法完全替代真正的语言交流。即使变声技术能够模拟说话者的声音，他们的唇部动作也无法匹配，这会让他们看起来像一部配音电影里的角色。这种差异反而会凸显共同语言的价值，以及学习语言的重要性。共同语言能够促进归属感和社群意识，就像如今的国际科学家们使用英语作为通用语一样，他们的前辈曾使用拉丁语。尽管对通用语言的实际需求可能会减少，共用一种语言所带来的社会价值依然会存在。而软件永远无法取代掌握一门语言所获得的那种微妙却至关重要的理解力。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"artificial": 6, "translation": 9, "cope": 2, "surrounding": 1, "obstacle": 1, "haven": 1, "institute": 1, "subtitle": 1, "lecturer": 1, "chatter": 1, "fiction": 1, "galaxy": 1, "practically": 1, "flat": 1, "commonplace": 1, "prototype": 1, "recognition": 2, "domestic": 1, "check-in": 1, "efficiency": 1, "incline": 1, "waver": 2, "entail": 1, "accuracy": 1, "pilot": 1, "sufficient": 1, "prevalent": 1, "prevalence": 1, "significance": 1, "simultaneous": 1, "oblige": 1, "apprehension": 1, "accumulate": 1, "server": 1, "processing": 1, "solemn": 1, "academic": 1, "relieve": 1, "differ": 1, "norm": 1, "awareness": 1, "mature": 1, "ubiquitous": 1, "noteworthy": 1, "migration": 1, "simulate": 1, "match": 1, "belonging": 1, "predecessor": 1, "latin": 1, "diminish": 1, "persist": 1, "substitute": 1, "subtle": 1, "vital": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

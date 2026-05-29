@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An ideal city 理想城市 - 剑桥雅思18 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思18</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>An ideal city 理想城市</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/56524.html" target="_blank">https://www.laokaoya.com/56524.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The word ‘<mark class="vocab-word" data-word="genius">genius</mark>’ is <mark class="vocab-word" data-word="universal">universally</mark> associated with the name of Leonardo da Vinci. A true <mark class="vocab-word" data-word="renaissance">Renaissance</mark> man, he embodied scientific spirit, artistic talent and humanist sensibilities. Five hundred years have passed since Leonardo died in his home at Chateau du Clos Luce, outside Tours, France. Yet far from <mark class="vocab-word" data-word="fade">fading</mark> into insignificance, his thinking has carried down the centuries and still surprises today.</p><p>The <mark class="vocab-word" data-word="renaissance">Renaissance</mark> <mark class="vocab-word" data-word="marked">marked</mark> the transition from the 15th century to modernity and took place after the spread of the <mark class="vocab-word" data-word="plague">plague</mark> in the 14th century, which caused a global <mark class="vocab-word" data-word="crisis">crisis</mark> resulting in some 200 million deaths across Europe and Asia. Today, the world is on the cusp of a climate <mark class="vocab-word" data-word="crisis">crisis</mark>, which is <mark class="vocab-word" data-word="predict">predicted</mark> to cause <mark class="vocab-word" data-word="widespread">widespread</mark> displacement, <mark class="vocab-word" data-word="extinction">extinctions</mark> and death, if left unaddressed. Then, as now, <mark class="vocab-word" data-word="radical">radical</mark> solutions were called for to revolutionise the way people lived and <mark class="vocab-word" data-word="safeguard">safeguard</mark> <mark class="vocab-word" data-word="humanity">humanity</mark> against <mark class="vocab-word" data-word="catastrophe">catastrophe</mark>.</p><p>Around 1486 – after a pestilence that killed half the population in Milan, Italy – Leonardo turned his thoughts to <mark class="vocab-word" data-word="urban">urban</mark> planning problems. Following a typical <mark class="vocab-word" data-word="renaissance">Renaissance</mark> trend, he began to work on an ‘ideal city’ project, which – due to its <mark class="vocab-word" data-word="excessive">excessive</mark> costs – would remain unfulfilled. This article is from  website. Yet given that unsustainable <mark class="vocab-word" data-word="urban">urban</mark> models are a key cause of global climate change today, it’s only natural to wonder how Leonardo might have changed the shape of modern cities.</p><p>Although the <mark class="vocab-word" data-word="renaissance">Renaissance</mark> is <mark class="vocab-word" data-word="renowned">renowned</mark> as an <mark class="vocab-word" data-word="era">era</mark> of <mark class="vocab-word" data-word="incredible">incredible</mark> progress in art and <mark class="vocab-word" data-word="architecture">architecture</mark>, it is rarely noted that the 15th century also <mark class="vocab-word" data-word="marked">marked</mark> the birth of urbanism as a true <mark class="vocab-word" data-word="academic">academic</mark> discipline. The rigour and method behind the <mark class="vocab-word" data-word="conscious">conscious</mark> <mark class="vocab-word" data-word="conception">conception</mark> of a city had been largely missing in Western thought until the moment when <mark class="vocab-word" data-word="prominent">prominent</mark> <mark class="vocab-word" data-word="renaissance">Renaissance</mark> men pushed forward <mark class="vocab-word" data-word="large-scale">large-scale</mark> <mark class="vocab-word" data-word="urban">urban</mark> projects in Italy, such as the reconfiguration of the town of Pienza and the <mark class="vocab-word" data-word="expansion">expansion</mark> of the city of Ferrara. These works surely inspired Leonardo’s decision to rethink the design of <mark class="vocab-word" data-word="medieval">medieval</mark> cities, with their <mark class="vocab-word" data-word="wind">winding</mark> and <mark class="vocab-word" data-word="overcrowded">overcrowded</mark> streets and with houses piled against one another.</p><p>It is not easy to identify a <mark class="vocab-word" data-word="coordinate">coordinated</mark> vision of Leonardo’s ideal city because of his <mark class="vocab-word" data-word="disorder">disordered</mark> way of working with notes and <mark class="vocab-word" data-word="sketch">sketches</mark>. But from the largest collection of Leonardo’s papers ever <mark class="vocab-word" data-word="assemble">assembled</mark>, a series of <mark class="vocab-word" data-word="innovative">innovative</mark> thoughts can be reconstructed <mark class="vocab-word" data-word="regarding">regarding</mark> the <mark class="vocab-word" data-word="foundation">foundation</mark> of a new city along the Ticino River, which runs from Switzerland into Italy and is 248 kilometres long. He designed the city for the easy transport of <mark class="vocab-word" data-word="goods">goods</mark> and clean <mark class="vocab-word" data-word="urban">urban</mark> spaces, and he wanted a comfortable and <mark class="vocab-word" data-word="spacious">spacious</mark> city, with well-ordered streets and <mark class="vocab-word" data-word="architecture">architecture</mark>. He recommended ‘high, strong walls’, with ‘towers and battlements of all necessary and pleasant beauty’.</p><p>His plans for a modern and ‘<mark class="vocab-word" data-word="rational">rational</mark>’ city were consistent with <mark class="vocab-word" data-word="renaissance">Renaissance</mark> ideals. But, in keeping with his personality, Leonardo included several <mark class="vocab-word" data-word="innovation">innovations</mark> in his <mark class="vocab-word" data-word="urban">urban</mark> design. Leonardo wanted the city to be built on several levels, linked with <mark class="vocab-word" data-word="vertical">vertical</mark> outdoor <mark class="vocab-word" data-word="staircase">staircases</mark>. This design can be seen in some of today’s high-rise buildings but was <mark class="vocab-word" data-word="unconventional">unconventional</mark> at the time. Indeed, this idea of taking full advantage of the <mark class="vocab-word" data-word="interior">interior</mark> spaces wasn’t <mark class="vocab-word" data-word="implement">implemented</mark> until the 1920s and 1930s, with the birth of the <mark class="vocab-word" data-word="modernist">Modernist</mark> movement.</p><p>While in the upper layers of the city, people could walk undisturbed between <mark class="vocab-word" data-word="elegant">elegant</mark> palaces and streets, the lower layer was the place for services, trade, transport and industry. But the true originality of Leonardo’s vision was its <mark class="vocab-word" data-word="fusion">fusion</mark> of <mark class="vocab-word" data-word="architecture">architecture</mark> and <mark class="vocab-word" data-word="engineering">engineering</mark>. Leonardo designed <mark class="vocab-word" data-word="extensive">extensive</mark> <mark class="vocab-word" data-word="hydraulic">hydraulic</mark> plants to create <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="canal">canals</mark> throughout the city. The <mark class="vocab-word" data-word="canal">canals</mark>, <mark class="vocab-word" data-word="regulate">regulated</mark> by clocks and <mark class="vocab-word" data-word="basin">basins</mark>, were supposed to make it easier for boats to <mark class="vocab-word" data-word="navigate">navigate</mark> <mark class="vocab-word" data-word="inland">inland</mark>. Leonardo also thought that the <mark class="vocab-word" data-word="width">width</mark> of the streets ought to <mark class="vocab-word" data-word="match">match</mark> the average height of the <mark class="vocab-word" data-word="adjacent">adjacent</mark> houses: a rule still followed in many <mark class="vocab-word" data-word="contemporary">contemporary</mark> cities across Italy, to allow access to sun and reduce the risk of damage from earthquakes.</p><p>Although some of these features existed in Roman cities, before Leonardo’s drawings there had never been a multi-level, <mark class="vocab-word" data-word="compact">compact</mark> modern city which was <mark class="vocab-word" data-word="thorough">thoroughly</mark> technically <mark class="vocab-word" data-word="conceive">conceived</mark>. Indeed, it wasn’t until the 19th century that some of his ideas were <mark class="vocab-word" data-word="applied">applied</mark>. For example, the subdivision of the city by function – with services and <mark class="vocab-word" data-word="infrastructure">infrastructures</mark> located in the lower levels and wide and well-ventilated boulevards and walkways above for <mark class="vocab-word" data-word="resident">residents</mark> – is an idea that can be found in Georges-Eugene Haussmann’s <mark class="vocab-word" data-word="renovation">renovation</mark> of Paris under <mark class="vocab-word" data-word="emperor">Emperor</mark> Napoleon Ⅲ between 1853 and 1870.</p><p>Today, Leonardo’s ideas are not simply <mark class="vocab-word" data-word="valid">valid</mark>, they actually <mark class="vocab-word" data-word="suggest">suggest</mark> a way forward for <mark class="vocab-word" data-word="urban">urban</mark> planning. Many <mark class="vocab-word" data-word="scholar">scholars</mark> think that the <mark class="vocab-word" data-word="compact">compact</mark> city, built <mark class="vocab-word" data-word="upward">upwards</mark> instead of <mark class="vocab-word" data-word="outward">outwards</mark>, <mark class="vocab-word" data-word="integrate">integrated</mark> with nature (especially water systems), with efficient transport <mark class="vocab-word" data-word="infrastructure">infrastructure</mark>, could help modern cities become more efficient and <mark class="vocab-word" data-word="sustainable">sustainable</mark>. This is yet another reason why Leonardo was <mark class="vocab-word" data-word="align">aligned</mark> so closely with modern <mark class="vocab-word" data-word="urban">urban</mark> planning and centuries ahead of his time.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>“天才”这个词往往与列奥纳多·达·芬奇的名字联系在一起。作为一个真正的文艺复兴人物，他具备科学精神、艺术才能和人文情怀。自从达·芬奇在法国图尔市郊外的克洛斯吕斯城堡的家中去世以来已经过去了五百年。然而，他的思想并没有慢慢变得无关紧要，而是一直流传至今，仍然让人们感到惊讶。</p><p>文艺复兴标志着从15世纪向现代的过渡，它发生在14世纪鼠疫蔓延之后。鼠疫导致全球危机。欧洲和亚洲共有大约2亿人死亡。如今，世界正处在气候危机的边缘，如果不加以解决，将导致大范围的人口迁移、物种灭绝和死亡。就像过去一样，现在也需要采取激进的解决方案，彻底改变人们的生活方式，以保护人类免受灾难的侵害。</p><p>1486年左右（一场杀死意大利米兰市一半人口的瘟疫之后），列奥纳多开始思考城市规划问题。他遵循文艺复兴时期的典型趋势，开始着手一个名为“理想城市”的项目。然而由于成本过高，这个项目最终未能实现。不过，考虑到不可持续的城市模式是如今全球气候变化的主要原因之一，我们不禁想知道列奥纳多会如何改变现代城市的形态。</p><p>尽管文艺复兴因艺术和建筑方面令人难以置信的进步而闻名，但很少有人注意到，15世纪也标志着城市规划作为真正的学术学科的诞生。西方思想缺少有意识规划城市所需要的严谨和方法，直到著名的文艺复兴人物推动了意大利的大规模城市项目，如皮恩扎小镇的重新规划和费拉拉市的扩张。这些作品无疑启发列奥纳多重新思考中世纪的城市设计，即蜿蜒拥挤的街道，以及紧密相连的房屋。</p><p>由于列奥纳多凌乱的笔记和草图，很难确定他对理想城市的整体愿景。但从迄今为止最大的列奥纳多文集中，我们可以重构一系列关于在从瑞士流入意大利的提契诺河沿岸建立新城的创新思想。他设计这座城市以方便货物运输，创造清洁的城市空间，并希望得到一个舒适而宽敞的城市。那里拥有井然有序的街道和建筑。他推荐建造“高大坚固的城墙”，并配以“所有必要和漂亮的塔楼与城垛”。</p><p>他追求现代和“理性”的城市规划与文艺复兴的理念是一致的。然而，与他的个性相符，列奥纳多在城市设计中做了几项创新。他希望这座城市建在几个平面上，通过垂直的户外楼梯相连。这种设计在一些现代高层建筑中可以看到，但在当时不常见的。事实上，充分利用室内空间的这一想法直到20世纪20，30年代现代主义运动诞生之后才得以实施。</p><p>在城市上层，人们可以在优雅的宫殿和街道之间自由行走，而下层则是用于服务、贸易、交通和工业的地方。然而，列奥纳多愿景中真正的独创性在于将建筑和工程融合在一起。他设计了大量的水力设施，在整个城市中建造人工运河。这些运河由时钟和水池调节，旨在使船只更容易在内陆航行。列奥纳多还认为街道的宽度应与相邻房屋的平均高度相匹配：许多意大利现代城市仍然遵循这一规则，以享受阳光，减少地震的危害。</p><p>尽管上述一些特征在罗马城市中就已经存在，但在列奥纳多的图画之前，还从未出现过一个经过彻底技术构思的，多层次、紧凑的现代城市。实际上，直到19世纪，他的一些想法才开始得以应用。例如，通过功能划分城市，将服务和基础设施置于低层，而将宽阔通风良好的林荫大道和步行道置于上层，以供居民使用。该想法在拿破仑三世时期（1853年至1870年）乔治·尤金·奥斯曼对巴黎的改造中有所体现。</p><p>如今，列奥纳多的思想不仅仍然有效，而且为城市规划提供了进步的方向。许多学者认为，紧凑的城市（向上而非向外扩展，与自然（尤其是水系统）融为一体，并拥有高效的交通基础设施）可以帮助现代城市变得更加高效和可持续。这也是为什么列奥纳多与现代城市规划密切相关，并领先于其所在时代好几个世纪的又一个原因。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The word ‘<mark class="vocab-word" data-word="genius">genius</mark>’ is <mark class="vocab-word" data-word="universal">universally</mark> associated with the name of Leonardo da Vinci. A true <mark class="vocab-word" data-word="renaissance">Renaissance</mark> man, he embodied scientific spirit, artistic talent and humanist sensibilities. Five hundred years have passed since Leonardo died in his home at Chateau du Clos Luce, outside Tours, France. Yet far from <mark class="vocab-word" data-word="fade">fading</mark> into insignificance, his thinking has carried down the centuries and still surprises today.</p></div>  <div class="parallel-zh"><p>“天才”这个词往往与列奥纳多·达·芬奇的名字联系在一起。作为一个真正的文艺复兴人物，他具备科学精神、艺术才能和人文情怀。自从达·芬奇在法国图尔市郊外的克洛斯吕斯城堡的家中去世以来已经过去了五百年。然而，他的思想并没有慢慢变得无关紧要，而是一直流传至今，仍然让人们感到惊讶。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="renaissance">Renaissance</mark> <mark class="vocab-word" data-word="marked">marked</mark> the transition from the 15th century to modernity and took place after the spread of the <mark class="vocab-word" data-word="plague">plague</mark> in the 14th century, which caused a global <mark class="vocab-word" data-word="crisis">crisis</mark> resulting in some 200 million deaths across Europe and Asia. Today, the world is on the cusp of a climate <mark class="vocab-word" data-word="crisis">crisis</mark>, which is <mark class="vocab-word" data-word="predict">predicted</mark> to cause <mark class="vocab-word" data-word="widespread">widespread</mark> displacement, <mark class="vocab-word" data-word="extinction">extinctions</mark> and death, if left unaddressed. Then, as now, <mark class="vocab-word" data-word="radical">radical</mark> solutions were called for to revolutionise the way people lived and <mark class="vocab-word" data-word="safeguard">safeguard</mark> <mark class="vocab-word" data-word="humanity">humanity</mark> against <mark class="vocab-word" data-word="catastrophe">catastrophe</mark>.</p></div>  <div class="parallel-zh"><p>文艺复兴标志着从15世纪向现代的过渡，它发生在14世纪鼠疫蔓延之后。鼠疫导致全球危机。欧洲和亚洲共有大约2亿人死亡。如今，世界正处在气候危机的边缘，如果不加以解决，将导致大范围的人口迁移、物种灭绝和死亡。就像过去一样，现在也需要采取激进的解决方案，彻底改变人们的生活方式，以保护人类免受灾难的侵害。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Around 1486 – after a pestilence that killed half the population in Milan, Italy – Leonardo turned his thoughts to <mark class="vocab-word" data-word="urban">urban</mark> planning problems. Following a typical <mark class="vocab-word" data-word="renaissance">Renaissance</mark> trend, he began to work on an ‘ideal city’ project, which – due to its <mark class="vocab-word" data-word="excessive">excessive</mark> costs – would remain unfulfilled. This article is from  website. Yet given that unsustainable <mark class="vocab-word" data-word="urban">urban</mark> models are a key cause of global climate change today, it’s only natural to wonder how Leonardo might have changed the shape of modern cities.</p></div>  <div class="parallel-zh"><p>1486年左右（一场杀死意大利米兰市一半人口的瘟疫之后），列奥纳多开始思考城市规划问题。他遵循文艺复兴时期的典型趋势，开始着手一个名为“理想城市”的项目。然而由于成本过高，这个项目最终未能实现。不过，考虑到不可持续的城市模式是如今全球气候变化的主要原因之一，我们不禁想知道列奥纳多会如何改变现代城市的形态。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Although the <mark class="vocab-word" data-word="renaissance">Renaissance</mark> is <mark class="vocab-word" data-word="renowned">renowned</mark> as an <mark class="vocab-word" data-word="era">era</mark> of <mark class="vocab-word" data-word="incredible">incredible</mark> progress in art and <mark class="vocab-word" data-word="architecture">architecture</mark>, it is rarely noted that the 15th century also <mark class="vocab-word" data-word="marked">marked</mark> the birth of urbanism as a true <mark class="vocab-word" data-word="academic">academic</mark> discipline. The rigour and method behind the <mark class="vocab-word" data-word="conscious">conscious</mark> <mark class="vocab-word" data-word="conception">conception</mark> of a city had been largely missing in Western thought until the moment when <mark class="vocab-word" data-word="prominent">prominent</mark> <mark class="vocab-word" data-word="renaissance">Renaissance</mark> men pushed forward <mark class="vocab-word" data-word="large-scale">large-scale</mark> <mark class="vocab-word" data-word="urban">urban</mark> projects in Italy, such as the reconfiguration of the town of Pienza and the <mark class="vocab-word" data-word="expansion">expansion</mark> of the city of Ferrara. These works surely inspired Leonardo’s decision to rethink the design of <mark class="vocab-word" data-word="medieval">medieval</mark> cities, with their <mark class="vocab-word" data-word="wind">winding</mark> and <mark class="vocab-word" data-word="overcrowded">overcrowded</mark> streets and with houses piled against one another.</p></div>  <div class="parallel-zh"><p>尽管文艺复兴因艺术和建筑方面令人难以置信的进步而闻名，但很少有人注意到，15世纪也标志着城市规划作为真正的学术学科的诞生。西方思想缺少有意识规划城市所需要的严谨和方法，直到著名的文艺复兴人物推动了意大利的大规模城市项目，如皮恩扎小镇的重新规划和费拉拉市的扩张。这些作品无疑启发列奥纳多重新思考中世纪的城市设计，即蜿蜒拥挤的街道，以及紧密相连的房屋。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It is not easy to identify a <mark class="vocab-word" data-word="coordinate">coordinated</mark> vision of Leonardo’s ideal city because of his <mark class="vocab-word" data-word="disorder">disordered</mark> way of working with notes and <mark class="vocab-word" data-word="sketch">sketches</mark>. But from the largest collection of Leonardo’s papers ever <mark class="vocab-word" data-word="assemble">assembled</mark>, a series of <mark class="vocab-word" data-word="innovative">innovative</mark> thoughts can be reconstructed <mark class="vocab-word" data-word="regarding">regarding</mark> the <mark class="vocab-word" data-word="foundation">foundation</mark> of a new city along the Ticino River, which runs from Switzerland into Italy and is 248 kilometres long. He designed the city for the easy transport of <mark class="vocab-word" data-word="goods">goods</mark> and clean <mark class="vocab-word" data-word="urban">urban</mark> spaces, and he wanted a comfortable and <mark class="vocab-word" data-word="spacious">spacious</mark> city, with well-ordered streets and <mark class="vocab-word" data-word="architecture">architecture</mark>. He recommended ‘high, strong walls’, with ‘towers and battlements of all necessary and pleasant beauty’.</p></div>  <div class="parallel-zh"><p>由于列奥纳多凌乱的笔记和草图，很难确定他对理想城市的整体愿景。但从迄今为止最大的列奥纳多文集中，我们可以重构一系列关于在从瑞士流入意大利的提契诺河沿岸建立新城的创新思想。他设计这座城市以方便货物运输，创造清洁的城市空间，并希望得到一个舒适而宽敞的城市。那里拥有井然有序的街道和建筑。他推荐建造“高大坚固的城墙”，并配以“所有必要和漂亮的塔楼与城垛”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>His plans for a modern and ‘<mark class="vocab-word" data-word="rational">rational</mark>’ city were consistent with <mark class="vocab-word" data-word="renaissance">Renaissance</mark> ideals. But, in keeping with his personality, Leonardo included several <mark class="vocab-word" data-word="innovation">innovations</mark> in his <mark class="vocab-word" data-word="urban">urban</mark> design. Leonardo wanted the city to be built on several levels, linked with <mark class="vocab-word" data-word="vertical">vertical</mark> outdoor <mark class="vocab-word" data-word="staircase">staircases</mark>. This design can be seen in some of today’s high-rise buildings but was <mark class="vocab-word" data-word="unconventional">unconventional</mark> at the time. Indeed, this idea of taking full advantage of the <mark class="vocab-word" data-word="interior">interior</mark> spaces wasn’t <mark class="vocab-word" data-word="implement">implemented</mark> until the 1920s and 1930s, with the birth of the <mark class="vocab-word" data-word="modernist">Modernist</mark> movement.</p></div>  <div class="parallel-zh"><p>他追求现代和“理性”的城市规划与文艺复兴的理念是一致的。然而，与他的个性相符，列奥纳多在城市设计中做了几项创新。他希望这座城市建在几个平面上，通过垂直的户外楼梯相连。这种设计在一些现代高层建筑中可以看到，但在当时不常见的。事实上，充分利用室内空间的这一想法直到20世纪20，30年代现代主义运动诞生之后才得以实施。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While in the upper layers of the city, people could walk undisturbed between <mark class="vocab-word" data-word="elegant">elegant</mark> palaces and streets, the lower layer was the place for services, trade, transport and industry. But the true originality of Leonardo’s vision was its <mark class="vocab-word" data-word="fusion">fusion</mark> of <mark class="vocab-word" data-word="architecture">architecture</mark> and <mark class="vocab-word" data-word="engineering">engineering</mark>. Leonardo designed <mark class="vocab-word" data-word="extensive">extensive</mark> <mark class="vocab-word" data-word="hydraulic">hydraulic</mark> plants to create <mark class="vocab-word" data-word="artificial">artificial</mark> <mark class="vocab-word" data-word="canal">canals</mark> throughout the city. The <mark class="vocab-word" data-word="canal">canals</mark>, <mark class="vocab-word" data-word="regulate">regulated</mark> by clocks and <mark class="vocab-word" data-word="basin">basins</mark>, were supposed to make it easier for boats to <mark class="vocab-word" data-word="navigate">navigate</mark> <mark class="vocab-word" data-word="inland">inland</mark>. Leonardo also thought that the <mark class="vocab-word" data-word="width">width</mark> of the streets ought to <mark class="vocab-word" data-word="match">match</mark> the average height of the <mark class="vocab-word" data-word="adjacent">adjacent</mark> houses: a rule still followed in many <mark class="vocab-word" data-word="contemporary">contemporary</mark> cities across Italy, to allow access to sun and reduce the risk of damage from earthquakes.</p></div>  <div class="parallel-zh"><p>在城市上层，人们可以在优雅的宫殿和街道之间自由行走，而下层则是用于服务、贸易、交通和工业的地方。然而，列奥纳多愿景中真正的独创性在于将建筑和工程融合在一起。他设计了大量的水力设施，在整个城市中建造人工运河。这些运河由时钟和水池调节，旨在使船只更容易在内陆航行。列奥纳多还认为街道的宽度应与相邻房屋的平均高度相匹配：许多意大利现代城市仍然遵循这一规则，以享受阳光，减少地震的危害。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Although some of these features existed in Roman cities, before Leonardo’s drawings there had never been a multi-level, <mark class="vocab-word" data-word="compact">compact</mark> modern city which was <mark class="vocab-word" data-word="thorough">thoroughly</mark> technically <mark class="vocab-word" data-word="conceive">conceived</mark>. Indeed, it wasn’t until the 19th century that some of his ideas were <mark class="vocab-word" data-word="applied">applied</mark>. For example, the subdivision of the city by function – with services and <mark class="vocab-word" data-word="infrastructure">infrastructures</mark> located in the lower levels and wide and well-ventilated boulevards and walkways above for <mark class="vocab-word" data-word="resident">residents</mark> – is an idea that can be found in Georges-Eugene Haussmann’s <mark class="vocab-word" data-word="renovation">renovation</mark> of Paris under <mark class="vocab-word" data-word="emperor">Emperor</mark> Napoleon Ⅲ between 1853 and 1870.</p></div>  <div class="parallel-zh"><p>尽管上述一些特征在罗马城市中就已经存在，但在列奥纳多的图画之前，还从未出现过一个经过彻底技术构思的，多层次、紧凑的现代城市。实际上，直到19世纪，他的一些想法才开始得以应用。例如，通过功能划分城市，将服务和基础设施置于低层，而将宽阔通风良好的林荫大道和步行道置于上层，以供居民使用。该想法在拿破仑三世时期（1853年至1870年）乔治·尤金·奥斯曼对巴黎的改造中有所体现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Today, Leonardo’s ideas are not simply <mark class="vocab-word" data-word="valid">valid</mark>, they actually <mark class="vocab-word" data-word="suggest">suggest</mark> a way forward for <mark class="vocab-word" data-word="urban">urban</mark> planning. Many <mark class="vocab-word" data-word="scholar">scholars</mark> think that the <mark class="vocab-word" data-word="compact">compact</mark> city, built <mark class="vocab-word" data-word="upward">upwards</mark> instead of <mark class="vocab-word" data-word="outward">outwards</mark>, <mark class="vocab-word" data-word="integrate">integrated</mark> with nature (especially water systems), with efficient transport <mark class="vocab-word" data-word="infrastructure">infrastructure</mark>, could help modern cities become more efficient and <mark class="vocab-word" data-word="sustainable">sustainable</mark>. This is yet another reason why Leonardo was <mark class="vocab-word" data-word="align">aligned</mark> so closely with modern <mark class="vocab-word" data-word="urban">urban</mark> planning and centuries ahead of his time.</p></div>  <div class="parallel-zh"><p>如今，列奥纳多的思想不仅仍然有效，而且为城市规划提供了进步的方向。许多学者认为，紧凑的城市（向上而非向外扩展，与自然（尤其是水系统）融为一体，并拥有高效的交通基础设施）可以帮助现代城市变得更加高效和可持续。这也是为什么列奥纳多与现代城市规划密切相关，并领先于其所在时代好几个世纪的又一个原因。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"genius": 1, "universal": 1, "renaissance": 6, "fade": 1, "marked": 2, "plague": 1, "crisis": 2, "predict": 1, "widespread": 1, "extinction": 1, "radical": 1, "safeguard": 1, "humanity": 1, "catastrophe": 1, "urban": 7, "excessive": 1, "renowned": 1, "era": 1, "incredible": 1, "architecture": 3, "academic": 1, "conscious": 1, "conception": 1, "prominent": 1, "large-scale": 1, "expansion": 1, "medieval": 1, "wind": 1, "overcrowded": 1, "coordinate": 1, "disorder": 1, "sketch": 1, "assemble": 1, "innovative": 1, "regarding": 1, "foundation": 1, "goods": 1, "spacious": 1, "rational": 1, "innovation": 1, "vertical": 1, "staircase": 1, "unconventional": 1, "interior": 1, "implement": 1, "modernist": 1, "elegant": 1, "fusion": 1, "engineering": 1, "extensive": 1, "hydraulic": 1, "artificial": 1, "canal": 2, "regulate": 1, "basin": 1, "navigate": 1, "inland": 1, "width": 1, "match": 1, "adjacent": 1, "contemporary": 1, "compact": 2, "thorough": 1, "conceive": 1, "applied": 1, "infrastructure": 2, "resident": 1, "renovation": 1, "emperor": 1, "valid": 1, "suggest": 1, "scholar": 1, "upward": 1, "outward": 1, "integrate": 1, "sustainable": 1, "align": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

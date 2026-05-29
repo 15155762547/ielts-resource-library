@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unselfish Gene 不自私的基因 - 剑桥雅思19 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思19</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>The Unselfish Gene 不自私的基因</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/59784.html" target="_blank">https://www.laokaoya.com/59784.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>There has long been a general <mark class="vocab-word" data-word="assumption">assumption</mark> that human beings are <mark class="vocab-word" data-word="essentially">essentially</mark> <mark class="vocab-word" data-word="selfish">selfish</mark>. We’re apparently <mark class="vocab-word" data-word="ruthless">ruthless</mark>, with strong <mark class="vocab-word" data-word="impulse">impulses</mark> to compete against each other for resources and to <mark class="vocab-word" data-word="accumulate">accumulate</mark> power and possessions. If we are kind to one another, it’s usually because we have <mark class="vocab-word" data-word="ulterior">ulterior</mark> <mark class="vocab-word" data-word="motive">motives</mark>. If we are good, it’s only because we have managed to control and <mark class="vocab-word" data-word="transcend">transcend</mark> our <mark class="vocab-word" data-word="innate">innate</mark> selfishness and <mark class="vocab-word" data-word="brutality">brutality</mark>.</p><p>This <mark class="vocab-word" data-word="bleak">bleak</mark> view of human nature is closely associated with the science writer Richard Dawkins, whose 1976 book The <mark class="vocab-word" data-word="selfish">Selfish</mark> <mark class="vocab-word" data-word="gene">Gene</mark> became popular because it fitted so well with – and helped to justify – the competitive and <mark class="vocab-word" data-word="individualistic">individualistic</mark> ethos that was so <mark class="vocab-word" data-word="prevalent">prevalent</mark> in late 20th-century societies. Like many others, Dawkins justifies his views with reference to the field of evolutionary <mark class="vocab-word" data-word="psychology">psychology</mark>. Evolutionary <mark class="vocab-word" data-word="psychology">psychology</mark> theorises that present-day human <mark class="vocab-word" data-word="trait">traits</mark> developed in <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> times, during what is termed the ‘environment of evolutionary adaptedness’.</p><p>Prehistory is usually seen as a period of intense competition, when life was such a <mark class="vocab-word" data-word="brutal">brutal</mark> battle that only those with <mark class="vocab-word" data-word="trait">traits</mark> such as selfishness, aggression and ruthlessness survived. And because <mark class="vocab-word" data-word="survival">survival</mark> depended on access to resources – such as rivers, forests and animals -there was <mark class="vocab-word" data-word="bound">bound</mark> to be conflict between <mark class="vocab-word" data-word="rival">rival</mark> groups, which led to the development of <mark class="vocab-word" data-word="trait">traits</mark> such as <mark class="vocab-word" data-word="racism">racism</mark> and warfare. This seems logical. But, in fact, the <mark class="vocab-word" data-word="assumption">assumption</mark> on which this all rests – that <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> life was a <mark class="vocab-word" data-word="desperate">desperate</mark> struggle for <mark class="vocab-word" data-word="survival">survival</mark> – is false.</p><p>It’s important to remember that in the <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> <mark class="vocab-word" data-word="era">era</mark>, the world was very <mark class="vocab-word" data-word="sparse">sparsely</mark> <mark class="vocab-word" data-word="populate">populated</mark>. <mark class="vocab-word" data-word="accord">According</mark> to some estimates, around 15,000 years ago, the population of Europe was only 29,000, and the population of the whole world was less than half a million. Humans at that time were hunter-gatherers: people who lived by hunting wild animals and collecting wild plants. With such small population densities, it seems unlikely that <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> hunter-gatherer groups had to compete against each other for resources or had any need to develop ruthlessness and competitiveness, or to go to war.</p><p>There is significant evidence to back this notion from <mark class="vocab-word" data-word="contemporary">contemporary</mark> hunter-gatherer groups, who live in the same way as <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> humans did. As the <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Bruce Knauft has remarked, hunter-gatherers are characterised by ‘extreme political and sexual egalitarianism’. Knauft has observed that individuals in such groups don’t <mark class="vocab-word" data-word="accumulate">accumulate</mark> property or possessions and have an <mark class="vocab-word" data-word="ethical">ethical</mark> <mark class="vocab-word" data-word="obligation">obligation</mark> to share everything. They also have methods of preserving egalitarianism by ensuring that disparities of status don’t arise.</p><p>The !Kung people of southern Africa, for example, <mark class="vocab-word" data-word="swap">swap</mark> <mark class="vocab-word" data-word="arrow">arrows</mark> before going hunting and when an animal is killed, the <mark class="vocab-word" data-word="acclaim">acclaim</mark> does not go to the person who <mark class="vocab-word" data-word="fir">fired</mark> the <mark class="vocab-word" data-word="arrow">arrow</mark>, but to the person the <mark class="vocab-word" data-word="arrow">arrow</mark> belongs to. And if a person becomes too domineering, the other members of the group ostracise them, <mark class="vocab-word" data-word="exile">exiling</mark> the offender from society. Typically in such groups, men do not <mark class="vocab-word" data-word="dictate">dictate</mark> what women do. Women in hunter-gatherer groups worldwide often benefit from a high level of <mark class="vocab-word" data-word="autonomy">autonomy</mark>, being able to select their own marriage partners, decide what work they do and work whenever they choose to. And if a marriage breaks down, they have <mark class="vocab-word" data-word="custody">custody</mark> rights over their children.</p><p>Many <mark class="vocab-word" data-word="anthropologist">anthropologists</mark> believe that societies such as the !Kung were normal until a few thousand years ago, when population growth led to the development of <mark class="vocab-word" data-word="agriculture">agriculture</mark> and a <mark class="vocab-word" data-word="settle">settled</mark> lifestyle. In view of the above, there seems little reason to assume that <mark class="vocab-word" data-word="trait">traits</mark> such as <mark class="vocab-word" data-word="racism">racism</mark>, warfare and male <mark class="vocab-word" data-word="domination">domination</mark> should have been selected by <mark class="vocab-word" data-word="evolution">evolution</mark> – as they would have been of little benefit in the <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> <mark class="vocab-word" data-word="era">era</mark>. Individuals who behaved <mark class="vocab-word" data-word="selfish">selfishly</mark> and <mark class="vocab-word" data-word="ruthlessly">ruthlessly</mark> would be less likely to survive, since they would have been ostracised from their groups.</p><p>It makes more sense, then, to see <mark class="vocab-word" data-word="trait">traits</mark> such as <mark class="vocab-word" data-word="cooperation">cooperation</mark>, egalitarianism, altruism and peacefulness as <mark class="vocab-word" data-word="innate">innate</mark> characteristics of human beings. These were the <mark class="vocab-word" data-word="trait">traits</mark> that were <mark class="vocab-word" data-word="prevalent">prevalent</mark> in human life for tens of thousands of years. So <mark class="vocab-word" data-word="presumably">presumably</mark> these <mark class="vocab-word" data-word="trait">traits</mark> are still strong in us now.</p><p>But if <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> life wasn’t really as <mark class="vocab-word" data-word="brutal">brutal</mark> as has often been assumed, why do modern humans behave so <mark class="vocab-word" data-word="selfish">selfishly</mark> and <mark class="vocab-word" data-word="ruthlessly">ruthlessly</mark>? Perhaps these <mark class="vocab-word" data-word="negative">negative</mark> <mark class="vocab-word" data-word="trait">traits</mark> should be seen as a later development, the result of environmental and <mark class="vocab-word" data-word="psychological">psychological</mark> <mark class="vocab-word" data-word="factor">factors</mark>. Research has shown <mark class="vocab-word" data-word="repeatedly">repeatedly</mark> that when the natural <mark class="vocab-word" data-word="habitat">habitats</mark> of <mark class="vocab-word" data-word="primate">primates</mark> such as <mark class="vocab-word" data-word="ape">apes</mark> and <mark class="vocab-word" data-word="gorilla">gorillas</mark> are <mark class="vocab-word" data-word="disrupt">disrupted</mark>, they tend to become more <mark class="vocab-word" data-word="violent">violent</mark> and hierarchical.</p><p>So, it could well be that the same thing has happened to us. I believe that the end of the hunter-gatherer lifestyle and the <mark class="vocab-word" data-word="advent">advent</mark> of farming was connected to a <mark class="vocab-word" data-word="psychological">psychological</mark> change that occurred in some groups of people. There was a new sense of individuality and separateness, which led to a new selfishness, and <mark class="vocab-word" data-word="ultimate">ultimately</mark> to hierarchical societies, patriarchy and warfare. At any rate, these <mark class="vocab-word" data-word="negative">negative</mark> <mark class="vocab-word" data-word="trait">traits</mark> appear to have developed so recently that it doesn’t seem <mark class="vocab-word" data-word="feasible">feasible</mark> to explain them in adaptive or evolutionary terms.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人类天性自私，这种看法早已深入人心。我们似乎天生冷酷，总是本能地为了资源而彼此竞争，追逐权力和财富。即使我们对别人友善，也往往被认为是另有所图；如果我们表现出善良，那也只是因为压抑住了内心原本的自私和暴力冲动。</p><p>这种对人性的灰暗理解，与科普作家理查德·道金斯密切相关。他在1976年出版的《自私的基因》一书广受欢迎，正是因为它很好地契合了20世纪末盛行的竞争意识和个人主义价值观，并在某种程度上为这些观念提供了合理性。和很多人一样，道金斯用进化心理学来支撑自己的观点。这门学科认为，现代人类的许多行为特征，其实早在远古时代就已经形成，也就是所谓“进化适应环境”时期。</p><p>史前时代常被描绘成一个竞争极其激烈的时期，生活如同一场残酷的生存之战，只有具备自私、好斗、冷酷等特质的人才能活下来。由于生存依赖于资源的获取，比如河流、森林和动物，彼此之间的冲突似乎不可避免，这也被认为促成了诸如种族主义和战争等特质的发展。这样的逻辑听起来似乎合理，但实际上，这一切的前提——即史前生活是一场艰难求生的斗争——并不成立。</p><p>我们需要意识到，在史前时代，地球上的人口极其稀少。根据一些估算，约一万五千年前，整个欧洲的人口只有大约2.9万人，而全球总人口还不到50万。当时的人类以狩猎和采集为生，也就是所谓的“狩猎采集者”。在人口密度如此之低的情况下，史前的人类群体之间几乎没有必要为了资源而彼此竞争，更谈不上发展出冷酷、好斗或发动战争的倾向。</p><p>大量证据都支持这样一种观点：当代一些仍以狩猎采集为生的群体生活方式与史前人类极为相似。从他们身上，我们可以窥见早期人类社会的真实面貌。人类学家布鲁斯·克诺夫特指出，狩猎采集社会的显著特点是“高度的政治和性别平等”。他观察到，这些群体中的个体不积累财产，物品和资源必须共享，而且这种分享是一种道德义务。他们还有一套机制来维护平等，防止权力或地位差距的产生。</p><p>比如生活在非洲南部的！Kung族人，在狩猎前会交换箭矢；一旦猎物被捕获，赞誉不会归于射中猎物的人，而是属于箭的主人。如果某个人变得过于专横，其他人就会将其排斥在外，甚至驱逐出群体，以维护社会的和谐与平等。这类群体中，男性不会支配女性的行为。在世界范围内，狩猎采集社会中的女性通常享有很高的自主权。她们可以自由选择婚姻对象，自主决定从事何种劳动，何时工作。如果婚姻关系破裂，孩子的抚养权往往也由女性掌握。</p><p>许多人类学家认为，像！Kung族这样的社会形态在几千年前其实是非常普遍的，直到人口增长推动了农业的发展和定居生活的出现。结合前文所述，我们几乎没有理由认为种族主义、战争和男性主导等特质是通过进化被“筛选”出来的——因为在史前时期，这些特质并没有什么实际益处。那些自私、冷酷的人反而更可能被群体排斥，从而难以生存下去。</p><p>因此，更合理的推论是：合作、平等、无私和和平才是人类与生俱来的特质。这些品质在人类历史上持续了成千上万年，是我们祖先日常生活中普遍存在的行为模式。既然如此，这些特质很可能至今仍深深根植于我们每个人的本性之中。</p><p>但如果史前生活并不像人们常说的那样残酷，那么为什么现代人却表现得如此自私和冷酷呢？或许，这些负面特质并非人类天生就有，而是后期发展出来的，是环境变化和心理因素共同作用的结果。研究一再表明，当猿类或大猩猩等灵长类动物的自然栖息地受到破坏时，它们往往会变得更加暴力，社会结构也更倾向于等级化。</p><p>所以，很可能我们人类也经历了类似的过程。我认为，狩猎采集生活方式的终结和农业的兴起，伴随着某些人群心理上的转变。他们开始产生一种新的个体意识和“我与他人分离”的感觉，这种变化催生了自私的行为，进而导致等级社会、父权制和战争的出现。无论如何，这些负面特质的发展时间都非常晚近，以至于我们很难用“适应”或“进化”来解释它们的产生。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>There has long been a general <mark class="vocab-word" data-word="assumption">assumption</mark> that human beings are <mark class="vocab-word" data-word="essentially">essentially</mark> <mark class="vocab-word" data-word="selfish">selfish</mark>. We’re apparently <mark class="vocab-word" data-word="ruthless">ruthless</mark>, with strong <mark class="vocab-word" data-word="impulse">impulses</mark> to compete against each other for resources and to <mark class="vocab-word" data-word="accumulate">accumulate</mark> power and possessions. If we are kind to one another, it’s usually because we have <mark class="vocab-word" data-word="ulterior">ulterior</mark> <mark class="vocab-word" data-word="motive">motives</mark>. If we are good, it’s only because we have managed to control and <mark class="vocab-word" data-word="transcend">transcend</mark> our <mark class="vocab-word" data-word="innate">innate</mark> selfishness and <mark class="vocab-word" data-word="brutality">brutality</mark>.</p></div>  <div class="parallel-zh"><p>人类天性自私，这种看法早已深入人心。我们似乎天生冷酷，总是本能地为了资源而彼此竞争，追逐权力和财富。即使我们对别人友善，也往往被认为是另有所图；如果我们表现出善良，那也只是因为压抑住了内心原本的自私和暴力冲动。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This <mark class="vocab-word" data-word="bleak">bleak</mark> view of human nature is closely associated with the science writer Richard Dawkins, whose 1976 book The <mark class="vocab-word" data-word="selfish">Selfish</mark> <mark class="vocab-word" data-word="gene">Gene</mark> became popular because it fitted so well with – and helped to justify – the competitive and <mark class="vocab-word" data-word="individualistic">individualistic</mark> ethos that was so <mark class="vocab-word" data-word="prevalent">prevalent</mark> in late 20th-century societies. Like many others, Dawkins justifies his views with reference to the field of evolutionary <mark class="vocab-word" data-word="psychology">psychology</mark>. Evolutionary <mark class="vocab-word" data-word="psychology">psychology</mark> theorises that present-day human <mark class="vocab-word" data-word="trait">traits</mark> developed in <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> times, during what is termed the ‘environment of evolutionary adaptedness’.</p></div>  <div class="parallel-zh"><p>这种对人性的灰暗理解，与科普作家理查德·道金斯密切相关。他在1976年出版的《自私的基因》一书广受欢迎，正是因为它很好地契合了20世纪末盛行的竞争意识和个人主义价值观，并在某种程度上为这些观念提供了合理性。和很多人一样，道金斯用进化心理学来支撑自己的观点。这门学科认为，现代人类的许多行为特征，其实早在远古时代就已经形成，也就是所谓“进化适应环境”时期。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Prehistory is usually seen as a period of intense competition, when life was such a <mark class="vocab-word" data-word="brutal">brutal</mark> battle that only those with <mark class="vocab-word" data-word="trait">traits</mark> such as selfishness, aggression and ruthlessness survived. And because <mark class="vocab-word" data-word="survival">survival</mark> depended on access to resources – such as rivers, forests and animals -there was <mark class="vocab-word" data-word="bound">bound</mark> to be conflict between <mark class="vocab-word" data-word="rival">rival</mark> groups, which led to the development of <mark class="vocab-word" data-word="trait">traits</mark> such as <mark class="vocab-word" data-word="racism">racism</mark> and warfare. This seems logical. But, in fact, the <mark class="vocab-word" data-word="assumption">assumption</mark> on which this all rests – that <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> life was a <mark class="vocab-word" data-word="desperate">desperate</mark> struggle for <mark class="vocab-word" data-word="survival">survival</mark> – is false.</p></div>  <div class="parallel-zh"><p>史前时代常被描绘成一个竞争极其激烈的时期，生活如同一场残酷的生存之战，只有具备自私、好斗、冷酷等特质的人才能活下来。由于生存依赖于资源的获取，比如河流、森林和动物，彼此之间的冲突似乎不可避免，这也被认为促成了诸如种族主义和战争等特质的发展。这样的逻辑听起来似乎合理，但实际上，这一切的前提——即史前生活是一场艰难求生的斗争——并不成立。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It’s important to remember that in the <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> <mark class="vocab-word" data-word="era">era</mark>, the world was very <mark class="vocab-word" data-word="sparse">sparsely</mark> <mark class="vocab-word" data-word="populate">populated</mark>. <mark class="vocab-word" data-word="accord">According</mark> to some estimates, around 15,000 years ago, the population of Europe was only 29,000, and the population of the whole world was less than half a million. Humans at that time were hunter-gatherers: people who lived by hunting wild animals and collecting wild plants. With such small population densities, it seems unlikely that <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> hunter-gatherer groups had to compete against each other for resources or had any need to develop ruthlessness and competitiveness, or to go to war.</p></div>  <div class="parallel-zh"><p>我们需要意识到，在史前时代，地球上的人口极其稀少。根据一些估算，约一万五千年前，整个欧洲的人口只有大约2.9万人，而全球总人口还不到50万。当时的人类以狩猎和采集为生，也就是所谓的“狩猎采集者”。在人口密度如此之低的情况下，史前的人类群体之间几乎没有必要为了资源而彼此竞争，更谈不上发展出冷酷、好斗或发动战争的倾向。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There is significant evidence to back this notion from <mark class="vocab-word" data-word="contemporary">contemporary</mark> hunter-gatherer groups, who live in the same way as <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> humans did. As the <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Bruce Knauft has remarked, hunter-gatherers are characterised by ‘extreme political and sexual egalitarianism’. Knauft has observed that individuals in such groups don’t <mark class="vocab-word" data-word="accumulate">accumulate</mark> property or possessions and have an <mark class="vocab-word" data-word="ethical">ethical</mark> <mark class="vocab-word" data-word="obligation">obligation</mark> to share everything. They also have methods of preserving egalitarianism by ensuring that disparities of status don’t arise.</p></div>  <div class="parallel-zh"><p>大量证据都支持这样一种观点：当代一些仍以狩猎采集为生的群体生活方式与史前人类极为相似。从他们身上，我们可以窥见早期人类社会的真实面貌。人类学家布鲁斯·克诺夫特指出，狩猎采集社会的显著特点是“高度的政治和性别平等”。他观察到，这些群体中的个体不积累财产，物品和资源必须共享，而且这种分享是一种道德义务。他们还有一套机制来维护平等，防止权力或地位差距的产生。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The !Kung people of southern Africa, for example, <mark class="vocab-word" data-word="swap">swap</mark> <mark class="vocab-word" data-word="arrow">arrows</mark> before going hunting and when an animal is killed, the <mark class="vocab-word" data-word="acclaim">acclaim</mark> does not go to the person who <mark class="vocab-word" data-word="fir">fired</mark> the <mark class="vocab-word" data-word="arrow">arrow</mark>, but to the person the <mark class="vocab-word" data-word="arrow">arrow</mark> belongs to. And if a person becomes too domineering, the other members of the group ostracise them, <mark class="vocab-word" data-word="exile">exiling</mark> the offender from society. Typically in such groups, men do not <mark class="vocab-word" data-word="dictate">dictate</mark> what women do. Women in hunter-gatherer groups worldwide often benefit from a high level of <mark class="vocab-word" data-word="autonomy">autonomy</mark>, being able to select their own marriage partners, decide what work they do and work whenever they choose to. And if a marriage breaks down, they have <mark class="vocab-word" data-word="custody">custody</mark> rights over their children.</p></div>  <div class="parallel-zh"><p>比如生活在非洲南部的！Kung族人，在狩猎前会交换箭矢；一旦猎物被捕获，赞誉不会归于射中猎物的人，而是属于箭的主人。如果某个人变得过于专横，其他人就会将其排斥在外，甚至驱逐出群体，以维护社会的和谐与平等。这类群体中，男性不会支配女性的行为。在世界范围内，狩猎采集社会中的女性通常享有很高的自主权。她们可以自由选择婚姻对象，自主决定从事何种劳动，何时工作。如果婚姻关系破裂，孩子的抚养权往往也由女性掌握。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many <mark class="vocab-word" data-word="anthropologist">anthropologists</mark> believe that societies such as the !Kung were normal until a few thousand years ago, when population growth led to the development of <mark class="vocab-word" data-word="agriculture">agriculture</mark> and a <mark class="vocab-word" data-word="settle">settled</mark> lifestyle. In view of the above, there seems little reason to assume that <mark class="vocab-word" data-word="trait">traits</mark> such as <mark class="vocab-word" data-word="racism">racism</mark>, warfare and male <mark class="vocab-word" data-word="domination">domination</mark> should have been selected by <mark class="vocab-word" data-word="evolution">evolution</mark> – as they would have been of little benefit in the <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> <mark class="vocab-word" data-word="era">era</mark>. Individuals who behaved <mark class="vocab-word" data-word="selfish">selfishly</mark> and <mark class="vocab-word" data-word="ruthlessly">ruthlessly</mark> would be less likely to survive, since they would have been ostracised from their groups.</p></div>  <div class="parallel-zh"><p>许多人类学家认为，像！Kung族这样的社会形态在几千年前其实是非常普遍的，直到人口增长推动了农业的发展和定居生活的出现。结合前文所述，我们几乎没有理由认为种族主义、战争和男性主导等特质是通过进化被“筛选”出来的——因为在史前时期，这些特质并没有什么实际益处。那些自私、冷酷的人反而更可能被群体排斥，从而难以生存下去。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It makes more sense, then, to see <mark class="vocab-word" data-word="trait">traits</mark> such as <mark class="vocab-word" data-word="cooperation">cooperation</mark>, egalitarianism, altruism and peacefulness as <mark class="vocab-word" data-word="innate">innate</mark> characteristics of human beings. These were the <mark class="vocab-word" data-word="trait">traits</mark> that were <mark class="vocab-word" data-word="prevalent">prevalent</mark> in human life for tens of thousands of years. So <mark class="vocab-word" data-word="presumably">presumably</mark> these <mark class="vocab-word" data-word="trait">traits</mark> are still strong in us now.</p></div>  <div class="parallel-zh"><p>因此，更合理的推论是：合作、平等、无私和和平才是人类与生俱来的特质。这些品质在人类历史上持续了成千上万年，是我们祖先日常生活中普遍存在的行为模式。既然如此，这些特质很可能至今仍深深根植于我们每个人的本性之中。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But if <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> life wasn’t really as <mark class="vocab-word" data-word="brutal">brutal</mark> as has often been assumed, why do modern humans behave so <mark class="vocab-word" data-word="selfish">selfishly</mark> and <mark class="vocab-word" data-word="ruthlessly">ruthlessly</mark>? Perhaps these <mark class="vocab-word" data-word="negative">negative</mark> <mark class="vocab-word" data-word="trait">traits</mark> should be seen as a later development, the result of environmental and <mark class="vocab-word" data-word="psychological">psychological</mark> <mark class="vocab-word" data-word="factor">factors</mark>. Research has shown <mark class="vocab-word" data-word="repeatedly">repeatedly</mark> that when the natural <mark class="vocab-word" data-word="habitat">habitats</mark> of <mark class="vocab-word" data-word="primate">primates</mark> such as <mark class="vocab-word" data-word="ape">apes</mark> and <mark class="vocab-word" data-word="gorilla">gorillas</mark> are <mark class="vocab-word" data-word="disrupt">disrupted</mark>, they tend to become more <mark class="vocab-word" data-word="violent">violent</mark> and hierarchical.</p></div>  <div class="parallel-zh"><p>但如果史前生活并不像人们常说的那样残酷，那么为什么现代人却表现得如此自私和冷酷呢？或许，这些负面特质并非人类天生就有，而是后期发展出来的，是环境变化和心理因素共同作用的结果。研究一再表明，当猿类或大猩猩等灵长类动物的自然栖息地受到破坏时，它们往往会变得更加暴力，社会结构也更倾向于等级化。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>So, it could well be that the same thing has happened to us. I believe that the end of the hunter-gatherer lifestyle and the <mark class="vocab-word" data-word="advent">advent</mark> of farming was connected to a <mark class="vocab-word" data-word="psychological">psychological</mark> change that occurred in some groups of people. There was a new sense of individuality and separateness, which led to a new selfishness, and <mark class="vocab-word" data-word="ultimate">ultimately</mark> to hierarchical societies, patriarchy and warfare. At any rate, these <mark class="vocab-word" data-word="negative">negative</mark> <mark class="vocab-word" data-word="trait">traits</mark> appear to have developed so recently that it doesn’t seem <mark class="vocab-word" data-word="feasible">feasible</mark> to explain them in adaptive or evolutionary terms.</p></div>  <div class="parallel-zh"><p>所以，很可能我们人类也经历了类似的过程。我认为，狩猎采集生活方式的终结和农业的兴起，伴随着某些人群心理上的转变。他们开始产生一种新的个体意识和“我与他人分离”的感觉，这种变化催生了自私的行为，进而导致等级社会、父权制和战争的出现。无论如何，这些负面特质的发展时间都非常晚近，以至于我们很难用“适应”或“进化”来解释它们的产生。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"assumption": 2, "essentially": 1, "selfish": 4, "ruthless": 1, "impulse": 1, "accumulate": 2, "ulterior": 1, "motive": 1, "transcend": 1, "innate": 2, "brutality": 1, "bleak": 1, "gene": 1, "individualistic": 1, "prevalent": 2, "psychology": 2, "trait": 9, "prehistoric": 7, "brutal": 2, "survival": 2, "bound": 1, "rival": 1, "racism": 2, "desperate": 1, "era": 2, "sparse": 1, "populate": 1, "accord": 1, "contemporary": 1, "anthropologist": 2, "ethical": 1, "obligation": 1, "swap": 1, "arrow": 3, "acclaim": 1, "fir": 1, "exile": 1, "dictate": 1, "autonomy": 1, "custody": 1, "agriculture": 1, "settle": 1, "domination": 1, "evolution": 1, "ruthlessly": 2, "cooperation": 1, "presumably": 1, "negative": 2, "psychological": 2, "factor": 1, "repeatedly": 1, "habitat": 1, "primate": 1, "ape": 1, "gorilla": 1, "disrupt": 1, "violent": 1, "advent": 1, "ultimate": 1, "feasible": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

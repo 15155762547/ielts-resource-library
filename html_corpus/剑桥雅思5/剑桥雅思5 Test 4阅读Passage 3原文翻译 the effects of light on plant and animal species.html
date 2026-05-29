@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the effects of light on plant and animal species - 剑桥雅思5 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思5</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>the effects of light on plant and animal species</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/22968.html" target="_blank">https://www.laokaoya.com/22968.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Light is important to <mark class="vocab-word" data-word="organism">organisms</mark> for two different reasons. Firstly it is used as a <mark class="vocab-word" data-word="cue">cue</mark> for the timing of daily and <mark class="vocab-word" data-word="seasonal">seasonal</mark> rhythms in both plants and animals, and secondly it is used to assist growth in plants.</p><p><mark class="vocab-word" data-word="breed">Breeding</mark> in most <mark class="vocab-word" data-word="organism">organisms</mark> occurs during a part of the year only, and so a reliable <mark class="vocab-word" data-word="cue">cue</mark> is needed to <mark class="vocab-word" data-word="trigger">trigger</mark> <mark class="vocab-word" data-word="breed">breeding</mark> behaviour. Day length is an excellent <mark class="vocab-word" data-word="cue">cue</mark>, because it provides a perfectly <mark class="vocab-word" data-word="predictable">predictable</mark> pattern of change within the year. In the <mark class="vocab-word" data-word="temperate">temperate</mark> zone in <mark class="vocab-word" data-word="spring">spring</mark>, temperatures <mark class="vocab-word" data-word="fluctuate">fluctuate</mark> greatly from day to day, but day length increases <mark class="vocab-word" data-word="steadily">steadily</mark> by a <mark class="vocab-word" data-word="predictable">predictable</mark> amount. The <mark class="vocab-word" data-word="seasonal">seasonal</mark> <mark class="vocab-word" data-word="impact">impact</mark> of day length on <mark class="vocab-word" data-word="physiological">physiological</mark> responses is called photoperiodism, and the amount of <mark class="vocab-word" data-word="experimental">experimental</mark> evidence for this <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> is <mark class="vocab-word" data-word="considerable">considerable</mark>. For example, some species of birds’ <mark class="vocab-word" data-word="breed">breeding</mark> can be <mark class="vocab-word" data-word="induce">induced</mark> even in midwinter simply by increasing day length <mark class="vocab-word" data-word="artificial">artificially</mark> (Wolfson 1964). Other examples of photoperiodism occur in plants. A short-day plant flowers when the day is less than a certain critical length. A long-day plant flowers after a certain critical day length is <mark class="vocab-word" data-word="exceed">exceeded</mark>. In both cases the critical day length <mark class="vocab-word" data-word="differ">differs</mark> from species to species. Plants which flower after a period of vegetative growth, <mark class="vocab-word" data-word="regardless">regardless</mark> of photoperiod, are known as day-neutral plants.</p><p><mark class="vocab-word" data-word="breed">Breeding</mark> seasons in animals such as birds have <mark class="vocab-word" data-word="evolve">evolved</mark> to <mark class="vocab-word" data-word="occupy">occupy</mark> the part of the year in which <mark class="vocab-word" data-word="offspring">offspring</mark> have the greatest chances of <mark class="vocab-word" data-word="survival">survival</mark>. Before the <mark class="vocab-word" data-word="breed">breeding</mark> season begins, food reserves must be built up to support the energy cost of <mark class="vocab-word" data-word="reproduction">reproduction</mark>, and to provide for young birds both when they are in the <mark class="vocab-word" data-word="nest">nest</mark> and after fiedging. Thus many temperate-zone birds use the increasing day lengths in <mark class="vocab-word" data-word="spring">spring</mark> as a <mark class="vocab-word" data-word="cue">cue</mark> to begin the <mark class="vocab-word" data-word="nest">nesting</mark> cycle, because this is a point when <mark class="vocab-word" data-word="adequate">adequate</mark> food resources will be <mark class="vocab-word" data-word="assure">assured</mark>.</p><p>The adaptive <mark class="vocab-word" data-word="significance">significance</mark> of photoperiodism in plants is also clear. Short-day plants that flower in <mark class="vocab-word" data-word="spring">spring</mark> in the <mark class="vocab-word" data-word="temperate">temperate</mark> zone are adapted to maximising <mark class="vocab-word" data-word="seedling">seedling</mark> growth during the growing season. Long-day plants are adapted for situations that require <mark class="vocab-word" data-word="fertilization">fertilization</mark> by insects, or a long period of seed <mark class="vocab-word" data-word="ripen">ripening</mark>. Short-day plants that flower in the autumn in the <mark class="vocab-word" data-word="temperate">temperate</mark> zone are able to build up food reserves over the growing season and over winter as seeds. Day-neutral plants have an evolutionary advantage when the connection between the favourable period for <mark class="vocab-word" data-word="reproduction">reproduction</mark> and day length is much less certain. For example, desert annuals <mark class="vocab-word" data-word="germinate">germinate</mark>, flower and seed whenever suitable <mark class="vocab-word" data-word="rainfall">rainfall</mark> occurs, <mark class="vocab-word" data-word="regardless">regardless</mark> of the day length.</p><p>The <mark class="vocab-word" data-word="breed">breeding</mark> season of some plants can be delayed to extraordinary lengths. <mark class="vocab-word" data-word="bamboo">Bamboos</mark> are <mark class="vocab-word" data-word="perennial">perennial</mark> grasses that remain in a vegetative state for many years and then suddenly flower, fruit and die (Evans 1976). Every <mark class="vocab-word" data-word="bamboo">bamboo</mark> of the species Chusquea abietifolia on the island of Jamaica flowered, set seed and died during 1884. The next generation of <mark class="vocab-word" data-word="bamboo">bamboo</mark> flowered and died between 1916 and 1918, which <mark class="vocab-word" data-word="suggest">suggests</mark> a vegetative cycle of about 31 years. The <mark class="vocab-word" data-word="climatic">climatic</mark> <mark class="vocab-word" data-word="trigger">trigger</mark> for this flowering cycle is not yet known, but the adaptive <mark class="vocab-word" data-word="significance">significance</mark> is clear. The <mark class="vocab-word" data-word="simultaneous">simultaneous</mark> production of masses of <mark class="vocab-word" data-word="bamboo">bamboo</mark> seeds (in some cases lying 12 to 15 centimetres deep on the ground) is more than all the seed-eating animals can <mark class="vocab-word" data-word="cope">cope</mark> with at the time, so that some seeds escape being eaten and grow up to form the next generation (Evans 1976).</p><p>The second reason light is important to <mark class="vocab-word" data-word="organism">organisms</mark> is that it is essential for <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark>. This is the process by which plants use energy from the sun to convert <mark class="vocab-word" data-word="carbon">carbon</mark> from soil or water into <mark class="vocab-word" data-word="organic">organic</mark> material for growth. The rate of <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark> in a plant can be measured by calculating the rate of its <mark class="vocab-word" data-word="uptake">uptake</mark> of <mark class="vocab-word" data-word="carbon">carbon</mark>. There is a wide range of photosynthetic responses of plants to <mark class="vocab-word" data-word="variation">variations</mark> in light <mark class="vocab-word" data-word="intensity">intensity</mark>. Some plants reach maximal <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark> at one-quarter full sunlight, and others, like sugarcane, never reach a maximum, but continue to increase <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark> rate as light <mark class="vocab-word" data-word="intensity">intensity</mark> rises.</p><p>Plants in general can be divided into two groups: shade-tolerant species and shade-intolerant species. This <mark class="vocab-word" data-word="classification">classification</mark> is commonly used in <mark class="vocab-word" data-word="forestry">forestry</mark> and <mark class="vocab-word" data-word="horticulture">horticulture</mark>. Shade-tolerant plants have lower photosynthetic rates and <mark class="vocab-word" data-word="hence">hence</mark> have lower growth rates than those of shade-intolerant species. Plant species become adapted to living in .a certain kind of <mark class="vocab-word" data-word="habitat">habitat</mark>, and in the process <mark class="vocab-word" data-word="evolve">evolve</mark> a series of characteristics that prevent them from <mark class="vocab-word" data-word="occupy">occupying</mark> other <mark class="vocab-word" data-word="habitat">habitats</mark>. Grime (1966) <mark class="vocab-word" data-word="suggest">suggests</mark> that light may be one of the major components directing these <mark class="vocab-word" data-word="adaptation">adaptations</mark>. For example, eastern hemlock <mark class="vocab-word" data-word="seedling">seedlings</mark> are shade-tolerant. They can survive in the forest understorey under very low light levels because they have a low photosynthetic rate.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>光线对生物很重要的原因有两个。首先，它被用于动植物每天和季节性活动时间节点的提示，其次，它被用于辅助植物的生长。</p><p>大多数生物的繁殖仅在一年的部分时间内发生，因此需要可靠的线索来触发繁殖行为。日长是一个很好的提示，因为它提供了一年中变化的可预测规律。在春季的温带地区，每天的温度波动很大，但日长每天稳定增加特定的数量。日长对生理反应的季节性影响称为光周期，这种现象的实验证据数量可观。例如，即使是在冬季，也可以通过人工增加日长来诱导某些鸟类的繁殖（Wolfson 1964）。 光周期的其他例子存在于植物中。当白天短于特定的关键长度时，短日照植物就会开花。超过了某个关键的白天长度时，长日照植物就会开花。在这两种情况下，关键的日照长度因物种而异。在不考虑光周期的情况下，经过一段时间生长后开花的植物被称为日中性植物。</p><p>动物（如鸟类）的繁殖季节往往占据一年中后代生存概率最大的一部分时间。在繁殖季节开始之前，必须建立食物储备以支持繁殖所需的能量消耗，并为幼鸟在巢中和飞翔后提供营养。因此，许多温带地区的鸟类利用春季不断增加的日长作为开始筑巢周期的提示，因为这时候可以确保有充足的食物来源。</p><p>光周期性在植物中的适应性意义也很明显。在温带地区春季开花的短日照植株在生长季节会最大化幼苗的生长。长日照植物适合需要昆虫施肥或种子成熟期长的情况。在温带地区秋季开花的短日照植物能够在生长季节和冬季以种子的形式积累食物储备。当繁殖的有利时期和日长之间的联系不太确定时，日中性植物具有进化优势。例如，无论白天多长，只要有合适的降雨，沙漠的一年生植物就会发芽，开花和播种。</p><p>有些植物的繁殖期可能会延迟很长的时间。竹子是多年生草本植物，会处于生长状态许多年，然后突然开花，结实和枯死（Evans 1976）。1884年，牙买加岛上的每一种Chusquea abietifolia竹子都开花，结实并死亡。下一代竹子在1916年至1918年之间开花并死亡，这表明其营养循环约为31年。尚不清楚该开花周期的气候触发因素，但适应性意义很明显。大量同时存在的竹子种子（在某些情况下位于地面12至15 厘米深处）超出了吃种子动物的处理能力，因此一些种子逃脱了被食用的命运并成长为下一代（Evans 1976）。</p><p>光对生物很重要的第二个原因是它对光合作用至关重要。这是植物利用太阳的能量将土壤或水中的碳转化成有机物质进行生长的过程。植物中的光合作用速率可以通过计算其碳吸收速率来测量。植物对光强度变化的光合作用响应范围很广。一些植物在四分之一的日光下达到最大的光合作用，而其他植物（如甘蔗）从未达到过最大值，而是随着光强度的提高，不断提升光合作用速率。</p><p>一般而言，植物可分为两类：耐阴种和不耐阴种。这种分类通常用于林业和园艺业。耐阴植物的光合速率较低，因此其生长速度低于不耐阴植物的生长速率。植物物种适应了生活在某一特定的栖息地中，并在这个过程中进化出一系列防止其占用其他栖息地特征。Grime（1966）提出，光可能是指导这些适应过程的主要原因之一。例如，东部铁杉幼苗具有耐阴性。因为其光合作用速率较低，它们可以在非常低的光照水平下在森林伞盖之下生存。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Light is important to <mark class="vocab-word" data-word="organism">organisms</mark> for two different reasons. Firstly it is used as a <mark class="vocab-word" data-word="cue">cue</mark> for the timing of daily and <mark class="vocab-word" data-word="seasonal">seasonal</mark> rhythms in both plants and animals, and secondly it is used to assist growth in plants.</p></div>  <div class="parallel-zh"><p>光线对生物很重要的原因有两个。首先，它被用于动植物每天和季节性活动时间节点的提示，其次，它被用于辅助植物的生长。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="breed">Breeding</mark> in most <mark class="vocab-word" data-word="organism">organisms</mark> occurs during a part of the year only, and so a reliable <mark class="vocab-word" data-word="cue">cue</mark> is needed to <mark class="vocab-word" data-word="trigger">trigger</mark> <mark class="vocab-word" data-word="breed">breeding</mark> behaviour. Day length is an excellent <mark class="vocab-word" data-word="cue">cue</mark>, because it provides a perfectly <mark class="vocab-word" data-word="predictable">predictable</mark> pattern of change within the year. In the <mark class="vocab-word" data-word="temperate">temperate</mark> zone in <mark class="vocab-word" data-word="spring">spring</mark>, temperatures <mark class="vocab-word" data-word="fluctuate">fluctuate</mark> greatly from day to day, but day length increases <mark class="vocab-word" data-word="steadily">steadily</mark> by a <mark class="vocab-word" data-word="predictable">predictable</mark> amount. The <mark class="vocab-word" data-word="seasonal">seasonal</mark> <mark class="vocab-word" data-word="impact">impact</mark> of day length on <mark class="vocab-word" data-word="physiological">physiological</mark> responses is called photoperiodism, and the amount of <mark class="vocab-word" data-word="experimental">experimental</mark> evidence for this <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> is <mark class="vocab-word" data-word="considerable">considerable</mark>. For example, some species of birds’ <mark class="vocab-word" data-word="breed">breeding</mark> can be <mark class="vocab-word" data-word="induce">induced</mark> even in midwinter simply by increasing day length <mark class="vocab-word" data-word="artificial">artificially</mark> (Wolfson 1964). Other examples of photoperiodism occur in plants. A short-day plant flowers when the day is less than a certain critical length. A long-day plant flowers after a certain critical day length is <mark class="vocab-word" data-word="exceed">exceeded</mark>. In both cases the critical day length <mark class="vocab-word" data-word="differ">differs</mark> from species to species. Plants which flower after a period of vegetative growth, <mark class="vocab-word" data-word="regardless">regardless</mark> of photoperiod, are known as day-neutral plants.</p></div>  <div class="parallel-zh"><p>大多数生物的繁殖仅在一年的部分时间内发生，因此需要可靠的线索来触发繁殖行为。日长是一个很好的提示，因为它提供了一年中变化的可预测规律。在春季的温带地区，每天的温度波动很大，但日长每天稳定增加特定的数量。日长对生理反应的季节性影响称为光周期，这种现象的实验证据数量可观。例如，即使是在冬季，也可以通过人工增加日长来诱导某些鸟类的繁殖（Wolfson 1964）。 光周期的其他例子存在于植物中。当白天短于特定的关键长度时，短日照植物就会开花。超过了某个关键的白天长度时，长日照植物就会开花。在这两种情况下，关键的日照长度因物种而异。在不考虑光周期的情况下，经过一段时间生长后开花的植物被称为日中性植物。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="breed">Breeding</mark> seasons in animals such as birds have <mark class="vocab-word" data-word="evolve">evolved</mark> to <mark class="vocab-word" data-word="occupy">occupy</mark> the part of the year in which <mark class="vocab-word" data-word="offspring">offspring</mark> have the greatest chances of <mark class="vocab-word" data-word="survival">survival</mark>. Before the <mark class="vocab-word" data-word="breed">breeding</mark> season begins, food reserves must be built up to support the energy cost of <mark class="vocab-word" data-word="reproduction">reproduction</mark>, and to provide for young birds both when they are in the <mark class="vocab-word" data-word="nest">nest</mark> and after fiedging. Thus many temperate-zone birds use the increasing day lengths in <mark class="vocab-word" data-word="spring">spring</mark> as a <mark class="vocab-word" data-word="cue">cue</mark> to begin the <mark class="vocab-word" data-word="nest">nesting</mark> cycle, because this is a point when <mark class="vocab-word" data-word="adequate">adequate</mark> food resources will be <mark class="vocab-word" data-word="assure">assured</mark>.</p></div>  <div class="parallel-zh"><p>动物（如鸟类）的繁殖季节往往占据一年中后代生存概率最大的一部分时间。在繁殖季节开始之前，必须建立食物储备以支持繁殖所需的能量消耗，并为幼鸟在巢中和飞翔后提供营养。因此，许多温带地区的鸟类利用春季不断增加的日长作为开始筑巢周期的提示，因为这时候可以确保有充足的食物来源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The adaptive <mark class="vocab-word" data-word="significance">significance</mark> of photoperiodism in plants is also clear. Short-day plants that flower in <mark class="vocab-word" data-word="spring">spring</mark> in the <mark class="vocab-word" data-word="temperate">temperate</mark> zone are adapted to maximising <mark class="vocab-word" data-word="seedling">seedling</mark> growth during the growing season. Long-day plants are adapted for situations that require <mark class="vocab-word" data-word="fertilization">fertilization</mark> by insects, or a long period of seed <mark class="vocab-word" data-word="ripen">ripening</mark>. Short-day plants that flower in the autumn in the <mark class="vocab-word" data-word="temperate">temperate</mark> zone are able to build up food reserves over the growing season and over winter as seeds. Day-neutral plants have an evolutionary advantage when the connection between the favourable period for <mark class="vocab-word" data-word="reproduction">reproduction</mark> and day length is much less certain. For example, desert annuals <mark class="vocab-word" data-word="germinate">germinate</mark>, flower and seed whenever suitable <mark class="vocab-word" data-word="rainfall">rainfall</mark> occurs, <mark class="vocab-word" data-word="regardless">regardless</mark> of the day length.</p></div>  <div class="parallel-zh"><p>光周期性在植物中的适应性意义也很明显。在温带地区春季开花的短日照植株在生长季节会最大化幼苗的生长。长日照植物适合需要昆虫施肥或种子成熟期长的情况。在温带地区秋季开花的短日照植物能够在生长季节和冬季以种子的形式积累食物储备。当繁殖的有利时期和日长之间的联系不太确定时，日中性植物具有进化优势。例如，无论白天多长，只要有合适的降雨，沙漠的一年生植物就会发芽，开花和播种。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="breed">breeding</mark> season of some plants can be delayed to extraordinary lengths. <mark class="vocab-word" data-word="bamboo">Bamboos</mark> are <mark class="vocab-word" data-word="perennial">perennial</mark> grasses that remain in a vegetative state for many years and then suddenly flower, fruit and die (Evans 1976). Every <mark class="vocab-word" data-word="bamboo">bamboo</mark> of the species Chusquea abietifolia on the island of Jamaica flowered, set seed and died during 1884. The next generation of <mark class="vocab-word" data-word="bamboo">bamboo</mark> flowered and died between 1916 and 1918, which <mark class="vocab-word" data-word="suggest">suggests</mark> a vegetative cycle of about 31 years. The <mark class="vocab-word" data-word="climatic">climatic</mark> <mark class="vocab-word" data-word="trigger">trigger</mark> for this flowering cycle is not yet known, but the adaptive <mark class="vocab-word" data-word="significance">significance</mark> is clear. The <mark class="vocab-word" data-word="simultaneous">simultaneous</mark> production of masses of <mark class="vocab-word" data-word="bamboo">bamboo</mark> seeds (in some cases lying 12 to 15 centimetres deep on the ground) is more than all the seed-eating animals can <mark class="vocab-word" data-word="cope">cope</mark> with at the time, so that some seeds escape being eaten and grow up to form the next generation (Evans 1976).</p></div>  <div class="parallel-zh"><p>有些植物的繁殖期可能会延迟很长的时间。竹子是多年生草本植物，会处于生长状态许多年，然后突然开花，结实和枯死（Evans 1976）。1884年，牙买加岛上的每一种Chusquea abietifolia竹子都开花，结实并死亡。下一代竹子在1916年至1918年之间开花并死亡，这表明其营养循环约为31年。尚不清楚该开花周期的气候触发因素，但适应性意义很明显。大量同时存在的竹子种子（在某些情况下位于地面12至15 厘米深处）超出了吃种子动物的处理能力，因此一些种子逃脱了被食用的命运并成长为下一代（Evans 1976）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The second reason light is important to <mark class="vocab-word" data-word="organism">organisms</mark> is that it is essential for <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark>. This is the process by which plants use energy from the sun to convert <mark class="vocab-word" data-word="carbon">carbon</mark> from soil or water into <mark class="vocab-word" data-word="organic">organic</mark> material for growth. The rate of <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark> in a plant can be measured by calculating the rate of its <mark class="vocab-word" data-word="uptake">uptake</mark> of <mark class="vocab-word" data-word="carbon">carbon</mark>. There is a wide range of photosynthetic responses of plants to <mark class="vocab-word" data-word="variation">variations</mark> in light <mark class="vocab-word" data-word="intensity">intensity</mark>. Some plants reach maximal <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark> at one-quarter full sunlight, and others, like sugarcane, never reach a maximum, but continue to increase <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark> rate as light <mark class="vocab-word" data-word="intensity">intensity</mark> rises.</p></div>  <div class="parallel-zh"><p>光对生物很重要的第二个原因是它对光合作用至关重要。这是植物利用太阳的能量将土壤或水中的碳转化成有机物质进行生长的过程。植物中的光合作用速率可以通过计算其碳吸收速率来测量。植物对光强度变化的光合作用响应范围很广。一些植物在四分之一的日光下达到最大的光合作用，而其他植物（如甘蔗）从未达到过最大值，而是随着光强度的提高，不断提升光合作用速率。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Plants in general can be divided into two groups: shade-tolerant species and shade-intolerant species. This <mark class="vocab-word" data-word="classification">classification</mark> is commonly used in <mark class="vocab-word" data-word="forestry">forestry</mark> and <mark class="vocab-word" data-word="horticulture">horticulture</mark>. Shade-tolerant plants have lower photosynthetic rates and <mark class="vocab-word" data-word="hence">hence</mark> have lower growth rates than those of shade-intolerant species. Plant species become adapted to living in .a certain kind of <mark class="vocab-word" data-word="habitat">habitat</mark>, and in the process <mark class="vocab-word" data-word="evolve">evolve</mark> a series of characteristics that prevent them from <mark class="vocab-word" data-word="occupy">occupying</mark> other <mark class="vocab-word" data-word="habitat">habitats</mark>. Grime (1966) <mark class="vocab-word" data-word="suggest">suggests</mark> that light may be one of the major components directing these <mark class="vocab-word" data-word="adaptation">adaptations</mark>. For example, eastern hemlock <mark class="vocab-word" data-word="seedling">seedlings</mark> are shade-tolerant. They can survive in the forest understorey under very low light levels because they have a low photosynthetic rate.</p></div>  <div class="parallel-zh"><p>一般而言，植物可分为两类：耐阴种和不耐阴种。这种分类通常用于林业和园艺业。耐阴植物的光合速率较低，因此其生长速度低于不耐阴植物的生长速率。植物物种适应了生活在某一特定的栖息地中，并在这个过程中进化出一系列防止其占用其他栖息地特征。Grime（1966）提出，光可能是指导这些适应过程的主要原因之一。例如，东部铁杉幼苗具有耐阴性。因为其光合作用速率较低，它们可以在非常低的光照水平下在森林伞盖之下生存。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"organism": 3, "cue": 4, "seasonal": 2, "breed": 6, "trigger": 2, "predictable": 2, "temperate": 3, "spring": 3, "fluctuate": 1, "steadily": 1, "impact": 1, "physiological": 1, "experimental": 1, "phenomenon": 1, "considerable": 1, "induce": 1, "artificial": 1, "exceed": 1, "differ": 1, "regardless": 2, "evolve": 2, "occupy": 2, "offspring": 1, "survival": 1, "reproduction": 2, "nest": 2, "adequate": 1, "assure": 1, "significance": 2, "seedling": 2, "fertilization": 1, "ripen": 1, "germinate": 1, "rainfall": 1, "bamboo": 4, "perennial": 1, "suggest": 2, "climatic": 1, "simultaneous": 1, "cope": 1, "photosynthesis": 4, "carbon": 2, "organic": 1, "uptake": 1, "variation": 1, "intensity": 2, "classification": 1, "forestry": 1, "horticulture": 1, "hence": 1, "habitat": 2, "adaptation": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

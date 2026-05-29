@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greying Population Stays in the Pink - 剑桥雅思6 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思6</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Greying Population Stays in the Pink</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/23433.html" target="_blank">https://www.laokaoya.com/23433.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="elder">Elderly</mark> people are growing healthier, happier and more independent, say American scientists. The results of a 14-year study to be announced later this month <mark class="vocab-word" data-word="reveal">reveal</mark> that the diseases associated with old age are <mark class="vocab-word" data-word="afflict">afflicting</mark> fewer and fewer people and when they do strike, it is much later in life.</p><p>In the last 14 years, the National <mark class="vocab-word" data-word="long-term">Long-term</mark> Health Care Survey has gathered data on the health and lifestyles of more than 20,000 men and women over 65. Researchers, now analysing the results of data gathered in 1994, say <mark class="vocab-word" data-word="arthritis">arthritis</mark>, high blood pressure and <mark class="vocab-word" data-word="circulation">circulation</mark> problems – the major medical complaints in this age group – are troubling a smaller <mark class="vocab-word" data-word="proportion">proportion</mark> every year. And the data confirms that the rate at which these diseases are declining continues to <mark class="vocab-word" data-word="accelerate">accelerate</mark>. Other diseases of old age – dementia, <mark class="vocab-word" data-word="stroke">stroke</mark>, arteriosclerosis and emphysema – are also troubling fewer and fewer people.</p><p>‘It really raises the question of what should be considered normal ageing,’ says Kenneth Manton, a demographer from Duke University in North Carolina. He says the problems doctors accepted as normal in a 65-year-old in 1982 are often not appearing until people are 70 or 75.</p><p>Clearly, certain diseases are beating a <mark class="vocab-word" data-word="retreat">retreat</mark> in the face of medical advances. But there may be other contributing <mark class="vocab-word" data-word="factor">factors</mark>. Improvements in childhood <mark class="vocab-word" data-word="nutrition">nutrition</mark> in the first <mark class="vocab-word" data-word="quarter">quarter</mark> of the twentieth century, for example, gave today’s <mark class="vocab-word" data-word="elder">elderly</mark> people a better start in life than their <mark class="vocab-word" data-word="predecessor">predecessors</mark>.</p><p>On the <mark class="vocab-word" data-word="downside">downside</mark>, the data also <mark class="vocab-word" data-word="reveal">reveals</mark> failures in public health that have caused <mark class="vocab-word" data-word="surge">surges</mark> in some illnesses. An increase in some cancers and <mark class="vocab-word" data-word="bronchitis">bronchitis</mark> may reflect changing smoking habits and poorer air quality, say the researchers. ‘These may be <mark class="vocab-word" data-word="subtle">subtle</mark> <mark class="vocab-word" data-word="influence">influences</mark>,’ says Manton, ‘but our subjects have been <mark class="vocab-word" data-word="exposed">exposed</mark> to worse and worse pollution for over 60 years. It’s not surprising we see some effect.’</p><p>One interesting <mark class="vocab-word" data-word="correlation">correlation</mark> Manton <mark class="vocab-word" data-word="uncover">uncovered</mark> is that better-educated people are likely to live longer. For example, 65-year-old women with fewer than eight years of schooling are expected, on average, to live to 82. Those who continued their education live an extra seven years. Although some of this can be <mark class="vocab-word" data-word="attribute">attributed</mark> to a higher income, Manton believes it is mainly because educated people seek more medical attention.</p><p>The survey also assessed how independent people over 65 were, and again found a <mark class="vocab-word" data-word="striking">striking</mark> trend. Almost 80% of those in the 1994 survey could complete everyday activities ranging from eating and dressing unaided to complex tasks such as cooking and managing their finances. That represents a significant drop in the number of <mark class="vocab-word" data-word="disable">disabled</mark> old people in the population. If the trends apparent in the <mark class="vocab-word" data-word="unite">United</mark> States 14 years ago had continued, researchers calculate there would be an additional one million <mark class="vocab-word" data-word="disable">disabled</mark> <mark class="vocab-word" data-word="elder">elderly</mark> people in today’s population. <mark class="vocab-word" data-word="accord">According</mark> to Manton, slowing the trend has saved the <mark class="vocab-word" data-word="unite">United</mark> States government’s Medicare system more than $200 billion, <mark class="vocab-word" data-word="suggest">suggesting</mark> that the greying of America’s population may prove less of a financial <mark class="vocab-word" data-word="burden">burden</mark> than expected.</p><p>The increasing self-reliance of many <mark class="vocab-word" data-word="elder">elderly</mark> people is probably linked to a <mark class="vocab-word" data-word="massive">massive</mark> increase in the use of simple home medical aids. For instance, the use of raised toilet seats has more than doubled since the start of the study, and the use of bath seats has grown by more than 50%. These developments also bring some health benefits, <mark class="vocab-word" data-word="accord">according</mark> to a report from the MacArthur <mark class="vocab-word" data-word="foundation">Foundation</mark>’s research group on successful ageing. The group found that those <mark class="vocab-word" data-word="elder">elderly</mark> people who were able to retain a sense of <mark class="vocab-word" data-word="independence">independence</mark> were more likely to stay healthy in old age.</p><p>Maintaining a level of daily physical activity may help mental functioning, says Carl Cotman, a neuroscientist at the University of California at Irvine. He found that rats that exercise on a <mark class="vocab-word" data-word="treadmill">treadmill</mark> have raised levels of brain-derived neurotrophic <mark class="vocab-word" data-word="factor">factor</mark> coursing through their brains. Cotman believes this <mark class="vocab-word" data-word="hormone">hormone</mark>, which keeps <mark class="vocab-word" data-word="neuron">neurons</mark> functioning, may prevent the brains of active humans from <mark class="vocab-word" data-word="deteriorate">deteriorating</mark>.</p><p>As part of the same study, Teresa Seeman, a social epidemiologist at the University of Southern California in Los Angeles, found a connection between <mark class="vocab-word" data-word="self-esteem">self-esteem</mark> and stress in people over 70. In laboratory <mark class="vocab-word" data-word="simulation">simulations</mark> of <mark class="vocab-word" data-word="challenging">challenging</mark> activities such as driving, those who felt in control of their lives <mark class="vocab-word" data-word="pump">pumped</mark> out lower levels of stress <mark class="vocab-word" data-word="hormone">hormones</mark> such as cortisol. Chronically high levels of these <mark class="vocab-word" data-word="hormone">hormones</mark> have been linked to heart disease.</p><p>But <mark class="vocab-word" data-word="independence">independence</mark> can have <mark class="vocab-word" data-word="drawback">drawbacks</mark>. Seeman found that <mark class="vocab-word" data-word="elder">elderly</mark> people who felt <mark class="vocab-word" data-word="emotionally">emotionally</mark> <mark class="vocab-word" data-word="isolated">isolated</mark> maintained higher levels of stress <mark class="vocab-word" data-word="hormone">hormones</mark> even when asleep. The research <mark class="vocab-word" data-word="suggest">suggests</mark> that older people <mark class="vocab-word" data-word="fare">fare</mark> best when they feel independent but know they can get help when they need it.</p><p>‘Like much research into ageing, these results support common sense,’ says Seeman. They also show that we may be <mark class="vocab-word" data-word="underestimate">underestimating</mark> the <mark class="vocab-word" data-word="impact">impact</mark> of these simple <mark class="vocab-word" data-word="factor">factors</mark>. ‘The sort of thing that your grandmother always told you turns out to be right on target,’ she says.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>美国科学家说，老年人正在变得更健康，更快乐，更独立。一项将在本月晚些时候宣布的为期14年的研究结果表明，受老年疾病困扰的人越来越少，而且哪怕疾病确实出现了，也在人生更为靠后的阶段。</p><p>在过去的14年里，国家长期健康护理调查收集了有关20,000多名65岁以上男性和女性健康与生活方式的数据。现在，研究人员在分析1994年所收集的数据的结果时说，关节炎，高血压和血液循环问题-该年龄段的主要医疗疾病-每年影响的人群比例都在减小。数据证实这些疾病的下降速度继续加快。受老年痴呆，中风，动脉硬化和肺气肿等其他疾病困扰的人也越来越少。</p><p>北卡罗来纳州杜克大学人口统计学家，肯尼斯·曼顿说：“这真的提出了什么应该被认为是正常老化的问题”。他说，1982年医生认为在65岁的老年人身上很正常的问题现在到70或者75岁才会出现。</p><p>显然，面对医学进步，某些疾病正在消退。但是可能还有其他促成因素。例如，在二十世纪前二十五年中，儿童营养的改善为当今的老年人提供了比其前辈更好的生活起点。</p><p>不利的一面是，该数据还揭示了公共健康的失败导致某些疾病激增。研究人员说，某些癌症和支气管炎的增加可能反映了吸烟习惯的改变和空气质量的下降。曼顿说：“这些可能是微妙的影响。但60多年来，我们的受试者一直忍受越来越严重的污染。我们看到一些影响不足为奇”。</p><p>曼顿发现的一个有趣的联系是，受过良好教育的人寿命可能更长。例如，受教育少于八年的65岁女性平均预期寿命为82岁。那些继续接受教育的人则会多活七年。尽管其部分原因可以归于较高的收入，但曼顿认为，这主要是因为受过教育的人们会寻求更多的医疗关注。</p><p>调查还评估了65岁以上人士的独立状况，并再次发现了惊人的趋势。在1994年的调查中，几乎80％的人可以完成日常活动，从不需帮助就可以吃饭穿衣到诸如烹饪和财务管理等复杂任务。这表示人口中残疾老年人的数量大大减少。如果14年前美国这一明显趋势继续下去，研究人员计算得出，现在的人口将再增加100万残疾人。曼顿认为，趋势放缓已为美国政府的医疗保险体系节省了超过2000亿美元。这表明美国人口老龄化的财务负担可能比预期的要少。</p><p>许多老年人的自力更生可能与简单家庭医疗辅助设备使用的大量增加有关。例如，自研究开始以来，加高马桶座圈的使用量增加了一倍以上，而浴室座圈的使用量已增长了50％以上。麦克阿瑟基金会研究小组关于成功衰老的报告指出，这些进展也带来了一些健康上的好处。该小组发现，那些能够保持独立感的老年人在老年时更可能保持健康。</p><p>加利福尼亚大学尔湾校区神经学家Cotman说，维持日常的体力活动水平可能有助于心理机能。他发现，在跑步机上运动的老鼠的大脑中神经源性神经营养因子水平升高。Cotman认为，这种使神经元保持运转的激素可以防止活跃的人的大脑退化。</p><p>作为同样研究的一部分，洛杉矶南加利福尼亚大学社会流行病学家Teresa Seeman发现，在70岁以上的人群中自尊与压力存在联系。在实验室模拟的诸如驾车等具有挑战性的活动中，那些觉得能够控制自己生活的人释放较低水平的压力荷尔蒙，例如皮质醇。如果这些激素长期处于较高水平可能会导致心脏病。</p><p>但是独立性也有弊端。西曼（Seeman）发现，感觉情感孤立的老年人即使在睡觉时也保持较高的压力激素水平。研究表明，老年人在感到独立，但知道他们可以在需要时获得帮助的时候表现最好。</p><p>西曼说：“就像对衰老的许多研究一样，这些结果与常识相符”。它们还表明，我们可能低估了这些简单因素的影响。她说：“奶奶总是告诉你的那些事情证明确实是正确的”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="elder">Elderly</mark> people are growing healthier, happier and more independent, say American scientists. The results of a 14-year study to be announced later this month <mark class="vocab-word" data-word="reveal">reveal</mark> that the diseases associated with old age are <mark class="vocab-word" data-word="afflict">afflicting</mark> fewer and fewer people and when they do strike, it is much later in life.</p></div>  <div class="parallel-zh"><p>美国科学家说，老年人正在变得更健康，更快乐，更独立。一项将在本月晚些时候宣布的为期14年的研究结果表明，受老年疾病困扰的人越来越少，而且哪怕疾病确实出现了，也在人生更为靠后的阶段。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In the last 14 years, the National <mark class="vocab-word" data-word="long-term">Long-term</mark> Health Care Survey has gathered data on the health and lifestyles of more than 20,000 men and women over 65. Researchers, now analysing the results of data gathered in 1994, say <mark class="vocab-word" data-word="arthritis">arthritis</mark>, high blood pressure and <mark class="vocab-word" data-word="circulation">circulation</mark> problems – the major medical complaints in this age group – are troubling a smaller <mark class="vocab-word" data-word="proportion">proportion</mark> every year. And the data confirms that the rate at which these diseases are declining continues to <mark class="vocab-word" data-word="accelerate">accelerate</mark>. Other diseases of old age – dementia, <mark class="vocab-word" data-word="stroke">stroke</mark>, arteriosclerosis and emphysema – are also troubling fewer and fewer people.</p></div>  <div class="parallel-zh"><p>在过去的14年里，国家长期健康护理调查收集了有关20,000多名65岁以上男性和女性健康与生活方式的数据。现在，研究人员在分析1994年所收集的数据的结果时说，关节炎，高血压和血液循环问题-该年龄段的主要医疗疾病-每年影响的人群比例都在减小。数据证实这些疾病的下降速度继续加快。受老年痴呆，中风，动脉硬化和肺气肿等其他疾病困扰的人也越来越少。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘It really raises the question of what should be considered normal ageing,’ says Kenneth Manton, a demographer from Duke University in North Carolina. He says the problems doctors accepted as normal in a 65-year-old in 1982 are often not appearing until people are 70 or 75.</p></div>  <div class="parallel-zh"><p>北卡罗来纳州杜克大学人口统计学家，肯尼斯·曼顿说：“这真的提出了什么应该被认为是正常老化的问题”。他说，1982年医生认为在65岁的老年人身上很正常的问题现在到70或者75岁才会出现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Clearly, certain diseases are beating a <mark class="vocab-word" data-word="retreat">retreat</mark> in the face of medical advances. But there may be other contributing <mark class="vocab-word" data-word="factor">factors</mark>. Improvements in childhood <mark class="vocab-word" data-word="nutrition">nutrition</mark> in the first <mark class="vocab-word" data-word="quarter">quarter</mark> of the twentieth century, for example, gave today’s <mark class="vocab-word" data-word="elder">elderly</mark> people a better start in life than their <mark class="vocab-word" data-word="predecessor">predecessors</mark>.</p></div>  <div class="parallel-zh"><p>显然，面对医学进步，某些疾病正在消退。但是可能还有其他促成因素。例如，在二十世纪前二十五年中，儿童营养的改善为当今的老年人提供了比其前辈更好的生活起点。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>On the <mark class="vocab-word" data-word="downside">downside</mark>, the data also <mark class="vocab-word" data-word="reveal">reveals</mark> failures in public health that have caused <mark class="vocab-word" data-word="surge">surges</mark> in some illnesses. An increase in some cancers and <mark class="vocab-word" data-word="bronchitis">bronchitis</mark> may reflect changing smoking habits and poorer air quality, say the researchers. ‘These may be <mark class="vocab-word" data-word="subtle">subtle</mark> <mark class="vocab-word" data-word="influence">influences</mark>,’ says Manton, ‘but our subjects have been <mark class="vocab-word" data-word="exposed">exposed</mark> to worse and worse pollution for over 60 years. It’s not surprising we see some effect.’</p></div>  <div class="parallel-zh"><p>不利的一面是，该数据还揭示了公共健康的失败导致某些疾病激增。研究人员说，某些癌症和支气管炎的增加可能反映了吸烟习惯的改变和空气质量的下降。曼顿说：“这些可能是微妙的影响。但60多年来，我们的受试者一直忍受越来越严重的污染。我们看到一些影响不足为奇”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One interesting <mark class="vocab-word" data-word="correlation">correlation</mark> Manton <mark class="vocab-word" data-word="uncover">uncovered</mark> is that better-educated people are likely to live longer. For example, 65-year-old women with fewer than eight years of schooling are expected, on average, to live to 82. Those who continued their education live an extra seven years. Although some of this can be <mark class="vocab-word" data-word="attribute">attributed</mark> to a higher income, Manton believes it is mainly because educated people seek more medical attention.</p></div>  <div class="parallel-zh"><p>曼顿发现的一个有趣的联系是，受过良好教育的人寿命可能更长。例如，受教育少于八年的65岁女性平均预期寿命为82岁。那些继续接受教育的人则会多活七年。尽管其部分原因可以归于较高的收入，但曼顿认为，这主要是因为受过教育的人们会寻求更多的医疗关注。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The survey also assessed how independent people over 65 were, and again found a <mark class="vocab-word" data-word="striking">striking</mark> trend. Almost 80% of those in the 1994 survey could complete everyday activities ranging from eating and dressing unaided to complex tasks such as cooking and managing their finances. That represents a significant drop in the number of <mark class="vocab-word" data-word="disable">disabled</mark> old people in the population. If the trends apparent in the <mark class="vocab-word" data-word="unite">United</mark> States 14 years ago had continued, researchers calculate there would be an additional one million <mark class="vocab-word" data-word="disable">disabled</mark> <mark class="vocab-word" data-word="elder">elderly</mark> people in today’s population. <mark class="vocab-word" data-word="accord">According</mark> to Manton, slowing the trend has saved the <mark class="vocab-word" data-word="unite">United</mark> States government’s Medicare system more than $200 billion, <mark class="vocab-word" data-word="suggest">suggesting</mark> that the greying of America’s population may prove less of a financial <mark class="vocab-word" data-word="burden">burden</mark> than expected.</p></div>  <div class="parallel-zh"><p>调查还评估了65岁以上人士的独立状况，并再次发现了惊人的趋势。在1994年的调查中，几乎80％的人可以完成日常活动，从不需帮助就可以吃饭穿衣到诸如烹饪和财务管理等复杂任务。这表示人口中残疾老年人的数量大大减少。如果14年前美国这一明显趋势继续下去，研究人员计算得出，现在的人口将再增加100万残疾人。曼顿认为，趋势放缓已为美国政府的医疗保险体系节省了超过2000亿美元。这表明美国人口老龄化的财务负担可能比预期的要少。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The increasing self-reliance of many <mark class="vocab-word" data-word="elder">elderly</mark> people is probably linked to a <mark class="vocab-word" data-word="massive">massive</mark> increase in the use of simple home medical aids. For instance, the use of raised toilet seats has more than doubled since the start of the study, and the use of bath seats has grown by more than 50%. These developments also bring some health benefits, <mark class="vocab-word" data-word="accord">according</mark> to a report from the MacArthur <mark class="vocab-word" data-word="foundation">Foundation</mark>’s research group on successful ageing. The group found that those <mark class="vocab-word" data-word="elder">elderly</mark> people who were able to retain a sense of <mark class="vocab-word" data-word="independence">independence</mark> were more likely to stay healthy in old age.</p></div>  <div class="parallel-zh"><p>许多老年人的自力更生可能与简单家庭医疗辅助设备使用的大量增加有关。例如，自研究开始以来，加高马桶座圈的使用量增加了一倍以上，而浴室座圈的使用量已增长了50％以上。麦克阿瑟基金会研究小组关于成功衰老的报告指出，这些进展也带来了一些健康上的好处。该小组发现，那些能够保持独立感的老年人在老年时更可能保持健康。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Maintaining a level of daily physical activity may help mental functioning, says Carl Cotman, a neuroscientist at the University of California at Irvine. He found that rats that exercise on a <mark class="vocab-word" data-word="treadmill">treadmill</mark> have raised levels of brain-derived neurotrophic <mark class="vocab-word" data-word="factor">factor</mark> coursing through their brains. Cotman believes this <mark class="vocab-word" data-word="hormone">hormone</mark>, which keeps <mark class="vocab-word" data-word="neuron">neurons</mark> functioning, may prevent the brains of active humans from <mark class="vocab-word" data-word="deteriorate">deteriorating</mark>.</p></div>  <div class="parallel-zh"><p>加利福尼亚大学尔湾校区神经学家Cotman说，维持日常的体力活动水平可能有助于心理机能。他发现，在跑步机上运动的老鼠的大脑中神经源性神经营养因子水平升高。Cotman认为，这种使神经元保持运转的激素可以防止活跃的人的大脑退化。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As part of the same study, Teresa Seeman, a social epidemiologist at the University of Southern California in Los Angeles, found a connection between <mark class="vocab-word" data-word="self-esteem">self-esteem</mark> and stress in people over 70. In laboratory <mark class="vocab-word" data-word="simulation">simulations</mark> of <mark class="vocab-word" data-word="challenging">challenging</mark> activities such as driving, those who felt in control of their lives <mark class="vocab-word" data-word="pump">pumped</mark> out lower levels of stress <mark class="vocab-word" data-word="hormone">hormones</mark> such as cortisol. Chronically high levels of these <mark class="vocab-word" data-word="hormone">hormones</mark> have been linked to heart disease.</p></div>  <div class="parallel-zh"><p>作为同样研究的一部分，洛杉矶南加利福尼亚大学社会流行病学家Teresa Seeman发现，在70岁以上的人群中自尊与压力存在联系。在实验室模拟的诸如驾车等具有挑战性的活动中，那些觉得能够控制自己生活的人释放较低水平的压力荷尔蒙，例如皮质醇。如果这些激素长期处于较高水平可能会导致心脏病。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But <mark class="vocab-word" data-word="independence">independence</mark> can have <mark class="vocab-word" data-word="drawback">drawbacks</mark>. Seeman found that <mark class="vocab-word" data-word="elder">elderly</mark> people who felt <mark class="vocab-word" data-word="emotionally">emotionally</mark> <mark class="vocab-word" data-word="isolated">isolated</mark> maintained higher levels of stress <mark class="vocab-word" data-word="hormone">hormones</mark> even when asleep. The research <mark class="vocab-word" data-word="suggest">suggests</mark> that older people <mark class="vocab-word" data-word="fare">fare</mark> best when they feel independent but know they can get help when they need it.</p></div>  <div class="parallel-zh"><p>但是独立性也有弊端。西曼（Seeman）发现，感觉情感孤立的老年人即使在睡觉时也保持较高的压力激素水平。研究表明，老年人在感到独立，但知道他们可以在需要时获得帮助的时候表现最好。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘Like much research into ageing, these results support common sense,’ says Seeman. They also show that we may be <mark class="vocab-word" data-word="underestimate">underestimating</mark> the <mark class="vocab-word" data-word="impact">impact</mark> of these simple <mark class="vocab-word" data-word="factor">factors</mark>. ‘The sort of thing that your grandmother always told you turns out to be right on target,’ she says.</p></div>  <div class="parallel-zh"><p>西曼说：“就像对衰老的许多研究一样，这些结果与常识相符”。它们还表明，我们可能低估了这些简单因素的影响。她说：“奶奶总是告诉你的那些事情证明确实是正确的”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"elder": 6, "reveal": 2, "afflict": 1, "long-term": 1, "arthritis": 1, "circulation": 1, "proportion": 1, "accelerate": 1, "stroke": 1, "retreat": 1, "factor": 3, "nutrition": 1, "quarter": 1, "predecessor": 1, "downside": 1, "surge": 1, "bronchitis": 1, "subtle": 1, "influence": 1, "exposed": 1, "correlation": 1, "uncover": 1, "attribute": 1, "striking": 1, "disable": 2, "unite": 2, "accord": 2, "suggest": 2, "burden": 1, "massive": 1, "foundation": 1, "independence": 2, "treadmill": 1, "hormone": 4, "neuron": 1, "deteriorate": 1, "self-esteem": 1, "simulation": 1, "challenging": 1, "pump": 1, "drawback": 1, "emotionally": 1, "isolated": 1, "fare": 1, "underestimate": 1, "impact": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

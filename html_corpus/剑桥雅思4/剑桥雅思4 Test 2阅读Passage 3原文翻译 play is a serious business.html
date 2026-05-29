@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>play is a serious business - 剑桥雅思4 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思4</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>play is a serious business</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/21234.html" target="_blank">https://www.laokaoya.com/21234.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Playing is a serious business. Children <mark class="vocab-word" data-word="engross">engrossed</mark> in a make-believe world, fox <mark class="vocab-word" data-word="cub">cubs</mark> play-fighting or kittens <mark class="vocab-word" data-word="tease">teasing</mark> a ball of <mark class="vocab-word" data-word="string">string</mark> aren’t just having fun. Play may look like a <mark class="vocab-word" data-word="carefree">carefree</mark> and <mark class="vocab-word" data-word="exuberant">exuberant</mark> way to pass the time before the hard work of <mark class="vocab-word" data-word="adulthood">adulthood</mark> comes along, but there’s much more to it than that. For a start, play can even cost animals their lives. Eighty per cent of deaths among <mark class="vocab-word" data-word="juvenile">juvenile</mark> fur <mark class="vocab-word" data-word="seal">seals</mark> occur because playing <mark class="vocab-word" data-word="pup">pups</mark> fail to spot <mark class="vocab-word" data-word="predator">predators</mark> approaching. It is also extremely expensive in terms of energy. Playful young animals use around two or three per cent of their energy <mark class="vocab-word" data-word="cavort">cavorting</mark>, and in children that figure can be closer to fifteen per cent. ‘Even two or three per cent is huge,’ says John Byers of Idaho University. ‘You just don’t find animals wasting energy like that,’ he adds. There must be a reason.</p><p>But if play is not simply a developmental <mark class="vocab-word" data-word="hiccup">hiccup</mark>, as <mark class="vocab-word" data-word="biologist">biologists</mark> once thought, why did it <mark class="vocab-word" data-word="evolve">evolve</mark>? The latest idea <mark class="vocab-word" data-word="suggest">suggests</mark> that play has <mark class="vocab-word" data-word="evolve">evolved</mark> to build big brains. In other words, playing makes you <mark class="vocab-word" data-word="intelligent">intelligent</mark>. This article is from  website. Playfulness, it seems, is common only among <mark class="vocab-word" data-word="mammal">mammals</mark>, although a few of the larger-brained birds also <mark class="vocab-word" data-word="indulge">indulge</mark>. Animals at play often use unique signs – tail-wagging in dogs, for example – to indicate that activity <mark class="vocab-word" data-word="superficial">superficially</mark> <mark class="vocab-word" data-word="resemble">resembling</mark> adult behaviour is not really in <mark class="vocab-word" data-word="earnest">earnest</mark>. A popular explanation of play has been that it helps <mark class="vocab-word" data-word="juvenile">juveniles</mark> develop the skills they will need to hunt, <mark class="vocab-word" data-word="mate">mate</mark> and socialise as adults. Another has been that it allows young animals to get in shape for adult life by improving their respiratory <mark class="vocab-word" data-word="endurance">endurance</mark>. Both these ideas have been questioned in recent years.</p><p>Take the exercise theory. If play <mark class="vocab-word" data-word="evolve">evolved</mark> to build muscle or as a kind of <mark class="vocab-word" data-word="endurance">endurance</mark> training, then you would expect to see permanent benefits. But Byers points out that the benefits of increased exercise disappear rapidly after training stops, so any improvement in <mark class="vocab-word" data-word="endurance">endurance</mark> resulting from <mark class="vocab-word" data-word="juvenile">juvenile</mark> play would be lost by <mark class="vocab-word" data-word="adulthood">adulthood</mark>. ‘If the function of play was to get into shape,’ says Byers, ‘the <mark class="vocab-word" data-word="optimum">optimum</mark> time for playing would depend on when it was most <mark class="vocab-word" data-word="advantageous">advantageous</mark> for the young of a particular species to do so. But it doesn’t work like that.’ Across species, play tends to <mark class="vocab-word" data-word="peak">peak</mark> about halfway through the suckling stage and then decline.</p><p>Then there’s the skills-training <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>. At first <mark class="vocab-word" data-word="glance">glance</mark>, playing animals do appear to be practising the complex manoeuvres they will need in <mark class="vocab-word" data-word="adulthood">adulthood</mark>. But a closer <mark class="vocab-word" data-word="inspection">inspection</mark> <mark class="vocab-word" data-word="reveal">reveals</mark> this <mark class="vocab-word" data-word="interpretation">interpretation</mark> as too <mark class="vocab-word" data-word="simplistic">simplistic</mark>. In one study, behavioural ecologist Tim Caro, from the University of California, looked at the <mark class="vocab-word" data-word="predatory">predatory</mark> play of kittens and their <mark class="vocab-word" data-word="predatory">predatory</mark> behaviour when they reached <mark class="vocab-word" data-word="adulthood">adulthood</mark>. He found that the way the cats played had no significant effect on their hunting <mark class="vocab-word" data-word="prowess">prowess</mark> in later life.</p><p>Earlier this year, Sergio Pellis of Lethbridge University, Canada, reported that there is a strong positive link between brain size and playfulness among <mark class="vocab-word" data-word="mammal">mammals</mark> in general. Comparing measurements for fifteen orders of <mark class="vocab-word" data-word="mammal">mammal</mark>, he and his team found larger brains (for a given body size) are linked to greater playfulness. The <mark class="vocab-word" data-word="converse">converse</mark> was also found to be true. Robert Barton of Durham University believes that, because large brains are more sensitive to developmental stimuli than smaller brains, they require more play to help mould them for <mark class="vocab-word" data-word="adulthood">adulthood</mark>. ‘I concluded it’s to do with learning, and with the importance of environmental data to the brain during development,’ he says.</p><p><mark class="vocab-word" data-word="accord">According</mark> to Byers, the timing of the playful stage in young animals provides an important <mark class="vocab-word" data-word="clue">clue</mark> to what’s going on. If you <mark class="vocab-word" data-word="plot">plot</mark> the amount of time a <mark class="vocab-word" data-word="juvenile">juvenile</mark> <mark class="vocab-word" data-word="devote">devotes</mark> to play each day over the course of its development, you discover a pattern typically associated with a ‘sensitive period’ – a brief development window during which the brain can actually be modified in ways that are not possible earlier or later in life. Think of the relative <mark class="vocab-word" data-word="ease">ease</mark> with which young children- but not <mark class="vocab-word" data-word="infant">infants</mark> or adults – <mark class="vocab-word" data-word="absorb">absorb</mark> language. Other researchers have found that play in cats, rats and mice is at its most intense just as this ‘window of opportunity’ reaches its <mark class="vocab-word" data-word="peak">peak</mark>.</p><p>‘People have not paid enough attention to the amount of the brain <mark class="vocab-word" data-word="activate">activated</mark> by play,’ says Marc Bekoff from Colorado University. Bekoff studied <mark class="vocab-word" data-word="coyote">coyote</mark> <mark class="vocab-word" data-word="pup">pups</mark> at play and found that the kind of behaviour <mark class="vocab-word" data-word="involved">involved</mark> was <mark class="vocab-word" data-word="marked">markedly</mark> more <mark class="vocab-word" data-word="variable">variable</mark> and unpredictable than that of adults. Such behaviour <mark class="vocab-word" data-word="activate">activates</mark> many different parts of the brain, he reasons. Bekoff <mark class="vocab-word" data-word="liken">likens</mark> it to a behavioural kaleidoscope, with animals at play jumping rapidly between activities. ‘They use behaviour from a lot of different contexts – <mark class="vocab-word" data-word="predation">predation</mark>, aggression, <mark class="vocab-word" data-word="reproduction">reproduction</mark>,’ he says. ‘Their developing brain is getting all sorts of <mark class="vocab-word" data-word="stimulation">stimulation</mark>.’</p><p>Not only is more of the brain <mark class="vocab-word" data-word="involved">involved</mark> in play than was suspected, but it also seems to <mark class="vocab-word" data-word="activate">activate</mark> higher <mark class="vocab-word" data-word="cognitive">cognitive</mark> processes. ‘There’s enormous <mark class="vocab-word" data-word="cognitive">cognitive</mark> <mark class="vocab-word" data-word="involvement">involvement</mark> in play,’ says Bekoff. He points out that play often involves complex assessments of playmates, ideas of reciprocity and the use of specialised signals and rules. He believes that play creates a brain that has greater behavioural <mark class="vocab-word" data-word="flexibility">flexibility</mark> and improved potential for learning later in life. The idea is backed up by the work of Stephen Siviy of Gettysburg College. Siviy studied how bouts of play affected the brain’s levels of a particular chemical associated with the <mark class="vocab-word" data-word="stimulation">stimulation</mark> and growth of nerve cells. He was surprised by the extent of the activation. ‘Play just lights everything up,’ he says. By allowing link-ups between brain areas that might not normally communicate with each other, play may enhance <mark class="vocab-word" data-word="creativity">creativity</mark>.</p><p>What might further experimentation <mark class="vocab-word" data-word="suggest">suggest</mark> about the way children are raised in many societies today? We already know that rat <mark class="vocab-word" data-word="pup">pups</mark> denied the chance to play grow smaller brain components and fail to develop the ability to apply social rules when they <mark class="vocab-word" data-word="interact">interact</mark> with their <mark class="vocab-word" data-word="peer">peers</mark>. With schooling beginning earlier and becoming increasingly exam-orientated, play is likely to get even less of a look-in. Who knows what the result of that will be?</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>玩耍是项十分重要的事情。孩子沉浸在自己幻想的世界中，狐狸幼崽嬉戏打闹，小猫拨弄线球，这些行为都不是单纯的为了娱乐。玩耍看起来像是成年努力工作时期到来之前的一种无忧无虑，精力充沛的打发时间方式。但它的意义远不止如此。首先，玩耍甚至会使动物丧命。在幼年的海狗中，有80％的死亡是因为幼崽在玩耍中未能发现掠食者接近而造成的。就能量而言，它也是极其昂贵的。玩耍的幼小动物消耗的能量大约占其总能量的2%到3%。而在儿童中，这一比例可能接近15 ％。 “即使百分之二到百分之三都是巨大的”， 爱达荷大学的约翰·拜尔斯（John Byers ）说。“你找不到动物像这样子浪费能量，“ 他补充道。一定有其他原因的。</p><p>但是，正如生物学家曾经想过的那样，如果玩耍不只是发展上的障碍，它为什么会演变呢？最近的观点表明，玩耍的演变是为了构建发达的大脑。换句话说，玩耍使你变得聪明。嬉戏似乎只在哺乳动物中很普遍，尽管一些大脑发达的鸟类也沉迷于此。玩耍中的动物经常使用独特的标志，例如狗的尾巴会摇动，来表明表面上与成年动物相似的行为并不是真的如此。关于玩耍的一种流行解释是，它可以帮助幼年期的动物锻炼他们成年之后所需要的捕猎、求偶以及社交技能。另一个原因是，它可以通过提升幼小动物的呼吸耐力来锻炼成年后的体型。这两种想法近年来都受到质疑。</p><p>拿锻炼理论来说，如果玩耍时为了锻炼肌肉或作为一种耐力锻炼，那么你会看到持久的好处。但拜尔斯指出，运动增加的好处会在训练停止后迅速消失。因此，青少年玩耍所带来的耐力提升在成年前就会丧失。“如果玩耍的功能是为了体型”，拜尔斯说，“其最佳时间应该取决于什么时候动物幼崽这么做对其最为有利。但似乎不是这样的”。在所有物种中，玩耍会在哺乳期一般的时候达到顶峰，然后下降。</p><p>除此之外，还有技能训练假说。乍一看，玩耍的动物似乎正在练习成年后所需的复杂动作。但是仔细检查发现，这种解释过于简单。在一项研究中，加利福尼亚大学的行为生态学家蒂姆·卡罗观察小猫的捕食行为和成年之后的捕食行为。他发现，小猫玩耍的方式对他们以后的狩猎技巧没有什么重大影响。</p><p>今年早些时候，加拿大莱斯布里奇大学的塞尔吉奥·佩利斯（Sergio Pellis）报告说，一般而言，哺乳动物的大脑大小与玩耍之间存在很强的正向联系。通过比较15个哺乳动物的测量值，他和他的团队发现更大的大脑（对于给定的体型）与更多的嬉戏息息相关。相反的规律也被发现是正确的。达勒姆大学的罗伯特·巴顿（Robert Barton）认为，由于大一点的大脑比小一点的大脑对发育刺激更为敏感，因此他们需要更多的玩耍来帮助他们成长。“我的结论是它与学习有关，与发育过程中环境对大脑的重要性有关”， 他说。</p><p>据拜尔斯说，幼龄动物玩耍阶段的时机为正在发生什么提供了重要的线索。如果你绘制出幼龄动物在发育过程中每天在玩耍上花费的时间，你会发现通常与“敏感期”相关的模式-一个短暂的发育窗口。在此期间，大脑实际上通过某种在生命早期和晚期都不太可能的方式进行调整。想想幼儿（不是婴儿或成人）学习语言的轻易性。其他研究者发现，在这种“机会之窗” 达到顶峰之时，猫、老鼠和小白鼠的玩耍也最为激烈。</p><p>“人们对玩耍所激发的大脑的部分没有给予足够的重视”，科罗拉多大学的马克·贝科夫说。贝科夫研究了土狼幼崽的活动，发现其所涉及的行为比成年土狼明显多变且难以预测。他认为，这些行为会激活大脑的许多不同部分。贝科夫将其比作行为万花筒，玩耍中的动物在不同活动之间迅速转换。“他们使用许多不同情景下的动作-捕食，侵略，繁殖”， 他说，“他们的大脑正在得到各种各样的刺激”。</p><p>不仅有人怀疑玩耍会涉及更多的大脑部分，而且它似乎也激发高级认知过程。“玩耍包含了大量的认知活动”，贝科夫说。他指出，玩耍通常涉及对玩伴的复杂评估，对互惠观念的认识，以及对信号和规则使用。他认为玩耍为以后的生活创造出一个拥有更大灵活性、更高学习潜力的大脑。葛底斯堡学院的斯蒂芬·西维（Stephen Siviy）的研究也支持这一说法。西维研究了玩耍如何影响大脑中与神经细胞刺激和生长有关的特定化学物质的水平。他对刺激的幅度感到经验。“玩耍点亮了一切”，他说。通过将大脑中平时不怎么可能交流的区域联系起来，游戏可能可以增强创造力。</p><p>关于当今许多社会中儿童成长方式的进一步实验可能提出什么建议？我们已经知道，被剥夺玩耍机会的老鼠的大脑较小，并且在与同伴互动时未能发展出运用社会规则的能力。随着上学时间的提前和考试导向的加深，玩耍的机会可能会更少。谁知道这样做的结果是什么？</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Playing is a serious business. Children <mark class="vocab-word" data-word="engross">engrossed</mark> in a make-believe world, fox <mark class="vocab-word" data-word="cub">cubs</mark> play-fighting or kittens <mark class="vocab-word" data-word="tease">teasing</mark> a ball of <mark class="vocab-word" data-word="string">string</mark> aren’t just having fun. Play may look like a <mark class="vocab-word" data-word="carefree">carefree</mark> and <mark class="vocab-word" data-word="exuberant">exuberant</mark> way to pass the time before the hard work of <mark class="vocab-word" data-word="adulthood">adulthood</mark> comes along, but there’s much more to it than that. For a start, play can even cost animals their lives. Eighty per cent of deaths among <mark class="vocab-word" data-word="juvenile">juvenile</mark> fur <mark class="vocab-word" data-word="seal">seals</mark> occur because playing <mark class="vocab-word" data-word="pup">pups</mark> fail to spot <mark class="vocab-word" data-word="predator">predators</mark> approaching. It is also extremely expensive in terms of energy. Playful young animals use around two or three per cent of their energy <mark class="vocab-word" data-word="cavort">cavorting</mark>, and in children that figure can be closer to fifteen per cent. ‘Even two or three per cent is huge,’ says John Byers of Idaho University. ‘You just don’t find animals wasting energy like that,’ he adds. There must be a reason.</p></div>  <div class="parallel-zh"><p>玩耍是项十分重要的事情。孩子沉浸在自己幻想的世界中，狐狸幼崽嬉戏打闹，小猫拨弄线球，这些行为都不是单纯的为了娱乐。玩耍看起来像是成年努力工作时期到来之前的一种无忧无虑，精力充沛的打发时间方式。但它的意义远不止如此。首先，玩耍甚至会使动物丧命。在幼年的海狗中，有80％的死亡是因为幼崽在玩耍中未能发现掠食者接近而造成的。就能量而言，它也是极其昂贵的。玩耍的幼小动物消耗的能量大约占其总能量的2%到3%。而在儿童中，这一比例可能接近15 ％。 “即使百分之二到百分之三都是巨大的”， 爱达荷大学的约翰·拜尔斯（John Byers ）说。“你找不到动物像这样子浪费能量，“ 他补充道。一定有其他原因的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But if play is not simply a developmental <mark class="vocab-word" data-word="hiccup">hiccup</mark>, as <mark class="vocab-word" data-word="biologist">biologists</mark> once thought, why did it <mark class="vocab-word" data-word="evolve">evolve</mark>? The latest idea <mark class="vocab-word" data-word="suggest">suggests</mark> that play has <mark class="vocab-word" data-word="evolve">evolved</mark> to build big brains. In other words, playing makes you <mark class="vocab-word" data-word="intelligent">intelligent</mark>. This article is from  website. Playfulness, it seems, is common only among <mark class="vocab-word" data-word="mammal">mammals</mark>, although a few of the larger-brained birds also <mark class="vocab-word" data-word="indulge">indulge</mark>. Animals at play often use unique signs – tail-wagging in dogs, for example – to indicate that activity <mark class="vocab-word" data-word="superficial">superficially</mark> <mark class="vocab-word" data-word="resemble">resembling</mark> adult behaviour is not really in <mark class="vocab-word" data-word="earnest">earnest</mark>. A popular explanation of play has been that it helps <mark class="vocab-word" data-word="juvenile">juveniles</mark> develop the skills they will need to hunt, <mark class="vocab-word" data-word="mate">mate</mark> and socialise as adults. Another has been that it allows young animals to get in shape for adult life by improving their respiratory <mark class="vocab-word" data-word="endurance">endurance</mark>. Both these ideas have been questioned in recent years.</p></div>  <div class="parallel-zh"><p>但是，正如生物学家曾经想过的那样，如果玩耍不只是发展上的障碍，它为什么会演变呢？最近的观点表明，玩耍的演变是为了构建发达的大脑。换句话说，玩耍使你变得聪明。嬉戏似乎只在哺乳动物中很普遍，尽管一些大脑发达的鸟类也沉迷于此。玩耍中的动物经常使用独特的标志，例如狗的尾巴会摇动，来表明表面上与成年动物相似的行为并不是真的如此。关于玩耍的一种流行解释是，它可以帮助幼年期的动物锻炼他们成年之后所需要的捕猎、求偶以及社交技能。另一个原因是，它可以通过提升幼小动物的呼吸耐力来锻炼成年后的体型。这两种想法近年来都受到质疑。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Take the exercise theory. If play <mark class="vocab-word" data-word="evolve">evolved</mark> to build muscle or as a kind of <mark class="vocab-word" data-word="endurance">endurance</mark> training, then you would expect to see permanent benefits. But Byers points out that the benefits of increased exercise disappear rapidly after training stops, so any improvement in <mark class="vocab-word" data-word="endurance">endurance</mark> resulting from <mark class="vocab-word" data-word="juvenile">juvenile</mark> play would be lost by <mark class="vocab-word" data-word="adulthood">adulthood</mark>. ‘If the function of play was to get into shape,’ says Byers, ‘the <mark class="vocab-word" data-word="optimum">optimum</mark> time for playing would depend on when it was most <mark class="vocab-word" data-word="advantageous">advantageous</mark> for the young of a particular species to do so. But it doesn’t work like that.’ Across species, play tends to <mark class="vocab-word" data-word="peak">peak</mark> about halfway through the suckling stage and then decline.</p></div>  <div class="parallel-zh"><p>拿锻炼理论来说，如果玩耍时为了锻炼肌肉或作为一种耐力锻炼，那么你会看到持久的好处。但拜尔斯指出，运动增加的好处会在训练停止后迅速消失。因此，青少年玩耍所带来的耐力提升在成年前就会丧失。“如果玩耍的功能是为了体型”，拜尔斯说，“其最佳时间应该取决于什么时候动物幼崽这么做对其最为有利。但似乎不是这样的”。在所有物种中，玩耍会在哺乳期一般的时候达到顶峰，然后下降。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Then there’s the skills-training <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>. At first <mark class="vocab-word" data-word="glance">glance</mark>, playing animals do appear to be practising the complex manoeuvres they will need in <mark class="vocab-word" data-word="adulthood">adulthood</mark>. But a closer <mark class="vocab-word" data-word="inspection">inspection</mark> <mark class="vocab-word" data-word="reveal">reveals</mark> this <mark class="vocab-word" data-word="interpretation">interpretation</mark> as too <mark class="vocab-word" data-word="simplistic">simplistic</mark>. In one study, behavioural ecologist Tim Caro, from the University of California, looked at the <mark class="vocab-word" data-word="predatory">predatory</mark> play of kittens and their <mark class="vocab-word" data-word="predatory">predatory</mark> behaviour when they reached <mark class="vocab-word" data-word="adulthood">adulthood</mark>. He found that the way the cats played had no significant effect on their hunting <mark class="vocab-word" data-word="prowess">prowess</mark> in later life.</p></div>  <div class="parallel-zh"><p>除此之外，还有技能训练假说。乍一看，玩耍的动物似乎正在练习成年后所需的复杂动作。但是仔细检查发现，这种解释过于简单。在一项研究中，加利福尼亚大学的行为生态学家蒂姆·卡罗观察小猫的捕食行为和成年之后的捕食行为。他发现，小猫玩耍的方式对他们以后的狩猎技巧没有什么重大影响。</p><p>今年早些时候，加拿大莱斯布里奇大学的塞尔吉奥·佩利斯（Sergio Pellis）报告说，一般而言，哺乳动物的大脑大小与玩耍之间存在很强的正向联系。通过比较15个哺乳动物的测量值，他和他的团队发现更大的大脑（对于给定的体型）与更多的嬉戏息息相关。相反的规律也被发现是正确的。达勒姆大学的罗伯特·巴顿（Robert Barton）认为，由于大一点的大脑比小一点的大脑对发育刺激更为敏感，因此他们需要更多的玩耍来帮助他们成长。“我的结论是它与学习有关，与发育过程中环境对大脑的重要性有关”， 他说。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Earlier this year, Sergio Pellis of Lethbridge University, Canada, reported that there is a strong positive link between brain size and playfulness among <mark class="vocab-word" data-word="mammal">mammals</mark> in general. Comparing measurements for fifteen orders of <mark class="vocab-word" data-word="mammal">mammal</mark>, he and his team found larger brains (for a given body size) are linked to greater playfulness. The <mark class="vocab-word" data-word="converse">converse</mark> was also found to be true. Robert Barton of Durham University believes that, because large brains are more sensitive to developmental stimuli than smaller brains, they require more play to help mould them for <mark class="vocab-word" data-word="adulthood">adulthood</mark>. ‘I concluded it’s to do with learning, and with the importance of environmental data to the brain during development,’ he says.</p></div>  <div class="parallel-zh"><p>据拜尔斯说，幼龄动物玩耍阶段的时机为正在发生什么提供了重要的线索。如果你绘制出幼龄动物在发育过程中每天在玩耍上花费的时间，你会发现通常与“敏感期”相关的模式-一个短暂的发育窗口。在此期间，大脑实际上通过某种在生命早期和晚期都不太可能的方式进行调整。想想幼儿（不是婴儿或成人）学习语言的轻易性。其他研究者发现，在这种“机会之窗” 达到顶峰之时，猫、老鼠和小白鼠的玩耍也最为激烈。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="accord">According</mark> to Byers, the timing of the playful stage in young animals provides an important <mark class="vocab-word" data-word="clue">clue</mark> to what’s going on. If you <mark class="vocab-word" data-word="plot">plot</mark> the amount of time a <mark class="vocab-word" data-word="juvenile">juvenile</mark> <mark class="vocab-word" data-word="devote">devotes</mark> to play each day over the course of its development, you discover a pattern typically associated with a ‘sensitive period’ – a brief development window during which the brain can actually be modified in ways that are not possible earlier or later in life. Think of the relative <mark class="vocab-word" data-word="ease">ease</mark> with which young children- but not <mark class="vocab-word" data-word="infant">infants</mark> or adults – <mark class="vocab-word" data-word="absorb">absorb</mark> language. Other researchers have found that play in cats, rats and mice is at its most intense just as this ‘window of opportunity’ reaches its <mark class="vocab-word" data-word="peak">peak</mark>.</p></div>  <div class="parallel-zh"><p>“人们对玩耍所激发的大脑的部分没有给予足够的重视”，科罗拉多大学的马克·贝科夫说。贝科夫研究了土狼幼崽的活动，发现其所涉及的行为比成年土狼明显多变且难以预测。他认为，这些行为会激活大脑的许多不同部分。贝科夫将其比作行为万花筒，玩耍中的动物在不同活动之间迅速转换。“他们使用许多不同情景下的动作-捕食，侵略，繁殖”， 他说，“他们的大脑正在得到各种各样的刺激”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘People have not paid enough attention to the amount of the brain <mark class="vocab-word" data-word="activate">activated</mark> by play,’ says Marc Bekoff from Colorado University. Bekoff studied <mark class="vocab-word" data-word="coyote">coyote</mark> <mark class="vocab-word" data-word="pup">pups</mark> at play and found that the kind of behaviour <mark class="vocab-word" data-word="involved">involved</mark> was <mark class="vocab-word" data-word="marked">markedly</mark> more <mark class="vocab-word" data-word="variable">variable</mark> and unpredictable than that of adults. Such behaviour <mark class="vocab-word" data-word="activate">activates</mark> many different parts of the brain, he reasons. Bekoff <mark class="vocab-word" data-word="liken">likens</mark> it to a behavioural kaleidoscope, with animals at play jumping rapidly between activities. ‘They use behaviour from a lot of different contexts – <mark class="vocab-word" data-word="predation">predation</mark>, aggression, <mark class="vocab-word" data-word="reproduction">reproduction</mark>,’ he says. ‘Their developing brain is getting all sorts of <mark class="vocab-word" data-word="stimulation">stimulation</mark>.’</p><p>Not only is more of the brain <mark class="vocab-word" data-word="involved">involved</mark> in play than was suspected, but it also seems to <mark class="vocab-word" data-word="activate">activate</mark> higher <mark class="vocab-word" data-word="cognitive">cognitive</mark> processes. ‘There’s enormous <mark class="vocab-word" data-word="cognitive">cognitive</mark> <mark class="vocab-word" data-word="involvement">involvement</mark> in play,’ says Bekoff. He points out that play often involves complex assessments of playmates, ideas of reciprocity and the use of specialised signals and rules. He believes that play creates a brain that has greater behavioural <mark class="vocab-word" data-word="flexibility">flexibility</mark> and improved potential for learning later in life. The idea is backed up by the work of Stephen Siviy of Gettysburg College. Siviy studied how bouts of play affected the brain’s levels of a particular chemical associated with the <mark class="vocab-word" data-word="stimulation">stimulation</mark> and growth of nerve cells. He was surprised by the extent of the activation. ‘Play just lights everything up,’ he says. By allowing link-ups between brain areas that might not normally communicate with each other, play may enhance <mark class="vocab-word" data-word="creativity">creativity</mark>.</p></div>  <div class="parallel-zh"><p>不仅有人怀疑玩耍会涉及更多的大脑部分，而且它似乎也激发高级认知过程。“玩耍包含了大量的认知活动”，贝科夫说。他指出，玩耍通常涉及对玩伴的复杂评估，对互惠观念的认识，以及对信号和规则使用。他认为玩耍为以后的生活创造出一个拥有更大灵活性、更高学习潜力的大脑。葛底斯堡学院的斯蒂芬·西维（Stephen Siviy）的研究也支持这一说法。西维研究了玩耍如何影响大脑中与神经细胞刺激和生长有关的特定化学物质的水平。他对刺激的幅度感到经验。“玩耍点亮了一切”，他说。通过将大脑中平时不怎么可能交流的区域联系起来，游戏可能可以增强创造力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What might further experimentation <mark class="vocab-word" data-word="suggest">suggest</mark> about the way children are raised in many societies today? We already know that rat <mark class="vocab-word" data-word="pup">pups</mark> denied the chance to play grow smaller brain components and fail to develop the ability to apply social rules when they <mark class="vocab-word" data-word="interact">interact</mark> with their <mark class="vocab-word" data-word="peer">peers</mark>. With schooling beginning earlier and becoming increasingly exam-orientated, play is likely to get even less of a look-in. Who knows what the result of that will be?</p></div>  <div class="parallel-zh"><p>关于当今许多社会中儿童成长方式的进一步实验可能提出什么建议？我们已经知道，被剥夺玩耍机会的老鼠的大脑较小，并且在与同伴互动时未能发展出运用社会规则的能力。随着上学时间的提前和考试导向的加深，玩耍的机会可能会更少。谁知道这样做的结果是什么？</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"engross": 1, "cub": 1, "tease": 1, "string": 1, "carefree": 1, "exuberant": 1, "adulthood": 5, "juvenile": 4, "seal": 1, "pup": 3, "predator": 1, "cavort": 1, "hiccup": 1, "biologist": 1, "evolve": 3, "suggest": 2, "intelligent": 1, "mammal": 3, "indulge": 1, "superficial": 1, "resemble": 1, "earnest": 1, "mate": 1, "endurance": 3, "optimum": 1, "advantageous": 1, "peak": 2, "hypothesis": 1, "glance": 1, "inspection": 1, "reveal": 1, "interpretation": 1, "simplistic": 1, "predatory": 2, "prowess": 1, "converse": 1, "accord": 1, "clue": 1, "plot": 1, "devote": 1, "ease": 1, "infant": 1, "absorb": 1, "activate": 3, "coyote": 1, "involved": 2, "marked": 1, "variable": 1, "liken": 1, "predation": 1, "reproduction": 1, "stimulation": 2, "cognitive": 2, "involvement": 1, "flexibility": 1, "creativity": 1, "interact": 1, "peer": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

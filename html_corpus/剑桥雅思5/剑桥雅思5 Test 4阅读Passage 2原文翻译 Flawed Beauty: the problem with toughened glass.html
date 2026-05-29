@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flawed Beauty: the problem with toughened glass - 剑桥雅思5 Test 4 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思5</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Flawed Beauty: the problem with toughened glass</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/22906.html" target="_blank">https://www.laokaoya.com/22906.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>On 2nd August 1999, a particularly hot day in the town of Cirencester in the UK, a large <mark class="vocab-word" data-word="pane">pane</mark> of toughened glass in the roof of a shopping centre at <mark class="vocab-word" data-word="bishop">Bishops</mark> Walk <mark class="vocab-word" data-word="shattered">shattered</mark> without warning and fell from its frame. When <mark class="vocab-word" data-word="fragment">fragments</mark> were analysed by experts at the giant glass <mark class="vocab-word" data-word="manufacturer">manufacturer</mark> Pilkington, which had made the <mark class="vocab-word" data-word="pane">pane</mark>, they found that minute <mark class="vocab-word" data-word="crystal">crystals</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide trapped inside the glass had almost certainly caused the failure.</p><p>‘The glass industry is aware of the issue,’ says Brian Waldron, chairman of the standards committee at the Glass and <mark class="vocab-word" data-word="glaze">Glazing</mark> <mark class="vocab-word" data-word="federation">Federation</mark>, a British trade association, and standards development officer at Pilkington. But he insists that cases are few and far between. ‘It’s a very rare <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>,’ he says.</p><p>Others disagree. ‘On average I see about one or two buildings a month suffering from <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide related failures,’ says Barrie Josie, a <mark class="vocab-word" data-word="consultant">consultant</mark> engineer <mark class="vocab-word" data-word="involved">involved</mark> in the <mark class="vocab-word" data-word="bishop">Bishops</mark> Walk investigation. Other experts tell of similar experiences. Tony Wilmott of London-based <mark class="vocab-word" data-word="consult">consulting</mark> engineers Sandberg, and Simon Armstrong at CladTech Associates in Hampshire both say they know of hundreds of cases. ‘What you hear is only the tip of the <mark class="vocab-word" data-word="iceberg">iceberg</mark>,’ says Trevor Ford, a glass expert at Resolve <mark class="vocab-word" data-word="engineering">Engineering</mark> in Brisbane, Queensland. He believes the reason is simple: ‘No-one wants bad press.’</p><p>Toughened glass is found everywhere, from cars and bus shelters to the windows, walls and roofs of thousands of buildings around the world. It’s easy to see why. This glass has five times the strength of standard glass, and when it does break it <mark class="vocab-word" data-word="shatter">shatters</mark> into tiny <mark class="vocab-word" data-word="cube">cubes</mark> rather than large, razor-sharp <mark class="vocab-word" data-word="shard">shards</mark>. <mark class="vocab-word" data-word="architect">Architects</mark> love it because large panels can be <mark class="vocab-word" data-word="bolt">bolted</mark> together to make <mark class="vocab-word" data-word="transparent">transparent</mark> walls, and turning it into <mark class="vocab-word" data-word="ceiling">ceilings</mark> and floors is almost as easy.</p><p>It is made by heating a sheet of ordinary glass to about 620℃ to soften it slightly, allowing its structure to expand, and then cooling it rapidly with <mark class="vocab-word" data-word="jet">jets</mark> of cold air. This causes the outer layer of the <mark class="vocab-word" data-word="pane">pane</mark> to contract and <mark class="vocab-word" data-word="solidify">solidify</mark> before the <mark class="vocab-word" data-word="interior">interior</mark>. When the <mark class="vocab-word" data-word="interior">interior</mark> finally solidifies and <mark class="vocab-word" data-word="shrink">shrinks</mark>, it <mark class="vocab-word" data-word="exert">exerts</mark> a pull on the outer layer that leaves it in permanent compression and produces a <mark class="vocab-word" data-word="tensile">tensile</mark> force inside the glass. As <mark class="vocab-word" data-word="crack">cracks</mark> <mark class="vocab-word" data-word="propagate">propagate</mark> best in materials under <mark class="vocab-word" data-word="tension">tension</mark>, the compressive force on the surface must be overcome before the <mark class="vocab-word" data-word="pane">pane</mark> will break, making it more <mark class="vocab-word" data-word="resistant">resistant</mark> to <mark class="vocab-word" data-word="crack">cracking</mark>.</p><p>The problem starts when glass contains <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide impurities. <mark class="vocab-word" data-word="trace">Trace</mark> amounts of <mark class="vocab-word" data-word="nickel">nickel</mark> and sulphur are usually present in the <mark class="vocab-word" data-word="raw">raw</mark> materials used to make glass, and <mark class="vocab-word" data-word="nickel">nickel</mark> can also be introduced by <mark class="vocab-word" data-word="fragment">fragments</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> <mark class="vocab-word" data-word="alloy">alloys</mark> falling into the <mark class="vocab-word" data-word="molten">molten</mark> glass. As the glass is <mark class="vocab-word" data-word="heated">heated</mark>, these <mark class="vocab-word" data-word="atom">atoms</mark> react to form tiny <mark class="vocab-word" data-word="crystal">crystals</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide. Just a tenth of a <mark class="vocab-word" data-word="gram">gram</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> in the <mark class="vocab-word" data-word="furnace">furnace</mark> can create up to 50,000 <mark class="vocab-word" data-word="crystal">crystals</mark>.</p><p>These <mark class="vocab-word" data-word="crystal">crystals</mark> can exist in two forms: a <mark class="vocab-word" data-word="dense">dense</mark> form called the alpha phase, which is <mark class="vocab-word" data-word="stable">stable</mark> at high temperatures, and a less <mark class="vocab-word" data-word="dense">dense</mark> form called the beta phase, which is <mark class="vocab-word" data-word="stable">stable</mark> at room temperatures. The high temperatures used in the toughening process convert all the <mark class="vocab-word" data-word="crystal">crystals</mark> to the <mark class="vocab-word" data-word="dense">dense</mark>, <mark class="vocab-word" data-word="compact">compact</mark> alpha form. But the <mark class="vocab-word" data-word="subsequent">subsequent</mark> cooling is so rapid that the <mark class="vocab-word" data-word="crystal">crystals</mark> don’t have time to change back to the beta phase. This leaves unstable alpha <mark class="vocab-word" data-word="crystal">crystals</mark> in the glass, primed like a <mark class="vocab-word" data-word="coil">coiled</mark> <mark class="vocab-word" data-word="spring">spring</mark>, ready to <mark class="vocab-word" data-word="revert">revert</mark> to the beta phase without warning.</p><p>When this happens, the <mark class="vocab-word" data-word="crystal">crystals</mark> expand by up to 4%. And if they are within the central, <mark class="vocab-word" data-word="tensile">tensile</mark> region of the <mark class="vocab-word" data-word="pane">pane</mark>, the stresses this <mark class="vocab-word" data-word="unleash">unleashes</mark> can <mark class="vocab-word" data-word="shatter">shatter</mark> the whole sheet. The time that <mark class="vocab-word" data-word="elapse">elapses</mark> before failure occurs is unpredictable. It could happen just months after <mark class="vocab-word" data-word="manufacture">manufacture</mark>, or <mark class="vocab-word" data-word="decade">decades</mark> later, although if the glass is <mark class="vocab-word" data-word="heated">heated</mark> – by sunlight, for example – the process is speeded up. <mark class="vocab-word" data-word="ironically">Ironically</mark>, says Graham Dodd, of <mark class="vocab-word" data-word="consult">consulting</mark> engineers Arup in London, the oldest <mark class="vocab-word" data-word="pane">pane</mark> of toughened glass known to have failed due to <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide inclusions was in Pilkington’s glass research building in Lathom, Lancashire. The <mark class="vocab-word" data-word="pane">pane</mark> was 27 years old.</p><p>Data showing the scale of the <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide problem is almost impossible to find. The picture is made more <mark class="vocab-word" data-word="complicated">complicated</mark> by the fact that these <mark class="vocab-word" data-word="crystal">crystals</mark> occur in <mark class="vocab-word" data-word="batch">batches</mark>. So even if, on average, there is only one inclusion in 7 tonnes of glass, if you experience one <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide failure in your building, that probably means you’ve got a problem in more than one <mark class="vocab-word" data-word="pane">pane</mark>. Josie says that in the last <mark class="vocab-word" data-word="decade">decade</mark> he has worked on over 15 buildings with the number of failures into double figures.</p><p>One of the worst examples of this is <mark class="vocab-word" data-word="waterfront">Waterfront</mark> Place, which was completed in 1990. Over the following <mark class="vocab-word" data-word="decade">decade</mark> the 40-storey Brisbane block suffered a <mark class="vocab-word" data-word="rash">rash</mark> of failures. Eighty <mark class="vocab-word" data-word="pane">panes</mark> of its toughened glass <mark class="vocab-word" data-word="shattered">shattered</mark> due to inclusions before experts were finally called in. John Barry, an expert in <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide contamination at the University of Queensland, analysed every glass <mark class="vocab-word" data-word="pane">pane</mark> in the building. Using a studio camera, a photographer went up in a <mark class="vocab-word" data-word="cradle">cradle</mark> to take photos of every <mark class="vocab-word" data-word="pane">pane</mark>. These were scanned under a modified microfiche reader for signs of <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide <mark class="vocab-word" data-word="crystal">crystals</mark>. ‘We discovered at least another 120 <mark class="vocab-word" data-word="pane">panes</mark> with potentially dangerous inclusions which were then replaced,’ says Barry. ‘It was a very expensive and time-consuming process that took around six months to complete.’ Though the project cost A$1.6 million (nearly ￡700,000), the alternative – re-cladding the entire building – would have cost ten times as much.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>1999年8月2日，英国Cirencester镇正经历极其炎热的一天。在没有任何警示的情况下，一大块钢化玻璃突然破裂，并从位于主教大道的购物中心屋顶脱落。制作该窗户的大型玻璃制造商Pilkington的专家对碎片进行了分析后，发现几乎可以肯定的是，玻璃中截留的硫化镍微小晶体导致了这一故障。</p><p>英国贸易协会玻璃联合会标准委员会主席，同时也是Pikington标准制定官员的Brian Waldron说，玻璃行业已经意识到了这个问题。但是他坚持认为案件很少而且相差不大。他说，这是一种非常罕见的现象。</p><p>其他人不同意。参与主教大道调查的顾问工程师巴里·乔西（Barrie Josie）表示：“平均而言，我每个月都能看到大约一两个建筑物遭受与硫化镍有关的故障。” 其他专家讲述了类似的经历。伦敦咨询工程师Sandberg的Tony Wilmott 和汉普郡的CladTech Associates的Simon Armstrong 都说他们知道数百起案件。“你听到的仅仅是冰山一角，”特雷弗·福特说。他是昆士兰州布里斯班Resolve Engineering公司的玻璃专家。他认为原因很简单：“没有人想要坏新闻。”</p><p>钢化玻璃随处可见，从轿车和公交车站到世界各地成千上万的建筑物的窗户，墙壁与屋顶。很容易明白为什么。这种玻璃的强度是标准玻璃的五倍。一旦破裂，它会碎成微小的立方体，而不是大而锋利的碎片。建筑师之所以喜欢它，是因为可以将大块的玻璃固定在一起以形成透明的墙，而将其变成天花板和地板几乎同样容易。</p><p>它是通过将一片普通玻璃加热到620℃使其略微软化，结构膨胀，然后用冷空气迅速冷却而制成的。这导致窗格玻璃的外层在内部之前收缩和固化。当内部最终固化并收缩时，它会在外层上施加拉力，使它处于永久压缩状态，并在玻璃内部产生张力。由于裂纹在张力下在材料中传播最好，因此必须在玻璃破裂之前克服表面上的压缩力，以使其更抗破裂。、</p><p>当玻璃中含有硫化镍杂质时，问题就开始了。微量的镍和硫通常存在于制造玻璃的原材料中，而且镍也可以通过落入熔融玻璃中的镍合金碎片进入其中。随着玻璃的加热，这些原子反应形成硫化镍的微小晶体。熔炉中仅十分之一克的镍就能产生多达50,000个晶体。</p><p>这些晶体可以以两种形式存在：一种称为α相的致密形式，在高温下稳定；一种称为β相的致密性较低的形式，在室温下稳定。硬化过程中使用的高温将所有晶体转化为紧缩、致密的α形式。但是随后的冷却如此之快，以至于晶体没有时间变回β相。这会在玻璃中留下不稳定的α晶体，就像盘绕的弹簧一样随时会恢复到β相，而不会发出警告。</p><p>发生这种情况时，晶体最多会膨胀4％。如果它们在玻璃板的中央张力区域内，释放出来的应力会破坏整块玻璃板。故障发生之前的时间长短是无法预测的。它可能在制造后的几个月内发生，也可能在几十年后发生，尽管玻璃被加热的话，过程会加快（比如在阳光照射下升温）。具有讽刺意味的是，伦敦咨询公司Arup的格雷厄姆·多德（Graham Dodd）表示，最古老的因硫化镍夹杂而失效的钢化玻璃窗格，位于Lancashire，Lathom，Pikington的玻璃研究中心。当时它已经有27年的历史</p><p>几乎不可能找到硫化镍问题规模的相关数据。这些晶体成批出现，使情况变得更加复杂。因此，即使平均而言，在7 吨玻璃中只有一块包含一杂质，如果你在建筑物中遇到一次硫化镍失效的情况，那可能意味着在不止一块玻璃存在问题。乔西说，在过去的十年中，他对超过15座建筑进行研究，失败的数量达到了两位数。</p><p>最糟糕的例子之一是1990年建成的海滨广场（Waterfront Place）。在随后的十年中，布里斯班40层高的大楼遭受了多次事故。在专家最终被召集过来之前，其八十块玻璃钢化玻璃都因为杂质而破裂了。约翰·巴里，昆士兰硫化物污染专家，分析了建筑的每个玻璃面板。摄影师在围栏里用摄影棚的照相机为每块窗格拍照。这些在改进的微缩胶片阅读器上进行扫描以寻找硫化镍晶体迹象。巴里说：“我们至少发现了120块带有潜在危险杂质的玻璃，然后将其更换。这是一个非常昂贵而且耗时的过程，大约需要六个月才能完成。” 虽然工程高达 160万澳元（约合700,000 英镑），其替代方案-重新覆盖整个建筑物-成本将是这的十倍。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>On 2nd August 1999, a particularly hot day in the town of Cirencester in the UK, a large <mark class="vocab-word" data-word="pane">pane</mark> of toughened glass in the roof of a shopping centre at <mark class="vocab-word" data-word="bishop">Bishops</mark> Walk <mark class="vocab-word" data-word="shattered">shattered</mark> without warning and fell from its frame. When <mark class="vocab-word" data-word="fragment">fragments</mark> were analysed by experts at the giant glass <mark class="vocab-word" data-word="manufacturer">manufacturer</mark> Pilkington, which had made the <mark class="vocab-word" data-word="pane">pane</mark>, they found that minute <mark class="vocab-word" data-word="crystal">crystals</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide trapped inside the glass had almost certainly caused the failure.</p></div>  <div class="parallel-zh"><p>1999年8月2日，英国Cirencester镇正经历极其炎热的一天。在没有任何警示的情况下，一大块钢化玻璃突然破裂，并从位于主教大道的购物中心屋顶脱落。制作该窗户的大型玻璃制造商Pilkington的专家对碎片进行了分析后，发现几乎可以肯定的是，玻璃中截留的硫化镍微小晶体导致了这一故障。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘The glass industry is aware of the issue,’ says Brian Waldron, chairman of the standards committee at the Glass and <mark class="vocab-word" data-word="glaze">Glazing</mark> <mark class="vocab-word" data-word="federation">Federation</mark>, a British trade association, and standards development officer at Pilkington. But he insists that cases are few and far between. ‘It’s a very rare <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>,’ he says.</p></div>  <div class="parallel-zh"><p>英国贸易协会玻璃联合会标准委员会主席，同时也是Pikington标准制定官员的Brian Waldron说，玻璃行业已经意识到了这个问题。但是他坚持认为案件很少而且相差不大。他说，这是一种非常罕见的现象。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Others disagree. ‘On average I see about one or two buildings a month suffering from <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide related failures,’ says Barrie Josie, a <mark class="vocab-word" data-word="consultant">consultant</mark> engineer <mark class="vocab-word" data-word="involved">involved</mark> in the <mark class="vocab-word" data-word="bishop">Bishops</mark> Walk investigation. Other experts tell of similar experiences. Tony Wilmott of London-based <mark class="vocab-word" data-word="consult">consulting</mark> engineers Sandberg, and Simon Armstrong at CladTech Associates in Hampshire both say they know of hundreds of cases. ‘What you hear is only the tip of the <mark class="vocab-word" data-word="iceberg">iceberg</mark>,’ says Trevor Ford, a glass expert at Resolve <mark class="vocab-word" data-word="engineering">Engineering</mark> in Brisbane, Queensland. He believes the reason is simple: ‘No-one wants bad press.’</p></div>  <div class="parallel-zh"><p>其他人不同意。参与主教大道调查的顾问工程师巴里·乔西（Barrie Josie）表示：“平均而言，我每个月都能看到大约一两个建筑物遭受与硫化镍有关的故障。” 其他专家讲述了类似的经历。伦敦咨询工程师Sandberg的Tony Wilmott 和汉普郡的CladTech Associates的Simon Armstrong 都说他们知道数百起案件。“你听到的仅仅是冰山一角，”特雷弗·福特说。他是昆士兰州布里斯班Resolve Engineering公司的玻璃专家。他认为原因很简单：“没有人想要坏新闻。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Toughened glass is found everywhere, from cars and bus shelters to the windows, walls and roofs of thousands of buildings around the world. It’s easy to see why. This glass has five times the strength of standard glass, and when it does break it <mark class="vocab-word" data-word="shatter">shatters</mark> into tiny <mark class="vocab-word" data-word="cube">cubes</mark> rather than large, razor-sharp <mark class="vocab-word" data-word="shard">shards</mark>. <mark class="vocab-word" data-word="architect">Architects</mark> love it because large panels can be <mark class="vocab-word" data-word="bolt">bolted</mark> together to make <mark class="vocab-word" data-word="transparent">transparent</mark> walls, and turning it into <mark class="vocab-word" data-word="ceiling">ceilings</mark> and floors is almost as easy.</p></div>  <div class="parallel-zh"><p>钢化玻璃随处可见，从轿车和公交车站到世界各地成千上万的建筑物的窗户，墙壁与屋顶。很容易明白为什么。这种玻璃的强度是标准玻璃的五倍。一旦破裂，它会碎成微小的立方体，而不是大而锋利的碎片。建筑师之所以喜欢它，是因为可以将大块的玻璃固定在一起以形成透明的墙，而将其变成天花板和地板几乎同样容易。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It is made by heating a sheet of ordinary glass to about 620℃ to soften it slightly, allowing its structure to expand, and then cooling it rapidly with <mark class="vocab-word" data-word="jet">jets</mark> of cold air. This causes the outer layer of the <mark class="vocab-word" data-word="pane">pane</mark> to contract and <mark class="vocab-word" data-word="solidify">solidify</mark> before the <mark class="vocab-word" data-word="interior">interior</mark>. When the <mark class="vocab-word" data-word="interior">interior</mark> finally solidifies and <mark class="vocab-word" data-word="shrink">shrinks</mark>, it <mark class="vocab-word" data-word="exert">exerts</mark> a pull on the outer layer that leaves it in permanent compression and produces a <mark class="vocab-word" data-word="tensile">tensile</mark> force inside the glass. As <mark class="vocab-word" data-word="crack">cracks</mark> <mark class="vocab-word" data-word="propagate">propagate</mark> best in materials under <mark class="vocab-word" data-word="tension">tension</mark>, the compressive force on the surface must be overcome before the <mark class="vocab-word" data-word="pane">pane</mark> will break, making it more <mark class="vocab-word" data-word="resistant">resistant</mark> to <mark class="vocab-word" data-word="crack">cracking</mark>.</p></div>  <div class="parallel-zh"><p>它是通过将一片普通玻璃加热到620℃使其略微软化，结构膨胀，然后用冷空气迅速冷却而制成的。这导致窗格玻璃的外层在内部之前收缩和固化。当内部最终固化并收缩时，它会在外层上施加拉力，使它处于永久压缩状态，并在玻璃内部产生张力。由于裂纹在张力下在材料中传播最好，因此必须在玻璃破裂之前克服表面上的压缩力，以使其更抗破裂。、</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The problem starts when glass contains <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide impurities. <mark class="vocab-word" data-word="trace">Trace</mark> amounts of <mark class="vocab-word" data-word="nickel">nickel</mark> and sulphur are usually present in the <mark class="vocab-word" data-word="raw">raw</mark> materials used to make glass, and <mark class="vocab-word" data-word="nickel">nickel</mark> can also be introduced by <mark class="vocab-word" data-word="fragment">fragments</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> <mark class="vocab-word" data-word="alloy">alloys</mark> falling into the <mark class="vocab-word" data-word="molten">molten</mark> glass. As the glass is <mark class="vocab-word" data-word="heated">heated</mark>, these <mark class="vocab-word" data-word="atom">atoms</mark> react to form tiny <mark class="vocab-word" data-word="crystal">crystals</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide. Just a tenth of a <mark class="vocab-word" data-word="gram">gram</mark> of <mark class="vocab-word" data-word="nickel">nickel</mark> in the <mark class="vocab-word" data-word="furnace">furnace</mark> can create up to 50,000 <mark class="vocab-word" data-word="crystal">crystals</mark>.</p></div>  <div class="parallel-zh"><p>当玻璃中含有硫化镍杂质时，问题就开始了。微量的镍和硫通常存在于制造玻璃的原材料中，而且镍也可以通过落入熔融玻璃中的镍合金碎片进入其中。随着玻璃的加热，这些原子反应形成硫化镍的微小晶体。熔炉中仅十分之一克的镍就能产生多达50,000个晶体。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>These <mark class="vocab-word" data-word="crystal">crystals</mark> can exist in two forms: a <mark class="vocab-word" data-word="dense">dense</mark> form called the alpha phase, which is <mark class="vocab-word" data-word="stable">stable</mark> at high temperatures, and a less <mark class="vocab-word" data-word="dense">dense</mark> form called the beta phase, which is <mark class="vocab-word" data-word="stable">stable</mark> at room temperatures. The high temperatures used in the toughening process convert all the <mark class="vocab-word" data-word="crystal">crystals</mark> to the <mark class="vocab-word" data-word="dense">dense</mark>, <mark class="vocab-word" data-word="compact">compact</mark> alpha form. But the <mark class="vocab-word" data-word="subsequent">subsequent</mark> cooling is so rapid that the <mark class="vocab-word" data-word="crystal">crystals</mark> don’t have time to change back to the beta phase. This leaves unstable alpha <mark class="vocab-word" data-word="crystal">crystals</mark> in the glass, primed like a <mark class="vocab-word" data-word="coil">coiled</mark> <mark class="vocab-word" data-word="spring">spring</mark>, ready to <mark class="vocab-word" data-word="revert">revert</mark> to the beta phase without warning.</p></div>  <div class="parallel-zh"><p>这些晶体可以以两种形式存在：一种称为α相的致密形式，在高温下稳定；一种称为β相的致密性较低的形式，在室温下稳定。硬化过程中使用的高温将所有晶体转化为紧缩、致密的α形式。但是随后的冷却如此之快，以至于晶体没有时间变回β相。这会在玻璃中留下不稳定的α晶体，就像盘绕的弹簧一样随时会恢复到β相，而不会发出警告。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>When this happens, the <mark class="vocab-word" data-word="crystal">crystals</mark> expand by up to 4%. And if they are within the central, <mark class="vocab-word" data-word="tensile">tensile</mark> region of the <mark class="vocab-word" data-word="pane">pane</mark>, the stresses this <mark class="vocab-word" data-word="unleash">unleashes</mark> can <mark class="vocab-word" data-word="shatter">shatter</mark> the whole sheet. The time that <mark class="vocab-word" data-word="elapse">elapses</mark> before failure occurs is unpredictable. It could happen just months after <mark class="vocab-word" data-word="manufacture">manufacture</mark>, or <mark class="vocab-word" data-word="decade">decades</mark> later, although if the glass is <mark class="vocab-word" data-word="heated">heated</mark> – by sunlight, for example – the process is speeded up. <mark class="vocab-word" data-word="ironically">Ironically</mark>, says Graham Dodd, of <mark class="vocab-word" data-word="consult">consulting</mark> engineers Arup in London, the oldest <mark class="vocab-word" data-word="pane">pane</mark> of toughened glass known to have failed due to <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide inclusions was in Pilkington’s glass research building in Lathom, Lancashire. The <mark class="vocab-word" data-word="pane">pane</mark> was 27 years old.</p></div>  <div class="parallel-zh"><p>发生这种情况时，晶体最多会膨胀4％。如果它们在玻璃板的中央张力区域内，释放出来的应力会破坏整块玻璃板。故障发生之前的时间长短是无法预测的。它可能在制造后的几个月内发生，也可能在几十年后发生，尽管玻璃被加热的话，过程会加快（比如在阳光照射下升温）。具有讽刺意味的是，伦敦咨询公司Arup的格雷厄姆·多德（Graham Dodd）表示，最古老的因硫化镍夹杂而失效的钢化玻璃窗格，位于Lancashire，Lathom，Pikington的玻璃研究中心。当时它已经有27年的历史</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Data showing the scale of the <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide problem is almost impossible to find. The picture is made more <mark class="vocab-word" data-word="complicated">complicated</mark> by the fact that these <mark class="vocab-word" data-word="crystal">crystals</mark> occur in <mark class="vocab-word" data-word="batch">batches</mark>. So even if, on average, there is only one inclusion in 7 tonnes of glass, if you experience one <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide failure in your building, that probably means you’ve got a problem in more than one <mark class="vocab-word" data-word="pane">pane</mark>. Josie says that in the last <mark class="vocab-word" data-word="decade">decade</mark> he has worked on over 15 buildings with the number of failures into double figures.</p></div>  <div class="parallel-zh"><p>几乎不可能找到硫化镍问题规模的相关数据。这些晶体成批出现，使情况变得更加复杂。因此，即使平均而言，在7 吨玻璃中只有一块包含一杂质，如果你在建筑物中遇到一次硫化镍失效的情况，那可能意味着在不止一块玻璃存在问题。乔西说，在过去的十年中，他对超过15座建筑进行研究，失败的数量达到了两位数。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One of the worst examples of this is <mark class="vocab-word" data-word="waterfront">Waterfront</mark> Place, which was completed in 1990. Over the following <mark class="vocab-word" data-word="decade">decade</mark> the 40-storey Brisbane block suffered a <mark class="vocab-word" data-word="rash">rash</mark> of failures. Eighty <mark class="vocab-word" data-word="pane">panes</mark> of its toughened glass <mark class="vocab-word" data-word="shattered">shattered</mark> due to inclusions before experts were finally called in. John Barry, an expert in <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide contamination at the University of Queensland, analysed every glass <mark class="vocab-word" data-word="pane">pane</mark> in the building. Using a studio camera, a photographer went up in a <mark class="vocab-word" data-word="cradle">cradle</mark> to take photos of every <mark class="vocab-word" data-word="pane">pane</mark>. These were scanned under a modified microfiche reader for signs of <mark class="vocab-word" data-word="nickel">nickel</mark> sulphide <mark class="vocab-word" data-word="crystal">crystals</mark>. ‘We discovered at least another 120 <mark class="vocab-word" data-word="pane">panes</mark> with potentially dangerous inclusions which were then replaced,’ says Barry. ‘It was a very expensive and time-consuming process that took around six months to complete.’ Though the project cost A$1.6 million (nearly ￡700,000), the alternative – re-cladding the entire building – would have cost ten times as much.</p></div>  <div class="parallel-zh"><p>最糟糕的例子之一是1990年建成的海滨广场（Waterfront Place）。在随后的十年中，布里斯班40层高的大楼遭受了多次事故。在专家最终被召集过来之前，其八十块玻璃钢化玻璃都因为杂质而破裂了。约翰·巴里，昆士兰硫化物污染专家，分析了建筑的每个玻璃面板。摄影师在围栏里用摄影棚的照相机为每块窗格拍照。这些在改进的微缩胶片阅读器上进行扫描以寻找硫化镍晶体迹象。巴里说：“我们至少发现了120块带有潜在危险杂质的玻璃，然后将其更换。这是一个非常昂贵而且耗时的过程，大约需要六个月才能完成。” 虽然工程高达 160万澳元（约合700,000 英镑），其替代方案-重新覆盖整个建筑物-成本将是这的十倍。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"pane": 12, "bishop": 2, "shattered": 2, "fragment": 2, "manufacturer": 1, "crystal": 10, "nickel": 13, "glaze": 1, "federation": 1, "phenomenon": 1, "consultant": 1, "involved": 1, "consult": 2, "iceberg": 1, "engineering": 1, "shatter": 2, "cube": 1, "shard": 1, "architect": 1, "bolt": 1, "transparent": 1, "ceiling": 1, "jet": 1, "solidify": 1, "interior": 2, "shrink": 1, "exert": 1, "tensile": 2, "crack": 2, "propagate": 1, "tension": 1, "resistant": 1, "trace": 1, "raw": 1, "alloy": 1, "molten": 1, "heated": 2, "atom": 1, "gram": 1, "furnace": 1, "dense": 3, "stable": 2, "compact": 1, "subsequent": 1, "coil": 1, "spring": 1, "revert": 1, "unleash": 1, "elapse": 1, "manufacture": 1, "decade": 3, "ironically": 1, "complicated": 1, "batch": 1, "waterfront": 1, "rash": 1, "cradle": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

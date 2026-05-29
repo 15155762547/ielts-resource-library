@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>micro-enterprise credit for street youth - 剑桥雅思4 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思4</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>micro-enterprise credit for street youth</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/21355.html" target="_blank">https://www.laokaoya.com/21355.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>‘I am from a large, poor family and for many years we have done without breakfast. Ever since I joined the Street Kids International program I have been able to buy my family sugar and buns for breakfast. I have also bought myself <mark class="vocab-word" data-word="decent">decent</mark> <mark class="vocab-word" data-word="second-hand">second-hand</mark> <mark class="vocab-word" data-word="clothe">clothes</mark> and shoes.’</p><p>‘We’ve had business experience. Now I’m confident to expand what we’ve been doing. I’ve learnt cash management, and the way of keeping money so we save for reinvestment. Now business is a part of our lives. As well, we didn’t know each other before – now we’ve made new friends.’</p><p>Participants in the Youth skills <mark class="vocab-word" data-word="enterprise">ENterprise</mark> <mark class="vocab-word" data-word="initiative">Initiative</mark> Program, Zambia</p><p>Although small-scale business training and credit programs have become more common throughout the world, relatively little attention has been paid to the need to direct such opportunities to young people. Even less attention has been paid to children living on the streets or in difficult <mark class="vocab-word" data-word="circumstance">circumstances</mark>.</p><p>Over the past nine years, Street Kids International (S. K. I.) has been working with partner organisations in Africa, <mark class="vocab-word" data-word="latin">Latin</mark> America and India to support the economic lives of street children. The purpose of this paper is to share some of the lessons S. K. I. and our partners have <mark class="vocab-word" data-word="learned">learned</mark>.</p><p>Typically, children do not end up on the streets due to a single cause, but to a combination of <mark class="vocab-word" data-word="factor">factors</mark>: a <mark class="vocab-word" data-word="dearth">dearth</mark> of <mark class="vocab-word" data-word="adequate">adequately</mark> funded schools, the demand for income at home, family <mark class="vocab-word" data-word="breakdown">breakdown</mark> and <mark class="vocab-word" data-word="violence">violence</mark>. The street may be attractive to children as a place to find <mark class="vocab-word" data-word="adventurous">adventurous</mark> play and money. However, it is also a place where some children are <mark class="vocab-word" data-word="exposed">exposed</mark>, with little or no protection, to <mark class="vocab-word" data-word="exploitative">exploitative</mark> employment, <mark class="vocab-word" data-word="urban">urban</mark> crime, and <mark class="vocab-word" data-word="abuse">abuse</mark>.</p><p>Children who work on the streets are generally <mark class="vocab-word" data-word="involved">involved</mark> in unskilled, labour-intensive tasks which require long hours, such as <mark class="vocab-word" data-word="shin">shining</mark> shoes, carrying <mark class="vocab-word" data-word="goods">goods</mark>, guarding or washing cars, and <mark class="vocab-word" data-word="informal">informal</mark> trading. Some may also earn income through begging, or through <mark class="vocab-word" data-word="theft">theft</mark> and other illegal activities. At the same time, there are street children who take pride in supporting themselves and their families and who often enjoy their work. Many children may choose entrepreneurship because it allows them a degree of <mark class="vocab-word" data-word="independence">independence</mark>, is less <mark class="vocab-word" data-word="exploitative">exploitative</mark> than many forms of paid employment, and is flexible enough to allow them to participate in other activities such as education and <mark class="vocab-word" data-word="domestic">domestic</mark> tasks.</p><p>S. K. I. has worked with partner organisations in <mark class="vocab-word" data-word="latin">Latin</mark> America, Africa and India to develop <mark class="vocab-word" data-word="innovative">innovative</mark> opportunities for street children to earn income.</p><p>The following lessons have emerged from the programs that S. K. I. and partner organisations have created.</p><p>There is a need to recognise the importance of access to credit for <mark class="vocab-word" data-word="impoverished">impoverished</mark> young people seeking to fulfil economic needs. The <mark class="vocab-word" data-word="provision">provision</mark> of small loans to support the <mark class="vocab-word" data-word="entrepreneurial">entrepreneurial</mark> dreams and <mark class="vocab-word" data-word="ambition">ambitions</mark> of youth can be an effective means to help them change their lives. However, we believe that credit must be extended in association with other types of support that help participants develop critical life skills as well as <mark class="vocab-word" data-word="productive">productive</mark> businesses.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>我来自一个贫穷的大家庭，多年来我们一直没有早餐吃。自从我加入“街头儿童国际” 计划以来，我就能够为家人购买糖和面包作为早餐。我还给自己买了不错的二手衣服和鞋子。”</p><p>‘我们有商业经验。现在，我有信心扩大我们一直在做的事情。我已经学会了现金管理以及保留资金的方式，因此我们可以省下一部分钱来用于再投资。现在，业务已成为我们生活的一部分。我们以前也不认识彼此，但现在我们交了新朋友。</p><p>赞比亚青年技能会企业行动项目参与者</p><p>尽管小规模的企业培训和信贷计划在世界范围内变得越来越普遍，但对于将此类机会给予给年轻人的需求却很少受到关注。对流落街头或处境困难的儿童的关注甚至更少。</p><p>在过去的九年中，街头儿童国际（SKI）与非洲，拉丁美洲和印度的合作伙伴组织合作，以支持街头儿童的经济生活。本文的目的是分享SKI和我们的合作伙伴在此过程中所学到的一些经验教训。</p><p>通常，儿童不会因为单一原因而流落街头，而是由于多种因素：缺乏足够资金的学校，对家庭收入的需求，家庭破裂和暴力。街头作为寻找冒险游戏和金钱的地方可能对儿童具有吸引力。但是，这里也是一些儿童在很少或没有保护的情况下遭受剥削性就业，城市犯罪和虐待的地方。</p><p>在街头上班的儿童通常会从事无需要技能的劳动密集型工作，这些工作需要很长时间，例如擦鞋，搬运货物，护卫或洗车，以及非正式贸易。有些人可能还通过乞讨，盗窃和其他非法活动赚取收入。同时，有一些流浪儿童以能够养活自己和家人为荣，并且经常享受他们的工作。许多孩子之所以选择创业，是因为它使他们有一定程度的独立性，比许多形式的有偿工作会少受剥削，并且具有足够的灵活性以允许他们参加其他活动，例如教育和家务劳动。</p><p>SKI已与拉丁美洲，非洲和印度的合作伙伴组织合作，为流浪儿童创造创收机会。</p><p>SKI和合作伙伴组织从开启的项目中吸取了以下教训。</p><p>有必要认识到寻求满足经济需求的贫困青年获得信贷的重要性。提供小额贷款支持青年人的创业梦想和野心可以成为帮助他们改变生活的有效手段。但是，我们认为贷款必须与其他类型的支持相结合，这些支持可以帮助参与者发展关键的生活技能以及生产性业务。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>‘I am from a large, poor family and for many years we have done without breakfast. Ever since I joined the Street Kids International program I have been able to buy my family sugar and buns for breakfast. I have also bought myself <mark class="vocab-word" data-word="decent">decent</mark> <mark class="vocab-word" data-word="second-hand">second-hand</mark> <mark class="vocab-word" data-word="clothe">clothes</mark> and shoes.’</p></div>  <div class="parallel-zh"><p>我来自一个贫穷的大家庭，多年来我们一直没有早餐吃。自从我加入“街头儿童国际” 计划以来，我就能够为家人购买糖和面包作为早餐。我还给自己买了不错的二手衣服和鞋子。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘We’ve had business experience. Now I’m confident to expand what we’ve been doing. I’ve learnt cash management, and the way of keeping money so we save for reinvestment. Now business is a part of our lives. As well, we didn’t know each other before – now we’ve made new friends.’</p></div>  <div class="parallel-zh"><p>‘我们有商业经验。现在，我有信心扩大我们一直在做的事情。我已经学会了现金管理以及保留资金的方式，因此我们可以省下一部分钱来用于再投资。现在，业务已成为我们生活的一部分。我们以前也不认识彼此，但现在我们交了新朋友。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Participants in the Youth skills <mark class="vocab-word" data-word="enterprise">ENterprise</mark> <mark class="vocab-word" data-word="initiative">Initiative</mark> Program, Zambia</p></div>  <div class="parallel-zh"><p>赞比亚青年技能会企业行动项目参与者</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Although small-scale business training and credit programs have become more common throughout the world, relatively little attention has been paid to the need to direct such opportunities to young people. Even less attention has been paid to children living on the streets or in difficult <mark class="vocab-word" data-word="circumstance">circumstances</mark>.</p></div>  <div class="parallel-zh"><p>尽管小规模的企业培训和信贷计划在世界范围内变得越来越普遍，但对于将此类机会给予给年轻人的需求却很少受到关注。对流落街头或处境困难的儿童的关注甚至更少。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Over the past nine years, Street Kids International (S. K. I.) has been working with partner organisations in Africa, <mark class="vocab-word" data-word="latin">Latin</mark> America and India to support the economic lives of street children. The purpose of this paper is to share some of the lessons S. K. I. and our partners have <mark class="vocab-word" data-word="learned">learned</mark>.</p></div>  <div class="parallel-zh"><p>在过去的九年中，街头儿童国际（SKI）与非洲，拉丁美洲和印度的合作伙伴组织合作，以支持街头儿童的经济生活。本文的目的是分享SKI和我们的合作伙伴在此过程中所学到的一些经验教训。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Typically, children do not end up on the streets due to a single cause, but to a combination of <mark class="vocab-word" data-word="factor">factors</mark>: a <mark class="vocab-word" data-word="dearth">dearth</mark> of <mark class="vocab-word" data-word="adequate">adequately</mark> funded schools, the demand for income at home, family <mark class="vocab-word" data-word="breakdown">breakdown</mark> and <mark class="vocab-word" data-word="violence">violence</mark>. The street may be attractive to children as a place to find <mark class="vocab-word" data-word="adventurous">adventurous</mark> play and money. However, it is also a place where some children are <mark class="vocab-word" data-word="exposed">exposed</mark>, with little or no protection, to <mark class="vocab-word" data-word="exploitative">exploitative</mark> employment, <mark class="vocab-word" data-word="urban">urban</mark> crime, and <mark class="vocab-word" data-word="abuse">abuse</mark>.</p></div>  <div class="parallel-zh"><p>通常，儿童不会因为单一原因而流落街头，而是由于多种因素：缺乏足够资金的学校，对家庭收入的需求，家庭破裂和暴力。街头作为寻找冒险游戏和金钱的地方可能对儿童具有吸引力。但是，这里也是一些儿童在很少或没有保护的情况下遭受剥削性就业，城市犯罪和虐待的地方。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Children who work on the streets are generally <mark class="vocab-word" data-word="involved">involved</mark> in unskilled, labour-intensive tasks which require long hours, such as <mark class="vocab-word" data-word="shin">shining</mark> shoes, carrying <mark class="vocab-word" data-word="goods">goods</mark>, guarding or washing cars, and <mark class="vocab-word" data-word="informal">informal</mark> trading. Some may also earn income through begging, or through <mark class="vocab-word" data-word="theft">theft</mark> and other illegal activities. At the same time, there are street children who take pride in supporting themselves and their families and who often enjoy their work. Many children may choose entrepreneurship because it allows them a degree of <mark class="vocab-word" data-word="independence">independence</mark>, is less <mark class="vocab-word" data-word="exploitative">exploitative</mark> than many forms of paid employment, and is flexible enough to allow them to participate in other activities such as education and <mark class="vocab-word" data-word="domestic">domestic</mark> tasks.</p></div>  <div class="parallel-zh"><p>在街头上班的儿童通常会从事无需要技能的劳动密集型工作，这些工作需要很长时间，例如擦鞋，搬运货物，护卫或洗车，以及非正式贸易。有些人可能还通过乞讨，盗窃和其他非法活动赚取收入。同时，有一些流浪儿童以能够养活自己和家人为荣，并且经常享受他们的工作。许多孩子之所以选择创业，是因为它使他们有一定程度的独立性，比许多形式的有偿工作会少受剥削，并且具有足够的灵活性以允许他们参加其他活动，例如教育和家务劳动。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>S. K. I. has worked with partner organisations in <mark class="vocab-word" data-word="latin">Latin</mark> America, Africa and India to develop <mark class="vocab-word" data-word="innovative">innovative</mark> opportunities for street children to earn income.</p></div>  <div class="parallel-zh"><p>SKI已与拉丁美洲，非洲和印度的合作伙伴组织合作，为流浪儿童创造创收机会。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The following lessons have emerged from the programs that S. K. I. and partner organisations have created.</p></div>  <div class="parallel-zh"><p>SKI和合作伙伴组织从开启的项目中吸取了以下教训。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There is a need to recognise the importance of access to credit for <mark class="vocab-word" data-word="impoverished">impoverished</mark> young people seeking to fulfil economic needs. The <mark class="vocab-word" data-word="provision">provision</mark> of small loans to support the <mark class="vocab-word" data-word="entrepreneurial">entrepreneurial</mark> dreams and <mark class="vocab-word" data-word="ambition">ambitions</mark> of youth can be an effective means to help them change their lives. However, we believe that credit must be extended in association with other types of support that help participants develop critical life skills as well as <mark class="vocab-word" data-word="productive">productive</mark> businesses.</p></div>  <div class="parallel-zh"><p>有必要认识到寻求满足经济需求的贫困青年获得信贷的重要性。提供小额贷款支持青年人的创业梦想和野心可以成为帮助他们改变生活的有效手段。但是，我们认为贷款必须与其他类型的支持相结合，这些支持可以帮助参与者发展关键的生活技能以及生产性业务。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"decent": 1, "second-hand": 1, "clothe": 1, "enterprise": 1, "initiative": 1, "circumstance": 1, "latin": 2, "learned": 1, "factor": 1, "dearth": 1, "adequate": 1, "breakdown": 1, "violence": 1, "adventurous": 1, "exposed": 1, "exploitative": 2, "urban": 1, "abuse": 1, "involved": 1, "shin": 1, "goods": 1, "informal": 1, "theft": 1, "independence": 1, "domestic": 1, "innovative": 1, "impoverished": 1, "provision": 1, "entrepreneurial": 1, "ambition": 1, "productive": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

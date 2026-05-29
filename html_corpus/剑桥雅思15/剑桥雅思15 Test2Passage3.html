@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>having a laugh 笑一笑 - 剑桥雅思15 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>having a laugh 笑一笑</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39946.html" target="_blank">https://www.laokaoya.com/39946.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Humans start developing a sense of humour as early as six weeks old, when babies begin to laugh and smile in response to stimuli. Laughter is <mark class="vocab-word" data-word="universal">universal</mark> across all human cultures and even exists in some form in rats, chimps, and bonobos. Like other human emotions and expressions, laughter and humour provide <mark class="vocab-word" data-word="psychological">psychological</mark> scientists with rich resources for studying human <mark class="vocab-word" data-word="psychology">psychology</mark>, ranging from the development of language to the <mark class="vocab-word" data-word="neuroscience">neuroscience</mark> of social <mark class="vocab-word" data-word="perception">perception</mark>.</p><p>Theories focusing on the <mark class="vocab-word" data-word="evolution">evolution</mark> of laughter point to it as an important <mark class="vocab-word" data-word="adaptation">adaptation</mark> for social communication. Take, for example, the recorded laughter in TV comedy shows. Back in 1950, US sound engineer Charley Douglass hated dealing with the unpredictable laughter of live audiences, so started recording his own ‘laugh tracks’. These were intended to help people at home feel like they were in a social situation, such as a <mark class="vocab-word" data-word="crowd">crowded</mark> theatre. Douglass even recorded various types of laughter, as well as mixtures of laughter from men, women, and children. In doing so, he picked up on a quality of laughter that is now interesting researchers: a simple ‘haha’ communicates a <mark class="vocab-word" data-word="remarkable">remarkable</mark> amount of socially relevant information.</p><p>In one study conducted in 2016, samples of laughter from pairs of English-speaking students were recorded at the University of California, Santa Cruz. A team made up of more than 30 <mark class="vocab-word" data-word="psychological">psychological</mark> scientists, <mark class="vocab-word" data-word="anthropologist">anthropologists</mark>, and <mark class="vocab-word" data-word="biologist">biologists</mark> then played these recordings to listeners from 24 <mark class="vocab-word" data-word="diverse">diverse</mark> societies, from <mark class="vocab-word" data-word="indigenous">indigenous</mark> <mark class="vocab-word" data-word="tribe">tribes</mark> in New <mark class="vocab-word" data-word="guinea">Guinea</mark> to city-dwellers in India and Europe. Participants were asked whether they thought the people laughing were friends or strangers. On average, the results were remarkably consistent: worldwide, people’s guesses were correct <mark class="vocab-word" data-word="approximate">approximately</mark> 60% of the time.</p><p>Researchers have also found that different types of laughter serve as <mark class="vocab-word" data-word="cod">codes</mark> to complex human social hierarchies. A team led by Christopher Oveis from the University of California, San Diego, found that high-status individuals had different laughs from low-status individuals, and that strangers’ judgements of an individual’s social status were <mark class="vocab-word" data-word="influence">influenced</mark> by the <mark class="vocab-word" data-word="dominant">dominant</mark> or <mark class="vocab-word" data-word="submissive">submissive</mark> quality of their laughter. In their study, 48 male college students were <mark class="vocab-word" data-word="random">randomly</mark> <mark class="vocab-word" data-word="assign">assigned</mark> to groups of four, with each group <mark class="vocab-word" data-word="compose">composed</mark> of two low-status members, who had just joined their college fraternity group, and two high-status members, older students who had been active in the fraternity for at least two years. Laughter was recorded as each student took a turn at being <mark class="vocab-word" data-word="tease">teased</mark> by the others, involving the use of <mark class="vocab-word" data-word="mild">mildly</mark> <mark class="vocab-word" data-word="insult">insulting</mark> <mark class="vocab-word" data-word="nickname">nicknames</mark>. Analysis <mark class="vocab-word" data-word="reveal">revealed</mark> that, as expected, high-status individuals produced more <mark class="vocab-word" data-word="dominant">dominant</mark> laughs and fewer <mark class="vocab-word" data-word="submissive">submissive</mark> laughs relative to the low-status individuals. Meanwhile, low-status individuals were more likely to change their laughter based on their position of power; that is, the newcomers produced more <mark class="vocab-word" data-word="dominant">dominant</mark> laughs when they were in the ‘powerful’ role of teasers. <mark class="vocab-word" data-word="dominant">Dominant</mark> laughter was higher in <mark class="vocab-word" data-word="pitch">pitch</mark>, louder, and more <mark class="vocab-word" data-word="variable">variable</mark> in <mark class="vocab-word" data-word="tone">tone</mark> than <mark class="vocab-word" data-word="submissive">submissive</mark> laughter.</p><p>A <mark class="vocab-word" data-word="random">random</mark> group of volunteers then listened to an equal number of <mark class="vocab-word" data-word="dominant">dominant</mark> and <mark class="vocab-word" data-word="submissive">submissive</mark> laughs from both the high- and low-status individuals, and were asked to estimate the social status of the laugher. In line with <mark class="vocab-word" data-word="prediction">predictions</mark>, laughers producing <mark class="vocab-word" data-word="dominant">dominant</mark> laughs were <mark class="vocab-word" data-word="perceive">perceived</mark> to be significantly higher in status than laughers producing <mark class="vocab-word" data-word="submissive">submissive</mark> laughs. ‘This was particularly true for low-status individuals, who were rated as significantly higher in status when displaying a <mark class="vocab-word" data-word="dominant">dominant</mark> <mark class="vocab-word" data-word="versus">versus</mark> <mark class="vocab-word" data-word="submissive">submissive</mark> laugh, ‘ Oveis and colleagues note. ‘Thus, by strategically displaying more <mark class="vocab-word" data-word="dominant">dominant</mark> laughter when the context allows, low-status individuals may achieve higher status in the eyes of others.’ However, high-status individuals were rated as high-status whether they produced their natural <mark class="vocab-word" data-word="dominant">dominant</mark> laugh or tried to do a <mark class="vocab-word" data-word="submissive">submissive</mark> one.</p><p>Another study, conducted by David Cheng and Lu Wang of Australian National University, was based on the <mark class="vocab-word" data-word="hypothesis">hypothesis</mark> that humour might provide a respite from <mark class="vocab-word" data-word="tedious">tedious</mark> situations in the workplace. This ‘mental break’ might <mark class="vocab-word" data-word="facilitate">facilitate</mark> the replenishment of mental resources. To test this theory, the researchers <mark class="vocab-word" data-word="recruit">recruited</mark> 74 business students, ostensibly for an experiment on <mark class="vocab-word" data-word="perception">perception</mark>. First, the students <mark class="vocab-word" data-word="perform">performed</mark> a <mark class="vocab-word" data-word="tedious">tedious</mark> task in which they had to <mark class="vocab-word" data-word="cross">cross</mark> out every instance of the letter ‘e’ over two pages of text. The students then were <mark class="vocab-word" data-word="random">randomly</mark> <mark class="vocab-word" data-word="assign">assigned</mark> to watch a video <mark class="vocab-word" data-word="clip">clip</mark> <mark class="vocab-word" data-word="elicit">eliciting</mark> either humour, contentment, or <mark class="vocab-word" data-word="neutral">neutral</mark> feelings. Some watched a <mark class="vocab-word" data-word="clip">clip</mark> of the BBC comedy Mr. Bean, others a relaxing scene with <mark class="vocab-word" data-word="dolphin">dolphins</mark> swimming in the ocean, and others a <mark class="vocab-word" data-word="factual">factual</mark> video about the management profession.</p><p>The students then completed a task requiring <mark class="vocab-word" data-word="persistence">persistence</mark> in which they were asked to guess the potential performance of employees based on <mark class="vocab-word" data-word="provided">provided</mark> profiles, and were told that making 10 correct assessments in a row would <mark class="vocab-word" data-word="lead">lead</mark> to a win. However, the software was programmed such that it was nearly impossible to achieve 10 <mark class="vocab-word" data-word="consecutive">consecutive</mark> correct answers. Participants were allowed to quit the task at any point. Students who had watched the Mr. Bean video ended up spending significantly more time working on the task, making twice as many <mark class="vocab-word" data-word="prediction">predictions</mark> as the other two groups.</p><p>Cheng and Wang then <mark class="vocab-word" data-word="replicate">replicated</mark> these results in a second study, during which they had participants complete long multiplication questions by hand. Again, participants who watched the <mark class="vocab-word" data-word="humorous">humorous</mark> video spent significantly more time working on this <mark class="vocab-word" data-word="tedious">tedious</mark> task and completed more questions correctly than did the students in either of the other groups.</p><p>‘Although humour has been found to help <mark class="vocab-word" data-word="relieve">relieve</mark> stress and <mark class="vocab-word" data-word="facilitate">facilitate</mark> social relationships, the traditional view of task performance implies that individuals should avoid things such as humour that may <mark class="vocab-word" data-word="distract">distract</mark> them from the accomplishment of task goals,’ Cheng and Wang conclude. ‘We <mark class="vocab-word" data-word="suggest">suggest</mark> that humour is not only <mark class="vocab-word" data-word="enjoyable">enjoyable</mark> but more importantly, energizing.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人类在6周大的时候就开始出现幽默感。这个时候，婴儿会开始使用大笑和微笑来回应外界刺激。笑是所有人类文化所共有的，它甚至以某种形式存在于老鼠、黑猩猩和倭黑猩猩中。正如人类其他情绪和表情一样，笑和幽默为心理学家提供了研究人类心理的丰富资源，从语言的发展到社会认知的神经科学等等。</p><p>关注笑容进化的理论指出，它是对社会交流的重要适应。以电视喜剧中事先录好的笑声为例。1950年，美国声音工程师Charley Douglass厌倦了处理现场观众无法预测的笑声，因此开始录制他自己的“笑声轨道”。这些音轨原本是为了让那些待在家里的人感觉自己仿佛处于社交场合之中，比如拥挤的剧院。Douglass甚至录制了不同类型的笑声，还将男人，女人和孩子的笑声混合在一起。在这样做的过程中，他注意到笑声一个如今仍然让研究者十分感兴趣的特点：仅仅是简单的“哈哈”就能传达出数量惊人的社交信息。</p><p>在2016年进行的一项研究中，加利福尼亚大学圣克鲁兹分校几对母语为英语的学生的笑声样本被记录下来。由超过30名心理学家、人类学家和生物学家组成的团队随后将这些录音播放给来自24个不同社会的听众。它们既包括新几内亚的原住民部落，也包括印度和欧洲的城市居民。参与者被询问他们觉得正在大笑的人是朋友还是陌生人。平均来看，这些结果惊人地一致：世界范围内，人们的猜测在大约60%的时候都是正确的。</p><p>研究者们还发现：不同类型的笑声能够作为人类社会复杂层级的暗码使用。由加利福尼亚大学圣地亚哥分校的Christopher Oveis领导的研究团队发现，社会地位高的个体与社会地位低的个体拥有不同的笑法，而陌生人对一个人社会地位的判断会受到他们笑声中支配性或服从性特质的影响。在他们的研究中，48名男性大学生被随机分为四人小组。每一组包含两名社会地位较低的成员（刚刚加入大学兄弟会）和两名社会地位较高的成员（至少已经在兄弟会中活跃两年的年长学生）。每位学生轮流被他人揶揄，具体手段包括使用有着轻微冒犯意味的外号，并记录他们的笑声。分析发现，正如事先预料的那样，与社会地位较低的个体相比，社会地位较高的人会发出更多支配性的笑声和更少服从性的笑声。与此同时，社会地位较低的个体更有可能根据他们的权力地位改变自己的笑声。也就是说，当新人处于揶揄者这一“掌权”地位时，他们会发出更多支配性的笑声。相比于服从性的笑声而言，支配性的笑声音调更高，声音更大，语调变化更为多样。</p><p>随后，一组随机选取的志愿者会聆听来自高低社会地位个体的同等数量的支配性笑声和服从性笑声，并被要求评估发出笑声的人的社会地位。与预测一致，发出支配性笑声的人被认为社会地位远高于那些发出服从性笑声的人。“这对于社会地位较低的人来说尤其如此，与发出服从性笑声相比，他们在发出支配性笑声的时候，获得的社会地位评定明显更高”，Oveis和他的同事注意到。“因此，在环境允许的情况下，通过有策略地展示更多支配性的笑声，社会地位较低的个体也许能够在别人眼中获得更高的地位”。然而，社会地位较高的个体无论是在发出自然的、支配性笑声时，还是在尝试发出服从性笑声时，都会被人们评定为高地位者。</p><p>另一项由澳大利亚国立大学的David Cheng和Lu Wang所进行的研究则建立在这样的假设之上：幽默也许能让人从工作场所无聊乏味的环境中暂时解脱出来。这种“精神休息”也许能够帮助补充精力。为了测试这一理论，研究者以进行认知实验为名，招募了74名商学院的学生。首先，学生要完成一项无聊的任务。他们必须划掉长达两页的文本中所有的字母“e”。然后学生被随机安排观看一段视频，刺激或者幽默、或者满足、或者中立的情感。一些人观看BBC喜剧《憨豆先生》中的片段，另一些人观看海豚在海洋中畅游的轻松景象，还有一些人则观看有关管理学专业的一部纪实影片。</p><p>这些学生随后完成一项需要毅力的任务。他们被要求根据所提供的资料猜测员工的潜在表现，并被告知连续进行10次正确的评估会赢得胜利。然而，软件的编程方式使其几乎不可能连续10次获得正确答案。参与者可以在任何时间退出任务。观看《憨豆先生》的学生最终在这项任务上投入的时间明显更多，所做预测是其他两组人的两倍。</p><p>Cheng和Wang在第二项研究中重现了这些结果。他们要求参与者用手完成漫长的乘法计算。再一次的，与其他两组学生相比，观看幽默视频的参与者在这项枯燥的任务中投入的时间明显更多，回答对的问题也更多。</p><p>“虽然早已发现幽默有助于缓解压力和促进社会关系，但有关任务表现的传统观点认为，个人应该避免诸如幽默这样会分散他们注意力、干扰完成任务目标的事情”，Cheng和Wang总结道，“我们认为幽默不仅让人愉悦，而且更重要的是，它还能给人增添精力”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Humans start developing a sense of humour as early as six weeks old, when babies begin to laugh and smile in response to stimuli. Laughter is <mark class="vocab-word" data-word="universal">universal</mark> across all human cultures and even exists in some form in rats, chimps, and bonobos. Like other human emotions and expressions, laughter and humour provide <mark class="vocab-word" data-word="psychological">psychological</mark> scientists with rich resources for studying human <mark class="vocab-word" data-word="psychology">psychology</mark>, ranging from the development of language to the <mark class="vocab-word" data-word="neuroscience">neuroscience</mark> of social <mark class="vocab-word" data-word="perception">perception</mark>.</p></div>  <div class="parallel-zh"><p>人类在6周大的时候就开始出现幽默感。这个时候，婴儿会开始使用大笑和微笑来回应外界刺激。笑是所有人类文化所共有的，它甚至以某种形式存在于老鼠、黑猩猩和倭黑猩猩中。正如人类其他情绪和表情一样，笑和幽默为心理学家提供了研究人类心理的丰富资源，从语言的发展到社会认知的神经科学等等。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Theories focusing on the <mark class="vocab-word" data-word="evolution">evolution</mark> of laughter point to it as an important <mark class="vocab-word" data-word="adaptation">adaptation</mark> for social communication. Take, for example, the recorded laughter in TV comedy shows. Back in 1950, US sound engineer Charley Douglass hated dealing with the unpredictable laughter of live audiences, so started recording his own ‘laugh tracks’. These were intended to help people at home feel like they were in a social situation, such as a <mark class="vocab-word" data-word="crowd">crowded</mark> theatre. Douglass even recorded various types of laughter, as well as mixtures of laughter from men, women, and children. In doing so, he picked up on a quality of laughter that is now interesting researchers: a simple ‘haha’ communicates a <mark class="vocab-word" data-word="remarkable">remarkable</mark> amount of socially relevant information.</p></div>  <div class="parallel-zh"><p>关注笑容进化的理论指出，它是对社会交流的重要适应。以电视喜剧中事先录好的笑声为例。1950年，美国声音工程师Charley Douglass厌倦了处理现场观众无法预测的笑声，因此开始录制他自己的“笑声轨道”。这些音轨原本是为了让那些待在家里的人感觉自己仿佛处于社交场合之中，比如拥挤的剧院。Douglass甚至录制了不同类型的笑声，还将男人，女人和孩子的笑声混合在一起。在这样做的过程中，他注意到笑声一个如今仍然让研究者十分感兴趣的特点：仅仅是简单的“哈哈”就能传达出数量惊人的社交信息。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In one study conducted in 2016, samples of laughter from pairs of English-speaking students were recorded at the University of California, Santa Cruz. A team made up of more than 30 <mark class="vocab-word" data-word="psychological">psychological</mark> scientists, <mark class="vocab-word" data-word="anthropologist">anthropologists</mark>, and <mark class="vocab-word" data-word="biologist">biologists</mark> then played these recordings to listeners from 24 <mark class="vocab-word" data-word="diverse">diverse</mark> societies, from <mark class="vocab-word" data-word="indigenous">indigenous</mark> <mark class="vocab-word" data-word="tribe">tribes</mark> in New <mark class="vocab-word" data-word="guinea">Guinea</mark> to city-dwellers in India and Europe. Participants were asked whether they thought the people laughing were friends or strangers. On average, the results were remarkably consistent: worldwide, people’s guesses were correct <mark class="vocab-word" data-word="approximate">approximately</mark> 60% of the time.</p></div>  <div class="parallel-zh"><p>在2016年进行的一项研究中，加利福尼亚大学圣克鲁兹分校几对母语为英语的学生的笑声样本被记录下来。由超过30名心理学家、人类学家和生物学家组成的团队随后将这些录音播放给来自24个不同社会的听众。它们既包括新几内亚的原住民部落，也包括印度和欧洲的城市居民。参与者被询问他们觉得正在大笑的人是朋友还是陌生人。平均来看，这些结果惊人地一致：世界范围内，人们的猜测在大约60%的时候都是正确的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Researchers have also found that different types of laughter serve as <mark class="vocab-word" data-word="cod">codes</mark> to complex human social hierarchies. A team led by Christopher Oveis from the University of California, San Diego, found that high-status individuals had different laughs from low-status individuals, and that strangers’ judgements of an individual’s social status were <mark class="vocab-word" data-word="influence">influenced</mark> by the <mark class="vocab-word" data-word="dominant">dominant</mark> or <mark class="vocab-word" data-word="submissive">submissive</mark> quality of their laughter. In their study, 48 male college students were <mark class="vocab-word" data-word="random">randomly</mark> <mark class="vocab-word" data-word="assign">assigned</mark> to groups of four, with each group <mark class="vocab-word" data-word="compose">composed</mark> of two low-status members, who had just joined their college fraternity group, and two high-status members, older students who had been active in the fraternity for at least two years. Laughter was recorded as each student took a turn at being <mark class="vocab-word" data-word="tease">teased</mark> by the others, involving the use of <mark class="vocab-word" data-word="mild">mildly</mark> <mark class="vocab-word" data-word="insult">insulting</mark> <mark class="vocab-word" data-word="nickname">nicknames</mark>. Analysis <mark class="vocab-word" data-word="reveal">revealed</mark> that, as expected, high-status individuals produced more <mark class="vocab-word" data-word="dominant">dominant</mark> laughs and fewer <mark class="vocab-word" data-word="submissive">submissive</mark> laughs relative to the low-status individuals. Meanwhile, low-status individuals were more likely to change their laughter based on their position of power; that is, the newcomers produced more <mark class="vocab-word" data-word="dominant">dominant</mark> laughs when they were in the ‘powerful’ role of teasers. <mark class="vocab-word" data-word="dominant">Dominant</mark> laughter was higher in <mark class="vocab-word" data-word="pitch">pitch</mark>, louder, and more <mark class="vocab-word" data-word="variable">variable</mark> in <mark class="vocab-word" data-word="tone">tone</mark> than <mark class="vocab-word" data-word="submissive">submissive</mark> laughter.</p></div>  <div class="parallel-zh"><p>研究者们还发现：不同类型的笑声能够作为人类社会复杂层级的暗码使用。由加利福尼亚大学圣地亚哥分校的Christopher Oveis领导的研究团队发现，社会地位高的个体与社会地位低的个体拥有不同的笑法，而陌生人对一个人社会地位的判断会受到他们笑声中支配性或服从性特质的影响。在他们的研究中，48名男性大学生被随机分为四人小组。每一组包含两名社会地位较低的成员（刚刚加入大学兄弟会）和两名社会地位较高的成员（至少已经在兄弟会中活跃两年的年长学生）。每位学生轮流被他人揶揄，具体手段包括使用有着轻微冒犯意味的外号，并记录他们的笑声。分析发现，正如事先预料的那样，与社会地位较低的个体相比，社会地位较高的人会发出更多支配性的笑声和更少服从性的笑声。与此同时，社会地位较低的个体更有可能根据他们的权力地位改变自己的笑声。也就是说，当新人处于揶揄者这一“掌权”地位时，他们会发出更多支配性的笑声。相比于服从性的笑声而言，支配性的笑声音调更高，声音更大，语调变化更为多样。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A <mark class="vocab-word" data-word="random">random</mark> group of volunteers then listened to an equal number of <mark class="vocab-word" data-word="dominant">dominant</mark> and <mark class="vocab-word" data-word="submissive">submissive</mark> laughs from both the high- and low-status individuals, and were asked to estimate the social status of the laugher. In line with <mark class="vocab-word" data-word="prediction">predictions</mark>, laughers producing <mark class="vocab-word" data-word="dominant">dominant</mark> laughs were <mark class="vocab-word" data-word="perceive">perceived</mark> to be significantly higher in status than laughers producing <mark class="vocab-word" data-word="submissive">submissive</mark> laughs. ‘This was particularly true for low-status individuals, who were rated as significantly higher in status when displaying a <mark class="vocab-word" data-word="dominant">dominant</mark> <mark class="vocab-word" data-word="versus">versus</mark> <mark class="vocab-word" data-word="submissive">submissive</mark> laugh, ‘ Oveis and colleagues note. ‘Thus, by strategically displaying more <mark class="vocab-word" data-word="dominant">dominant</mark> laughter when the context allows, low-status individuals may achieve higher status in the eyes of others.’ However, high-status individuals were rated as high-status whether they produced their natural <mark class="vocab-word" data-word="dominant">dominant</mark> laugh or tried to do a <mark class="vocab-word" data-word="submissive">submissive</mark> one.</p></div>  <div class="parallel-zh"><p>随后，一组随机选取的志愿者会聆听来自高低社会地位个体的同等数量的支配性笑声和服从性笑声，并被要求评估发出笑声的人的社会地位。与预测一致，发出支配性笑声的人被认为社会地位远高于那些发出服从性笑声的人。“这对于社会地位较低的人来说尤其如此，与发出服从性笑声相比，他们在发出支配性笑声的时候，获得的社会地位评定明显更高”，Oveis和他的同事注意到。“因此，在环境允许的情况下，通过有策略地展示更多支配性的笑声，社会地位较低的个体也许能够在别人眼中获得更高的地位”。然而，社会地位较高的个体无论是在发出自然的、支配性笑声时，还是在尝试发出服从性笑声时，都会被人们评定为高地位者。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Another study, conducted by David Cheng and Lu Wang of Australian National University, was based on the <mark class="vocab-word" data-word="hypothesis">hypothesis</mark> that humour might provide a respite from <mark class="vocab-word" data-word="tedious">tedious</mark> situations in the workplace. This ‘mental break’ might <mark class="vocab-word" data-word="facilitate">facilitate</mark> the replenishment of mental resources. To test this theory, the researchers <mark class="vocab-word" data-word="recruit">recruited</mark> 74 business students, ostensibly for an experiment on <mark class="vocab-word" data-word="perception">perception</mark>. First, the students <mark class="vocab-word" data-word="perform">performed</mark> a <mark class="vocab-word" data-word="tedious">tedious</mark> task in which they had to <mark class="vocab-word" data-word="cross">cross</mark> out every instance of the letter ‘e’ over two pages of text. The students then were <mark class="vocab-word" data-word="random">randomly</mark> <mark class="vocab-word" data-word="assign">assigned</mark> to watch a video <mark class="vocab-word" data-word="clip">clip</mark> <mark class="vocab-word" data-word="elicit">eliciting</mark> either humour, contentment, or <mark class="vocab-word" data-word="neutral">neutral</mark> feelings. Some watched a <mark class="vocab-word" data-word="clip">clip</mark> of the BBC comedy Mr. Bean, others a relaxing scene with <mark class="vocab-word" data-word="dolphin">dolphins</mark> swimming in the ocean, and others a <mark class="vocab-word" data-word="factual">factual</mark> video about the management profession.</p></div>  <div class="parallel-zh"><p>另一项由澳大利亚国立大学的David Cheng和Lu Wang所进行的研究则建立在这样的假设之上：幽默也许能让人从工作场所无聊乏味的环境中暂时解脱出来。这种“精神休息”也许能够帮助补充精力。为了测试这一理论，研究者以进行认知实验为名，招募了74名商学院的学生。首先，学生要完成一项无聊的任务。他们必须划掉长达两页的文本中所有的字母“e”。然后学生被随机安排观看一段视频，刺激或者幽默、或者满足、或者中立的情感。一些人观看BBC喜剧《憨豆先生》中的片段，另一些人观看海豚在海洋中畅游的轻松景象，还有一些人则观看有关管理学专业的一部纪实影片。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The students then completed a task requiring <mark class="vocab-word" data-word="persistence">persistence</mark> in which they were asked to guess the potential performance of employees based on <mark class="vocab-word" data-word="provided">provided</mark> profiles, and were told that making 10 correct assessments in a row would <mark class="vocab-word" data-word="lead">lead</mark> to a win. However, the software was programmed such that it was nearly impossible to achieve 10 <mark class="vocab-word" data-word="consecutive">consecutive</mark> correct answers. Participants were allowed to quit the task at any point. Students who had watched the Mr. Bean video ended up spending significantly more time working on the task, making twice as many <mark class="vocab-word" data-word="prediction">predictions</mark> as the other two groups.</p></div>  <div class="parallel-zh"><p>这些学生随后完成一项需要毅力的任务。他们被要求根据所提供的资料猜测员工的潜在表现，并被告知连续进行10次正确的评估会赢得胜利。然而，软件的编程方式使其几乎不可能连续10次获得正确答案。参与者可以在任何时间退出任务。观看《憨豆先生》的学生最终在这项任务上投入的时间明显更多，所做预测是其他两组人的两倍。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Cheng and Wang then <mark class="vocab-word" data-word="replicate">replicated</mark> these results in a second study, during which they had participants complete long multiplication questions by hand. Again, participants who watched the <mark class="vocab-word" data-word="humorous">humorous</mark> video spent significantly more time working on this <mark class="vocab-word" data-word="tedious">tedious</mark> task and completed more questions correctly than did the students in either of the other groups.</p></div>  <div class="parallel-zh"><p>Cheng和Wang在第二项研究中重现了这些结果。他们要求参与者用手完成漫长的乘法计算。再一次的，与其他两组学生相比，观看幽默视频的参与者在这项枯燥的任务中投入的时间明显更多，回答对的问题也更多。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘Although humour has been found to help <mark class="vocab-word" data-word="relieve">relieve</mark> stress and <mark class="vocab-word" data-word="facilitate">facilitate</mark> social relationships, the traditional view of task performance implies that individuals should avoid things such as humour that may <mark class="vocab-word" data-word="distract">distract</mark> them from the accomplishment of task goals,’ Cheng and Wang conclude. ‘We <mark class="vocab-word" data-word="suggest">suggest</mark> that humour is not only <mark class="vocab-word" data-word="enjoyable">enjoyable</mark> but more importantly, energizing.’</p></div>  <div class="parallel-zh"><p>“虽然早已发现幽默有助于缓解压力和促进社会关系，但有关任务表现的传统观点认为，个人应该避免诸如幽默这样会分散他们注意力、干扰完成任务目标的事情”，Cheng和Wang总结道，“我们认为幽默不仅让人愉悦，而且更重要的是，它还能给人增添精力”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"universal": 1, "psychological": 2, "psychology": 1, "neuroscience": 1, "perception": 2, "evolution": 1, "adaptation": 1, "crowd": 1, "remarkable": 1, "anthropologist": 1, "biologist": 1, "diverse": 1, "indigenous": 1, "tribe": 1, "guinea": 1, "approximate": 1, "cod": 1, "influence": 1, "dominant": 9, "submissive": 7, "random": 3, "assign": 2, "compose": 1, "tease": 1, "mild": 1, "insult": 1, "nickname": 1, "reveal": 1, "pitch": 1, "variable": 1, "tone": 1, "prediction": 2, "perceive": 1, "versus": 1, "hypothesis": 1, "tedious": 3, "facilitate": 2, "recruit": 1, "perform": 1, "cross": 1, "clip": 2, "elicit": 1, "neutral": 1, "dolphin": 1, "factual": 1, "persistence": 1, "provided": 1, "lead": 1, "consecutive": 1, "replicate": 1, "humorous": 1, "relieve": 1, "distract": 1, "suggest": 1, "enjoyable": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

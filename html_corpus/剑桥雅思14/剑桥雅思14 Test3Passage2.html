@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving bugs to find new drugs 利用昆虫开发药物 - 剑桥雅思14 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Saving bugs to find new drugs 利用昆虫开发药物</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39316.html" target="_blank">https://www.laokaoya.com/39316.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>More drugs than you might think are <mark class="vocab-word" data-word="derive">derived</mark> from, or inspired by, <mark class="vocab-word" data-word="compound">compounds</mark> found in living things. Looking to nature for the <mark class="vocab-word" data-word="soothe">soothing</mark> and curing of our <mark class="vocab-word" data-word="ailment">ailments</mark> is nothing new – we have been doing it for tens of thousands of years. You only have to look at other <mark class="vocab-word" data-word="primate">primates</mark> – such as the capuchin monkeys who <mark class="vocab-word" data-word="rub">rub</mark> themselves with toxin-oozing millipedes to <mark class="vocab-word" data-word="deter">deter</mark> <mark class="vocab-word" data-word="mosquito">mosquitoes</mark>, or the <mark class="vocab-word" data-word="chimpanzee">chimpanzees</mark> who use <mark class="vocab-word" data-word="noxious">noxious</mark> forest plants to rid themselves of intestinal <mark class="vocab-word" data-word="parasite">parasites</mark> – to realise that our ancient <mark class="vocab-word" data-word="ancestor">ancestors</mark> too probably had a basic <mark class="vocab-word" data-word="grasp">grasp</mark> of medicine.</p><p><mark class="vocab-word" data-word="pharmaceutical">Pharmaceutical</mark> science and chemistry built on these ancient <mark class="vocab-word" data-word="foundation">foundations</mark> and perfected the extraction, characterisation, <mark class="vocab-word" data-word="modification">modification</mark> and testing of these natural products. Then, for a while, modern <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> science moved its focus away from nature and into the laboratory, designing chemical <mark class="vocab-word" data-word="compound">compounds</mark> from <mark class="vocab-word" data-word="scratch">scratch</mark>. The main cause of this shift is that although there are plenty of <mark class="vocab-word" data-word="promising">promising</mark> chemical <mark class="vocab-word" data-word="compound">compounds</mark> in nature, finding them is far from easy. Securing <mark class="vocab-word" data-word="sufficient">sufficient</mark> numbers of the <mark class="vocab-word" data-word="organism">organism</mark> in question, <mark class="vocab-word" data-word="isolate">isolating</mark> and characterising the <mark class="vocab-word" data-word="compound">compounds</mark> of interest, and producing large quantities of these <mark class="vocab-word" data-word="compound">compounds</mark> are all significant <mark class="vocab-word" data-word="hurdle">hurdles</mark>.</p><p>Laboratory-based drug discovery has achieved varying levels of success, something which has now <mark class="vocab-word" data-word="prompt">prompted</mark> the development of new approaches focusing once again on natural products. With the ability to mine genomes for useful <mark class="vocab-word" data-word="compound">compounds</mark>, it is now <mark class="vocab-word" data-word="evident">evident</mark> that we have <mark class="vocab-word" data-word="barely">barely</mark> <mark class="vocab-word" data-word="scratch">scratched</mark> the surface of nature’s <mark class="vocab-word" data-word="molecular">molecular</mark> <mark class="vocab-word" data-word="diversity">diversity</mark>. This realisation, together with several <mark class="vocab-word" data-word="loom">looming</mark> health crises, such as <mark class="vocab-word" data-word="antibiotic">antibiotic</mark> <mark class="vocab-word" data-word="resistance">resistance</mark>, has put bioprospecting – the search for useful <mark class="vocab-word" data-word="compound">compounds</mark> in nature – firmly back on the map.</p><p>Insects are the undisputed masters of the <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> <mark class="vocab-word" data-word="domain">domain</mark>, where they <mark class="vocab-word" data-word="occupy">occupy</mark> every possible <mark class="vocab-word" data-word="niche">niche</mark>. <mark class="vocab-word" data-word="consequently">Consequently</mark>, they have a <mark class="vocab-word" data-word="bewildering">bewildering</mark> <mark class="vocab-word" data-word="array">array</mark> of <mark class="vocab-word" data-word="interaction">interactions</mark> with other <mark class="vocab-word" data-word="organism">organisms</mark>, something which has driven the <mark class="vocab-word" data-word="evolution">evolution</mark> of an enormous range of very interesting <mark class="vocab-word" data-word="compound">compounds</mark> for defensive and <mark class="vocab-word" data-word="offensive">offensive</mark> purposes. Their <mark class="vocab-word" data-word="remarkable">remarkable</mark> <mark class="vocab-word" data-word="diversity">diversity</mark> <mark class="vocab-word" data-word="exceed">exceeds</mark> that of every other group of animals on the planet combined. Yet even though insects are far and away the most <mark class="vocab-word" data-word="diverse">diverse</mark> animals in existence, their potential as sources of therapeutic <mark class="vocab-word" data-word="compound">compounds</mark> is yet to be realised.</p><p>From the tiny <mark class="vocab-word" data-word="proportion">proportion</mark> of insects that have been <mark class="vocab-word" data-word="investigate">investigated</mark>, several <mark class="vocab-word" data-word="promising">promising</mark> <mark class="vocab-word" data-word="compound">compounds</mark> have been identified. For example, alloferon, an <mark class="vocab-word" data-word="compound">compound</mark> produced by <mark class="vocab-word" data-word="blow">blow</mark> fly larvae, is used as an antiviral and antitumor agent in South Korea and Russia. The larvae of a few other insect species are being <mark class="vocab-word" data-word="investigate">investigated</mark> for the <mark class="vocab-word" data-word="potent">potent</mark> antimicrobial <mark class="vocab-word" data-word="compound">compounds</mark> they produce. Meanwhile, a <mark class="vocab-word" data-word="compound">compound</mark> from the venom of the <mark class="vocab-word" data-word="wasp">wasp</mark> Polybia paulista has potential in cancer treatment.</p><p>Why is it that insects have received relatively little attention in bioprospecting? Firstly, there are so many insects that, without some manner of targeted approach, <mark class="vocab-word" data-word="investigate">investigating</mark> this huge variety of species is a <mark class="vocab-word" data-word="daunting">daunting</mark> task. Secondly, insects are generally very small, and the <mark class="vocab-word" data-word="gland">glands</mark> inside them that <mark class="vocab-word" data-word="secrete">secrete</mark> potentially useful <mark class="vocab-word" data-word="compound">compounds</mark> are smaller still. This can make it difficult to <mark class="vocab-word" data-word="obtain">obtain</mark> <mark class="vocab-word" data-word="sufficient">sufficient</mark> quantities of the <mark class="vocab-word" data-word="compound">compound</mark> for <mark class="vocab-word" data-word="subsequent">subsequent</mark> testing. Thirdly, although we consider insects to be everywhere, the reality of this ubiquity is vast numbers of a few extremely common species. Many insect species are <mark class="vocab-word" data-word="infrequent">infrequently</mark> encountered and very difficult to <mark class="vocab-word" data-word="rear">rear</mark> in <mark class="vocab-word" data-word="captivity">captivity</mark>, which, again, can leave us with <mark class="vocab-word" data-word="insufficient">insufficient</mark> material to work with.</p><p>My colleagues and I at Aberystwyth University in the UK have developed an approach in which we use our knowledge of <mark class="vocab-word" data-word="ecology">ecology</mark> as a guide to target our efforts. The creatures that particularly interest us are the many insects that <mark class="vocab-word" data-word="secrete">secrete</mark> powerful <mark class="vocab-word" data-word="poison">poison</mark> for <mark class="vocab-word" data-word="subdue">subduing</mark> <mark class="vocab-word" data-word="prey">prey</mark> and keeping it fresh for future <mark class="vocab-word" data-word="consumption">consumption</mark>. There are even more insects that are masters of <mark class="vocab-word" data-word="exploit">exploiting</mark> filthy <mark class="vocab-word" data-word="habitat">habitats</mark>, such as faeces and <mark class="vocab-word" data-word="carcass">carcasses</mark>, where they are regularly challenged by thousands of <mark class="vocab-word" data-word="microorganism">microorganisms</mark>. These insects have many antimicrobial <mark class="vocab-word" data-word="compound">compounds</mark> for dealing with pathogenic <mark class="vocab-word" data-word="bacteria">bacteria</mark> and fungi, <mark class="vocab-word" data-word="suggest">suggesting</mark> that there is certainly potential to find many <mark class="vocab-word" data-word="compound">compounds</mark> that can serve as or inspire new <mark class="vocab-word" data-word="antibiotic">antibiotics</mark>.</p><p>Although natural history knowledge points us in the right direction, it doesn’t solve the problems associated with <mark class="vocab-word" data-word="obtain">obtaining</mark> useful <mark class="vocab-word" data-word="compound">compounds</mark> from insects. <mark class="vocab-word" data-word="fortunate">Fortunately</mark>, it is now possible to snip out the stretches of the insect’s DNA that carry the <mark class="vocab-word" data-word="cod">codes</mark> for the interesting <mark class="vocab-word" data-word="compound">compounds</mark> and <mark class="vocab-word" data-word="insert">insert</mark> them into cell lines that allow larger quantities to be produced. And although the road from <mark class="vocab-word" data-word="isolate">isolating</mark> and characterising <mark class="vocab-word" data-word="compound">compounds</mark> with <mark class="vocab-word" data-word="desirable">desirable</mark> qualities to developing a commercial product is very long and full of <mark class="vocab-word" data-word="pitfall">pitfalls</mark>, the variety of successful animal-derived <mark class="vocab-word" data-word="pharmaceutical">pharmaceuticals</mark> on the market demonstrates there is a <mark class="vocab-word" data-word="precedent">precedent</mark> here that is worth exploring.</p><p>With every bit of <mark class="vocab-word" data-word="wilderness">wilderness</mark> that disappears, we <mark class="vocab-word" data-word="deprive">deprive</mark> ourselves of potential medicines. As much as I’d love to help develop a groundbreaking insect-derived medicine, my main <mark class="vocab-word" data-word="motivation">motivation</mark> for looking at insects in this way is <mark class="vocab-word" data-word="conservation">conservation</mark>. I <mark class="vocab-word" data-word="sincere">sincerely</mark> believe that all species, however small and seemingly <mark class="vocab-word" data-word="insignificant">insignificant</mark>, have a right to exist for their own <mark class="vocab-word" data-word="sake">sake</mark>. If we can shine a light on the darker recesses of nature’s medicine <mark class="vocab-word" data-word="cabinet">cabinet</mark>, exploring the useful chemistry of the most <mark class="vocab-word" data-word="diverse">diverse</mark> animals on the planet, I believe we can make people think differently about the value of nature.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>提取自生物中的化合物，或者受其启发而制成的药物可能比你想象的要多得多。向自然界寻求缓解或者治疗我们疾病的方法并不是什么新鲜事 – 我们已经这样做了成千上万年。只用看看其他灵长类动物 – 比如卷尾猴会用带有毒素的千足虫涂抹自身来驱走蚊子，而大猩猩则会使用有毒的森林植物来摆脱肠内寄生虫 – 你就会意识到，我们的祖先或许也掌握了一些药物的基本知识。</p><p>药物科学和化学建立在这些古老基础之上，并完善对这些自然产物的提取、鉴定、改良与测试。然后，有那么一段时间，现代药物科学将关注点从自然移到了实验室中，从零开始设计化合物。这一转变的原因在于，虽然自然界中有充足的、充满前景的化合物，但找到它们却并非易事。收集足够的相关生物，分离并鉴定人们感兴趣的化合物，最后再大量生产这些化合物，所有过程都存在巨大困难。</p><p>以实验室为基础的药物开发取得了不同程度的成功，这使得新的研究方法再次聚焦到自然产物上。有了挖掘实用化合物基因组的能力，很明显我们目前才仅仅接触到自然分子多样新的表面而已。这一认识，再加上诸如耐药性等潜在健康危机的存在，使得生物探索（在自然界中寻找有用的化合物）再次坚定地回到人们的视野中。</p><p>昆虫是陆地上毫无争议的主宰，占据每一寸可能的地方。因此，它们与其他生物之间存在大量复杂的互动。这促使它们进化出许多各种各样有趣的化合物用于防御或者进攻。它们非凡的多样性超过地球上所有其他动物的总和。然而，即便昆虫是现存最为多样化的动物，它们作为治疗性化合物来源的潜力尚未被意识到。</p><p>从极少部分已经被研究的昆虫中，人们找到几种很有潜力的化合物。例如，alloferon，一种绿头苍蝇幼虫产生的抗菌剂，在韩国和俄罗斯被当作抗病毒剂和抗癌剂使用。其他昆虫的幼虫也正在被研究，以寻找它们产生的有效抗菌成分。与此同时，黄蜂毒液中的化合物Polybia paulista在癌症治疗方面也有潜在的效用。</p><p>为什么昆虫在生物探索中很少受到关注呢？首先，昆虫种类太多，在没有目标方法的情况下，研究如此多样的物种是一项很容易让人气馁的任务。其次，昆虫的体型普遍偏小，它们体内分泌潜在有用化合物的腺体更小。这使得获取足够的化合物以用于后续测试十分困难。第三，虽然我们认为昆虫到处都是，但现实情况是一些非常常见的物种数量巨大。许多昆虫很少遇到，并且很难在圈禁的情况下培养。这再一次使得我们没有充足的材料进行研究。</p><p>我和英国阿伯里斯特威斯大学的同事研究出一种方法，利用我们生态学的知识指导工作。让我们尤其感兴趣的生物是一些昆虫。它们分泌强力的毒药来捕杀猎物，并使其保持新鲜以供未来食用。甚至还有更多的昆虫擅长利用肮脏的栖息地，比如粪便和尸体。在这些地方，它们经常受到上千种微生物的威胁。这些昆虫具备许多应对致病细菌和真菌的化合物。这意味着我们一定有可能找到许多化合物作为新的抗生素使用，或者启发我们开发新的抗生素。</p><p>虽然自然历史知识为我们指出正确的方向，但它并没有解决从昆虫中获取有用化合物的相关问题。幸运的是，我们如今可以裁剪昆虫基因中携带我们关注的化合物的编码片段，将它们植入到细胞系中，从而使大量生产成为可能。虽然从分离鉴定带有可取性质的化合物到开发出商业产品仍然有很长的路要走，并且途中充满困难，但市场上多种成功的动物提取药物证明，这方面已有先例值得探索。</p><p>每一片荒野的消失都使得我们失去许多潜在的药品。尽管我十分想要帮助开发一种突破性的昆虫提取药品，但我以这种方式研究昆虫的主要动力是为了保护它们。我真心相信，所有物种，无论多么微小，看起来多么微不足道，都有生存的权利。如果我们照亮自然药橱更为黑暗的深处，探索地球上最为多样的动物体内有用的化学物质，我相信我们能够改变人们关于自然价值的看法。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>More drugs than you might think are <mark class="vocab-word" data-word="derive">derived</mark> from, or inspired by, <mark class="vocab-word" data-word="compound">compounds</mark> found in living things. Looking to nature for the <mark class="vocab-word" data-word="soothe">soothing</mark> and curing of our <mark class="vocab-word" data-word="ailment">ailments</mark> is nothing new – we have been doing it for tens of thousands of years. You only have to look at other <mark class="vocab-word" data-word="primate">primates</mark> – such as the capuchin monkeys who <mark class="vocab-word" data-word="rub">rub</mark> themselves with toxin-oozing millipedes to <mark class="vocab-word" data-word="deter">deter</mark> <mark class="vocab-word" data-word="mosquito">mosquitoes</mark>, or the <mark class="vocab-word" data-word="chimpanzee">chimpanzees</mark> who use <mark class="vocab-word" data-word="noxious">noxious</mark> forest plants to rid themselves of intestinal <mark class="vocab-word" data-word="parasite">parasites</mark> – to realise that our ancient <mark class="vocab-word" data-word="ancestor">ancestors</mark> too probably had a basic <mark class="vocab-word" data-word="grasp">grasp</mark> of medicine.</p></div>  <div class="parallel-zh"><p>提取自生物中的化合物，或者受其启发而制成的药物可能比你想象的要多得多。向自然界寻求缓解或者治疗我们疾病的方法并不是什么新鲜事 – 我们已经这样做了成千上万年。只用看看其他灵长类动物 – 比如卷尾猴会用带有毒素的千足虫涂抹自身来驱走蚊子，而大猩猩则会使用有毒的森林植物来摆脱肠内寄生虫 – 你就会意识到，我们的祖先或许也掌握了一些药物的基本知识。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="pharmaceutical">Pharmaceutical</mark> science and chemistry built on these ancient <mark class="vocab-word" data-word="foundation">foundations</mark> and perfected the extraction, characterisation, <mark class="vocab-word" data-word="modification">modification</mark> and testing of these natural products. Then, for a while, modern <mark class="vocab-word" data-word="pharmaceutical">pharmaceutical</mark> science moved its focus away from nature and into the laboratory, designing chemical <mark class="vocab-word" data-word="compound">compounds</mark> from <mark class="vocab-word" data-word="scratch">scratch</mark>. The main cause of this shift is that although there are plenty of <mark class="vocab-word" data-word="promising">promising</mark> chemical <mark class="vocab-word" data-word="compound">compounds</mark> in nature, finding them is far from easy. Securing <mark class="vocab-word" data-word="sufficient">sufficient</mark> numbers of the <mark class="vocab-word" data-word="organism">organism</mark> in question, <mark class="vocab-word" data-word="isolate">isolating</mark> and characterising the <mark class="vocab-word" data-word="compound">compounds</mark> of interest, and producing large quantities of these <mark class="vocab-word" data-word="compound">compounds</mark> are all significant <mark class="vocab-word" data-word="hurdle">hurdles</mark>.</p></div>  <div class="parallel-zh"><p>药物科学和化学建立在这些古老基础之上，并完善对这些自然产物的提取、鉴定、改良与测试。然后，有那么一段时间，现代药物科学将关注点从自然移到了实验室中，从零开始设计化合物。这一转变的原因在于，虽然自然界中有充足的、充满前景的化合物，但找到它们却并非易事。收集足够的相关生物，分离并鉴定人们感兴趣的化合物，最后再大量生产这些化合物，所有过程都存在巨大困难。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Laboratory-based drug discovery has achieved varying levels of success, something which has now <mark class="vocab-word" data-word="prompt">prompted</mark> the development of new approaches focusing once again on natural products. With the ability to mine genomes for useful <mark class="vocab-word" data-word="compound">compounds</mark>, it is now <mark class="vocab-word" data-word="evident">evident</mark> that we have <mark class="vocab-word" data-word="barely">barely</mark> <mark class="vocab-word" data-word="scratch">scratched</mark> the surface of nature’s <mark class="vocab-word" data-word="molecular">molecular</mark> <mark class="vocab-word" data-word="diversity">diversity</mark>. This realisation, together with several <mark class="vocab-word" data-word="loom">looming</mark> health crises, such as <mark class="vocab-word" data-word="antibiotic">antibiotic</mark> <mark class="vocab-word" data-word="resistance">resistance</mark>, has put bioprospecting – the search for useful <mark class="vocab-word" data-word="compound">compounds</mark> in nature – firmly back on the map.</p></div>  <div class="parallel-zh"><p>以实验室为基础的药物开发取得了不同程度的成功，这使得新的研究方法再次聚焦到自然产物上。有了挖掘实用化合物基因组的能力，很明显我们目前才仅仅接触到自然分子多样新的表面而已。这一认识，再加上诸如耐药性等潜在健康危机的存在，使得生物探索（在自然界中寻找有用的化合物）再次坚定地回到人们的视野中。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Insects are the undisputed masters of the <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> <mark class="vocab-word" data-word="domain">domain</mark>, where they <mark class="vocab-word" data-word="occupy">occupy</mark> every possible <mark class="vocab-word" data-word="niche">niche</mark>. <mark class="vocab-word" data-word="consequently">Consequently</mark>, they have a <mark class="vocab-word" data-word="bewildering">bewildering</mark> <mark class="vocab-word" data-word="array">array</mark> of <mark class="vocab-word" data-word="interaction">interactions</mark> with other <mark class="vocab-word" data-word="organism">organisms</mark>, something which has driven the <mark class="vocab-word" data-word="evolution">evolution</mark> of an enormous range of very interesting <mark class="vocab-word" data-word="compound">compounds</mark> for defensive and <mark class="vocab-word" data-word="offensive">offensive</mark> purposes. Their <mark class="vocab-word" data-word="remarkable">remarkable</mark> <mark class="vocab-word" data-word="diversity">diversity</mark> <mark class="vocab-word" data-word="exceed">exceeds</mark> that of every other group of animals on the planet combined. Yet even though insects are far and away the most <mark class="vocab-word" data-word="diverse">diverse</mark> animals in existence, their potential as sources of therapeutic <mark class="vocab-word" data-word="compound">compounds</mark> is yet to be realised.</p></div>  <div class="parallel-zh"><p>昆虫是陆地上毫无争议的主宰，占据每一寸可能的地方。因此，它们与其他生物之间存在大量复杂的互动。这促使它们进化出许多各种各样有趣的化合物用于防御或者进攻。它们非凡的多样性超过地球上所有其他动物的总和。然而，即便昆虫是现存最为多样化的动物，它们作为治疗性化合物来源的潜力尚未被意识到。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>From the tiny <mark class="vocab-word" data-word="proportion">proportion</mark> of insects that have been <mark class="vocab-word" data-word="investigate">investigated</mark>, several <mark class="vocab-word" data-word="promising">promising</mark> <mark class="vocab-word" data-word="compound">compounds</mark> have been identified. For example, alloferon, an <mark class="vocab-word" data-word="compound">compound</mark> produced by <mark class="vocab-word" data-word="blow">blow</mark> fly larvae, is used as an antiviral and antitumor agent in South Korea and Russia. The larvae of a few other insect species are being <mark class="vocab-word" data-word="investigate">investigated</mark> for the <mark class="vocab-word" data-word="potent">potent</mark> antimicrobial <mark class="vocab-word" data-word="compound">compounds</mark> they produce. Meanwhile, a <mark class="vocab-word" data-word="compound">compound</mark> from the venom of the <mark class="vocab-word" data-word="wasp">wasp</mark> Polybia paulista has potential in cancer treatment.</p></div>  <div class="parallel-zh"><p>从极少部分已经被研究的昆虫中，人们找到几种很有潜力的化合物。例如，alloferon，一种绿头苍蝇幼虫产生的抗菌剂，在韩国和俄罗斯被当作抗病毒剂和抗癌剂使用。其他昆虫的幼虫也正在被研究，以寻找它们产生的有效抗菌成分。与此同时，黄蜂毒液中的化合物Polybia paulista在癌症治疗方面也有潜在的效用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Why is it that insects have received relatively little attention in bioprospecting? Firstly, there are so many insects that, without some manner of targeted approach, <mark class="vocab-word" data-word="investigate">investigating</mark> this huge variety of species is a <mark class="vocab-word" data-word="daunting">daunting</mark> task. Secondly, insects are generally very small, and the <mark class="vocab-word" data-word="gland">glands</mark> inside them that <mark class="vocab-word" data-word="secrete">secrete</mark> potentially useful <mark class="vocab-word" data-word="compound">compounds</mark> are smaller still. This can make it difficult to <mark class="vocab-word" data-word="obtain">obtain</mark> <mark class="vocab-word" data-word="sufficient">sufficient</mark> quantities of the <mark class="vocab-word" data-word="compound">compound</mark> for <mark class="vocab-word" data-word="subsequent">subsequent</mark> testing. Thirdly, although we consider insects to be everywhere, the reality of this ubiquity is vast numbers of a few extremely common species. Many insect species are <mark class="vocab-word" data-word="infrequent">infrequently</mark> encountered and very difficult to <mark class="vocab-word" data-word="rear">rear</mark> in <mark class="vocab-word" data-word="captivity">captivity</mark>, which, again, can leave us with <mark class="vocab-word" data-word="insufficient">insufficient</mark> material to work with.</p></div>  <div class="parallel-zh"><p>为什么昆虫在生物探索中很少受到关注呢？首先，昆虫种类太多，在没有目标方法的情况下，研究如此多样的物种是一项很容易让人气馁的任务。其次，昆虫的体型普遍偏小，它们体内分泌潜在有用化合物的腺体更小。这使得获取足够的化合物以用于后续测试十分困难。第三，虽然我们认为昆虫到处都是，但现实情况是一些非常常见的物种数量巨大。许多昆虫很少遇到，并且很难在圈禁的情况下培养。这再一次使得我们没有充足的材料进行研究。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>My colleagues and I at Aberystwyth University in the UK have developed an approach in which we use our knowledge of <mark class="vocab-word" data-word="ecology">ecology</mark> as a guide to target our efforts. The creatures that particularly interest us are the many insects that <mark class="vocab-word" data-word="secrete">secrete</mark> powerful <mark class="vocab-word" data-word="poison">poison</mark> for <mark class="vocab-word" data-word="subdue">subduing</mark> <mark class="vocab-word" data-word="prey">prey</mark> and keeping it fresh for future <mark class="vocab-word" data-word="consumption">consumption</mark>. There are even more insects that are masters of <mark class="vocab-word" data-word="exploit">exploiting</mark> filthy <mark class="vocab-word" data-word="habitat">habitats</mark>, such as faeces and <mark class="vocab-word" data-word="carcass">carcasses</mark>, where they are regularly challenged by thousands of <mark class="vocab-word" data-word="microorganism">microorganisms</mark>. These insects have many antimicrobial <mark class="vocab-word" data-word="compound">compounds</mark> for dealing with pathogenic <mark class="vocab-word" data-word="bacteria">bacteria</mark> and fungi, <mark class="vocab-word" data-word="suggest">suggesting</mark> that there is certainly potential to find many <mark class="vocab-word" data-word="compound">compounds</mark> that can serve as or inspire new <mark class="vocab-word" data-word="antibiotic">antibiotics</mark>.</p></div>  <div class="parallel-zh"><p>我和英国阿伯里斯特威斯大学的同事研究出一种方法，利用我们生态学的知识指导工作。让我们尤其感兴趣的生物是一些昆虫。它们分泌强力的毒药来捕杀猎物，并使其保持新鲜以供未来食用。甚至还有更多的昆虫擅长利用肮脏的栖息地，比如粪便和尸体。在这些地方，它们经常受到上千种微生物的威胁。这些昆虫具备许多应对致病细菌和真菌的化合物。这意味着我们一定有可能找到许多化合物作为新的抗生素使用，或者启发我们开发新的抗生素。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Although natural history knowledge points us in the right direction, it doesn’t solve the problems associated with <mark class="vocab-word" data-word="obtain">obtaining</mark> useful <mark class="vocab-word" data-word="compound">compounds</mark> from insects. <mark class="vocab-word" data-word="fortunate">Fortunately</mark>, it is now possible to snip out the stretches of the insect’s DNA that carry the <mark class="vocab-word" data-word="cod">codes</mark> for the interesting <mark class="vocab-word" data-word="compound">compounds</mark> and <mark class="vocab-word" data-word="insert">insert</mark> them into cell lines that allow larger quantities to be produced. And although the road from <mark class="vocab-word" data-word="isolate">isolating</mark> and characterising <mark class="vocab-word" data-word="compound">compounds</mark> with <mark class="vocab-word" data-word="desirable">desirable</mark> qualities to developing a commercial product is very long and full of <mark class="vocab-word" data-word="pitfall">pitfalls</mark>, the variety of successful animal-derived <mark class="vocab-word" data-word="pharmaceutical">pharmaceuticals</mark> on the market demonstrates there is a <mark class="vocab-word" data-word="precedent">precedent</mark> here that is worth exploring.</p></div>  <div class="parallel-zh"><p>虽然自然历史知识为我们指出正确的方向，但它并没有解决从昆虫中获取有用化合物的相关问题。幸运的是，我们如今可以裁剪昆虫基因中携带我们关注的化合物的编码片段，将它们植入到细胞系中，从而使大量生产成为可能。虽然从分离鉴定带有可取性质的化合物到开发出商业产品仍然有很长的路要走，并且途中充满困难，但市场上多种成功的动物提取药物证明，这方面已有先例值得探索。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>With every bit of <mark class="vocab-word" data-word="wilderness">wilderness</mark> that disappears, we <mark class="vocab-word" data-word="deprive">deprive</mark> ourselves of potential medicines. As much as I’d love to help develop a groundbreaking insect-derived medicine, my main <mark class="vocab-word" data-word="motivation">motivation</mark> for looking at insects in this way is <mark class="vocab-word" data-word="conservation">conservation</mark>. I <mark class="vocab-word" data-word="sincere">sincerely</mark> believe that all species, however small and seemingly <mark class="vocab-word" data-word="insignificant">insignificant</mark>, have a right to exist for their own <mark class="vocab-word" data-word="sake">sake</mark>. If we can shine a light on the darker recesses of nature’s medicine <mark class="vocab-word" data-word="cabinet">cabinet</mark>, exploring the useful chemistry of the most <mark class="vocab-word" data-word="diverse">diverse</mark> animals on the planet, I believe we can make people think differently about the value of nature.</p></div>  <div class="parallel-zh"><p>每一片荒野的消失都使得我们失去许多潜在的药品。尽管我十分想要帮助开发一种突破性的昆虫提取药品，但我以这种方式研究昆虫的主要动力是为了保护它们。我真心相信，所有物种，无论多么微小，看起来多么微不足道，都有生存的权利。如果我们照亮自然药橱更为黑暗的深处，探索地球上最为多样的动物体内有用的化学物质，我相信我们能够改变人们关于自然价值的看法。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"derive": 1, "compound": 20, "soothe": 1, "ailment": 1, "primate": 1, "rub": 1, "deter": 1, "mosquito": 1, "chimpanzee": 1, "noxious": 1, "parasite": 1, "ancestor": 1, "grasp": 1, "pharmaceutical": 3, "foundation": 1, "modification": 1, "scratch": 2, "promising": 2, "sufficient": 2, "organism": 2, "isolate": 2, "hurdle": 1, "prompt": 1, "evident": 1, "barely": 1, "molecular": 1, "diversity": 2, "loom": 1, "antibiotic": 2, "resistance": 1, "terrestrial": 1, "domain": 1, "occupy": 1, "niche": 1, "consequently": 1, "bewildering": 1, "array": 1, "interaction": 1, "evolution": 1, "offensive": 1, "remarkable": 1, "exceed": 1, "diverse": 2, "proportion": 1, "investigate": 3, "blow": 1, "potent": 1, "wasp": 1, "daunting": 1, "gland": 1, "secrete": 2, "obtain": 2, "subsequent": 1, "infrequent": 1, "rear": 1, "captivity": 1, "insufficient": 1, "ecology": 1, "poison": 1, "subdue": 1, "prey": 1, "consumption": 1, "exploit": 1, "habitat": 1, "carcass": 1, "microorganism": 1, "bacteria": 1, "suggest": 1, "fortunate": 1, "cod": 1, "insert": 1, "desirable": 1, "pitfall": 1, "precedent": 1, "wilderness": 1, "deprive": 1, "motivation": 1, "conservation": 1, "sincere": 1, "insignificant": 1, "sake": 1, "cabinet": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

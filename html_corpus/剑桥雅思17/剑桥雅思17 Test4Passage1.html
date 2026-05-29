@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bats to the rescue 马达加斯加蝙蝠 - 剑桥雅思17 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思17</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Bats to the rescue 马达加斯加蝙蝠</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/52627.html" target="_blank">https://www.laokaoya.com/52627.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>There are few places in the world where relations between <mark class="vocab-word" data-word="agriculture">agriculture</mark> and <mark class="vocab-word" data-word="conservation">conservation</mark> are more <mark class="vocab-word" data-word="strain">strained</mark>. Madagascar’s forests are being converted to <mark class="vocab-word" data-word="agricultural">agricultural</mark> land at a rate of one percent every year. Much of this <mark class="vocab-word" data-word="destruction">destruction</mark> is fuelled by the <mark class="vocab-word" data-word="cultivation">cultivation</mark> of the country’s main <mark class="vocab-word" data-word="staple">staple</mark> crop: rice. And a key reason for this <mark class="vocab-word" data-word="destruction">destruction</mark> is that insect <mark class="vocab-word" data-word="pest">pests</mark> are destroying vast quantities of what is grown by local subsistence farmers, <mark class="vocab-word" data-word="lead">leading</mark> them to clear forest to create new paddy fields. The result is <mark class="vocab-word" data-word="devastating">devastating</mark> <mark class="vocab-word" data-word="habitat">habitat</mark> and <mark class="vocab-word" data-word="biodiversity">biodiversity</mark> loss on the island, but not all species are suffering. In fact, some of the island’s insectivorous <mark class="vocab-word" data-word="bat">bats</mark> are currently <mark class="vocab-word" data-word="thriving">thriving</mark> and this has important <mark class="vocab-word" data-word="implication">implications</mark> for farmers and <mark class="vocab-word" data-word="conservationist">conservationists</mark> alike.</p><p>Enter University of Cambridge zoologist Ricardo Rocha. He’s <mark class="vocab-word" data-word="passionate">passionate</mark> about <mark class="vocab-word" data-word="conservation">conservation</mark>, and <mark class="vocab-word" data-word="bat">bats</mark>. More specifically, he’s interested in how <mark class="vocab-word" data-word="bat">bats</mark> are responding to human activity and <mark class="vocab-word" data-word="deforestation">deforestation</mark> in particular. Rocha’s new study shows that several species of <mark class="vocab-word" data-word="bat">bats</mark> are giving Madagascar’s rice farmers a <mark class="vocab-word" data-word="vital">vital</mark> <mark class="vocab-word" data-word="pest">pest</mark> control service by <mark class="vocab-word" data-word="feast">feasting</mark> on <mark class="vocab-word" data-word="plague">plagues</mark> of insects. And this, he believes, can <mark class="vocab-word" data-word="ease">ease</mark> the financial pressure on farmers to turn forest into fields.</p><p><mark class="vocab-word" data-word="bat">Bats</mark> <mark class="vocab-word" data-word="comprise">comprise</mark> roughly one-fifth of all <mark class="vocab-word" data-word="mammal">mammal</mark> species in Madagascar and thirty-six recorded <mark class="vocab-word" data-word="bat">bat</mark> species are native to the island, making it one of the most important regions for <mark class="vocab-word" data-word="conservation">conservation</mark> of this animal group anywhere in the world.</p><p>Co-leading an international team of scientists, Rocha found that several species of <mark class="vocab-word" data-word="indigenous">indigenous</mark> <mark class="vocab-word" data-word="bat">bats</mark> are taking advantage of <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="modification">modification</mark> to hunt insects <mark class="vocab-word" data-word="swarm">swarming</mark> above the country’s rice fields. They include the Malagasy mouse-eared <mark class="vocab-word" data-word="bat">bat</mark>, Major’s long-fingered <mark class="vocab-word" data-word="bat">bat</mark>, the Malagasy white-bellied free-tailed <mark class="vocab-word" data-word="bat">bat</mark> and Peters’ wrinkle-lipped <mark class="vocab-word" data-word="bat">bat</mark>.</p><p>‘These winner species are providing a valuable free service to Madagascar as <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="pest">pest</mark> suppressors,’ says Rocha. ‘We found that six species of <mark class="vocab-word" data-word="bat">bat</mark> are <mark class="vocab-word" data-word="prey">preying</mark> on rice <mark class="vocab-word" data-word="pest">pests</mark>, including the paddy <mark class="vocab-word" data-word="swarm">swarming</mark> <mark class="vocab-word" data-word="caterpillar">caterpillar</mark> and grass webworm. The damage which these insects cause puts the island’s farmers under huge financial pressure and that encourages <mark class="vocab-word" data-word="deforestation">deforestation</mark>.’</p><p>The study, now published in the journalAgriculture, <mark class="vocab-word" data-word="ecosystem">Ecosystems</mark> and Environment,set out to <mark class="vocab-word" data-word="investigate">investigate</mark> the feeding activity of insectivorous <mark class="vocab-word" data-word="bat">bats</mark> in the farmland bordering the Ranomafana National Park in the southeast of the country.</p><p>Rocha and his team used state-of-the-art <mark class="vocab-word" data-word="ultrasonic">ultrasonic</mark> <mark class="vocab-word" data-word="recorder">recorders</mark> to record over a thousand <mark class="vocab-word" data-word="bat">bat</mark> ‘feeding <mark class="vocab-word" data-word="buzz">buzzes</mark>’ (<mark class="vocab-word" data-word="echolocation">echolocation</mark> <mark class="vocab-word" data-word="sequence">sequences</mark> used by <mark class="vocab-word" data-word="bat">bats</mark> to target their <mark class="vocab-word" data-word="prey">prey</mark>) at 54 <mark class="vocab-word" data-word="site">sites</mark>, in order to identify the favourite feeding spots of the <mark class="vocab-word" data-word="bat">bats</mark>. They next used DNA barcoding techniques to analyse droppings collected from <mark class="vocab-word" data-word="bat">bats</mark> at the different <mark class="vocab-word" data-word="site">sites</mark>.</p><p>The recordings <mark class="vocab-word" data-word="reveal">revealed</mark> that <mark class="vocab-word" data-word="bat">bat</mark> activity over rice fields was much higher than it was in continuous forest – seven times higher over rice fields which were on <mark class="vocab-word" data-word="flat">flat</mark> ground, and sixteen times higher over fields on the sides of hills – leaving no doubt that the animals are preferentially <mark class="vocab-word" data-word="forage">foraging</mark> in these man-made <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>. The researchers <mark class="vocab-word" data-word="suggest">suggest</mark> that the <mark class="vocab-word" data-word="bat">bats</mark> favour these fields because lack of water and <mark class="vocab-word" data-word="nutrient">nutrient</mark> <mark class="vocab-word" data-word="run-off">run-off</mark> make these crops this article is from  website more <mark class="vocab-word" data-word="susceptible">susceptible</mark> to insect <mark class="vocab-word" data-word="pest">pest</mark> infestations. DNA analysis showed that all six species of <mark class="vocab-word" data-word="bat">bat</mark> had fed on <mark class="vocab-word" data-word="economically">economically</mark> important insect <mark class="vocab-word" data-word="pest">pests</mark>. While the findings indicated that rice farming benefits most from the <mark class="vocab-word" data-word="bat">bats</mark>, the scientists also found <mark class="vocab-word" data-word="indication">indications</mark> that the <mark class="vocab-word" data-word="bat">bats</mark> were consuming <mark class="vocab-word" data-word="pest">pests</mark> of other crops, including the black <mark class="vocab-word" data-word="twig">twig</mark> borer (which <mark class="vocab-word" data-word="infest">infests</mark> coffee plants), the sugarcane <mark class="vocab-word" data-word="cicada">cicada</mark>, the macadamia nut-borer, and the <mark class="vocab-word" data-word="sober">sober</mark> tabby (a <mark class="vocab-word" data-word="pest">pest</mark> of citrus fruits).</p><p>‘The <mark class="vocab-word" data-word="effectiveness">effectiveness</mark> of <mark class="vocab-word" data-word="bat">bats</mark> as <mark class="vocab-word" data-word="pest">pest</mark> controllers has already been proven in the USA and Catalonia,’ said co-author <mark class="vocab-word" data-word="jam">James</mark> Kemp, from the University of Lisbon. ‘But our study is the first to show this happening in Madagascar, where the <mark class="vocab-word" data-word="stake">stakes</mark> for both farmers and <mark class="vocab-word" data-word="conservationist">conservationists</mark> are so high.’</p><p>Local people may have a further reason to be grateful to their <mark class="vocab-word" data-word="bat">bats</mark>. While the animal is often associated with spreading disease, Rocha and his team found evidence that Malagasy <mark class="vocab-word" data-word="bat">bats</mark> feed not just on crop <mark class="vocab-word" data-word="pest">pests</mark> but also on <mark class="vocab-word" data-word="mosquito">mosquitoes</mark> – <mark class="vocab-word" data-word="carrier">carriers</mark> of <mark class="vocab-word" data-word="malaria">malaria</mark>, <mark class="vocab-word" data-word="rift">Rift</mark> Valley <mark class="vocab-word" data-word="fever">fever</mark> <mark class="vocab-word" data-word="virus">virus</mark> and elephantiasis – as well as blackflies, which spread river blindness.</p><p>Rocha points out that the relationship is <mark class="vocab-word" data-word="complicated">complicated</mark>. When food is <mark class="vocab-word" data-word="scarce">scarce</mark>, <mark class="vocab-word" data-word="bat">bats</mark> become a crucial source of <mark class="vocab-word" data-word="protein">protein</mark> for local people. Even the children will hunt them. And as well as <mark class="vocab-word" data-word="roost">roosting</mark> in <mark class="vocab-word" data-word="tree">trees</mark>, the <mark class="vocab-word" data-word="bat">bats</mark> sometimes <mark class="vocab-word" data-word="roost">roost</mark> in buildings, but are not welcomed there because they make them unclean. At the same time, however, they are associated with <mark class="vocab-word" data-word="sacred">sacred</mark> <mark class="vocab-word" data-word="cave">caves</mark> and the <mark class="vocab-word" data-word="ancestor">ancestors</mark>, so they can be viewed as beings between worlds, which makes them very significant in the culture of the people. And one potential problem is that while these <mark class="vocab-word" data-word="bat">bats</mark> are benefiting from farming, at the same time <mark class="vocab-word" data-word="deforestation">deforestation</mark> is reducing the places where they can <mark class="vocab-word" data-word="roost">roost</mark>, which could have <mark class="vocab-word" data-word="long-term">long-term</mark> effects on their numbers. Rocha says, ‘With the right help, we hope that farmers can promote this <mark class="vocab-word" data-word="mutual">mutually</mark> <mark class="vocab-word" data-word="beneficial">beneficial</mark> relationship by installing <mark class="vocab-word" data-word="bat">bat</mark> houses.’</p><p>Rocha and his colleagues believe that maximising <mark class="vocab-word" data-word="bat">bat</mark> populations can help to <mark class="vocab-word" data-word="boost">boost</mark> crop <mark class="vocab-word" data-word="yield">yields</mark> and promote <mark class="vocab-word" data-word="sustainable">sustainable</mark> <mark class="vocab-word" data-word="livelihood">livelihoods</mark>. The team is now calling for further research to <mark class="vocab-word" data-word="quantify">quantify</mark> this contribution. ‘I’m very <mark class="vocab-word" data-word="optimistic">optimistic</mark>,’ says Rocha. ‘If we give nature a hand, we can speed up the process of regeneration.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>世界上很少有其他地方，农业与自然保护之间的关系是如此紧张。马达加斯加的森林正在以每年百分之一的速率转化为农业用地。推动这一破坏的主要原因是该国家所种植的主要粮食作物：大米。而造成这一破坏的一个关键因素则是各种害虫正在摧毁大量当地农民为了维持生计而种植的粮食。这迫使他们不得不清除森林以开辟新的耕地。结果就是岛上栖息地的破坏和生物多样性的损失。但并非所有的物种都饱受其害。事实上，岛上一些以昆虫为食的蝙蝠就过的很好。这对于农民和环保主义者来说都有重大意义。</p><p>以剑桥大学动物学家Ricardo Rocha为例。他对环境保护和蝙蝠都充满热情。更确切的说，他对蝙蝠如何回应人类活动和森林砍伐尤其感兴趣。Rocha最近的研究表明，某些种类的蝙蝠通过捕食成灾的昆虫，为马达加斯加的稻农提供至关重要的害虫控制服务。他认为，这可以减轻农民将森林变为田地的经济压力。</p><p>蝙蝠大约占马达加斯加所有哺乳动物的五分之一。36种有记录的蝙蝠都是该岛的原生物种。这使得它成为世界上保护这一动物群体最重要的区域之一。</p><p>作为国际科学家团队的共同领队，Rocha发现，几种本土的蝙蝠正利用栖息地的变化，捕食该国稻田里泛滥的昆虫。它们包括马达加斯加鼠耳蝠、马加长趾蝠、马达加斯加白腹犬吻蝠和彼氏皱唇蝠。</p><p>“这些赢家物种作为生物害虫抑制者为马达加斯加提供宝贵的免费服务，”Rocha说。“我们发现六种蝙蝠以水稻害虫为食。其中包括灰翅夜蛾和水稻切叶野螟。这些害虫所造成的破坏给岛上的农民带来沉重的经济压力，而这又鼓励砍伐森林的行为”。</p><p>这一研究，如今发表在期刊《农业，生态系统与环境》上，着手调查食虫蝙蝠在该国东南部拉努马法纳国家公园边界处农田里的捕食行为。</p><p>Rocha和他的团队利用最先进的超声录音设备记录了来自54个地点，超过1000段蝙蝠的“进食嗡鸣”（即蝙蝠用来定位猎物的回声定位序列），以界定这些蝙蝠最喜欢的捕食地点。他们随后使用DNA条码技术分析在不同地点所收集的蝙蝠粪便。</p><p>记录显示，蝙蝠在稻田上的活动要远高于连绵的森林 – 稻田上的活动比平地上高7倍，比山坡上的区域高16倍。毫无疑问，这些动物更喜欢在这些人造生态系统中寻找食物。研究者认为，蝙蝠喜欢这些地方是因为缺水和营养流失使得这些农作物更容易受到害虫的侵扰。DNA分析显示，所有六种蝙蝠都以对经济有重大影响的害虫为食。尽管研究表明稻田从蝙蝠身上受益最多，但科学家也发现一些迹象，证明蝙蝠同样会捕食其他庄稼的害虫，其中包括黑色枝小蠹（侵害咖啡作物）、甘蔗蝉、坚果异胫小卷蛾，以及平纹林翅蛾（一种侵害柑橘类水果的害虫）。</p><p>“蝙蝠作为害虫控制者的有效性已经在美国和加泰罗尼亚得以证实”，来自里斯本大学的共同作者James Kemp说到。“但我们的研究第一次表明马达加斯加也有相同的情况。这里农民和环保主义者所承担的风险都是如此之大”。</p><p>当地人有更深一层的理由来感谢蝙蝠。虽然该动物经常与传播疾病联系在一起，Rocha和他的团队发现，有证据表明，马达加斯加的蝙蝠不仅吃庄稼害虫，而且也吃蚊子（它们是疟疾、裂谷热病毒和象皮病的携带者 ）和传播河盲症的黑蝇。</p><p>Rocha指出，其关系很复杂。当食物匮乏的时候，蝙蝠会成为当地人重要的蛋白质来源。即便是孩子也会捕捉它们。而且除了栖息在树上之外，蝙蝠有时候也会栖息在建筑里。但它们在此并不受欢迎，因为它们会弄脏这些地方。然而，与此同时，它们与神圣的洞穴和祖先联系在一起，它们也因此被当成可以穿越不同世界的生物。这使得它们在当地民众的文化中十分重要。另外，一个潜在的问题是，虽然这些蝙蝠正从农耕中受益，但同时发生的森林砍伐却在减少它们可以栖身的地点。这对其数量有着长期的影响。Rocha说：“在正确的帮助下，我们希望农民可以通过建造蝙蝠屋来促进这种互利关系”。</p><p>Rocha和其同事认为，蝙蝠数量的最大化能够帮助提升农作物产量，推动可持续的谋生之道。其团队如今需要更进一步的研究来量化这一贡献。“我十分乐观”，Rocha说。“如果我们给予自然帮助，我们就能加速恢复的过程”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>There are few places in the world where relations between <mark class="vocab-word" data-word="agriculture">agriculture</mark> and <mark class="vocab-word" data-word="conservation">conservation</mark> are more <mark class="vocab-word" data-word="strain">strained</mark>. Madagascar’s forests are being converted to <mark class="vocab-word" data-word="agricultural">agricultural</mark> land at a rate of one percent every year. Much of this <mark class="vocab-word" data-word="destruction">destruction</mark> is fuelled by the <mark class="vocab-word" data-word="cultivation">cultivation</mark> of the country’s main <mark class="vocab-word" data-word="staple">staple</mark> crop: rice. And a key reason for this <mark class="vocab-word" data-word="destruction">destruction</mark> is that insect <mark class="vocab-word" data-word="pest">pests</mark> are destroying vast quantities of what is grown by local subsistence farmers, <mark class="vocab-word" data-word="lead">leading</mark> them to clear forest to create new paddy fields. The result is <mark class="vocab-word" data-word="devastating">devastating</mark> <mark class="vocab-word" data-word="habitat">habitat</mark> and <mark class="vocab-word" data-word="biodiversity">biodiversity</mark> loss on the island, but not all species are suffering. In fact, some of the island’s insectivorous <mark class="vocab-word" data-word="bat">bats</mark> are currently <mark class="vocab-word" data-word="thriving">thriving</mark> and this has important <mark class="vocab-word" data-word="implication">implications</mark> for farmers and <mark class="vocab-word" data-word="conservationist">conservationists</mark> alike.</p></div>  <div class="parallel-zh"><p>世界上很少有其他地方，农业与自然保护之间的关系是如此紧张。马达加斯加的森林正在以每年百分之一的速率转化为农业用地。推动这一破坏的主要原因是该国家所种植的主要粮食作物：大米。而造成这一破坏的一个关键因素则是各种害虫正在摧毁大量当地农民为了维持生计而种植的粮食。这迫使他们不得不清除森林以开辟新的耕地。结果就是岛上栖息地的破坏和生物多样性的损失。但并非所有的物种都饱受其害。事实上，岛上一些以昆虫为食的蝙蝠就过的很好。这对于农民和环保主义者来说都有重大意义。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Enter University of Cambridge zoologist Ricardo Rocha. He’s <mark class="vocab-word" data-word="passionate">passionate</mark> about <mark class="vocab-word" data-word="conservation">conservation</mark>, and <mark class="vocab-word" data-word="bat">bats</mark>. More specifically, he’s interested in how <mark class="vocab-word" data-word="bat">bats</mark> are responding to human activity and <mark class="vocab-word" data-word="deforestation">deforestation</mark> in particular. Rocha’s new study shows that several species of <mark class="vocab-word" data-word="bat">bats</mark> are giving Madagascar’s rice farmers a <mark class="vocab-word" data-word="vital">vital</mark> <mark class="vocab-word" data-word="pest">pest</mark> control service by <mark class="vocab-word" data-word="feast">feasting</mark> on <mark class="vocab-word" data-word="plague">plagues</mark> of insects. And this, he believes, can <mark class="vocab-word" data-word="ease">ease</mark> the financial pressure on farmers to turn forest into fields.</p></div>  <div class="parallel-zh"><p>以剑桥大学动物学家Ricardo Rocha为例。他对环境保护和蝙蝠都充满热情。更确切的说，他对蝙蝠如何回应人类活动和森林砍伐尤其感兴趣。Rocha最近的研究表明，某些种类的蝙蝠通过捕食成灾的昆虫，为马达加斯加的稻农提供至关重要的害虫控制服务。他认为，这可以减轻农民将森林变为田地的经济压力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="bat">Bats</mark> <mark class="vocab-word" data-word="comprise">comprise</mark> roughly one-fifth of all <mark class="vocab-word" data-word="mammal">mammal</mark> species in Madagascar and thirty-six recorded <mark class="vocab-word" data-word="bat">bat</mark> species are native to the island, making it one of the most important regions for <mark class="vocab-word" data-word="conservation">conservation</mark> of this animal group anywhere in the world.</p></div>  <div class="parallel-zh"><p>蝙蝠大约占马达加斯加所有哺乳动物的五分之一。36种有记录的蝙蝠都是该岛的原生物种。这使得它成为世界上保护这一动物群体最重要的区域之一。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Co-leading an international team of scientists, Rocha found that several species of <mark class="vocab-word" data-word="indigenous">indigenous</mark> <mark class="vocab-word" data-word="bat">bats</mark> are taking advantage of <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="modification">modification</mark> to hunt insects <mark class="vocab-word" data-word="swarm">swarming</mark> above the country’s rice fields. They include the Malagasy mouse-eared <mark class="vocab-word" data-word="bat">bat</mark>, Major’s long-fingered <mark class="vocab-word" data-word="bat">bat</mark>, the Malagasy white-bellied free-tailed <mark class="vocab-word" data-word="bat">bat</mark> and Peters’ wrinkle-lipped <mark class="vocab-word" data-word="bat">bat</mark>.</p></div>  <div class="parallel-zh"><p>作为国际科学家团队的共同领队，Rocha发现，几种本土的蝙蝠正利用栖息地的变化，捕食该国稻田里泛滥的昆虫。它们包括马达加斯加鼠耳蝠、马加长趾蝠、马达加斯加白腹犬吻蝠和彼氏皱唇蝠。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘These winner species are providing a valuable free service to Madagascar as <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="pest">pest</mark> suppressors,’ says Rocha. ‘We found that six species of <mark class="vocab-word" data-word="bat">bat</mark> are <mark class="vocab-word" data-word="prey">preying</mark> on rice <mark class="vocab-word" data-word="pest">pests</mark>, including the paddy <mark class="vocab-word" data-word="swarm">swarming</mark> <mark class="vocab-word" data-word="caterpillar">caterpillar</mark> and grass webworm. The damage which these insects cause puts the island’s farmers under huge financial pressure and that encourages <mark class="vocab-word" data-word="deforestation">deforestation</mark>.’</p></div>  <div class="parallel-zh"><p>“这些赢家物种作为生物害虫抑制者为马达加斯加提供宝贵的免费服务，”Rocha说。“我们发现六种蝙蝠以水稻害虫为食。其中包括灰翅夜蛾和水稻切叶野螟。这些害虫所造成的破坏给岛上的农民带来沉重的经济压力，而这又鼓励砍伐森林的行为”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The study, now published in the journalAgriculture, <mark class="vocab-word" data-word="ecosystem">Ecosystems</mark> and Environment,set out to <mark class="vocab-word" data-word="investigate">investigate</mark> the feeding activity of insectivorous <mark class="vocab-word" data-word="bat">bats</mark> in the farmland bordering the Ranomafana National Park in the southeast of the country.</p></div>  <div class="parallel-zh"><p>这一研究，如今发表在期刊《农业，生态系统与环境》上，着手调查食虫蝙蝠在该国东南部拉努马法纳国家公园边界处农田里的捕食行为。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Rocha and his team used state-of-the-art <mark class="vocab-word" data-word="ultrasonic">ultrasonic</mark> <mark class="vocab-word" data-word="recorder">recorders</mark> to record over a thousand <mark class="vocab-word" data-word="bat">bat</mark> ‘feeding <mark class="vocab-word" data-word="buzz">buzzes</mark>’ (<mark class="vocab-word" data-word="echolocation">echolocation</mark> <mark class="vocab-word" data-word="sequence">sequences</mark> used by <mark class="vocab-word" data-word="bat">bats</mark> to target their <mark class="vocab-word" data-word="prey">prey</mark>) at 54 <mark class="vocab-word" data-word="site">sites</mark>, in order to identify the favourite feeding spots of the <mark class="vocab-word" data-word="bat">bats</mark>. They next used DNA barcoding techniques to analyse droppings collected from <mark class="vocab-word" data-word="bat">bats</mark> at the different <mark class="vocab-word" data-word="site">sites</mark>.</p></div>  <div class="parallel-zh"><p>Rocha和他的团队利用最先进的超声录音设备记录了来自54个地点，超过1000段蝙蝠的“进食嗡鸣”（即蝙蝠用来定位猎物的回声定位序列），以界定这些蝙蝠最喜欢的捕食地点。他们随后使用DNA条码技术分析在不同地点所收集的蝙蝠粪便。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The recordings <mark class="vocab-word" data-word="reveal">revealed</mark> that <mark class="vocab-word" data-word="bat">bat</mark> activity over rice fields was much higher than it was in continuous forest – seven times higher over rice fields which were on <mark class="vocab-word" data-word="flat">flat</mark> ground, and sixteen times higher over fields on the sides of hills – leaving no doubt that the animals are preferentially <mark class="vocab-word" data-word="forage">foraging</mark> in these man-made <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>. The researchers <mark class="vocab-word" data-word="suggest">suggest</mark> that the <mark class="vocab-word" data-word="bat">bats</mark> favour these fields because lack of water and <mark class="vocab-word" data-word="nutrient">nutrient</mark> <mark class="vocab-word" data-word="run-off">run-off</mark> make these crops this article is from  website more <mark class="vocab-word" data-word="susceptible">susceptible</mark> to insect <mark class="vocab-word" data-word="pest">pest</mark> infestations. DNA analysis showed that all six species of <mark class="vocab-word" data-word="bat">bat</mark> had fed on <mark class="vocab-word" data-word="economically">economically</mark> important insect <mark class="vocab-word" data-word="pest">pests</mark>. While the findings indicated that rice farming benefits most from the <mark class="vocab-word" data-word="bat">bats</mark>, the scientists also found <mark class="vocab-word" data-word="indication">indications</mark> that the <mark class="vocab-word" data-word="bat">bats</mark> were consuming <mark class="vocab-word" data-word="pest">pests</mark> of other crops, including the black <mark class="vocab-word" data-word="twig">twig</mark> borer (which <mark class="vocab-word" data-word="infest">infests</mark> coffee plants), the sugarcane <mark class="vocab-word" data-word="cicada">cicada</mark>, the macadamia nut-borer, and the <mark class="vocab-word" data-word="sober">sober</mark> tabby (a <mark class="vocab-word" data-word="pest">pest</mark> of citrus fruits).</p></div>  <div class="parallel-zh"><p>记录显示，蝙蝠在稻田上的活动要远高于连绵的森林 – 稻田上的活动比平地上高7倍，比山坡上的区域高16倍。毫无疑问，这些动物更喜欢在这些人造生态系统中寻找食物。研究者认为，蝙蝠喜欢这些地方是因为缺水和营养流失使得这些农作物更容易受到害虫的侵扰。DNA分析显示，所有六种蝙蝠都以对经济有重大影响的害虫为食。尽管研究表明稻田从蝙蝠身上受益最多，但科学家也发现一些迹象，证明蝙蝠同样会捕食其他庄稼的害虫，其中包括黑色枝小蠹（侵害咖啡作物）、甘蔗蝉、坚果异胫小卷蛾，以及平纹林翅蛾（一种侵害柑橘类水果的害虫）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘The <mark class="vocab-word" data-word="effectiveness">effectiveness</mark> of <mark class="vocab-word" data-word="bat">bats</mark> as <mark class="vocab-word" data-word="pest">pest</mark> controllers has already been proven in the USA and Catalonia,’ said co-author <mark class="vocab-word" data-word="jam">James</mark> Kemp, from the University of Lisbon. ‘But our study is the first to show this happening in Madagascar, where the <mark class="vocab-word" data-word="stake">stakes</mark> for both farmers and <mark class="vocab-word" data-word="conservationist">conservationists</mark> are so high.’</p></div>  <div class="parallel-zh"><p>“蝙蝠作为害虫控制者的有效性已经在美国和加泰罗尼亚得以证实”，来自里斯本大学的共同作者James Kemp说到。“但我们的研究第一次表明马达加斯加也有相同的情况。这里农民和环保主义者所承担的风险都是如此之大”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Local people may have a further reason to be grateful to their <mark class="vocab-word" data-word="bat">bats</mark>. While the animal is often associated with spreading disease, Rocha and his team found evidence that Malagasy <mark class="vocab-word" data-word="bat">bats</mark> feed not just on crop <mark class="vocab-word" data-word="pest">pests</mark> but also on <mark class="vocab-word" data-word="mosquito">mosquitoes</mark> – <mark class="vocab-word" data-word="carrier">carriers</mark> of <mark class="vocab-word" data-word="malaria">malaria</mark>, <mark class="vocab-word" data-word="rift">Rift</mark> Valley <mark class="vocab-word" data-word="fever">fever</mark> <mark class="vocab-word" data-word="virus">virus</mark> and elephantiasis – as well as blackflies, which spread river blindness.</p></div>  <div class="parallel-zh"><p>当地人有更深一层的理由来感谢蝙蝠。虽然该动物经常与传播疾病联系在一起，Rocha和他的团队发现，有证据表明，马达加斯加的蝙蝠不仅吃庄稼害虫，而且也吃蚊子（它们是疟疾、裂谷热病毒和象皮病的携带者 ）和传播河盲症的黑蝇。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Rocha points out that the relationship is <mark class="vocab-word" data-word="complicated">complicated</mark>. When food is <mark class="vocab-word" data-word="scarce">scarce</mark>, <mark class="vocab-word" data-word="bat">bats</mark> become a crucial source of <mark class="vocab-word" data-word="protein">protein</mark> for local people. Even the children will hunt them. And as well as <mark class="vocab-word" data-word="roost">roosting</mark> in <mark class="vocab-word" data-word="tree">trees</mark>, the <mark class="vocab-word" data-word="bat">bats</mark> sometimes <mark class="vocab-word" data-word="roost">roost</mark> in buildings, but are not welcomed there because they make them unclean. At the same time, however, they are associated with <mark class="vocab-word" data-word="sacred">sacred</mark> <mark class="vocab-word" data-word="cave">caves</mark> and the <mark class="vocab-word" data-word="ancestor">ancestors</mark>, so they can be viewed as beings between worlds, which makes them very significant in the culture of the people. And one potential problem is that while these <mark class="vocab-word" data-word="bat">bats</mark> are benefiting from farming, at the same time <mark class="vocab-word" data-word="deforestation">deforestation</mark> is reducing the places where they can <mark class="vocab-word" data-word="roost">roost</mark>, which could have <mark class="vocab-word" data-word="long-term">long-term</mark> effects on their numbers. Rocha says, ‘With the right help, we hope that farmers can promote this <mark class="vocab-word" data-word="mutual">mutually</mark> <mark class="vocab-word" data-word="beneficial">beneficial</mark> relationship by installing <mark class="vocab-word" data-word="bat">bat</mark> houses.’</p></div>  <div class="parallel-zh"><p>Rocha指出，其关系很复杂。当食物匮乏的时候，蝙蝠会成为当地人重要的蛋白质来源。即便是孩子也会捕捉它们。而且除了栖息在树上之外，蝙蝠有时候也会栖息在建筑里。但它们在此并不受欢迎，因为它们会弄脏这些地方。然而，与此同时，它们与神圣的洞穴和祖先联系在一起，它们也因此被当成可以穿越不同世界的生物。这使得它们在当地民众的文化中十分重要。另外，一个潜在的问题是，虽然这些蝙蝠正从农耕中受益，但同时发生的森林砍伐却在减少它们可以栖身的地点。这对其数量有着长期的影响。Rocha说：“在正确的帮助下，我们希望农民可以通过建造蝙蝠屋来促进这种互利关系”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Rocha and his colleagues believe that maximising <mark class="vocab-word" data-word="bat">bat</mark> populations can help to <mark class="vocab-word" data-word="boost">boost</mark> crop <mark class="vocab-word" data-word="yield">yields</mark> and promote <mark class="vocab-word" data-word="sustainable">sustainable</mark> <mark class="vocab-word" data-word="livelihood">livelihoods</mark>. The team is now calling for further research to <mark class="vocab-word" data-word="quantify">quantify</mark> this contribution. ‘I’m very <mark class="vocab-word" data-word="optimistic">optimistic</mark>,’ says Rocha. ‘If we give nature a hand, we can speed up the process of regeneration.’</p></div>  <div class="parallel-zh"><p>Rocha和其同事认为，蝙蝠数量的最大化能够帮助提升农作物产量，推动可持续的谋生之道。其团队如今需要更进一步的研究来量化这一贡献。“我十分乐观”，Rocha说。“如果我们给予自然帮助，我们就能加速恢复的过程”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"agriculture": 1, "conservation": 3, "strain": 1, "agricultural": 1, "destruction": 2, "cultivation": 1, "staple": 1, "pest": 10, "lead": 1, "devastating": 1, "habitat": 2, "biodiversity": 1, "bat": 30, "thriving": 1, "implication": 1, "conservationist": 2, "passionate": 1, "deforestation": 3, "vital": 1, "feast": 1, "plague": 1, "ease": 1, "comprise": 1, "mammal": 1, "indigenous": 1, "modification": 1, "swarm": 2, "biological": 1, "prey": 2, "caterpillar": 1, "ecosystem": 2, "investigate": 1, "ultrasonic": 1, "recorder": 1, "buzz": 1, "echolocation": 1, "sequence": 1, "site": 2, "reveal": 1, "flat": 1, "forage": 1, "suggest": 1, "nutrient": 1, "run-off": 1, "susceptible": 1, "economically": 1, "indication": 1, "twig": 1, "infest": 1, "cicada": 1, "sober": 1, "effectiveness": 1, "jam": 1, "stake": 1, "mosquito": 1, "carrier": 1, "malaria": 1, "rift": 1, "fever": 1, "virus": 1, "complicated": 1, "scarce": 1, "protein": 1, "roost": 3, "tree": 1, "sacred": 1, "cave": 1, "ancestor": 1, "long-term": 1, "mutual": 1, "beneficial": 1, "boost": 1, "yield": 1, "sustainable": 1, "livelihood": 1, "quantify": 1, "optimistic": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

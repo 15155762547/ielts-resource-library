@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The return of the huarango Huarango树的回归 - 剑桥雅思15 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The return of the huarango Huarango树的回归</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/40076.html" target="_blank">https://www.laokaoya.com/40076.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The south coast of Peru is a narrow, 2,000-kilometre-long <mark class="vocab-word" data-word="strip">strip</mark> of desert <mark class="vocab-word" data-word="squeeze">squeezed</mark> between the <mark class="vocab-word" data-word="andes">Andes</mark> and the Pacific Ocean. It is also one of the most <mark class="vocab-word" data-word="fragile">fragile</mark> <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> on Earth. It hardly ever rains there, and the only year-round source of water is located tens of metres below the surface. This is why the huarango <mark class="vocab-word" data-word="tree">tree</mark> is so <mark class="vocab-word" data-word="suite">suited</mark> to life there: it has the longest roots of any <mark class="vocab-word" data-word="tree">tree</mark> in the world. They stretch down 50-80 metres and, as well as <mark class="vocab-word" data-word="suck">sucking</mark> up water for the <mark class="vocab-word" data-word="tree">tree</mark>, they bring it into the higher <mark class="vocab-word" data-word="subsoil">subsoil</mark>, creating a water source for other plant life.</p><p>Dr David Beresford-Jones, archaeobotanist at Cambridge University, has been studying the role of the huarango <mark class="vocab-word" data-word="tree">tree</mark> in landscape change in the Lower lea Valley in southern Peru. He believes the huarango was key to the ancient people’s diet and, because it could reach deep water sources, it allowed local people to <mark class="vocab-word" data-word="withstand">withstand</mark> years of <mark class="vocab-word" data-word="drought">drought</mark> when their other crops failed. But over the centuries huarango <mark class="vocab-word" data-word="tree">trees</mark> were <mark class="vocab-word" data-word="gradual">gradually</mark> replaced with crops. Cutting down native woodland <mark class="vocab-word" data-word="lead">leads</mark> to <mark class="vocab-word" data-word="erosion">erosion</mark>, as there is nothing to keep the soil in place. So when the huarangos go, the land turns into a desert. Nothing grows at all in the Lower lea Valley now.</p><p>For centuries the huarango <mark class="vocab-word" data-word="tree">tree</mark> was <mark class="vocab-word" data-word="vital">vital</mark> to the people of the neighbouring Middle lea Valley too. They grew vegetables under it and ate products made from its seed pods. Its leaves and <mark class="vocab-word" data-word="bark">bark</mark> were used for <mark class="vocab-word" data-word="herbal">herbal</mark> remedies, while its branches were used for <mark class="vocab-word" data-word="charcoal">charcoal</mark> for cooking and heating, and its <mark class="vocab-word" data-word="trunk">trunk</mark> was used to build houses. But now it is disappearing rapidly. The majority of the huarango forests in the valley have already been cleared for fuel and <mark class="vocab-word" data-word="agriculture">agriculture</mark> – initially, these were smallholdings, but now they’re huge farms producing crops for the international market.</p><p>‘Of the forests that were here 1,000 years ago, 99 per cent have already gone,’ says <mark class="vocab-word" data-word="botanist">botanist</mark> Oliver Whaley from Kew Gardens in London, who, together with ethnobotanist Dr William Milliken, is running a <mark class="vocab-word" data-word="pioneer">pioneering</mark> project to protect and <mark class="vocab-word" data-word="restore">restore</mark> the rapidly disappearing <mark class="vocab-word" data-word="habitat">habitat</mark>. In order to succeed, Whaley needs to get the local people on board, and that has meant overcoming local <mark class="vocab-word" data-word="prejudice">prejudices</mark>. ‘Increasingly <mark class="vocab-word" data-word="aspirational">aspirational</mark> communities think that if you plant food <mark class="vocab-word" data-word="tree">trees</mark> in your home or street, it shows you are poor, and still need to grow your own food,’ he says. In order to stop the Middle lea Valley going the same way as the Lower lea Valley, Whaley is encouraging locals to love the huarangos again. ‘It’s a process of cultural resuscitation,’ he says. He has already set up a huarango festival to reinstate a sense of pride in their eco-heritage, and has helped local schoolchildren plant thousands of <mark class="vocab-word" data-word="tree">trees</mark>.</p><p>‘In order to get people interested in <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="restoration">restoration</mark>, you need to plant a <mark class="vocab-word" data-word="tree">tree</mark> that is useful to them,’ says Whaley. So, he has been working with local families to attempt to create a <mark class="vocab-word" data-word="sustainable">sustainable</mark> income from the huarangos by turning their products into foodstuffs. ‘Boil up the beans and you get this thick brown <mark class="vocab-word" data-word="syrup">syrup</mark> like molasses. You can also use it in drinks, soups or <mark class="vocab-word" data-word="stew">stews</mark>. ‘ The pods can be ground into <mark class="vocab-word" data-word="flour">flour</mark> to make cakes, and the seeds <mark class="vocab-word" data-word="roast">roasted</mark> into a sweet, chocolatey ‘coffee’. ‘It’s packed full of <mark class="vocab-word" data-word="vitamin">vitamins</mark> and <mark class="vocab-word" data-word="mineral">minerals</mark>, ‘ Whaley says.</p><p>And some farmers are already planting huarangos. Alberto Benevides, owner of lea Valley’s only certified <mark class="vocab-word" data-word="organic">organic</mark> farm, which Whaley helped set up, has been planting the <mark class="vocab-word" data-word="tree">tree</mark> for 13 years. He produces <mark class="vocab-word" data-word="syrup">syrup</mark> and <mark class="vocab-word" data-word="flour">flour</mark>, and sells these products at an <mark class="vocab-word" data-word="organic">organic</mark> farmers’ market in Lima. His farm is relatively small and doesn’t yet provide him with enough to live on, but he <mark class="vocab-word" data-word="hop">hopes</mark> this will change. ‘The <mark class="vocab-word" data-word="organic">organic</mark> market is growing rapidly in Peru, ‘ Benevides says. ‘I am investing in the future.</p><p>But even if Whaley can <mark class="vocab-word" data-word="convince">convince</mark> the local people to fall in love with the huarango again, there is still the <mark class="vocab-word" data-word="threat">threat</mark> of the larger farms. Some of these cut across the forests and break up the <mark class="vocab-word" data-word="corridor">corridors</mark> that allow the essential movement of <mark class="vocab-word" data-word="mammal">mammals</mark>, birds and <mark class="vocab-word" data-word="pollen">pollen</mark> up and down the narrow forest <mark class="vocab-word" data-word="strip">strip</mark>. In the hope of <mark class="vocab-word" data-word="counteract">counteracting</mark> this, he’s <mark class="vocab-word" data-word="persuade">persuading</mark> farmers to let him plant forest <mark class="vocab-word" data-word="corridor">corridors</mark> on their land. He believes the extra woodland will also benefit the farms by reducing their water <mark class="vocab-word" data-word="usage">usage</mark> through a lowering of <mark class="vocab-word" data-word="evaporation">evaporation</mark> and providing a <mark class="vocab-word" data-word="refuge">refuge</mark> for bio-control insects.</p><p>‘If we can record <mark class="vocab-word" data-word="biodiversity">biodiversity</mark> and see how it all works, then we’re in a good position to move on from there. Desert <mark class="vocab-word" data-word="habitat">habitats</mark> can reduce down to very little, ‘ Whaley explains. ‘It’s not like a rainforest that needs to have this huge <mark class="vocab-word" data-word="expanse">expanse</mark>. Life has always been <mark class="vocab-word" data-word="confine">confined</mark> to <mark class="vocab-word" data-word="corridor">corridors</mark> and islands here. If you just have a few <mark class="vocab-word" data-word="tree">trees</mark> left, the population can grow up quickly because it’s used to <mark class="vocab-word" data-word="exploit">exploiting</mark> water when it arrives.’ He sees his project as a model that has the potential to be rolled out across other <mark class="vocab-word" data-word="arid">arid</mark> areas around the world. ‘If we can do it here, in the most <mark class="vocab-word" data-word="fragile">fragile</mark> system on Earth, then that’s a real message of hope for lots of places, including Africa, where there is <mark class="vocab-word" data-word="drought">drought</mark> and they just can’t afford to wait for rain.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>夹在安第斯山脉和太平洋之间的秘鲁南岸，是一条绵延2000公里的狭长沙漠地带。它也是地球上最为脆弱的生态系统之一。那里几乎从不下雨。全年唯一可用的水源位于地表数十米之下。这就是huarango如此适合在那里生存的原因：它拥有世界上所有树木中最长的根系。它们向下延伸50到80米，为树木吸收水分的同时，他们还将水分带到更高的底土中，为其他植物的生存创造水源。</p><p>剑桥大学考古植物学家David Bereford-Jones博士，一直在研究huarango树在秘鲁南部Lower lea Valley的景色变化中所起的作用。他认为huarango对古代居民的饮食十分重要。因为它能够到达深层水源，让当地居民可以在其他作物歉收的时候忍受数年的干旱。但几个世纪以来，huarango逐渐被粮食作物所取代。对当地林地的砍伐导致水土流失，因为没有任何东西能够固定住土壤。所以，当huarango消失时，土地就变为沙漠。如今没有任何东西能够在Lower lea Valley生长。</p><p>几个世纪以来，huarango树对隔壁Middle lea Valley的居民也同样重要。他们在它下面种植蔬菜，食用其种荚制成的产品。它的叶子和树皮被当作草药使用，枝干作为木炭用于做饭和加热，而树干则用于建造房屋。但它如今也在快速消失。山谷中大部分huarango森林已经被清理出来，要么当作燃料使用，要么为农业腾出地方。一开始，这些只是小块的耕地，但现在它们已经变成为国际市场生产粮食的巨大农场。</p><p>“一千年前这里存在的森林中，99%都已经消失了”，伦敦皇家植物园的植物学家Oliver Whaley说。他与民族植物学家William Milliken博士一起，正在运作一个开创性的项目，以保护和修复这一正在快速消失的栖息地。为了取得成功，Whaley需要得到当地居民的支持，而这意味着要克服当地人的偏见。“越来越多渴望成功的社区认为，如果你在家里或者街道上种植可食用的树木，这就表明你很穷，仍然需要种植自己吃的东西”，他说。为了避免Middle lea Valley走上Lower lea Valley同样的道路，Whaley正鼓励当地人再次喜欢上huarangos。“这是一个文化复兴的过程”，他说。他设立了huarango节来恢复人们对他们生态遗产的自豪感，并已经帮助当地在校儿童种植了数千颗树木。</p><p>“为了让人们对栖息地的重建产生兴趣，你得种植一种对他们有用的树木”，Whaley说。因此，他一直在与当地家庭合作，尝试通过将huarango的产品制成食物来创造一条可持续的收入来源。“把豆子煮开，你就会得到这种粘稠的棕色糖浆。你也可以在饮料、汤或者炖菜中使用它”。种荚可以被碾成粉制作蛋糕，种子可以烘培成香甜的、巧克力味“咖啡”。“它富含维生素和矿物质”，Whaley说。</p><p>一些农民已经开始种植huarangos。Alberto Benevides，lea Valley中唯一一个经过认证的有机农场的主人（该农场正式Whaley帮忙建造的），种植这种树木已经13年了。他生产糖浆和面粉，并在利马的一个有机农贸市场里销售这些产品。他的农场规模相对较小，无法满足他的生活需要，但他希望这在未来会有所改变。“有机市场在秘鲁发展很快”，Benevides说，“我是在投资未来”。</p><p>但即使Whaley能够说服当地居民再次爱上Huarango，大型农场的威胁也仍然存在。其中一些砍伐森林，破坏让哺乳动物、鸟类和花粉得以在狭长森林地带移动的关键走廊。为了消除这一影响，他正在劝说农民让他在他们的土地上种植森林走廊。他认为，通过减少蒸发降低水资源的使用，以及为生物防治的昆虫提供栖息地，额外的林地也可以让农民受益。</p><p>“如果我们能够记录生物多样性，并看到它是如何运作的，那么我们就有了一个从这里继续前进的优秀起点。沙漠栖息地的面积可以缩减的非常小”，Whaley解释道，“它不像雨林那样需要极大的面积。生命一直都只存在于这里的走廊和岛屿。如果你只剩下几棵树木，其数量也会在水到来时迅速生长，因为它们习惯于充分利用水源”。他将他的项目视为一个有潜力推广到世界其他干旱地区的样板。“如果我们能够在这里-世界上生态系统最为脆弱的地方-做到这一点，那么它对于包括非洲在内的许多地方都是一条充满希望的信息。那些地方干旱横行，而他们已经无法承担等候雨水来临的代价”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The south coast of Peru is a narrow, 2,000-kilometre-long <mark class="vocab-word" data-word="strip">strip</mark> of desert <mark class="vocab-word" data-word="squeeze">squeezed</mark> between the <mark class="vocab-word" data-word="andes">Andes</mark> and the Pacific Ocean. It is also one of the most <mark class="vocab-word" data-word="fragile">fragile</mark> <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> on Earth. It hardly ever rains there, and the only year-round source of water is located tens of metres below the surface. This is why the huarango <mark class="vocab-word" data-word="tree">tree</mark> is so <mark class="vocab-word" data-word="suite">suited</mark> to life there: it has the longest roots of any <mark class="vocab-word" data-word="tree">tree</mark> in the world. They stretch down 50-80 metres and, as well as <mark class="vocab-word" data-word="suck">sucking</mark> up water for the <mark class="vocab-word" data-word="tree">tree</mark>, they bring it into the higher <mark class="vocab-word" data-word="subsoil">subsoil</mark>, creating a water source for other plant life.</p></div>  <div class="parallel-zh"><p>夹在安第斯山脉和太平洋之间的秘鲁南岸，是一条绵延2000公里的狭长沙漠地带。它也是地球上最为脆弱的生态系统之一。那里几乎从不下雨。全年唯一可用的水源位于地表数十米之下。这就是huarango如此适合在那里生存的原因：它拥有世界上所有树木中最长的根系。它们向下延伸50到80米，为树木吸收水分的同时，他们还将水分带到更高的底土中，为其他植物的生存创造水源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Dr David Beresford-Jones, archaeobotanist at Cambridge University, has been studying the role of the huarango <mark class="vocab-word" data-word="tree">tree</mark> in landscape change in the Lower lea Valley in southern Peru. He believes the huarango was key to the ancient people’s diet and, because it could reach deep water sources, it allowed local people to <mark class="vocab-word" data-word="withstand">withstand</mark> years of <mark class="vocab-word" data-word="drought">drought</mark> when their other crops failed. But over the centuries huarango <mark class="vocab-word" data-word="tree">trees</mark> were <mark class="vocab-word" data-word="gradual">gradually</mark> replaced with crops. Cutting down native woodland <mark class="vocab-word" data-word="lead">leads</mark> to <mark class="vocab-word" data-word="erosion">erosion</mark>, as there is nothing to keep the soil in place. So when the huarangos go, the land turns into a desert. Nothing grows at all in the Lower lea Valley now.</p></div>  <div class="parallel-zh"><p>剑桥大学考古植物学家David Bereford-Jones博士，一直在研究huarango树在秘鲁南部Lower lea Valley的景色变化中所起的作用。他认为huarango对古代居民的饮食十分重要。因为它能够到达深层水源，让当地居民可以在其他作物歉收的时候忍受数年的干旱。但几个世纪以来，huarango逐渐被粮食作物所取代。对当地林地的砍伐导致水土流失，因为没有任何东西能够固定住土壤。所以，当huarango消失时，土地就变为沙漠。如今没有任何东西能够在Lower lea Valley生长。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>For centuries the huarango <mark class="vocab-word" data-word="tree">tree</mark> was <mark class="vocab-word" data-word="vital">vital</mark> to the people of the neighbouring Middle lea Valley too. They grew vegetables under it and ate products made from its seed pods. Its leaves and <mark class="vocab-word" data-word="bark">bark</mark> were used for <mark class="vocab-word" data-word="herbal">herbal</mark> remedies, while its branches were used for <mark class="vocab-word" data-word="charcoal">charcoal</mark> for cooking and heating, and its <mark class="vocab-word" data-word="trunk">trunk</mark> was used to build houses. But now it is disappearing rapidly. The majority of the huarango forests in the valley have already been cleared for fuel and <mark class="vocab-word" data-word="agriculture">agriculture</mark> – initially, these were smallholdings, but now they’re huge farms producing crops for the international market.</p></div>  <div class="parallel-zh"><p>几个世纪以来，huarango树对隔壁Middle lea Valley的居民也同样重要。他们在它下面种植蔬菜，食用其种荚制成的产品。它的叶子和树皮被当作草药使用，枝干作为木炭用于做饭和加热，而树干则用于建造房屋。但它如今也在快速消失。山谷中大部分huarango森林已经被清理出来，要么当作燃料使用，要么为农业腾出地方。一开始，这些只是小块的耕地，但现在它们已经变成为国际市场生产粮食的巨大农场。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘Of the forests that were here 1,000 years ago, 99 per cent have already gone,’ says <mark class="vocab-word" data-word="botanist">botanist</mark> Oliver Whaley from Kew Gardens in London, who, together with ethnobotanist Dr William Milliken, is running a <mark class="vocab-word" data-word="pioneer">pioneering</mark> project to protect and <mark class="vocab-word" data-word="restore">restore</mark> the rapidly disappearing <mark class="vocab-word" data-word="habitat">habitat</mark>. In order to succeed, Whaley needs to get the local people on board, and that has meant overcoming local <mark class="vocab-word" data-word="prejudice">prejudices</mark>. ‘Increasingly <mark class="vocab-word" data-word="aspirational">aspirational</mark> communities think that if you plant food <mark class="vocab-word" data-word="tree">trees</mark> in your home or street, it shows you are poor, and still need to grow your own food,’ he says. In order to stop the Middle lea Valley going the same way as the Lower lea Valley, Whaley is encouraging locals to love the huarangos again. ‘It’s a process of cultural resuscitation,’ he says. He has already set up a huarango festival to reinstate a sense of pride in their eco-heritage, and has helped local schoolchildren plant thousands of <mark class="vocab-word" data-word="tree">trees</mark>.</p></div>  <div class="parallel-zh"><p>“一千年前这里存在的森林中，99%都已经消失了”，伦敦皇家植物园的植物学家Oliver Whaley说。他与民族植物学家William Milliken博士一起，正在运作一个开创性的项目，以保护和修复这一正在快速消失的栖息地。为了取得成功，Whaley需要得到当地居民的支持，而这意味着要克服当地人的偏见。“越来越多渴望成功的社区认为，如果你在家里或者街道上种植可食用的树木，这就表明你很穷，仍然需要种植自己吃的东西”，他说。为了避免Middle lea Valley走上Lower lea Valley同样的道路，Whaley正鼓励当地人再次喜欢上huarangos。“这是一个文化复兴的过程”，他说。他设立了huarango节来恢复人们对他们生态遗产的自豪感，并已经帮助当地在校儿童种植了数千颗树木。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘In order to get people interested in <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="restoration">restoration</mark>, you need to plant a <mark class="vocab-word" data-word="tree">tree</mark> that is useful to them,’ says Whaley. So, he has been working with local families to attempt to create a <mark class="vocab-word" data-word="sustainable">sustainable</mark> income from the huarangos by turning their products into foodstuffs. ‘Boil up the beans and you get this thick brown <mark class="vocab-word" data-word="syrup">syrup</mark> like molasses. You can also use it in drinks, soups or <mark class="vocab-word" data-word="stew">stews</mark>. ‘ The pods can be ground into <mark class="vocab-word" data-word="flour">flour</mark> to make cakes, and the seeds <mark class="vocab-word" data-word="roast">roasted</mark> into a sweet, chocolatey ‘coffee’. ‘It’s packed full of <mark class="vocab-word" data-word="vitamin">vitamins</mark> and <mark class="vocab-word" data-word="mineral">minerals</mark>, ‘ Whaley says.</p></div>  <div class="parallel-zh"><p>“为了让人们对栖息地的重建产生兴趣，你得种植一种对他们有用的树木”，Whaley说。因此，他一直在与当地家庭合作，尝试通过将huarango的产品制成食物来创造一条可持续的收入来源。“把豆子煮开，你就会得到这种粘稠的棕色糖浆。你也可以在饮料、汤或者炖菜中使用它”。种荚可以被碾成粉制作蛋糕，种子可以烘培成香甜的、巧克力味“咖啡”。“它富含维生素和矿物质”，Whaley说。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>And some farmers are already planting huarangos. Alberto Benevides, owner of lea Valley’s only certified <mark class="vocab-word" data-word="organic">organic</mark> farm, which Whaley helped set up, has been planting the <mark class="vocab-word" data-word="tree">tree</mark> for 13 years. He produces <mark class="vocab-word" data-word="syrup">syrup</mark> and <mark class="vocab-word" data-word="flour">flour</mark>, and sells these products at an <mark class="vocab-word" data-word="organic">organic</mark> farmers’ market in Lima. His farm is relatively small and doesn’t yet provide him with enough to live on, but he <mark class="vocab-word" data-word="hop">hopes</mark> this will change. ‘The <mark class="vocab-word" data-word="organic">organic</mark> market is growing rapidly in Peru, ‘ Benevides says. ‘I am investing in the future.</p></div>  <div class="parallel-zh"><p>一些农民已经开始种植huarangos。Alberto Benevides，lea Valley中唯一一个经过认证的有机农场的主人（该农场正式Whaley帮忙建造的），种植这种树木已经13年了。他生产糖浆和面粉，并在利马的一个有机农贸市场里销售这些产品。他的农场规模相对较小，无法满足他的生活需要，但他希望这在未来会有所改变。“有机市场在秘鲁发展很快”，Benevides说，“我是在投资未来”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But even if Whaley can <mark class="vocab-word" data-word="convince">convince</mark> the local people to fall in love with the huarango again, there is still the <mark class="vocab-word" data-word="threat">threat</mark> of the larger farms. Some of these cut across the forests and break up the <mark class="vocab-word" data-word="corridor">corridors</mark> that allow the essential movement of <mark class="vocab-word" data-word="mammal">mammals</mark>, birds and <mark class="vocab-word" data-word="pollen">pollen</mark> up and down the narrow forest <mark class="vocab-word" data-word="strip">strip</mark>. In the hope of <mark class="vocab-word" data-word="counteract">counteracting</mark> this, he’s <mark class="vocab-word" data-word="persuade">persuading</mark> farmers to let him plant forest <mark class="vocab-word" data-word="corridor">corridors</mark> on their land. He believes the extra woodland will also benefit the farms by reducing their water <mark class="vocab-word" data-word="usage">usage</mark> through a lowering of <mark class="vocab-word" data-word="evaporation">evaporation</mark> and providing a <mark class="vocab-word" data-word="refuge">refuge</mark> for bio-control insects.</p></div>  <div class="parallel-zh"><p>但即使Whaley能够说服当地居民再次爱上Huarango，大型农场的威胁也仍然存在。其中一些砍伐森林，破坏让哺乳动物、鸟类和花粉得以在狭长森林地带移动的关键走廊。为了消除这一影响，他正在劝说农民让他在他们的土地上种植森林走廊。他认为，通过减少蒸发降低水资源的使用，以及为生物防治的昆虫提供栖息地，额外的林地也可以让农民受益。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘If we can record <mark class="vocab-word" data-word="biodiversity">biodiversity</mark> and see how it all works, then we’re in a good position to move on from there. Desert <mark class="vocab-word" data-word="habitat">habitats</mark> can reduce down to very little, ‘ Whaley explains. ‘It’s not like a rainforest that needs to have this huge <mark class="vocab-word" data-word="expanse">expanse</mark>. Life has always been <mark class="vocab-word" data-word="confine">confined</mark> to <mark class="vocab-word" data-word="corridor">corridors</mark> and islands here. If you just have a few <mark class="vocab-word" data-word="tree">trees</mark> left, the population can grow up quickly because it’s used to <mark class="vocab-word" data-word="exploit">exploiting</mark> water when it arrives.’ He sees his project as a model that has the potential to be rolled out across other <mark class="vocab-word" data-word="arid">arid</mark> areas around the world. ‘If we can do it here, in the most <mark class="vocab-word" data-word="fragile">fragile</mark> system on Earth, then that’s a real message of hope for lots of places, including Africa, where there is <mark class="vocab-word" data-word="drought">drought</mark> and they just can’t afford to wait for rain.’</p></div>  <div class="parallel-zh"><p>“如果我们能够记录生物多样性，并看到它是如何运作的，那么我们就有了一个从这里继续前进的优秀起点。沙漠栖息地的面积可以缩减的非常小”，Whaley解释道，“它不像雨林那样需要极大的面积。生命一直都只存在于这里的走廊和岛屿。如果你只剩下几棵树木，其数量也会在水到来时迅速生长，因为它们习惯于充分利用水源”。他将他的项目视为一个有潜力推广到世界其他干旱地区的样板。“如果我们能够在这里-世界上生态系统最为脆弱的地方-做到这一点，那么它对于包括非洲在内的许多地方都是一条充满希望的信息。那些地方干旱横行，而他们已经无法承担等候雨水来临的代价”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"strip": 2, "squeeze": 1, "andes": 1, "fragile": 2, "ecosystem": 1, "tree": 11, "suite": 1, "suck": 1, "subsoil": 1, "withstand": 1, "drought": 2, "gradual": 1, "lead": 1, "erosion": 1, "vital": 1, "bark": 1, "herbal": 1, "charcoal": 1, "trunk": 1, "agriculture": 1, "botanist": 1, "pioneer": 1, "restore": 1, "habitat": 3, "prejudice": 1, "aspirational": 1, "restoration": 1, "sustainable": 1, "syrup": 2, "stew": 1, "flour": 2, "roast": 1, "vitamin": 1, "mineral": 1, "organic": 3, "hop": 1, "convince": 1, "threat": 1, "corridor": 3, "mammal": 1, "pollen": 1, "counteract": 1, "persuade": 1, "usage": 1, "evaporation": 1, "refuge": 1, "biodiversity": 1, "expanse": 1, "confine": 1, "exploit": 1, "arid": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

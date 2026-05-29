@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collecting as a hobby 作为爱好的收藏 - 剑桥雅思12 Test 5 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思12</span>
+                    <span class="badge-tag">Test 5</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Collecting as a hobby 作为爱好的收藏</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/30361.html" target="_blank">https://www.laokaoya.com/30361.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Collecting must be one of the most <mark class="vocab-word" data-word="varied">varied</mark> of human activities, and it’s one that many of us psychologists findfascinating.Many forms of collecting have been <mark class="vocab-word" data-word="dignified">dignified</mark> with a technical name: an archtophilist collects teddy bears, a philatelist collects <mark class="vocab-word" data-word="postage">postage</mark> <mark class="vocab-word" data-word="stamp">stamps</mark>, and a deltiologist collects <mark class="vocab-word" data-word="postcard">postcards</mark>.<mark class="vocab-word" data-word="amass">Amassing</mark> hundreds or even thousands of <mark class="vocab-word" data-word="postcard">postcards</mark>, chocolate wrappers or whatever, takes time, energy and money that could surely be put to much more <mark class="vocab-word" data-word="productive">productive</mark> use.And yet there are millions of collectors around the world.Why do they do it?</p><p>There are the people who collect because they want to make money – this could be called an <mark class="vocab-word" data-word="instrumental">instrumental</mark> reason for collecting; that is, collecting as a means to an end.They’ll look for, say, <mark class="vocab-word" data-word="antique">antiques</mark> that they can buy cheaply and expect to be able to sell at a profit.But there may well be a <mark class="vocab-word" data-word="psychological">psychological</mark> element, too – buying cheap and selling dear can give the collector a sense oftriumph.And as selling online is so easy, more and more people are joining in.</p><p>Many collectors collect to develop their social life, attending meetings of a group of collectors and exchanging information on items.This is avarianton joining a bridge club or a gym, and similarly brings them into contact with like-minded people.</p><p>Another <mark class="vocab-word" data-word="motive">motive</mark> for collecting is the desire to find something special, or aparticularexample of the collected item, such as a rare early recording by aparticularsinger.Some may spend their whole lives in a hunt for this.<mark class="vocab-word" data-word="psychological">Psychologically</mark>, this can give a purpose to a life that otherwise feels aimless.There is a danger, though, that if the individual is ever lucky enough to find what they’re looking for, rather than celebrating their success, they may feel empty, now that the goal that drove them on has gone.</p><p>If you think about collecting <mark class="vocab-word" data-word="postage">postage</mark> <mark class="vocab-word" data-word="stamp">stamps</mark>, anotherpotentialreason for it – or, perhaps, a result of collecting – is its educational value.Stampcollecting opens a window to other countries, and to the plants, animals, or famous people shown on their <mark class="vocab-word" data-word="stamp">stamps</mark>.Similarly, in the 19th century, many collectors <mark class="vocab-word" data-word="amass">amassed</mark> <mark class="vocab-word" data-word="fossil">fossils</mark>, animals and plants from around the <mark class="vocab-word" data-word="globe">globe</mark>, and their collections <mark class="vocab-word" data-word="provided">provided</mark> a vast amount of information about the natural world. Without those collections, our understanding would be greatlyinferiorto what it is.</p><p>In the past – and nowadays, too, though to a <mark class="vocab-word" data-word="lesser">lesser</mark> extent – a popular form of collecting, particularly among boys and men, was trainspotting.This might involve trying to see everylocomotiveof aparticulartype, using published data that identifies each one, and <mark class="vocab-word" data-word="tick">ticking</mark> off each engine as it is seen.Trainspotters exchange information, these days often by mobile phone, so they can work out where to go to, to see aparticularengine.As a by­product, many <mark class="vocab-word" data-word="practitioner">practitioners</mark> of the hobby become veryknowledgeableabout railway operations, or the technical <mark class="vocab-word" data-word="specification">specifications</mark> of different engine types.</p><p>Similarly, people who collect dolls may go beyond simply <mark class="vocab-word" data-word="enlarge">enlarging</mark> their collection, and develop an interest in the way that dolls are made, or the materials that are used.These have changed over the centuries from the wood that was standard in 16th century Europe, through the <mark class="vocab-word" data-word="wax">wax</mark> andporcelainof later centuries, to the plastics of today’s dolls.Or collectors might be inspired to study how dollsreflectnotions of what children like, or ought to like.</p><p>Not all collectors are interested in learning from their hobby, though, so what we might call a <mark class="vocab-word" data-word="psychological">psychological</mark> reason for collecting is the need for a sense of control, perhaps as a way of dealing with <mark class="vocab-word" data-word="insecurity">insecurity</mark>.Stampcollectors, forinstance, arrange their <mark class="vocab-word" data-word="stamp">stamps</mark> in albums, usually very <mark class="vocab-word" data-word="neat">neatly</mark>, organising their collection <mark class="vocab-word" data-word="accord">according</mark> to certain <mark class="vocab-word" data-word="commonplace">commonplace</mark> principles – perhaps by country inalphabeticalorder, or grouping <mark class="vocab-word" data-word="stamp">stamps</mark> by what theydepict– people, birds, maps, and so on.</p><p>One reason, <mark class="vocab-word" data-word="conscious">conscious</mark> or not, for what someone chooses to collect is to show the collector’sindividualism.Someone who decides to collect something as unexpected as dog <mark class="vocab-word" data-word="collar">collars</mark>, forinstance, may be <mark class="vocab-word" data-word="convey">conveying</mark> their belief that they must be interesting themselves.And believe it or not, there is at least one dogcollarmuseum in existence, and it grew out of a personal collection.</p><p>Of course, all hobbies give pleasure, but the common <mark class="vocab-word" data-word="factor">factor</mark> in collecting is usually passion: pleasure is putting it far too <mark class="vocab-word" data-word="mild">mildly</mark>.More than most other hobbies, collecting can be totally <mark class="vocab-word" data-word="engross">engrossing</mark>, and can give a strong sense of personal fulfilment. To non-collectors it may appear aneccentric, if <mark class="vocab-word" data-word="harmless">harmless</mark>, way of spending time, but potentially, collecting has a lot going for it.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>收藏一定是最为多样化的人类活动之一。许多心理学家都觉得它十分迷人。不少收藏形式都被冠以专门的技术术语：archtophilist收藏泰迪熊；philatelist收藏邮票，而deltiologist则收藏明信片。收集成百上千张明信片，巧克力包装纸或者其他任何东西都需要时间，精力和金钱。而它们完全可以被用于更有成效的事情。但是，世界上有数百万的收藏者。他们为什么要从事这样活动呢？</p><p>有人收藏是因为他们想要赚钱-这可以被称为收藏的工具性原因，即收藏作为实现目的的手段。比如，他们会寻找可以低价买入，希望高价卖出的古董。但这其中很有可能也存在心理因素。低买高卖可以赋予收藏者一种成就感。并且由于网上售卖十分简单，越来越多的人正加入这一行列。</p><p>许多收藏者进行收藏是为了拓展自己的社交生活，参加收藏家的团体聚会并交换物品信息。这是一种加入桥牌俱乐部或者健身房的变体，同样使他们能够接触到志趣相投的人。</p><p>另一种收藏的动机是渴望找到某种特别的东西，或者特定的藏品，比如某一歌手早期十分稀有的唱片。一些人可能会穷尽一生来追寻它。心理学上讲，这可以赋予人生某种意义，使它不至于感到漫无目的。然而，这也存在一定的危险。如果这个人足够幸运找到了他们所寻找的物品，与其庆祝自己的成功，他们反而可能感到空虚。曾经驱使他们前进的目标现在消失了。</p><p>如果你考虑收藏邮票，那么其教育价值是另一个潜在的原因。邮票收集打开了一扇了解其他国家、植物、动物以及邮票上名人的窗户。类似的，在19世纪，许多收藏家从全球收集化石、动物和植物。他们的藏品提供了大量有关自然界的信息。没有这些收藏，我们的理解远远达不到现在的水平。</p><p>过去–现在也一样，只不过程度较轻–男孩和成年男子之间十分流行的一种收藏是猜火车。这可能包括观赏每一种特定类型的火车头，利用公开发表的数据区分它们，并划掉已经见过的火车引擎。猜火车者互相交换信息，在今天这一般通过手机完成，以便他们可以知道要去那里才能看到特定的引擎。随之而来的结果是，许多这一爱好的实践者对铁路运营，或者不同引擎种类的技术细节知之甚深。</p><p>类似的，收集玩偶的人可能不仅仅是扩大自己的藏品，而是会对玩偶的制作方式或者使用的材料产生兴趣。这些在过去几个世纪里发生了变化。从16世纪欧洲常见的木制品，到之后几个世纪所使用的蜡和陶瓷，再到今天的塑料质地。此外，收藏者也会受到鼓舞去研究玩偶如何反映孩子所喜欢或者应该喜欢的东西。</p><p>然而，不是所有的收藏者都对从他们的爱好中获取知识感兴趣。所以我们或许可以将收藏背后的一种心理因素称为对控制感的需求。这可能是一种应对不安全感的方式。例如，邮票收集者通常将他们的邮票整齐的摆放在相册里，根据特定的普遍原则进行排列。或者根据国家首字母顺序，或者根据它们所描绘的对象（人物，鸟类，地图等等）。</p><p>无论是否意识到，人们收藏某种特定物品的原因是为了展示收藏者的个性。一些人决定收集一些意料之外的东西，比如狗项圈。这可能是在传达一种信息：它们本身是很有趣的。无论你是否相信，世界上都至少有一个狗项圈博物馆存在，而且它来自于个人收藏。</p><p>当然，所有的爱好都能带来乐趣。但收藏的共同因素往往是热爱：乐趣一词形容的太过温和了。与其他大多数爱好相比，收藏可以使人全神贯注，并且赋予一种很强的个人成就感。对于非收藏者来说，它可能是一种奇怪但无害的打发时间方式。但收藏其实有着许多的潜在理由。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Collecting must be one of the most <mark class="vocab-word" data-word="varied">varied</mark> of human activities, and it’s one that many of us psychologists findfascinating.Many forms of collecting have been <mark class="vocab-word" data-word="dignified">dignified</mark> with a technical name: an archtophilist collects teddy bears, a philatelist collects <mark class="vocab-word" data-word="postage">postage</mark> <mark class="vocab-word" data-word="stamp">stamps</mark>, and a deltiologist collects <mark class="vocab-word" data-word="postcard">postcards</mark>.<mark class="vocab-word" data-word="amass">Amassing</mark> hundreds or even thousands of <mark class="vocab-word" data-word="postcard">postcards</mark>, chocolate wrappers or whatever, takes time, energy and money that could surely be put to much more <mark class="vocab-word" data-word="productive">productive</mark> use.And yet there are millions of collectors around the world.Why do they do it?</p></div>  <div class="parallel-zh"><p>收藏一定是最为多样化的人类活动之一。许多心理学家都觉得它十分迷人。不少收藏形式都被冠以专门的技术术语：archtophilist收藏泰迪熊；philatelist收藏邮票，而deltiologist则收藏明信片。收集成百上千张明信片，巧克力包装纸或者其他任何东西都需要时间，精力和金钱。而它们完全可以被用于更有成效的事情。但是，世界上有数百万的收藏者。他们为什么要从事这样活动呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There are the people who collect because they want to make money – this could be called an <mark class="vocab-word" data-word="instrumental">instrumental</mark> reason for collecting; that is, collecting as a means to an end.They’ll look for, say, <mark class="vocab-word" data-word="antique">antiques</mark> that they can buy cheaply and expect to be able to sell at a profit.But there may well be a <mark class="vocab-word" data-word="psychological">psychological</mark> element, too – buying cheap and selling dear can give the collector a sense oftriumph.And as selling online is so easy, more and more people are joining in.</p></div>  <div class="parallel-zh"><p>有人收藏是因为他们想要赚钱-这可以被称为收藏的工具性原因，即收藏作为实现目的的手段。比如，他们会寻找可以低价买入，希望高价卖出的古董。但这其中很有可能也存在心理因素。低买高卖可以赋予收藏者一种成就感。并且由于网上售卖十分简单，越来越多的人正加入这一行列。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many collectors collect to develop their social life, attending meetings of a group of collectors and exchanging information on items.This is avarianton joining a bridge club or a gym, and similarly brings them into contact with like-minded people.</p></div>  <div class="parallel-zh"><p>许多收藏者进行收藏是为了拓展自己的社交生活，参加收藏家的团体聚会并交换物品信息。这是一种加入桥牌俱乐部或者健身房的变体，同样使他们能够接触到志趣相投的人。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Another <mark class="vocab-word" data-word="motive">motive</mark> for collecting is the desire to find something special, or aparticularexample of the collected item, such as a rare early recording by aparticularsinger.Some may spend their whole lives in a hunt for this.<mark class="vocab-word" data-word="psychological">Psychologically</mark>, this can give a purpose to a life that otherwise feels aimless.There is a danger, though, that if the individual is ever lucky enough to find what they’re looking for, rather than celebrating their success, they may feel empty, now that the goal that drove them on has gone.</p></div>  <div class="parallel-zh"><p>另一种收藏的动机是渴望找到某种特别的东西，或者特定的藏品，比如某一歌手早期十分稀有的唱片。一些人可能会穷尽一生来追寻它。心理学上讲，这可以赋予人生某种意义，使它不至于感到漫无目的。然而，这也存在一定的危险。如果这个人足够幸运找到了他们所寻找的物品，与其庆祝自己的成功，他们反而可能感到空虚。曾经驱使他们前进的目标现在消失了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>If you think about collecting <mark class="vocab-word" data-word="postage">postage</mark> <mark class="vocab-word" data-word="stamp">stamps</mark>, anotherpotentialreason for it – or, perhaps, a result of collecting – is its educational value.Stampcollecting opens a window to other countries, and to the plants, animals, or famous people shown on their <mark class="vocab-word" data-word="stamp">stamps</mark>.Similarly, in the 19th century, many collectors <mark class="vocab-word" data-word="amass">amassed</mark> <mark class="vocab-word" data-word="fossil">fossils</mark>, animals and plants from around the <mark class="vocab-word" data-word="globe">globe</mark>, and their collections <mark class="vocab-word" data-word="provided">provided</mark> a vast amount of information about the natural world. Without those collections, our understanding would be greatlyinferiorto what it is.</p></div>  <div class="parallel-zh"><p>如果你考虑收藏邮票，那么其教育价值是另一个潜在的原因。邮票收集打开了一扇了解其他国家、植物、动物以及邮票上名人的窗户。类似的，在19世纪，许多收藏家从全球收集化石、动物和植物。他们的藏品提供了大量有关自然界的信息。没有这些收藏，我们的理解远远达不到现在的水平。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In the past – and nowadays, too, though to a <mark class="vocab-word" data-word="lesser">lesser</mark> extent – a popular form of collecting, particularly among boys and men, was trainspotting.This might involve trying to see everylocomotiveof aparticulartype, using published data that identifies each one, and <mark class="vocab-word" data-word="tick">ticking</mark> off each engine as it is seen.Trainspotters exchange information, these days often by mobile phone, so they can work out where to go to, to see aparticularengine.As a by­product, many <mark class="vocab-word" data-word="practitioner">practitioners</mark> of the hobby become veryknowledgeableabout railway operations, or the technical <mark class="vocab-word" data-word="specification">specifications</mark> of different engine types.</p></div>  <div class="parallel-zh"><p>过去–现在也一样，只不过程度较轻–男孩和成年男子之间十分流行的一种收藏是猜火车。这可能包括观赏每一种特定类型的火车头，利用公开发表的数据区分它们，并划掉已经见过的火车引擎。猜火车者互相交换信息，在今天这一般通过手机完成，以便他们可以知道要去那里才能看到特定的引擎。随之而来的结果是，许多这一爱好的实践者对铁路运营，或者不同引擎种类的技术细节知之甚深。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Similarly, people who collect dolls may go beyond simply <mark class="vocab-word" data-word="enlarge">enlarging</mark> their collection, and develop an interest in the way that dolls are made, or the materials that are used.These have changed over the centuries from the wood that was standard in 16th century Europe, through the <mark class="vocab-word" data-word="wax">wax</mark> andporcelainof later centuries, to the plastics of today’s dolls.Or collectors might be inspired to study how dollsreflectnotions of what children like, or ought to like.</p></div>  <div class="parallel-zh"><p>类似的，收集玩偶的人可能不仅仅是扩大自己的藏品，而是会对玩偶的制作方式或者使用的材料产生兴趣。这些在过去几个世纪里发生了变化。从16世纪欧洲常见的木制品，到之后几个世纪所使用的蜡和陶瓷，再到今天的塑料质地。此外，收藏者也会受到鼓舞去研究玩偶如何反映孩子所喜欢或者应该喜欢的东西。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Not all collectors are interested in learning from their hobby, though, so what we might call a <mark class="vocab-word" data-word="psychological">psychological</mark> reason for collecting is the need for a sense of control, perhaps as a way of dealing with <mark class="vocab-word" data-word="insecurity">insecurity</mark>.Stampcollectors, forinstance, arrange their <mark class="vocab-word" data-word="stamp">stamps</mark> in albums, usually very <mark class="vocab-word" data-word="neat">neatly</mark>, organising their collection <mark class="vocab-word" data-word="accord">according</mark> to certain <mark class="vocab-word" data-word="commonplace">commonplace</mark> principles – perhaps by country inalphabeticalorder, or grouping <mark class="vocab-word" data-word="stamp">stamps</mark> by what theydepict– people, birds, maps, and so on.</p></div>  <div class="parallel-zh"><p>然而，不是所有的收藏者都对从他们的爱好中获取知识感兴趣。所以我们或许可以将收藏背后的一种心理因素称为对控制感的需求。这可能是一种应对不安全感的方式。例如，邮票收集者通常将他们的邮票整齐的摆放在相册里，根据特定的普遍原则进行排列。或者根据国家首字母顺序，或者根据它们所描绘的对象（人物，鸟类，地图等等）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One reason, <mark class="vocab-word" data-word="conscious">conscious</mark> or not, for what someone chooses to collect is to show the collector’sindividualism.Someone who decides to collect something as unexpected as dog <mark class="vocab-word" data-word="collar">collars</mark>, forinstance, may be <mark class="vocab-word" data-word="convey">conveying</mark> their belief that they must be interesting themselves.And believe it or not, there is at least one dogcollarmuseum in existence, and it grew out of a personal collection.</p></div>  <div class="parallel-zh"><p>无论是否意识到，人们收藏某种特定物品的原因是为了展示收藏者的个性。一些人决定收集一些意料之外的东西，比如狗项圈。这可能是在传达一种信息：它们本身是很有趣的。无论你是否相信，世界上都至少有一个狗项圈博物馆存在，而且它来自于个人收藏。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Of course, all hobbies give pleasure, but the common <mark class="vocab-word" data-word="factor">factor</mark> in collecting is usually passion: pleasure is putting it far too <mark class="vocab-word" data-word="mild">mildly</mark>.More than most other hobbies, collecting can be totally <mark class="vocab-word" data-word="engross">engrossing</mark>, and can give a strong sense of personal fulfilment. To non-collectors it may appear aneccentric, if <mark class="vocab-word" data-word="harmless">harmless</mark>, way of spending time, but potentially, collecting has a lot going for it.</p></div>  <div class="parallel-zh"><p>当然，所有的爱好都能带来乐趣。但收藏的共同因素往往是热爱：乐趣一词形容的太过温和了。与其他大多数爱好相比，收藏可以使人全神贯注，并且赋予一种很强的个人成就感。对于非收藏者来说，它可能是一种奇怪但无害的打发时间方式。但收藏其实有着许多的潜在理由。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"varied": 1, "dignified": 1, "postage": 2, "stamp": 5, "postcard": 2, "amass": 2, "productive": 1, "instrumental": 1, "antique": 1, "psychological": 3, "motive": 1, "fossil": 1, "globe": 1, "provided": 1, "lesser": 1, "tick": 1, "practitioner": 1, "specification": 1, "enlarge": 1, "wax": 1, "insecurity": 1, "neat": 1, "accord": 1, "commonplace": 1, "conscious": 1, "collar": 1, "convey": 1, "factor": 1, "mild": 1, "engross": 1, "harmless": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

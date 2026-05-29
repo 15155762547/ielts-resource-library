@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making the most of trends 潮流对商业策略的影响 - 剑桥雅思13 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思13</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Making the most of trends 潮流对商业策略的影响</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/38630.html" target="_blank">https://www.laokaoya.com/38630.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Most managers can identify the major trends of the day. But in the course of conducting research in a number of industries and working directly with companies, we have discovered that managers often fail to recognize the less obvious but <mark class="vocab-word" data-word="profound">profound</mark> ways these trends are <mark class="vocab-word" data-word="influence">influencing</mark> consumers’ <mark class="vocab-word" data-word="aspiration">aspirations</mark>, attitudes, and behaviors. This is especially true of trends that managers view as <mark class="vocab-word" data-word="peripheral">peripheral</mark> to their <mark class="vocab-word" data-word="core">core</mark> markets.</p><p>Many ignore trends in their <mark class="vocab-word" data-word="innovation">innovation</mark> strategies or adopt a wait-and-see approach and let competitors take the <mark class="vocab-word" data-word="lead">lead</mark>. At a minimum, such responses mean missed profit opportunities. At the extreme, they can <mark class="vocab-word" data-word="jeopardize">jeopardize</mark> a company by ceding to <mark class="vocab-word" data-word="rival">rivals</mark> the opportunity to transform the industry. The purpose of this article is <mark class="vocab-word" data-word="twofold">twofold</mark>: to <mark class="vocab-word" data-word="spur">spur</mark> managers to think more expansively about how trends could <mark class="vocab-word" data-word="engender">engender</mark> new value <mark class="vocab-word" data-word="proposition">propositions</mark> in their <mark class="vocab-word" data-word="core">core</mark> markets, and to provide some high-level advice on how to make market research and product development <mark class="vocab-word" data-word="personnel">personnel</mark> more <mark class="vocab-word" data-word="adept">adept</mark> at analyzing and <mark class="vocab-word" data-word="exploit">exploiting</mark> trends.</p><p>One strategy, known as ‘<mark class="vocab-word" data-word="infuse">infuse</mark> and <mark class="vocab-word" data-word="augment">augment</mark>’, is to design a product or service that retains most of the <mark class="vocab-word" data-word="attribute">attributes</mark> and functions of <mark class="vocab-word" data-word="existing">existing</mark> products in the category but adds others that address the needs and desires <mark class="vocab-word" data-word="unleash">unleashed</mark> by a major trend. A case in point is the Poppy range of handbags, which the firm Coach created in response to the economic <mark class="vocab-word" data-word="downturn">downturn</mark> of 2008. The Coach brand had been a symbol of <mark class="vocab-word" data-word="opulence">opulence</mark> and luxury for nearly 70 years, and the most obvious reaction to the <mark class="vocab-word" data-word="downturn">downturn</mark> would have been to lower prices. However, that would have risked cheapening the brand’s image. Instead, they <mark class="vocab-word" data-word="initiate">initiated</mark> a consumer-research project which <mark class="vocab-word" data-word="reveal">revealed</mark> that customers were <mark class="vocab-word" data-word="eager">eager</mark> to lift themselves and the country out of tough times. Using these <mark class="vocab-word" data-word="insight">insights</mark>, Coach launched the lower-priced Poppy handbags, which were in <mark class="vocab-word" data-word="vibrant">vibrant</mark> colors, and looked more youthful and playful than <mark class="vocab-word" data-word="conventional">conventional</mark> Coach products. Creating the sub-brand allowed Coach to <mark class="vocab-word" data-word="avert">avert</mark> an across-the-board price cut. In contrast to the many companies that responded to the <mark class="vocab-word" data-word="recession">recession</mark> by cutting prices, Coach saw the new consumer mindset as an opportunity for <mark class="vocab-word" data-word="innovation">innovation</mark> and <mark class="vocab-word" data-word="renewal">renewal</mark>.</p><p>A further example of this strategy was supermarket Tesco’s response to consumers’ growing concerns about the environment. With that in mind, Tesco, one of the world’s top five <mark class="vocab-word" data-word="retailer">retailers</mark>, introduced its Greener Living program, which demonstrates the company’s commitment to protecting the environment by involving consumers in ways that produce <mark class="vocab-word" data-word="tangible">tangible</mark> results. For example, Tesco customers can <mark class="vocab-word" data-word="accumulate">accumulate</mark> points for such activities as <mark class="vocab-word" data-word="reuse">reusing</mark> bags, <mark class="vocab-word" data-word="recycle">recycling</mark> cans and printer <mark class="vocab-word" data-word="cartridge">cartridges</mark>, and buying home-insulation materials. Like points earned on regular purchases, these green points can be <mark class="vocab-word" data-word="redeem">redeemed</mark> for cash. Tesco has not abandoned its traditional <mark class="vocab-word" data-word="retail">retail</mark> offerings but <mark class="vocab-word" data-word="augment">augmented</mark> its business with these <mark class="vocab-word" data-word="innovation">innovations</mark>, <mark class="vocab-word" data-word="thereby">thereby</mark> <mark class="vocab-word" data-word="infuse">infusing</mark> its value <mark class="vocab-word" data-word="proposition">proposition</mark> with a green streak.</p><p>A more <mark class="vocab-word" data-word="radical">radical</mark> strategy is ‘combine and <mark class="vocab-word" data-word="transcend">transcend</mark>’. This <mark class="vocab-word" data-word="entail">entails</mark> combining aspects of the product’s <mark class="vocab-word" data-word="existing">existing</mark> value <mark class="vocab-word" data-word="proposition">proposition</mark> with <mark class="vocab-word" data-word="attribute">attributes</mark> addressing changes arising from a trend, to create a novel experience – one that may land the company in an entirely new market space. At first <mark class="vocab-word" data-word="glance">glance</mark>, spending resources to <mark class="vocab-word" data-word="incorporate">incorporate</mark> elements of a seemingly <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> trend into one’s <mark class="vocab-word" data-word="core">core</mark> offerings sounds like it’s hardly <mark class="vocab-word" data-word="worthwhile">worthwhile</mark>. But consider Nike’s move to <mark class="vocab-word" data-word="integrate">integrate</mark> the digital revolution into its <mark class="vocab-word" data-word="reputation">reputation</mark> for high-performance <mark class="vocab-word" data-word="athletic">athletic</mark> footwear. In 2006, they teamed up with technology company Apple to launch Nike+, a digital sports <mark class="vocab-word" data-word="kit">kit</mark> <mark class="vocab-word" data-word="comprise">comprising</mark> a <mark class="vocab-word" data-word="sensor">sensor</mark> that attaches to the running shoe and a <mark class="vocab-word" data-word="wireless">wireless</mark> <mark class="vocab-word" data-word="receiver">receiver</mark> that connects to the user’s iPod. By combining Nike’s original value <mark class="vocab-word" data-word="proposition">proposition</mark> for <mark class="vocab-word" data-word="amateur">amateur</mark> athletes with one for digital consumers, the Nike+ sports <mark class="vocab-word" data-word="kit">kit</mark> and web <mark class="vocab-word" data-word="interface">interface</mark> moved the company from a focus on <mark class="vocab-word" data-word="athletic">athletic</mark> <mark class="vocab-word" data-word="apparel">apparel</mark> to a new plane of <mark class="vocab-word" data-word="engagement">engagement</mark> with its customers.</p><p>A third approach, known as ‘<mark class="vocab-word" data-word="counteract">counteract</mark> and reaffirm’, involves developing products or services that stress the values <mark class="vocab-word" data-word="traditionally">traditionally</mark> associated with the category in ways that allow consumers to oppose – or at least <mark class="vocab-word" data-word="temporarily">temporarily</mark> escape from – the aspects of trends they view as <mark class="vocab-word" data-word="undesirable">undesirable</mark>. A product that <mark class="vocab-word" data-word="accomplish">accomplished</mark> this is the ME2, a video game created by Canada’s iToys. By reaffirming the toy category’s association with physical play, the ME2 <mark class="vocab-word" data-word="counteract">counteracted</mark> some of the widely <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="negative">negative</mark> <mark class="vocab-word" data-word="impact">impacts</mark> of digital gaming devices. Like other handheld games, the device featured a host of <mark class="vocab-word" data-word="excite">exciting</mark> interactive games, a full-color LCD screen, and <mark class="vocab-word" data-word="advanced">advanced</mark> 3D <mark class="vocab-word" data-word="graphic">graphics</mark>. What set it apart was that it <mark class="vocab-word" data-word="incorporate">incorporated</mark> the traditional physical component of children’s play: it contained a pedometer, which tracked and awarded points for physical activity (walking, running, biking, <mark class="vocab-word" data-word="skateboarding">skateboarding</mark>, <mark class="vocab-word" data-word="climb">climbing</mark> stairs). The child could use the points to enhance various virtual skills needed for the video game. The ME2, introduced in mid- 2008, <mark class="vocab-word" data-word="cater">catered</mark> to kids’ huge desire to play video games while <mark class="vocab-word" data-word="counter">countering</mark> the <mark class="vocab-word" data-word="negative">negatives</mark>, such as associations with lack of exercise and obesity.</p><p>Once you have gained <mark class="vocab-word" data-word="perspective">perspective</mark> on how trend-related changes in consumer opinions and behaviors <mark class="vocab-word" data-word="impact">impact</mark> on your category, you can determine which of our three <mark class="vocab-word" data-word="innovation">innovation</mark> strategies to pursue. When your category’s basic value <mark class="vocab-word" data-word="proposition">proposition</mark> continues to be <mark class="vocab-word" data-word="meaningful">meaningful</mark> for consumers <mark class="vocab-word" data-word="influence">influenced</mark> by the trend, the infuse-and-augment strategy will allow you to <mark class="vocab-word" data-word="reinvigorate">reinvigorate</mark> the category. If analysis <mark class="vocab-word" data-word="reveal">reveals</mark> an increasing disparity between your category and consumers’ new focus, your <mark class="vocab-word" data-word="innovation">innovations</mark> need to <mark class="vocab-word" data-word="transcend">transcend</mark> the category to <mark class="vocab-word" data-word="integrate">integrate</mark> the two worlds. Finally, if aspects of the category <mark class="vocab-word" data-word="clash">clash</mark> with undesired outcomes of a trend, such as associations with unhealthy lifestyles, there is an opportunity to <mark class="vocab-word" data-word="counteract">counteract</mark> those changes by reaffirming the <mark class="vocab-word" data-word="core">core</mark> values of your category.</p><p>Trends – technological, economic, environmental, social, or political – that affect how people <mark class="vocab-word" data-word="perceive">perceive</mark> the world around them and shape what they expect from products and services present firms with unique opportunities for growth.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>大多数经理人都能够识别当下的主要潮流。但是，在对一些行业进行研究和与各种公司直接合作的过程中，我们发现经理人往往无法意识到这些潮流正在以不那么明显但却意义深远的方式影响着消费者的需求，态度和行为。这对于那些经理人认为处于他们核心市场边缘的潮流来说，尤其如此。</p><p>许多人在他们的创新战略中忽视潮流因素，或者采用一种“等等看”的策略，结果让竞争对手拔得头筹。最低限度来讲，这些应对意味着错过盈利的机会。最严重的情况下，他们将改变整个行业的机会拱手让给竞争对手，从而危及自己的公司。这篇文章带有双重目的：刺激经理人以一种更为宽泛的方式思考潮流如何在他们的核心市场中创造新的价值增长点，以及针对如何进行市场研究并使得产品开发人员更加擅长分析和利用潮流提出一些高水平的意见。</p><p>一种被称为“渗透与扩充”的战略是设计一种产品或服务。它保留同类现存产品大部分的特征与功能，但同时添加一些其他东西来满足主流趋势所释放出来的需求与渴望。这一战略的一个案例是Poppy系列手袋。它由蔻驰公司推出以应对2008年的经济衰退。在将近70年的时间里，蔻驰品牌一直都是财富与奢侈的象征，而应对经济衰退最显而易见的反应本应是降低价格。但是，那将冒着使品牌形象贬值的风险。因此，取而代之的是，他们发起了一项消费者调查项目，发现消费者十分渴望将自己和国家带出这段艰难的时期。利用这些发现，蔻驰推出低价的Poppy手袋。它们颜色鲜艳，相比于传统的蔻驰产品看起来更加年轻化和有趣。创造这一子品牌使得蔻驰可以免于降低全线产品的价格。与许多公司通过降价来应对衰退的方式相比，蔻驰将新的消费者观念看作是创新和自我更新的机遇。</p><p>这一战略的另一个例子是Tesco超市面对消费者越来越关心环境所做出的应对。了解到这一情况后，Tesco，世界五大零售商之一，推出了它的“绿色生活项目”，通过一些让消费者参与其中并产生实际效果的方式，展示该公司对环境保护的承诺。例如，Tesco的顾客可以通过反复使用购物袋，回收易拉罐和打印机墨盒，购买家居隔热材料等活动来积分。跟日常购物行为所获取的积分一样，这些绿色积分可以兑换现金。Tesco并没有放弃其传统的零售服务，而是利用这些创新扩充了自己的业务，并凭此在它的价值定位中注入了一抹环保色彩。</p><p>一种更为激进的战略是“融合与超越”。这涉及将产品现存的价值定位与针对潮流中所产生变化的新特征结合在一起，从而创造出新奇的体验。这可能将公司带入全新的市场领域。乍看起来，耗费资源将看似不相关的潮流元素融入一家公司的核心产品好像不太值得。但想想耐克的举动。它将数字革命融入到自己高性能运动鞋的声誉之中。2006年，他们与科技公司苹果合作推出了耐克+，一款数码运动设备，包括一个附加在跑鞋上的传感器和一个连接到用户iPod的无线接收装置。通过结合耐克原本针对业余运动爱好者的价值定位与针对数码消费者的价值定位，耐克+运动设备与网络界面将该公司从专注运动服饰带向了一个吸引消费者的新平台。</p><p>第三种策略被称为“抵制与重申”，即以一种允许消费者反对，或者至少暂时逃离潮流中他们所不喜欢方面的方式，开发产品与服务来强调传统上与该类别联系在一起的价值体系。实现这一策略的一个产品是ME2，一款由加拿大iToys公司所推出的电子游戏。通过重申玩具品类与体育锻炼之间的联系，ME2得以抵制一些大众普遍认可的数码游戏设备的负面影响。正如其他手持游戏一样，该设备配备全色彩液晶显示屏和先进的立体画面，以一系列令人兴奋的互动游戏为特征。与众不同的地方在于，它结合了儿童游戏的传统运动因素，内置计步器，可以记录体育活动（徒步，跑步，骑行，滑板和爬楼梯）并奖励积分。孩子可以使用积分来强化游戏所需要的各种虚拟技能。2008年年中推出的ME2既照顾到孩子玩游戏的巨大渴望，也抵制了一些负面看法，例如游戏与缺乏运动和肥胖之间的联系。</p><p>一旦你了解到消费者观念和行为方面与潮流相关的变化如何影响你的产品序列，那么你就可以决定采用我们三项创新策略中的哪一项。当你的产品的基本价值定位对受到潮流影响的消费者仍有意义时，“渗透与扩充”战略可以使产品复兴。如果分析显示，你的产品和消费者新的关注点之间的分歧越来越大，那么创新就需要超越该品类来融合两个不同的世界。最后，如果产品的某些方面正好与潮流中令人不悦的地方相冲突，比如与不健康的生活方式发生了关联，那么有机会通过重申品类的核心价值来抵制这些变化。</p><p>那些影响人们如何看待周围世界，并塑造他们对产品和服务具体期待的潮流-无论是技术的、经济的、环境的、社会的、还是政治的-都为公司提供增长的独特机遇。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Most managers can identify the major trends of the day. But in the course of conducting research in a number of industries and working directly with companies, we have discovered that managers often fail to recognize the less obvious but <mark class="vocab-word" data-word="profound">profound</mark> ways these trends are <mark class="vocab-word" data-word="influence">influencing</mark> consumers’ <mark class="vocab-word" data-word="aspiration">aspirations</mark>, attitudes, and behaviors. This is especially true of trends that managers view as <mark class="vocab-word" data-word="peripheral">peripheral</mark> to their <mark class="vocab-word" data-word="core">core</mark> markets.</p></div>  <div class="parallel-zh"><p>大多数经理人都能够识别当下的主要潮流。但是，在对一些行业进行研究和与各种公司直接合作的过程中，我们发现经理人往往无法意识到这些潮流正在以不那么明显但却意义深远的方式影响着消费者的需求，态度和行为。这对于那些经理人认为处于他们核心市场边缘的潮流来说，尤其如此。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many ignore trends in their <mark class="vocab-word" data-word="innovation">innovation</mark> strategies or adopt a wait-and-see approach and let competitors take the <mark class="vocab-word" data-word="lead">lead</mark>. At a minimum, such responses mean missed profit opportunities. At the extreme, they can <mark class="vocab-word" data-word="jeopardize">jeopardize</mark> a company by ceding to <mark class="vocab-word" data-word="rival">rivals</mark> the opportunity to transform the industry. The purpose of this article is <mark class="vocab-word" data-word="twofold">twofold</mark>: to <mark class="vocab-word" data-word="spur">spur</mark> managers to think more expansively about how trends could <mark class="vocab-word" data-word="engender">engender</mark> new value <mark class="vocab-word" data-word="proposition">propositions</mark> in their <mark class="vocab-word" data-word="core">core</mark> markets, and to provide some high-level advice on how to make market research and product development <mark class="vocab-word" data-word="personnel">personnel</mark> more <mark class="vocab-word" data-word="adept">adept</mark> at analyzing and <mark class="vocab-word" data-word="exploit">exploiting</mark> trends.</p></div>  <div class="parallel-zh"><p>许多人在他们的创新战略中忽视潮流因素，或者采用一种“等等看”的策略，结果让竞争对手拔得头筹。最低限度来讲，这些应对意味着错过盈利的机会。最严重的情况下，他们将改变整个行业的机会拱手让给竞争对手，从而危及自己的公司。这篇文章带有双重目的：刺激经理人以一种更为宽泛的方式思考潮流如何在他们的核心市场中创造新的价值增长点，以及针对如何进行市场研究并使得产品开发人员更加擅长分析和利用潮流提出一些高水平的意见。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One strategy, known as ‘<mark class="vocab-word" data-word="infuse">infuse</mark> and <mark class="vocab-word" data-word="augment">augment</mark>’, is to design a product or service that retains most of the <mark class="vocab-word" data-word="attribute">attributes</mark> and functions of <mark class="vocab-word" data-word="existing">existing</mark> products in the category but adds others that address the needs and desires <mark class="vocab-word" data-word="unleash">unleashed</mark> by a major trend. A case in point is the Poppy range of handbags, which the firm Coach created in response to the economic <mark class="vocab-word" data-word="downturn">downturn</mark> of 2008. The Coach brand had been a symbol of <mark class="vocab-word" data-word="opulence">opulence</mark> and luxury for nearly 70 years, and the most obvious reaction to the <mark class="vocab-word" data-word="downturn">downturn</mark> would have been to lower prices. However, that would have risked cheapening the brand’s image. Instead, they <mark class="vocab-word" data-word="initiate">initiated</mark> a consumer-research project which <mark class="vocab-word" data-word="reveal">revealed</mark> that customers were <mark class="vocab-word" data-word="eager">eager</mark> to lift themselves and the country out of tough times. Using these <mark class="vocab-word" data-word="insight">insights</mark>, Coach launched the lower-priced Poppy handbags, which were in <mark class="vocab-word" data-word="vibrant">vibrant</mark> colors, and looked more youthful and playful than <mark class="vocab-word" data-word="conventional">conventional</mark> Coach products. Creating the sub-brand allowed Coach to <mark class="vocab-word" data-word="avert">avert</mark> an across-the-board price cut. In contrast to the many companies that responded to the <mark class="vocab-word" data-word="recession">recession</mark> by cutting prices, Coach saw the new consumer mindset as an opportunity for <mark class="vocab-word" data-word="innovation">innovation</mark> and <mark class="vocab-word" data-word="renewal">renewal</mark>.</p></div>  <div class="parallel-zh"><p>一种被称为“渗透与扩充”的战略是设计一种产品或服务。它保留同类现存产品大部分的特征与功能，但同时添加一些其他东西来满足主流趋势所释放出来的需求与渴望。这一战略的一个案例是Poppy系列手袋。它由蔻驰公司推出以应对2008年的经济衰退。在将近70年的时间里，蔻驰品牌一直都是财富与奢侈的象征，而应对经济衰退最显而易见的反应本应是降低价格。但是，那将冒着使品牌形象贬值的风险。因此，取而代之的是，他们发起了一项消费者调查项目，发现消费者十分渴望将自己和国家带出这段艰难的时期。利用这些发现，蔻驰推出低价的Poppy手袋。它们颜色鲜艳，相比于传统的蔻驰产品看起来更加年轻化和有趣。创造这一子品牌使得蔻驰可以免于降低全线产品的价格。与许多公司通过降价来应对衰退的方式相比，蔻驰将新的消费者观念看作是创新和自我更新的机遇。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A further example of this strategy was supermarket Tesco’s response to consumers’ growing concerns about the environment. With that in mind, Tesco, one of the world’s top five <mark class="vocab-word" data-word="retailer">retailers</mark>, introduced its Greener Living program, which demonstrates the company’s commitment to protecting the environment by involving consumers in ways that produce <mark class="vocab-word" data-word="tangible">tangible</mark> results. For example, Tesco customers can <mark class="vocab-word" data-word="accumulate">accumulate</mark> points for such activities as <mark class="vocab-word" data-word="reuse">reusing</mark> bags, <mark class="vocab-word" data-word="recycle">recycling</mark> cans and printer <mark class="vocab-word" data-word="cartridge">cartridges</mark>, and buying home-insulation materials. Like points earned on regular purchases, these green points can be <mark class="vocab-word" data-word="redeem">redeemed</mark> for cash. Tesco has not abandoned its traditional <mark class="vocab-word" data-word="retail">retail</mark> offerings but <mark class="vocab-word" data-word="augment">augmented</mark> its business with these <mark class="vocab-word" data-word="innovation">innovations</mark>, <mark class="vocab-word" data-word="thereby">thereby</mark> <mark class="vocab-word" data-word="infuse">infusing</mark> its value <mark class="vocab-word" data-word="proposition">proposition</mark> with a green streak.</p></div>  <div class="parallel-zh"><p>这一战略的另一个例子是Tesco超市面对消费者越来越关心环境所做出的应对。了解到这一情况后，Tesco，世界五大零售商之一，推出了它的“绿色生活项目”，通过一些让消费者参与其中并产生实际效果的方式，展示该公司对环境保护的承诺。例如，Tesco的顾客可以通过反复使用购物袋，回收易拉罐和打印机墨盒，购买家居隔热材料等活动来积分。跟日常购物行为所获取的积分一样，这些绿色积分可以兑换现金。Tesco并没有放弃其传统的零售服务，而是利用这些创新扩充了自己的业务，并凭此在它的价值定位中注入了一抹环保色彩。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A more <mark class="vocab-word" data-word="radical">radical</mark> strategy is ‘combine and <mark class="vocab-word" data-word="transcend">transcend</mark>’. This <mark class="vocab-word" data-word="entail">entails</mark> combining aspects of the product’s <mark class="vocab-word" data-word="existing">existing</mark> value <mark class="vocab-word" data-word="proposition">proposition</mark> with <mark class="vocab-word" data-word="attribute">attributes</mark> addressing changes arising from a trend, to create a novel experience – one that may land the company in an entirely new market space. At first <mark class="vocab-word" data-word="glance">glance</mark>, spending resources to <mark class="vocab-word" data-word="incorporate">incorporate</mark> elements of a seemingly <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> trend into one’s <mark class="vocab-word" data-word="core">core</mark> offerings sounds like it’s hardly <mark class="vocab-word" data-word="worthwhile">worthwhile</mark>. But consider Nike’s move to <mark class="vocab-word" data-word="integrate">integrate</mark> the digital revolution into its <mark class="vocab-word" data-word="reputation">reputation</mark> for high-performance <mark class="vocab-word" data-word="athletic">athletic</mark> footwear. In 2006, they teamed up with technology company Apple to launch Nike+, a digital sports <mark class="vocab-word" data-word="kit">kit</mark> <mark class="vocab-word" data-word="comprise">comprising</mark> a <mark class="vocab-word" data-word="sensor">sensor</mark> that attaches to the running shoe and a <mark class="vocab-word" data-word="wireless">wireless</mark> <mark class="vocab-word" data-word="receiver">receiver</mark> that connects to the user’s iPod. By combining Nike’s original value <mark class="vocab-word" data-word="proposition">proposition</mark> for <mark class="vocab-word" data-word="amateur">amateur</mark> athletes with one for digital consumers, the Nike+ sports <mark class="vocab-word" data-word="kit">kit</mark> and web <mark class="vocab-word" data-word="interface">interface</mark> moved the company from a focus on <mark class="vocab-word" data-word="athletic">athletic</mark> <mark class="vocab-word" data-word="apparel">apparel</mark> to a new plane of <mark class="vocab-word" data-word="engagement">engagement</mark> with its customers.</p></div>  <div class="parallel-zh"><p>一种更为激进的战略是“融合与超越”。这涉及将产品现存的价值定位与针对潮流中所产生变化的新特征结合在一起，从而创造出新奇的体验。这可能将公司带入全新的市场领域。乍看起来，耗费资源将看似不相关的潮流元素融入一家公司的核心产品好像不太值得。但想想耐克的举动。它将数字革命融入到自己高性能运动鞋的声誉之中。2006年，他们与科技公司苹果合作推出了耐克+，一款数码运动设备，包括一个附加在跑鞋上的传感器和一个连接到用户iPod的无线接收装置。通过结合耐克原本针对业余运动爱好者的价值定位与针对数码消费者的价值定位，耐克+运动设备与网络界面将该公司从专注运动服饰带向了一个吸引消费者的新平台。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A third approach, known as ‘<mark class="vocab-word" data-word="counteract">counteract</mark> and reaffirm’, involves developing products or services that stress the values <mark class="vocab-word" data-word="traditionally">traditionally</mark> associated with the category in ways that allow consumers to oppose – or at least <mark class="vocab-word" data-word="temporarily">temporarily</mark> escape from – the aspects of trends they view as <mark class="vocab-word" data-word="undesirable">undesirable</mark>. A product that <mark class="vocab-word" data-word="accomplish">accomplished</mark> this is the ME2, a video game created by Canada’s iToys. By reaffirming the toy category’s association with physical play, the ME2 <mark class="vocab-word" data-word="counteract">counteracted</mark> some of the widely <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="negative">negative</mark> <mark class="vocab-word" data-word="impact">impacts</mark> of digital gaming devices. Like other handheld games, the device featured a host of <mark class="vocab-word" data-word="excite">exciting</mark> interactive games, a full-color LCD screen, and <mark class="vocab-word" data-word="advanced">advanced</mark> 3D <mark class="vocab-word" data-word="graphic">graphics</mark>. What set it apart was that it <mark class="vocab-word" data-word="incorporate">incorporated</mark> the traditional physical component of children’s play: it contained a pedometer, which tracked and awarded points for physical activity (walking, running, biking, <mark class="vocab-word" data-word="skateboarding">skateboarding</mark>, <mark class="vocab-word" data-word="climb">climbing</mark> stairs). The child could use the points to enhance various virtual skills needed for the video game. The ME2, introduced in mid- 2008, <mark class="vocab-word" data-word="cater">catered</mark> to kids’ huge desire to play video games while <mark class="vocab-word" data-word="counter">countering</mark> the <mark class="vocab-word" data-word="negative">negatives</mark>, such as associations with lack of exercise and obesity.</p></div>  <div class="parallel-zh"><p>第三种策略被称为“抵制与重申”，即以一种允许消费者反对，或者至少暂时逃离潮流中他们所不喜欢方面的方式，开发产品与服务来强调传统上与该类别联系在一起的价值体系。实现这一策略的一个产品是ME2，一款由加拿大iToys公司所推出的电子游戏。通过重申玩具品类与体育锻炼之间的联系，ME2得以抵制一些大众普遍认可的数码游戏设备的负面影响。正如其他手持游戏一样，该设备配备全色彩液晶显示屏和先进的立体画面，以一系列令人兴奋的互动游戏为特征。与众不同的地方在于，它结合了儿童游戏的传统运动因素，内置计步器，可以记录体育活动（徒步，跑步，骑行，滑板和爬楼梯）并奖励积分。孩子可以使用积分来强化游戏所需要的各种虚拟技能。2008年年中推出的ME2既照顾到孩子玩游戏的巨大渴望，也抵制了一些负面看法，例如游戏与缺乏运动和肥胖之间的联系。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Once you have gained <mark class="vocab-word" data-word="perspective">perspective</mark> on how trend-related changes in consumer opinions and behaviors <mark class="vocab-word" data-word="impact">impact</mark> on your category, you can determine which of our three <mark class="vocab-word" data-word="innovation">innovation</mark> strategies to pursue. When your category’s basic value <mark class="vocab-word" data-word="proposition">proposition</mark> continues to be <mark class="vocab-word" data-word="meaningful">meaningful</mark> for consumers <mark class="vocab-word" data-word="influence">influenced</mark> by the trend, the infuse-and-augment strategy will allow you to <mark class="vocab-word" data-word="reinvigorate">reinvigorate</mark> the category. If analysis <mark class="vocab-word" data-word="reveal">reveals</mark> an increasing disparity between your category and consumers’ new focus, your <mark class="vocab-word" data-word="innovation">innovations</mark> need to <mark class="vocab-word" data-word="transcend">transcend</mark> the category to <mark class="vocab-word" data-word="integrate">integrate</mark> the two worlds. Finally, if aspects of the category <mark class="vocab-word" data-word="clash">clash</mark> with undesired outcomes of a trend, such as associations with unhealthy lifestyles, there is an opportunity to <mark class="vocab-word" data-word="counteract">counteract</mark> those changes by reaffirming the <mark class="vocab-word" data-word="core">core</mark> values of your category.</p></div>  <div class="parallel-zh"><p>一旦你了解到消费者观念和行为方面与潮流相关的变化如何影响你的产品序列，那么你就可以决定采用我们三项创新策略中的哪一项。当你的产品的基本价值定位对受到潮流影响的消费者仍有意义时，“渗透与扩充”战略可以使产品复兴。如果分析显示，你的产品和消费者新的关注点之间的分歧越来越大，那么创新就需要超越该品类来融合两个不同的世界。最后，如果产品的某些方面正好与潮流中令人不悦的地方相冲突，比如与不健康的生活方式发生了关联，那么有机会通过重申品类的核心价值来抵制这些变化。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Trends – technological, economic, environmental, social, or political – that affect how people <mark class="vocab-word" data-word="perceive">perceive</mark> the world around them and shape what they expect from products and services present firms with unique opportunities for growth.</p></div>  <div class="parallel-zh"><p>那些影响人们如何看待周围世界，并塑造他们对产品和服务具体期待的潮流-无论是技术的、经济的、环境的、社会的、还是政治的-都为公司提供增长的独特机遇。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"profound": 1, "influence": 2, "aspiration": 1, "peripheral": 1, "core": 4, "innovation": 5, "lead": 1, "jeopardize": 1, "rival": 1, "twofold": 1, "spur": 1, "engender": 1, "proposition": 5, "personnel": 1, "adept": 1, "exploit": 1, "infuse": 2, "augment": 2, "attribute": 2, "existing": 2, "unleash": 1, "downturn": 2, "opulence": 1, "initiate": 1, "reveal": 2, "eager": 1, "insight": 1, "vibrant": 1, "conventional": 1, "avert": 1, "recession": 1, "renewal": 1, "retailer": 1, "tangible": 1, "accumulate": 1, "reuse": 1, "recycle": 1, "cartridge": 1, "redeem": 1, "retail": 1, "thereby": 1, "radical": 1, "transcend": 2, "entail": 1, "glance": 1, "incorporate": 2, "irrelevant": 1, "worthwhile": 1, "integrate": 2, "reputation": 1, "athletic": 2, "kit": 2, "comprise": 1, "sensor": 1, "wireless": 1, "receiver": 1, "amateur": 1, "interface": 1, "apparel": 1, "engagement": 1, "counteract": 3, "traditionally": 1, "temporarily": 1, "undesirable": 1, "accomplish": 1, "perceive": 2, "negative": 2, "impact": 2, "excite": 1, "advanced": 1, "graphic": 1, "skateboarding": 1, "climb": 1, "cater": 1, "counter": 1, "perspective": 1, "meaningful": 1, "reinvigorate": 1, "clash": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

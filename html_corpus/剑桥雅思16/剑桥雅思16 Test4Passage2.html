@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changes in reading habits 阅读习惯的改变 - 剑桥雅思16 Test 4 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思16</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Changes in reading habits 阅读习惯的改变</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/43044.html" target="_blank">https://www.laokaoya.com/43044.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Look around on your next plane trip. The iPad is the new pacifier for babies and toddlers. Younger school-aged children read stories on smartphones; older kids don’t read at all, but hunch over video games. Parents and other passengers read on <mark class="vocab-word" data-word="tablet">tablets</mark> or <mark class="vocab-word" data-word="skim">skim</mark> a flotilla of email and news feeds. Unbeknown to most of us, an <mark class="vocab-word" data-word="invisible">invisible</mark>, game-changing <mark class="vocab-word" data-word="transformation">transformation</mark> links everyone in this picture: the neuronal <mark class="vocab-word" data-word="circuit">circuit</mark> that <mark class="vocab-word" data-word="underlie">underlies</mark> the brain’s ability to read is subtly, rapidly changing and this has <mark class="vocab-word" data-word="implication">implications</mark> for everyone from the pre-reading toddler to the expert adult.</p><p>As work in <mark class="vocab-word" data-word="neuroscience">neurosciences</mark> indicates, the <mark class="vocab-word" data-word="acquisition">acquisition</mark> of <mark class="vocab-word" data-word="literacy">literacy</mark> <mark class="vocab-word" data-word="necessitate">necessitated</mark> a new <mark class="vocab-word" data-word="circuit">circuit</mark> in our species’ brain more than 6,000 years ago. That <mark class="vocab-word" data-word="circuit">circuit</mark> <mark class="vocab-word" data-word="evolve">evolved</mark> from a very simple <mark class="vocab-word" data-word="mechanism">mechanism</mark> for <mark class="vocab-word" data-word="decode">decoding</mark> basic information, like the number of <mark class="vocab-word" data-word="goat">goats</mark> in one’s <mark class="vocab-word" data-word="herd">herd</mark>, to the present, highly <mark class="vocab-word" data-word="elaborate">elaborated</mark> reading brain. My research <mark class="vocab-word" data-word="depict">depicts</mark> how the present reading brain enables the development of some of our most important <mark class="vocab-word" data-word="intellectual">intellectual</mark> and affective processes: internalized knowledge, analogical reasoning, and <mark class="vocab-word" data-word="inference">inference</mark>; perspective-taking and <mark class="vocab-word" data-word="empathy">empathy</mark>; critical analysis and the generation of <mark class="vocab-word" data-word="insight">insight</mark>. Research surfacing in many parts of the world now <mark class="vocab-word" data-word="caution">cautions</mark> that each of these essential ‘deep reading’ processes may be under <mark class="vocab-word" data-word="threat">threat</mark> as we move into digital-based <mark class="vocab-word" data-word="mode">modes</mark> of reading.</p><p>This is not a simple, <mark class="vocab-word" data-word="binary">binary</mark> issue of print <mark class="vocab-word" data-word="versus">versus</mark> digital reading and technological <mark class="vocab-word" data-word="innovation">innovation</mark>. As MIT <mark class="vocab-word" data-word="scholar">scholar</mark> Sherry Turkle has written, we do not <mark class="vocab-word" data-word="err">err</mark> as a society when we <mark class="vocab-word" data-word="innovate">innovate</mark> but when we ignore what we <mark class="vocab-word" data-word="disrupt">disrupt</mark> or <mark class="vocab-word" data-word="diminish">diminish</mark> while <mark class="vocab-word" data-word="innovate">innovating</mark>. In this <mark class="vocab-word" data-word="hinge">hinge</mark> moment between print and digital cultures, society needs to <mark class="vocab-word" data-word="confront">confront</mark> what is <mark class="vocab-word" data-word="diminish">diminishing</mark> in the expert reading <mark class="vocab-word" data-word="circuit">circuit</mark>, what our children and older students are not developing, and what we can do about it.</p><p>We know from research that the reading <mark class="vocab-word" data-word="circuit">circuit</mark> is not given to human beings through a <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="blueprint">blueprint</mark> like vision or language; it needs an environment to develop. Further, it will adapt to that environment’s requirements – from different writing systems to the characteristics of whatever medium is used. If the <mark class="vocab-word" data-word="dominant">dominant</mark> medium advantages processes that are fast, multi-task <mark class="vocab-word" data-word="orient">oriented</mark> and well-suited for large volumes of information, like the current digital medium, so will the reading <mark class="vocab-word" data-word="circuit">circuit</mark>. As UCLA psychologist Patricia Greenfield writes, the result is that less attention and time will be <mark class="vocab-word" data-word="allocate">allocated</mark> to slower, time-demanding deep reading processes.</p><p>Increasing reports from educators and from researchers in <mark class="vocab-word" data-word="psychology">psychology</mark> and the humanities bear this out. English literature <mark class="vocab-word" data-word="scholar">scholar</mark> and teacher Mark Edmundson describes how many college students actively avoid the classic literature of the 19th and 20th centuries in favour of something simpler as they no longer have the <mark class="vocab-word" data-word="patience">patience</mark> to read longer, denser, more difficult texts. We should be less <mark class="vocab-word" data-word="concerned">concerned</mark> with students’ ‘<mark class="vocab-word" data-word="cognitive">cognitive</mark> impatience’, however, than by what may <mark class="vocab-word" data-word="underlie">underlie</mark> it: the potential <mark class="vocab-word" data-word="inability">inability</mark> of large numbers of students to read with a level of critical analysis <mark class="vocab-word" data-word="sufficient">sufficient</mark> to <mark class="vocab-word" data-word="comprehend">comprehend</mark> the <mark class="vocab-word" data-word="complexity">complexity</mark> of thought and argument found in more <mark class="vocab-word" data-word="demanding">demanding</mark> texts.</p><p>Multiple studies show that digital screen use may be causing a variety of troubling downstream effects on reading <mark class="vocab-word" data-word="comprehension">comprehension</mark> in older high school and college students. In Stavanger, Norway, psychologist Anne Mangen and her colleagues studied how high school students <mark class="vocab-word" data-word="comprehend">comprehend</mark> the same material in different mediums. This article is from  website. Mangen’s group asked subjects questions about a short <mark class="vocab-word" data-word="story">story</mark> whose <mark class="vocab-word" data-word="plot">plot</mark> had <mark class="vocab-word" data-word="universal">universal</mark> student appeal; half of the students read the <mark class="vocab-word" data-word="story">story</mark> on a <mark class="vocab-word" data-word="tablet">tablet</mark>, the other half in <mark class="vocab-word" data-word="paperback">paperback</mark>. Results indicated that students who read on print were <mark class="vocab-word" data-word="superior">superior</mark> in their <mark class="vocab-word" data-word="comprehension">comprehension</mark> to screen-reading <mark class="vocab-word" data-word="peer">peers</mark>, particularly in their ability to <mark class="vocab-word" data-word="sequence">sequence</mark> detail and reconstruct the <mark class="vocab-word" data-word="plot">plot</mark> in <mark class="vocab-word" data-word="chronological">chronological</mark> order.</p><p>Ziming Liu from San Jose State University has conducted a series of studies which indicate that the ‘new <mark class="vocab-word" data-word="norm">norm</mark>’ in reading is skimming, involving word-spotting and <mark class="vocab-word" data-word="browse">browsing</mark> through the text. Many readers now use a pattern when reading in which they sample the first line and then word-spot through the rest of the text. When the reading brain <mark class="vocab-word" data-word="skim">skims</mark> like this, it reduces time <mark class="vocab-word" data-word="allocate">allocated</mark> to deep reading processes. In other words, we don’t have time to <mark class="vocab-word" data-word="grasp">grasp</mark> <mark class="vocab-word" data-word="complexity">complexity</mark>, to understand another’s feelings, to <mark class="vocab-word" data-word="perceive">perceive</mark> beauty, and to create thoughts of the reader’s own.</p><p>The possibility that critical analysis, <mark class="vocab-word" data-word="empathy">empathy</mark> and other deep reading processes could become the unintended ‘<mark class="vocab-word" data-word="collateral">collateral</mark> damage’ of our digital culture is not a <mark class="vocab-word" data-word="straightforward">straightforward</mark> <mark class="vocab-word" data-word="binary">binary</mark> issue about print <mark class="vocab-word" data-word="versus">versus</mark> digital reading. It is about how we all have begun to read on various mediums and how that changes not only what we read, but also the purposes for which we read. Nor is it only about the young. The <mark class="vocab-word" data-word="subtle">subtle</mark> atrophy of critical analysis and <mark class="vocab-word" data-word="empathy">empathy</mark> affects us all equally. It affects our ability to <mark class="vocab-word" data-word="navigate">navigate</mark> a constant bombardment of information. It incentivizes a <mark class="vocab-word" data-word="retreat">retreat</mark> to the most familiar stores of unchecked information, which require and receive no analysis, leaving us <mark class="vocab-word" data-word="susceptible">susceptible</mark> to false information and <mark class="vocab-word" data-word="irrational">irrational</mark> ideas.</p><p>There’s an old rule in <mark class="vocab-word" data-word="neuroscience">neuroscience</mark> that does not alter with age: use it or lose it. It is a very <mark class="vocab-word" data-word="hopeful">hopeful</mark> principle when <mark class="vocab-word" data-word="applied">applied</mark> to critical thought in the reading brain because it implies choice. The <mark class="vocab-word" data-word="story">story</mark> of the changing reading brain is hardly finished. We possess both the science and the technology to identify and redress the changes in how we read before they become <mark class="vocab-word" data-word="entrench">entrenched</mark>. If we work to understand exactly what we will lose, <mark class="vocab-word" data-word="alongside">alongside</mark> the extraordinary new capacities that the digital world has brought us, there is as much reason for excitement as <mark class="vocab-word" data-word="caution">caution</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>下次乘坐飞机的时候记得环顾四周。iPad已经成为婴儿和幼儿新的安抚物。年轻一些的学龄儿童在手机上看故事；年龄稍大一些的孩子则完全不阅读，只是低头玩游戏。父母和其他乘客要么在平板上看东西，要么浏览电子邮件和新闻。我们大多数人不知道的是，一场看不见的，天翻地覆的变化将这一情景中的每个人联系在一起：构成大脑阅读能力基础的神经回路正在发生微妙而迅速的改变。从尚不会阅读的幼儿到成年专家，它影响着每一个人。</p><p>神经科学方面的研究表明，6000多年前，读写能力的获取让我们种族的大脑中出现新的回路。从解码基础信息（如羊群中的山羊数量）这一十分简单的机制开始，该回路进化成如今十分精妙的、有阅读能力的大脑。我的研究描绘了当前拥有阅读能力的大脑如何使得一些我们最为重要的智力和情感发展成为可能，如知识的内化、类比推理与干预；态度取舍与共情；批判性分析和洞察力的产生等。如今世界许多地方进行的研究告诫我们，随着我们转向数字模式的阅读习惯，这些重要的深度阅读过程可能遭到威胁。</p><p>这并不是简单的纸张对抗数码阅读与技术创新的二元问题。正如麻省理工学者Sherry Turkle所写的那样，我们的社会并不会在我们创新的时候出错，而是在我们忽略我们创新所打破或者消弭的东西时才会出错。在这一纸张与数码文化的承接时期，社会需要解决专业阅读回路中什么东西正在消失，我们的孩子以及年龄稍大的学生没有提升什么能力，以及我们对此能做什么。</p><p>我们从研究中得知，与视力或者语言不同，阅读回路并非通过基因蓝图被赋予给人类。它需要相应的环境才能发展。此外，它会适应环境的要求 – 从不同的书写体系到所使用的媒介的特点。如果主流媒介有利于快速、多重任务导向、以及适合处理大量信息的过程，比如当前的数码媒介，那么阅读回路也会这样子。正如UCLA心理学家Patricia Greenfield所写的那样，结果是更少的注意力和时间会被分配给速度较慢、需要时间的深度阅读过程。</p><p>越来越多来自教育者与心理学和人类学领域研究者的报告支持这一观点。英国文学学者和教师Mark Edmundson描述了有多少大学生会主动避开19世纪和20世纪的经典文学作品，反而选择一些更为简单的作品，因为他们不再拥有阅读更长、更密集、难度更大的文本的耐心。 我们应该更多的关注学生认知急躁背后的原因，而非这一现象：大量的学生没有能力在阅读中进行一定程度的批判性分析，从而理解要求更高的文本中所体现的复杂思想和争论。</p><p>许多研究表明，数码屏幕的使用可能对高中生和大学生的阅读理解能力造成各种各样令人烦心的负面影响。在挪威的斯塔万格，心理学家Anne Mangen和她的同事研究了高中生在不同的媒介下如何理解相同的材料。Mangen的团队询问实验对象有关一篇短小故事的问题。该故事的情节受到学生的普遍欢迎。其中一半学生在平板上阅读该故事，而另一半学生则在纸张上阅读。研究表明，相比于在屏幕上阅读的学生，在纸张上阅读的学生在理解方面更胜一筹，尤其是在他们按顺序排列细节并根据时间发展重构情节的能力方面。</p><p>圣何塞州立大学的Ziming Liu进行的一系列研究表明，阅读方面的新常态是略读，包括识别单词与浏览文本。如今，许多阅读者在阅读时使用如下模式：首先看下第一行，然后只看剩余文本中的个别词汇。当阅读大脑这样略读的时候，它就会减少分配给深入阅读的时间。换句话说，我们没有时间领悟复杂的东西，理解他人的情感，欣赏美，或者产生读者自身的想法。</p><p>批判性分析、共情和其他深入阅读过程可能成为我们数码文化无意之间附带的牺牲品。这一可能性并不是简单的纸张对抗数码阅读的二元问题。它更多的是关于：我们所有人如何开始在不同媒介上阅读，以及这如何改变了我们阅读的内容和阅读的目的。它也不仅仅是关于年轻人的。批判性分析和共情不易察觉的衰退同等地影响着我们所有人。它影响我们在持续不断的信息轰炸中寻找出路的能力。它刺激我们退回到未经核验的、最熟悉的信息中。这些信息不需要、也没有经过分析，让我们很容易受到错误信息和不合逻辑的观点的影响。</p><p>神经科学中有一条不随时间变化的古老规则：用进废退。当应用于阅读大脑的批判性思维时，它是一条给人以希望的原理，因为它预示着选择。阅读大脑改变的故事还远未终止。我们拥有科学和技术能够在阅读方式的变化固化之前对其进行界定和矫正。如果我们尝试理解我们所损失的东西，以及数码世界带给我们的全新能力，那么我们就有相同的理由保持谨慎和兴奋。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Look around on your next plane trip. The iPad is the new pacifier for babies and toddlers. Younger school-aged children read stories on smartphones; older kids don’t read at all, but hunch over video games. Parents and other passengers read on <mark class="vocab-word" data-word="tablet">tablets</mark> or <mark class="vocab-word" data-word="skim">skim</mark> a flotilla of email and news feeds. Unbeknown to most of us, an <mark class="vocab-word" data-word="invisible">invisible</mark>, game-changing <mark class="vocab-word" data-word="transformation">transformation</mark> links everyone in this picture: the neuronal <mark class="vocab-word" data-word="circuit">circuit</mark> that <mark class="vocab-word" data-word="underlie">underlies</mark> the brain’s ability to read is subtly, rapidly changing and this has <mark class="vocab-word" data-word="implication">implications</mark> for everyone from the pre-reading toddler to the expert adult.</p></div>  <div class="parallel-zh"><p>下次乘坐飞机的时候记得环顾四周。iPad已经成为婴儿和幼儿新的安抚物。年轻一些的学龄儿童在手机上看故事；年龄稍大一些的孩子则完全不阅读，只是低头玩游戏。父母和其他乘客要么在平板上看东西，要么浏览电子邮件和新闻。我们大多数人不知道的是，一场看不见的，天翻地覆的变化将这一情景中的每个人联系在一起：构成大脑阅读能力基础的神经回路正在发生微妙而迅速的改变。从尚不会阅读的幼儿到成年专家，它影响着每一个人。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As work in <mark class="vocab-word" data-word="neuroscience">neurosciences</mark> indicates, the <mark class="vocab-word" data-word="acquisition">acquisition</mark> of <mark class="vocab-word" data-word="literacy">literacy</mark> <mark class="vocab-word" data-word="necessitate">necessitated</mark> a new <mark class="vocab-word" data-word="circuit">circuit</mark> in our species’ brain more than 6,000 years ago. That <mark class="vocab-word" data-word="circuit">circuit</mark> <mark class="vocab-word" data-word="evolve">evolved</mark> from a very simple <mark class="vocab-word" data-word="mechanism">mechanism</mark> for <mark class="vocab-word" data-word="decode">decoding</mark> basic information, like the number of <mark class="vocab-word" data-word="goat">goats</mark> in one’s <mark class="vocab-word" data-word="herd">herd</mark>, to the present, highly <mark class="vocab-word" data-word="elaborate">elaborated</mark> reading brain. My research <mark class="vocab-word" data-word="depict">depicts</mark> how the present reading brain enables the development of some of our most important <mark class="vocab-word" data-word="intellectual">intellectual</mark> and affective processes: internalized knowledge, analogical reasoning, and <mark class="vocab-word" data-word="inference">inference</mark>; perspective-taking and <mark class="vocab-word" data-word="empathy">empathy</mark>; critical analysis and the generation of <mark class="vocab-word" data-word="insight">insight</mark>. Research surfacing in many parts of the world now <mark class="vocab-word" data-word="caution">cautions</mark> that each of these essential ‘deep reading’ processes may be under <mark class="vocab-word" data-word="threat">threat</mark> as we move into digital-based <mark class="vocab-word" data-word="mode">modes</mark> of reading.</p></div>  <div class="parallel-zh"><p>神经科学方面的研究表明，6000多年前，读写能力的获取让我们种族的大脑中出现新的回路。从解码基础信息（如羊群中的山羊数量）这一十分简单的机制开始，该回路进化成如今十分精妙的、有阅读能力的大脑。我的研究描绘了当前拥有阅读能力的大脑如何使得一些我们最为重要的智力和情感发展成为可能，如知识的内化、类比推理与干预；态度取舍与共情；批判性分析和洞察力的产生等。如今世界许多地方进行的研究告诫我们，随着我们转向数字模式的阅读习惯，这些重要的深度阅读过程可能遭到威胁。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This is not a simple, <mark class="vocab-word" data-word="binary">binary</mark> issue of print <mark class="vocab-word" data-word="versus">versus</mark> digital reading and technological <mark class="vocab-word" data-word="innovation">innovation</mark>. As MIT <mark class="vocab-word" data-word="scholar">scholar</mark> Sherry Turkle has written, we do not <mark class="vocab-word" data-word="err">err</mark> as a society when we <mark class="vocab-word" data-word="innovate">innovate</mark> but when we ignore what we <mark class="vocab-word" data-word="disrupt">disrupt</mark> or <mark class="vocab-word" data-word="diminish">diminish</mark> while <mark class="vocab-word" data-word="innovate">innovating</mark>. In this <mark class="vocab-word" data-word="hinge">hinge</mark> moment between print and digital cultures, society needs to <mark class="vocab-word" data-word="confront">confront</mark> what is <mark class="vocab-word" data-word="diminish">diminishing</mark> in the expert reading <mark class="vocab-word" data-word="circuit">circuit</mark>, what our children and older students are not developing, and what we can do about it.</p></div>  <div class="parallel-zh"><p>这并不是简单的纸张对抗数码阅读与技术创新的二元问题。正如麻省理工学者Sherry Turkle所写的那样，我们的社会并不会在我们创新的时候出错，而是在我们忽略我们创新所打破或者消弭的东西时才会出错。在这一纸张与数码文化的承接时期，社会需要解决专业阅读回路中什么东西正在消失，我们的孩子以及年龄稍大的学生没有提升什么能力，以及我们对此能做什么。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>We know from research that the reading <mark class="vocab-word" data-word="circuit">circuit</mark> is not given to human beings through a <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="blueprint">blueprint</mark> like vision or language; it needs an environment to develop. Further, it will adapt to that environment’s requirements – from different writing systems to the characteristics of whatever medium is used. If the <mark class="vocab-word" data-word="dominant">dominant</mark> medium advantages processes that are fast, multi-task <mark class="vocab-word" data-word="orient">oriented</mark> and well-suited for large volumes of information, like the current digital medium, so will the reading <mark class="vocab-word" data-word="circuit">circuit</mark>. As UCLA psychologist Patricia Greenfield writes, the result is that less attention and time will be <mark class="vocab-word" data-word="allocate">allocated</mark> to slower, time-demanding deep reading processes.</p></div>  <div class="parallel-zh"><p>我们从研究中得知，与视力或者语言不同，阅读回路并非通过基因蓝图被赋予给人类。它需要相应的环境才能发展。此外，它会适应环境的要求 – 从不同的书写体系到所使用的媒介的特点。如果主流媒介有利于快速、多重任务导向、以及适合处理大量信息的过程，比如当前的数码媒介，那么阅读回路也会这样子。正如UCLA心理学家Patricia Greenfield所写的那样，结果是更少的注意力和时间会被分配给速度较慢、需要时间的深度阅读过程。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Increasing reports from educators and from researchers in <mark class="vocab-word" data-word="psychology">psychology</mark> and the humanities bear this out. English literature <mark class="vocab-word" data-word="scholar">scholar</mark> and teacher Mark Edmundson describes how many college students actively avoid the classic literature of the 19th and 20th centuries in favour of something simpler as they no longer have the <mark class="vocab-word" data-word="patience">patience</mark> to read longer, denser, more difficult texts. We should be less <mark class="vocab-word" data-word="concerned">concerned</mark> with students’ ‘<mark class="vocab-word" data-word="cognitive">cognitive</mark> impatience’, however, than by what may <mark class="vocab-word" data-word="underlie">underlie</mark> it: the potential <mark class="vocab-word" data-word="inability">inability</mark> of large numbers of students to read with a level of critical analysis <mark class="vocab-word" data-word="sufficient">sufficient</mark> to <mark class="vocab-word" data-word="comprehend">comprehend</mark> the <mark class="vocab-word" data-word="complexity">complexity</mark> of thought and argument found in more <mark class="vocab-word" data-word="demanding">demanding</mark> texts.</p></div>  <div class="parallel-zh"><p>越来越多来自教育者与心理学和人类学领域研究者的报告支持这一观点。英国文学学者和教师Mark Edmundson描述了有多少大学生会主动避开19世纪和20世纪的经典文学作品，反而选择一些更为简单的作品，因为他们不再拥有阅读更长、更密集、难度更大的文本的耐心。 我们应该更多的关注学生认知急躁背后的原因，而非这一现象：大量的学生没有能力在阅读中进行一定程度的批判性分析，从而理解要求更高的文本中所体现的复杂思想和争论。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Multiple studies show that digital screen use may be causing a variety of troubling downstream effects on reading <mark class="vocab-word" data-word="comprehension">comprehension</mark> in older high school and college students. In Stavanger, Norway, psychologist Anne Mangen and her colleagues studied how high school students <mark class="vocab-word" data-word="comprehend">comprehend</mark> the same material in different mediums. This article is from  website. Mangen’s group asked subjects questions about a short <mark class="vocab-word" data-word="story">story</mark> whose <mark class="vocab-word" data-word="plot">plot</mark> had <mark class="vocab-word" data-word="universal">universal</mark> student appeal; half of the students read the <mark class="vocab-word" data-word="story">story</mark> on a <mark class="vocab-word" data-word="tablet">tablet</mark>, the other half in <mark class="vocab-word" data-word="paperback">paperback</mark>. Results indicated that students who read on print were <mark class="vocab-word" data-word="superior">superior</mark> in their <mark class="vocab-word" data-word="comprehension">comprehension</mark> to screen-reading <mark class="vocab-word" data-word="peer">peers</mark>, particularly in their ability to <mark class="vocab-word" data-word="sequence">sequence</mark> detail and reconstruct the <mark class="vocab-word" data-word="plot">plot</mark> in <mark class="vocab-word" data-word="chronological">chronological</mark> order.</p></div>  <div class="parallel-zh"><p>许多研究表明，数码屏幕的使用可能对高中生和大学生的阅读理解能力造成各种各样令人烦心的负面影响。在挪威的斯塔万格，心理学家Anne Mangen和她的同事研究了高中生在不同的媒介下如何理解相同的材料。Mangen的团队询问实验对象有关一篇短小故事的问题。该故事的情节受到学生的普遍欢迎。其中一半学生在平板上阅读该故事，而另一半学生则在纸张上阅读。研究表明，相比于在屏幕上阅读的学生，在纸张上阅读的学生在理解方面更胜一筹，尤其是在他们按顺序排列细节并根据时间发展重构情节的能力方面。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Ziming Liu from San Jose State University has conducted a series of studies which indicate that the ‘new <mark class="vocab-word" data-word="norm">norm</mark>’ in reading is skimming, involving word-spotting and <mark class="vocab-word" data-word="browse">browsing</mark> through the text. Many readers now use a pattern when reading in which they sample the first line and then word-spot through the rest of the text. When the reading brain <mark class="vocab-word" data-word="skim">skims</mark> like this, it reduces time <mark class="vocab-word" data-word="allocate">allocated</mark> to deep reading processes. In other words, we don’t have time to <mark class="vocab-word" data-word="grasp">grasp</mark> <mark class="vocab-word" data-word="complexity">complexity</mark>, to understand another’s feelings, to <mark class="vocab-word" data-word="perceive">perceive</mark> beauty, and to create thoughts of the reader’s own.</p></div>  <div class="parallel-zh"><p>圣何塞州立大学的Ziming Liu进行的一系列研究表明，阅读方面的新常态是略读，包括识别单词与浏览文本。如今，许多阅读者在阅读时使用如下模式：首先看下第一行，然后只看剩余文本中的个别词汇。当阅读大脑这样略读的时候，它就会减少分配给深入阅读的时间。换句话说，我们没有时间领悟复杂的东西，理解他人的情感，欣赏美，或者产生读者自身的想法。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The possibility that critical analysis, <mark class="vocab-word" data-word="empathy">empathy</mark> and other deep reading processes could become the unintended ‘<mark class="vocab-word" data-word="collateral">collateral</mark> damage’ of our digital culture is not a <mark class="vocab-word" data-word="straightforward">straightforward</mark> <mark class="vocab-word" data-word="binary">binary</mark> issue about print <mark class="vocab-word" data-word="versus">versus</mark> digital reading. It is about how we all have begun to read on various mediums and how that changes not only what we read, but also the purposes for which we read. Nor is it only about the young. The <mark class="vocab-word" data-word="subtle">subtle</mark> atrophy of critical analysis and <mark class="vocab-word" data-word="empathy">empathy</mark> affects us all equally. It affects our ability to <mark class="vocab-word" data-word="navigate">navigate</mark> a constant bombardment of information. It incentivizes a <mark class="vocab-word" data-word="retreat">retreat</mark> to the most familiar stores of unchecked information, which require and receive no analysis, leaving us <mark class="vocab-word" data-word="susceptible">susceptible</mark> to false information and <mark class="vocab-word" data-word="irrational">irrational</mark> ideas.</p></div>  <div class="parallel-zh"><p>批判性分析、共情和其他深入阅读过程可能成为我们数码文化无意之间附带的牺牲品。这一可能性并不是简单的纸张对抗数码阅读的二元问题。它更多的是关于：我们所有人如何开始在不同媒介上阅读，以及这如何改变了我们阅读的内容和阅读的目的。它也不仅仅是关于年轻人的。批判性分析和共情不易察觉的衰退同等地影响着我们所有人。它影响我们在持续不断的信息轰炸中寻找出路的能力。它刺激我们退回到未经核验的、最熟悉的信息中。这些信息不需要、也没有经过分析，让我们很容易受到错误信息和不合逻辑的观点的影响。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There’s an old rule in <mark class="vocab-word" data-word="neuroscience">neuroscience</mark> that does not alter with age: use it or lose it. It is a very <mark class="vocab-word" data-word="hopeful">hopeful</mark> principle when <mark class="vocab-word" data-word="applied">applied</mark> to critical thought in the reading brain because it implies choice. The <mark class="vocab-word" data-word="story">story</mark> of the changing reading brain is hardly finished. We possess both the science and the technology to identify and redress the changes in how we read before they become <mark class="vocab-word" data-word="entrench">entrenched</mark>. If we work to understand exactly what we will lose, <mark class="vocab-word" data-word="alongside">alongside</mark> the extraordinary new capacities that the digital world has brought us, there is as much reason for excitement as <mark class="vocab-word" data-word="caution">caution</mark>.</p></div>  <div class="parallel-zh"><p>神经科学中有一条不随时间变化的古老规则：用进废退。当应用于阅读大脑的批判性思维时，它是一条给人以希望的原理，因为它预示着选择。阅读大脑改变的故事还远未终止。我们拥有科学和技术能够在阅读方式的变化固化之前对其进行界定和矫正。如果我们尝试理解我们所损失的东西，以及数码世界带给我们的全新能力，那么我们就有相同的理由保持谨慎和兴奋。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"tablet": 2, "skim": 2, "invisible": 1, "transformation": 1, "circuit": 6, "underlie": 2, "implication": 1, "neuroscience": 2, "acquisition": 1, "literacy": 1, "necessitate": 1, "evolve": 1, "mechanism": 1, "decode": 1, "goat": 1, "herd": 1, "elaborate": 1, "depict": 1, "intellectual": 1, "inference": 1, "empathy": 3, "insight": 1, "caution": 2, "threat": 1, "mode": 1, "binary": 2, "versus": 2, "innovation": 1, "scholar": 2, "err": 1, "innovate": 2, "disrupt": 1, "diminish": 2, "hinge": 1, "confront": 1, "genetic": 1, "blueprint": 1, "dominant": 1, "orient": 1, "allocate": 2, "psychology": 1, "patience": 1, "concerned": 1, "cognitive": 1, "inability": 1, "sufficient": 1, "comprehend": 2, "complexity": 2, "demanding": 1, "comprehension": 2, "story": 3, "plot": 2, "universal": 1, "paperback": 1, "superior": 1, "peer": 1, "sequence": 1, "chronological": 1, "norm": 1, "browse": 1, "grasp": 1, "perceive": 1, "collateral": 1, "straightforward": 1, "subtle": 1, "navigate": 1, "retreat": 1, "susceptible": 1, "irrational": 1, "hopeful": 1, "applied": 1, "entrench": 1, "alongside": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

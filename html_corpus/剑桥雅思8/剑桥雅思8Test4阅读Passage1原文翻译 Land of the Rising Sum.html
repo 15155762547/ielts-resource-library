@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land of the Rising Sum - 剑桥雅思8 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Land of the Rising Sum</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26107.html" target="_blank">https://www.laokaoya.com/26107.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Japan has a significantly better record in terms of average <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="attainment">attainment</mark> than England and Wales. Large sample international comparisons of <mark class="vocab-word" data-word="pupil">pupils</mark>’ <mark class="vocab-word" data-word="attainment">attainments</mark> since the 1960s have <mark class="vocab-word" data-word="established">established</mark> that not only did Japanese <mark class="vocab-word" data-word="pupil">pupils</mark> at age 13 have better scores of average <mark class="vocab-word" data-word="attainment">attainment</mark>, but there was also a larger <mark class="vocab-word" data-word="proportion">proportion</mark> of ‘low’ attainers in England, where, <mark class="vocab-word" data-word="incidentally">incidentally</mark>, the <mark class="vocab-word" data-word="variation">variation</mark> in <mark class="vocab-word" data-word="attainment">attainment</mark> scores was much greater. The percentage of <mark class="vocab-word" data-word="gross">Gross</mark> National Product spent on education is reasonably similar in the two countries, so how is this higher and more consistent <mark class="vocab-word" data-word="attainment">attainment</mark> in maths achieved?</p><p>Lower secondary schools in Japan cover three school years, from the seventh <mark class="vocab-word" data-word="grade">grade</mark> (age 13) to the ninth <mark class="vocab-word" data-word="grade">grade</mark> (age 15). <mark class="vocab-word" data-word="virtually">Virtually</mark> all <mark class="vocab-word" data-word="pupil">pupils</mark> at this stage attend state schools: only 3 per cent are in the private <mark class="vocab-word" data-word="sector">sector</mark>. Schools are usually modern in design, set well back from the road and <mark class="vocab-word" data-word="spacious">spacious</mark> inside. Classrooms are large and <mark class="vocab-word" data-word="pupil">pupils</mark> sit at single desks in rows. Lessons last for a standardised 50 minutes and are always followed by a 10-minute break, which gives the <mark class="vocab-word" data-word="pupil">pupils</mark> a chance to let off <mark class="vocab-word" data-word="steam">steam</mark>. Teachers begin with a formal address and <mark class="vocab-word" data-word="mutual">mutual</mark> <mark class="vocab-word" data-word="bow">bowing</mark>, and then concentrate on whole-class teaching.</p><p>Classes are large – usually about 40 – and are unstreamed. <mark class="vocab-word" data-word="pupil">Pupils</mark> stay in the same class for all lessons throughout the school and develop <mark class="vocab-word" data-word="considerable">considerable</mark> class identity and <mark class="vocab-word" data-word="loyalty">loyalty</mark>. <mark class="vocab-word" data-word="pupil">Pupils</mark> attend the school in their own neighbourhood, which in theory removes ranking by school. In practice in Tokyo, because of the relative concentration of schools, there is some competition to get into the ‘better’ school in a particular area.</p><p>Traditional ways of teaching form the basis of the lesson and the remarkably quiet classes take their own notes of the points made and the examples demonstrated. Everyone has their own copy of the textbook supplied by the central education <mark class="vocab-word" data-word="authority">authority</mark>, Monbusho, as part of the concept of free <mark class="vocab-word" data-word="compulsory">compulsory</mark> education up to the age of 15. These textbooks are, on the whole, small, <mark class="vocab-word" data-word="presumably">presumably</mark> inexpensive to produce, but well set out and logically developed. (One teacher was particularly <mark class="vocab-word" data-word="keen">keen</mark> to introduce colour and pictures into maths textbooks: he felt this would make them more <mark class="vocab-word" data-word="accessible">accessible</mark> to <mark class="vocab-word" data-word="pupil">pupils</mark> brought up in a cartoon culture. ) Besides approving textbooks, Monbusho also decides the highly centralised national <mark class="vocab-word" data-word="curriculum">curriculum</mark> and how it is to be delivered.</p><p>Lessons all follow the same pattern. At the beginning, the <mark class="vocab-word" data-word="pupil">pupils</mark> put solutions to the homework on the board, then the teachers comment, correct or <mark class="vocab-word" data-word="elaborate">elaborate</mark> as necessary. <mark class="vocab-word" data-word="pupil">Pupils</mark> mark their own homework: this is an important principle in Japanese schooling as it enables <mark class="vocab-word" data-word="pupil">pupils</mark> to see where and why they made a mistake, so that these can be avoided in future. No one minds mistakes or <mark class="vocab-word" data-word="ignorance">ignorance</mark> as long as you are prepared to learn from them.</p><p>After the homework has been discussed, the teacher explains the topic of the lesson, slowly and with a lot of <mark class="vocab-word" data-word="repetition">repetition</mark> and <mark class="vocab-word" data-word="elaboration">elaboration</mark>. Examples are demonstrated on the board; questions from the textbook are worked through first with the class, and then the class is set questions from the textbook to do <mark class="vocab-word" data-word="individually">individually</mark>. Only rarely are <mark class="vocab-word" data-word="supplementary">supplementary</mark> worksheets distributed in a maths class. The impression is that the logical nature of the textbooks and their <mark class="vocab-word" data-word="comprehensive">comprehensive</mark> <mark class="vocab-word" data-word="coverage">coverage</mark> of different types of examples, combined with the relative homogeneity of the class, <mark class="vocab-word" data-word="render">renders</mark> work sheets unnecessary. At this point, the teacher would <mark class="vocab-word" data-word="circulate">circulate</mark> and make sure that all the <mark class="vocab-word" data-word="pupil">pupils</mark> were <mark class="vocab-word" data-word="cope">coping</mark> well.</p><p>It is <mark class="vocab-word" data-word="remarkable">remarkable</mark> that large, mixed-ability classes could be kept together for maths throughout all their <mark class="vocab-word" data-word="compulsory">compulsory</mark> schooling from 6 to 15. Teachers say that they give individual help at the end of a lesson or after school, setting extra work if necessary. In observed lessons, any strugglers would be assisted by the teacher or quietly seek help from their neighbour. Carefully <mark class="vocab-word" data-word="foster">fostered</mark> class identity makes <mark class="vocab-word" data-word="pupil">pupils</mark> <mark class="vocab-word" data-word="keen">keen</mark> to help each other – anyway, it is in their interests since the class progresses together.</p><p>This <mark class="vocab-word" data-word="scarcely">scarcely</mark> seems <mark class="vocab-word" data-word="adequate">adequate</mark> help to enable slow learners to keep up. However, the Japanese attitude towards education runs along the lines of ‘if you work hard enough, you can do almost anything’. Parents are kept closely informed of their children’s progress and will play a part in helping their children to keep up with class, sending them to ‘Juku’ (private evening <mark class="vocab-word" data-word="tuition">tuition</mark>) if extra help is needed and encouraging them to work harder. It seems to work, at least for 95 per cent of the school population.</p><p>So what are the major contributing <mark class="vocab-word" data-word="factor">factors</mark> in the success of maths teaching? Clearly, attitudes are important. Education is valued greatly in Japanese culture; maths is recognised as an important <mark class="vocab-word" data-word="compulsory">compulsory</mark> subject throughout schooling; and the emphasis is on hard work coupled with a focus on <mark class="vocab-word" data-word="accuracy">accuracy</mark>.</p><p>Other relevant points relate to the <mark class="vocab-word" data-word="supportive">supportive</mark> attitude of a class towards slower <mark class="vocab-word" data-word="pupil">pupils</mark>, the lack of competition within a class, and the positive emphasis on learning for <mark class="vocab-word" data-word="oneself">oneself</mark> and improving one’s own standard. And the view of <mark class="vocab-word" data-word="repetitive">repetitively</mark> <mark class="vocab-word" data-word="bore">boring</mark> lessons and learning the facts by heart, which is sometimes quoted in relation to Japanese classes, may be <mark class="vocab-word" data-word="unfair">unfair</mark> and unjustified. No poor maths lessons were observed. They were mainly good and one or two were <mark class="vocab-word" data-word="inspirational">inspirational</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>日本的平均数学水平要比英格兰和威尔士好得多。自20世纪60年代以来，国际上对学生学业成绩的大量样本比较表明，不仅13岁的日本学生的平均学业成绩更高，而且英格兰“低成绩”学生的比例也更大，同时其成绩差异也更明显。两国在教育上花费的国民生产总值的百分比十分相似，那么数学上更高和更一致的成就是如何获得的呢？</p><p>日本的初中涵盖从7 年级（13岁）到9年级（15岁）的三个学年。目前，几乎所有学生都在公立学校就读：只有3％在私立学校。学校通常采用现代设计，远离道路，内部宽敞。教室很大，学生们成排坐在单张桌子旁。上课时长为标准的50分钟，之后总是有10分钟的休息时间，这使学生有机会发泄精力。教师从正式的问候和互相鞠躬开始，然后专注于全班教学。</p><p>班级很大-通常约为40名学生-并且没有按照成绩分班。在整个学校的所有课程中，学生都待在同一个班级，并培养出可观的班级认同和忠诚度。学生在自己附近的学校上学。从理论上讲，这可以消除学校的排名。在东京的实践中，由于学校相对集中，进入某个特定地区“更好”的学校会有一些竞争。</p><p>传统的教学方法构成了课程的基础，而安静的课堂则记下老师提出的观点和所举的例子。每个人都有自己的中央教育当局（Monbusho）提供的教科书。它们是15岁以下免费义务教育概念的一部分。这些教科书总体上很小，生产成本低廉，但是出发点很好，逻辑流畅。（一位老师特别热衷于将色彩和图片引入数学教科书中：他认为这将使在卡通文化中成长的学生更容易使用它们。）除了批准教科书之外，Monbusho 还决定了高度集中的国家课程以及如何教授这些课程。</p><p>所有课程都遵循相同的模式。开始时，学生将家庭作业的解决方案写在黑板上，然后老师进行评论，根据需要进行更正或解释。学生批改自己的作业：这是日本学校教育中的一项重要原则，因为它使学生能够了解他们在哪里以及为什么犯错，以便将来可以避免。只要你准备向错误或无知学习，就不会有人介意它们。</p><p>在讨论完作业后，老师会慢慢地讲解本节课的主题，并进行大量重复和解释。黑板上展示有例子；首先老师与全班一起处理教科书中的问题，然后学生独立完成教科书上的习题。很少在数学课上分发补充练习题。给人的印象是，教科书的逻辑性质以及它们对不同类型例子的全面覆盖，再加上班级的相对同质性，使练习题变得不必要。在这一点上，老师将四处巡视，并确保所有学生都很好地应对。</p><p>值得注意的是，在从6岁到15岁的所有义务教育阶段中，数学课一直采用大型混合能力的班级形式。老师说，他们在课程结束后或放学后会提供个人帮助，并在必要时布置额外的作业。在所观察的课程中，任何挣扎的人都会得到老师的帮助，或者悄悄地寻求邻居的帮助。精心培养的班级认同使学生热衷于互相帮助-无论如何，班级一起进步符合他们的利益。</p><p>这似乎不足以帮助缓慢的学习者跟上进度。但是，日本人对教育的态度是“只要努力就可以做到几乎所有事情”。父母会密切了解孩子的学习情况，并会在帮助孩子跟上课堂进度。如果需要额外的辅助，他们会将孩子送至“ Juku ”（私人夜间补习），并鼓励他们更加努力地学习。这似乎至少对95％的学校人口都很有效。</p><p>那么，数学教学成功的主要因素是什么？显然，态度很重要。在日本文化中，教育受到高度重视；数学被认为是整个教育过程中的重要必修课；重点是努力学习和准确性。</p><p>其他相关要素涉及班级对较慢学生的支持态度，班级内部缺乏竞争，以及积极强调为自己学习和提高自己的水平。涉及到日本课堂时，有时会被引用的观点认为，它主要是无聊的重复和用心背诵事实。但这既不公平也不合理。没有观察到草稿的数学课程。它们大体而言都很好，还有一两个十分具有启发意义。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Japan has a significantly better record in terms of average <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="attainment">attainment</mark> than England and Wales. Large sample international comparisons of <mark class="vocab-word" data-word="pupil">pupils</mark>’ <mark class="vocab-word" data-word="attainment">attainments</mark> since the 1960s have <mark class="vocab-word" data-word="established">established</mark> that not only did Japanese <mark class="vocab-word" data-word="pupil">pupils</mark> at age 13 have better scores of average <mark class="vocab-word" data-word="attainment">attainment</mark>, but there was also a larger <mark class="vocab-word" data-word="proportion">proportion</mark> of ‘low’ attainers in England, where, <mark class="vocab-word" data-word="incidentally">incidentally</mark>, the <mark class="vocab-word" data-word="variation">variation</mark> in <mark class="vocab-word" data-word="attainment">attainment</mark> scores was much greater. The percentage of <mark class="vocab-word" data-word="gross">Gross</mark> National Product spent on education is reasonably similar in the two countries, so how is this higher and more consistent <mark class="vocab-word" data-word="attainment">attainment</mark> in maths achieved?</p></div>  <div class="parallel-zh"><p>日本的平均数学水平要比英格兰和威尔士好得多。自20世纪60年代以来，国际上对学生学业成绩的大量样本比较表明，不仅13岁的日本学生的平均学业成绩更高，而且英格兰“低成绩”学生的比例也更大，同时其成绩差异也更明显。两国在教育上花费的国民生产总值的百分比十分相似，那么数学上更高和更一致的成就是如何获得的呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Lower secondary schools in Japan cover three school years, from the seventh <mark class="vocab-word" data-word="grade">grade</mark> (age 13) to the ninth <mark class="vocab-word" data-word="grade">grade</mark> (age 15). <mark class="vocab-word" data-word="virtually">Virtually</mark> all <mark class="vocab-word" data-word="pupil">pupils</mark> at this stage attend state schools: only 3 per cent are in the private <mark class="vocab-word" data-word="sector">sector</mark>. Schools are usually modern in design, set well back from the road and <mark class="vocab-word" data-word="spacious">spacious</mark> inside. Classrooms are large and <mark class="vocab-word" data-word="pupil">pupils</mark> sit at single desks in rows. Lessons last for a standardised 50 minutes and are always followed by a 10-minute break, which gives the <mark class="vocab-word" data-word="pupil">pupils</mark> a chance to let off <mark class="vocab-word" data-word="steam">steam</mark>. Teachers begin with a formal address and <mark class="vocab-word" data-word="mutual">mutual</mark> <mark class="vocab-word" data-word="bow">bowing</mark>, and then concentrate on whole-class teaching.</p></div>  <div class="parallel-zh"><p>日本的初中涵盖从7 年级（13岁）到9年级（15岁）的三个学年。目前，几乎所有学生都在公立学校就读：只有3％在私立学校。学校通常采用现代设计，远离道路，内部宽敞。教室很大，学生们成排坐在单张桌子旁。上课时长为标准的50分钟，之后总是有10分钟的休息时间，这使学生有机会发泄精力。教师从正式的问候和互相鞠躬开始，然后专注于全班教学。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Classes are large – usually about 40 – and are unstreamed. <mark class="vocab-word" data-word="pupil">Pupils</mark> stay in the same class for all lessons throughout the school and develop <mark class="vocab-word" data-word="considerable">considerable</mark> class identity and <mark class="vocab-word" data-word="loyalty">loyalty</mark>. <mark class="vocab-word" data-word="pupil">Pupils</mark> attend the school in their own neighbourhood, which in theory removes ranking by school. In practice in Tokyo, because of the relative concentration of schools, there is some competition to get into the ‘better’ school in a particular area.</p></div>  <div class="parallel-zh"><p>班级很大-通常约为40名学生-并且没有按照成绩分班。在整个学校的所有课程中，学生都待在同一个班级，并培养出可观的班级认同和忠诚度。学生在自己附近的学校上学。从理论上讲，这可以消除学校的排名。在东京的实践中，由于学校相对集中，进入某个特定地区“更好”的学校会有一些竞争。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Traditional ways of teaching form the basis of the lesson and the remarkably quiet classes take their own notes of the points made and the examples demonstrated. Everyone has their own copy of the textbook supplied by the central education <mark class="vocab-word" data-word="authority">authority</mark>, Monbusho, as part of the concept of free <mark class="vocab-word" data-word="compulsory">compulsory</mark> education up to the age of 15. These textbooks are, on the whole, small, <mark class="vocab-word" data-word="presumably">presumably</mark> inexpensive to produce, but well set out and logically developed. (One teacher was particularly <mark class="vocab-word" data-word="keen">keen</mark> to introduce colour and pictures into maths textbooks: he felt this would make them more <mark class="vocab-word" data-word="accessible">accessible</mark> to <mark class="vocab-word" data-word="pupil">pupils</mark> brought up in a cartoon culture. ) Besides approving textbooks, Monbusho also decides the highly centralised national <mark class="vocab-word" data-word="curriculum">curriculum</mark> and how it is to be delivered.</p></div>  <div class="parallel-zh"><p>传统的教学方法构成了课程的基础，而安静的课堂则记下老师提出的观点和所举的例子。每个人都有自己的中央教育当局（Monbusho）提供的教科书。它们是15岁以下免费义务教育概念的一部分。这些教科书总体上很小，生产成本低廉，但是出发点很好，逻辑流畅。（一位老师特别热衷于将色彩和图片引入数学教科书中：他认为这将使在卡通文化中成长的学生更容易使用它们。）除了批准教科书之外，Monbusho 还决定了高度集中的国家课程以及如何教授这些课程。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Lessons all follow the same pattern. At the beginning, the <mark class="vocab-word" data-word="pupil">pupils</mark> put solutions to the homework on the board, then the teachers comment, correct or <mark class="vocab-word" data-word="elaborate">elaborate</mark> as necessary. <mark class="vocab-word" data-word="pupil">Pupils</mark> mark their own homework: this is an important principle in Japanese schooling as it enables <mark class="vocab-word" data-word="pupil">pupils</mark> to see where and why they made a mistake, so that these can be avoided in future. No one minds mistakes or <mark class="vocab-word" data-word="ignorance">ignorance</mark> as long as you are prepared to learn from them.</p></div>  <div class="parallel-zh"><p>所有课程都遵循相同的模式。开始时，学生将家庭作业的解决方案写在黑板上，然后老师进行评论，根据需要进行更正或解释。学生批改自己的作业：这是日本学校教育中的一项重要原则，因为它使学生能够了解他们在哪里以及为什么犯错，以便将来可以避免。只要你准备向错误或无知学习，就不会有人介意它们。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>After the homework has been discussed, the teacher explains the topic of the lesson, slowly and with a lot of <mark class="vocab-word" data-word="repetition">repetition</mark> and <mark class="vocab-word" data-word="elaboration">elaboration</mark>. Examples are demonstrated on the board; questions from the textbook are worked through first with the class, and then the class is set questions from the textbook to do <mark class="vocab-word" data-word="individually">individually</mark>. Only rarely are <mark class="vocab-word" data-word="supplementary">supplementary</mark> worksheets distributed in a maths class. The impression is that the logical nature of the textbooks and their <mark class="vocab-word" data-word="comprehensive">comprehensive</mark> <mark class="vocab-word" data-word="coverage">coverage</mark> of different types of examples, combined with the relative homogeneity of the class, <mark class="vocab-word" data-word="render">renders</mark> work sheets unnecessary. At this point, the teacher would <mark class="vocab-word" data-word="circulate">circulate</mark> and make sure that all the <mark class="vocab-word" data-word="pupil">pupils</mark> were <mark class="vocab-word" data-word="cope">coping</mark> well.</p></div>  <div class="parallel-zh"><p>在讨论完作业后，老师会慢慢地讲解本节课的主题，并进行大量重复和解释。黑板上展示有例子；首先老师与全班一起处理教科书中的问题，然后学生独立完成教科书上的习题。很少在数学课上分发补充练习题。给人的印象是，教科书的逻辑性质以及它们对不同类型例子的全面覆盖，再加上班级的相对同质性，使练习题变得不必要。在这一点上，老师将四处巡视，并确保所有学生都很好地应对。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It is <mark class="vocab-word" data-word="remarkable">remarkable</mark> that large, mixed-ability classes could be kept together for maths throughout all their <mark class="vocab-word" data-word="compulsory">compulsory</mark> schooling from 6 to 15. Teachers say that they give individual help at the end of a lesson or after school, setting extra work if necessary. In observed lessons, any strugglers would be assisted by the teacher or quietly seek help from their neighbour. Carefully <mark class="vocab-word" data-word="foster">fostered</mark> class identity makes <mark class="vocab-word" data-word="pupil">pupils</mark> <mark class="vocab-word" data-word="keen">keen</mark> to help each other – anyway, it is in their interests since the class progresses together.</p></div>  <div class="parallel-zh"><p>值得注意的是，在从6岁到15岁的所有义务教育阶段中，数学课一直采用大型混合能力的班级形式。老师说，他们在课程结束后或放学后会提供个人帮助，并在必要时布置额外的作业。在所观察的课程中，任何挣扎的人都会得到老师的帮助，或者悄悄地寻求邻居的帮助。精心培养的班级认同使学生热衷于互相帮助-无论如何，班级一起进步符合他们的利益。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This <mark class="vocab-word" data-word="scarcely">scarcely</mark> seems <mark class="vocab-word" data-word="adequate">adequate</mark> help to enable slow learners to keep up. However, the Japanese attitude towards education runs along the lines of ‘if you work hard enough, you can do almost anything’. Parents are kept closely informed of their children’s progress and will play a part in helping their children to keep up with class, sending them to ‘Juku’ (private evening <mark class="vocab-word" data-word="tuition">tuition</mark>) if extra help is needed and encouraging them to work harder. It seems to work, at least for 95 per cent of the school population.</p></div>  <div class="parallel-zh"><p>这似乎不足以帮助缓慢的学习者跟上进度。但是，日本人对教育的态度是“只要努力就可以做到几乎所有事情”。父母会密切了解孩子的学习情况，并会在帮助孩子跟上课堂进度。如果需要额外的辅助，他们会将孩子送至“ Juku ”（私人夜间补习），并鼓励他们更加努力地学习。这似乎至少对95％的学校人口都很有效。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>So what are the major contributing <mark class="vocab-word" data-word="factor">factors</mark> in the success of maths teaching? Clearly, attitudes are important. Education is valued greatly in Japanese culture; maths is recognised as an important <mark class="vocab-word" data-word="compulsory">compulsory</mark> subject throughout schooling; and the emphasis is on hard work coupled with a focus on <mark class="vocab-word" data-word="accuracy">accuracy</mark>.</p></div>  <div class="parallel-zh"><p>那么，数学教学成功的主要因素是什么？显然，态度很重要。在日本文化中，教育受到高度重视；数学被认为是整个教育过程中的重要必修课；重点是努力学习和准确性。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Other relevant points relate to the <mark class="vocab-word" data-word="supportive">supportive</mark> attitude of a class towards slower <mark class="vocab-word" data-word="pupil">pupils</mark>, the lack of competition within a class, and the positive emphasis on learning for <mark class="vocab-word" data-word="oneself">oneself</mark> and improving one’s own standard. And the view of <mark class="vocab-word" data-word="repetitive">repetitively</mark> <mark class="vocab-word" data-word="bore">boring</mark> lessons and learning the facts by heart, which is sometimes quoted in relation to Japanese classes, may be <mark class="vocab-word" data-word="unfair">unfair</mark> and unjustified. No poor maths lessons were observed. They were mainly good and one or two were <mark class="vocab-word" data-word="inspirational">inspirational</mark>.</p></div>  <div class="parallel-zh"><p>其他相关要素涉及班级对较慢学生的支持态度，班级内部缺乏竞争，以及积极强调为自己学习和提高自己的水平。涉及到日本课堂时，有时会被引用的观点认为，它主要是无聊的重复和用心背诵事实。但这既不公平也不合理。没有观察到草稿的数学课程。它们大体而言都很好，还有一两个十分具有启发意义。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"mathematical": 1, "attainment": 5, "pupil": 14, "established": 1, "proportion": 1, "incidentally": 1, "variation": 1, "gross": 1, "grade": 2, "virtually": 1, "sector": 1, "spacious": 1, "steam": 1, "mutual": 1, "bow": 1, "considerable": 1, "loyalty": 1, "authority": 1, "compulsory": 3, "presumably": 1, "keen": 2, "accessible": 1, "curriculum": 1, "elaborate": 1, "ignorance": 1, "repetition": 1, "elaboration": 1, "individually": 1, "supplementary": 1, "comprehensive": 1, "coverage": 1, "render": 1, "circulate": 1, "cope": 1, "remarkable": 1, "foster": 1, "scarcely": 1, "adequate": 1, "tuition": 1, "factor": 1, "accuracy": 1, "supportive": 1, "oneself": 1, "repetitive": 1, "bore": 1, "unfair": 1, "inspirational": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

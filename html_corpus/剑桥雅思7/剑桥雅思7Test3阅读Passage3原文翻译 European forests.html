@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>European forests - 剑桥雅思7 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>European forests</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24538.html" target="_blank">https://www.laokaoya.com/24538.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Forests are one of the main elements of our natural <mark class="vocab-word" data-word="heritage">heritage</mark>. The decline of Europe’s forests over the last <mark class="vocab-word" data-word="decade">decade</mark> and a half has led to an increasing <mark class="vocab-word" data-word="awareness">awareness</mark> and understanding of the serious <mark class="vocab-word" data-word="imbalance">imbalances</mark> which threaten them. European countries are becoming increasingly <mark class="vocab-word" data-word="concerned">concerned</mark> by major <mark class="vocab-word" data-word="threat">threats</mark> to European forests, <mark class="vocab-word" data-word="threat">threats</mark> which know no <mark class="vocab-word" data-word="frontier">frontiers</mark> other than those of geography or climate: air pollution, soil <mark class="vocab-word" data-word="deterioration">deterioration</mark>, the increasing number of forest <mark class="vocab-word" data-word="fir">fires</mark> and sometimes even the mismanagement of our woodland and forest <mark class="vocab-word" data-word="heritage">heritage</mark>. There has been a growing <mark class="vocab-word" data-word="awareness">awareness</mark> of the need for countries to get together to co-ordinate their policies. In December 1990, Strasbourg hosted the first Ministerial Conference on the protection of Europe’s forests. The conference brought together 31 countries from both Western and Eastern Europe. The topics discussed included the co-ordinated study of the <mark class="vocab-word" data-word="destruction">destruction</mark> of forests, as well as how to <mark class="vocab-word" data-word="combat">combat</mark> forest <mark class="vocab-word" data-word="fir">fires</mark> and the <mark class="vocab-word" data-word="extension">extension</mark> of European research programs on the forest <mark class="vocab-word" data-word="ecosystem">ecosystem</mark>. The preparatory work for the conference had been undertaken at two meetings of experts. Their initial task was to decide which of the many forest problems of concern to Europe <mark class="vocab-word" data-word="involved">involved</mark> the largest number of countries and might be the subject of <mark class="vocab-word" data-word="joint">joint</mark> <mark class="vocab-word" data-word="action">action</mark>. Those <mark class="vocab-word" data-word="confine">confined</mark> to particular <mark class="vocab-word" data-word="geographical">geographical</mark> areas, such as countries bordering the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark> or the <mark class="vocab-word" data-word="nordic">Nordic</mark> countries therefore had to be <mark class="vocab-word" data-word="discard">discarded</mark>. However, this does not mean that in future they will be ignored.</p><p>As a whole, European countries see forests as <mark class="vocab-word" data-word="perform">performing</mark> a <mark class="vocab-word" data-word="triple">triple</mark> function: <mark class="vocab-word" data-word="biological">biological</mark>, economic and <mark class="vocab-word" data-word="recreational">recreational</mark>. The first is to act as a ‘green <mark class="vocab-word" data-word="lung">lung</mark>’ for our planet; by means of <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark>, forests produce <mark class="vocab-word" data-word="oxygen">oxygen</mark> through the <mark class="vocab-word" data-word="transformation">transformation</mark> of <mark class="vocab-word" data-word="solar">solar</mark> energy, thus <mark class="vocab-word" data-word="fulfill">fulfilling</mark> what for humans is the essential role of an <mark class="vocab-word" data-word="immense">immense</mark>, non-polluting power plant. At the same time, forests provide <mark class="vocab-word" data-word="raw">raw</mark> materials for human activities through their constantly <mark class="vocab-word" data-word="renew">renewed</mark> production of wood. Finally, they offer those <mark class="vocab-word" data-word="condemn">condemned</mark> to spend five days a week in an <mark class="vocab-word" data-word="urban">urban</mark> environment an unrivalled area of freedom to unwind and take part in a range of <mark class="vocab-word" data-word="leisure">leisure</mark> activities, such as hunting, riding and <mark class="vocab-word" data-word="hiking">hiking</mark>. The economic importance of forests has been understood since the <mark class="vocab-word" data-word="dawn">dawn</mark> of man – wood was the first fuel. The other aspects have been recognised only for a few centuries but they are becoming more and more important. <mark class="vocab-word" data-word="hence">Hence</mark>, there is a real concern throughout Europe about the damage to the forest environment which threatens these three basic roles.</p><p>The <mark class="vocab-word" data-word="myth">myth</mark> of the ‘natural’ forest has survived, yet there are effectively no remaining ‘primary’ forests in Europe. All European forests are <mark class="vocab-word" data-word="artificial">artificial</mark>, having been adapted and <mark class="vocab-word" data-word="exploit">exploited</mark> by man for thousands of years. This means that a forest policy is <mark class="vocab-word" data-word="vital">vital</mark>, that it must <mark class="vocab-word" data-word="transcend">transcend</mark> national <mark class="vocab-word" data-word="frontier">frontiers</mark> and generations of people, and that it must allow for the <mark class="vocab-word" data-word="inevitable">inevitable</mark> changes that take place in the forests, in needs, and <mark class="vocab-word" data-word="hence">hence</mark> in policy. The Strasbourg conference was one of the first events on such a scale to reach this conclusion. A general <mark class="vocab-word" data-word="declaration">declaration</mark> was made that ‘a central place in any <mark class="vocab-word" data-word="ecological">ecologically</mark> <mark class="vocab-word" data-word="coherent">coherent</mark> forest policy must be given to <mark class="vocab-word" data-word="continuity">continuity</mark> over time and to the possible effects of unforeseen events, to ensure that the full potential of these forests is maintained’.</p><p>That general <mark class="vocab-word" data-word="declaration">declaration</mark> was accompanied by six detailed <mark class="vocab-word" data-word="resolution">resolutions</mark> to assist national policy-making. The first <mark class="vocab-word" data-word="propose">proposes</mark> the <mark class="vocab-word" data-word="extension">extension</mark> and systematisation of <mark class="vocab-word" data-word="surveillance">surveillance</mark> <mark class="vocab-word" data-word="site">sites</mark> to monitor forest decline. Forest decline is still poorly understood but <mark class="vocab-word" data-word="lead">leads</mark> to the loss of a high <mark class="vocab-word" data-word="proportion">proportion</mark> of a <mark class="vocab-word" data-word="tree">tree</mark>’s <mark class="vocab-word" data-word="needle">needles</mark> or leaves. The entire <mark class="vocab-word" data-word="continent">continent</mark> and the majority of species are now affected: between 30%and 50% of the <mark class="vocab-word" data-word="tree">tree</mark> population. The condition appears to result from the <mark class="vocab-word" data-word="cumulative">cumulative</mark> effect of a number of <mark class="vocab-word" data-word="factor">factors</mark>, with <mark class="vocab-word" data-word="atmospheric">atmospheric</mark> <mark class="vocab-word" data-word="pollutant">pollutants</mark> the <mark class="vocab-word" data-word="principal">principal</mark> <mark class="vocab-word" data-word="culprit">culprits</mark>. <mark class="vocab-word" data-word="compound">Compounds</mark> of <mark class="vocab-word" data-word="nitrogen">nitrogen</mark> and sulphur <mark class="vocab-word" data-word="dioxide">dioxide</mark> should be particularly closely watched. However, their effects are probably <mark class="vocab-word" data-word="accentuate">accentuated</mark> by <mark class="vocab-word" data-word="climatic">climatic</mark> <mark class="vocab-word" data-word="factor">factors</mark>, such as <mark class="vocab-word" data-word="drought">drought</mark> and hard winters, or soil <mark class="vocab-word" data-word="imbalance">imbalances</mark> such as soil acidification, which damages the roots. The second <mark class="vocab-word" data-word="resolution">resolution</mark> concentrates on the need to preserve the <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="diversity">diversity</mark> of European forests. The aim is to <mark class="vocab-word" data-word="reverse">reverse</mark> the decline in the number of <mark class="vocab-word" data-word="tree">tree</mark> species or at least to preserve the ‘<mark class="vocab-word" data-word="genetic">genetic</mark> material’ of all of them. Although forest <mark class="vocab-word" data-word="fir">fires</mark> do not affect all of Europe to the same extent, the amount of damage caused the experts to <mark class="vocab-word" data-word="propose">propose</mark> as the third <mark class="vocab-word" data-word="resolution">resolution</mark> that the Strasbourg conference consider the <mark class="vocab-word" data-word="establishment">establishment</mark> of a European databank on the subject. All information used in the development of national preventative policies would become generally available. The subject of the fourth <mark class="vocab-word" data-word="resolution">resolution</mark> discussed by the <mark class="vocab-word" data-word="minister">ministers</mark> was mountain forests. In Europe, it is <mark class="vocab-word" data-word="undoubtedly">undoubtedly</mark> the mountain <mark class="vocab-word" data-word="ecosystem">ecosystem</mark> which has changed most rapidly and is most at risk. A thinly <mark class="vocab-word" data-word="scatter">scattered</mark> permanent population and development of <mark class="vocab-word" data-word="leisure">leisure</mark> activities, particularly <mark class="vocab-word" data-word="ski">skiing</mark>, have resulted in significant <mark class="vocab-word" data-word="long-term">long-term</mark> changes to the local <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>. <mark class="vocab-word" data-word="propose">Proposed</mark> developments include a preferential research program on mountain forests. The fifth <mark class="vocab-word" data-word="resolution">resolution</mark> relaunched the European research network on the <mark class="vocab-word" data-word="physiology">physiology</mark> of <mark class="vocab-word" data-word="tree">trees</mark>, called Eurosilva. Eurosilva should support <mark class="vocab-word" data-word="joint">joint</mark> European research on <mark class="vocab-word" data-word="tree">tree</mark> diseases and their <mark class="vocab-word" data-word="physiological">physiological</mark> and biochemical aspects. Each country <mark class="vocab-word" data-word="concerned">concerned</mark> could increase the number of <mark class="vocab-word" data-word="scholarship">scholarships</mark> and other financial support for <mark class="vocab-word" data-word="doctoral">doctoral</mark> theses and research projects in this area. Finally, the conference <mark class="vocab-word" data-word="established">established</mark> the <mark class="vocab-word" data-word="framework">framework</mark> for a European research network on forest <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>. This would also involve harmonising activities in individual countries as well as identifying a number of priority research topics relating to the protection of forests. The Strasbourg conference’s main concern was to provide for the future. This was the initial <mark class="vocab-word" data-word="motivation">motivation</mark>, one now shared by all 31 participants representing 31European countries. Their final text commits them to on-going discussion between government <mark class="vocab-word" data-word="representative">representatives</mark> with responsibility for forests.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>森林是我们自然遗产的主要元素之一。在过去的十五年里，欧洲森林的减少导致人们对威胁它v们的严重不平衡问题的认识和了解不断增加。欧洲国家越来越关注对欧洲森林的重大威胁，这些威胁忽略除地理或气候外的其他边界：空气污染，土壤退化，森林大火不断增加，有时甚至是我们自己对林地和森林遗产的管理不善。目前，人们越来越意识到国家需要团结在一起，共同协调其政策 。1990年12月，斯特拉斯堡主办了首届保护欧洲森林部长级会议。会议聚集了来自西欧和东欧的31个国家。议题包括对森林破坏的共同研究，如何扑灭森林大火，以及扩展欧洲对森林生态系统的研究项目。会议的筹备工作是在两次专家会议上进行的。他们的首要任务是确定欧洲关注的众多森林问题中哪一个涉及最多的国家，并可能成为联合行动的主题。 。因此，仅限于特定地理区域的那些问题，例如与地中海接壤的国家或北欧国家，必须被丢弃。但是，这并不意味着将来它们会被忽略。</p><p>总体而言，欧洲国家认为森林具有三重功能：生物，经济和娱乐。首先，森林充当我们星球的“绿肺”。通过光合作用，森林通过太阳能的转化产生氧气，从而实现了对人类来言，巨大无污染的动力工厂的基本作用。同时，森林通过不断产生的木材为人类活动提供原材料。最后，他们为那些每周必须在城市环境中度过五天的人提供了无与伦比的自由空间，让他们放松身心并参加一系列休闲活动，例如狩猎，骑马和远足。作为第一种燃料，自从人来文明诞生开始，人们就认识到森林的经济重要性。其他方面在最近几个世纪才显露出来，但是它们变得越来越重要。因此，整个欧洲都存在对威胁到森林环境这三个基本功能的损害的真正担忧。</p><p>“天然”森林的神话一直存在，但实际上欧洲没有剩下任何的“原始”森林。欧洲所有的森林都是人造的，经过人类数千年的改造和开发。这意味着森林政策至关重要，必须超越国界和人类代际，并且必须考虑到森林中需求以及政策方面不可避免的变化。斯特拉斯堡会议是达成这一结论的首次此类活动。宣言称，“在任何生态上合乎逻辑的森林政策中，必须将其随时间推移的连续性和不可预见事件的可能影响置于中心位置，以确保维持这些森林的全部潜力” 。</p><p>伴随这一声明的是六个详细的决议，以协助国家政策的制定。第一项提议是扩大监测点并使其系统化，以监测森林的退化。人们对森林退化仍然知之甚少，但是它却导致大量的树针或树叶损失。现在整个大陆和大多数物种都受到了影响：占树木种群的30％至50％。这种情况似乎是由于许多因素的累积影响所致，其中大气污染物是主要罪魁祸首。应特别注意氮和二氧化硫的化合物。然而，气候因素（例如干旱和严冬）或土壤失衡（例如土壤酸化）会破坏根系，从而加剧其影响。第二项决议集中于维护欧洲森林基因多样性的需要。目的是扭转树种数量的下降，或至少保留所有树种的“遗传材料” 。尽管森林大火不会对整个欧洲产生相同程度的影响，但造成的破坏程度却使专家们提出了第三项决议：斯特拉斯堡会议考虑建立有关该问题的欧洲数据库。制定国家预防政策所使用的所有信息将普遍公开。部长们讨论的第四项决议的主题是山区森林。在欧洲，山区生态系统无疑变化最快，风险最大。零散的永久人口居住点和休闲活动的发展，尤其是滑雪的发展，导致当地生态系统重大长期的变化。拟议的改善包括一项关于山区森林的有限研究计划。第五项决议重新启动了被称为Eurosilva的欧洲树木生理学研究网络 。Eurosilva 应该支持欧洲在树木病害及其生理和生化方面的联合研究。每个相关国家都可以增加该领域的博士学位论文和研究项目的奖学金以及其他经济支持的数量。最后，会议为欧洲森林生态系统研究网络建立了框架。这将涉及协调各个国家的活动，并确定一些与森林保护有关的优先研究主题。斯特拉斯堡会议的主要关切是为未来做好准备。这是最初的动机，现在由代表31个欧洲国家的31位参与者共同拥有。他们的文本使其参与到负责森林相关问题的政府代表之间的持续讨论中。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Forests are one of the main elements of our natural <mark class="vocab-word" data-word="heritage">heritage</mark>. The decline of Europe’s forests over the last <mark class="vocab-word" data-word="decade">decade</mark> and a half has led to an increasing <mark class="vocab-word" data-word="awareness">awareness</mark> and understanding of the serious <mark class="vocab-word" data-word="imbalance">imbalances</mark> which threaten them. European countries are becoming increasingly <mark class="vocab-word" data-word="concerned">concerned</mark> by major <mark class="vocab-word" data-word="threat">threats</mark> to European forests, <mark class="vocab-word" data-word="threat">threats</mark> which know no <mark class="vocab-word" data-word="frontier">frontiers</mark> other than those of geography or climate: air pollution, soil <mark class="vocab-word" data-word="deterioration">deterioration</mark>, the increasing number of forest <mark class="vocab-word" data-word="fir">fires</mark> and sometimes even the mismanagement of our woodland and forest <mark class="vocab-word" data-word="heritage">heritage</mark>. There has been a growing <mark class="vocab-word" data-word="awareness">awareness</mark> of the need for countries to get together to co-ordinate their policies. In December 1990, Strasbourg hosted the first Ministerial Conference on the protection of Europe’s forests. The conference brought together 31 countries from both Western and Eastern Europe. The topics discussed included the co-ordinated study of the <mark class="vocab-word" data-word="destruction">destruction</mark> of forests, as well as how to <mark class="vocab-word" data-word="combat">combat</mark> forest <mark class="vocab-word" data-word="fir">fires</mark> and the <mark class="vocab-word" data-word="extension">extension</mark> of European research programs on the forest <mark class="vocab-word" data-word="ecosystem">ecosystem</mark>. The preparatory work for the conference had been undertaken at two meetings of experts. Their initial task was to decide which of the many forest problems of concern to Europe <mark class="vocab-word" data-word="involved">involved</mark> the largest number of countries and might be the subject of <mark class="vocab-word" data-word="joint">joint</mark> <mark class="vocab-word" data-word="action">action</mark>. Those <mark class="vocab-word" data-word="confine">confined</mark> to particular <mark class="vocab-word" data-word="geographical">geographical</mark> areas, such as countries bordering the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark> or the <mark class="vocab-word" data-word="nordic">Nordic</mark> countries therefore had to be <mark class="vocab-word" data-word="discard">discarded</mark>. However, this does not mean that in future they will be ignored.</p></div>  <div class="parallel-zh"><p>森林是我们自然遗产的主要元素之一。在过去的十五年里，欧洲森林的减少导致人们对威胁它v们的严重不平衡问题的认识和了解不断增加。欧洲国家越来越关注对欧洲森林的重大威胁，这些威胁忽略除地理或气候外的其他边界：空气污染，土壤退化，森林大火不断增加，有时甚至是我们自己对林地和森林遗产的管理不善。目前，人们越来越意识到国家需要团结在一起，共同协调其政策 。1990年12月，斯特拉斯堡主办了首届保护欧洲森林部长级会议。会议聚集了来自西欧和东欧的31个国家。议题包括对森林破坏的共同研究，如何扑灭森林大火，以及扩展欧洲对森林生态系统的研究项目。会议的筹备工作是在两次专家会议上进行的。他们的首要任务是确定欧洲关注的众多森林问题中哪一个涉及最多的国家，并可能成为联合行动的主题。 。因此，仅限于特定地理区域的那些问题，例如与地中海接壤的国家或北欧国家，必须被丢弃。但是，这并不意味着将来它们会被忽略。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As a whole, European countries see forests as <mark class="vocab-word" data-word="perform">performing</mark> a <mark class="vocab-word" data-word="triple">triple</mark> function: <mark class="vocab-word" data-word="biological">biological</mark>, economic and <mark class="vocab-word" data-word="recreational">recreational</mark>. The first is to act as a ‘green <mark class="vocab-word" data-word="lung">lung</mark>’ for our planet; by means of <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark>, forests produce <mark class="vocab-word" data-word="oxygen">oxygen</mark> through the <mark class="vocab-word" data-word="transformation">transformation</mark> of <mark class="vocab-word" data-word="solar">solar</mark> energy, thus <mark class="vocab-word" data-word="fulfill">fulfilling</mark> what for humans is the essential role of an <mark class="vocab-word" data-word="immense">immense</mark>, non-polluting power plant. At the same time, forests provide <mark class="vocab-word" data-word="raw">raw</mark> materials for human activities through their constantly <mark class="vocab-word" data-word="renew">renewed</mark> production of wood. Finally, they offer those <mark class="vocab-word" data-word="condemn">condemned</mark> to spend five days a week in an <mark class="vocab-word" data-word="urban">urban</mark> environment an unrivalled area of freedom to unwind and take part in a range of <mark class="vocab-word" data-word="leisure">leisure</mark> activities, such as hunting, riding and <mark class="vocab-word" data-word="hiking">hiking</mark>. The economic importance of forests has been understood since the <mark class="vocab-word" data-word="dawn">dawn</mark> of man – wood was the first fuel. The other aspects have been recognised only for a few centuries but they are becoming more and more important. <mark class="vocab-word" data-word="hence">Hence</mark>, there is a real concern throughout Europe about the damage to the forest environment which threatens these three basic roles.</p></div>  <div class="parallel-zh"><p>总体而言，欧洲国家认为森林具有三重功能：生物，经济和娱乐。首先，森林充当我们星球的“绿肺”。通过光合作用，森林通过太阳能的转化产生氧气，从而实现了对人类来言，巨大无污染的动力工厂的基本作用。同时，森林通过不断产生的木材为人类活动提供原材料。最后，他们为那些每周必须在城市环境中度过五天的人提供了无与伦比的自由空间，让他们放松身心并参加一系列休闲活动，例如狩猎，骑马和远足。作为第一种燃料，自从人来文明诞生开始，人们就认识到森林的经济重要性。其他方面在最近几个世纪才显露出来，但是它们变得越来越重要。因此，整个欧洲都存在对威胁到森林环境这三个基本功能的损害的真正担忧。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="myth">myth</mark> of the ‘natural’ forest has survived, yet there are effectively no remaining ‘primary’ forests in Europe. All European forests are <mark class="vocab-word" data-word="artificial">artificial</mark>, having been adapted and <mark class="vocab-word" data-word="exploit">exploited</mark> by man for thousands of years. This means that a forest policy is <mark class="vocab-word" data-word="vital">vital</mark>, that it must <mark class="vocab-word" data-word="transcend">transcend</mark> national <mark class="vocab-word" data-word="frontier">frontiers</mark> and generations of people, and that it must allow for the <mark class="vocab-word" data-word="inevitable">inevitable</mark> changes that take place in the forests, in needs, and <mark class="vocab-word" data-word="hence">hence</mark> in policy. The Strasbourg conference was one of the first events on such a scale to reach this conclusion. A general <mark class="vocab-word" data-word="declaration">declaration</mark> was made that ‘a central place in any <mark class="vocab-word" data-word="ecological">ecologically</mark> <mark class="vocab-word" data-word="coherent">coherent</mark> forest policy must be given to <mark class="vocab-word" data-word="continuity">continuity</mark> over time and to the possible effects of unforeseen events, to ensure that the full potential of these forests is maintained’.</p></div>  <div class="parallel-zh"><p>“天然”森林的神话一直存在，但实际上欧洲没有剩下任何的“原始”森林。欧洲所有的森林都是人造的，经过人类数千年的改造和开发。这意味着森林政策至关重要，必须超越国界和人类代际，并且必须考虑到森林中需求以及政策方面不可避免的变化。斯特拉斯堡会议是达成这一结论的首次此类活动。宣言称，“在任何生态上合乎逻辑的森林政策中，必须将其随时间推移的连续性和不可预见事件的可能影响置于中心位置，以确保维持这些森林的全部潜力” 。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>That general <mark class="vocab-word" data-word="declaration">declaration</mark> was accompanied by six detailed <mark class="vocab-word" data-word="resolution">resolutions</mark> to assist national policy-making. The first <mark class="vocab-word" data-word="propose">proposes</mark> the <mark class="vocab-word" data-word="extension">extension</mark> and systematisation of <mark class="vocab-word" data-word="surveillance">surveillance</mark> <mark class="vocab-word" data-word="site">sites</mark> to monitor forest decline. Forest decline is still poorly understood but <mark class="vocab-word" data-word="lead">leads</mark> to the loss of a high <mark class="vocab-word" data-word="proportion">proportion</mark> of a <mark class="vocab-word" data-word="tree">tree</mark>’s <mark class="vocab-word" data-word="needle">needles</mark> or leaves. The entire <mark class="vocab-word" data-word="continent">continent</mark> and the majority of species are now affected: between 30%and 50% of the <mark class="vocab-word" data-word="tree">tree</mark> population. The condition appears to result from the <mark class="vocab-word" data-word="cumulative">cumulative</mark> effect of a number of <mark class="vocab-word" data-word="factor">factors</mark>, with <mark class="vocab-word" data-word="atmospheric">atmospheric</mark> <mark class="vocab-word" data-word="pollutant">pollutants</mark> the <mark class="vocab-word" data-word="principal">principal</mark> <mark class="vocab-word" data-word="culprit">culprits</mark>. <mark class="vocab-word" data-word="compound">Compounds</mark> of <mark class="vocab-word" data-word="nitrogen">nitrogen</mark> and sulphur <mark class="vocab-word" data-word="dioxide">dioxide</mark> should be particularly closely watched. However, their effects are probably <mark class="vocab-word" data-word="accentuate">accentuated</mark> by <mark class="vocab-word" data-word="climatic">climatic</mark> <mark class="vocab-word" data-word="factor">factors</mark>, such as <mark class="vocab-word" data-word="drought">drought</mark> and hard winters, or soil <mark class="vocab-word" data-word="imbalance">imbalances</mark> such as soil acidification, which damages the roots. The second <mark class="vocab-word" data-word="resolution">resolution</mark> concentrates on the need to preserve the <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="diversity">diversity</mark> of European forests. The aim is to <mark class="vocab-word" data-word="reverse">reverse</mark> the decline in the number of <mark class="vocab-word" data-word="tree">tree</mark> species or at least to preserve the ‘<mark class="vocab-word" data-word="genetic">genetic</mark> material’ of all of them. Although forest <mark class="vocab-word" data-word="fir">fires</mark> do not affect all of Europe to the same extent, the amount of damage caused the experts to <mark class="vocab-word" data-word="propose">propose</mark> as the third <mark class="vocab-word" data-word="resolution">resolution</mark> that the Strasbourg conference consider the <mark class="vocab-word" data-word="establishment">establishment</mark> of a European databank on the subject. All information used in the development of national preventative policies would become generally available. The subject of the fourth <mark class="vocab-word" data-word="resolution">resolution</mark> discussed by the <mark class="vocab-word" data-word="minister">ministers</mark> was mountain forests. In Europe, it is <mark class="vocab-word" data-word="undoubtedly">undoubtedly</mark> the mountain <mark class="vocab-word" data-word="ecosystem">ecosystem</mark> which has changed most rapidly and is most at risk. A thinly <mark class="vocab-word" data-word="scatter">scattered</mark> permanent population and development of <mark class="vocab-word" data-word="leisure">leisure</mark> activities, particularly <mark class="vocab-word" data-word="ski">skiing</mark>, have resulted in significant <mark class="vocab-word" data-word="long-term">long-term</mark> changes to the local <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>. <mark class="vocab-word" data-word="propose">Proposed</mark> developments include a preferential research program on mountain forests. The fifth <mark class="vocab-word" data-word="resolution">resolution</mark> relaunched the European research network on the <mark class="vocab-word" data-word="physiology">physiology</mark> of <mark class="vocab-word" data-word="tree">trees</mark>, called Eurosilva. Eurosilva should support <mark class="vocab-word" data-word="joint">joint</mark> European research on <mark class="vocab-word" data-word="tree">tree</mark> diseases and their <mark class="vocab-word" data-word="physiological">physiological</mark> and biochemical aspects. Each country <mark class="vocab-word" data-word="concerned">concerned</mark> could increase the number of <mark class="vocab-word" data-word="scholarship">scholarships</mark> and other financial support for <mark class="vocab-word" data-word="doctoral">doctoral</mark> theses and research projects in this area. Finally, the conference <mark class="vocab-word" data-word="established">established</mark> the <mark class="vocab-word" data-word="framework">framework</mark> for a European research network on forest <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>. This would also involve harmonising activities in individual countries as well as identifying a number of priority research topics relating to the protection of forests. The Strasbourg conference’s main concern was to provide for the future. This was the initial <mark class="vocab-word" data-word="motivation">motivation</mark>, one now shared by all 31 participants representing 31European countries. Their final text commits them to on-going discussion between government <mark class="vocab-word" data-word="representative">representatives</mark> with responsibility for forests.</p></div>  <div class="parallel-zh"><p>伴随这一声明的是六个详细的决议，以协助国家政策的制定。第一项提议是扩大监测点并使其系统化，以监测森林的退化。人们对森林退化仍然知之甚少，但是它却导致大量的树针或树叶损失。现在整个大陆和大多数物种都受到了影响：占树木种群的30％至50％。这种情况似乎是由于许多因素的累积影响所致，其中大气污染物是主要罪魁祸首。应特别注意氮和二氧化硫的化合物。然而，气候因素（例如干旱和严冬）或土壤失衡（例如土壤酸化）会破坏根系，从而加剧其影响。第二项决议集中于维护欧洲森林基因多样性的需要。目的是扭转树种数量的下降，或至少保留所有树种的“遗传材料” 。尽管森林大火不会对整个欧洲产生相同程度的影响，但造成的破坏程度却使专家们提出了第三项决议：斯特拉斯堡会议考虑建立有关该问题的欧洲数据库。制定国家预防政策所使用的所有信息将普遍公开。部长们讨论的第四项决议的主题是山区森林。在欧洲，山区生态系统无疑变化最快，风险最大。零散的永久人口居住点和休闲活动的发展，尤其是滑雪的发展，导致当地生态系统重大长期的变化。拟议的改善包括一项关于山区森林的有限研究计划。第五项决议重新启动了被称为Eurosilva的欧洲树木生理学研究网络 。Eurosilva 应该支持欧洲在树木病害及其生理和生化方面的联合研究。每个相关国家都可以增加该领域的博士学位论文和研究项目的奖学金以及其他经济支持的数量。最后，会议为欧洲森林生态系统研究网络建立了框架。这将涉及协调各个国家的活动，并确定一些与森林保护有关的优先研究主题。斯特拉斯堡会议的主要关切是为未来做好准备。这是最初的动机，现在由代表31个欧洲国家的31位参与者共同拥有。他们的文本使其参与到负责森林相关问题的政府代表之间的持续讨论中。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"heritage": 2, "decade": 1, "awareness": 2, "imbalance": 2, "concerned": 2, "threat": 2, "frontier": 2, "deterioration": 1, "fir": 3, "destruction": 1, "combat": 1, "extension": 2, "ecosystem": 4, "involved": 1, "joint": 2, "action": 1, "confine": 1, "geographical": 1, "mediterranean": 1, "nordic": 1, "discard": 1, "perform": 1, "triple": 1, "biological": 1, "recreational": 1, "lung": 1, "photosynthesis": 1, "oxygen": 1, "transformation": 1, "solar": 1, "fulfill": 1, "immense": 1, "raw": 1, "renew": 1, "condemn": 1, "urban": 1, "leisure": 2, "hiking": 1, "dawn": 1, "hence": 2, "myth": 1, "artificial": 1, "exploit": 1, "vital": 1, "transcend": 1, "inevitable": 1, "declaration": 2, "ecological": 1, "coherent": 1, "continuity": 1, "resolution": 5, "propose": 3, "surveillance": 1, "site": 1, "lead": 1, "proportion": 1, "tree": 5, "needle": 1, "continent": 1, "cumulative": 1, "factor": 2, "atmospheric": 1, "pollutant": 1, "principal": 1, "culprit": 1, "compound": 1, "nitrogen": 1, "dioxide": 1, "accentuate": 1, "climatic": 1, "drought": 1, "genetic": 2, "diversity": 1, "reverse": 1, "establishment": 1, "minister": 1, "undoubtedly": 1, "scatter": 1, "ski": 1, "long-term": 1, "physiology": 1, "physiological": 1, "scholarship": 1, "doctoral": 1, "established": 1, "framework": 1, "motivation": 1, "representative": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

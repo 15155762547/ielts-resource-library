@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collecting Ant Specimens - 剑桥雅思8 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Collecting Ant Specimens</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26338.html" target="_blank">https://www.laokaoya.com/26338.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Collecting ants can be as simple as picking up <mark class="vocab-word" data-word="stray">stray</mark> ones and placing them in a glass <mark class="vocab-word" data-word="jar">jar</mark>, or as <mark class="vocab-word" data-word="complicated">complicated</mark> as completing an <mark class="vocab-word" data-word="exhaustive">exhaustive</mark> survey of all species present in an area and estimating their relative <mark class="vocab-word" data-word="abundance">abundances</mark>. The exact method used will depend on the final purpose of the collections. For taxonomy, or <mark class="vocab-word" data-word="classification">classification</mark>, long series, from a single <mark class="vocab-word" data-word="nest">nest</mark>, which contain all castes (workers, including majors and minors, and, if present, queens and males) are <mark class="vocab-word" data-word="desirable">desirable</mark>, to allow the <mark class="vocab-word" data-word="determination">determination</mark> of <mark class="vocab-word" data-word="variation">variation</mark> within species. For <mark class="vocab-word" data-word="ecological">ecological</mark> studies, the most important <mark class="vocab-word" data-word="factor">factor</mark> is collecting <mark class="vocab-word" data-word="identifiable">identifiable</mark> samples of as many of the different species present as possible. <mark class="vocab-word" data-word="unfortunate">Unfortunately</mark>, these methods are not always <mark class="vocab-word" data-word="compatible">compatible</mark>. The taxonomist sometimes <mark class="vocab-word" data-word="overlook">overlooks</mark> whole species in favour of those groups currently under study, while the ecologist often collects only a limited number of <mark class="vocab-word" data-word="specimen">specimens</mark> of each species, thus reducing their value for taxonomic investigations.</p><p>To collect as wide a range of species as possible, several methods must be used. These include hand collecting, using <mark class="vocab-word" data-word="bait">baits</mark> to attract the ants, ground <mark class="vocab-word" data-word="litter">litter</mark> sampling, and the use of <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">traps</mark>. Hand collecting consists of searching for ants everywhere they are likely to occur. This article is from  website. This includes on the ground, under rocks, <mark class="vocab-word" data-word="log">logs</mark> or other objects on the ground, in <mark class="vocab-word" data-word="rotten">rotten</mark> wood on the ground or on <mark class="vocab-word" data-word="tree">trees</mark>, in <mark class="vocab-word" data-word="vegetation">vegetation</mark>, on <mark class="vocab-word" data-word="tree">tree</mark> <mark class="vocab-word" data-word="trunk">trunks</mark> and under <mark class="vocab-word" data-word="bark">bark</mark>. When possible, collections should be made from <mark class="vocab-word" data-word="nest">nests</mark> or <mark class="vocab-word" data-word="forage">foraging</mark> <mark class="vocab-word" data-word="column">columns</mark> and at least 20 to 25 individuals collected. This will ensure that all individuals are of the same species, and so increase their value for detailed studies. Since some species are largely <mark class="vocab-word" data-word="nocturnal">nocturnal</mark>, collecting should not be <mark class="vocab-word" data-word="confine">confined</mark> to <mark class="vocab-word" data-word="daytime">daytime</mark>. <mark class="vocab-word" data-word="specimen">Specimens</mark> are collected using an aspirator (often called a pooter), forceps, a fine, moistened paint brush, or fingers, if the ants are known not to <mark class="vocab-word" data-word="sting">sting</mark>. Individual insects are placed in plastic or glass <mark class="vocab-word" data-word="tub">tubes</mark> (1. 5-3. 0 ml <mark class="vocab-word" data-word="capacity">capacity</mark> for small ants, 5-8 ml for larger ants) containing 75% to 95% <mark class="vocab-word" data-word="ethanol">ethanol</mark>. Plastic <mark class="vocab-word" data-word="tub">tubes</mark> with secure tops are better than glass because they are <mark class="vocab-word" data-word="lighter">lighter</mark>, and do not break as easily if <mark class="vocab-word" data-word="mishandle">mishandled</mark>.</p><p><mark class="vocab-word" data-word="bait">Baits</mark> can be used to attract and concentrate foragers. This often increases the number of individuals collected and attracts species that are otherwise <mark class="vocab-word" data-word="elusive">elusive</mark>. Sugars and meats or oils will attract different species and a range should be utilised. These <mark class="vocab-word" data-word="bait">baits</mark> Can be placed either on the ground or on the <mark class="vocab-word" data-word="trunk">trunks</mark> of <mark class="vocab-word" data-word="tree">trees</mark> or large <mark class="vocab-word" data-word="shrub">shrubs</mark>. When placed on the ground, <mark class="vocab-word" data-word="bait">baits</mark> should be <mark class="vocab-word" data-word="situated">situated</mark> on small paper cards or other <mark class="vocab-word" data-word="flat">flat</mark>, light-coloured surfaces, or in test-tubes or vials. This makes it easier to spot ants and to capture them before they can escape into the <mark class="vocab-word" data-word="surrounding">surrounding</mark> <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark>.</p><p>Many ants are small and <mark class="vocab-word" data-word="forage">forage</mark> <mark class="vocab-word" data-word="primarily">primarily</mark> in the layer of leaves and other <mark class="vocab-word" data-word="debris">debris</mark> on the ground. Collecting these species by hand can be difficult. One of the most successful ways to collect them is to gather the <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> in which they are <mark class="vocab-word" data-word="forage">foraging</mark> and extract the ants from it. This is most commonly done by placing <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> on a screen over a large <mark class="vocab-word" data-word="funnel">funnel</mark>, often under some heat. As the <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> dries from above, ants (and other animals) move <mark class="vocab-word" data-word="downward">downward</mark> and eventually fall out the bottom and are collected in alcohol placed below the <mark class="vocab-word" data-word="funnel">funnel</mark>. This method works especially well in rain forests and marshy areas. A method of improving the <mark class="vocab-word" data-word="catch">catch</mark> when using a <mark class="vocab-word" data-word="funnel">funnel</mark> is to <mark class="vocab-word" data-word="sift">sift</mark> the <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> through a <mark class="vocab-word" data-word="coarse">coarse</mark> screen before placing it above the <mark class="vocab-word" data-word="funnel">funnel</mark>. This will concentrate the <mark class="vocab-word" data-word="litter">litter</mark> and remove larger leaves and <mark class="vocab-word" data-word="twig">twigs</mark>. It will also allow more <mark class="vocab-word" data-word="litter">litter</mark> to be sampled when using a limited number of <mark class="vocab-word" data-word="funnel">funnels</mark>.</p><p>The <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">trap</mark> is another commonly used tool for collecting ants. A <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">trap</mark> can be any small <mark class="vocab-word" data-word="container">container</mark> placed in the ground with the top level with the <mark class="vocab-word" data-word="surrounding">surrounding</mark> surface and filled with a preservative. Ants are collected when they fall into the <mark class="vocab-word" data-word="trap">trap</mark> while <mark class="vocab-word" data-word="forage">foraging</mark>. The <mark class="vocab-word" data-word="diameter">diameter</mark> of the <mark class="vocab-word" data-word="trap">traps</mark> can vary from about 18 mm to 10 cm and the number used can vary from a few to several hundred. The size of the <mark class="vocab-word" data-word="trap">traps</mark> used is <mark class="vocab-word" data-word="influence">influenced</mark> largely by personal <mark class="vocab-word" data-word="preference">preference</mark> (although larger sizes are generally better), while the number will be <mark class="vocab-word" data-word="determined">determined</mark> by the study being undertaken. The preservative used is usually ethylene glycol or propylene glycol, as alcohol will <mark class="vocab-word" data-word="evaporate">evaporate</mark> quickly and the <mark class="vocab-word" data-word="trap">traps</mark> will dry out. One advantage of <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">traps</mark> is that they can be used to collect over a period of time with <mark class="vocab-word" data-word="minimal">minimal</mark> <mark class="vocab-word" data-word="maintenance">maintenance</mark> and <mark class="vocab-word" data-word="intervention">intervention</mark>. One <mark class="vocab-word" data-word="disadvantage">disadvantage</mark> is that some species are not collected as they either avoid the <mark class="vocab-word" data-word="trap">traps</mark> or do not commonly encounter them while <mark class="vocab-word" data-word="forage">foraging</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>收集蚂蚁可以很简单，例如捡起走失的蚂蚁并将它们放在玻璃罐中，也可以很复杂，例如完成一个区域内所有蚂蚁种类的详尽调查，并估算它们的相对数量。所使用的具体方法将取决于收集的最终目的。对于分分类来说，最好是能够从一个巢穴中获取包含所有种类（包括成年和幼小的工蚁，以及蚁后和雄性，如果存在的话）在内的长序列，以便确定物种内的多样性。对于生态研究，最重要的因素是收集尽可能多的不同物种的可识别样本。不幸的是，这些方法并不总是能够互相兼容。分类学家有时会忽视整个物种，而倾向于当前正在研究的那些族群；而生态学家通常只收集每种物种数量有限的标本，这样就降低了它们在分类学研究中的价值。</p><p>为了收集尽可能广泛的物种，必须使用几种方法。它们包括手工收集，使用诱饵吸引蚂蚁，对地面垫料进行采样以及使用陷阱。手工收集包括在可能出现蚂蚁的任何地方搜索蚂蚁。这包括地面上，岩石、原木或其他物体之下，地面腐烂的树木里，植被中，树干上和树皮下。可能的话，应从巢穴或觅食柱中收集，并至少收集20至25个个体。这样可以确保所有个体都属于同一物种，并因此可以增加它们进行详细研究的价值。由于某些物种主要在夜间活动，因此收集不应仅限于白天。可以使用吸气器（通常称为pooter），镊子，细的湿油漆刷俩进行收集。如果知道蚂蚁不会叮人的话，也可以使用手指。将单个蚂蚁放在装有75％至95％乙醇的塑料或玻璃管中（小蚂蚁为1. 5-3.0 ml，大蚂蚁为5-8 ml）。拥有固定盖子的塑料管比玻璃管更好，因为它们更轻，并且如果处理不当的话也不会轻易断裂。</p><p>诱饵可用于吸引和集中觅食者。这通常会增加收集到的个体数量，并吸引本来难以捉摸的物种。糖，肉或油会吸引不同的物种，因此应使用多种诱饵。这些诱饵可以放在地面，或者树木或大灌木的树干上。当放置在地面上时，诱饵应放在小纸片或其他浅色的平面上，或在试管或小瓶中。这样可以在蚂蚁逃脱到周围的枯枝落叶中之前，更轻松地发现并捕获它们。</p><p>许多蚂蚁都很小，主要在地面上的树叶里和其他杂物中觅食。手工收集这些物种可能很困难。收集它们的最成功的方法之一是聚集它们正在觅食的叶子并从中提取蚂蚁。通常将落叶放在大漏斗上的滤网上，并进行加热。当叶子逐渐干燥时，蚂蚁（和其他动物）会向下移动并最终从底部掉出，并被收集在漏斗下方的酒精中。此方法在雨林和沼泽地区特别有效。一种在使用漏斗时提升捕获量的方法是，先将叶子通过粗滤网过滤一遍，然后再将其置于漏斗上方。这将使叶子更集中，并去除较大的叶子和树枝。当漏斗数量有限时，它还可以对更多的树叶进行采样。</p><p>陷阱是收集蚂蚁的另一种常用工具。陷阱可以是任何小型容器，该小容器可以放在地上，其顶部与周围的表面齐平，并装满防腐剂。蚂蚁在觅食时掉入陷阱并被收集。陷阱的直径可以在18毫米到10厘米之间变化，所用数量可以是几个到几百个不等。陷阱的大小在很大程度上受个人喜好的影响（尽管较大的陷阱通常更好），而陷阱的数量将由正在进行的研究确定。所使用的防腐剂通常是乙二醇或丙二醇，因为酒精会迅速蒸发使得陷阱会变干。陷阱的一个优势是，它们可以在一段时间内持续收集，而不怎么需要维护和干预。一个缺点是无法收集某些五种，因为它们要么避开陷阱，要么在觅食时通常不会遇到陷阱。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Collecting ants can be as simple as picking up <mark class="vocab-word" data-word="stray">stray</mark> ones and placing them in a glass <mark class="vocab-word" data-word="jar">jar</mark>, or as <mark class="vocab-word" data-word="complicated">complicated</mark> as completing an <mark class="vocab-word" data-word="exhaustive">exhaustive</mark> survey of all species present in an area and estimating their relative <mark class="vocab-word" data-word="abundance">abundances</mark>. The exact method used will depend on the final purpose of the collections. For taxonomy, or <mark class="vocab-word" data-word="classification">classification</mark>, long series, from a single <mark class="vocab-word" data-word="nest">nest</mark>, which contain all castes (workers, including majors and minors, and, if present, queens and males) are <mark class="vocab-word" data-word="desirable">desirable</mark>, to allow the <mark class="vocab-word" data-word="determination">determination</mark> of <mark class="vocab-word" data-word="variation">variation</mark> within species. For <mark class="vocab-word" data-word="ecological">ecological</mark> studies, the most important <mark class="vocab-word" data-word="factor">factor</mark> is collecting <mark class="vocab-word" data-word="identifiable">identifiable</mark> samples of as many of the different species present as possible. <mark class="vocab-word" data-word="unfortunate">Unfortunately</mark>, these methods are not always <mark class="vocab-word" data-word="compatible">compatible</mark>. The taxonomist sometimes <mark class="vocab-word" data-word="overlook">overlooks</mark> whole species in favour of those groups currently under study, while the ecologist often collects only a limited number of <mark class="vocab-word" data-word="specimen">specimens</mark> of each species, thus reducing their value for taxonomic investigations.</p></div>  <div class="parallel-zh"><p>收集蚂蚁可以很简单，例如捡起走失的蚂蚁并将它们放在玻璃罐中，也可以很复杂，例如完成一个区域内所有蚂蚁种类的详尽调查，并估算它们的相对数量。所使用的具体方法将取决于收集的最终目的。对于分分类来说，最好是能够从一个巢穴中获取包含所有种类（包括成年和幼小的工蚁，以及蚁后和雄性，如果存在的话）在内的长序列，以便确定物种内的多样性。对于生态研究，最重要的因素是收集尽可能多的不同物种的可识别样本。不幸的是，这些方法并不总是能够互相兼容。分类学家有时会忽视整个物种，而倾向于当前正在研究的那些族群；而生态学家通常只收集每种物种数量有限的标本，这样就降低了它们在分类学研究中的价值。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>To collect as wide a range of species as possible, several methods must be used. These include hand collecting, using <mark class="vocab-word" data-word="bait">baits</mark> to attract the ants, ground <mark class="vocab-word" data-word="litter">litter</mark> sampling, and the use of <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">traps</mark>. Hand collecting consists of searching for ants everywhere they are likely to occur. This article is from  website. This includes on the ground, under rocks, <mark class="vocab-word" data-word="log">logs</mark> or other objects on the ground, in <mark class="vocab-word" data-word="rotten">rotten</mark> wood on the ground or on <mark class="vocab-word" data-word="tree">trees</mark>, in <mark class="vocab-word" data-word="vegetation">vegetation</mark>, on <mark class="vocab-word" data-word="tree">tree</mark> <mark class="vocab-word" data-word="trunk">trunks</mark> and under <mark class="vocab-word" data-word="bark">bark</mark>. When possible, collections should be made from <mark class="vocab-word" data-word="nest">nests</mark> or <mark class="vocab-word" data-word="forage">foraging</mark> <mark class="vocab-word" data-word="column">columns</mark> and at least 20 to 25 individuals collected. This will ensure that all individuals are of the same species, and so increase their value for detailed studies. Since some species are largely <mark class="vocab-word" data-word="nocturnal">nocturnal</mark>, collecting should not be <mark class="vocab-word" data-word="confine">confined</mark> to <mark class="vocab-word" data-word="daytime">daytime</mark>. <mark class="vocab-word" data-word="specimen">Specimens</mark> are collected using an aspirator (often called a pooter), forceps, a fine, moistened paint brush, or fingers, if the ants are known not to <mark class="vocab-word" data-word="sting">sting</mark>. Individual insects are placed in plastic or glass <mark class="vocab-word" data-word="tub">tubes</mark> (1. 5-3. 0 ml <mark class="vocab-word" data-word="capacity">capacity</mark> for small ants, 5-8 ml for larger ants) containing 75% to 95% <mark class="vocab-word" data-word="ethanol">ethanol</mark>. Plastic <mark class="vocab-word" data-word="tub">tubes</mark> with secure tops are better than glass because they are <mark class="vocab-word" data-word="lighter">lighter</mark>, and do not break as easily if <mark class="vocab-word" data-word="mishandle">mishandled</mark>.</p></div>  <div class="parallel-zh"><p>为了收集尽可能广泛的物种，必须使用几种方法。它们包括手工收集，使用诱饵吸引蚂蚁，对地面垫料进行采样以及使用陷阱。手工收集包括在可能出现蚂蚁的任何地方搜索蚂蚁。这包括地面上，岩石、原木或其他物体之下，地面腐烂的树木里，植被中，树干上和树皮下。可能的话，应从巢穴或觅食柱中收集，并至少收集20至25个个体。这样可以确保所有个体都属于同一物种，并因此可以增加它们进行详细研究的价值。由于某些物种主要在夜间活动，因此收集不应仅限于白天。可以使用吸气器（通常称为pooter），镊子，细的湿油漆刷俩进行收集。如果知道蚂蚁不会叮人的话，也可以使用手指。将单个蚂蚁放在装有75％至95％乙醇的塑料或玻璃管中（小蚂蚁为1. 5-3.0 ml，大蚂蚁为5-8 ml）。拥有固定盖子的塑料管比玻璃管更好，因为它们更轻，并且如果处理不当的话也不会轻易断裂。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="bait">Baits</mark> can be used to attract and concentrate foragers. This often increases the number of individuals collected and attracts species that are otherwise <mark class="vocab-word" data-word="elusive">elusive</mark>. Sugars and meats or oils will attract different species and a range should be utilised. These <mark class="vocab-word" data-word="bait">baits</mark> Can be placed either on the ground or on the <mark class="vocab-word" data-word="trunk">trunks</mark> of <mark class="vocab-word" data-word="tree">trees</mark> or large <mark class="vocab-word" data-word="shrub">shrubs</mark>. When placed on the ground, <mark class="vocab-word" data-word="bait">baits</mark> should be <mark class="vocab-word" data-word="situated">situated</mark> on small paper cards or other <mark class="vocab-word" data-word="flat">flat</mark>, light-coloured surfaces, or in test-tubes or vials. This makes it easier to spot ants and to capture them before they can escape into the <mark class="vocab-word" data-word="surrounding">surrounding</mark> <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark>.</p></div>  <div class="parallel-zh"><p>诱饵可用于吸引和集中觅食者。这通常会增加收集到的个体数量，并吸引本来难以捉摸的物种。糖，肉或油会吸引不同的物种，因此应使用多种诱饵。这些诱饵可以放在地面，或者树木或大灌木的树干上。当放置在地面上时，诱饵应放在小纸片或其他浅色的平面上，或在试管或小瓶中。这样可以在蚂蚁逃脱到周围的枯枝落叶中之前，更轻松地发现并捕获它们。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many ants are small and <mark class="vocab-word" data-word="forage">forage</mark> <mark class="vocab-word" data-word="primarily">primarily</mark> in the layer of leaves and other <mark class="vocab-word" data-word="debris">debris</mark> on the ground. Collecting these species by hand can be difficult. One of the most successful ways to collect them is to gather the <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> in which they are <mark class="vocab-word" data-word="forage">foraging</mark> and extract the ants from it. This is most commonly done by placing <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> on a screen over a large <mark class="vocab-word" data-word="funnel">funnel</mark>, often under some heat. As the <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> dries from above, ants (and other animals) move <mark class="vocab-word" data-word="downward">downward</mark> and eventually fall out the bottom and are collected in alcohol placed below the <mark class="vocab-word" data-word="funnel">funnel</mark>. This method works especially well in rain forests and marshy areas. A method of improving the <mark class="vocab-word" data-word="catch">catch</mark> when using a <mark class="vocab-word" data-word="funnel">funnel</mark> is to <mark class="vocab-word" data-word="sift">sift</mark> the <mark class="vocab-word" data-word="leaf">leaf</mark> <mark class="vocab-word" data-word="litter">litter</mark> through a <mark class="vocab-word" data-word="coarse">coarse</mark> screen before placing it above the <mark class="vocab-word" data-word="funnel">funnel</mark>. This will concentrate the <mark class="vocab-word" data-word="litter">litter</mark> and remove larger leaves and <mark class="vocab-word" data-word="twig">twigs</mark>. It will also allow more <mark class="vocab-word" data-word="litter">litter</mark> to be sampled when using a limited number of <mark class="vocab-word" data-word="funnel">funnels</mark>.</p></div>  <div class="parallel-zh"><p>许多蚂蚁都很小，主要在地面上的树叶里和其他杂物中觅食。手工收集这些物种可能很困难。收集它们的最成功的方法之一是聚集它们正在觅食的叶子并从中提取蚂蚁。通常将落叶放在大漏斗上的滤网上，并进行加热。当叶子逐渐干燥时，蚂蚁（和其他动物）会向下移动并最终从底部掉出，并被收集在漏斗下方的酒精中。此方法在雨林和沼泽地区特别有效。一种在使用漏斗时提升捕获量的方法是，先将叶子通过粗滤网过滤一遍，然后再将其置于漏斗上方。这将使叶子更集中，并去除较大的叶子和树枝。当漏斗数量有限时，它还可以对更多的树叶进行采样。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">trap</mark> is another commonly used tool for collecting ants. A <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">trap</mark> can be any small <mark class="vocab-word" data-word="container">container</mark> placed in the ground with the top level with the <mark class="vocab-word" data-word="surrounding">surrounding</mark> surface and filled with a preservative. Ants are collected when they fall into the <mark class="vocab-word" data-word="trap">trap</mark> while <mark class="vocab-word" data-word="forage">foraging</mark>. The <mark class="vocab-word" data-word="diameter">diameter</mark> of the <mark class="vocab-word" data-word="trap">traps</mark> can vary from about 18 mm to 10 cm and the number used can vary from a few to several hundred. The size of the <mark class="vocab-word" data-word="trap">traps</mark> used is <mark class="vocab-word" data-word="influence">influenced</mark> largely by personal <mark class="vocab-word" data-word="preference">preference</mark> (although larger sizes are generally better), while the number will be <mark class="vocab-word" data-word="determined">determined</mark> by the study being undertaken. The preservative used is usually ethylene glycol or propylene glycol, as alcohol will <mark class="vocab-word" data-word="evaporate">evaporate</mark> quickly and the <mark class="vocab-word" data-word="trap">traps</mark> will dry out. One advantage of <mark class="vocab-word" data-word="pitfall">pitfall</mark> <mark class="vocab-word" data-word="trap">traps</mark> is that they can be used to collect over a period of time with <mark class="vocab-word" data-word="minimal">minimal</mark> <mark class="vocab-word" data-word="maintenance">maintenance</mark> and <mark class="vocab-word" data-word="intervention">intervention</mark>. One <mark class="vocab-word" data-word="disadvantage">disadvantage</mark> is that some species are not collected as they either avoid the <mark class="vocab-word" data-word="trap">traps</mark> or do not commonly encounter them while <mark class="vocab-word" data-word="forage">foraging</mark>.</p></div>  <div class="parallel-zh"><p>陷阱是收集蚂蚁的另一种常用工具。陷阱可以是任何小型容器，该小容器可以放在地上，其顶部与周围的表面齐平，并装满防腐剂。蚂蚁在觅食时掉入陷阱并被收集。陷阱的直径可以在18毫米到10厘米之间变化，所用数量可以是几个到几百个不等。陷阱的大小在很大程度上受个人喜好的影响（尽管较大的陷阱通常更好），而陷阱的数量将由正在进行的研究确定。所使用的防腐剂通常是乙二醇或丙二醇，因为酒精会迅速蒸发使得陷阱会变干。陷阱的一个优势是，它们可以在一段时间内持续收集，而不怎么需要维护和干预。一个缺点是无法收集某些五种，因为它们要么避开陷阱，要么在觅食时通常不会遇到陷阱。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"stray": 1, "jar": 1, "complicated": 1, "exhaustive": 1, "abundance": 1, "classification": 1, "nest": 2, "desirable": 1, "determination": 1, "variation": 1, "ecological": 1, "factor": 1, "identifiable": 1, "unfortunate": 1, "compatible": 1, "overlook": 1, "specimen": 2, "bait": 4, "litter": 8, "pitfall": 4, "trap": 9, "log": 1, "rotten": 1, "tree": 3, "vegetation": 1, "trunk": 2, "bark": 1, "forage": 5, "column": 1, "nocturnal": 1, "confine": 1, "daytime": 1, "sting": 1, "tub": 2, "capacity": 1, "ethanol": 1, "lighter": 1, "mishandle": 1, "elusive": 1, "shrub": 1, "situated": 1, "flat": 1, "surrounding": 2, "leaf": 5, "primarily": 1, "debris": 1, "funnel": 5, "downward": 1, "catch": 1, "sift": 1, "coarse": 1, "twig": 1, "container": 1, "diameter": 1, "influence": 1, "preference": 1, "determined": 1, "evaporate": 1, "minimal": 1, "maintenance": 1, "intervention": 1, "disadvantage": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

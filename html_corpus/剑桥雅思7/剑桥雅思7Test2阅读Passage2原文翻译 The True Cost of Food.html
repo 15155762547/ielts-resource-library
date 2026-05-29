@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The True Cost of Food - 剑桥雅思7 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>The True Cost of Food</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24358.html" target="_blank">https://www.laokaoya.com/24358.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>For more than forty years the cost of food has been rising. It has now reached a point where a growing number of people believe that it is far too high, and that bringing it down will be one of the great challenges of the twenty-first century. That cost, however, is not in immediate cash. In the west at least, most food is now far cheaper to buy in relative terms than it was in 1960. The cost is in the <mark class="vocab-word" data-word="collateral">collateral</mark> damage of the very methods of food production that have made the food cheaper: in the pollution of water, the enervation of soil, the <mark class="vocab-word" data-word="destruction">destruction</mark> of wildlife, the harm to animal <mark class="vocab-word" data-word="welfare">welfare</mark> and the <mark class="vocab-word" data-word="threat">threat</mark> to human health caused by modern industrial <mark class="vocab-word" data-word="agriculture">agriculture</mark>.</p><p>First mechanisation, then mass use of chemical fertilisers and <mark class="vocab-word" data-word="pesticide">pesticides</mark>, then monocultures, then battery <mark class="vocab-word" data-word="rear">rearing</mark> of <mark class="vocab-word" data-word="livestock">livestock</mark>, and now <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> – the onward <mark class="vocab-word" data-word="march">march</mark> of <mark class="vocab-word" data-word="intensive">intensive</mark> farming has seemed unstoppable in the last half-century, as the <mark class="vocab-word" data-word="yield">yields</mark> of produce have <mark class="vocab-word" data-word="soar">soared</mark>. But the damage it has caused has been <mark class="vocab-word" data-word="colossal">colossal</mark>. In Britain, for example, many of our best-loved farmland birds, such as the skylark, the grey partridge, the lapwing and the corn bunting, have <mark class="vocab-word" data-word="vanish">vanished</mark> from huge stretches of countryside, as have even more wild flowers and insects. This is a direct result of the way we have produced our food in the last four <mark class="vocab-word" data-word="decade">decades</mark>. Thousands of miles of hedgerows, thousands of <mark class="vocab-word" data-word="pond">ponds</mark>, have disappeared from the landscape. The faecal filth of <mark class="vocab-word" data-word="salmon">salmon</mark> farming has driven wild <mark class="vocab-word" data-word="salmon">salmon</mark> from many of the sea lochs and rivers of Scotland. Natural soil fertility is dropping in many areas because of continuous industrial fertiliser and <mark class="vocab-word" data-word="pesticide">pesticide</mark> use, while the growth of <mark class="vocab-word" data-word="algae">algae</mark> is increasing in lakes because of the fertiliser <mark class="vocab-word" data-word="run-off">run-off</mark>.</p><p>Put it all together and it looks like a battlefield, but consumers rarely make the connection at the dinner table. That is mainly because the costs of all this damage are what economists refer to as externalities: they are outside the main <mark class="vocab-word" data-word="transaction">transaction</mark>, which is for example producing and selling a field of <mark class="vocab-word" data-word="wheat">wheat</mark>, and are borne directly by neither producers nor consumers. To many, the costs may not even appear to be financial at all, but <mark class="vocab-word" data-word="merely">merely</mark> aesthetic – a terrible shame, but nothing to do with money. And anyway they, as consumers of food, certainly aren’t paying for it, are they?</p><p>But the costs to society can actually be quantified and, when added up, can amount to <mark class="vocab-word" data-word="stagger">staggering</mark> sums. A <mark class="vocab-word" data-word="remarkable">remarkable</mark> exercise in doing this has been carried out by one of the world’s <mark class="vocab-word" data-word="lead">leading</mark> thinkers on the future of <mark class="vocab-word" data-word="agriculture">agriculture</mark>, Professor Jules Pretty, Director of the Centre for Environment and Society at the University of Essex. Professor Pretty and his colleagues calculated the externalities of British <mark class="vocab-word" data-word="agriculture">agriculture</mark> for one particular year. They added up the costs of repairing the damage it caused, and came up with a total figure of ￡2,343m. This is <mark class="vocab-word" data-word="equivalent">equivalent</mark> to ￡208 for every <mark class="vocab-word" data-word="hectare">hectare</mark> of <mark class="vocab-word" data-word="arable">arable</mark> land and permanent <mark class="vocab-word" data-word="pasture">pasture</mark>, almost as much again as the total government and EU spend on British farming in that year. And <mark class="vocab-word" data-word="accord">according</mark> to Professor Pretty, it was a <mark class="vocab-word" data-word="conservative">conservative</mark> estimate.</p><p>The costs included: ￡120m for <mark class="vocab-word" data-word="removal">removal</mark> of <mark class="vocab-word" data-word="pesticide">pesticides</mark>; ￡16m for <mark class="vocab-word" data-word="removal">removal</mark> of <mark class="vocab-word" data-word="nitrate">nitrates</mark>; ￡55m for <mark class="vocab-word" data-word="removal">removal</mark> of <mark class="vocab-word" data-word="phosphate">phosphates</mark> and soil; ￡23m for the <mark class="vocab-word" data-word="removal">removal</mark> of the bug cryptosporidium from drinking water by water companies; ￡125m for damage to wildlife <mark class="vocab-word" data-word="habitat">habitats</mark>, hedgerows and dry stone walls; ￡1,113m from <mark class="vocab-word" data-word="emission">emissions</mark> of gases likely to contribute to climate change; ￡106m from soil <mark class="vocab-word" data-word="erosion">erosion</mark> and <mark class="vocab-word" data-word="organic">organic</mark> <mark class="vocab-word" data-word="carbon">carbon</mark> losses; ￡169m from food <mark class="vocab-word" data-word="poison">poisoning</mark>; and ￡607m from <mark class="vocab-word" data-word="cattle">cattle</mark> disease. Professor Pretty draws a simple but <mark class="vocab-word" data-word="memorable">memorable</mark> conclusion from all this: our food bills are actually threefold. We are paying for our <mark class="vocab-word" data-word="supposedly">supposedly</mark> cheaper food in three separate ways: once over the <mark class="vocab-word" data-word="counter">counter</mark>, secondly through our taxes, which provide the enormous subsidies propping up modern <mark class="vocab-word" data-word="intensive">intensive</mark> farming, and thirdly to clean up the mess that modern farming leaves behind.</p><p>So can the true cost of food be brought down? Breaking away from industrial <mark class="vocab-word" data-word="agriculture">agriculture</mark> as the solution to <mark class="vocab-word" data-word="hunger">hunger</mark> may be very hard for some countries, but in Britain, where the immediate need to supply food is less <mark class="vocab-word" data-word="urgent">urgent</mark>, and the costs and the damage of <mark class="vocab-word" data-word="intensive">intensive</mark> farming have been clearly seen, it may be more <mark class="vocab-word" data-word="feasible">feasible</mark>. The government needs to create <mark class="vocab-word" data-word="sustainable">sustainable</mark>, competitive and <mark class="vocab-word" data-word="diverse">diverse</mark> farming and food <mark class="vocab-word" data-word="sector">sectors</mark>, which will contribute to a <mark class="vocab-word" data-word="thriving">thriving</mark> and <mark class="vocab-word" data-word="sustainable">sustainable</mark> <mark class="vocab-word" data-word="rural">rural</mark> economy, and advance environmental, economic, health, and animal <mark class="vocab-word" data-word="welfare">welfare</mark> goals.</p><p>But if industrial <mark class="vocab-word" data-word="agriculture">agriculture</mark> is to be replaced, what is a <mark class="vocab-word" data-word="viable">viable</mark> alternative? Professor Pretty feels that <mark class="vocab-word" data-word="organic">organic</mark> farming would be too big a jump in thinking and in practices for many farmers. Furthermore, the price <mark class="vocab-word" data-word="premium">premium</mark> would put the produce out of reach of many poorer consumers. He is recommending the immediate introduction of a ‘Greener Food Standard’, which would push the market towards more <mark class="vocab-word" data-word="sustainable">sustainable</mark> environmental practices than the current <mark class="vocab-word" data-word="norm">norm</mark>, while not requiring the full commitment to <mark class="vocab-word" data-word="organic">organic</mark> production. Such a standard would <mark class="vocab-word" data-word="comprise">comprise</mark> agreed practices for different kinds of farming, covering agrochemical use, soil health, land management, water and energy use, food safety and animal health. It could go a long way, he says, to shifting consumers as well as farmers towards a more <mark class="vocab-word" data-word="sustainable">sustainable</mark> system of <mark class="vocab-word" data-word="agriculture">agriculture</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>四十多年来，食品的成本一直在上升。现在已经到了一个越​​来越多的人认为它太高的地步。降低它将是二十一世纪的巨大挑战之一。但是，这笔费用不是立即用现金支付的。至少在西方，相对而言，现在大多数食品要比1960年便宜。代价在于使粮食更加便宜的生产方法所带来的附带损害：现代农业造成水污染，土壤退化，破坏野生动植物，危害动物安全，威胁人类健康。</p><p>先是机械化，然后大量使用化肥和杀虫剂，再然后是单一种植，畜牧业的笼内饲养，再到现在的基因工程-在过去的半个世纪中，随着农产品产量猛增，集约农业的前进步伐似乎不可阻挡。但是它造成的破坏是巨大的。例如，在英国，许多我们喜爱农田鸟类，如云雀，灰山鹑，凤头麦鸡和黍鹀，从广阔的乡村消失。随之消失的还有更多的野花和昆虫。这是我们在过去的四十年里食物生产的直接结果。 数千英里的树篱，数千个池塘从地面上消失。鲑鱼养殖的粪便污染已将野生鲑鱼从苏格兰的许多海湾和河流中驱除出去。由于持续使用工业肥料和杀虫剂，许多地区的自然土壤肥力正在下降，而由于肥料流失，湖泊中藻类的生长正在增加。</p><p>将它们放在一起看起来就像是战场，但消费者在餐桌旁很少将它们联系起来。这主要是因为所有这些损失被经济学家称为外部性：它们不在主要交易（例如生产和出售一块麦田）的范围之内，既不由生产者也不由消费者直接承担。对许多人来说，代价似乎仅仅是美学上的，而根本不算是经济上的-虽然是可怕的耻辱，但与金钱无关。无论如何，他们作为食品的消费者肯定不会为此付费，是吗？</p><p>但是，社会的成本实际上是可以量化的，加起来可以达到惊人的数目。埃塞克斯大学环境与社会研究中心主任朱尔斯·普里斯（Jules Pretty）教授是全球领先的农业未来思想家之一。他在这方面进行了卓著的实践。Pretty教授和他的同事计算了特定年份英国农业的外部性。他们汇总了修复农业造成的破坏所需要的成本，共计23.43 亿英镑。平均下来每公顷耕地和永久牧场208 英镑，几乎是该年政府和欧盟在英国农业上的总支出的两倍。根据Pretty教授的说法，这还只是保守的估计。</p><p>费用包括：1亿2千万英镑用于去除杀虫剂；1600万去除硝酸盐；5500万英镑用于去除磷酸盐和土壤；2300万用于自来水公司清除饮用水中的隐孢子虫；1亿2千500万英镑用于野生动物栖息地，树篱和干石墙的破坏；11.13 亿英镑用于可能造成气候变化的气体排放；1亿600万英镑用于土壤侵蚀和有机碳的损失；1亿6千700万用于食物中毒；以及6亿700万用于牲畜疾病。Pretty教授从这一切得出一个简单但令人难忘的结论：我们的食品账单实际上包含三重内容。我们正在以三种不同的方式为我们本应便宜的食品买单：一次是柜台交易。其次是通过我们的税收。它提供了支持现代集约农业的巨额补贴。最后是清理现代农业留下的烂摊子。</p><p>那么，食品的真实成本可以降低吗？对于某些国家而言，摆脱作为饥饿解决方案的工业化农业可能非常困难，但是在英国，眼前的粮食供应需求并不那么紧迫，而且集约化耕作的代价和损害已得到明显体现，摆脱工业化农业更加可行。政府需要创建可持续、充满竞争和多样化的农业与粮食部门，这将为蓬勃发展和可持续的农村经济做出贡献，并促进环境、经济、健康和动物安全目标的实现。</p><p>但是，如果要取代工业农业，可行的选择是什么呢？Pretty教授认为有机农业对许多农民的思想和实践来说步子太大。此外，价格溢价将使产品无法满足许多较贫穷的消费者的需求。他建议立即引入“绿色食品标准”，这将推动市场朝着比当前规范更具可持续性的环境实践发展，同时不需要对有机生产做出全面承诺。该标准将包括针对各种农业的统一实践，涵盖农用化学品的使用，土壤健康，土地管理，水和能源的使用，食品安全和动物健康。他说，要使消费者和农民转向更可持续的农业体系，还有很长的路要走。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>For more than forty years the cost of food has been rising. It has now reached a point where a growing number of people believe that it is far too high, and that bringing it down will be one of the great challenges of the twenty-first century. That cost, however, is not in immediate cash. In the west at least, most food is now far cheaper to buy in relative terms than it was in 1960. The cost is in the <mark class="vocab-word" data-word="collateral">collateral</mark> damage of the very methods of food production that have made the food cheaper: in the pollution of water, the enervation of soil, the <mark class="vocab-word" data-word="destruction">destruction</mark> of wildlife, the harm to animal <mark class="vocab-word" data-word="welfare">welfare</mark> and the <mark class="vocab-word" data-word="threat">threat</mark> to human health caused by modern industrial <mark class="vocab-word" data-word="agriculture">agriculture</mark>.</p></div>  <div class="parallel-zh"><p>四十多年来，食品的成本一直在上升。现在已经到了一个越​​来越多的人认为它太高的地步。降低它将是二十一世纪的巨大挑战之一。但是，这笔费用不是立即用现金支付的。至少在西方，相对而言，现在大多数食品要比1960年便宜。代价在于使粮食更加便宜的生产方法所带来的附带损害：现代农业造成水污染，土壤退化，破坏野生动植物，危害动物安全，威胁人类健康。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>First mechanisation, then mass use of chemical fertilisers and <mark class="vocab-word" data-word="pesticide">pesticides</mark>, then monocultures, then battery <mark class="vocab-word" data-word="rear">rearing</mark> of <mark class="vocab-word" data-word="livestock">livestock</mark>, and now <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> – the onward <mark class="vocab-word" data-word="march">march</mark> of <mark class="vocab-word" data-word="intensive">intensive</mark> farming has seemed unstoppable in the last half-century, as the <mark class="vocab-word" data-word="yield">yields</mark> of produce have <mark class="vocab-word" data-word="soar">soared</mark>. But the damage it has caused has been <mark class="vocab-word" data-word="colossal">colossal</mark>. In Britain, for example, many of our best-loved farmland birds, such as the skylark, the grey partridge, the lapwing and the corn bunting, have <mark class="vocab-word" data-word="vanish">vanished</mark> from huge stretches of countryside, as have even more wild flowers and insects. This is a direct result of the way we have produced our food in the last four <mark class="vocab-word" data-word="decade">decades</mark>. Thousands of miles of hedgerows, thousands of <mark class="vocab-word" data-word="pond">ponds</mark>, have disappeared from the landscape. The faecal filth of <mark class="vocab-word" data-word="salmon">salmon</mark> farming has driven wild <mark class="vocab-word" data-word="salmon">salmon</mark> from many of the sea lochs and rivers of Scotland. Natural soil fertility is dropping in many areas because of continuous industrial fertiliser and <mark class="vocab-word" data-word="pesticide">pesticide</mark> use, while the growth of <mark class="vocab-word" data-word="algae">algae</mark> is increasing in lakes because of the fertiliser <mark class="vocab-word" data-word="run-off">run-off</mark>.</p></div>  <div class="parallel-zh"><p>先是机械化，然后大量使用化肥和杀虫剂，再然后是单一种植，畜牧业的笼内饲养，再到现在的基因工程-在过去的半个世纪中，随着农产品产量猛增，集约农业的前进步伐似乎不可阻挡。但是它造成的破坏是巨大的。例如，在英国，许多我们喜爱农田鸟类，如云雀，灰山鹑，凤头麦鸡和黍鹀，从广阔的乡村消失。随之消失的还有更多的野花和昆虫。这是我们在过去的四十年里食物生产的直接结果。 数千英里的树篱，数千个池塘从地面上消失。鲑鱼养殖的粪便污染已将野生鲑鱼从苏格兰的许多海湾和河流中驱除出去。由于持续使用工业肥料和杀虫剂，许多地区的自然土壤肥力正在下降，而由于肥料流失，湖泊中藻类的生长正在增加。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Put it all together and it looks like a battlefield, but consumers rarely make the connection at the dinner table. That is mainly because the costs of all this damage are what economists refer to as externalities: they are outside the main <mark class="vocab-word" data-word="transaction">transaction</mark>, which is for example producing and selling a field of <mark class="vocab-word" data-word="wheat">wheat</mark>, and are borne directly by neither producers nor consumers. To many, the costs may not even appear to be financial at all, but <mark class="vocab-word" data-word="merely">merely</mark> aesthetic – a terrible shame, but nothing to do with money. And anyway they, as consumers of food, certainly aren’t paying for it, are they?</p></div>  <div class="parallel-zh"><p>将它们放在一起看起来就像是战场，但消费者在餐桌旁很少将它们联系起来。这主要是因为所有这些损失被经济学家称为外部性：它们不在主要交易（例如生产和出售一块麦田）的范围之内，既不由生产者也不由消费者直接承担。对许多人来说，代价似乎仅仅是美学上的，而根本不算是经济上的-虽然是可怕的耻辱，但与金钱无关。无论如何，他们作为食品的消费者肯定不会为此付费，是吗？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But the costs to society can actually be quantified and, when added up, can amount to <mark class="vocab-word" data-word="stagger">staggering</mark> sums. A <mark class="vocab-word" data-word="remarkable">remarkable</mark> exercise in doing this has been carried out by one of the world’s <mark class="vocab-word" data-word="lead">leading</mark> thinkers on the future of <mark class="vocab-word" data-word="agriculture">agriculture</mark>, Professor Jules Pretty, Director of the Centre for Environment and Society at the University of Essex. Professor Pretty and his colleagues calculated the externalities of British <mark class="vocab-word" data-word="agriculture">agriculture</mark> for one particular year. They added up the costs of repairing the damage it caused, and came up with a total figure of ￡2,343m. This is <mark class="vocab-word" data-word="equivalent">equivalent</mark> to ￡208 for every <mark class="vocab-word" data-word="hectare">hectare</mark> of <mark class="vocab-word" data-word="arable">arable</mark> land and permanent <mark class="vocab-word" data-word="pasture">pasture</mark>, almost as much again as the total government and EU spend on British farming in that year. And <mark class="vocab-word" data-word="accord">according</mark> to Professor Pretty, it was a <mark class="vocab-word" data-word="conservative">conservative</mark> estimate.</p></div>  <div class="parallel-zh"><p>但是，社会的成本实际上是可以量化的，加起来可以达到惊人的数目。埃塞克斯大学环境与社会研究中心主任朱尔斯·普里斯（Jules Pretty）教授是全球领先的农业未来思想家之一。他在这方面进行了卓著的实践。Pretty教授和他的同事计算了特定年份英国农业的外部性。他们汇总了修复农业造成的破坏所需要的成本，共计23.43 亿英镑。平均下来每公顷耕地和永久牧场208 英镑，几乎是该年政府和欧盟在英国农业上的总支出的两倍。根据Pretty教授的说法，这还只是保守的估计。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The costs included: ￡120m for <mark class="vocab-word" data-word="removal">removal</mark> of <mark class="vocab-word" data-word="pesticide">pesticides</mark>; ￡16m for <mark class="vocab-word" data-word="removal">removal</mark> of <mark class="vocab-word" data-word="nitrate">nitrates</mark>; ￡55m for <mark class="vocab-word" data-word="removal">removal</mark> of <mark class="vocab-word" data-word="phosphate">phosphates</mark> and soil; ￡23m for the <mark class="vocab-word" data-word="removal">removal</mark> of the bug cryptosporidium from drinking water by water companies; ￡125m for damage to wildlife <mark class="vocab-word" data-word="habitat">habitats</mark>, hedgerows and dry stone walls; ￡1,113m from <mark class="vocab-word" data-word="emission">emissions</mark> of gases likely to contribute to climate change; ￡106m from soil <mark class="vocab-word" data-word="erosion">erosion</mark> and <mark class="vocab-word" data-word="organic">organic</mark> <mark class="vocab-word" data-word="carbon">carbon</mark> losses; ￡169m from food <mark class="vocab-word" data-word="poison">poisoning</mark>; and ￡607m from <mark class="vocab-word" data-word="cattle">cattle</mark> disease. Professor Pretty draws a simple but <mark class="vocab-word" data-word="memorable">memorable</mark> conclusion from all this: our food bills are actually threefold. We are paying for our <mark class="vocab-word" data-word="supposedly">supposedly</mark> cheaper food in three separate ways: once over the <mark class="vocab-word" data-word="counter">counter</mark>, secondly through our taxes, which provide the enormous subsidies propping up modern <mark class="vocab-word" data-word="intensive">intensive</mark> farming, and thirdly to clean up the mess that modern farming leaves behind.</p></div>  <div class="parallel-zh"><p>费用包括：1亿2千万英镑用于去除杀虫剂；1600万去除硝酸盐；5500万英镑用于去除磷酸盐和土壤；2300万用于自来水公司清除饮用水中的隐孢子虫；1亿2千500万英镑用于野生动物栖息地，树篱和干石墙的破坏；11.13 亿英镑用于可能造成气候变化的气体排放；1亿600万英镑用于土壤侵蚀和有机碳的损失；1亿6千700万用于食物中毒；以及6亿700万用于牲畜疾病。Pretty教授从这一切得出一个简单但令人难忘的结论：我们的食品账单实际上包含三重内容。我们正在以三种不同的方式为我们本应便宜的食品买单：一次是柜台交易。其次是通过我们的税收。它提供了支持现代集约农业的巨额补贴。最后是清理现代农业留下的烂摊子。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>So can the true cost of food be brought down? Breaking away from industrial <mark class="vocab-word" data-word="agriculture">agriculture</mark> as the solution to <mark class="vocab-word" data-word="hunger">hunger</mark> may be very hard for some countries, but in Britain, where the immediate need to supply food is less <mark class="vocab-word" data-word="urgent">urgent</mark>, and the costs and the damage of <mark class="vocab-word" data-word="intensive">intensive</mark> farming have been clearly seen, it may be more <mark class="vocab-word" data-word="feasible">feasible</mark>. The government needs to create <mark class="vocab-word" data-word="sustainable">sustainable</mark>, competitive and <mark class="vocab-word" data-word="diverse">diverse</mark> farming and food <mark class="vocab-word" data-word="sector">sectors</mark>, which will contribute to a <mark class="vocab-word" data-word="thriving">thriving</mark> and <mark class="vocab-word" data-word="sustainable">sustainable</mark> <mark class="vocab-word" data-word="rural">rural</mark> economy, and advance environmental, economic, health, and animal <mark class="vocab-word" data-word="welfare">welfare</mark> goals.</p></div>  <div class="parallel-zh"><p>那么，食品的真实成本可以降低吗？对于某些国家而言，摆脱作为饥饿解决方案的工业化农业可能非常困难，但是在英国，眼前的粮食供应需求并不那么紧迫，而且集约化耕作的代价和损害已得到明显体现，摆脱工业化农业更加可行。政府需要创建可持续、充满竞争和多样化的农业与粮食部门，这将为蓬勃发展和可持续的农村经济做出贡献，并促进环境、经济、健康和动物安全目标的实现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But if industrial <mark class="vocab-word" data-word="agriculture">agriculture</mark> is to be replaced, what is a <mark class="vocab-word" data-word="viable">viable</mark> alternative? Professor Pretty feels that <mark class="vocab-word" data-word="organic">organic</mark> farming would be too big a jump in thinking and in practices for many farmers. Furthermore, the price <mark class="vocab-word" data-word="premium">premium</mark> would put the produce out of reach of many poorer consumers. He is recommending the immediate introduction of a ‘Greener Food Standard’, which would push the market towards more <mark class="vocab-word" data-word="sustainable">sustainable</mark> environmental practices than the current <mark class="vocab-word" data-word="norm">norm</mark>, while not requiring the full commitment to <mark class="vocab-word" data-word="organic">organic</mark> production. Such a standard would <mark class="vocab-word" data-word="comprise">comprise</mark> agreed practices for different kinds of farming, covering agrochemical use, soil health, land management, water and energy use, food safety and animal health. It could go a long way, he says, to shifting consumers as well as farmers towards a more <mark class="vocab-word" data-word="sustainable">sustainable</mark> system of <mark class="vocab-word" data-word="agriculture">agriculture</mark>.</p></div>  <div class="parallel-zh"><p>但是，如果要取代工业农业，可行的选择是什么呢？Pretty教授认为有机农业对许多农民的思想和实践来说步子太大。此外，价格溢价将使产品无法满足许多较贫穷的消费者的需求。他建议立即引入“绿色食品标准”，这将推动市场朝着比当前规范更具可持续性的环境实践发展，同时不需要对有机生产做出全面承诺。该标准将包括针对各种农业的统一实践，涵盖农用化学品的使用，土壤健康，土地管理，水和能源的使用，食品安全和动物健康。他说，要使消费者和农民转向更可持续的农业体系，还有很长的路要走。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"collateral": 1, "destruction": 1, "welfare": 2, "threat": 1, "agriculture": 6, "pesticide": 3, "rear": 1, "livestock": 1, "genetic": 1, "engineering": 1, "march": 1, "intensive": 3, "yield": 1, "soar": 1, "colossal": 1, "vanish": 1, "decade": 1, "pond": 1, "salmon": 2, "algae": 1, "run-off": 1, "transaction": 1, "wheat": 1, "merely": 1, "stagger": 1, "remarkable": 1, "lead": 1, "equivalent": 1, "hectare": 1, "arable": 1, "pasture": 1, "accord": 1, "conservative": 1, "removal": 4, "nitrate": 1, "phosphate": 1, "habitat": 1, "emission": 1, "erosion": 1, "organic": 3, "carbon": 1, "poison": 1, "cattle": 1, "memorable": 1, "supposedly": 1, "counter": 1, "hunger": 1, "urgent": 1, "feasible": 1, "sustainable": 4, "diverse": 1, "sector": 1, "thriving": 1, "rural": 1, "viable": 1, "premium": 1, "norm": 1, "comprise": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

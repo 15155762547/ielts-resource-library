@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The concept of intelligence 智力的概念 - 剑桥雅思14 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The concept of intelligence 智力的概念</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39269.html" target="_blank">https://www.laokaoya.com/39269.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Looked at in one way, everyone knows what intelligence is; looked at in another way, no one does. In other words, people all have <mark class="vocab-word" data-word="unconscious">unconscious</mark> notions – known as ‘<mark class="vocab-word" data-word="implicit">implicit</mark> theories’- of intelligence, but no one knows for certain what it actually is. This chapter addresses how people conceptualize intelligence, whatever it may actually be.</p><p>But why should we even care what people think intelligence is, as opposed only to valuing whatever it actually is? There are at least four reasons people’s <mark class="vocab-word" data-word="conception">conceptions</mark> of intelligence <mark class="vocab-word" data-word="matter">matter</mark>.</p><p>First, <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence drive the way in which people <mark class="vocab-word" data-word="perceive">perceive</mark> and evaluate their own intelligence and that of others. To better understand the judgments people make about their own and others’ abilities, it is useful to learn about people’s <mark class="vocab-word" data-word="implicit">implicit</mark> theories. For example, parents’ <mark class="vocab-word" data-word="implicit">implicit</mark> theories of their children’s language development will determine at what ages they will be willing to make various corrections in their children’s speech. More generally, parents’ <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence will determine at what ages they believe their children are ready to <mark class="vocab-word" data-word="perform">perform</mark> various <mark class="vocab-word" data-word="cognitive">cognitive</mark> tasks. Job interviewers will make hiring decisions on the basis of their <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence. People will decide who to be friends with on the basis of such theories. In sum, knowledge about <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence is important because this knowledge is so often used by people to make judgments in the course of their everyday lives.</p><p>Second, the <mark class="vocab-word" data-word="implicit">implicit</mark> theories of scientific investigators <mark class="vocab-word" data-word="ultimate">ultimately</mark> give rise to their <mark class="vocab-word" data-word="explicit">explicit</mark> theories. Thus it is useful to find out what these <mark class="vocab-word" data-word="implicit">implicit</mark> theories are. <mark class="vocab-word" data-word="implicit">Implicit</mark> theories provide a <mark class="vocab-word" data-word="framework">framework</mark> that is useful in defining the general <mark class="vocab-word" data-word="scope">scope</mark> of a <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> – especially a not-well-understood <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>. These <mark class="vocab-word" data-word="implicit">implicit</mark> theories can <mark class="vocab-word" data-word="suggest">suggest</mark> what aspects of the <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> have been more or less attended to in previous investigations.</p><p>Third, <mark class="vocab-word" data-word="implicit">implicit</mark> theories can be useful when an investigator suspects that <mark class="vocab-word" data-word="existing">existing</mark> <mark class="vocab-word" data-word="explicit">explicit</mark> theories are wrong or <mark class="vocab-word" data-word="mislead">misleading</mark>. If an investigation of <mark class="vocab-word" data-word="implicit">implicit</mark> theories <mark class="vocab-word" data-word="reveal">reveals</mark> little <mark class="vocab-word" data-word="correspondence">correspondence</mark> between the extant <mark class="vocab-word" data-word="implicit">implicit</mark> and <mark class="vocab-word" data-word="explicit">explicit</mark> theories, the <mark class="vocab-word" data-word="implicit">implicit</mark> theories may be wrong. But the possibility also needs to be taken into account that the <mark class="vocab-word" data-word="explicit">explicit</mark> theories are wrong and in need of correction or <mark class="vocab-word" data-word="supplementation">supplementation</mark>. For example, some <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence <mark class="vocab-word" data-word="suggest">suggest</mark> the need for <mark class="vocab-word" data-word="expansion">expansion</mark> of some of our <mark class="vocab-word" data-word="explicit">explicit</mark> theories of the <mark class="vocab-word" data-word="construct">construct</mark>.</p><p>Finally, understanding <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence can help <mark class="vocab-word" data-word="elucidate">elucidate</mark> developmental and <mark class="vocab-word" data-word="cross-cultural">cross-cultural</mark> differences. As mentioned earlier, people have expectations for <mark class="vocab-word" data-word="intellectual">intellectual</mark> performances that <mark class="vocab-word" data-word="differ">differ</mark> for children of different ages. How these expectations <mark class="vocab-word" data-word="differ">differ</mark> is in part a function of culture. For example, expectations for children who participate in Western-style schooling are almost certain to be different from those for children who do not participate in such schooling.</p><p>I have <mark class="vocab-word" data-word="suggest">suggested</mark> that there are three major <mark class="vocab-word" data-word="implicit">implicit</mark> theories of how intelligence relates to society as a whole (Sternberg, 1997). These might be called Hamiltonian, Jeffersonian, and Jacksonian. These views are not based strictly, but rather, loosely, on the philosophies of Alexander Hamilton, Thomas Jefferson, and Andrew Jackson, three great statesmen in the history of the <mark class="vocab-word" data-word="unite">United</mark> States.</p><p>The Hamiltonian view, which is similar to the Platonic view, is that people are born with different levels of intelligence and that those who are less <mark class="vocab-word" data-word="intelligent">intelligent</mark> need the good offices of the more <mark class="vocab-word" data-word="intelligent">intelligent</mark> to keep them in line, whether they are called government officials or, in Plato’s term, philosopher-kings. Herrnstein and Murray (1994) seem to have shared this belief when they wrote about the emergence of a <mark class="vocab-word" data-word="cognitive">cognitive</mark> (high-IQ) <mark class="vocab-word" data-word="elite">elite</mark>, which eventually would have to take responsibility for the largely <mark class="vocab-word" data-word="irresponsible">irresponsible</mark> masses of non-elite (low-IQ) people who cannot take care of themselves. Left to themselves, the unintelligent would create, as they always have created, a kind of <mark class="vocab-word" data-word="chaos">chaos</mark>.</p><p>The Jeffersonian view is that people should have equal opportunities, but they do not necessarily <mark class="vocab-word" data-word="avail">avail</mark> themselves equally of these opportunities and are not necessarily equally rewarded for their accomplishments. People are rewarded for what they <mark class="vocab-word" data-word="accomplish">accomplish</mark>, if given equal opportunity. Low <mark class="vocab-word" data-word="achiever">achievers</mark> are not rewarded to the same extent as high <mark class="vocab-word" data-word="achiever">achievers</mark>. In the Jeffersonian view, the goal of education is not to favor or <mark class="vocab-word" data-word="foster">foster</mark> an <mark class="vocab-word" data-word="elite">elite</mark>, as in the Hamiltonian tradition, but rather to allow children the opportunities to make full use of the skills they have. My own views are similar to these (Sternberg, 1997).</p><p>The Jacksonian view is that all people are equal, not only as human beings but in terms of their competencies – that one person would serve as well as another in government or on a <mark class="vocab-word" data-word="jury">jury</mark> or in almost any position of responsibility. In this view of <mark class="vocab-word" data-word="democracy">democracy</mark>, people are <mark class="vocab-word" data-word="essentially">essentially</mark> intersubstitutable except for <mark class="vocab-word" data-word="specialize">specialized</mark> skills, all of which can be <mark class="vocab-word" data-word="learned">learned</mark>. In this view, we do not need or want any <mark class="vocab-word" data-word="institution">institutions</mark> that might <mark class="vocab-word" data-word="lead">lead</mark> to favoring one group over another.</p><p><mark class="vocab-word" data-word="implicit">Implicit</mark> theories of intelligence and of the relationship of intelligence to society perhaps need to be considered more carefully than they have been because they often serve as <mark class="vocab-word" data-word="underlying">underlying</mark> presuppositions for <mark class="vocab-word" data-word="explicit">explicit</mark> theories and even <mark class="vocab-word" data-word="experimental">experimental</mark> designs that are then taken as scientific contributions. Until <mark class="vocab-word" data-word="scholar">scholars</mark> are able to discuss their <mark class="vocab-word" data-word="implicit">implicit</mark> theories and thus their <mark class="vocab-word" data-word="assumption">assumptions</mark>, they are likely to miss the point of what others are saying when discussing their <mark class="vocab-word" data-word="explicit">explicit</mark> theories and their data.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>从某种方式来看，每个人都知道智力是什么；但换种方式看的话，就没有人知道了。换句话说，人们对智力都有一种下意识的概念。这被称作内隐理论。但没有人确切的知道它究竟是什么。这一章会解决无论知识是什么，人类如何将它概念化的问题</p><p>但是，我们为什么应该关心人们如何看待智力，而不是仅仅评估它确实是什么？至少有四个原因可以说明人们对智力的理解十分重要。</p><p>首先，智力的内隐理论决定人们看待和评估他们自己与他人智力的方式。为了更好地理解人们对于自身以及他人能力所做出的判断，了解人们的内隐理论十分重要。例如，父母关于他们孩子语言发展的内隐理论会决定他们愿意在什么时候对孩子的语言进行各种纠正。更普遍地来说，父母关于智力的内隐理论会决定他们什么时候相信孩子已经为进行各种认知任务做好了准备。面试官会基于他们自己的智力内隐理论做出招聘决定。人们会基于这样的理论决定跟谁交朋友。总的来说，关于智力内隐理论的知识很重要，因为在日常生活中，这种知识经常被人们用于做判断。</p><p>第二，对内隐理论进行科学研究最终会导致外显理论的出现。因此，研究这些内隐理论是什么十分有用。内隐理论所提供的框架结构在定义某一现象的广义范畴时十分有用，尤其是对于那些尚未被充分理解的现象来说。这些内隐理论可以提示该现象的哪些方面在之前的研究中或多或少被关注过。</p><p>第三，内隐理论在研究者怀疑现存外显理论存在错误或误导时十分有用。如果对内隐理论的研究发现现存内隐理论与外显理论之间缺乏相关性，那么内隐理论就可能是错误的。但也需要考虑外显理论错误并需要纠正或补充的可能性。例如，一些有关智力的内隐理论表明需要对外显理论的架构进行扩展。</p><p>最终，理解智力的内隐理论有助于说明发展差异与跨文化差异。正如之前提到的那样，人们对于智力表现的预期因儿童年龄的不同而不同。这种预期上的差异一定程度上是由文化造成的。例如，对接受西式教育的儿童的期待几乎肯定不同于那些没有接受此类教育的儿童。</p><p>我曾指出，存在三种主要的内隐理论，解释智力如何与整体社会相联系（Sternberg, 1997）。它们可以被称作汉密尔顿型，杰弗逊型，以及杰克逊型。这些理论并非严格基于亚历山大·汉密尔顿，托马斯·杰弗逊，以及安德鲁·杰克逊这三位美国历史上伟大政治家的哲学，但一定程度上与他们相关。</p><p>汉密尔顿的观点与柏拉图的观点相似，认为人们生而具有不同水平的智力。智力较低的人需要智力较高的人的统治（无论他们被称为政府官员，还是用柏拉图的词语“哲学王”）以确保秩序。Herrnstein和Murray（1994）在写到有关认知精英（高智商）的出现时，似乎认同这种观念。他们认为该群体最终不得不承担大多数不负责任的非精英群体（低智商）的责任。这些人无法照顾好他们自己。如果让他们自生自灭的话，智力较低的人会产生混乱，正如他们一直以来的那样。</p><p>杰弗逊的观点认为，人们应该拥有同等的机会，但他们并不一定平等地受益于这些机会，也不一定因自己的成就获得同等的回报。在机遇相同的情况下，人们凭借自己的成就获得回报。低成就者的回报不会与高成就者相同。在杰弗逊看来，教育的目的不是像汉密尔顿的传统那样为了帮助或培养精英，而是让孩子有机会充分利用他们所拥有的技能。我自己的观点与此类似（Sternberg, 1997）。</p><p>杰克逊的观点是人人平等，不仅作为人类如此，而且能力方面也一样。在政府或陪审团，或者在任何需要承担责任的岗位上，一个人能跟其他人一样同样出色的完成任务。在这种民主的观念下，人们除了可以被学习的专业技能之外，本质上是可以互相取代的。这一观点认为，我们不需要也不想要任何偏袒某一类人群的机构。</p><p>智力的内隐理论以及智力与社会的关系或许需要比现在更加仔细的考量，因为它们经常作为外显理论，甚至是随后被当作科学贡献的实验设计的潜在假设。直到学者能够讨论他们的内隐理论，以及因之而来的假设，他们才不会再其他人讨论他们的外显理论与数据时显得毫无头绪。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Looked at in one way, everyone knows what intelligence is; looked at in another way, no one does. In other words, people all have <mark class="vocab-word" data-word="unconscious">unconscious</mark> notions – known as ‘<mark class="vocab-word" data-word="implicit">implicit</mark> theories’- of intelligence, but no one knows for certain what it actually is. This chapter addresses how people conceptualize intelligence, whatever it may actually be.</p></div>  <div class="parallel-zh"><p>从某种方式来看，每个人都知道智力是什么；但换种方式看的话，就没有人知道了。换句话说，人们对智力都有一种下意识的概念。这被称作内隐理论。但没有人确切的知道它究竟是什么。这一章会解决无论知识是什么，人类如何将它概念化的问题</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But why should we even care what people think intelligence is, as opposed only to valuing whatever it actually is? There are at least four reasons people’s <mark class="vocab-word" data-word="conception">conceptions</mark> of intelligence <mark class="vocab-word" data-word="matter">matter</mark>.</p></div>  <div class="parallel-zh"><p>但是，我们为什么应该关心人们如何看待智力，而不是仅仅评估它确实是什么？至少有四个原因可以说明人们对智力的理解十分重要。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>First, <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence drive the way in which people <mark class="vocab-word" data-word="perceive">perceive</mark> and evaluate their own intelligence and that of others. To better understand the judgments people make about their own and others’ abilities, it is useful to learn about people’s <mark class="vocab-word" data-word="implicit">implicit</mark> theories. For example, parents’ <mark class="vocab-word" data-word="implicit">implicit</mark> theories of their children’s language development will determine at what ages they will be willing to make various corrections in their children’s speech. More generally, parents’ <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence will determine at what ages they believe their children are ready to <mark class="vocab-word" data-word="perform">perform</mark> various <mark class="vocab-word" data-word="cognitive">cognitive</mark> tasks. Job interviewers will make hiring decisions on the basis of their <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence. People will decide who to be friends with on the basis of such theories. In sum, knowledge about <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence is important because this knowledge is so often used by people to make judgments in the course of their everyday lives.</p></div>  <div class="parallel-zh"><p>首先，智力的内隐理论决定人们看待和评估他们自己与他人智力的方式。为了更好地理解人们对于自身以及他人能力所做出的判断，了解人们的内隐理论十分重要。例如，父母关于他们孩子语言发展的内隐理论会决定他们愿意在什么时候对孩子的语言进行各种纠正。更普遍地来说，父母关于智力的内隐理论会决定他们什么时候相信孩子已经为进行各种认知任务做好了准备。面试官会基于他们自己的智力内隐理论做出招聘决定。人们会基于这样的理论决定跟谁交朋友。总的来说，关于智力内隐理论的知识很重要，因为在日常生活中，这种知识经常被人们用于做判断。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Second, the <mark class="vocab-word" data-word="implicit">implicit</mark> theories of scientific investigators <mark class="vocab-word" data-word="ultimate">ultimately</mark> give rise to their <mark class="vocab-word" data-word="explicit">explicit</mark> theories. Thus it is useful to find out what these <mark class="vocab-word" data-word="implicit">implicit</mark> theories are. <mark class="vocab-word" data-word="implicit">Implicit</mark> theories provide a <mark class="vocab-word" data-word="framework">framework</mark> that is useful in defining the general <mark class="vocab-word" data-word="scope">scope</mark> of a <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> – especially a not-well-understood <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>. These <mark class="vocab-word" data-word="implicit">implicit</mark> theories can <mark class="vocab-word" data-word="suggest">suggest</mark> what aspects of the <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> have been more or less attended to in previous investigations.</p></div>  <div class="parallel-zh"><p>第二，对内隐理论进行科学研究最终会导致外显理论的出现。因此，研究这些内隐理论是什么十分有用。内隐理论所提供的框架结构在定义某一现象的广义范畴时十分有用，尤其是对于那些尚未被充分理解的现象来说。这些内隐理论可以提示该现象的哪些方面在之前的研究中或多或少被关注过。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Third, <mark class="vocab-word" data-word="implicit">implicit</mark> theories can be useful when an investigator suspects that <mark class="vocab-word" data-word="existing">existing</mark> <mark class="vocab-word" data-word="explicit">explicit</mark> theories are wrong or <mark class="vocab-word" data-word="mislead">misleading</mark>. If an investigation of <mark class="vocab-word" data-word="implicit">implicit</mark> theories <mark class="vocab-word" data-word="reveal">reveals</mark> little <mark class="vocab-word" data-word="correspondence">correspondence</mark> between the extant <mark class="vocab-word" data-word="implicit">implicit</mark> and <mark class="vocab-word" data-word="explicit">explicit</mark> theories, the <mark class="vocab-word" data-word="implicit">implicit</mark> theories may be wrong. But the possibility also needs to be taken into account that the <mark class="vocab-word" data-word="explicit">explicit</mark> theories are wrong and in need of correction or <mark class="vocab-word" data-word="supplementation">supplementation</mark>. For example, some <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence <mark class="vocab-word" data-word="suggest">suggest</mark> the need for <mark class="vocab-word" data-word="expansion">expansion</mark> of some of our <mark class="vocab-word" data-word="explicit">explicit</mark> theories of the <mark class="vocab-word" data-word="construct">construct</mark>.</p></div>  <div class="parallel-zh"><p>第三，内隐理论在研究者怀疑现存外显理论存在错误或误导时十分有用。如果对内隐理论的研究发现现存内隐理论与外显理论之间缺乏相关性，那么内隐理论就可能是错误的。但也需要考虑外显理论错误并需要纠正或补充的可能性。例如，一些有关智力的内隐理论表明需要对外显理论的架构进行扩展。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Finally, understanding <mark class="vocab-word" data-word="implicit">implicit</mark> theories of intelligence can help <mark class="vocab-word" data-word="elucidate">elucidate</mark> developmental and <mark class="vocab-word" data-word="cross-cultural">cross-cultural</mark> differences. As mentioned earlier, people have expectations for <mark class="vocab-word" data-word="intellectual">intellectual</mark> performances that <mark class="vocab-word" data-word="differ">differ</mark> for children of different ages. How these expectations <mark class="vocab-word" data-word="differ">differ</mark> is in part a function of culture. For example, expectations for children who participate in Western-style schooling are almost certain to be different from those for children who do not participate in such schooling.</p></div>  <div class="parallel-zh"><p>最终，理解智力的内隐理论有助于说明发展差异与跨文化差异。正如之前提到的那样，人们对于智力表现的预期因儿童年龄的不同而不同。这种预期上的差异一定程度上是由文化造成的。例如，对接受西式教育的儿童的期待几乎肯定不同于那些没有接受此类教育的儿童。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>I have <mark class="vocab-word" data-word="suggest">suggested</mark> that there are three major <mark class="vocab-word" data-word="implicit">implicit</mark> theories of how intelligence relates to society as a whole (Sternberg, 1997). These might be called Hamiltonian, Jeffersonian, and Jacksonian. These views are not based strictly, but rather, loosely, on the philosophies of Alexander Hamilton, Thomas Jefferson, and Andrew Jackson, three great statesmen in the history of the <mark class="vocab-word" data-word="unite">United</mark> States.</p></div>  <div class="parallel-zh"><p>我曾指出，存在三种主要的内隐理论，解释智力如何与整体社会相联系（Sternberg, 1997）。它们可以被称作汉密尔顿型，杰弗逊型，以及杰克逊型。这些理论并非严格基于亚历山大·汉密尔顿，托马斯·杰弗逊，以及安德鲁·杰克逊这三位美国历史上伟大政治家的哲学，但一定程度上与他们相关。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Hamiltonian view, which is similar to the Platonic view, is that people are born with different levels of intelligence and that those who are less <mark class="vocab-word" data-word="intelligent">intelligent</mark> need the good offices of the more <mark class="vocab-word" data-word="intelligent">intelligent</mark> to keep them in line, whether they are called government officials or, in Plato’s term, philosopher-kings. Herrnstein and Murray (1994) seem to have shared this belief when they wrote about the emergence of a <mark class="vocab-word" data-word="cognitive">cognitive</mark> (high-IQ) <mark class="vocab-word" data-word="elite">elite</mark>, which eventually would have to take responsibility for the largely <mark class="vocab-word" data-word="irresponsible">irresponsible</mark> masses of non-elite (low-IQ) people who cannot take care of themselves. Left to themselves, the unintelligent would create, as they always have created, a kind of <mark class="vocab-word" data-word="chaos">chaos</mark>.</p></div>  <div class="parallel-zh"><p>汉密尔顿的观点与柏拉图的观点相似，认为人们生而具有不同水平的智力。智力较低的人需要智力较高的人的统治（无论他们被称为政府官员，还是用柏拉图的词语“哲学王”）以确保秩序。Herrnstein和Murray（1994）在写到有关认知精英（高智商）的出现时，似乎认同这种观念。他们认为该群体最终不得不承担大多数不负责任的非精英群体（低智商）的责任。这些人无法照顾好他们自己。如果让他们自生自灭的话，智力较低的人会产生混乱，正如他们一直以来的那样。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Jeffersonian view is that people should have equal opportunities, but they do not necessarily <mark class="vocab-word" data-word="avail">avail</mark> themselves equally of these opportunities and are not necessarily equally rewarded for their accomplishments. People are rewarded for what they <mark class="vocab-word" data-word="accomplish">accomplish</mark>, if given equal opportunity. Low <mark class="vocab-word" data-word="achiever">achievers</mark> are not rewarded to the same extent as high <mark class="vocab-word" data-word="achiever">achievers</mark>. In the Jeffersonian view, the goal of education is not to favor or <mark class="vocab-word" data-word="foster">foster</mark> an <mark class="vocab-word" data-word="elite">elite</mark>, as in the Hamiltonian tradition, but rather to allow children the opportunities to make full use of the skills they have. My own views are similar to these (Sternberg, 1997).</p></div>  <div class="parallel-zh"><p>杰弗逊的观点认为，人们应该拥有同等的机会，但他们并不一定平等地受益于这些机会，也不一定因自己的成就获得同等的回报。在机遇相同的情况下，人们凭借自己的成就获得回报。低成就者的回报不会与高成就者相同。在杰弗逊看来，教育的目的不是像汉密尔顿的传统那样为了帮助或培养精英，而是让孩子有机会充分利用他们所拥有的技能。我自己的观点与此类似（Sternberg, 1997）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Jacksonian view is that all people are equal, not only as human beings but in terms of their competencies – that one person would serve as well as another in government or on a <mark class="vocab-word" data-word="jury">jury</mark> or in almost any position of responsibility. In this view of <mark class="vocab-word" data-word="democracy">democracy</mark>, people are <mark class="vocab-word" data-word="essentially">essentially</mark> intersubstitutable except for <mark class="vocab-word" data-word="specialize">specialized</mark> skills, all of which can be <mark class="vocab-word" data-word="learned">learned</mark>. In this view, we do not need or want any <mark class="vocab-word" data-word="institution">institutions</mark> that might <mark class="vocab-word" data-word="lead">lead</mark> to favoring one group over another.</p></div>  <div class="parallel-zh"><p>杰克逊的观点是人人平等，不仅作为人类如此，而且能力方面也一样。在政府或陪审团，或者在任何需要承担责任的岗位上，一个人能跟其他人一样同样出色的完成任务。在这种民主的观念下，人们除了可以被学习的专业技能之外，本质上是可以互相取代的。这一观点认为，我们不需要也不想要任何偏袒某一类人群的机构。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="implicit">Implicit</mark> theories of intelligence and of the relationship of intelligence to society perhaps need to be considered more carefully than they have been because they often serve as <mark class="vocab-word" data-word="underlying">underlying</mark> presuppositions for <mark class="vocab-word" data-word="explicit">explicit</mark> theories and even <mark class="vocab-word" data-word="experimental">experimental</mark> designs that are then taken as scientific contributions. Until <mark class="vocab-word" data-word="scholar">scholars</mark> are able to discuss their <mark class="vocab-word" data-word="implicit">implicit</mark> theories and thus their <mark class="vocab-word" data-word="assumption">assumptions</mark>, they are likely to miss the point of what others are saying when discussing their <mark class="vocab-word" data-word="explicit">explicit</mark> theories and their data.</p></div>  <div class="parallel-zh"><p>智力的内隐理论以及智力与社会的关系或许需要比现在更加仔细的考量，因为它们经常作为外显理论，甚至是随后被当作科学贡献的实验设计的潜在假设。直到学者能够讨论他们的内隐理论，以及因之而来的假设，他们才不会再其他人讨论他们的外显理论与数据时显得毫无头绪。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"unconscious": 1, "implicit": 20, "conception": 1, "matter": 1, "perceive": 1, "perform": 1, "cognitive": 2, "ultimate": 1, "explicit": 7, "framework": 1, "scope": 1, "phenomenon": 3, "suggest": 3, "existing": 1, "mislead": 1, "reveal": 1, "correspondence": 1, "supplementation": 1, "expansion": 1, "construct": 1, "elucidate": 1, "cross-cultural": 1, "intellectual": 1, "differ": 2, "unite": 1, "intelligent": 2, "elite": 2, "irresponsible": 1, "chaos": 1, "avail": 1, "accomplish": 1, "achiever": 2, "foster": 1, "jury": 1, "democracy": 1, "essentially": 1, "specialize": 1, "learned": 1, "institution": 1, "lead": 1, "underlying": 1, "experimental": 1, "scholar": 1, "assumption": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

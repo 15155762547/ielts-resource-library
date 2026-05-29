@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Nature and Aims of Archaeology - 剑桥雅思4 Test 4 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思4</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>The Nature and Aims of Archaeology</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/21651.html" target="_blank">https://www.laokaoya.com/21651.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Archaeology is partly the discovery of the <mark class="vocab-word" data-word="treasure">treasures</mark> of the past, partly the careful work of the scientific <mark class="vocab-word" data-word="analyst">analyst</mark>, partly the exercise of the creative imagination. It is <mark class="vocab-word" data-word="toil">toiling</mark> in the sun on an <mark class="vocab-word" data-word="excavation">excavation</mark> in the Middle East, it is working with living Inuit in the snows of Alaska, and it is <mark class="vocab-word" data-word="investigate">investigating</mark> the <mark class="vocab-word" data-word="sewer">sewers</mark> of Roman Britain. But it is also the <mark class="vocab-word" data-word="painstaking">painstaking</mark> task of <mark class="vocab-word" data-word="interpretation">interpretation</mark>, so that we come to understand what these things mean for the human <mark class="vocab-word" data-word="story">story</mark>. And it is the <mark class="vocab-word" data-word="conservation">conservation</mark> of the world’s cultural <mark class="vocab-word" data-word="heritage">heritage</mark> against looting and careless harm.</p><p>Archaeology, then, is both a physical activity out in the field, and an <mark class="vocab-word" data-word="intellectual">intellectual</mark> <mark class="vocab-word" data-word="pursuit">pursuit</mark> in the study or laboratory. That is part of its great attraction. The rich mixture of danger and <mark class="vocab-word" data-word="detective">detective</mark> work has also made it the perfect vehicle for <mark class="vocab-word" data-word="fiction">fiction</mark> writers and film-makers, from Agatha Christie with Murder in <mark class="vocab-word" data-word="mesopotamia">Mesopotamia</mark> to Stephen Spielberg with Indiana Jones. However far from reality such portrayals are, they capture the essential truth that archaeology is an <mark class="vocab-word" data-word="excite">exciting</mark> quest- the <mark class="vocab-word" data-word="quest">quest</mark> for knowledge about ourselves and our past.</p><p>But how does archaeology relate to disciplines such as <mark class="vocab-word" data-word="anthropology">anthropology</mark> and history, that are also <mark class="vocab-word" data-word="concerned">concerned</mark> with the human <mark class="vocab-word" data-word="story">story</mark>? Is archaeology itself a science? And what are the responsibilities of the archaeologist in today’s world?</p><p><mark class="vocab-word" data-word="anthropology">Anthropology</mark>, at its broadest, is the study of <mark class="vocab-word" data-word="humanity">humanity</mark> – our physical characteristics as animals and our unique non-biological characteristics that we call culture. Culture in this sense includes what the <mark class="vocab-word" data-word="anthropologist">anthropologist</mark>, Edward Tylor, summarised in 1871 as ‘knowledge, belief, art, morals, custom and any other capabilities and habits acquired by man as a member of society’. <mark class="vocab-word" data-word="anthropologist">Anthropologists</mark> also use the term ‘culture’ in a more restricted sense when they refer to the ‘culture’ of a particular society, meaning the non-biological characteristics unique to that society, which <mark class="vocab-word" data-word="distinguish">distinguish</mark> it from other societies. <mark class="vocab-word" data-word="anthropology">Anthropology</mark> is thus a broad discipline – so broad that it is generally broken down into three smaller disciplines: physical <mark class="vocab-word" data-word="anthropology">anthropology</mark>, cultural <mark class="vocab-word" data-word="anthropology">anthropology</mark> and archaeology.</p><p>Physical <mark class="vocab-word" data-word="anthropology">anthropology</mark>, or <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="anthropology">anthropology</mark> as it is also called, concerns the study of human <mark class="vocab-word" data-word="biological">biological</mark> or physical characteristics and how they <mark class="vocab-word" data-word="evolve">evolved</mark>. Cultural <mark class="vocab-word" data-word="anthropology">anthropology</mark> – or social <mark class="vocab-word" data-word="anthropology">anthropology</mark> – analyses human culture and society. Two of its branches are ethnography (the study at first hand of individual living cultures) and <mark class="vocab-word" data-word="ethnology">ethnology</mark> (which sets out to compare cultures using ethnographic evidence to <mark class="vocab-word" data-word="derive">derive</mark> general principles about human society).</p><p>Archaeology is the ‘past <mark class="vocab-word" data-word="tense">tense</mark> of cultural <mark class="vocab-word" data-word="anthropology">anthropology</mark>’. Whereas cultural <mark class="vocab-word" data-word="anthropologist">anthropologists</mark> will often base their conclusions on the experience of living within <mark class="vocab-word" data-word="contemporary">contemporary</mark> communities, archaeologists study past societies <mark class="vocab-word" data-word="primarily">primarily</mark> through their material <mark class="vocab-word" data-word="remains">remains</mark> – the buildings, tools, and other <mark class="vocab-word" data-word="artefact">artefacts</mark> that <mark class="vocab-word" data-word="constitute">constitute</mark> what is known as the material culture left over from former societies.</p><p>Nevertheless, one of the most important tasks for the archaeologist today is to know how to interpret material culture in human terms. How were those <mark class="vocab-word" data-word="pot">pots</mark> used? Why are some <mark class="vocab-word" data-word="dwelling">dwellings</mark> round and others square? Here the methods of archaeology and ethnography <mark class="vocab-word" data-word="overlap">overlap</mark>. Archaeologists in recent <mark class="vocab-word" data-word="decade">decades</mark> have developed ‘ethnoarchaeology’, where, like ethnographers, they live among <mark class="vocab-word" data-word="contemporary">contemporary</mark> communities, but with the specific purpose of learning how such societies use material culture – how they make their tools and weapons, why they build their <mark class="vocab-word" data-word="settlement">settlements</mark> where they do, and so on. Moreover, archaeology has an active role to play in the field of <mark class="vocab-word" data-word="conservation">conservation</mark>. <mark class="vocab-word" data-word="heritage">Heritage</mark> studies <mark class="vocab-word" data-word="constitute">constitutes</mark> a developing field, where it is realised that the world’s cultural <mark class="vocab-word" data-word="heritage">heritage</mark> is a <mark class="vocab-word" data-word="diminish">diminishing</mark> resource which holds different meanings for different people.</p><p>If, then, archaeology deals with the past, in what way does it <mark class="vocab-word" data-word="differ">differ</mark> from history? In the broadest sense, just as archaeology is an aspect of <mark class="vocab-word" data-word="anthropology">anthropology</mark>, so too is it a part of history – where we mean the whole history of <mark class="vocab-word" data-word="humankind">humankind</mark> from its beginnings over three million years ago. Indeed, for more than ninety-nine per cent of that huge <mark class="vocab-word" data-word="span">span</mark> of time, archaeology- the study of past material culture – is the only significant source of information. <mark class="vocab-word" data-word="conventional">Conventional</mark> historical sources begin only with the introduction of written records around 3000 BC in western Asia, and much later in most other parts of the world.</p><p>A commonly <mark class="vocab-word" data-word="drawn">drawn</mark> <mark class="vocab-word" data-word="distinction">distinction</mark> is between pre-history, i.e. the period before written records -and history in the narrow sense, meaning the study of the past using written evidence. To archaeology, which studies all cultures and periods, whether with or without writing, the <mark class="vocab-word" data-word="distinction">distinction</mark> between history and pre-history is a <mark class="vocab-word" data-word="convenient">convenient</mark> dividing line that recognises the importance of the written word, but in no way <mark class="vocab-word" data-word="lessen">lessens</mark> the importance of the useful information contained in <mark class="vocab-word" data-word="oral">oral</mark> histories.</p><p>Since the aim of archaeology is the understanding of <mark class="vocab-word" data-word="humankind">humankind</mark>, it is a <mark class="vocab-word" data-word="humanistic">humanistic</mark> study, and since it deals with the human past, it is a historical discipline. But it <mark class="vocab-word" data-word="differ">differs</mark> from the study of written history in a fundamental way. The material the archaeologist finds does not tell us directly what to think. Historical records make statements, offer opinions and pass judgements. The objects the archaeologists discover, on the other hand, tell us nothing directly in themselves. In this respect, the practice of the archaeologist is rather like that of the scientist, who collects data, conducts experiments, <mark class="vocab-word" data-word="formulate">formulates</mark> a <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>, tests the <mark class="vocab-word" data-word="hypothesis">hypothesis</mark> against more data, and then, in conclusion, <mark class="vocab-word" data-word="devise">devises</mark> a model that seems best to summarise the pattern observed in the data. The archaeologist has to develop a picture of the past, just as the scientist has to develop a <mark class="vocab-word" data-word="coherent">coherent</mark> view of the natural world.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>考古学部分是对过去珍宝的发现，部分是科学分析师的精心工作，部分是对创造性想象力的锻炼。它在阳光下的中东发掘场中辛勤工作，在阿拉斯加的雪中与因纽特人生活在一起，并且正在研究罗马时期英国的下水道。但这也是一项艰巨的解释任务。它让我们开始了解这些东西对人类故事的意义，保护世界文化遗产免遭掠夺和粗心大意的伤害。</p><p>因此，考古学既是野外的体力活动，又是研究或实验室中的智力追求。这是其巨大吸引力的一部分。从阿加莎·克里斯蒂（Agatha Christie）的美索不达米亚的谋杀案到斯蒂芬·斯皮尔伯格（Stephen Spielberg）的印第安纳·琼斯（Indiana Jones），作为危险和侦探工作的丰富混合体，它已经成为小说作家和电影制片人的理想工具。无论这些描述与现实相距多么远，它们都抓住了这一本质，即考古学是令人激动的探索，是对自己和我们过去的追求。</p><p>但是考古学如何与同样跟人类历史相关的人类学和历史学等学科联系起来？考古本身就是一门科学吗？考古学家在当今世界的职责是什么？</p><p>最广泛的人类学是对人类的研究-我们作为动物的身体特征以及我们称为文化的独特非生物学特征。从这个意义上讲，文化包括人类学家爱德华·泰勒（Edward Tylor）在1871年所概括的“知识，信仰，艺术，道德，风俗以及人类作为社会成员获得的任何其他能力和习惯”。人类学家在提及特定社会的“文化”时，也使用了更为狭义的术语“文化”，这意味着该社会所独有的非生物特征，将其与其他社会区分开来。因此，人类学是一门广泛的学科-如此广泛，以至于通常将其细分为三个较小的学科：自然人类学，文化人类学和考古学。</p><p>物理人类学或生物学人类学也涉及对人类生物学或身体特征及其演变方式的研究。文化人类学或社会人类学分析人类文化和社会。它的两个分支是人种志（个人生活文化的第一手研究）和人种学（使用民族志证据比较文化以得出有关人类社会的一般原理）。</p><p>考古学是“文化人类学的过去式”。文化人类学家通常会基于在现代社区中的生活经验得出结论，而考古学家则主要通过物质遗骸研究过去的社会-建筑，工具和其他文物构成了先前社会遗留下来的物质文化。</p><p>尽管如此，今天对于考古学家来说最重要的任务之一就是要知道如何以人类的方式来解释物质文化。这些锅是如何使用的？为什么有些房屋是圆形的而其他房屋是方形的？在这里，考古学和人种学的方法重叠。近几十年来，考古学家发展了“民族考古学”，就像民族志学家一样，他们生活在当代社区中，但其特定目的是学习此类社会如何利用物质文化-他们如何制造工具和武器，为什么在他们居住的地方建立定居点等等。此外，考古学在保护领域发挥着积极作用。遗产研究构成了一个发展中的领域，人们意识到世界文化遗产是一种日益减少的资源，对不同的人具有不同的含义。</p><p>如果说考古学处理的是过去，与历史有何不同？从最广泛的意义上说，就像考古学是人类学的一个方面一样，它也是历史的一部分-在这里，我们指的是人类从开始到现在300多万年的整体历史。确实，在那巨大的时间跨度中，超过百分之九十九的考古学是对过去物质文化的研究，是唯一重要的信息来源。传统的历史资料仅始于公元前3000年左右在西亚引入书面记录，而世界上其他地区还要更晚一些。</p><p>通常会在史前（即书面记录之前的时期）与狭义的历史之间做出区分，这意味着使用书面证据对过去进行研究。对于研究所有文化和时期，无论有无书面形式的考古学来说，历史与史前史之间的区别都是一个方便的分界线，它可以认识到书面文字的重要性，但绝不能减少口述历史中所包含的有用信息的重要性。</p><p>由于考古学的目的是对人类的了解，因此它是一门人文主义的研究，并且由于它涉及人类的过去，因此它是一门历史学科。但这在根本上不同于对书面历史的研究。考古学家发现的材料并不能直接告诉我们该怎么想。历史记录作出陈述，提出意见并作出判断。另一方面，考古学家发现的物体本身并没有直接告诉我们。在这方面，考古学家的做法与科学家的做法很像，后者收集数据，进行实验，提出假设，针对更多数据测试假设，然后得出结论，设计出一种似乎最能概括数据中观测到的规律的模型。就像科学家必须对自然世界形成连贯一致的看法一样，考古学家必须对过去进行描绘。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Archaeology is partly the discovery of the <mark class="vocab-word" data-word="treasure">treasures</mark> of the past, partly the careful work of the scientific <mark class="vocab-word" data-word="analyst">analyst</mark>, partly the exercise of the creative imagination. It is <mark class="vocab-word" data-word="toil">toiling</mark> in the sun on an <mark class="vocab-word" data-word="excavation">excavation</mark> in the Middle East, it is working with living Inuit in the snows of Alaska, and it is <mark class="vocab-word" data-word="investigate">investigating</mark> the <mark class="vocab-word" data-word="sewer">sewers</mark> of Roman Britain. But it is also the <mark class="vocab-word" data-word="painstaking">painstaking</mark> task of <mark class="vocab-word" data-word="interpretation">interpretation</mark>, so that we come to understand what these things mean for the human <mark class="vocab-word" data-word="story">story</mark>. And it is the <mark class="vocab-word" data-word="conservation">conservation</mark> of the world’s cultural <mark class="vocab-word" data-word="heritage">heritage</mark> against looting and careless harm.</p></div>  <div class="parallel-zh"><p>考古学部分是对过去珍宝的发现，部分是科学分析师的精心工作，部分是对创造性想象力的锻炼。它在阳光下的中东发掘场中辛勤工作，在阿拉斯加的雪中与因纽特人生活在一起，并且正在研究罗马时期英国的下水道。但这也是一项艰巨的解释任务。它让我们开始了解这些东西对人类故事的意义，保护世界文化遗产免遭掠夺和粗心大意的伤害。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Archaeology, then, is both a physical activity out in the field, and an <mark class="vocab-word" data-word="intellectual">intellectual</mark> <mark class="vocab-word" data-word="pursuit">pursuit</mark> in the study or laboratory. That is part of its great attraction. The rich mixture of danger and <mark class="vocab-word" data-word="detective">detective</mark> work has also made it the perfect vehicle for <mark class="vocab-word" data-word="fiction">fiction</mark> writers and film-makers, from Agatha Christie with Murder in <mark class="vocab-word" data-word="mesopotamia">Mesopotamia</mark> to Stephen Spielberg with Indiana Jones. However far from reality such portrayals are, they capture the essential truth that archaeology is an <mark class="vocab-word" data-word="excite">exciting</mark> quest- the <mark class="vocab-word" data-word="quest">quest</mark> for knowledge about ourselves and our past.</p></div>  <div class="parallel-zh"><p>因此，考古学既是野外的体力活动，又是研究或实验室中的智力追求。这是其巨大吸引力的一部分。从阿加莎·克里斯蒂（Agatha Christie）的美索不达米亚的谋杀案到斯蒂芬·斯皮尔伯格（Stephen Spielberg）的印第安纳·琼斯（Indiana Jones），作为危险和侦探工作的丰富混合体，它已经成为小说作家和电影制片人的理想工具。无论这些描述与现实相距多么远，它们都抓住了这一本质，即考古学是令人激动的探索，是对自己和我们过去的追求。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But how does archaeology relate to disciplines such as <mark class="vocab-word" data-word="anthropology">anthropology</mark> and history, that are also <mark class="vocab-word" data-word="concerned">concerned</mark> with the human <mark class="vocab-word" data-word="story">story</mark>? Is archaeology itself a science? And what are the responsibilities of the archaeologist in today’s world?</p></div>  <div class="parallel-zh"><p>但是考古学如何与同样跟人类历史相关的人类学和历史学等学科联系起来？考古本身就是一门科学吗？考古学家在当今世界的职责是什么？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="anthropology">Anthropology</mark>, at its broadest, is the study of <mark class="vocab-word" data-word="humanity">humanity</mark> – our physical characteristics as animals and our unique non-biological characteristics that we call culture. Culture in this sense includes what the <mark class="vocab-word" data-word="anthropologist">anthropologist</mark>, Edward Tylor, summarised in 1871 as ‘knowledge, belief, art, morals, custom and any other capabilities and habits acquired by man as a member of society’. <mark class="vocab-word" data-word="anthropologist">Anthropologists</mark> also use the term ‘culture’ in a more restricted sense when they refer to the ‘culture’ of a particular society, meaning the non-biological characteristics unique to that society, which <mark class="vocab-word" data-word="distinguish">distinguish</mark> it from other societies. <mark class="vocab-word" data-word="anthropology">Anthropology</mark> is thus a broad discipline – so broad that it is generally broken down into three smaller disciplines: physical <mark class="vocab-word" data-word="anthropology">anthropology</mark>, cultural <mark class="vocab-word" data-word="anthropology">anthropology</mark> and archaeology.</p></div>  <div class="parallel-zh"><p>最广泛的人类学是对人类的研究-我们作为动物的身体特征以及我们称为文化的独特非生物学特征。从这个意义上讲，文化包括人类学家爱德华·泰勒（Edward Tylor）在1871年所概括的“知识，信仰，艺术，道德，风俗以及人类作为社会成员获得的任何其他能力和习惯”。人类学家在提及特定社会的“文化”时，也使用了更为狭义的术语“文化”，这意味着该社会所独有的非生物特征，将其与其他社会区分开来。因此，人类学是一门广泛的学科-如此广泛，以至于通常将其细分为三个较小的学科：自然人类学，文化人类学和考古学。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Physical <mark class="vocab-word" data-word="anthropology">anthropology</mark>, or <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="anthropology">anthropology</mark> as it is also called, concerns the study of human <mark class="vocab-word" data-word="biological">biological</mark> or physical characteristics and how they <mark class="vocab-word" data-word="evolve">evolved</mark>. Cultural <mark class="vocab-word" data-word="anthropology">anthropology</mark> – or social <mark class="vocab-word" data-word="anthropology">anthropology</mark> – analyses human culture and society. Two of its branches are ethnography (the study at first hand of individual living cultures) and <mark class="vocab-word" data-word="ethnology">ethnology</mark> (which sets out to compare cultures using ethnographic evidence to <mark class="vocab-word" data-word="derive">derive</mark> general principles about human society).</p></div>  <div class="parallel-zh"><p>物理人类学或生物学人类学也涉及对人类生物学或身体特征及其演变方式的研究。文化人类学或社会人类学分析人类文化和社会。它的两个分支是人种志（个人生活文化的第一手研究）和人种学（使用民族志证据比较文化以得出有关人类社会的一般原理）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Archaeology is the ‘past <mark class="vocab-word" data-word="tense">tense</mark> of cultural <mark class="vocab-word" data-word="anthropology">anthropology</mark>’. Whereas cultural <mark class="vocab-word" data-word="anthropologist">anthropologists</mark> will often base their conclusions on the experience of living within <mark class="vocab-word" data-word="contemporary">contemporary</mark> communities, archaeologists study past societies <mark class="vocab-word" data-word="primarily">primarily</mark> through their material <mark class="vocab-word" data-word="remains">remains</mark> – the buildings, tools, and other <mark class="vocab-word" data-word="artefact">artefacts</mark> that <mark class="vocab-word" data-word="constitute">constitute</mark> what is known as the material culture left over from former societies.</p></div>  <div class="parallel-zh"><p>考古学是“文化人类学的过去式”。文化人类学家通常会基于在现代社区中的生活经验得出结论，而考古学家则主要通过物质遗骸研究过去的社会-建筑，工具和其他文物构成了先前社会遗留下来的物质文化。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Nevertheless, one of the most important tasks for the archaeologist today is to know how to interpret material culture in human terms. How were those <mark class="vocab-word" data-word="pot">pots</mark> used? Why are some <mark class="vocab-word" data-word="dwelling">dwellings</mark> round and others square? Here the methods of archaeology and ethnography <mark class="vocab-word" data-word="overlap">overlap</mark>. Archaeologists in recent <mark class="vocab-word" data-word="decade">decades</mark> have developed ‘ethnoarchaeology’, where, like ethnographers, they live among <mark class="vocab-word" data-word="contemporary">contemporary</mark> communities, but with the specific purpose of learning how such societies use material culture – how they make their tools and weapons, why they build their <mark class="vocab-word" data-word="settlement">settlements</mark> where they do, and so on. Moreover, archaeology has an active role to play in the field of <mark class="vocab-word" data-word="conservation">conservation</mark>. <mark class="vocab-word" data-word="heritage">Heritage</mark> studies <mark class="vocab-word" data-word="constitute">constitutes</mark> a developing field, where it is realised that the world’s cultural <mark class="vocab-word" data-word="heritage">heritage</mark> is a <mark class="vocab-word" data-word="diminish">diminishing</mark> resource which holds different meanings for different people.</p></div>  <div class="parallel-zh"><p>尽管如此，今天对于考古学家来说最重要的任务之一就是要知道如何以人类的方式来解释物质文化。这些锅是如何使用的？为什么有些房屋是圆形的而其他房屋是方形的？在这里，考古学和人种学的方法重叠。近几十年来，考古学家发展了“民族考古学”，就像民族志学家一样，他们生活在当代社区中，但其特定目的是学习此类社会如何利用物质文化-他们如何制造工具和武器，为什么在他们居住的地方建立定居点等等。此外，考古学在保护领域发挥着积极作用。遗产研究构成了一个发展中的领域，人们意识到世界文化遗产是一种日益减少的资源，对不同的人具有不同的含义。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>If, then, archaeology deals with the past, in what way does it <mark class="vocab-word" data-word="differ">differ</mark> from history? In the broadest sense, just as archaeology is an aspect of <mark class="vocab-word" data-word="anthropology">anthropology</mark>, so too is it a part of history – where we mean the whole history of <mark class="vocab-word" data-word="humankind">humankind</mark> from its beginnings over three million years ago. Indeed, for more than ninety-nine per cent of that huge <mark class="vocab-word" data-word="span">span</mark> of time, archaeology- the study of past material culture – is the only significant source of information. <mark class="vocab-word" data-word="conventional">Conventional</mark> historical sources begin only with the introduction of written records around 3000 BC in western Asia, and much later in most other parts of the world.</p></div>  <div class="parallel-zh"><p>如果说考古学处理的是过去，与历史有何不同？从最广泛的意义上说，就像考古学是人类学的一个方面一样，它也是历史的一部分-在这里，我们指的是人类从开始到现在300多万年的整体历史。确实，在那巨大的时间跨度中，超过百分之九十九的考古学是对过去物质文化的研究，是唯一重要的信息来源。传统的历史资料仅始于公元前3000年左右在西亚引入书面记录，而世界上其他地区还要更晚一些。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A commonly <mark class="vocab-word" data-word="drawn">drawn</mark> <mark class="vocab-word" data-word="distinction">distinction</mark> is between pre-history, i.e. the period before written records -and history in the narrow sense, meaning the study of the past using written evidence. To archaeology, which studies all cultures and periods, whether with or without writing, the <mark class="vocab-word" data-word="distinction">distinction</mark> between history and pre-history is a <mark class="vocab-word" data-word="convenient">convenient</mark> dividing line that recognises the importance of the written word, but in no way <mark class="vocab-word" data-word="lessen">lessens</mark> the importance of the useful information contained in <mark class="vocab-word" data-word="oral">oral</mark> histories.</p></div>  <div class="parallel-zh"><p>通常会在史前（即书面记录之前的时期）与狭义的历史之间做出区分，这意味着使用书面证据对过去进行研究。对于研究所有文化和时期，无论有无书面形式的考古学来说，历史与史前史之间的区别都是一个方便的分界线，它可以认识到书面文字的重要性，但绝不能减少口述历史中所包含的有用信息的重要性。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Since the aim of archaeology is the understanding of <mark class="vocab-word" data-word="humankind">humankind</mark>, it is a <mark class="vocab-word" data-word="humanistic">humanistic</mark> study, and since it deals with the human past, it is a historical discipline. But it <mark class="vocab-word" data-word="differ">differs</mark> from the study of written history in a fundamental way. The material the archaeologist finds does not tell us directly what to think. Historical records make statements, offer opinions and pass judgements. The objects the archaeologists discover, on the other hand, tell us nothing directly in themselves. In this respect, the practice of the archaeologist is rather like that of the scientist, who collects data, conducts experiments, <mark class="vocab-word" data-word="formulate">formulates</mark> a <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>, tests the <mark class="vocab-word" data-word="hypothesis">hypothesis</mark> against more data, and then, in conclusion, <mark class="vocab-word" data-word="devise">devises</mark> a model that seems best to summarise the pattern observed in the data. The archaeologist has to develop a picture of the past, just as the scientist has to develop a <mark class="vocab-word" data-word="coherent">coherent</mark> view of the natural world.</p></div>  <div class="parallel-zh"><p>由于考古学的目的是对人类的了解，因此它是一门人文主义的研究，并且由于它涉及人类的过去，因此它是一门历史学科。但这在根本上不同于对书面历史的研究。考古学家发现的材料并不能直接告诉我们该怎么想。历史记录作出陈述，提出意见并作出判断。另一方面，考古学家发现的物体本身并没有直接告诉我们。在这方面，考古学家的做法与科学家的做法很像，后者收集数据，进行实验，提出假设，针对更多数据测试假设，然后得出结论，设计出一种似乎最能概括数据中观测到的规律的模型。就像科学家必须对自然世界形成连贯一致的看法一样，考古学家必须对过去进行描绘。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"treasure": 1, "analyst": 1, "toil": 1, "excavation": 1, "investigate": 1, "sewer": 1, "painstaking": 1, "interpretation": 1, "story": 2, "conservation": 2, "heritage": 3, "intellectual": 1, "pursuit": 1, "detective": 1, "fiction": 1, "mesopotamia": 1, "excite": 1, "quest": 1, "anthropology": 11, "concerned": 1, "humanity": 1, "anthropologist": 3, "distinguish": 1, "biological": 2, "evolve": 1, "ethnology": 1, "derive": 1, "tense": 1, "contemporary": 2, "primarily": 1, "remains": 1, "artefact": 1, "constitute": 2, "pot": 1, "dwelling": 1, "overlap": 1, "decade": 1, "settlement": 1, "diminish": 1, "differ": 2, "humankind": 2, "span": 1, "conventional": 1, "drawn": 1, "distinction": 2, "convenient": 1, "lessen": 1, "oral": 1, "humanistic": 1, "formulate": 1, "hypothesis": 2, "devise": 1, "coherent": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

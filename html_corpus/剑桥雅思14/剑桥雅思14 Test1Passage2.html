@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The growth of bike-sharing schemes around the world 共享单车 - 剑桥雅思14 Test 1 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>The growth of bike-sharing schemes around the world 共享单车</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39016.html" target="_blank">https://www.laokaoya.com/39016.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The original idea for an <mark class="vocab-word" data-word="urban">urban</mark> bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark> dates back to a summer’s day in Amsterdam in 1965. Provo, the organisation that came up with the idea, was a group of Dutch activists who wanted to change society. They believed the <mark class="vocab-word" data-word="scheme">scheme</mark>, which was known as the Witte Fietsenplan, was an answer to the <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="threat">threats</mark> of air pollution and <mark class="vocab-word" data-word="consumerism">consumerism</mark>. In the centre of Amsterdam, they painted a small number of used bikes white. They also distributed <mark class="vocab-word" data-word="leaflet">leaflets</mark> describing the dangers of cars and <mark class="vocab-word" data-word="inviting">inviting</mark> people to use the white bikes. The bikes were then left unlocked at various locations around the city, to be used by anyone in need of transport.</p><p>Luud Schimmelpennink, a Dutch industrial engineer who still lives and cycles in Amsterdam, was heavily <mark class="vocab-word" data-word="involved">involved</mark> in the original <mark class="vocab-word" data-word="scheme">scheme</mark>. He recalls how the <mark class="vocab-word" data-word="scheme">scheme</mark> succeeded in attracting a great deal of attention – particularly when it came to publicising Provo’s aims – but struggled to get off the ground. The police were opposed to Provo’s <mark class="vocab-word" data-word="initiative">initiatives</mark> and almost as soon as the white bikes were distributed around the city, they removed them. However, for Schimmelpennink and for bike-sharing <mark class="vocab-word" data-word="scheme">schemes</mark> in general, this was just the beginning. ‘The first Witte Fietsenplan was just a <mark class="vocab-word" data-word="symbolic">symbolic</mark> thing,’ he says. ‘We painted a few bikes white, that was all. Things got more serious when I became a member of the Amsterdam city <mark class="vocab-word" data-word="council">council</mark> two years later.’</p><p>Luud Schimmelpennink，</p><p>Schimmelpennink <mark class="vocab-word" data-word="seize">seized</mark> this opportunity to present a more <mark class="vocab-word" data-word="elaborate">elaborate</mark> Witte Fietsenplan to the city <mark class="vocab-word" data-word="council">council</mark>. ‘My idea was that the municipality of Amsterdam would distribute 10,000 white bikes over the city, for everyone to use,’ he explains. ‘I made serious <mark class="vocab-word" data-word="calculation">calculations</mark>. It turned out that a white bicycle – per person, per kilometre – would cost the municipality only 10% of what it contributed to public transport per person per kilometre.’ Nevertheless, the <mark class="vocab-word" data-word="council">council</mark> <mark class="vocab-word" data-word="unanimously">unanimously</mark> rejected the plan. ‘They said that the bicycle belongs to the past. They saw a <mark class="vocab-word" data-word="glorious">glorious</mark> future for the car,’ says Schimmelpennink. But he was not in the least <mark class="vocab-word" data-word="discourage">discouraged</mark>.</p><p>Schimmelpennink</p><p>Schimmelpennink never stopped believing in bike-sharing, and in the mid-90s, two Danes asked for his help to set up a system in Copenhagen. The result was the world’s first <mark class="vocab-word" data-word="large-scale">large-scale</mark> bike-share programme. It worked on a <mark class="vocab-word" data-word="deposit">deposit</mark>: ‘You dropped a coin in the bike and when you returned it, you got your money back.’ After setting up the Danish system, Schimmelpennink decided to try his luck again in the Netherlands – and this time he succeeded in <mark class="vocab-word" data-word="arouse">arousing</mark> the interest of the Dutch <mark class="vocab-word" data-word="ministry">Ministry</mark> of Transport. ‘Times had changed,’ he recalls. ‘People had become more environmentally <mark class="vocab-word" data-word="conscious">conscious</mark>, and the Danish experiment had proved that bike-sharing was a real possibility.’ A new Witte Fietsenplan was launched in 1999 in Amsterdam. However, riding a white bike was no longer free; it cost one guilder per trip and payment was made with a chip card developed by the Dutch bank Postbank. Schimmelpennink designed <mark class="vocab-word" data-word="conspicuous">conspicuous</mark>, <mark class="vocab-word" data-word="sturdy">sturdy</mark> white bikes locked in special <mark class="vocab-word" data-word="rack">racks</mark> which could be opened with the chip card – the plan started with 250 bikes, distributed over five stations.</p><p>Schimmelpennink</p><p>Theo Molenaar, who was a system designer for the project, worked <mark class="vocab-word" data-word="alongside">alongside</mark> Schimmelpennink. ‘I remember when we were testing the bike <mark class="vocab-word" data-word="rack">racks</mark>, he announced that he had already designed better ones. But of course, we had to go through with the ones we had.’ The system, however, was <mark class="vocab-word" data-word="prone">prone</mark> to vandalism and <mark class="vocab-word" data-word="theft">theft</mark>. ‘After every weekend there would always be a couple of bikes missing,’ Molenaar says. ‘I really have no idea what people did with them, because they could <mark class="vocab-word" data-word="instant">instantly</mark> be recognised as white bikes.’ But the biggest <mark class="vocab-word" data-word="blow">blow</mark> came when Postbank decided to <mark class="vocab-word" data-word="abolish">abolish</mark> the chip card, because it wasn’t <mark class="vocab-word" data-word="profitable">profitable</mark>. ‘That chip card was <mark class="vocab-word" data-word="pivotal">pivotal</mark> to the system,’ Molenaar says. ‘To continue the project we would have needed to set up another system, but the business partner had lost interest.’</p><p>Schimmelpennink was disappointed, but – characteristically – not for long. In 2002 he got a call from the French advertising <mark class="vocab-word" data-word="corporation">corporation</mark> JC Decaux, who wanted to set up his bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark> in Vienna. ‘That went really well. After Vienna, they set up a system in Lyon. Then in 2007, Paris followed. That was a <mark class="vocab-word" data-word="decisive">decisive</mark> moment in the history of bike-sharing.’ The huge and unexpected success of the Parisian bike-sharing programme, which now <mark class="vocab-word" data-word="boast">boasts</mark> more than 20,000 bicycles, inspired cities all over the world to set up their own <mark class="vocab-word" data-word="scheme">schemes</mark>, all modelled on Schimmelpennink’s. ‘It’s wonderful that this happened,’ he says. ‘But <mark class="vocab-word" data-word="financially">financially</mark> I didn’t really benefit from it, because I never filed for a <mark class="vocab-word" data-word="patent">patent</mark>.’</p><p>In Amsterdam today, 38% of all trips are made by bike and, along with Copenhagen, it is regarded as one of the two most cycle-friendly capitals in the world – but the city never got another Witte Fietsenplan. Molenaar believes this may be because everybody in Amsterdam already has a bike. Schimmelpennink, however, cannot see that this changes Amsterdam’s need for a bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark>. ‘People who travel on the underground don’t carry their bikes around. But often they need additional transport to reach their final destination.’ Although he thinks it is strange that a city like Amsterdam does not have a successful bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark>, he is <mark class="vocab-word" data-word="optimistic">optimistic</mark> about the future. ‘In the ’60s we didn’t stand a chance because people were prepared to give their lives to keep cars in the city. But that <mark class="vocab-word" data-word="mentality">mentality</mark> has totally changed. Today everybody longs for cities that are not <mark class="vocab-word" data-word="dominate">dominated</mark> by cars.’</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>城市共享单车计划的最初想法可以追溯到1965年阿姆斯特丹的某个夏日。提出该想法的组织，Provo，是一群想要改变社会的荷兰积极行动分子。他们认为，被称作“Witte Fietsenplan”的计划是应对空气污染和消费主义威胁的答案。在阿姆斯特丹市中心，他们将一些旧自行车喷成白色。他们还分发小册子，描绘汽车的危害，并邀请人们使用白色自行车。随后，没有上锁的自行车被留在城市中的各个地点，可以被任何需要交通工具的人使用。</p><p>一名仍然居住在阿姆斯特丹并经常骑行的荷兰工业工程师，曾紧密参与到最初的计划中。他回忆起这项计划如何成功吸引到大量的注意力 – 尤其是在宣传Provo的目的方面- 但未能真正起飞。警察反对Provo的方案。白色自行车刚被放在城市各处，他们就会把车清走。然而，对于Schimmelpennink和广义上的共享单车计划而言，这还仅仅是个开始。“第一次的Witte Fietsenplan仅仅是象征意义的事情”，他说。“我们将一些自行车喷成白色，仅此而已。两年后，当我成为阿姆斯特丹市议会成员时，事情才变得更加认真起来”。</p><p>抓住这次机会向市议会提交了一份更为详细周密的Witte Fietsenplan计划。“我的想法是，在阿姆斯特丹市内投放10000辆白色自行车供所有人使用”，他解释到。“我进行了严密的计算。结果显示，一辆白色自行车 – 每人，每公里 – 仅仅需要当局投入它在每人每公里公共交通上花费的10%”。然而，议会一致否决了这一计划。“他们说，自行车属于过去，他们看到汽车光辉灿烂的未来”，Schimmelpennink说。但他没有丝毫气馁。</p><p>从未放弃过对共享单车的信念。90年代中期，两个丹麦人请求他帮忙在哥本哈根建立一个这样的系统。结果出现了世界上第一个大型的共享单车项目。它采用押金的方式运行：“你向自行车投入一枚硬币，归还的时候把钱拿回来”。在建立丹麦系统之后，Schimmelpennink决定再在荷兰试试自己的运气。这一次，他成功引起了荷兰交通运输部的兴趣。“时代变了”，他回忆到。“人们对环境更加关心，并且丹麦的实验也证明共享单车计划确实可行”。1999年，一项新的Witte Fietsenplan在阿姆斯特丹推行。然而，骑行白色自行车不再是免费的了。每次旅程的费用为一盾，通过荷兰银行Postbank开发的芯片卡付费。Schimmelpennink设计醒目坚固的白色自行车。它们锁在用芯片卡可以打开的，特殊的车架上 – 计划开始时有250辆自行车，分布在5个站点。</p><p>Theo Molenaar，该项目的系统设计师，与Schimmelpennink并肩工作。“我记得我们在测试车架的时候，他宣布他已经设计出更好的产品。但当然，我们不得不继续使用已有的那些”。然而，该系统很容易受到破坏并被偷窃。“每个周末过后，总是会有几辆自行车丢失”，Molenaar说。“我实在想不通人们拿它们做什么，因为它们立刻就会被认出是白色自行车啊”。但最大的打击是Postbank决定放弃芯片卡，因为它无法盈利。“芯片卡是该系统的核心”，Molenaar说。“要想把项目继续下去，我们就需要设立另一套系统，但商业伙伴已经失去了兴趣”。</p><p>Schimmelpennik很失望，但性格决定了这种失望并没有持续很长时间。2002年，他接到法国广告公司JC Decaux的电话。该公司想要在维也纳设立一套他的共享单车系统。“该项目运行的十分顺利。维也纳之后，他们又在里昂建了了一套系统。随后，2007年，巴黎跟进。这在共享单车的历史上是决定性的一刻”。巴黎共享单车项目现在拥有20000多辆自行车。其巨大而又出人意料的成功激发全世界的城市纷纷建立他们自己的项目。而所有这些项目都以Schimmelpennink的为模板。“发生这一切真的太好了”，他说。“但从经济角度来说，我并没有从中获益，因为我一直都没有申请专利”。</p><p>如今阿姆斯特丹有38%的旅程都是通过自行车完成的。与哥本哈根一起，它被认为是世界上对骑行最为友好的两个首都之一 – 但该城市再未设立过另一个Witte Flietsenpan项目。Molenaar认为，这可能是因为阿姆斯特丹的每个居民都已经拥有自己的自行车。然而，Schimmelpennink并不认为这改变了阿姆斯特丹对共享单车项目的需求。“乘地铁出行的人无法抗着自己的自行车走来走去。但他们往往需要额外的交通工具才能抵达自己最终的目的地”。虽然他认为像阿姆斯特丹这样的城市没有成功的共享单车项目很奇怪，但他对未来十分乐观。“60年代的时候，我们没有丝毫机会，因为人们下定决心要在城市中保留汽车。但那种想法已经完全改变。今天每个人都期望城市不再被汽车所主宰”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The original idea for an <mark class="vocab-word" data-word="urban">urban</mark> bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark> dates back to a summer’s day in Amsterdam in 1965. Provo, the organisation that came up with the idea, was a group of Dutch activists who wanted to change society. They believed the <mark class="vocab-word" data-word="scheme">scheme</mark>, which was known as the Witte Fietsenplan, was an answer to the <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="threat">threats</mark> of air pollution and <mark class="vocab-word" data-word="consumerism">consumerism</mark>. In the centre of Amsterdam, they painted a small number of used bikes white. They also distributed <mark class="vocab-word" data-word="leaflet">leaflets</mark> describing the dangers of cars and <mark class="vocab-word" data-word="inviting">inviting</mark> people to use the white bikes. The bikes were then left unlocked at various locations around the city, to be used by anyone in need of transport.</p></div>  <div class="parallel-zh"><p>城市共享单车计划的最初想法可以追溯到1965年阿姆斯特丹的某个夏日。提出该想法的组织，Provo，是一群想要改变社会的荷兰积极行动分子。他们认为，被称作“Witte Fietsenplan”的计划是应对空气污染和消费主义威胁的答案。在阿姆斯特丹市中心，他们将一些旧自行车喷成白色。他们还分发小册子，描绘汽车的危害，并邀请人们使用白色自行车。随后，没有上锁的自行车被留在城市中的各个地点，可以被任何需要交通工具的人使用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Luud Schimmelpennink, a Dutch industrial engineer who still lives and cycles in Amsterdam, was heavily <mark class="vocab-word" data-word="involved">involved</mark> in the original <mark class="vocab-word" data-word="scheme">scheme</mark>. He recalls how the <mark class="vocab-word" data-word="scheme">scheme</mark> succeeded in attracting a great deal of attention – particularly when it came to publicising Provo’s aims – but struggled to get off the ground. The police were opposed to Provo’s <mark class="vocab-word" data-word="initiative">initiatives</mark> and almost as soon as the white bikes were distributed around the city, they removed them. However, for Schimmelpennink and for bike-sharing <mark class="vocab-word" data-word="scheme">schemes</mark> in general, this was just the beginning. ‘The first Witte Fietsenplan was just a <mark class="vocab-word" data-word="symbolic">symbolic</mark> thing,’ he says. ‘We painted a few bikes white, that was all. Things got more serious when I became a member of the Amsterdam city <mark class="vocab-word" data-word="council">council</mark> two years later.’</p><p>Luud Schimmelpennink，</p></div>  <div class="parallel-zh"><p>一名仍然居住在阿姆斯特丹并经常骑行的荷兰工业工程师，曾紧密参与到最初的计划中。他回忆起这项计划如何成功吸引到大量的注意力 – 尤其是在宣传Provo的目的方面- 但未能真正起飞。警察反对Provo的方案。白色自行车刚被放在城市各处，他们就会把车清走。然而，对于Schimmelpennink和广义上的共享单车计划而言，这还仅仅是个开始。“第一次的Witte Fietsenplan仅仅是象征意义的事情”，他说。“我们将一些自行车喷成白色，仅此而已。两年后，当我成为阿姆斯特丹市议会成员时，事情才变得更加认真起来”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Schimmelpennink <mark class="vocab-word" data-word="seize">seized</mark> this opportunity to present a more <mark class="vocab-word" data-word="elaborate">elaborate</mark> Witte Fietsenplan to the city <mark class="vocab-word" data-word="council">council</mark>. ‘My idea was that the municipality of Amsterdam would distribute 10,000 white bikes over the city, for everyone to use,’ he explains. ‘I made serious <mark class="vocab-word" data-word="calculation">calculations</mark>. It turned out that a white bicycle – per person, per kilometre – would cost the municipality only 10% of what it contributed to public transport per person per kilometre.’ Nevertheless, the <mark class="vocab-word" data-word="council">council</mark> <mark class="vocab-word" data-word="unanimously">unanimously</mark> rejected the plan. ‘They said that the bicycle belongs to the past. They saw a <mark class="vocab-word" data-word="glorious">glorious</mark> future for the car,’ says Schimmelpennink. But he was not in the least <mark class="vocab-word" data-word="discourage">discouraged</mark>.</p><p>Schimmelpennink</p></div>  <div class="parallel-zh"><p>抓住这次机会向市议会提交了一份更为详细周密的Witte Fietsenplan计划。“我的想法是，在阿姆斯特丹市内投放10000辆白色自行车供所有人使用”，他解释到。“我进行了严密的计算。结果显示，一辆白色自行车 – 每人，每公里 – 仅仅需要当局投入它在每人每公里公共交通上花费的10%”。然而，议会一致否决了这一计划。“他们说，自行车属于过去，他们看到汽车光辉灿烂的未来”，Schimmelpennink说。但他没有丝毫气馁。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Schimmelpennink never stopped believing in bike-sharing, and in the mid-90s, two Danes asked for his help to set up a system in Copenhagen. The result was the world’s first <mark class="vocab-word" data-word="large-scale">large-scale</mark> bike-share programme. It worked on a <mark class="vocab-word" data-word="deposit">deposit</mark>: ‘You dropped a coin in the bike and when you returned it, you got your money back.’ After setting up the Danish system, Schimmelpennink decided to try his luck again in the Netherlands – and this time he succeeded in <mark class="vocab-word" data-word="arouse">arousing</mark> the interest of the Dutch <mark class="vocab-word" data-word="ministry">Ministry</mark> of Transport. ‘Times had changed,’ he recalls. ‘People had become more environmentally <mark class="vocab-word" data-word="conscious">conscious</mark>, and the Danish experiment had proved that bike-sharing was a real possibility.’ A new Witte Fietsenplan was launched in 1999 in Amsterdam. However, riding a white bike was no longer free; it cost one guilder per trip and payment was made with a chip card developed by the Dutch bank Postbank. Schimmelpennink designed <mark class="vocab-word" data-word="conspicuous">conspicuous</mark>, <mark class="vocab-word" data-word="sturdy">sturdy</mark> white bikes locked in special <mark class="vocab-word" data-word="rack">racks</mark> which could be opened with the chip card – the plan started with 250 bikes, distributed over five stations.</p><p>Schimmelpennink</p></div>  <div class="parallel-zh"><p>从未放弃过对共享单车的信念。90年代中期，两个丹麦人请求他帮忙在哥本哈根建立一个这样的系统。结果出现了世界上第一个大型的共享单车项目。它采用押金的方式运行：“你向自行车投入一枚硬币，归还的时候把钱拿回来”。在建立丹麦系统之后，Schimmelpennink决定再在荷兰试试自己的运气。这一次，他成功引起了荷兰交通运输部的兴趣。“时代变了”，他回忆到。“人们对环境更加关心，并且丹麦的实验也证明共享单车计划确实可行”。1999年，一项新的Witte Fietsenplan在阿姆斯特丹推行。然而，骑行白色自行车不再是免费的了。每次旅程的费用为一盾，通过荷兰银行Postbank开发的芯片卡付费。Schimmelpennink设计醒目坚固的白色自行车。它们锁在用芯片卡可以打开的，特殊的车架上 – 计划开始时有250辆自行车，分布在5个站点。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Theo Molenaar, who was a system designer for the project, worked <mark class="vocab-word" data-word="alongside">alongside</mark> Schimmelpennink. ‘I remember when we were testing the bike <mark class="vocab-word" data-word="rack">racks</mark>, he announced that he had already designed better ones. But of course, we had to go through with the ones we had.’ The system, however, was <mark class="vocab-word" data-word="prone">prone</mark> to vandalism and <mark class="vocab-word" data-word="theft">theft</mark>. ‘After every weekend there would always be a couple of bikes missing,’ Molenaar says. ‘I really have no idea what people did with them, because they could <mark class="vocab-word" data-word="instant">instantly</mark> be recognised as white bikes.’ But the biggest <mark class="vocab-word" data-word="blow">blow</mark> came when Postbank decided to <mark class="vocab-word" data-word="abolish">abolish</mark> the chip card, because it wasn’t <mark class="vocab-word" data-word="profitable">profitable</mark>. ‘That chip card was <mark class="vocab-word" data-word="pivotal">pivotal</mark> to the system,’ Molenaar says. ‘To continue the project we would have needed to set up another system, but the business partner had lost interest.’</p></div>  <div class="parallel-zh"><p>Theo Molenaar，该项目的系统设计师，与Schimmelpennink并肩工作。“我记得我们在测试车架的时候，他宣布他已经设计出更好的产品。但当然，我们不得不继续使用已有的那些”。然而，该系统很容易受到破坏并被偷窃。“每个周末过后，总是会有几辆自行车丢失”，Molenaar说。“我实在想不通人们拿它们做什么，因为它们立刻就会被认出是白色自行车啊”。但最大的打击是Postbank决定放弃芯片卡，因为它无法盈利。“芯片卡是该系统的核心”，Molenaar说。“要想把项目继续下去，我们就需要设立另一套系统，但商业伙伴已经失去了兴趣”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Schimmelpennink was disappointed, but – characteristically – not for long. In 2002 he got a call from the French advertising <mark class="vocab-word" data-word="corporation">corporation</mark> JC Decaux, who wanted to set up his bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark> in Vienna. ‘That went really well. After Vienna, they set up a system in Lyon. Then in 2007, Paris followed. That was a <mark class="vocab-word" data-word="decisive">decisive</mark> moment in the history of bike-sharing.’ The huge and unexpected success of the Parisian bike-sharing programme, which now <mark class="vocab-word" data-word="boast">boasts</mark> more than 20,000 bicycles, inspired cities all over the world to set up their own <mark class="vocab-word" data-word="scheme">schemes</mark>, all modelled on Schimmelpennink’s. ‘It’s wonderful that this happened,’ he says. ‘But <mark class="vocab-word" data-word="financially">financially</mark> I didn’t really benefit from it, because I never filed for a <mark class="vocab-word" data-word="patent">patent</mark>.’</p></div>  <div class="parallel-zh"><p>Schimmelpennik很失望，但性格决定了这种失望并没有持续很长时间。2002年，他接到法国广告公司JC Decaux的电话。该公司想要在维也纳设立一套他的共享单车系统。“该项目运行的十分顺利。维也纳之后，他们又在里昂建了了一套系统。随后，2007年，巴黎跟进。这在共享单车的历史上是决定性的一刻”。巴黎共享单车项目现在拥有20000多辆自行车。其巨大而又出人意料的成功激发全世界的城市纷纷建立他们自己的项目。而所有这些项目都以Schimmelpennink的为模板。“发生这一切真的太好了”，他说。“但从经济角度来说，我并没有从中获益，因为我一直都没有申请专利”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In Amsterdam today, 38% of all trips are made by bike and, along with Copenhagen, it is regarded as one of the two most cycle-friendly capitals in the world – but the city never got another Witte Fietsenplan. Molenaar believes this may be because everybody in Amsterdam already has a bike. Schimmelpennink, however, cannot see that this changes Amsterdam’s need for a bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark>. ‘People who travel on the underground don’t carry their bikes around. But often they need additional transport to reach their final destination.’ Although he thinks it is strange that a city like Amsterdam does not have a successful bike-sharing <mark class="vocab-word" data-word="scheme">scheme</mark>, he is <mark class="vocab-word" data-word="optimistic">optimistic</mark> about the future. ‘In the ’60s we didn’t stand a chance because people were prepared to give their lives to keep cars in the city. But that <mark class="vocab-word" data-word="mentality">mentality</mark> has totally changed. Today everybody longs for cities that are not <mark class="vocab-word" data-word="dominate">dominated</mark> by cars.’</p></div>  <div class="parallel-zh"><p>如今阿姆斯特丹有38%的旅程都是通过自行车完成的。与哥本哈根一起，它被认为是世界上对骑行最为友好的两个首都之一 – 但该城市再未设立过另一个Witte Flietsenpan项目。Molenaar认为，这可能是因为阿姆斯特丹的每个居民都已经拥有自己的自行车。然而，Schimmelpennink并不认为这改变了阿姆斯特丹对共享单车项目的需求。“乘地铁出行的人无法抗着自己的自行车走来走去。但他们往往需要额外的交通工具才能抵达自己最终的目的地”。虽然他认为像阿姆斯特丹这样的城市没有成功的共享单车项目很奇怪，但他对未来十分乐观。“60年代的时候，我们没有丝毫机会，因为人们下定决心要在城市中保留汽车。但那种想法已经完全改变。今天每个人都期望城市不再被汽车所主宰”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"urban": 1, "scheme": 9, "perceive": 1, "threat": 1, "consumerism": 1, "leaflet": 1, "inviting": 1, "involved": 1, "initiative": 1, "symbolic": 1, "council": 3, "seize": 1, "elaborate": 1, "calculation": 1, "unanimously": 1, "glorious": 1, "discourage": 1, "large-scale": 1, "deposit": 1, "arouse": 1, "ministry": 1, "conscious": 1, "conspicuous": 1, "sturdy": 1, "rack": 2, "alongside": 1, "prone": 1, "theft": 1, "instant": 1, "blow": 1, "abolish": 1, "profitable": 1, "pivotal": 1, "corporation": 1, "decisive": 1, "boast": 1, "financially": 1, "patent": 1, "optimistic": 1, "mentality": 1, "dominate": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

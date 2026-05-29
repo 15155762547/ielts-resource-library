@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>persistent bullying - 剑桥雅思6 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思6</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>persistent bullying</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/23956.html" target="_blank">https://www.laokaoya.com/23956.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="persistent">Persistent</mark> <mark class="vocab-word" data-word="bully">bullying</mark> is one of the worst experiences a child can face. How can it be prevented? Peter Smith, Professor of <mark class="vocab-word" data-word="psychology">Psychology</mark> at the University of Sheffield, directed the Sheffield Anti-Bullying <mark class="vocab-word" data-word="intervention">Intervention</mark> Project, funded by the Department for Education. Here he reports on his findings.</p><p><mark class="vocab-word" data-word="bully">Bullying</mark> can take a variety of forms, from the <mark class="vocab-word" data-word="verbal">verbal</mark> – being <mark class="vocab-word" data-word="taunt">taunted</mark> or called hurtful names – to the physical – being kicked or <mark class="vocab-word" data-word="shove">shoved</mark> – as well as <mark class="vocab-word" data-word="indirect">indirect</mark> forms, such as being <mark class="vocab-word" data-word="exclude">excluded</mark> from social groups. A survey I conducted with Irene Whitney found that in British primary schools up to a <mark class="vocab-word" data-word="quarter">quarter</mark> of <mark class="vocab-word" data-word="pupil">pupils</mark> reported experience of <mark class="vocab-word" data-word="bully">bullying</mark>, which in about one in ten cases was <mark class="vocab-word" data-word="persistent">persistent</mark>. There was less <mark class="vocab-word" data-word="bully">bullying</mark> in secondary schools, with about one in twenty-five suffering <mark class="vocab-word" data-word="persistent">persistent</mark> <mark class="vocab-word" data-word="bully">bullying</mark>, but these cases may be particularly <mark class="vocab-word" data-word="recalcitrant">recalcitrant</mark>.</p><p><mark class="vocab-word" data-word="bully">Bullying</mark> is clearly unpleasant, and can make the child experiencing it feel <mark class="vocab-word" data-word="unworthy">unworthy</mark> and <mark class="vocab-word" data-word="depress">depressed</mark>. In extreme cases it can even <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="suicide">suicide</mark>, though this is thankfully rare. Victimised <mark class="vocab-word" data-word="pupil">pupils</mark> are more likely to experience difficulties with interpersonal relationships as adults, while children who <mark class="vocab-word" data-word="persistent">persistently</mark> <mark class="vocab-word" data-word="bully">bully</mark> are more likely to grow up to be physically <mark class="vocab-word" data-word="violent">violent</mark>, and <mark class="vocab-word" data-word="convict">convicted</mark> of anti-social offences.</p><p>Until recently, not much was known about the topic, and little help was available to teachers to deal with <mark class="vocab-word" data-word="bully">bullying</mark>. Perhaps as a consequence, schools would often deny the problem. ‘There is no <mark class="vocab-word" data-word="bully">bullying</mark> at this school’ has been a common <mark class="vocab-word" data-word="refrain">refrain</mark>, almost certainly untrue. <mark class="vocab-word" data-word="fortunate">Fortunately</mark> more schools are now saying: ‘There is not much <mark class="vocab-word" data-word="bully">bullying</mark> here, but when it occurs we have a clear policy for dealing with it.’</p><p>Three <mark class="vocab-word" data-word="factor">factors</mark> are <mark class="vocab-word" data-word="involved">involved</mark> in this change. First is an <mark class="vocab-word" data-word="awareness">awareness</mark> of the severity of the problem. Second, a number of resources to help <mark class="vocab-word" data-word="tackle">tackle</mark> <mark class="vocab-word" data-word="bully">bullying</mark> have become available in Britain. For example, the Scottish <mark class="vocab-word" data-word="council">Council</mark> for Research in Education produced a package of materials, <mark class="vocab-word" data-word="action">Action</mark> Against <mark class="vocab-word" data-word="bully">Bullying</mark>, <mark class="vocab-word" data-word="circulate">circulated</mark> to all schools in England and Wales as well as in Scotland in summer 1992, with a second pack, Supporting Schools Against <mark class="vocab-word" data-word="bully">Bullying</mark>, produced the following year. In Ireland, <mark class="vocab-word" data-word="guideline">Guidelines</mark> on <mark class="vocab-word" data-word="counter">Countering</mark> <mark class="vocab-word" data-word="bully">Bullying</mark> Behaviour in Post-Primary Schools was published in 1993. Third, there is evidence that these materials work, and that schools can achieve something. This comes from carefully conducted ‘before and after’ <mark class="vocab-word" data-word="evaluation">evaluations</mark> of <mark class="vocab-word" data-word="intervention">interventions</mark> in schools, monitored by a research team. In Norway, after an <mark class="vocab-word" data-word="intervention">intervention</mark> <mark class="vocab-word" data-word="campaign">campaign</mark> was introduced nationally, an <mark class="vocab-word" data-word="evaluation">evaluation</mark> of forty-two schools <mark class="vocab-word" data-word="suggest">suggested</mark> that, over a two-year period, <mark class="vocab-word" data-word="bully">bullying</mark> was <mark class="vocab-word" data-word="halve">halved</mark>. The Sheffield investigation, which <mark class="vocab-word" data-word="involved">involved</mark> sixteen primary schools and seven secondary schools, found that most schools succeeded in reducing <mark class="vocab-word" data-word="bully">bullying</mark>.</p><p>Evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that a key step is to develop a policy on <mark class="vocab-word" data-word="bully">bullying</mark>, saying clearly what is meant by <mark class="vocab-word" data-word="bully">bullying</mark>, and giving <mark class="vocab-word" data-word="explicit">explicit</mark> <mark class="vocab-word" data-word="guideline">guidelines</mark> on what will be done if it occurs, what records will be kept, who will be informed, what <mark class="vocab-word" data-word="sanction">sanctions</mark> will be employed. The policy should be developed through <mark class="vocab-word" data-word="consultation">consultation</mark>, over a period of time – not just <mark class="vocab-word" data-word="impose">imposed</mark> from the head teacher’s office！ <mark class="vocab-word" data-word="pupil">Pupils</mark>, parents and staff should feel they have been <mark class="vocab-word" data-word="involved">involved</mark> in the policy, which needs to be <mark class="vocab-word" data-word="disseminate">disseminated</mark> and <mark class="vocab-word" data-word="implement">implemented</mark> effectively.</p><p>Other <mark class="vocab-word" data-word="action">actions</mark> can be taken to back up the policy. There are ways of dealing with the topic through the <mark class="vocab-word" data-word="curriculum">curriculum</mark>, using video, drama and literature. These are useful for raising <mark class="vocab-word" data-word="awareness">awareness</mark>, and can best be tied in to early phases of development, while the school is starting to discuss the issue of <mark class="vocab-word" data-word="bully">bullying</mark>. They are also useful in <mark class="vocab-word" data-word="renew">renewing</mark> the policy for new <mark class="vocab-word" data-word="pupil">pupils</mark>, or <mark class="vocab-word" data-word="revise">revising</mark> it in the light of experience. But <mark class="vocab-word" data-word="curriculum">curriculum</mark> work alone may only have <mark class="vocab-word" data-word="short-term">short-term</mark> effects; it should be an addition to policy work, not a <mark class="vocab-word" data-word="substitute">substitute</mark>.</p><p>There are also ways of working with individual <mark class="vocab-word" data-word="pupil">pupils</mark>, or in small groups. <mark class="vocab-word" data-word="assertiveness">Assertiveness</mark> training for <mark class="vocab-word" data-word="pupil">pupils</mark> who are <mark class="vocab-word" data-word="liable">liable</mark> to be <mark class="vocab-word" data-word="victim">victims</mark> is <mark class="vocab-word" data-word="worthwhile">worthwhile</mark>, and certain approaches to group <mark class="vocab-word" data-word="bully">bullying</mark> such as ‘no blame’, can be useful in changing the behaviour of <mark class="vocab-word" data-word="bully">bullying</mark> <mark class="vocab-word" data-word="pupil">pupils</mark> without <mark class="vocab-word" data-word="confront">confronting</mark> them directly, although other <mark class="vocab-word" data-word="sanction">sanctions</mark> may be needed for those who continue with <mark class="vocab-word" data-word="persistent">persistent</mark> <mark class="vocab-word" data-word="bully">bullying</mark>.</p><p>Work in the playground is important, too. One helpful step is to train lunchtime <mark class="vocab-word" data-word="supervisor">supervisors</mark> to <mark class="vocab-word" data-word="distinguish">distinguish</mark> <mark class="vocab-word" data-word="bully">bullying</mark> from playful fighting and help them break up conflicts. Another possibility is to improve the playground environment, so that <mark class="vocab-word" data-word="pupil">pupils</mark> are less likely to be led into <mark class="vocab-word" data-word="bully">bullying</mark> from boredom or <mark class="vocab-word" data-word="frustration">frustration</mark>.</p><p>With these developments, schools can expect that at least the most serious kinds of <mark class="vocab-word" data-word="bully">bullying</mark> can largely be prevented. The more effort put in and the wider the whole school <mark class="vocab-word" data-word="involvement">involvement</mark>, the more <mark class="vocab-word" data-word="substantial">substantial</mark> the results are likely to be. The reduction in <mark class="vocab-word" data-word="bully">bullying</mark> – and the <mark class="vocab-word" data-word="consequent">consequent</mark> improvement in <mark class="vocab-word" data-word="pupil">pupil</mark> happiness – is surely a <mark class="vocab-word" data-word="worthwhile">worthwhile</mark> objective.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>持续的欺凌是孩子可能面对的最糟糕的经历之一。如何预防？谢菲尔德大学心理学教授，彼得·史密斯，开展了一项由教育部资助的谢菲尔德反欺凌干预项目。以下是他的发现。</p><p>欺凌可采取多种形式，从口头上（被嘲笑或冠以侮辱性的名字）到身体上（被踢或推），还有各种各样的间接形式，如被排除在社会群体之外。我与艾琳·惠特尼（Irene Whitney）进行的一项调查发现，在英国小学，有四分之一的学生报告遭受欺凌的经历，其中十分之一的案例是持续了很久。中学中的欺凌现象较少，约有二十五分之一的学生遭受持续性欺凌，但这些案例可能尤其令人难以接受。</p><p>欺凌显然是令人不快的，并且会使经历它的孩子感到格格不入和沮丧。极端情况下，它甚至可能导致自杀。尽管幸运的是这种情况很少见。受害的学长大之后更容易遭遇人际关系困难，而那些持续欺凌他人的孩子长大后则更有可能变得十分暴力，并被判犯有反社会罪。</p><p>直到最近，人们对这个话题都知之甚少，而且教师在应对欺凌方面几乎得不到帮助。或许正是因为如此，学校经常会否认这个问题的存在。“这所学校没有欺凌行为”是一种普遍的说法。但这几乎可以肯定是假的。幸运的是，现在有更多的学校在说：“这里没有太多欺凌行为，但是一旦发生，我们就有明确的政策予以处理。‘</p><p>这种变化涉及到三个因素。第一是意识到问题的严重性。第二是英国已经有许多资源可以帮助解决欺凌行为。例如，苏格兰教育研究理事会制作了一揽子的材料-《反欺凌行动》，并于1992年夏季分发给英格兰和威尔士以及苏格兰的所有学校，第二项资料-《支持反欺凌学校》在随后一年发行。1993年，爱尔兰发布了《打击小学后欺凌行为的指南》。第三，有证据表明这些材料行之有效，并且学校可以实现某种改变。这来自于在研究团队监督下对学校干预措施进行前后的评估。在挪威全国范围内开展了干预运动之后，对四十二所学校的评估表明，在两年的时间内，欺凌现象减半了。谢菲尔德的调查涉及16所小学，7所中学，发现大部分学校都成功地减少了欺凌现象。</p><p>证据表明，关键步骤是制定有关欺凌的政策，清晰说出欺凌的含义，并给出明确的指导方针，说明发生欺凌行为时将如何处理，保留哪些记录，将通知谁，将采取何种制裁措施。该政策应在一段时间内通过协商制定，而不仅仅是由校方单独施加！学生，父母和工作人员应感到自己已经参与到政策之中，需要对其进行有效的传播和实施。</p><p>可以采取其他措施来支持该政策。可以通过视频，戏剧和文学等方式通过课程处理这一问题。这些在学校开始讨论欺凌问题时对于提高认识很有用，并且最好与事态发展的早期阶段联系在一起。它们对于更新新生政策或根据经验进行修订也很有用。但是仅仅课程自身可能只会产生短期效果。它应该是政策工作的补充，而不是替代品。</p><p>也可以与个别学生或者小组一起努力。对容易成为受害者的学生进行自信训练十分重要，并且诸如“不责怪”之类的方法对于在不直接对抗的情况下改变欺凌者的行为十分有用，尽管对于那些继续进行欺凌行为的人应该采取相应制裁。</p><p>操场上的工作也很重要。一项有用的措施是培训午餐时间管理员，以区分欺凌和玩耍性质的打闹，并帮助他们解决冲突。另一种可行性措施是改善操场的环境，以使学生不太可能因无聊或沮丧而欺负他人。</p><p>随着这些发展，学校至少可以期望在很大程度上防止最严重的欺凌行为。投入的精力越多，整个学校的参与范围越广，结果可能会越有意义。欺凌行为的减少以及随之而来的学生幸福感的提高无疑是一个值得追求的目标。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="persistent">Persistent</mark> <mark class="vocab-word" data-word="bully">bullying</mark> is one of the worst experiences a child can face. How can it be prevented? Peter Smith, Professor of <mark class="vocab-word" data-word="psychology">Psychology</mark> at the University of Sheffield, directed the Sheffield Anti-Bullying <mark class="vocab-word" data-word="intervention">Intervention</mark> Project, funded by the Department for Education. Here he reports on his findings.</p></div>  <div class="parallel-zh"><p>持续的欺凌是孩子可能面对的最糟糕的经历之一。如何预防？谢菲尔德大学心理学教授，彼得·史密斯，开展了一项由教育部资助的谢菲尔德反欺凌干预项目。以下是他的发现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="bully">Bullying</mark> can take a variety of forms, from the <mark class="vocab-word" data-word="verbal">verbal</mark> – being <mark class="vocab-word" data-word="taunt">taunted</mark> or called hurtful names – to the physical – being kicked or <mark class="vocab-word" data-word="shove">shoved</mark> – as well as <mark class="vocab-word" data-word="indirect">indirect</mark> forms, such as being <mark class="vocab-word" data-word="exclude">excluded</mark> from social groups. A survey I conducted with Irene Whitney found that in British primary schools up to a <mark class="vocab-word" data-word="quarter">quarter</mark> of <mark class="vocab-word" data-word="pupil">pupils</mark> reported experience of <mark class="vocab-word" data-word="bully">bullying</mark>, which in about one in ten cases was <mark class="vocab-word" data-word="persistent">persistent</mark>. There was less <mark class="vocab-word" data-word="bully">bullying</mark> in secondary schools, with about one in twenty-five suffering <mark class="vocab-word" data-word="persistent">persistent</mark> <mark class="vocab-word" data-word="bully">bullying</mark>, but these cases may be particularly <mark class="vocab-word" data-word="recalcitrant">recalcitrant</mark>.</p></div>  <div class="parallel-zh"><p>欺凌可采取多种形式，从口头上（被嘲笑或冠以侮辱性的名字）到身体上（被踢或推），还有各种各样的间接形式，如被排除在社会群体之外。我与艾琳·惠特尼（Irene Whitney）进行的一项调查发现，在英国小学，有四分之一的学生报告遭受欺凌的经历，其中十分之一的案例是持续了很久。中学中的欺凌现象较少，约有二十五分之一的学生遭受持续性欺凌，但这些案例可能尤其令人难以接受。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="bully">Bullying</mark> is clearly unpleasant, and can make the child experiencing it feel <mark class="vocab-word" data-word="unworthy">unworthy</mark> and <mark class="vocab-word" data-word="depress">depressed</mark>. In extreme cases it can even <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="suicide">suicide</mark>, though this is thankfully rare. Victimised <mark class="vocab-word" data-word="pupil">pupils</mark> are more likely to experience difficulties with interpersonal relationships as adults, while children who <mark class="vocab-word" data-word="persistent">persistently</mark> <mark class="vocab-word" data-word="bully">bully</mark> are more likely to grow up to be physically <mark class="vocab-word" data-word="violent">violent</mark>, and <mark class="vocab-word" data-word="convict">convicted</mark> of anti-social offences.</p></div>  <div class="parallel-zh"><p>欺凌显然是令人不快的，并且会使经历它的孩子感到格格不入和沮丧。极端情况下，它甚至可能导致自杀。尽管幸运的是这种情况很少见。受害的学长大之后更容易遭遇人际关系困难，而那些持续欺凌他人的孩子长大后则更有可能变得十分暴力，并被判犯有反社会罪。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Until recently, not much was known about the topic, and little help was available to teachers to deal with <mark class="vocab-word" data-word="bully">bullying</mark>. Perhaps as a consequence, schools would often deny the problem. ‘There is no <mark class="vocab-word" data-word="bully">bullying</mark> at this school’ has been a common <mark class="vocab-word" data-word="refrain">refrain</mark>, almost certainly untrue. <mark class="vocab-word" data-word="fortunate">Fortunately</mark> more schools are now saying: ‘There is not much <mark class="vocab-word" data-word="bully">bullying</mark> here, but when it occurs we have a clear policy for dealing with it.’</p></div>  <div class="parallel-zh"><p>直到最近，人们对这个话题都知之甚少，而且教师在应对欺凌方面几乎得不到帮助。或许正是因为如此，学校经常会否认这个问题的存在。“这所学校没有欺凌行为”是一种普遍的说法。但这几乎可以肯定是假的。幸运的是，现在有更多的学校在说：“这里没有太多欺凌行为，但是一旦发生，我们就有明确的政策予以处理。‘</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Three <mark class="vocab-word" data-word="factor">factors</mark> are <mark class="vocab-word" data-word="involved">involved</mark> in this change. First is an <mark class="vocab-word" data-word="awareness">awareness</mark> of the severity of the problem. Second, a number of resources to help <mark class="vocab-word" data-word="tackle">tackle</mark> <mark class="vocab-word" data-word="bully">bullying</mark> have become available in Britain. For example, the Scottish <mark class="vocab-word" data-word="council">Council</mark> for Research in Education produced a package of materials, <mark class="vocab-word" data-word="action">Action</mark> Against <mark class="vocab-word" data-word="bully">Bullying</mark>, <mark class="vocab-word" data-word="circulate">circulated</mark> to all schools in England and Wales as well as in Scotland in summer 1992, with a second pack, Supporting Schools Against <mark class="vocab-word" data-word="bully">Bullying</mark>, produced the following year. In Ireland, <mark class="vocab-word" data-word="guideline">Guidelines</mark> on <mark class="vocab-word" data-word="counter">Countering</mark> <mark class="vocab-word" data-word="bully">Bullying</mark> Behaviour in Post-Primary Schools was published in 1993. Third, there is evidence that these materials work, and that schools can achieve something. This comes from carefully conducted ‘before and after’ <mark class="vocab-word" data-word="evaluation">evaluations</mark> of <mark class="vocab-word" data-word="intervention">interventions</mark> in schools, monitored by a research team. In Norway, after an <mark class="vocab-word" data-word="intervention">intervention</mark> <mark class="vocab-word" data-word="campaign">campaign</mark> was introduced nationally, an <mark class="vocab-word" data-word="evaluation">evaluation</mark> of forty-two schools <mark class="vocab-word" data-word="suggest">suggested</mark> that, over a two-year period, <mark class="vocab-word" data-word="bully">bullying</mark> was <mark class="vocab-word" data-word="halve">halved</mark>. The Sheffield investigation, which <mark class="vocab-word" data-word="involved">involved</mark> sixteen primary schools and seven secondary schools, found that most schools succeeded in reducing <mark class="vocab-word" data-word="bully">bullying</mark>.</p></div>  <div class="parallel-zh"><p>这种变化涉及到三个因素。第一是意识到问题的严重性。第二是英国已经有许多资源可以帮助解决欺凌行为。例如，苏格兰教育研究理事会制作了一揽子的材料-《反欺凌行动》，并于1992年夏季分发给英格兰和威尔士以及苏格兰的所有学校，第二项资料-《支持反欺凌学校》在随后一年发行。1993年，爱尔兰发布了《打击小学后欺凌行为的指南》。第三，有证据表明这些材料行之有效，并且学校可以实现某种改变。这来自于在研究团队监督下对学校干预措施进行前后的评估。在挪威全国范围内开展了干预运动之后，对四十二所学校的评估表明，在两年的时间内，欺凌现象减半了。谢菲尔德的调查涉及16所小学，7所中学，发现大部分学校都成功地减少了欺凌现象。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Evidence <mark class="vocab-word" data-word="suggest">suggests</mark> that a key step is to develop a policy on <mark class="vocab-word" data-word="bully">bullying</mark>, saying clearly what is meant by <mark class="vocab-word" data-word="bully">bullying</mark>, and giving <mark class="vocab-word" data-word="explicit">explicit</mark> <mark class="vocab-word" data-word="guideline">guidelines</mark> on what will be done if it occurs, what records will be kept, who will be informed, what <mark class="vocab-word" data-word="sanction">sanctions</mark> will be employed. The policy should be developed through <mark class="vocab-word" data-word="consultation">consultation</mark>, over a period of time – not just <mark class="vocab-word" data-word="impose">imposed</mark> from the head teacher’s office！ <mark class="vocab-word" data-word="pupil">Pupils</mark>, parents and staff should feel they have been <mark class="vocab-word" data-word="involved">involved</mark> in the policy, which needs to be <mark class="vocab-word" data-word="disseminate">disseminated</mark> and <mark class="vocab-word" data-word="implement">implemented</mark> effectively.</p></div>  <div class="parallel-zh"><p>证据表明，关键步骤是制定有关欺凌的政策，清晰说出欺凌的含义，并给出明确的指导方针，说明发生欺凌行为时将如何处理，保留哪些记录，将通知谁，将采取何种制裁措施。该政策应在一段时间内通过协商制定，而不仅仅是由校方单独施加！学生，父母和工作人员应感到自己已经参与到政策之中，需要对其进行有效的传播和实施。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Other <mark class="vocab-word" data-word="action">actions</mark> can be taken to back up the policy. There are ways of dealing with the topic through the <mark class="vocab-word" data-word="curriculum">curriculum</mark>, using video, drama and literature. These are useful for raising <mark class="vocab-word" data-word="awareness">awareness</mark>, and can best be tied in to early phases of development, while the school is starting to discuss the issue of <mark class="vocab-word" data-word="bully">bullying</mark>. They are also useful in <mark class="vocab-word" data-word="renew">renewing</mark> the policy for new <mark class="vocab-word" data-word="pupil">pupils</mark>, or <mark class="vocab-word" data-word="revise">revising</mark> it in the light of experience. But <mark class="vocab-word" data-word="curriculum">curriculum</mark> work alone may only have <mark class="vocab-word" data-word="short-term">short-term</mark> effects; it should be an addition to policy work, not a <mark class="vocab-word" data-word="substitute">substitute</mark>.</p></div>  <div class="parallel-zh"><p>可以采取其他措施来支持该政策。可以通过视频，戏剧和文学等方式通过课程处理这一问题。这些在学校开始讨论欺凌问题时对于提高认识很有用，并且最好与事态发展的早期阶段联系在一起。它们对于更新新生政策或根据经验进行修订也很有用。但是仅仅课程自身可能只会产生短期效果。它应该是政策工作的补充，而不是替代品。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There are also ways of working with individual <mark class="vocab-word" data-word="pupil">pupils</mark>, or in small groups. <mark class="vocab-word" data-word="assertiveness">Assertiveness</mark> training for <mark class="vocab-word" data-word="pupil">pupils</mark> who are <mark class="vocab-word" data-word="liable">liable</mark> to be <mark class="vocab-word" data-word="victim">victims</mark> is <mark class="vocab-word" data-word="worthwhile">worthwhile</mark>, and certain approaches to group <mark class="vocab-word" data-word="bully">bullying</mark> such as ‘no blame’, can be useful in changing the behaviour of <mark class="vocab-word" data-word="bully">bullying</mark> <mark class="vocab-word" data-word="pupil">pupils</mark> without <mark class="vocab-word" data-word="confront">confronting</mark> them directly, although other <mark class="vocab-word" data-word="sanction">sanctions</mark> may be needed for those who continue with <mark class="vocab-word" data-word="persistent">persistent</mark> <mark class="vocab-word" data-word="bully">bullying</mark>.</p></div>  <div class="parallel-zh"><p>也可以与个别学生或者小组一起努力。对容易成为受害者的学生进行自信训练十分重要，并且诸如“不责怪”之类的方法对于在不直接对抗的情况下改变欺凌者的行为十分有用，尽管对于那些继续进行欺凌行为的人应该采取相应制裁。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Work in the playground is important, too. One helpful step is to train lunchtime <mark class="vocab-word" data-word="supervisor">supervisors</mark> to <mark class="vocab-word" data-word="distinguish">distinguish</mark> <mark class="vocab-word" data-word="bully">bullying</mark> from playful fighting and help them break up conflicts. Another possibility is to improve the playground environment, so that <mark class="vocab-word" data-word="pupil">pupils</mark> are less likely to be led into <mark class="vocab-word" data-word="bully">bullying</mark> from boredom or <mark class="vocab-word" data-word="frustration">frustration</mark>.</p></div>  <div class="parallel-zh"><p>操场上的工作也很重要。一项有用的措施是培训午餐时间管理员，以区分欺凌和玩耍性质的打闹，并帮助他们解决冲突。另一种可行性措施是改善操场的环境，以使学生不太可能因无聊或沮丧而欺负他人。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>With these developments, schools can expect that at least the most serious kinds of <mark class="vocab-word" data-word="bully">bullying</mark> can largely be prevented. The more effort put in and the wider the whole school <mark class="vocab-word" data-word="involvement">involvement</mark>, the more <mark class="vocab-word" data-word="substantial">substantial</mark> the results are likely to be. The reduction in <mark class="vocab-word" data-word="bully">bullying</mark> – and the <mark class="vocab-word" data-word="consequent">consequent</mark> improvement in <mark class="vocab-word" data-word="pupil">pupil</mark> happiness – is surely a <mark class="vocab-word" data-word="worthwhile">worthwhile</mark> objective.</p></div>  <div class="parallel-zh"><p>随着这些发展，学校至少可以期望在很大程度上防止最严重的欺凌行为。投入的精力越多，整个学校的参与范围越广，结果可能会越有意义。欺凌行为的减少以及随之而来的学生幸福感的提高无疑是一个值得追求的目标。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"persistent": 5, "bully": 26, "psychology": 1, "intervention": 3, "verbal": 1, "taunt": 1, "shove": 1, "indirect": 1, "exclude": 1, "quarter": 1, "pupil": 9, "recalcitrant": 1, "unworthy": 1, "depress": 1, "lead": 1, "suicide": 1, "violent": 1, "convict": 1, "refrain": 1, "fortunate": 1, "factor": 1, "involved": 3, "awareness": 2, "tackle": 1, "council": 1, "action": 2, "circulate": 1, "guideline": 2, "counter": 1, "evaluation": 2, "campaign": 1, "suggest": 2, "halve": 1, "explicit": 1, "sanction": 2, "consultation": 1, "impose": 1, "disseminate": 1, "implement": 1, "curriculum": 2, "renew": 1, "revise": 1, "short-term": 1, "substitute": 1, "assertiveness": 1, "liable": 1, "victim": 1, "worthwhile": 2, "confront": 1, "supervisor": 1, "distinguish": 1, "frustration": 1, "involvement": 1, "substantial": 1, "consequent": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

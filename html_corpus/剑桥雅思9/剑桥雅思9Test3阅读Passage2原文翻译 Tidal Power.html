@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tidal Power - 剑桥雅思9 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Tidal Power</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/27150.html" target="_blank">https://www.laokaoya.com/27150.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="undersea">Undersea</mark> <mark class="vocab-word" data-word="turbine">turbines</mark> which produce electricity from the <mark class="vocab-word" data-word="tide">tides</mark> are set to become an important source of <mark class="vocab-word" data-word="renewable">renewable</mark> energy for Britain. It is still too early to <mark class="vocab-word" data-word="predict">predict</mark> the extent of the <mark class="vocab-word" data-word="impact">impact</mark> they may have, but all the signs are that they will play a significant role in the future</p><p>Operating on the same principle as <mark class="vocab-word" data-word="wind">wind</mark> <mark class="vocab-word" data-word="turbine">turbines</mark>, the power in sea <mark class="vocab-word" data-word="turbine">turbines</mark> comes from tidal currents which turn <mark class="vocab-word" data-word="blade">blades</mark> similar to ships <mark class="vocab-word" data-word="propeller">propellers</mark>, but, unlike <mark class="vocab-word" data-word="wind">wind</mark>, the <mark class="vocab-word" data-word="tide">tides</mark> are <mark class="vocab-word" data-word="predictable">predictable</mark> and the power input is constant. The technology raises the <mark class="vocab-word" data-word="prospect">prospect</mark> of Britain becoming <mark class="vocab-word" data-word="self-sufficient">self-sufficient</mark> in <mark class="vocab-word" data-word="renewable">renewable</mark> energy and drastically reducing its <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="dioxide">dioxide</mark> <mark class="vocab-word" data-word="emission">emissions</mark>. If <mark class="vocab-word" data-word="tide">tide</mark>, <mark class="vocab-word" data-word="wind">wind</mark> and wave-power are all developed, Britain would be able to close gas, coal and nuclear plants and export <mark class="vocab-word" data-word="renewable">renewable</mark> power to other parts of Europe. Unlike <mark class="vocab-word" data-word="wind">wind</mark> power which Britain originally developed and then abandoned for 20 years allowing the Dutch to make it a major industry, <mark class="vocab-word" data-word="undersea">undersea</mark> <mark class="vocab-word" data-word="turbine">turbines</mark> could become a big export earner to island nations such as Japan and New Zealand.</p><p>Tidal <mark class="vocab-word" data-word="site">sites</mark> have already been identified that will produce one sixth or more of the UK’s power—and at prices competitive with modern gas <mark class="vocab-word" data-word="turbine">turbines</mark> and undercutting those of the already ailing nuclear industry. One <mark class="vocab-word" data-word="site">site</mark> alone, the Pentland Firth, between Orkney and <mark class="vocab-word" data-word="mainland">mainland</mark> Scotland, could produce 10% of the country’s electricity with banks of <mark class="vocab-word" data-word="turbine">turbines</mark> under the sea, and another at Alderney in the Channel Islands three times the 1,2000 <mark class="vocab-word" data-word="megawatt">megawatts</mark> of Britain’s largest and newest nuclear plant, Sizewell B, in Suffolk. Other <mark class="vocab-word" data-word="site">sites</mark> identified include the Bristol Channel and the west coast of Scotland, particularly the channel between Campbelltown and Northern Ireland.</p><p>Work on designs for the new <mark class="vocab-word" data-word="turbine">turbine</mark> <mark class="vocab-word" data-word="blade">blades</mark> and <mark class="vocab-word" data-word="site">sites</mark> are well <mark class="vocab-word" data-word="advanced">advanced</mark> at the University of Southampton’s <mark class="vocab-word" data-word="sustainable">sustainable</mark> energy research group. The first station is expected to be installed off Lynmouth in Devon <mark class="vocab-word" data-word="shortly">shortly</mark> to test the technology in a <mark class="vocab-word" data-word="venture">venture</mark> <mark class="vocab-word" data-word="joint">jointly</mark> funded by the Department of Trade and Industry and the European Union. AbuBakn Bahaj, in charge of the Southampton research, said: ‘The <mark class="vocab-word" data-word="prospect">prospects</mark> for energy from tidal currents are far better than from <mark class="vocab-word" data-word="wind">wind</mark> because the flows of water are <mark class="vocab-word" data-word="predictable">predictable</mark> and constant. The technology for dealing with the <mark class="vocab-word" data-word="hostile">hostile</mark> <mark class="vocab-word" data-word="saline">saline</mark> environment under the sea has been developed in the North Sea oil industry and much is already known about <mark class="vocab-word" data-word="turbine">turbine</mark> <mark class="vocab-word" data-word="blade">blade</mark> design, because of <mark class="vocab-word" data-word="wind">wind</mark> power and ship <mark class="vocab-word" data-word="propeller">propellers</mark>. There are a few technical difficulties, but I believe in the next five to ten years we will be installing commercial <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="turbine">turbine</mark> farm. Southampton has been rewarded £215,000 over three years to develop the <mark class="vocab-word" data-word="turbine">turbines</mark> and is working with <mark class="vocab-word" data-word="marine">Marine</mark> Current <mark class="vocab-word" data-word="turbine">Turbines</mark>, a <mark class="vocab-word" data-word="subsidiary">subsidiary</mark> of IT power, on the Lynmouth project. EU research has now identified 106 potential <mark class="vocab-word" data-word="site">sites</mark> for tidal power, 80% round the coasts of Britain. The best <mark class="vocab-word" data-word="site">sites</mark> are between islands or around heavily indented coasts where there are strong tidal currents.</p><p>A <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="turbine">turbine</mark> <mark class="vocab-word" data-word="blade">blade</mark> needs to be only one third of the size of a <mark class="vocab-word" data-word="wind">wind</mark> <mark class="vocab-word" data-word="generator">generator</mark> to produce three times as much power. The <mark class="vocab-word" data-word="blade">blades</mark> will be about 20 meters in <mark class="vocab-word" data-word="diameter">diameter</mark>, so around 30 meters of water is required. Unlike <mark class="vocab-word" data-word="wind">wind</mark> power, there are unlikely to be environmental <mark class="vocab-word" data-word="objection">objections</mark>. Fish and other creatures are thought unlikely to be at risk from the relatively slow-turning <mark class="vocab-word" data-word="blade">blades</mark>. Each <mark class="vocab-word" data-word="turbine">turbine</mark> will be mounted on a tower which will connect to the national power supply <mark class="vocab-word" data-word="grid">grid</mark> via <mark class="vocab-word" data-word="underwater">underwater</mark> <mark class="vocab-word" data-word="cable">cables</mark>. The towers will stick out of the water and be lit, to warn shipping, and also be designed to be lifted out of the water for <mark class="vocab-word" data-word="maintenance">maintenance</mark> and to clean seaweed from the <mark class="vocab-word" data-word="blade">blades</mark>.</p><p>Dr Bahaj has done most work on the Alderney <mark class="vocab-word" data-word="site">site</mark>, where there are powerful currents. The single <mark class="vocab-word" data-word="undersea">undersea</mark> <mark class="vocab-word" data-word="turbine">turbine</mark> farm would produce far more power than needed for the Channel Islands and most would be fed into the French <mark class="vocab-word" data-word="grid">Grid</mark> and be re-imported into Britain via the <mark class="vocab-word" data-word="cable">cable</mark> under the Channel.</p><p>One technical difficulty is cavitation, where low pressure behind a turning <mark class="vocab-word" data-word="blade">blade</mark> causes air bubbles. These can cause <mark class="vocab-word" data-word="vibration">vibration</mark> and damage the <mark class="vocab-word" data-word="blade">blades</mark> of the <mark class="vocab-word" data-word="turbine">turbines</mark>. Dr Bahaj said: ‘We have to test a number of <mark class="vocab-word" data-word="blade">blade</mark> types to avoid this happening or at least make sure it does not damage the <mark class="vocab-word" data-word="turbine">turbines</mark> or reduce performance. Another slight concern is <mark class="vocab-word" data-word="submerge">submerged</mark> <mark class="vocab-word" data-word="debris">debris</mark> floating into the <mark class="vocab-word" data-word="blade">blades</mark>. So far we do not know how much of a problem it might be. We will have to make the <mark class="vocab-word" data-word="turbine">turbines</mark> <mark class="vocab-word" data-word="robust">robust</mark> because the sea is a <mark class="vocab-word" data-word="hostile">hostile</mark> environment, but all the signs that we can do it are good.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>利用潮汐发电的水下涡轮机将注定成为英国可再生能源的重要来源。预测其具体的影响程度还为时过早，但所有迹象都表明它们将在未来发挥重要作用。</p><p>与风力涡轮机的工作原理相同，海洋涡轮机的动力来自潮汐。它使得像船舶螺旋桨一样的叶片转动。但与风不同，潮汐是可预测的，并且动力输入是恒定的。该技术提高了英国可再生能源自给自足，并大幅度减少其二氧化碳排放的前景。如果潮汐，风能和波浪能都发展良好，英国将能够关闭天然气，燃煤和核电站，并向欧洲其他地区出口可再生能源。与英国最初开发，然后废弃20年，使得荷兰将其作为主要产业的风力发电不同，海底涡轮机可以成为日本和新西兰等岛国的主要出口收入来源。</p><p>已经确定潮汐发电站将产生英国六分之一或更多的电力。其价格与现代燃气涡轮机相比具有竞争力，并削弱本已陷入困境的核能发电的竞争力。位于奥克尼和苏格兰大陆之间的彭特兰峡湾（Pentland Firth）一个地方，就可以利用海底涡轮机产生全国10％的电力。而位于海峡群岛奥尔德尼岛的另一个发电站所产生的电量是英国最大、最新的位于萨福克的Sizewell B核电厂发电量（12000兆瓦）的三倍。其他已经确定的位置包括布里斯托尔海峡和苏格兰的西海岸，尤其坎特伯雷和北爱尔兰之间的海峡。</p><p>南安普敦大学可持续能源研究小组的新型涡轮叶片和站点设计工作已经取得了很大进展。第一站预计将很快在德文郡林茅斯附近安装，以便在由贸易和工业部与欧盟共同投资的合资企业中测试该技术。负责南安普敦研究的阿布巴肯· 巴哈伊（AbuBakn Bahaj）表示：“潮汐产生的能源前景远胜于风能，因为水流是可预测的且恒定的。在北海石油工业中已经开发出用于应对海底不利环境的技术，并且由于风力和船舶螺旋桨，涡轮叶片设计已广为人知。技术上有一些困难，但是我相信在未来的五到十年中，我们将安装可用于商业化的海底涡轮发电厂。南安普敦在过去三年中获得了215,000英镑的资助，用于开发涡轮机，并正与IT电力子公司Marine Current Turbines合作进行Lynmouth项目。欧盟的研究现已确定了106个潜在的潮汐发电点，其中80％位于英国沿海。最好的地点是在岛屿之间或在有强烈潮汐的深凹海岸附近。</p><p>海洋涡轮叶片仅需是风力发电机尺寸的三分之一即可产生三倍的功率。叶片直径约为20米，因此需要约30米深的水。与风力发电不同，它不太可能有环境方面的反对意见。人们认为鱼和其他生物不太可能受到旋转相对较慢的叶片的威胁。每个涡轮机将安装在塔架上，该塔架通过水下电缆连接到国家电网。这些塔尖将伸出水面并发出光亮，以警告船只。它们还应被设计成可以从水中抬起以进行维护并清洁叶片上的海藻。</p><p>巴哈伊博士已经完成了奥尔德尼站点的大部分工作，那里有强大的洋流。单个海底涡轮发电场产生的电力将远远超过海峡群岛的需求。大多数将被输送到法国电网，并通过海峡下方的电缆重新输入英国。</p><p>一项技术难题是气蚀，即叶片旋转所产生的低压将制造气泡。它们会引起振动并损伤涡轮机的叶片。巴哈伊博士说：“我们必须测试多种叶片类型，以避免这种情况的发生，或者至少确保它不会损坏涡轮机或降低其性能。另一个细微的问题是漂浮的水下碎片会撞向叶片。到目前为止，我们还不知道这一问题的麻烦程度。由于海洋不利的环境，我们将必须使涡轮机十分坚固才行，但我们能做到的所有迹象都是好的。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="undersea">Undersea</mark> <mark class="vocab-word" data-word="turbine">turbines</mark> which produce electricity from the <mark class="vocab-word" data-word="tide">tides</mark> are set to become an important source of <mark class="vocab-word" data-word="renewable">renewable</mark> energy for Britain. It is still too early to <mark class="vocab-word" data-word="predict">predict</mark> the extent of the <mark class="vocab-word" data-word="impact">impact</mark> they may have, but all the signs are that they will play a significant role in the future</p></div>  <div class="parallel-zh"><p>利用潮汐发电的水下涡轮机将注定成为英国可再生能源的重要来源。预测其具体的影响程度还为时过早，但所有迹象都表明它们将在未来发挥重要作用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Operating on the same principle as <mark class="vocab-word" data-word="wind">wind</mark> <mark class="vocab-word" data-word="turbine">turbines</mark>, the power in sea <mark class="vocab-word" data-word="turbine">turbines</mark> comes from tidal currents which turn <mark class="vocab-word" data-word="blade">blades</mark> similar to ships <mark class="vocab-word" data-word="propeller">propellers</mark>, but, unlike <mark class="vocab-word" data-word="wind">wind</mark>, the <mark class="vocab-word" data-word="tide">tides</mark> are <mark class="vocab-word" data-word="predictable">predictable</mark> and the power input is constant. The technology raises the <mark class="vocab-word" data-word="prospect">prospect</mark> of Britain becoming <mark class="vocab-word" data-word="self-sufficient">self-sufficient</mark> in <mark class="vocab-word" data-word="renewable">renewable</mark> energy and drastically reducing its <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="dioxide">dioxide</mark> <mark class="vocab-word" data-word="emission">emissions</mark>. If <mark class="vocab-word" data-word="tide">tide</mark>, <mark class="vocab-word" data-word="wind">wind</mark> and wave-power are all developed, Britain would be able to close gas, coal and nuclear plants and export <mark class="vocab-word" data-word="renewable">renewable</mark> power to other parts of Europe. Unlike <mark class="vocab-word" data-word="wind">wind</mark> power which Britain originally developed and then abandoned for 20 years allowing the Dutch to make it a major industry, <mark class="vocab-word" data-word="undersea">undersea</mark> <mark class="vocab-word" data-word="turbine">turbines</mark> could become a big export earner to island nations such as Japan and New Zealand.</p></div>  <div class="parallel-zh"><p>与风力涡轮机的工作原理相同，海洋涡轮机的动力来自潮汐。它使得像船舶螺旋桨一样的叶片转动。但与风不同，潮汐是可预测的，并且动力输入是恒定的。该技术提高了英国可再生能源自给自足，并大幅度减少其二氧化碳排放的前景。如果潮汐，风能和波浪能都发展良好，英国将能够关闭天然气，燃煤和核电站，并向欧洲其他地区出口可再生能源。与英国最初开发，然后废弃20年，使得荷兰将其作为主要产业的风力发电不同，海底涡轮机可以成为日本和新西兰等岛国的主要出口收入来源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Tidal <mark class="vocab-word" data-word="site">sites</mark> have already been identified that will produce one sixth or more of the UK’s power—and at prices competitive with modern gas <mark class="vocab-word" data-word="turbine">turbines</mark> and undercutting those of the already ailing nuclear industry. One <mark class="vocab-word" data-word="site">site</mark> alone, the Pentland Firth, between Orkney and <mark class="vocab-word" data-word="mainland">mainland</mark> Scotland, could produce 10% of the country’s electricity with banks of <mark class="vocab-word" data-word="turbine">turbines</mark> under the sea, and another at Alderney in the Channel Islands three times the 1,2000 <mark class="vocab-word" data-word="megawatt">megawatts</mark> of Britain’s largest and newest nuclear plant, Sizewell B, in Suffolk. Other <mark class="vocab-word" data-word="site">sites</mark> identified include the Bristol Channel and the west coast of Scotland, particularly the channel between Campbelltown and Northern Ireland.</p></div>  <div class="parallel-zh"><p>已经确定潮汐发电站将产生英国六分之一或更多的电力。其价格与现代燃气涡轮机相比具有竞争力，并削弱本已陷入困境的核能发电的竞争力。位于奥克尼和苏格兰大陆之间的彭特兰峡湾（Pentland Firth）一个地方，就可以利用海底涡轮机产生全国10％的电力。而位于海峡群岛奥尔德尼岛的另一个发电站所产生的电量是英国最大、最新的位于萨福克的Sizewell B核电厂发电量（12000兆瓦）的三倍。其他已经确定的位置包括布里斯托尔海峡和苏格兰的西海岸，尤其坎特伯雷和北爱尔兰之间的海峡。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Work on designs for the new <mark class="vocab-word" data-word="turbine">turbine</mark> <mark class="vocab-word" data-word="blade">blades</mark> and <mark class="vocab-word" data-word="site">sites</mark> are well <mark class="vocab-word" data-word="advanced">advanced</mark> at the University of Southampton’s <mark class="vocab-word" data-word="sustainable">sustainable</mark> energy research group. The first station is expected to be installed off Lynmouth in Devon <mark class="vocab-word" data-word="shortly">shortly</mark> to test the technology in a <mark class="vocab-word" data-word="venture">venture</mark> <mark class="vocab-word" data-word="joint">jointly</mark> funded by the Department of Trade and Industry and the European Union. AbuBakn Bahaj, in charge of the Southampton research, said: ‘The <mark class="vocab-word" data-word="prospect">prospects</mark> for energy from tidal currents are far better than from <mark class="vocab-word" data-word="wind">wind</mark> because the flows of water are <mark class="vocab-word" data-word="predictable">predictable</mark> and constant. The technology for dealing with the <mark class="vocab-word" data-word="hostile">hostile</mark> <mark class="vocab-word" data-word="saline">saline</mark> environment under the sea has been developed in the North Sea oil industry and much is already known about <mark class="vocab-word" data-word="turbine">turbine</mark> <mark class="vocab-word" data-word="blade">blade</mark> design, because of <mark class="vocab-word" data-word="wind">wind</mark> power and ship <mark class="vocab-word" data-word="propeller">propellers</mark>. There are a few technical difficulties, but I believe in the next five to ten years we will be installing commercial <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="turbine">turbine</mark> farm. Southampton has been rewarded £215,000 over three years to develop the <mark class="vocab-word" data-word="turbine">turbines</mark> and is working with <mark class="vocab-word" data-word="marine">Marine</mark> Current <mark class="vocab-word" data-word="turbine">Turbines</mark>, a <mark class="vocab-word" data-word="subsidiary">subsidiary</mark> of IT power, on the Lynmouth project. EU research has now identified 106 potential <mark class="vocab-word" data-word="site">sites</mark> for tidal power, 80% round the coasts of Britain. The best <mark class="vocab-word" data-word="site">sites</mark> are between islands or around heavily indented coasts where there are strong tidal currents.</p></div>  <div class="parallel-zh"><p>南安普敦大学可持续能源研究小组的新型涡轮叶片和站点设计工作已经取得了很大进展。第一站预计将很快在德文郡林茅斯附近安装，以便在由贸易和工业部与欧盟共同投资的合资企业中测试该技术。负责南安普敦研究的阿布巴肯· 巴哈伊（AbuBakn Bahaj）表示：“潮汐产生的能源前景远胜于风能，因为水流是可预测的且恒定的。在北海石油工业中已经开发出用于应对海底不利环境的技术，并且由于风力和船舶螺旋桨，涡轮叶片设计已广为人知。技术上有一些困难，但是我相信在未来的五到十年中，我们将安装可用于商业化的海底涡轮发电厂。南安普敦在过去三年中获得了215,000英镑的资助，用于开发涡轮机，并正与IT电力子公司Marine Current Turbines合作进行Lynmouth项目。欧盟的研究现已确定了106个潜在的潮汐发电点，其中80％位于英国沿海。最好的地点是在岛屿之间或在有强烈潮汐的深凹海岸附近。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="turbine">turbine</mark> <mark class="vocab-word" data-word="blade">blade</mark> needs to be only one third of the size of a <mark class="vocab-word" data-word="wind">wind</mark> <mark class="vocab-word" data-word="generator">generator</mark> to produce three times as much power. The <mark class="vocab-word" data-word="blade">blades</mark> will be about 20 meters in <mark class="vocab-word" data-word="diameter">diameter</mark>, so around 30 meters of water is required. Unlike <mark class="vocab-word" data-word="wind">wind</mark> power, there are unlikely to be environmental <mark class="vocab-word" data-word="objection">objections</mark>. Fish and other creatures are thought unlikely to be at risk from the relatively slow-turning <mark class="vocab-word" data-word="blade">blades</mark>. Each <mark class="vocab-word" data-word="turbine">turbine</mark> will be mounted on a tower which will connect to the national power supply <mark class="vocab-word" data-word="grid">grid</mark> via <mark class="vocab-word" data-word="underwater">underwater</mark> <mark class="vocab-word" data-word="cable">cables</mark>. The towers will stick out of the water and be lit, to warn shipping, and also be designed to be lifted out of the water for <mark class="vocab-word" data-word="maintenance">maintenance</mark> and to clean seaweed from the <mark class="vocab-word" data-word="blade">blades</mark>.</p></div>  <div class="parallel-zh"><p>海洋涡轮叶片仅需是风力发电机尺寸的三分之一即可产生三倍的功率。叶片直径约为20米，因此需要约30米深的水。与风力发电不同，它不太可能有环境方面的反对意见。人们认为鱼和其他生物不太可能受到旋转相对较慢的叶片的威胁。每个涡轮机将安装在塔架上，该塔架通过水下电缆连接到国家电网。这些塔尖将伸出水面并发出光亮，以警告船只。它们还应被设计成可以从水中抬起以进行维护并清洁叶片上的海藻。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Dr Bahaj has done most work on the Alderney <mark class="vocab-word" data-word="site">site</mark>, where there are powerful currents. The single <mark class="vocab-word" data-word="undersea">undersea</mark> <mark class="vocab-word" data-word="turbine">turbine</mark> farm would produce far more power than needed for the Channel Islands and most would be fed into the French <mark class="vocab-word" data-word="grid">Grid</mark> and be re-imported into Britain via the <mark class="vocab-word" data-word="cable">cable</mark> under the Channel.</p></div>  <div class="parallel-zh"><p>巴哈伊博士已经完成了奥尔德尼站点的大部分工作，那里有强大的洋流。单个海底涡轮发电场产生的电力将远远超过海峡群岛的需求。大多数将被输送到法国电网，并通过海峡下方的电缆重新输入英国。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One technical difficulty is cavitation, where low pressure behind a turning <mark class="vocab-word" data-word="blade">blade</mark> causes air bubbles. These can cause <mark class="vocab-word" data-word="vibration">vibration</mark> and damage the <mark class="vocab-word" data-word="blade">blades</mark> of the <mark class="vocab-word" data-word="turbine">turbines</mark>. Dr Bahaj said: ‘We have to test a number of <mark class="vocab-word" data-word="blade">blade</mark> types to avoid this happening or at least make sure it does not damage the <mark class="vocab-word" data-word="turbine">turbines</mark> or reduce performance. Another slight concern is <mark class="vocab-word" data-word="submerge">submerged</mark> <mark class="vocab-word" data-word="debris">debris</mark> floating into the <mark class="vocab-word" data-word="blade">blades</mark>. So far we do not know how much of a problem it might be. We will have to make the <mark class="vocab-word" data-word="turbine">turbines</mark> <mark class="vocab-word" data-word="robust">robust</mark> because the sea is a <mark class="vocab-word" data-word="hostile">hostile</mark> environment, but all the signs that we can do it are good.</p></div>  <div class="parallel-zh"><p>一项技术难题是气蚀，即叶片旋转所产生的低压将制造气泡。它们会引起振动并损伤涡轮机的叶片。巴哈伊博士说：“我们必须测试多种叶片类型，以避免这种情况的发生，或者至少确保它不会损坏涡轮机或降低其性能。另一个细微的问题是漂浮的水下碎片会撞向叶片。到目前为止，我们还不知道这一问题的麻烦程度。由于海洋不利的环境，我们将必须使涡轮机十分坚固才行，但我们能做到的所有迹象都是好的。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"undersea": 3, "turbine": 17, "tide": 3, "renewable": 3, "predict": 1, "impact": 1, "wind": 8, "blade": 11, "propeller": 2, "predictable": 2, "prospect": 2, "self-sufficient": 1, "carbon": 1, "dioxide": 1, "emission": 1, "site": 7, "mainland": 1, "megawatt": 1, "advanced": 1, "sustainable": 1, "shortly": 1, "venture": 1, "joint": 1, "hostile": 2, "saline": 1, "marine": 3, "subsidiary": 1, "generator": 1, "diameter": 1, "objection": 1, "grid": 2, "underwater": 1, "cable": 2, "maintenance": 1, "vibration": 1, "submerge": 1, "debris": 1, "robust": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

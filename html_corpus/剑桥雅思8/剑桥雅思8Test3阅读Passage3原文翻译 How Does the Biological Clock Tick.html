@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the Biological Clock Tick - 剑桥雅思8 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>How Does the Biological Clock Tick</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26024.html" target="_blank">https://www.laokaoya.com/26024.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Our life <mark class="vocab-word" data-word="span">span</mark> is restricted. Everyone accepts this as ‘<mark class="vocab-word" data-word="biological">biologically</mark>’ obvious. ‘Nothing lives for ever!’ However, in this statement we think of <mark class="vocab-word" data-word="artificial">artificially</mark> produced, technical objects, products which are subjected to natural wear and tear during use. This <mark class="vocab-word" data-word="lead">leads</mark> to the result that at some time or other the object stops working and is unusable (‘death’ in the <mark class="vocab-word" data-word="biological">biological</mark> sense). But are the wear and tear and loss of function of technical objects and the death of living <mark class="vocab-word" data-word="organism">organisms</mark> really similar or <mark class="vocab-word" data-word="comparable">comparable</mark>?</p><p>Our ‘dead’ products are ‘<mark class="vocab-word" data-word="static">static</mark>’, closed systems. It is always the basic material which <mark class="vocab-word" data-word="constitute">constitutes</mark> the object and which, in the natural course of things, is worn down and becomes ‘older’. Ageing in this case must occur <mark class="vocab-word" data-word="accord">according</mark> to the laws of physical chemistry and of <mark class="vocab-word" data-word="thermodynamic">thermodynamics</mark>. Although the same law holds for a living <mark class="vocab-word" data-word="organism">organism</mark>, the result of this law is not <mark class="vocab-word" data-word="inexorable">inexorable</mark> in the same way. At least as long as a <mark class="vocab-word" data-word="biological">biological</mark> system has the ability to <mark class="vocab-word" data-word="renew">renew</mark> itself it could actually become older without ageing; an <mark class="vocab-word" data-word="organism">organism</mark> is an open, <mark class="vocab-word" data-word="dynamic">dynamic</mark> system through which new material <mark class="vocab-word" data-word="continuously">continuously</mark> flows. <mark class="vocab-word" data-word="destruction">Destruction</mark> of old material and <mark class="vocab-word" data-word="formation">formation</mark> of new material are thus in permanent <mark class="vocab-word" data-word="dynamic">dynamic</mark> <mark class="vocab-word" data-word="equilibrium">equilibrium</mark>. The material of which the <mark class="vocab-word" data-word="organism">organism</mark> is formed changes <mark class="vocab-word" data-word="continuously">continuously</mark>. Thus our bodies <mark class="vocab-word" data-word="continuously">continuously</mark> exchange old substance for new, just like a <mark class="vocab-word" data-word="spring">spring</mark> which more or less maintains its form and movement, but in which the water <mark class="vocab-word" data-word="molecule">molecules</mark> are always different.</p><p>Thus ageing and death should not be seen as <mark class="vocab-word" data-word="inevitable">inevitable</mark>, particularly as the <mark class="vocab-word" data-word="organism">organism</mark> possesses many <mark class="vocab-word" data-word="mechanism">mechanisms</mark> for repair. It is not, in principle, necessary for a <mark class="vocab-word" data-word="biological">biological</mark> system to age and die. Nevertheless, a restricted life <mark class="vocab-word" data-word="span">span</mark>, ageing, and then death are basic characteristics of life. The reason for this is easy to recognise: in nature, the <mark class="vocab-word" data-word="existent">existent</mark> <mark class="vocab-word" data-word="organism">organisms</mark> either adapt or are regularly replaced by new types. Because of changes in the <mark class="vocab-word" data-word="genetic">genetic</mark> material (<mark class="vocab-word" data-word="mutation">mutations</mark>) these have new characteristics and in the course of their individual lives they are tested for <mark class="vocab-word" data-word="optimal">optimal</mark> or better <mark class="vocab-word" data-word="adaptation">adaptation</mark> to the environmental conditions. Immortality would <mark class="vocab-word" data-word="disturb">disturb</mark> this system – it needs room for new and better life. This is the basic problem of <mark class="vocab-word" data-word="evolution">evolution</mark>.</p><p>Every <mark class="vocab-word" data-word="organism">organism</mark> has a life <mark class="vocab-word" data-word="span">span</mark> which is highly characteristic. There are <mark class="vocab-word" data-word="striking">striking</mark> differences in life <mark class="vocab-word" data-word="span">span</mark> between different species, but within one species the <mark class="vocab-word" data-word="parameter">parameter</mark> is relatively constant. For example, the average <mark class="vocab-word" data-word="duration">duration</mark> of human life has hardly changed in thousands of years. Although more and more people <mark class="vocab-word" data-word="attain">attain</mark> an <mark class="vocab-word" data-word="advanced">advanced</mark> age as a result of developments in medical care and better <mark class="vocab-word" data-word="nutrition">nutrition</mark>, the characteristic upper limit for most <mark class="vocab-word" data-word="remains">remains</mark> 80 years. A further argument against the simple wear and tear theory is the observation that the time within which <mark class="vocab-word" data-word="organism">organisms</mark> age lies between a few days (even a few hours for <mark class="vocab-word" data-word="unicellular">unicellular</mark> <mark class="vocab-word" data-word="organism">organisms</mark>) and several thousand years, as with <mark class="vocab-word" data-word="mammoth">mammoth</mark> <mark class="vocab-word" data-word="tree">trees</mark>.</p><p>If a life <mark class="vocab-word" data-word="span">span</mark> is a genetically <mark class="vocab-word" data-word="determined">determined</mark> <mark class="vocab-word" data-word="biological">biological</mark> characteristic, it is logically necessary to <mark class="vocab-word" data-word="propose">propose</mark> the existence of an internal clock, which in some way measures and controls the ageing process and which finally determines death as the last step in a <mark class="vocab-word" data-word="fixed">fixed</mark> programme. Like the life <mark class="vocab-word" data-word="span">span</mark>, the metabolic rate has for different <mark class="vocab-word" data-word="organism">organisms</mark> a <mark class="vocab-word" data-word="fixed">fixed</mark> <mark class="vocab-word" data-word="mathematical">mathematical</mark> relationship to the body mass. In comparison to the life <mark class="vocab-word" data-word="span">span</mark> this relationship is ‘<mark class="vocab-word" data-word="invert">inverted</mark>’: the larger the <mark class="vocab-word" data-word="organism">organism</mark> the lower its metabolic rate. Again this relationship is <mark class="vocab-word" data-word="valid">valid</mark> not only for birds, but also, similarly on average within the <mark class="vocab-word" data-word="systematic">systematic</mark> unit, for all other <mark class="vocab-word" data-word="organism">organisms</mark> (plants, animals, <mark class="vocab-word" data-word="unicellular">unicellular</mark> <mark class="vocab-word" data-word="organism">organisms</mark>).</p><p>Animals which behave ‘<mark class="vocab-word" data-word="frugal">frugally</mark>’ with energy become particularly old, for example, <mark class="vocab-word" data-word="crocodile">crocodiles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>. <mark class="vocab-word" data-word="parrot">Parrots</mark> and birds of <mark class="vocab-word" data-word="prey">prey</mark> are often held chained up. Thus they are not able to ‘experience life’ and so they <mark class="vocab-word" data-word="attain">attain</mark> a high life <mark class="vocab-word" data-word="span">span</mark> in <mark class="vocab-word" data-word="captivity">captivity</mark>. Animals which save energy by <mark class="vocab-word" data-word="hibernation">hibernation</mark> or lethargy (e. g. <mark class="vocab-word" data-word="bat">bats</mark> or hedgehogs) live much longer than those which are always active. The metabolic rate of mice can be reduced by a very low <mark class="vocab-word" data-word="consumption">consumption</mark> of food (<mark class="vocab-word" data-word="hunger">hunger</mark> diet). They then may live twice as long as their well-fed <mark class="vocab-word" data-word="comrade">comrades</mark>. Women become <mark class="vocab-word" data-word="distinct">distinctly</mark> (about 10 per cent) older than men. If you examine the metabolic rates of the two sexes you establish that the higher male metabolic rate roughly accounts for the lower male life <mark class="vocab-word" data-word="span">span</mark>. That means that they live life ‘energetically’ – more <mark class="vocab-word" data-word="intensive">intensively</mark>, but not for as long.</p><p>It follows from the above that <mark class="vocab-word" data-word="spare">sparing</mark> use of energy reserves should tend to extend life. Extreme high performance sports may <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="optimal">optimal</mark> <mark class="vocab-word" data-word="cardiovascular">cardiovascular</mark> performance, but they quite certainly do not <mark class="vocab-word" data-word="prolong">prolong</mark> life. <mark class="vocab-word" data-word="relaxation">Relaxation</mark> lowers metabolic rate, as does <mark class="vocab-word" data-word="adequate">adequate</mark> sleep and in general an equable and <mark class="vocab-word" data-word="balanced">balanced</mark> personality. Each of us can develop his or her own ‘energy saving programme’ with a little self-observation, critical self-control and, above all, logical <mark class="vocab-word" data-word="consistency">consistency</mark>. Experience will show that to live in this way not only increases the life <mark class="vocab-word" data-word="span">span</mark> but is also very healthy. This final aspect should not be forgotten.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>我们的寿命受到限制。每个人都认为这是“生物学上”显而易见的。 “没有什么能够永生！”但是，在这一说法中，我们想到的是人工生产的技术物品以及在使用过程中会遭受自然磨损的产品。这导致以下结果：物体有时会停止工作并且无法使用（生物学意义上的“死亡”）。但是，技术物品的磨损与功能丧失和有机物的死亡真的是相似的或可比较的吗？</p><p>我们的“死去的”产品是“静态的”封闭系统。构成物体的基本材料在事物的自然发展过程中会被磨损并变“旧”。在这种情况下，老化必须根据物理化学和热力学定律进行。尽管同样的规律也适用于生物，但该规律的结果并非不可避免。至少只要生物系统具有更新自身的能力，它实际上就可以变老而不老化。生物是一个开放的，动态的系统。新材料在其中不断流动。因此，旧材料的破坏和新材料的形成处于永久的动态平衡中。形成生物的物质不断变化。 因此，我们的身体不断地将旧物质换为新物质，就像一个或多或少保持其形态和运动的弹簧一样，但是其中的水分子总是不同的。</p><p>因此，衰老和死亡不应被看作是必然的，尤其是当生物体具有许多修复机制。原则上，生物系统没有必要发生老化和死亡。然而，有限的寿命，衰老，然后死亡是生命的基本特征。我们很容易意识到其原因：在自然界中，现有的生物要么适应新生物，要么定期被新生物取代。由于遗传物质（突变）的变化，它们具有新的特征。在其个体生命过程中，它们经受测试以更好地适应环境条件。永生会扰乱这个系统-它需要为新的、更好的生命创造空间。这是进化的基本问题。</p><p>每个生物体都有其独具特色的生命长度。不同物种之间的寿命存在显著差异。但在一个物种内，参数相对恒定。例如，人类的平均寿命几千年来几乎没有变化。尽管越来越多的人由于医疗保健的发展和更好的营养而达到高龄，但对于大多数人来说，其典型的上限仍然是80岁。反对简单磨损理论的另一个论据来自以下观察，生物衰老的时间介于几天（单细胞生物甚至几小时）和数千年之间（正如巨杉树一样）。</p><p>如果寿命是遗传决定的生物学特征，那么从逻辑上讲，有必要提出一个内部时钟的存在。该时钟以某种方式测量和控制衰老过程，并最终将死亡确定为固定程序中的最后一步。像寿命一样，不同生物体的代谢率与其体重之间存在固定的数学关系。与寿命相比，这种关系是“倒置的”：生物体越大，其代谢率越低。同样，这种关系不仅对鸟类有效，而且对于系统单位内相似的所有其他生物同样有效（植物，动物，单细胞生物）。</p><p>表现“节俭”的动物能活的特别久，例如鳄鱼和乌龟。鹦鹉和猛禽经常被拴起来。因此，他们无法“体验生活”，但他们在囚禁中的寿命却很高。通过冬眠或嗜睡来节省能量的动物（例如蝙蝠或刺猬）的寿命比总是活跃的动物更长。极少消耗食物（饥饿饮食）可降低小白鼠的代谢率。然后，他们的寿命是他们经过良好喂养的同伴的两倍。女性明显比男性活的长（大约10%）。如果检查两个性别的新陈代谢率，则可以确定较高的男性新陈代谢率大致解释了较低的男性寿命。这意味着他们“精力充沛”地过着更加紧张的生活，但时间不长。</p><p>由上述内容可知，节约使用能量会倾向于延长寿命。极限的高性能运动可能会导致最佳的心血管运动表现，但无疑不会延长寿命。放松会降低新陈代谢的速度，充足的睡眠和良好的性格也会降低新陈代谢的速度。我们每个人都可以通过一些自我观察，严格的自我控制以及最重要的逻辑一致性来制定自己的“节能计划”。经验表明，以这种方式生活不仅可以延长寿命，而且非常健康。最后一个方面不应被忘记。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Our life <mark class="vocab-word" data-word="span">span</mark> is restricted. Everyone accepts this as ‘<mark class="vocab-word" data-word="biological">biologically</mark>’ obvious. ‘Nothing lives for ever!’ However, in this statement we think of <mark class="vocab-word" data-word="artificial">artificially</mark> produced, technical objects, products which are subjected to natural wear and tear during use. This <mark class="vocab-word" data-word="lead">leads</mark> to the result that at some time or other the object stops working and is unusable (‘death’ in the <mark class="vocab-word" data-word="biological">biological</mark> sense). But are the wear and tear and loss of function of technical objects and the death of living <mark class="vocab-word" data-word="organism">organisms</mark> really similar or <mark class="vocab-word" data-word="comparable">comparable</mark>?</p></div>  <div class="parallel-zh"><p>我们的寿命受到限制。每个人都认为这是“生物学上”显而易见的。 “没有什么能够永生！”但是，在这一说法中，我们想到的是人工生产的技术物品以及在使用过程中会遭受自然磨损的产品。这导致以下结果：物体有时会停止工作并且无法使用（生物学意义上的“死亡”）。但是，技术物品的磨损与功能丧失和有机物的死亡真的是相似的或可比较的吗？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Our ‘dead’ products are ‘<mark class="vocab-word" data-word="static">static</mark>’, closed systems. It is always the basic material which <mark class="vocab-word" data-word="constitute">constitutes</mark> the object and which, in the natural course of things, is worn down and becomes ‘older’. Ageing in this case must occur <mark class="vocab-word" data-word="accord">according</mark> to the laws of physical chemistry and of <mark class="vocab-word" data-word="thermodynamic">thermodynamics</mark>. Although the same law holds for a living <mark class="vocab-word" data-word="organism">organism</mark>, the result of this law is not <mark class="vocab-word" data-word="inexorable">inexorable</mark> in the same way. At least as long as a <mark class="vocab-word" data-word="biological">biological</mark> system has the ability to <mark class="vocab-word" data-word="renew">renew</mark> itself it could actually become older without ageing; an <mark class="vocab-word" data-word="organism">organism</mark> is an open, <mark class="vocab-word" data-word="dynamic">dynamic</mark> system through which new material <mark class="vocab-word" data-word="continuously">continuously</mark> flows. <mark class="vocab-word" data-word="destruction">Destruction</mark> of old material and <mark class="vocab-word" data-word="formation">formation</mark> of new material are thus in permanent <mark class="vocab-word" data-word="dynamic">dynamic</mark> <mark class="vocab-word" data-word="equilibrium">equilibrium</mark>. The material of which the <mark class="vocab-word" data-word="organism">organism</mark> is formed changes <mark class="vocab-word" data-word="continuously">continuously</mark>. Thus our bodies <mark class="vocab-word" data-word="continuously">continuously</mark> exchange old substance for new, just like a <mark class="vocab-word" data-word="spring">spring</mark> which more or less maintains its form and movement, but in which the water <mark class="vocab-word" data-word="molecule">molecules</mark> are always different.</p></div>  <div class="parallel-zh"><p>我们的“死去的”产品是“静态的”封闭系统。构成物体的基本材料在事物的自然发展过程中会被磨损并变“旧”。在这种情况下，老化必须根据物理化学和热力学定律进行。尽管同样的规律也适用于生物，但该规律的结果并非不可避免。至少只要生物系统具有更新自身的能力，它实际上就可以变老而不老化。生物是一个开放的，动态的系统。新材料在其中不断流动。因此，旧材料的破坏和新材料的形成处于永久的动态平衡中。形成生物的物质不断变化。 因此，我们的身体不断地将旧物质换为新物质，就像一个或多或少保持其形态和运动的弹簧一样，但是其中的水分子总是不同的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Thus ageing and death should not be seen as <mark class="vocab-word" data-word="inevitable">inevitable</mark>, particularly as the <mark class="vocab-word" data-word="organism">organism</mark> possesses many <mark class="vocab-word" data-word="mechanism">mechanisms</mark> for repair. It is not, in principle, necessary for a <mark class="vocab-word" data-word="biological">biological</mark> system to age and die. Nevertheless, a restricted life <mark class="vocab-word" data-word="span">span</mark>, ageing, and then death are basic characteristics of life. The reason for this is easy to recognise: in nature, the <mark class="vocab-word" data-word="existent">existent</mark> <mark class="vocab-word" data-word="organism">organisms</mark> either adapt or are regularly replaced by new types. Because of changes in the <mark class="vocab-word" data-word="genetic">genetic</mark> material (<mark class="vocab-word" data-word="mutation">mutations</mark>) these have new characteristics and in the course of their individual lives they are tested for <mark class="vocab-word" data-word="optimal">optimal</mark> or better <mark class="vocab-word" data-word="adaptation">adaptation</mark> to the environmental conditions. Immortality would <mark class="vocab-word" data-word="disturb">disturb</mark> this system – it needs room for new and better life. This is the basic problem of <mark class="vocab-word" data-word="evolution">evolution</mark>.</p></div>  <div class="parallel-zh"><p>因此，衰老和死亡不应被看作是必然的，尤其是当生物体具有许多修复机制。原则上，生物系统没有必要发生老化和死亡。然而，有限的寿命，衰老，然后死亡是生命的基本特征。我们很容易意识到其原因：在自然界中，现有的生物要么适应新生物，要么定期被新生物取代。由于遗传物质（突变）的变化，它们具有新的特征。在其个体生命过程中，它们经受测试以更好地适应环境条件。永生会扰乱这个系统-它需要为新的、更好的生命创造空间。这是进化的基本问题。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Every <mark class="vocab-word" data-word="organism">organism</mark> has a life <mark class="vocab-word" data-word="span">span</mark> which is highly characteristic. There are <mark class="vocab-word" data-word="striking">striking</mark> differences in life <mark class="vocab-word" data-word="span">span</mark> between different species, but within one species the <mark class="vocab-word" data-word="parameter">parameter</mark> is relatively constant. For example, the average <mark class="vocab-word" data-word="duration">duration</mark> of human life has hardly changed in thousands of years. Although more and more people <mark class="vocab-word" data-word="attain">attain</mark> an <mark class="vocab-word" data-word="advanced">advanced</mark> age as a result of developments in medical care and better <mark class="vocab-word" data-word="nutrition">nutrition</mark>, the characteristic upper limit for most <mark class="vocab-word" data-word="remains">remains</mark> 80 years. A further argument against the simple wear and tear theory is the observation that the time within which <mark class="vocab-word" data-word="organism">organisms</mark> age lies between a few days (even a few hours for <mark class="vocab-word" data-word="unicellular">unicellular</mark> <mark class="vocab-word" data-word="organism">organisms</mark>) and several thousand years, as with <mark class="vocab-word" data-word="mammoth">mammoth</mark> <mark class="vocab-word" data-word="tree">trees</mark>.</p></div>  <div class="parallel-zh"><p>每个生物体都有其独具特色的生命长度。不同物种之间的寿命存在显著差异。但在一个物种内，参数相对恒定。例如，人类的平均寿命几千年来几乎没有变化。尽管越来越多的人由于医疗保健的发展和更好的营养而达到高龄，但对于大多数人来说，其典型的上限仍然是80岁。反对简单磨损理论的另一个论据来自以下观察，生物衰老的时间介于几天（单细胞生物甚至几小时）和数千年之间（正如巨杉树一样）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>If a life <mark class="vocab-word" data-word="span">span</mark> is a genetically <mark class="vocab-word" data-word="determined">determined</mark> <mark class="vocab-word" data-word="biological">biological</mark> characteristic, it is logically necessary to <mark class="vocab-word" data-word="propose">propose</mark> the existence of an internal clock, which in some way measures and controls the ageing process and which finally determines death as the last step in a <mark class="vocab-word" data-word="fixed">fixed</mark> programme. Like the life <mark class="vocab-word" data-word="span">span</mark>, the metabolic rate has for different <mark class="vocab-word" data-word="organism">organisms</mark> a <mark class="vocab-word" data-word="fixed">fixed</mark> <mark class="vocab-word" data-word="mathematical">mathematical</mark> relationship to the body mass. In comparison to the life <mark class="vocab-word" data-word="span">span</mark> this relationship is ‘<mark class="vocab-word" data-word="invert">inverted</mark>’: the larger the <mark class="vocab-word" data-word="organism">organism</mark> the lower its metabolic rate. Again this relationship is <mark class="vocab-word" data-word="valid">valid</mark> not only for birds, but also, similarly on average within the <mark class="vocab-word" data-word="systematic">systematic</mark> unit, for all other <mark class="vocab-word" data-word="organism">organisms</mark> (plants, animals, <mark class="vocab-word" data-word="unicellular">unicellular</mark> <mark class="vocab-word" data-word="organism">organisms</mark>).</p></div>  <div class="parallel-zh"><p>如果寿命是遗传决定的生物学特征，那么从逻辑上讲，有必要提出一个内部时钟的存在。该时钟以某种方式测量和控制衰老过程，并最终将死亡确定为固定程序中的最后一步。像寿命一样，不同生物体的代谢率与其体重之间存在固定的数学关系。与寿命相比，这种关系是“倒置的”：生物体越大，其代谢率越低。同样，这种关系不仅对鸟类有效，而且对于系统单位内相似的所有其他生物同样有效（植物，动物，单细胞生物）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Animals which behave ‘<mark class="vocab-word" data-word="frugal">frugally</mark>’ with energy become particularly old, for example, <mark class="vocab-word" data-word="crocodile">crocodiles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>. <mark class="vocab-word" data-word="parrot">Parrots</mark> and birds of <mark class="vocab-word" data-word="prey">prey</mark> are often held chained up. Thus they are not able to ‘experience life’ and so they <mark class="vocab-word" data-word="attain">attain</mark> a high life <mark class="vocab-word" data-word="span">span</mark> in <mark class="vocab-word" data-word="captivity">captivity</mark>. Animals which save energy by <mark class="vocab-word" data-word="hibernation">hibernation</mark> or lethargy (e. g. <mark class="vocab-word" data-word="bat">bats</mark> or hedgehogs) live much longer than those which are always active. The metabolic rate of mice can be reduced by a very low <mark class="vocab-word" data-word="consumption">consumption</mark> of food (<mark class="vocab-word" data-word="hunger">hunger</mark> diet). They then may live twice as long as their well-fed <mark class="vocab-word" data-word="comrade">comrades</mark>. Women become <mark class="vocab-word" data-word="distinct">distinctly</mark> (about 10 per cent) older than men. If you examine the metabolic rates of the two sexes you establish that the higher male metabolic rate roughly accounts for the lower male life <mark class="vocab-word" data-word="span">span</mark>. That means that they live life ‘energetically’ – more <mark class="vocab-word" data-word="intensive">intensively</mark>, but not for as long.</p></div>  <div class="parallel-zh"><p>表现“节俭”的动物能活的特别久，例如鳄鱼和乌龟。鹦鹉和猛禽经常被拴起来。因此，他们无法“体验生活”，但他们在囚禁中的寿命却很高。通过冬眠或嗜睡来节省能量的动物（例如蝙蝠或刺猬）的寿命比总是活跃的动物更长。极少消耗食物（饥饿饮食）可降低小白鼠的代谢率。然后，他们的寿命是他们经过良好喂养的同伴的两倍。女性明显比男性活的长（大约10%）。如果检查两个性别的新陈代谢率，则可以确定较高的男性新陈代谢率大致解释了较低的男性寿命。这意味着他们“精力充沛”地过着更加紧张的生活，但时间不长。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It follows from the above that <mark class="vocab-word" data-word="spare">sparing</mark> use of energy reserves should tend to extend life. Extreme high performance sports may <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="optimal">optimal</mark> <mark class="vocab-word" data-word="cardiovascular">cardiovascular</mark> performance, but they quite certainly do not <mark class="vocab-word" data-word="prolong">prolong</mark> life. <mark class="vocab-word" data-word="relaxation">Relaxation</mark> lowers metabolic rate, as does <mark class="vocab-word" data-word="adequate">adequate</mark> sleep and in general an equable and <mark class="vocab-word" data-word="balanced">balanced</mark> personality. Each of us can develop his or her own ‘energy saving programme’ with a little self-observation, critical self-control and, above all, logical <mark class="vocab-word" data-word="consistency">consistency</mark>. Experience will show that to live in this way not only increases the life <mark class="vocab-word" data-word="span">span</mark> but is also very healthy. This final aspect should not be forgotten.</p></div>  <div class="parallel-zh"><p>由上述内容可知，节约使用能量会倾向于延长寿命。极限的高性能运动可能会导致最佳的心血管运动表现，但无疑不会延长寿命。放松会降低新陈代谢的速度，充足的睡眠和良好的性格也会降低新陈代谢的速度。我们每个人都可以通过一些自我观察，严格的自我控制以及最重要的逻辑一致性来制定自己的“节能计划”。经验表明，以这种方式生活不仅可以延长寿命，而且非常健康。最后一个方面不应被忘记。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"span": 10, "biological": 5, "artificial": 1, "lead": 2, "organism": 13, "comparable": 1, "static": 1, "constitute": 1, "accord": 1, "thermodynamic": 1, "inexorable": 1, "renew": 1, "dynamic": 2, "continuously": 3, "destruction": 1, "formation": 1, "equilibrium": 1, "spring": 1, "molecule": 1, "inevitable": 1, "mechanism": 1, "existent": 1, "genetic": 1, "mutation": 1, "optimal": 2, "adaptation": 1, "disturb": 1, "evolution": 1, "striking": 1, "parameter": 1, "duration": 1, "attain": 2, "advanced": 1, "nutrition": 1, "remains": 1, "unicellular": 2, "mammoth": 1, "tree": 1, "determined": 1, "propose": 1, "fixed": 2, "mathematical": 1, "invert": 1, "valid": 1, "systematic": 1, "frugal": 1, "crocodile": 1, "tortoise": 1, "parrot": 1, "prey": 1, "captivity": 1, "hibernation": 1, "bat": 1, "consumption": 1, "hunger": 1, "comrade": 1, "distinct": 1, "intensive": 1, "spare": 1, "cardiovascular": 1, "prolong": 1, "relaxation": 1, "adequate": 1, "balanced": 1, "consistency": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

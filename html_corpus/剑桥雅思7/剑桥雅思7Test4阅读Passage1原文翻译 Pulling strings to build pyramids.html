@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulling strings to build pyramids - 剑桥雅思7 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Pulling strings to build pyramids</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24614.html" target="_blank">https://www.laokaoya.com/24614.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The <mark class="vocab-word" data-word="pyramid">pyramids</mark> of Egypt were built more than three thousand years ago, and no one knows how. The <mark class="vocab-word" data-word="conventional">conventional</mark> picture is that tens of thousands of slaves dragged stones on <mark class="vocab-word" data-word="sledge">sledges</mark>. But there is no evidence to back this up. Now a Californian software <mark class="vocab-word" data-word="consultant">consultant</mark> called Maureen Clemmons has <mark class="vocab-word" data-word="suggest">suggested</mark> that <mark class="vocab-word" data-word="kit">kites</mark> might have been <mark class="vocab-word" data-word="involved">involved</mark>. While perusing a book on the <mark class="vocab-word" data-word="monument">monuments</mark> of Egypt, she noticed a <mark class="vocab-word" data-word="hieroglyph">hieroglyph</mark> that showed a row of men <mark class="vocab-word" data-word="standing">standing</mark> in odd <mark class="vocab-word" data-word="posture">postures</mark>. They were holding what looked like ropes that led, via some kind of <mark class="vocab-word" data-word="mechanical">mechanical</mark> system, to a giant bird in the sky. She wondered if perhaps the bird was actually a giant kite, and the men were using it to lift a heavy object.</p><p><mark class="vocab-word" data-word="intrigue">Intrigued</mark>, Clemmons contacted Morteza Gharib, <mark class="vocab-word" data-word="aeronautics">aeronautics</mark> professor at the California <mark class="vocab-word" data-word="institute">Institute</mark> of Technology. He was <mark class="vocab-word" data-word="fascinate">fascinated</mark> by the idea. ‘Coming from Iran, I have a <mark class="vocab-word" data-word="keen">keen</mark> interest in Middle Eastern science,’ he says. This article is from  webiste. He too was <mark class="vocab-word" data-word="puzzled">puzzled</mark> by the picture that had <mark class="vocab-word" data-word="spark">sparked</mark> Clemmons’s interest. The object in the sky apparently had wings far too short and wide for a bird. ‘The possibility certainly existed that it was a kite,’ he says. And since he needed a summer project for his student Emilio Graff, <mark class="vocab-word" data-word="investigate">investigating</mark> the possibility of using <mark class="vocab-word" data-word="kit">kites</mark> as heavy lifters seemed like a good idea.</p><p>Gharib and Graff set themselves the task of raising a 4.5-metre stone <mark class="vocab-word" data-word="column">column</mark> from <mark class="vocab-word" data-word="horizontal">horizontal</mark> to <mark class="vocab-word" data-word="vertical">vertical</mark>, using no source of energy except the <mark class="vocab-word" data-word="wind">wind</mark>. Their initial <mark class="vocab-word" data-word="calculation">calculations</mark> and scale-model wind-tunnel experiments <mark class="vocab-word" data-word="convince">convinced</mark> them they wouldn’t need a strong <mark class="vocab-word" data-word="wind">wind</mark> to lift the 33.5-tonne <mark class="vocab-word" data-word="column">column</mark>. Even a <mark class="vocab-word" data-word="modest">modest</mark> force, if <mark class="vocab-word" data-word="sustain">sustained</mark> over a long time, would do. The key was to use a <mark class="vocab-word" data-word="pulley">pulley</mark> system that would <mark class="vocab-word" data-word="magnify">magnify</mark> the <mark class="vocab-word" data-word="applied">applied</mark> force. So they rigged up a tent-shaped <mark class="vocab-word" data-word="scaffold">scaffold</mark> directly above the tip of the <mark class="vocab-word" data-word="horizontal">horizontal</mark> <mark class="vocab-word" data-word="column">column</mark>, with <mark class="vocab-word" data-word="pulley">pulleys</mark> <mark class="vocab-word" data-word="suspend">suspended</mark> from the <mark class="vocab-word" data-word="scaffold">scaffold</mark>’s <mark class="vocab-word" data-word="apex">apex</mark>. The idea was that as one end of the <mark class="vocab-word" data-word="column">column</mark> rose, the base would roll across the ground on a <mark class="vocab-word" data-word="trolley">trolley</mark>.</p><p>Earlier this year, the team put Clemmons’s unlikely theory to the test, using a 40-square-metre <mark class="vocab-word" data-word="rectangular">rectangular</mark> <mark class="vocab-word" data-word="nylon">nylon</mark> sail. The kite lifted the <mark class="vocab-word" data-word="column">column</mark> clean off the ground. We were absolutely stunned,’ Gharib says. ‘The <mark class="vocab-word" data-word="instant">instant</mark> the sail opened into the <mark class="vocab-word" data-word="wind">wind</mark>, a huge force was generated and the <mark class="vocab-word" data-word="column">column</mark> was raised to the <mark class="vocab-word" data-word="vertical">vertical</mark> in a <mark class="vocab-word" data-word="mere">mere</mark> 40 seconds.’</p><p>The <mark class="vocab-word" data-word="wind">wind</mark> was <mark class="vocab-word" data-word="blow">blowing</mark> at a gentle 16 to 20 kilometres an hour, little more than half what they thought would be needed. What they had failed to <mark class="vocab-word" data-word="reckon">reckon</mark> with was what happened when the kite was opened. ‘There was a huge initial force- five times larger than the steady state force,’ Gharib says. This <mark class="vocab-word" data-word="jerk">jerk</mark> meant that <mark class="vocab-word" data-word="kit">kites</mark> could lift huge weights, Gharib realised. Even a 300-tonne <mark class="vocab-word" data-word="column">column</mark> could have been lifted to the <mark class="vocab-word" data-word="vertical">vertical</mark> with 40 or so men and four or five sails. So Clemmons was right: the <mark class="vocab-word" data-word="pyramid">pyramid</mark> builders could have used <mark class="vocab-word" data-word="kit">kites</mark> to lift <mark class="vocab-word" data-word="massive">massive</mark> stones into place. ‘Whether they actually did is another <mark class="vocab-word" data-word="matter">matter</mark>,’ Gharib says. There are no pictures showing the construction of the <mark class="vocab-word" data-word="pyramid">pyramids</mark>, so there is no way to tell what really happened. ‘The evidence for using <mark class="vocab-word" data-word="kit">kites</mark> to move large stones is no better or worse than the evidence for the <mark class="vocab-word" data-word="brute">brute</mark> force method,’ Gharib says.</p><p>Indeed, the experiments have left many specialists unconvinced. ‘The evidence for kite-lifting is non-existent,’ says Willeke Wendrich, an associate professor of Egyptology at the University of California, Los Angeles.</p><p>Others feel there is more of a case for the theory. <mark class="vocab-word" data-word="harness">Harnessing</mark> the <mark class="vocab-word" data-word="wind">wind</mark> would not have been a problem for <mark class="vocab-word" data-word="accomplish">accomplished</mark> <mark class="vocab-word" data-word="sailor">sailors</mark> like the Egyptians. And they are known to have used wooden <mark class="vocab-word" data-word="pulley">pulleys</mark>, which could have been made strong enough to bear the weight of <mark class="vocab-word" data-word="massive">massive</mark> blocks of stone. In addition, there is some physical evidence that the ancient Egyptians were interested in flight. A wooden <mark class="vocab-word" data-word="artefact">artefact</mark> found on the step <mark class="vocab-word" data-word="pyramid">pyramid</mark> at Saqqara looks uncannily like a modern glider. Although it dates from several hundred years after the building of the <mark class="vocab-word" data-word="pyramid">pyramids</mark>, its <mark class="vocab-word" data-word="sophistication">sophistication</mark> <mark class="vocab-word" data-word="suggest">suggests</mark> that the Egyptians might have been developing ideas of flight for a long time. And other ancient civilisations certainly knew about <mark class="vocab-word" data-word="kit">kites</mark>; as early as 1250 BC, the <mark class="vocab-word" data-word="chinese">Chinese</mark> were using them to deliver messages and <mark class="vocab-word" data-word="dump">dump</mark> <mark class="vocab-word" data-word="flame">flaming</mark> <mark class="vocab-word" data-word="debris">debris</mark> on their foes.</p><p>The experiments might even have practical uses nowadays. There are plenty of places around the <mark class="vocab-word" data-word="globe">globe</mark> where people have no access to heavy <mark class="vocab-word" data-word="machinery">machinery</mark>, but do know how to deal with <mark class="vocab-word" data-word="wind">wind</mark>, sailing and basic <mark class="vocab-word" data-word="mechanical">mechanical</mark> principles. Gharib has already been contacted by a civil engineer in Nicaragua, who wants to put up buildings with <mark class="vocab-word" data-word="adobe">adobe</mark> roofs supported by <mark class="vocab-word" data-word="concrete">concrete</mark> <mark class="vocab-word" data-word="arch">arches</mark> on a <mark class="vocab-word" data-word="site">site</mark> that heavy equipment can’t reach. His idea is to build the <mark class="vocab-word" data-word="arch">arches</mark> <mark class="vocab-word" data-word="horizontally">horizontally</mark>, then lift them into place using <mark class="vocab-word" data-word="kit">kites</mark>. ‘We’ve given him some design <mark class="vocab-word" data-word="hint">hints</mark>,’ says Gharib. ‘We’re just waiting for him to report back.’ So whether they were actually used to build the <mark class="vocab-word" data-word="pyramid">pyramids</mark> or not, it seems that <mark class="vocab-word" data-word="kit">kites</mark> may make <mark class="vocab-word" data-word="sensible">sensible</mark> construction tools in the 21st century AD.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>埃及的金字塔建于三千多年前，没人知道是怎么完成的。传统观点认为该过程涉及数万名奴隶用雪橇拖运石头。但是没有证据可以证明这一点。现在，加利福尼亚一位叫做莫琳·克莱蒙斯（Maureen Clemmons）的软件顾问认为风筝可能参与其中。当她仔细阅读一本关于埃及古迹的书时，她注意到一个象形文字，显示一排人以奇怪的姿势站立。他们拿着看起来像绳索的东西，通过某种机械系统引向天空中的一只大鸟。 她好奇这只鸟是否真的是一只巨大的风筝，而这些人正在用它提起沉重的物体。</p><p>克莱蒙斯对此深感兴趣，她与加州理工学院的航空学教授Morteza Gharib 联系。他对这个想法着迷。他说：“我来自伊朗，对中东科学非常感兴趣。” 引起克莱蒙斯兴趣的那幅画也使他感到困惑。天空中的物体对于一只鸟来说翅膀太短又太宽。他说：“确实有可能是风筝。” 而且由于他需要为学生Emilio Graff进行暑期项目，因此研究将风筝用作重型起重器的可能性似乎是个好主意。</p><p>Gharib和Graff为自己设定的任务如下：将一块4.5米长的石柱从水平位置变为竖直。在此过程中除了风能之外不使用其他任何能源。他们最初的计算和相应比例的风洞实验说服他们，他们并不需要强风来提起这一重达33.5吨的石柱。即使力量一般，如果长期维持下去，也能做到。关键是使用滑轮系统放大施加的力。因此，他们在水平支柱的顶端直接架起了一个帐篷形的脚手架，并在脚手架的顶点上悬挂了滑轮。当时的想法是，当柱子的一端升起时，底座会在推车上滑过地面。</p><p>今年早些时候，团队使用40平方米的长方形尼龙帆将克莱蒙斯看起来不太可能的理论付诸测试。风筝把柱子从地面上抬起。我们超级震惊”，Gharib说，“帆向风张开的一瞬间就产生了巨大的力量，柱子在短短40秒内就上升到垂直位置”。</p><p>风以每小时16至20公里的平缓速度吹来，仅仅是他们认为所需速度的一半多一点。他们没有考虑到的是风筝打开时所发生的事情。Gharib说：“初始力很大，是稳定状态下力的五倍”。Gharib意识到，这一猛然的力道意味着风筝可以举起巨大的重量。甚至一根300吨重的柱子也可以用40名左右的人和四五个帆起吊到垂直位置。因此，克莱蒙斯说得对：金字塔建造者确实可能使用风筝将大块石头抬起。Gharib说：“他们是否真的这样做是另外一回事”。没有图片展示金字塔的建造过程，所以没有办法知道当时真正发生了什么。Gharib说：“用风筝移动大石头的证据并不比用蛮力的方法更好或更糟”。</p><p>确实，实验并没有使许多专家信服。美国加州大学洛杉矶分校埃及学的副教授Willeke Wendrich说：“风筝抬起重物的证据是不存在的”。</p><p>其他人则认为该理论还有其他案例支持。对于像埃及人这样熟练的水手来说，驾驭风不是问题。而且众所周知，他们确实使用木质滑轮。这些滑轮可以制造得足够坚固以承受巨大石块的重量。另外，有一些实际证据表明古埃及人对飞行感兴趣。在萨加拉（Saqqara）的台阶金字塔上发现的木制人工制品看起来特别像现代滑翔机。尽管它的历史可以追溯到金字塔建成后的数百年，但它的复杂性表明埃及人可能已经对飞行感兴趣很久了。当然其他古代文明也知道风筝。早在公元前1250年，中国人就用它们来传递信息，并将燃烧的碎片倾倒在敌人身上。</p><p>如今，这些实验甚至可能有实际用途。全球有很多地方的人们无法使用重型机械。但他们确实知道如何处理风，航海和基本的机械原理。尼加拉瓜的一位土木工程师已经联系了Gharib ，他希望在重型设备无法到达的地点建造由混凝土拱门支撑的带有土坯屋顶的建筑物。他的想法是水平建造拱门，然后使用风筝将其提升到位。“我们给了他一些设计上的提示”，Gharib说，”我们正在等待他的反馈”。因此，无论它们是否真的被用于建造金字塔，风筝似乎都可以在公元21世纪成为明智的建造工具。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="pyramid">pyramids</mark> of Egypt were built more than three thousand years ago, and no one knows how. The <mark class="vocab-word" data-word="conventional">conventional</mark> picture is that tens of thousands of slaves dragged stones on <mark class="vocab-word" data-word="sledge">sledges</mark>. But there is no evidence to back this up. Now a Californian software <mark class="vocab-word" data-word="consultant">consultant</mark> called Maureen Clemmons has <mark class="vocab-word" data-word="suggest">suggested</mark> that <mark class="vocab-word" data-word="kit">kites</mark> might have been <mark class="vocab-word" data-word="involved">involved</mark>. While perusing a book on the <mark class="vocab-word" data-word="monument">monuments</mark> of Egypt, she noticed a <mark class="vocab-word" data-word="hieroglyph">hieroglyph</mark> that showed a row of men <mark class="vocab-word" data-word="standing">standing</mark> in odd <mark class="vocab-word" data-word="posture">postures</mark>. They were holding what looked like ropes that led, via some kind of <mark class="vocab-word" data-word="mechanical">mechanical</mark> system, to a giant bird in the sky. She wondered if perhaps the bird was actually a giant kite, and the men were using it to lift a heavy object.</p></div>  <div class="parallel-zh"><p>埃及的金字塔建于三千多年前，没人知道是怎么完成的。传统观点认为该过程涉及数万名奴隶用雪橇拖运石头。但是没有证据可以证明这一点。现在，加利福尼亚一位叫做莫琳·克莱蒙斯（Maureen Clemmons）的软件顾问认为风筝可能参与其中。当她仔细阅读一本关于埃及古迹的书时，她注意到一个象形文字，显示一排人以奇怪的姿势站立。他们拿着看起来像绳索的东西，通过某种机械系统引向天空中的一只大鸟。 她好奇这只鸟是否真的是一只巨大的风筝，而这些人正在用它提起沉重的物体。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="intrigue">Intrigued</mark>, Clemmons contacted Morteza Gharib, <mark class="vocab-word" data-word="aeronautics">aeronautics</mark> professor at the California <mark class="vocab-word" data-word="institute">Institute</mark> of Technology. He was <mark class="vocab-word" data-word="fascinate">fascinated</mark> by the idea. ‘Coming from Iran, I have a <mark class="vocab-word" data-word="keen">keen</mark> interest in Middle Eastern science,’ he says. This article is from  webiste. He too was <mark class="vocab-word" data-word="puzzled">puzzled</mark> by the picture that had <mark class="vocab-word" data-word="spark">sparked</mark> Clemmons’s interest. The object in the sky apparently had wings far too short and wide for a bird. ‘The possibility certainly existed that it was a kite,’ he says. And since he needed a summer project for his student Emilio Graff, <mark class="vocab-word" data-word="investigate">investigating</mark> the possibility of using <mark class="vocab-word" data-word="kit">kites</mark> as heavy lifters seemed like a good idea.</p></div>  <div class="parallel-zh"><p>克莱蒙斯对此深感兴趣，她与加州理工学院的航空学教授Morteza Gharib 联系。他对这个想法着迷。他说：“我来自伊朗，对中东科学非常感兴趣。” 引起克莱蒙斯兴趣的那幅画也使他感到困惑。天空中的物体对于一只鸟来说翅膀太短又太宽。他说：“确实有可能是风筝。” 而且由于他需要为学生Emilio Graff进行暑期项目，因此研究将风筝用作重型起重器的可能性似乎是个好主意。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Gharib and Graff set themselves the task of raising a 4.5-metre stone <mark class="vocab-word" data-word="column">column</mark> from <mark class="vocab-word" data-word="horizontal">horizontal</mark> to <mark class="vocab-word" data-word="vertical">vertical</mark>, using no source of energy except the <mark class="vocab-word" data-word="wind">wind</mark>. Their initial <mark class="vocab-word" data-word="calculation">calculations</mark> and scale-model wind-tunnel experiments <mark class="vocab-word" data-word="convince">convinced</mark> them they wouldn’t need a strong <mark class="vocab-word" data-word="wind">wind</mark> to lift the 33.5-tonne <mark class="vocab-word" data-word="column">column</mark>. Even a <mark class="vocab-word" data-word="modest">modest</mark> force, if <mark class="vocab-word" data-word="sustain">sustained</mark> over a long time, would do. The key was to use a <mark class="vocab-word" data-word="pulley">pulley</mark> system that would <mark class="vocab-word" data-word="magnify">magnify</mark> the <mark class="vocab-word" data-word="applied">applied</mark> force. So they rigged up a tent-shaped <mark class="vocab-word" data-word="scaffold">scaffold</mark> directly above the tip of the <mark class="vocab-word" data-word="horizontal">horizontal</mark> <mark class="vocab-word" data-word="column">column</mark>, with <mark class="vocab-word" data-word="pulley">pulleys</mark> <mark class="vocab-word" data-word="suspend">suspended</mark> from the <mark class="vocab-word" data-word="scaffold">scaffold</mark>’s <mark class="vocab-word" data-word="apex">apex</mark>. The idea was that as one end of the <mark class="vocab-word" data-word="column">column</mark> rose, the base would roll across the ground on a <mark class="vocab-word" data-word="trolley">trolley</mark>.</p></div>  <div class="parallel-zh"><p>Gharib和Graff为自己设定的任务如下：将一块4.5米长的石柱从水平位置变为竖直。在此过程中除了风能之外不使用其他任何能源。他们最初的计算和相应比例的风洞实验说服他们，他们并不需要强风来提起这一重达33.5吨的石柱。即使力量一般，如果长期维持下去，也能做到。关键是使用滑轮系统放大施加的力。因此，他们在水平支柱的顶端直接架起了一个帐篷形的脚手架，并在脚手架的顶点上悬挂了滑轮。当时的想法是，当柱子的一端升起时，底座会在推车上滑过地面。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Earlier this year, the team put Clemmons’s unlikely theory to the test, using a 40-square-metre <mark class="vocab-word" data-word="rectangular">rectangular</mark> <mark class="vocab-word" data-word="nylon">nylon</mark> sail. The kite lifted the <mark class="vocab-word" data-word="column">column</mark> clean off the ground. We were absolutely stunned,’ Gharib says. ‘The <mark class="vocab-word" data-word="instant">instant</mark> the sail opened into the <mark class="vocab-word" data-word="wind">wind</mark>, a huge force was generated and the <mark class="vocab-word" data-word="column">column</mark> was raised to the <mark class="vocab-word" data-word="vertical">vertical</mark> in a <mark class="vocab-word" data-word="mere">mere</mark> 40 seconds.’</p></div>  <div class="parallel-zh"><p>今年早些时候，团队使用40平方米的长方形尼龙帆将克莱蒙斯看起来不太可能的理论付诸测试。风筝把柱子从地面上抬起。我们超级震惊”，Gharib说，“帆向风张开的一瞬间就产生了巨大的力量，柱子在短短40秒内就上升到垂直位置”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="wind">wind</mark> was <mark class="vocab-word" data-word="blow">blowing</mark> at a gentle 16 to 20 kilometres an hour, little more than half what they thought would be needed. What they had failed to <mark class="vocab-word" data-word="reckon">reckon</mark> with was what happened when the kite was opened. ‘There was a huge initial force- five times larger than the steady state force,’ Gharib says. This <mark class="vocab-word" data-word="jerk">jerk</mark> meant that <mark class="vocab-word" data-word="kit">kites</mark> could lift huge weights, Gharib realised. Even a 300-tonne <mark class="vocab-word" data-word="column">column</mark> could have been lifted to the <mark class="vocab-word" data-word="vertical">vertical</mark> with 40 or so men and four or five sails. So Clemmons was right: the <mark class="vocab-word" data-word="pyramid">pyramid</mark> builders could have used <mark class="vocab-word" data-word="kit">kites</mark> to lift <mark class="vocab-word" data-word="massive">massive</mark> stones into place. ‘Whether they actually did is another <mark class="vocab-word" data-word="matter">matter</mark>,’ Gharib says. There are no pictures showing the construction of the <mark class="vocab-word" data-word="pyramid">pyramids</mark>, so there is no way to tell what really happened. ‘The evidence for using <mark class="vocab-word" data-word="kit">kites</mark> to move large stones is no better or worse than the evidence for the <mark class="vocab-word" data-word="brute">brute</mark> force method,’ Gharib says.</p></div>  <div class="parallel-zh"><p>风以每小时16至20公里的平缓速度吹来，仅仅是他们认为所需速度的一半多一点。他们没有考虑到的是风筝打开时所发生的事情。Gharib说：“初始力很大，是稳定状态下力的五倍”。Gharib意识到，这一猛然的力道意味着风筝可以举起巨大的重量。甚至一根300吨重的柱子也可以用40名左右的人和四五个帆起吊到垂直位置。因此，克莱蒙斯说得对：金字塔建造者确实可能使用风筝将大块石头抬起。Gharib说：“他们是否真的这样做是另外一回事”。没有图片展示金字塔的建造过程，所以没有办法知道当时真正发生了什么。Gharib说：“用风筝移动大石头的证据并不比用蛮力的方法更好或更糟”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Indeed, the experiments have left many specialists unconvinced. ‘The evidence for kite-lifting is non-existent,’ says Willeke Wendrich, an associate professor of Egyptology at the University of California, Los Angeles.</p></div>  <div class="parallel-zh"><p>确实，实验并没有使许多专家信服。美国加州大学洛杉矶分校埃及学的副教授Willeke Wendrich说：“风筝抬起重物的证据是不存在的”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Others feel there is more of a case for the theory. <mark class="vocab-word" data-word="harness">Harnessing</mark> the <mark class="vocab-word" data-word="wind">wind</mark> would not have been a problem for <mark class="vocab-word" data-word="accomplish">accomplished</mark> <mark class="vocab-word" data-word="sailor">sailors</mark> like the Egyptians. And they are known to have used wooden <mark class="vocab-word" data-word="pulley">pulleys</mark>, which could have been made strong enough to bear the weight of <mark class="vocab-word" data-word="massive">massive</mark> blocks of stone. In addition, there is some physical evidence that the ancient Egyptians were interested in flight. A wooden <mark class="vocab-word" data-word="artefact">artefact</mark> found on the step <mark class="vocab-word" data-word="pyramid">pyramid</mark> at Saqqara looks uncannily like a modern glider. Although it dates from several hundred years after the building of the <mark class="vocab-word" data-word="pyramid">pyramids</mark>, its <mark class="vocab-word" data-word="sophistication">sophistication</mark> <mark class="vocab-word" data-word="suggest">suggests</mark> that the Egyptians might have been developing ideas of flight for a long time. And other ancient civilisations certainly knew about <mark class="vocab-word" data-word="kit">kites</mark>; as early as 1250 BC, the <mark class="vocab-word" data-word="chinese">Chinese</mark> were using them to deliver messages and <mark class="vocab-word" data-word="dump">dump</mark> <mark class="vocab-word" data-word="flame">flaming</mark> <mark class="vocab-word" data-word="debris">debris</mark> on their foes.</p></div>  <div class="parallel-zh"><p>其他人则认为该理论还有其他案例支持。对于像埃及人这样熟练的水手来说，驾驭风不是问题。而且众所周知，他们确实使用木质滑轮。这些滑轮可以制造得足够坚固以承受巨大石块的重量。另外，有一些实际证据表明古埃及人对飞行感兴趣。在萨加拉（Saqqara）的台阶金字塔上发现的木制人工制品看起来特别像现代滑翔机。尽管它的历史可以追溯到金字塔建成后的数百年，但它的复杂性表明埃及人可能已经对飞行感兴趣很久了。当然其他古代文明也知道风筝。早在公元前1250年，中国人就用它们来传递信息，并将燃烧的碎片倾倒在敌人身上。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The experiments might even have practical uses nowadays. There are plenty of places around the <mark class="vocab-word" data-word="globe">globe</mark> where people have no access to heavy <mark class="vocab-word" data-word="machinery">machinery</mark>, but do know how to deal with <mark class="vocab-word" data-word="wind">wind</mark>, sailing and basic <mark class="vocab-word" data-word="mechanical">mechanical</mark> principles. Gharib has already been contacted by a civil engineer in Nicaragua, who wants to put up buildings with <mark class="vocab-word" data-word="adobe">adobe</mark> roofs supported by <mark class="vocab-word" data-word="concrete">concrete</mark> <mark class="vocab-word" data-word="arch">arches</mark> on a <mark class="vocab-word" data-word="site">site</mark> that heavy equipment can’t reach. His idea is to build the <mark class="vocab-word" data-word="arch">arches</mark> <mark class="vocab-word" data-word="horizontally">horizontally</mark>, then lift them into place using <mark class="vocab-word" data-word="kit">kites</mark>. ‘We’ve given him some design <mark class="vocab-word" data-word="hint">hints</mark>,’ says Gharib. ‘We’re just waiting for him to report back.’ So whether they were actually used to build the <mark class="vocab-word" data-word="pyramid">pyramids</mark> or not, it seems that <mark class="vocab-word" data-word="kit">kites</mark> may make <mark class="vocab-word" data-word="sensible">sensible</mark> construction tools in the 21st century AD.</p></div>  <div class="parallel-zh"><p>如今，这些实验甚至可能有实际用途。全球有很多地方的人们无法使用重型机械。但他们确实知道如何处理风，航海和基本的机械原理。尼加拉瓜的一位土木工程师已经联系了Gharib ，他希望在重型设备无法到达的地点建造由混凝土拱门支撑的带有土坯屋顶的建筑物。他的想法是水平建造拱门，然后使用风筝将其提升到位。“我们给了他一些设计上的提示”，Gharib说，”我们正在等待他的反馈”。因此，无论它们是否真的被用于建造金字塔，风筝似乎都可以在公元21世纪成为明智的建造工具。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"pyramid": 6, "conventional": 1, "sledge": 1, "consultant": 1, "suggest": 2, "kit": 8, "involved": 1, "monument": 1, "hieroglyph": 1, "standing": 1, "posture": 1, "mechanical": 2, "intrigue": 1, "aeronautics": 1, "institute": 1, "fascinate": 1, "keen": 1, "puzzled": 1, "spark": 1, "investigate": 1, "column": 7, "horizontal": 2, "vertical": 3, "wind": 6, "calculation": 1, "convince": 1, "modest": 1, "sustain": 1, "pulley": 3, "magnify": 1, "applied": 1, "scaffold": 2, "suspend": 1, "apex": 1, "trolley": 1, "rectangular": 1, "nylon": 1, "instant": 1, "mere": 1, "blow": 1, "reckon": 1, "jerk": 1, "massive": 2, "matter": 1, "brute": 1, "harness": 1, "accomplish": 1, "sailor": 1, "artefact": 1, "sophistication": 1, "chinese": 1, "dump": 1, "flame": 1, "debris": 1, "globe": 1, "machinery": 1, "adobe": 1, "concrete": 1, "arch": 2, "site": 1, "horizontally": 1, "hint": 1, "sensible": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

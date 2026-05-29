@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The steam Car 蒸汽汽车 - 剑桥雅思18 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思18</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>The steam Car 蒸汽汽车</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/56612.html" target="_blank">https://www.laokaoya.com/56612.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>When <mark class="vocab-word" data-word="primitive">primitive</mark> <mark class="vocab-word" data-word="automobile">automobiles</mark> first began to appear in the 1800s, their engines were based on <mark class="vocab-word" data-word="steam">steam</mark> power. <mark class="vocab-word" data-word="steam">Steam</mark> had already enjoyed a long and successful career in the railways, so it was only natural that the technology <mark class="vocab-word" data-word="evolve">evolved</mark> into a miniaturized version which was separate from the trains. But these early cars <mark class="vocab-word" data-word="inherit">inherited</mark> <mark class="vocab-word" data-word="steam">steam</mark>’s weaknesses along with its strengths. The boilers had to be lit by hand, and they required about twenty minutes to build up pressure before they could be driven. Furthermore, their water <mark class="vocab-word" data-word="reservoir">reservoirs</mark> only lasted for about thirty miles before needing replenishment. Despite such <mark class="vocab-word" data-word="shortcoming">shortcomings</mark>, these newly designed self-propelled <mark class="vocab-word" data-word="carriage">carriages</mark> offered quick <mark class="vocab-word" data-word="transportation">transportation</mark>, and by the early 1900s it was not <mark class="vocab-word" data-word="uncommon">uncommon</mark> to see such machines <mark class="vocab-word" data-word="shuttle">shuttling</mark> wealthy citizens around town.</p><p>But the <mark class="vocab-word" data-word="glory">glory</mark> days of <mark class="vocab-word" data-word="steam">steam</mark> cars were few. A new technology called the Internal <mark class="vocab-word" data-word="combustion">Combustion</mark> Engine soon appeared, which offered the ability to drive down the road just moments after starting up. At first, these noisy <mark class="vocab-word" data-word="gasoline">gasoline</mark> cars were unpopular because they were more <mark class="vocab-word" data-word="complicated">complicated</mark> to operate and they had difficult hand-crank starters, which were known to break arms when the engines <mark class="vocab-word" data-word="backfire">backfired</mark>. But in 1912 General Motors introduced the electric starter, and over the following few years <mark class="vocab-word" data-word="steam">steam</mark> power was <mark class="vocab-word" data-word="gradual">gradually</mark> phased out.</p><p>Even as the market was declining, four brothers made one last effort to <mark class="vocab-word" data-word="rekindle">rekindle</mark> the technology. Between 1906 and 1909, while still attending high school, Abner Doble and his three brothers built their first <mark class="vocab-word" data-word="steam">steam</mark> car in their parents’ <mark class="vocab-word" data-word="basement">basement</mark>. It <mark class="vocab-word" data-word="comprise">comprised</mark> parts taken from a <mark class="vocab-word" data-word="wreck">wrecked</mark> early <mark class="vocab-word" data-word="steam">steam</mark> car but reconfigured to drive an engine of their own design. Though it did not run well, the Doble brothers went on to build a second and third <mark class="vocab-word" data-word="prototype">prototype</mark> in the following years. Though the Doble boys’ third <mark class="vocab-word" data-word="prototype">prototype</mark>, <mark class="vocab-word" data-word="nickname">nicknamed</mark> the Model B, still lacked the <mark class="vocab-word" data-word="convenience">convenience</mark> of an internal <mark class="vocab-word" data-word="combustion">combustion</mark> engine, this article is from  website, it drew the attention of <mark class="vocab-word" data-word="automobile">automobile</mark> trade magazines due to its numerous improvements over previous <mark class="vocab-word" data-word="steam">steam</mark> cars. The Model B proved to be <mark class="vocab-word" data-word="superior">superior</mark> to <mark class="vocab-word" data-word="gasoline">gasoline</mark> <mark class="vocab-word" data-word="automobile">automobiles</mark> in many ways. Its high-pressure <mark class="vocab-word" data-word="steam">steam</mark> drove the engine <mark class="vocab-word" data-word="piston">pistons</mark> in virtual silence, in contrast to clattering gas engines which emitted the <mark class="vocab-word" data-word="aroma">aroma</mark> of burned <mark class="vocab-word" data-word="hydrocarbon">hydrocarbons</mark>. Perhaps most <mark class="vocab-word" data-word="impressively">impressively</mark>, the Model B was amazingly <mark class="vocab-word" data-word="swift">swift</mark>. It could <mark class="vocab-word" data-word="accelerate">accelerate</mark> from zero to sixty miles per hour in just fifteen seconds, a <mark class="vocab-word" data-word="feat">feat</mark> described as ‘<mark class="vocab-word" data-word="remarkable">remarkable</mark> <mark class="vocab-word" data-word="acceleration">acceleration</mark>’ by <mark class="vocab-word" data-word="automobile">Automobile</mark> magazine in 1914.</p><p>The following year Abner Doble drove the Model B from Massachusetts to Detroit in order to seek investment in his <mark class="vocab-word" data-word="automobile">automobile</mark> design, which he used to open the General <mark class="vocab-word" data-word="engineering">Engineering</mark> Company. He and his brothers immediately began working on the Model C, which was intended to expand upon the <mark class="vocab-word" data-word="innovation">innovations</mark> of the Model B. The brothers added features such as a key-based ignition in the <mark class="vocab-word" data-word="cabin">cabin</mark>, <mark class="vocab-word" data-word="eliminate">eliminating</mark> the need for the <mark class="vocab-word" data-word="operator">operator</mark> to <mark class="vocab-word" data-word="manually">manually</mark> <mark class="vocab-word" data-word="ignite">ignite</mark> the boiler. With these enhancements, the Dobles’new car company promised a <mark class="vocab-word" data-word="steam">steam</mark> vehicle which would provide all of the <mark class="vocab-word" data-word="convenience">convenience</mark> of a <mark class="vocab-word" data-word="gasoline">gasoline</mark> car, but with much greater speed, much simpler driving controls, and a virually silent powerplant. By the following April, the General <mark class="vocab-word" data-word="engineering">Engineering</mark> Company had received 5,390 <mark class="vocab-word" data-word="deposit">deposits</mark> for Doble Detroits, which were scheduled for delivery in early 1918.</p><p>Later that year Abner Doble delivered unhappy news to those <mark class="vocab-word" data-word="eager">eagerly</mark> <mark class="vocab-word" data-word="await">awaiting</mark> the delivery of their modern new cars. Those buyers who received the <mark class="vocab-word" data-word="handful">handful</mark> of completed cars complained that the vehicles were <mark class="vocab-word" data-word="sluggish">sluggish</mark> and <mark class="vocab-word" data-word="erratic">erratic</mark>, sometimes going in <mark class="vocab-word" data-word="reverse">reverse</mark> when they should go forward. The new engine design, though <mark class="vocab-word" data-word="innovative">innovative</mark>, was still <mark class="vocab-word" data-word="plague">plagued</mark> with serious glitches.</p><p>The brothers made one final attempt to produce a <mark class="vocab-word" data-word="viable">viable</mark> <mark class="vocab-word" data-word="steam">steam</mark> <mark class="vocab-word" data-word="automobile">automobile</mark>. In early 1924, the Doble brothers shipped a Model E to New York City to be road-tested by the <mark class="vocab-word" data-word="automobile">Automobile</mark> Club of America. After sitting <mark class="vocab-word" data-word="overnight">overnight</mark> in freezing temperatures, the car was pushed out into the road and left to sit for over an hour in the frosty morning air. At the turn of the key, the boiler lit and reached its operating pressure inside of forty seconds. As they drove the test vehicle further, they found that its evenly distributed weight lent it surprisingly good handling, even though it was so heavy. As the new Doble <mark class="vocab-word" data-word="steamer">steamer</mark> was further developed and tested, its maximum speed was pushed to over a hundred miles per hour, and it achieved about fifteen miles per <mark class="vocab-word" data-word="gallon">gallon</mark> of <mark class="vocab-word" data-word="kerosene">kerosene</mark> with <mark class="vocab-word" data-word="negligible">negligible</mark> <mark class="vocab-word" data-word="emission">emissions</mark>.</p><p>Sadly, the Dobles’ brilliant <mark class="vocab-word" data-word="steam">steam</mark> car never was a financial success. Priced at around $18,000 in 1924, it was popular only among the very wealthy. Plus, it is said that no two model Es were quite the same, because Abner Doble tinkered endlessly with the design. By the time the company folded in 1931, fewer than fifty of the amazing Model E <mark class="vocab-word" data-word="steam">steam</mark> cars had been produced. For his whole career, until his death in 1961, Abner Doble remained adamant that steam-powered <mark class="vocab-word" data-word="automobile">automobiles</mark> were at least equal to <mark class="vocab-word" data-word="gasoline">gasoline</mark> cars, if not <mark class="vocab-word" data-word="superior">superior</mark>. Given the evidence, he may have been right. Many of the Model E Dobles which have survived are still in good working condition, some having been driven over half a million miles with only normal <mark class="vocab-word" data-word="maintenance">maintenance</mark>. Astonishingly, an unmodified Doble Model Eruns clean enough to pass the <mark class="vocab-word" data-word="emission">emissions</mark> laws in California today, and they are pretty strict. It is true that the technology poses some difficult problems, but you cannot help but wonder how efficient a <mark class="vocab-word" data-word="steam">steam</mark> car might be with the benefit of modern materials and computers. Under the current pressure to improve automotive performance and reduce <mark class="vocab-word" data-word="emission">emissions</mark>, it is not unthinkable that the <mark class="vocab-word" data-word="steam">steam</mark> car may rise again.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>19世纪汽车刚出现时，它们的发动机基于蒸汽动力。蒸汽在铁路上已经有了漫长而成功的运用历史，因此技术的发展自然而然地演变出一个与火车分离的小型化版本。然而，这些早期汽车除了继承了蒸汽的优点外，也继承了它的缺点。锅炉必须手动点火，并且需要约20分钟才能积攒起足够的压力，然后才能行驶。此外，它们的水箱只能维持大约30英里的行驶距离，随后就需要重新补充水源。尽管存在这些缺点，这些新设计的自动行驶马车提供了快速的交通方式。到了19世纪初，这样的机器在城里来回穿梭运送富有的市民并不少见。</p><p>然而，蒸汽汽车的辉煌十分短暂。很快出现了一种名为内燃机的新技术，它可以在启动后短时间内上路行驶。起初，这些吵闹的汽油汽车并不受欢迎，因为它们操作更加复杂，而且手摇曲轴启动器很难使用。当发动机回火时，会导致手臂骨折。但在1912年，通用汽车引入了电动起动器。接下来的几年里，蒸汽动力汽车逐渐被淘汰。</p><p>尽管市场衰退，但四兄弟为重启这项技术做出了最后一次努力。在1906年至1909年期间，仍在上高中的阿布纳·多布尔和他的三个兄弟在父母的地下室里组装了他们的第一辆蒸汽汽车。它由来自一辆报废的早期蒸汽汽车的零部件组成，但重新配备了他们自己设计的发动机。尽管它的运行情况不佳，但多布尔兄弟在接下来的几年里继续建造了第二和第三个原型车。尽管多布尔兄弟的第三个原型车，“B型”，仍然缺乏内燃机的便利性，但它因为对之前的蒸汽汽车进行了多项改进而引起了汽车贸易杂志的关注。B型车在许多方面被证实优于汽油汽车。它的高压蒸汽以近乎无声的方式驱动发动机活塞，与吵闹的、散发出燃烧烃类化合物气味的燃气发动机形成鲜明对比。也许最令人印象深刻的是，B型车车速极快。它只需15秒就能从静止加速到每小时60英里。这一壮举被1914年的《汽车》杂志称为“令人瞩目的加速度”。</p><p>次年，阿布纳·多布尔驾驶着B型车从马萨诸塞州开往底特律，寻求对其汽车设计的投资。他利用这笔钱创办了通用工程公司。他和他的兄弟们立即开始着手研发C型车，旨在在B型车的创新基础上进一步扩展。他们兄弟增加了一些功能，例如车内钥匙点火装置。这使的驾驶员不再需要手动点燃锅炉。凭借这些改进，多布尔兄弟的新汽车公司承诺推出一种蒸汽汽车，它将提供汽油汽车的所有便利，但速度更快、驾驶起来更简单，并且动力装置几乎无声。到了次年四月，通用工程公司已经收到5,390份定金，用于订购预计在1918年初交付的多布尔底特律车型。</p><p>同年晚些时候，阿布纳·多布尔向那些急切等待交付现代新车的人传达了令人不快的消息。少数收到已完成的汽车的买家抱怨说这些车辆行驶迟缓且不稳定，有时候应该前进却倒退。尽管新的发动机设计具有创新性，但仍然存在严重的故障。</p><p>多布尔兄弟做出了最后一次尝试，试图生产一辆可用的蒸汽汽车。1924年初，多布尔兄弟将一辆E型车运到纽约市，由美国汽车俱乐部进行道路测试。在寒冷的环境中停放一夜之后，它被推上道路，但又在清冷的早晨等待了一个小时。转动钥匙的一刻，锅炉被点燃，并在四十秒内达到操作压力。当驾驶这辆测试车辆时，他们发现尽管它非常沉重，但均匀分布的重量使它具有令人惊讶的良好操控性。随着新的多布尔蒸汽汽车的进一步开发和测试，它的最高时速被推至每小时一百英里以上，每十五英里消耗一加仑煤油，排放几乎可以忽略不计。</p><p>可悲的是，多布尔兄弟出色的蒸汽汽车从未在财务上获得成功。1924年，它的售价约为18,000美元，只受到非常富有的人士的欢迎。此外，据说没有两辆E型车完全相同，因为阿布纳·多布尔对设计进行了无休止的调整。到1931年公司倒闭时，他们仅生产了不到50辆令人惊叹的E型蒸汽汽车。直到1961年去世，阿布纳·多布尔在他整个职业生涯中始终坚信蒸汽动力汽车至少与汽油汽车不相上下，如果不是更好的话。从证据来看，他可能是正确的。许多保存下来的E型多布尔汽车仍然处于良好的工作状态，有些车辆甚至行驶了超过50万英里，仅需要常规维护。令人惊讶的是，未经修改的多布尔E型车足以达到今天加利福尼亚州排放法规的清洁标准，而这些法规要求相当严格。的确，这项技术存在一些难以解决的问题，但你不禁想知道如果借助现代材料和计算机的优势，蒸汽汽车可能会有多么高效。在当前提升汽车性能和减少排放的压力下，蒸汽汽车再次崛起并非不可想象。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>When <mark class="vocab-word" data-word="primitive">primitive</mark> <mark class="vocab-word" data-word="automobile">automobiles</mark> first began to appear in the 1800s, their engines were based on <mark class="vocab-word" data-word="steam">steam</mark> power. <mark class="vocab-word" data-word="steam">Steam</mark> had already enjoyed a long and successful career in the railways, so it was only natural that the technology <mark class="vocab-word" data-word="evolve">evolved</mark> into a miniaturized version which was separate from the trains. But these early cars <mark class="vocab-word" data-word="inherit">inherited</mark> <mark class="vocab-word" data-word="steam">steam</mark>’s weaknesses along with its strengths. The boilers had to be lit by hand, and they required about twenty minutes to build up pressure before they could be driven. Furthermore, their water <mark class="vocab-word" data-word="reservoir">reservoirs</mark> only lasted for about thirty miles before needing replenishment. Despite such <mark class="vocab-word" data-word="shortcoming">shortcomings</mark>, these newly designed self-propelled <mark class="vocab-word" data-word="carriage">carriages</mark> offered quick <mark class="vocab-word" data-word="transportation">transportation</mark>, and by the early 1900s it was not <mark class="vocab-word" data-word="uncommon">uncommon</mark> to see such machines <mark class="vocab-word" data-word="shuttle">shuttling</mark> wealthy citizens around town.</p></div>  <div class="parallel-zh"><p>19世纪汽车刚出现时，它们的发动机基于蒸汽动力。蒸汽在铁路上已经有了漫长而成功的运用历史，因此技术的发展自然而然地演变出一个与火车分离的小型化版本。然而，这些早期汽车除了继承了蒸汽的优点外，也继承了它的缺点。锅炉必须手动点火，并且需要约20分钟才能积攒起足够的压力，然后才能行驶。此外，它们的水箱只能维持大约30英里的行驶距离，随后就需要重新补充水源。尽管存在这些缺点，这些新设计的自动行驶马车提供了快速的交通方式。到了19世纪初，这样的机器在城里来回穿梭运送富有的市民并不少见。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But the <mark class="vocab-word" data-word="glory">glory</mark> days of <mark class="vocab-word" data-word="steam">steam</mark> cars were few. A new technology called the Internal <mark class="vocab-word" data-word="combustion">Combustion</mark> Engine soon appeared, which offered the ability to drive down the road just moments after starting up. At first, these noisy <mark class="vocab-word" data-word="gasoline">gasoline</mark> cars were unpopular because they were more <mark class="vocab-word" data-word="complicated">complicated</mark> to operate and they had difficult hand-crank starters, which were known to break arms when the engines <mark class="vocab-word" data-word="backfire">backfired</mark>. But in 1912 General Motors introduced the electric starter, and over the following few years <mark class="vocab-word" data-word="steam">steam</mark> power was <mark class="vocab-word" data-word="gradual">gradually</mark> phased out.</p></div>  <div class="parallel-zh"><p>然而，蒸汽汽车的辉煌十分短暂。很快出现了一种名为内燃机的新技术，它可以在启动后短时间内上路行驶。起初，这些吵闹的汽油汽车并不受欢迎，因为它们操作更加复杂，而且手摇曲轴启动器很难使用。当发动机回火时，会导致手臂骨折。但在1912年，通用汽车引入了电动起动器。接下来的几年里，蒸汽动力汽车逐渐被淘汰。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Even as the market was declining, four brothers made one last effort to <mark class="vocab-word" data-word="rekindle">rekindle</mark> the technology. Between 1906 and 1909, while still attending high school, Abner Doble and his three brothers built their first <mark class="vocab-word" data-word="steam">steam</mark> car in their parents’ <mark class="vocab-word" data-word="basement">basement</mark>. It <mark class="vocab-word" data-word="comprise">comprised</mark> parts taken from a <mark class="vocab-word" data-word="wreck">wrecked</mark> early <mark class="vocab-word" data-word="steam">steam</mark> car but reconfigured to drive an engine of their own design. Though it did not run well, the Doble brothers went on to build a second and third <mark class="vocab-word" data-word="prototype">prototype</mark> in the following years. Though the Doble boys’ third <mark class="vocab-word" data-word="prototype">prototype</mark>, <mark class="vocab-word" data-word="nickname">nicknamed</mark> the Model B, still lacked the <mark class="vocab-word" data-word="convenience">convenience</mark> of an internal <mark class="vocab-word" data-word="combustion">combustion</mark> engine, this article is from  website, it drew the attention of <mark class="vocab-word" data-word="automobile">automobile</mark> trade magazines due to its numerous improvements over previous <mark class="vocab-word" data-word="steam">steam</mark> cars. The Model B proved to be <mark class="vocab-word" data-word="superior">superior</mark> to <mark class="vocab-word" data-word="gasoline">gasoline</mark> <mark class="vocab-word" data-word="automobile">automobiles</mark> in many ways. Its high-pressure <mark class="vocab-word" data-word="steam">steam</mark> drove the engine <mark class="vocab-word" data-word="piston">pistons</mark> in virtual silence, in contrast to clattering gas engines which emitted the <mark class="vocab-word" data-word="aroma">aroma</mark> of burned <mark class="vocab-word" data-word="hydrocarbon">hydrocarbons</mark>. Perhaps most <mark class="vocab-word" data-word="impressively">impressively</mark>, the Model B was amazingly <mark class="vocab-word" data-word="swift">swift</mark>. It could <mark class="vocab-word" data-word="accelerate">accelerate</mark> from zero to sixty miles per hour in just fifteen seconds, a <mark class="vocab-word" data-word="feat">feat</mark> described as ‘<mark class="vocab-word" data-word="remarkable">remarkable</mark> <mark class="vocab-word" data-word="acceleration">acceleration</mark>’ by <mark class="vocab-word" data-word="automobile">Automobile</mark> magazine in 1914.</p></div>  <div class="parallel-zh"><p>尽管市场衰退，但四兄弟为重启这项技术做出了最后一次努力。在1906年至1909年期间，仍在上高中的阿布纳·多布尔和他的三个兄弟在父母的地下室里组装了他们的第一辆蒸汽汽车。它由来自一辆报废的早期蒸汽汽车的零部件组成，但重新配备了他们自己设计的发动机。尽管它的运行情况不佳，但多布尔兄弟在接下来的几年里继续建造了第二和第三个原型车。尽管多布尔兄弟的第三个原型车，“B型”，仍然缺乏内燃机的便利性，但它因为对之前的蒸汽汽车进行了多项改进而引起了汽车贸易杂志的关注。B型车在许多方面被证实优于汽油汽车。它的高压蒸汽以近乎无声的方式驱动发动机活塞，与吵闹的、散发出燃烧烃类化合物气味的燃气发动机形成鲜明对比。也许最令人印象深刻的是，B型车车速极快。它只需15秒就能从静止加速到每小时60英里。这一壮举被1914年的《汽车》杂志称为“令人瞩目的加速度”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The following year Abner Doble drove the Model B from Massachusetts to Detroit in order to seek investment in his <mark class="vocab-word" data-word="automobile">automobile</mark> design, which he used to open the General <mark class="vocab-word" data-word="engineering">Engineering</mark> Company. He and his brothers immediately began working on the Model C, which was intended to expand upon the <mark class="vocab-word" data-word="innovation">innovations</mark> of the Model B. The brothers added features such as a key-based ignition in the <mark class="vocab-word" data-word="cabin">cabin</mark>, <mark class="vocab-word" data-word="eliminate">eliminating</mark> the need for the <mark class="vocab-word" data-word="operator">operator</mark> to <mark class="vocab-word" data-word="manually">manually</mark> <mark class="vocab-word" data-word="ignite">ignite</mark> the boiler. With these enhancements, the Dobles’new car company promised a <mark class="vocab-word" data-word="steam">steam</mark> vehicle which would provide all of the <mark class="vocab-word" data-word="convenience">convenience</mark> of a <mark class="vocab-word" data-word="gasoline">gasoline</mark> car, but with much greater speed, much simpler driving controls, and a virually silent powerplant. By the following April, the General <mark class="vocab-word" data-word="engineering">Engineering</mark> Company had received 5,390 <mark class="vocab-word" data-word="deposit">deposits</mark> for Doble Detroits, which were scheduled for delivery in early 1918.</p></div>  <div class="parallel-zh"><p>次年，阿布纳·多布尔驾驶着B型车从马萨诸塞州开往底特律，寻求对其汽车设计的投资。他利用这笔钱创办了通用工程公司。他和他的兄弟们立即开始着手研发C型车，旨在在B型车的创新基础上进一步扩展。他们兄弟增加了一些功能，例如车内钥匙点火装置。这使的驾驶员不再需要手动点燃锅炉。凭借这些改进，多布尔兄弟的新汽车公司承诺推出一种蒸汽汽车，它将提供汽油汽车的所有便利，但速度更快、驾驶起来更简单，并且动力装置几乎无声。到了次年四月，通用工程公司已经收到5,390份定金，用于订购预计在1918年初交付的多布尔底特律车型。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Later that year Abner Doble delivered unhappy news to those <mark class="vocab-word" data-word="eager">eagerly</mark> <mark class="vocab-word" data-word="await">awaiting</mark> the delivery of their modern new cars. Those buyers who received the <mark class="vocab-word" data-word="handful">handful</mark> of completed cars complained that the vehicles were <mark class="vocab-word" data-word="sluggish">sluggish</mark> and <mark class="vocab-word" data-word="erratic">erratic</mark>, sometimes going in <mark class="vocab-word" data-word="reverse">reverse</mark> when they should go forward. The new engine design, though <mark class="vocab-word" data-word="innovative">innovative</mark>, was still <mark class="vocab-word" data-word="plague">plagued</mark> with serious glitches.</p></div>  <div class="parallel-zh"><p>同年晚些时候，阿布纳·多布尔向那些急切等待交付现代新车的人传达了令人不快的消息。少数收到已完成的汽车的买家抱怨说这些车辆行驶迟缓且不稳定，有时候应该前进却倒退。尽管新的发动机设计具有创新性，但仍然存在严重的故障。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The brothers made one final attempt to produce a <mark class="vocab-word" data-word="viable">viable</mark> <mark class="vocab-word" data-word="steam">steam</mark> <mark class="vocab-word" data-word="automobile">automobile</mark>. In early 1924, the Doble brothers shipped a Model E to New York City to be road-tested by the <mark class="vocab-word" data-word="automobile">Automobile</mark> Club of America. After sitting <mark class="vocab-word" data-word="overnight">overnight</mark> in freezing temperatures, the car was pushed out into the road and left to sit for over an hour in the frosty morning air. At the turn of the key, the boiler lit and reached its operating pressure inside of forty seconds. As they drove the test vehicle further, they found that its evenly distributed weight lent it surprisingly good handling, even though it was so heavy. As the new Doble <mark class="vocab-word" data-word="steamer">steamer</mark> was further developed and tested, its maximum speed was pushed to over a hundred miles per hour, and it achieved about fifteen miles per <mark class="vocab-word" data-word="gallon">gallon</mark> of <mark class="vocab-word" data-word="kerosene">kerosene</mark> with <mark class="vocab-word" data-word="negligible">negligible</mark> <mark class="vocab-word" data-word="emission">emissions</mark>.</p></div>  <div class="parallel-zh"><p>多布尔兄弟做出了最后一次尝试，试图生产一辆可用的蒸汽汽车。1924年初，多布尔兄弟将一辆E型车运到纽约市，由美国汽车俱乐部进行道路测试。在寒冷的环境中停放一夜之后，它被推上道路，但又在清冷的早晨等待了一个小时。转动钥匙的一刻，锅炉被点燃，并在四十秒内达到操作压力。当驾驶这辆测试车辆时，他们发现尽管它非常沉重，但均匀分布的重量使它具有令人惊讶的良好操控性。随着新的多布尔蒸汽汽车的进一步开发和测试，它的最高时速被推至每小时一百英里以上，每十五英里消耗一加仑煤油，排放几乎可以忽略不计。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Sadly, the Dobles’ brilliant <mark class="vocab-word" data-word="steam">steam</mark> car never was a financial success. Priced at around $18,000 in 1924, it was popular only among the very wealthy. Plus, it is said that no two model Es were quite the same, because Abner Doble tinkered endlessly with the design. By the time the company folded in 1931, fewer than fifty of the amazing Model E <mark class="vocab-word" data-word="steam">steam</mark> cars had been produced. For his whole career, until his death in 1961, Abner Doble remained adamant that steam-powered <mark class="vocab-word" data-word="automobile">automobiles</mark> were at least equal to <mark class="vocab-word" data-word="gasoline">gasoline</mark> cars, if not <mark class="vocab-word" data-word="superior">superior</mark>. Given the evidence, he may have been right. Many of the Model E Dobles which have survived are still in good working condition, some having been driven over half a million miles with only normal <mark class="vocab-word" data-word="maintenance">maintenance</mark>. Astonishingly, an unmodified Doble Model Eruns clean enough to pass the <mark class="vocab-word" data-word="emission">emissions</mark> laws in California today, and they are pretty strict. It is true that the technology poses some difficult problems, but you cannot help but wonder how efficient a <mark class="vocab-word" data-word="steam">steam</mark> car might be with the benefit of modern materials and computers. Under the current pressure to improve automotive performance and reduce <mark class="vocab-word" data-word="emission">emissions</mark>, it is not unthinkable that the <mark class="vocab-word" data-word="steam">steam</mark> car may rise again.</p></div>  <div class="parallel-zh"><p>可悲的是，多布尔兄弟出色的蒸汽汽车从未在财务上获得成功。1924年，它的售价约为18,000美元，只受到非常富有的人士的欢迎。此外，据说没有两辆E型车完全相同，因为阿布纳·多布尔对设计进行了无休止的调整。到1931年公司倒闭时，他们仅生产了不到50辆令人惊叹的E型蒸汽汽车。直到1961年去世，阿布纳·多布尔在他整个职业生涯中始终坚信蒸汽动力汽车至少与汽油汽车不相上下，如果不是更好的话。从证据来看，他可能是正确的。许多保存下来的E型多布尔汽车仍然处于良好的工作状态，有些车辆甚至行驶了超过50万英里，仅需要常规维护。令人惊讶的是，未经修改的多布尔E型车足以达到今天加利福尼亚州排放法规的清洁标准，而这些法规要求相当严格。的确，这项技术存在一些难以解决的问题，但你不禁想知道如果借助现代材料和计算机的优势，蒸汽汽车可能会有多么高效。在当前提升汽车性能和减少排放的压力下，蒸汽汽车再次崛起并非不可想象。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"primitive": 1, "automobile": 8, "steam": 15, "evolve": 1, "inherit": 1, "reservoir": 1, "shortcoming": 1, "carriage": 1, "transportation": 1, "uncommon": 1, "shuttle": 1, "glory": 1, "combustion": 2, "gasoline": 4, "complicated": 1, "backfire": 1, "gradual": 1, "rekindle": 1, "basement": 1, "comprise": 1, "wreck": 1, "prototype": 2, "nickname": 1, "convenience": 2, "superior": 2, "piston": 1, "aroma": 1, "hydrocarbon": 1, "impressively": 1, "swift": 1, "accelerate": 1, "feat": 1, "remarkable": 1, "acceleration": 1, "engineering": 2, "innovation": 1, "cabin": 1, "eliminate": 1, "operator": 1, "manually": 1, "ignite": 1, "deposit": 1, "eager": 1, "await": 1, "handful": 1, "sluggish": 1, "erratic": 1, "reverse": 1, "innovative": 1, "plague": 1, "viable": 1, "overnight": 1, "steamer": 1, "gallon": 1, "kerosene": 1, "negligible": 1, "emission": 3, "maintenance": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

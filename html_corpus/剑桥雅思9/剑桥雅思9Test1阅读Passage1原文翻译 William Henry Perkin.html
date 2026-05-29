@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>William Henry Perkin - 剑桥雅思9 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>William Henry Perkin</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26388.html" target="_blank">https://www.laokaoya.com/26388.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>William Henry Perkin was born on <mark class="vocab-word" data-word="march">March</mark> 12, 1838, in London, England. As a boy, Perkin’s <mark class="vocab-word" data-word="curiosity">curiosity</mark> <mark class="vocab-word" data-word="prompt">prompted</mark> early interests in the arts, sciences, photography, and <mark class="vocab-word" data-word="engineering">engineering</mark>. But it was a chance <mark class="vocab-word" data-word="stumble">stumbling</mark> upon a run-down, yet <mark class="vocab-word" data-word="functional">functional</mark>, laboratory in his late grandfather’s home that solidified the young man’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark> for chemistry.</p><p>As a student at the city of London School, Perkin became <mark class="vocab-word" data-word="immerse">immersed</mark> in the study at chemistry. His talent and <mark class="vocab-word" data-word="devotion">devotion</mark> to the subject were <mark class="vocab-word" data-word="perceive">perceived</mark> by his teachers, Thomas Hall, who encouraged him to attend a series of lectures given by the <mark class="vocab-word" data-word="eminent">eminent</mark> scientist Michael Faraday at the Royal <mark class="vocab-word" data-word="institution">Institution</mark>. Those speeches <mark class="vocab-word" data-word="fir">fired</mark> the young chemistry’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark> further, and he later went on to attend the Royal College of Chemistry, which he succeeded in entering in 1853, at the age of 15.</p><p>At the time of Perkin’s enrolment, the Royal College of Chemistry was headed by the noted German <mark class="vocab-word" data-word="chemist">chemist</mark> August Wilhelm Hofmann. Perkin’s scientific gifts soon caught Hofmann’s attention and, within two years, he became Hofmann’s youngest assistant. Not long after that, Perkin made the scientific <mark class="vocab-word" data-word="breakthrough">breakthrough</mark> that would bring him both <mark class="vocab-word" data-word="fame">fame</mark> and fortune.</p><p>At the time, quinine was the only <mark class="vocab-word" data-word="viable">viable</mark> medical treatment for <mark class="vocab-word" data-word="malaria">malaria</mark>. The drug is <mark class="vocab-word" data-word="derive">derived</mark> from the <mark class="vocab-word" data-word="bark">bark</mark> of the cinchona <mark class="vocab-word" data-word="tree">tree</mark>, native to South America, and by 1856, demand for the drug was <mark class="vocab-word" data-word="surpass">surpassing</mark> the available supply. Thus, when Hofmann made some <mark class="vocab-word" data-word="passing">passing</mark> comments about the desirability of a <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="substitute">substitute</mark> for quinine, it was unsurprising that his star <mark class="vocab-word" data-word="pupil">pupil</mark> was moved to take up the challenge.</p><p>During his vacation in 1856, Perkin spent his time in the laboratory on the top floor of his family’s house. He was attempting to <mark class="vocab-word" data-word="manufacture">manufacture</mark> quinine from aniline, an inexpensive and <mark class="vocab-word" data-word="readily">readily</mark> available coal <mark class="vocab-word" data-word="tar">tar</mark> waste product. Despite his best efforts, however, he did not end up with quinine. Instead, he produced a <mark class="vocab-word" data-word="mysterious">mysterious</mark> dark sludge. Luckily, Perkin’s scientific training and nature <mark class="vocab-word" data-word="prompt">prompted</mark> him to <mark class="vocab-word" data-word="investigate">investigate</mark> the substance further. <mark class="vocab-word" data-word="incorporate">Incorporating</mark> <mark class="vocab-word" data-word="potassium">potassium</mark> dichromate and alcohol into the aniline at various stages of the <mark class="vocab-word" data-word="experimental">experimental</mark> process, he finally produced a deep purple solution. And, proving the truth of the famous scientist Louis Pasteur’s words ‘chance favours only the prepared mind’, Perkin saw the potential of his unexpected find.</p><p>Historically, <mark class="vocab-word" data-word="textile">textile</mark> <mark class="vocab-word" data-word="dye">dyes</mark> were made from such natural sources as plants and animal <mark class="vocab-word" data-word="excretion">excretions</mark>. Some of these, such as the glandular mucus of snails, were difficult to <mark class="vocab-word" data-word="obtain">obtain</mark> and <mark class="vocab-word" data-word="outrageous">outrageously</mark> expensive. Indeed, the purple colour extracted from a snail was once so <mark class="vocab-word" data-word="costly">costly</mark> that in society at the time only the rich could afford it. Further, natural <mark class="vocab-word" data-word="dye">dyes</mark> tend to be <mark class="vocab-word" data-word="muddy">muddy</mark> in <mark class="vocab-word" data-word="hue">hue</mark> and <mark class="vocab-word" data-word="fade">fade</mark> quickly. It was against this <mark class="vocab-word" data-word="backdrop">backdrop</mark> that Perkin’s discovery was made.</p><p>Perkin quickly <mark class="vocab-word" data-word="grasp">grasped</mark> that his purple solution could be used to colour <mark class="vocab-word" data-word="fabric">fabric</mark>, thus making it the world’s first <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="dye">dye</mark>. Realising the importance of this <mark class="vocab-word" data-word="breakthrough">breakthrough</mark>, he lost no time in <mark class="vocab-word" data-word="patent">patenting</mark> it. But perhaps the most <mark class="vocab-word" data-word="fascinating">fascinating</mark> of all Perkin’s reactions to his find was his nearly <mark class="vocab-word" data-word="instant">instant</mark> <mark class="vocab-word" data-word="recognition">recognition</mark> that the new <mark class="vocab-word" data-word="dye">dye</mark> had commercial possibilities.</p><p>Perkin originally named his <mark class="vocab-word" data-word="dye">dye</mark> Tyrian Purple, but it later became commonly known as mauve (from the French for the plant used to make the colour <mark class="vocab-word" data-word="violet">violet</mark>). He asked advice of Scottish <mark class="vocab-word" data-word="dye">dye</mark> works owner Robert Pullar, who <mark class="vocab-word" data-word="assure">assured</mark> him that <mark class="vocab-word" data-word="manufacture">manufacturing</mark> the <mark class="vocab-word" data-word="dye">dye</mark> would be well worth it if the colour remained fast (i.e. would not <mark class="vocab-word" data-word="fade">fade</mark>) and the cost was relatively low. So, over the <mark class="vocab-word" data-word="fierce">fierce</mark> <mark class="vocab-word" data-word="objection">objections</mark> of his <mark class="vocab-word" data-word="mentor">mentor</mark> Hofmann, he left college to give birth to the modern chemical industry.</p><p>With the help of his father and brother, Perkin set up a factory not far from London. Utilising the cheap and <mark class="vocab-word" data-word="plentiful">plentiful</mark> coal <mark class="vocab-word" data-word="tar">tar</mark> that was an almost unlimited byproduct of London’s gas street lighting, the <mark class="vocab-word" data-word="dye">dye</mark> works began producing the world’s first <mark class="vocab-word" data-word="synthetically">synthetically</mark> dyed material in 1857. The company received a commercial <mark class="vocab-word" data-word="boost">boost</mark> from the Empress Eugenie of France, when she decided the new colour <mark class="vocab-word" data-word="flatter">flattered</mark> her. Very soon, Mauve was the necessary <mark class="vocab-word" data-word="shade">shade</mark> for all the <mark class="vocab-word" data-word="fashionable">fashionable</mark> ladies in that country. Not to be outdone, England’s Queen Victoria also appeared in public wearing a mauve <mark class="vocab-word" data-word="gown">gown</mark>, thus making it all the rate in England as well. The <mark class="vocab-word" data-word="dye">dye</mark> was <mark class="vocab-word" data-word="bold">bold</mark> and fast, and the public clamoured for more. Perkin went back to the drawing board.</p><p>Although Perkin’s <mark class="vocab-word" data-word="fame">fame</mark> was achieved and fortune <mark class="vocab-word" data-word="assure">assured</mark> by his first discovery, the <mark class="vocab-word" data-word="chemist">chemist</mark> continued his research. Among other <mark class="vocab-word" data-word="dye">dyes</mark> he developed and introduced were aniline red (1859) and aniline black (1863) and, in the late 1860s, Perkin’s <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="dye">dye</mark> discoveries had outcomes far beyond the <mark class="vocab-word" data-word="merely">merely</mark> <mark class="vocab-word" data-word="decorative">decorative</mark>. The <mark class="vocab-word" data-word="dye">dyes</mark> also became <mark class="vocab-word" data-word="vital">vital</mark> to medical research in many ways. For instance, they were used to <mark class="vocab-word" data-word="stain">stain</mark> previously <mark class="vocab-word" data-word="invisible">invisible</mark> <mark class="vocab-word" data-word="microbe">microbes</mark> and <mark class="vocab-word" data-word="bacteria">bacteria</mark>, allowing researchers to identify such bacilli as <mark class="vocab-word" data-word="tuberculosis">tuberculosis</mark>, <mark class="vocab-word" data-word="cholera">cholera</mark>, and anthrax. <mark class="vocab-word" data-word="artificial">Artificial</mark> <mark class="vocab-word" data-word="dye">dyes</mark> continue to play a crucial role today. And, in what would have been particularly pleasing to Perkin, their current use is in the search for a <mark class="vocab-word" data-word="vaccine">vaccine</mark> against <mark class="vocab-word" data-word="malaria">malaria</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>威廉·亨利·珀金（William Henry Perkin）于1838年3月12日出生于英国伦敦。珀金（Perkin）小时候的好奇心激发了他对艺术，科学，摄影和工程学的早期兴趣。但一次绊倒在他已故祖父家破旧但实用的实验室中的经历巩固了这名年轻人对化学的热爱。</p><p>作为伦敦市立学校的学生，珀金开始沉迷于化学研究。他的老师托马斯·霍尔（Thomas Hall）意识到了他的才华与对这一学科的投入，他鼓励他参加皇家学院著名科学家迈克尔·法拉第（Michael Faraday）的一系列讲座。这些讲座进一步激发了这名年轻化学家的热情，后来他继续就读于皇家化学学院，并于1853年在15岁的时候成功进入大学。</p><p>珀金入学时，皇家化学学院由著名的德国化学家奥古斯特·威廉·霍夫曼（August Wilhelm Hofmann）领导。珀金的科学天赋很快引起了霍夫曼的注意。他在两年内成为霍夫曼最年轻的助手。此后不久，珀金取得了科学突破，这将为他带来名声和财富。</p><p>当时，奎宁是唯一有用的疟疾药物。该药物源自南美本地的金鸡纳树皮，到1856年，对该药物的需求已超过了供应量。因此，当霍夫曼（Hofmann）对奎宁合成替代品的需求发表一些评论时，他的明星学生毫不奇怪地接受了挑战。</p><p>在1856年度假期间，珀金在他家房屋顶层的实验室里度过了大量时光。他正试图用苯胺生产奎宁。苯胺是一种廉价且容易获得的煤焦油废品。尽管尽了最大的努力，但是他最终都没有获得奎宁。相反，他产生了一种神秘的深色污泥。幸运的是，珀金的科学训练和天性促使他进一步研究了该物质。在实验过程的不同阶段将重铬酸钾和酒精掺入苯胺中，最终产生了深紫色溶液。珀金证明了著名科学家路易斯·巴斯德（Louis Pasteur）的话“机会只留给有准备的人”，他看到了这一意想不到的发现的潜力。</p><p>从历史上看，纺织染料是从植物和动物分泌物等天然来源制成的。其中一些，例如蜗牛的腺粘液，很难获得且非常昂贵。的确，从蜗牛中提取的紫色曾经非常昂贵，以至于当时的社会只有富人才能负担得起。此外，天然染料颜色混浊并很快褪色。正是在这种背景下，珀金得出了他的发现。</p><p>珀金很快就意识到，他的紫色溶液可用于为织物着色，从而使其成为世界上第一种合成染料。意识到这一突破的重要性，他及时申请了专利。但是，也许珀金对他的发现最有意思的反应是他几乎立即意识到新染料具有商业潜力。</p><p>珀金最初将他的染料命名为Tyrian Purple，但后来被人们称为mauve（来自于法国用于制造紫罗兰色的植物）。他询问苏格兰染料厂老板罗伯特·普拉尔（Robert Pullar）的建议。他向他保证，如果颜色定型很快（即不会褪色）并且成本相对较低，那么制造这种染料就非常值得。因此，在他的导师霍夫曼（Hofmann）的强烈反对下，他离开了大学，开启了现代化学工业。</p><p>在他的父亲和兄弟的帮助下，珀金在离伦敦不远的地方建立了一家工厂。利用廉价和丰富的煤焦油（伦敦燃气街道照明几乎无限的副产品），该染料厂于1857年开始生产世界上第一种合成染料。该公司得到了法国女皇Eugenie的商业帮助。这种新颜色使她受宠若惊。很快，淡紫色就成为该国所有时尚女士的必备品。不甘落后的英格兰女王维多利亚也穿着淡紫色礼服在公众场合露面，使得该颜色在英国也流行起来。这种染料清晰而着色迅速，公众渴望更多。珀金回到实验室中。</p><p>尽管珀金的首个发现为他赢取了名望和财富，但该化学家仍在继续他的研究。他开发和引进的其他染料包括苯胺红（1859年）和苯胺黑（1863年），以及19世纪60年代后期的珀金绿。珀金合成染料的发现所产生的成果远远超出了装饰性的范畴。染料在许多方面对医学研究也至关重要。例如，它们被用来标记以前看不见的微生物和细菌，从而使研究人员能够鉴定出诸如结核，霍乱和炭疽等细菌。如今，人造染料仍然扮演着至关重要的角色。而且，令珀金特别高兴的是，它们目前的用途是寻找对抗疟疾的疫苗。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>William Henry Perkin was born on <mark class="vocab-word" data-word="march">March</mark> 12, 1838, in London, England. As a boy, Perkin’s <mark class="vocab-word" data-word="curiosity">curiosity</mark> <mark class="vocab-word" data-word="prompt">prompted</mark> early interests in the arts, sciences, photography, and <mark class="vocab-word" data-word="engineering">engineering</mark>. But it was a chance <mark class="vocab-word" data-word="stumble">stumbling</mark> upon a run-down, yet <mark class="vocab-word" data-word="functional">functional</mark>, laboratory in his late grandfather’s home that solidified the young man’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark> for chemistry.</p></div>  <div class="parallel-zh"><p>威廉·亨利·珀金（William Henry Perkin）于1838年3月12日出生于英国伦敦。珀金（Perkin）小时候的好奇心激发了他对艺术，科学，摄影和工程学的早期兴趣。但一次绊倒在他已故祖父家破旧但实用的实验室中的经历巩固了这名年轻人对化学的热爱。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As a student at the city of London School, Perkin became <mark class="vocab-word" data-word="immerse">immersed</mark> in the study at chemistry. His talent and <mark class="vocab-word" data-word="devotion">devotion</mark> to the subject were <mark class="vocab-word" data-word="perceive">perceived</mark> by his teachers, Thomas Hall, who encouraged him to attend a series of lectures given by the <mark class="vocab-word" data-word="eminent">eminent</mark> scientist Michael Faraday at the Royal <mark class="vocab-word" data-word="institution">Institution</mark>. Those speeches <mark class="vocab-word" data-word="fir">fired</mark> the young chemistry’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark> further, and he later went on to attend the Royal College of Chemistry, which he succeeded in entering in 1853, at the age of 15.</p></div>  <div class="parallel-zh"><p>作为伦敦市立学校的学生，珀金开始沉迷于化学研究。他的老师托马斯·霍尔（Thomas Hall）意识到了他的才华与对这一学科的投入，他鼓励他参加皇家学院著名科学家迈克尔·法拉第（Michael Faraday）的一系列讲座。这些讲座进一步激发了这名年轻化学家的热情，后来他继续就读于皇家化学学院，并于1853年在15岁的时候成功进入大学。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At the time of Perkin’s enrolment, the Royal College of Chemistry was headed by the noted German <mark class="vocab-word" data-word="chemist">chemist</mark> August Wilhelm Hofmann. Perkin’s scientific gifts soon caught Hofmann’s attention and, within two years, he became Hofmann’s youngest assistant. Not long after that, Perkin made the scientific <mark class="vocab-word" data-word="breakthrough">breakthrough</mark> that would bring him both <mark class="vocab-word" data-word="fame">fame</mark> and fortune.</p></div>  <div class="parallel-zh"><p>珀金入学时，皇家化学学院由著名的德国化学家奥古斯特·威廉·霍夫曼（August Wilhelm Hofmann）领导。珀金的科学天赋很快引起了霍夫曼的注意。他在两年内成为霍夫曼最年轻的助手。此后不久，珀金取得了科学突破，这将为他带来名声和财富。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At the time, quinine was the only <mark class="vocab-word" data-word="viable">viable</mark> medical treatment for <mark class="vocab-word" data-word="malaria">malaria</mark>. The drug is <mark class="vocab-word" data-word="derive">derived</mark> from the <mark class="vocab-word" data-word="bark">bark</mark> of the cinchona <mark class="vocab-word" data-word="tree">tree</mark>, native to South America, and by 1856, demand for the drug was <mark class="vocab-word" data-word="surpass">surpassing</mark> the available supply. Thus, when Hofmann made some <mark class="vocab-word" data-word="passing">passing</mark> comments about the desirability of a <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="substitute">substitute</mark> for quinine, it was unsurprising that his star <mark class="vocab-word" data-word="pupil">pupil</mark> was moved to take up the challenge.</p></div>  <div class="parallel-zh"><p>当时，奎宁是唯一有用的疟疾药物。该药物源自南美本地的金鸡纳树皮，到1856年，对该药物的需求已超过了供应量。因此，当霍夫曼（Hofmann）对奎宁合成替代品的需求发表一些评论时，他的明星学生毫不奇怪地接受了挑战。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>During his vacation in 1856, Perkin spent his time in the laboratory on the top floor of his family’s house. He was attempting to <mark class="vocab-word" data-word="manufacture">manufacture</mark> quinine from aniline, an inexpensive and <mark class="vocab-word" data-word="readily">readily</mark> available coal <mark class="vocab-word" data-word="tar">tar</mark> waste product. Despite his best efforts, however, he did not end up with quinine. Instead, he produced a <mark class="vocab-word" data-word="mysterious">mysterious</mark> dark sludge. Luckily, Perkin’s scientific training and nature <mark class="vocab-word" data-word="prompt">prompted</mark> him to <mark class="vocab-word" data-word="investigate">investigate</mark> the substance further. <mark class="vocab-word" data-word="incorporate">Incorporating</mark> <mark class="vocab-word" data-word="potassium">potassium</mark> dichromate and alcohol into the aniline at various stages of the <mark class="vocab-word" data-word="experimental">experimental</mark> process, he finally produced a deep purple solution. And, proving the truth of the famous scientist Louis Pasteur’s words ‘chance favours only the prepared mind’, Perkin saw the potential of his unexpected find.</p></div>  <div class="parallel-zh"><p>在1856年度假期间，珀金在他家房屋顶层的实验室里度过了大量时光。他正试图用苯胺生产奎宁。苯胺是一种廉价且容易获得的煤焦油废品。尽管尽了最大的努力，但是他最终都没有获得奎宁。相反，他产生了一种神秘的深色污泥。幸运的是，珀金的科学训练和天性促使他进一步研究了该物质。在实验过程的不同阶段将重铬酸钾和酒精掺入苯胺中，最终产生了深紫色溶液。珀金证明了著名科学家路易斯·巴斯德（Louis Pasteur）的话“机会只留给有准备的人”，他看到了这一意想不到的发现的潜力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Historically, <mark class="vocab-word" data-word="textile">textile</mark> <mark class="vocab-word" data-word="dye">dyes</mark> were made from such natural sources as plants and animal <mark class="vocab-word" data-word="excretion">excretions</mark>. Some of these, such as the glandular mucus of snails, were difficult to <mark class="vocab-word" data-word="obtain">obtain</mark> and <mark class="vocab-word" data-word="outrageous">outrageously</mark> expensive. Indeed, the purple colour extracted from a snail was once so <mark class="vocab-word" data-word="costly">costly</mark> that in society at the time only the rich could afford it. Further, natural <mark class="vocab-word" data-word="dye">dyes</mark> tend to be <mark class="vocab-word" data-word="muddy">muddy</mark> in <mark class="vocab-word" data-word="hue">hue</mark> and <mark class="vocab-word" data-word="fade">fade</mark> quickly. It was against this <mark class="vocab-word" data-word="backdrop">backdrop</mark> that Perkin’s discovery was made.</p></div>  <div class="parallel-zh"><p>从历史上看，纺织染料是从植物和动物分泌物等天然来源制成的。其中一些，例如蜗牛的腺粘液，很难获得且非常昂贵。的确，从蜗牛中提取的紫色曾经非常昂贵，以至于当时的社会只有富人才能负担得起。此外，天然染料颜色混浊并很快褪色。正是在这种背景下，珀金得出了他的发现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Perkin quickly <mark class="vocab-word" data-word="grasp">grasped</mark> that his purple solution could be used to colour <mark class="vocab-word" data-word="fabric">fabric</mark>, thus making it the world’s first <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="dye">dye</mark>. Realising the importance of this <mark class="vocab-word" data-word="breakthrough">breakthrough</mark>, he lost no time in <mark class="vocab-word" data-word="patent">patenting</mark> it. But perhaps the most <mark class="vocab-word" data-word="fascinating">fascinating</mark> of all Perkin’s reactions to his find was his nearly <mark class="vocab-word" data-word="instant">instant</mark> <mark class="vocab-word" data-word="recognition">recognition</mark> that the new <mark class="vocab-word" data-word="dye">dye</mark> had commercial possibilities.</p></div>  <div class="parallel-zh"><p>珀金很快就意识到，他的紫色溶液可用于为织物着色，从而使其成为世界上第一种合成染料。意识到这一突破的重要性，他及时申请了专利。但是，也许珀金对他的发现最有意思的反应是他几乎立即意识到新染料具有商业潜力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Perkin originally named his <mark class="vocab-word" data-word="dye">dye</mark> Tyrian Purple, but it later became commonly known as mauve (from the French for the plant used to make the colour <mark class="vocab-word" data-word="violet">violet</mark>). He asked advice of Scottish <mark class="vocab-word" data-word="dye">dye</mark> works owner Robert Pullar, who <mark class="vocab-word" data-word="assure">assured</mark> him that <mark class="vocab-word" data-word="manufacture">manufacturing</mark> the <mark class="vocab-word" data-word="dye">dye</mark> would be well worth it if the colour remained fast (i.e. would not <mark class="vocab-word" data-word="fade">fade</mark>) and the cost was relatively low. So, over the <mark class="vocab-word" data-word="fierce">fierce</mark> <mark class="vocab-word" data-word="objection">objections</mark> of his <mark class="vocab-word" data-word="mentor">mentor</mark> Hofmann, he left college to give birth to the modern chemical industry.</p></div>  <div class="parallel-zh"><p>珀金最初将他的染料命名为Tyrian Purple，但后来被人们称为mauve（来自于法国用于制造紫罗兰色的植物）。他询问苏格兰染料厂老板罗伯特·普拉尔（Robert Pullar）的建议。他向他保证，如果颜色定型很快（即不会褪色）并且成本相对较低，那么制造这种染料就非常值得。因此，在他的导师霍夫曼（Hofmann）的强烈反对下，他离开了大学，开启了现代化学工业。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>With the help of his father and brother, Perkin set up a factory not far from London. Utilising the cheap and <mark class="vocab-word" data-word="plentiful">plentiful</mark> coal <mark class="vocab-word" data-word="tar">tar</mark> that was an almost unlimited byproduct of London’s gas street lighting, the <mark class="vocab-word" data-word="dye">dye</mark> works began producing the world’s first <mark class="vocab-word" data-word="synthetically">synthetically</mark> dyed material in 1857. The company received a commercial <mark class="vocab-word" data-word="boost">boost</mark> from the Empress Eugenie of France, when she decided the new colour <mark class="vocab-word" data-word="flatter">flattered</mark> her. Very soon, Mauve was the necessary <mark class="vocab-word" data-word="shade">shade</mark> for all the <mark class="vocab-word" data-word="fashionable">fashionable</mark> ladies in that country. Not to be outdone, England’s Queen Victoria also appeared in public wearing a mauve <mark class="vocab-word" data-word="gown">gown</mark>, thus making it all the rate in England as well. The <mark class="vocab-word" data-word="dye">dye</mark> was <mark class="vocab-word" data-word="bold">bold</mark> and fast, and the public clamoured for more. Perkin went back to the drawing board.</p></div>  <div class="parallel-zh"><p>在他的父亲和兄弟的帮助下，珀金在离伦敦不远的地方建立了一家工厂。利用廉价和丰富的煤焦油（伦敦燃气街道照明几乎无限的副产品），该染料厂于1857年开始生产世界上第一种合成染料。该公司得到了法国女皇Eugenie的商业帮助。这种新颜色使她受宠若惊。很快，淡紫色就成为该国所有时尚女士的必备品。不甘落后的英格兰女王维多利亚也穿着淡紫色礼服在公众场合露面，使得该颜色在英国也流行起来。这种染料清晰而着色迅速，公众渴望更多。珀金回到实验室中。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Although Perkin’s <mark class="vocab-word" data-word="fame">fame</mark> was achieved and fortune <mark class="vocab-word" data-word="assure">assured</mark> by his first discovery, the <mark class="vocab-word" data-word="chemist">chemist</mark> continued his research. Among other <mark class="vocab-word" data-word="dye">dyes</mark> he developed and introduced were aniline red (1859) and aniline black (1863) and, in the late 1860s, Perkin’s <mark class="vocab-word" data-word="synthetic">synthetic</mark> <mark class="vocab-word" data-word="dye">dye</mark> discoveries had outcomes far beyond the <mark class="vocab-word" data-word="merely">merely</mark> <mark class="vocab-word" data-word="decorative">decorative</mark>. The <mark class="vocab-word" data-word="dye">dyes</mark> also became <mark class="vocab-word" data-word="vital">vital</mark> to medical research in many ways. For instance, they were used to <mark class="vocab-word" data-word="stain">stain</mark> previously <mark class="vocab-word" data-word="invisible">invisible</mark> <mark class="vocab-word" data-word="microbe">microbes</mark> and <mark class="vocab-word" data-word="bacteria">bacteria</mark>, allowing researchers to identify such bacilli as <mark class="vocab-word" data-word="tuberculosis">tuberculosis</mark>, <mark class="vocab-word" data-word="cholera">cholera</mark>, and anthrax. <mark class="vocab-word" data-word="artificial">Artificial</mark> <mark class="vocab-word" data-word="dye">dyes</mark> continue to play a crucial role today. And, in what would have been particularly pleasing to Perkin, their current use is in the search for a <mark class="vocab-word" data-word="vaccine">vaccine</mark> against <mark class="vocab-word" data-word="malaria">malaria</mark>.</p></div>  <div class="parallel-zh"><p>尽管珀金的首个发现为他赢取了名望和财富，但该化学家仍在继续他的研究。他开发和引进的其他染料包括苯胺红（1859年）和苯胺黑（1863年），以及19世纪60年代后期的珀金绿。珀金合成染料的发现所产生的成果远远超出了装饰性的范畴。染料在许多方面对医学研究也至关重要。例如，它们被用来标记以前看不见的微生物和细菌，从而使研究人员能够鉴定出诸如结核，霍乱和炭疽等细菌。如今，人造染料仍然扮演着至关重要的角色。而且，令珀金特别高兴的是，它们目前的用途是寻找对抗疟疾的疫苗。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"march": 1, "curiosity": 1, "prompt": 2, "engineering": 1, "stumble": 1, "functional": 1, "enthusiasm": 2, "immerse": 1, "devotion": 1, "perceive": 1, "eminent": 1, "institution": 1, "fir": 1, "chemist": 2, "breakthrough": 2, "fame": 2, "viable": 1, "malaria": 2, "derive": 1, "bark": 1, "tree": 1, "surpass": 1, "passing": 1, "synthetic": 3, "substitute": 1, "pupil": 1, "manufacture": 2, "readily": 1, "tar": 2, "mysterious": 1, "investigate": 1, "incorporate": 1, "potassium": 1, "experimental": 1, "textile": 1, "dye": 13, "excretion": 1, "obtain": 1, "outrageous": 1, "costly": 1, "muddy": 1, "hue": 1, "fade": 2, "backdrop": 1, "grasp": 1, "fabric": 1, "patent": 1, "fascinating": 1, "instant": 1, "recognition": 1, "violet": 1, "assure": 2, "fierce": 1, "objection": 1, "mentor": 1, "plentiful": 1, "synthetically": 1, "boost": 1, "flatter": 1, "shade": 1, "fashionable": 1, "gown": 1, "bold": 1, "merely": 1, "decorative": 1, "vital": 1, "stain": 1, "invisible": 1, "microbe": 1, "bacteria": 1, "tuberculosis": 1, "cholera": 1, "artificial": 1, "vaccine": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

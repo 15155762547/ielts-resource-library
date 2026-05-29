@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutmeg – a valuable spice 肉豆蔻 - 剑桥雅思15 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Nutmeg – a valuable spice 肉豆蔻</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39499.html" target="_blank">https://www.laokaoya.com/39499.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The nutmeg <mark class="vocab-word" data-word="tree">tree</mark>, Myristica fragrans, is a large <mark class="vocab-word" data-word="evergreen">evergreen</mark> <mark class="vocab-word" data-word="tree">tree</mark> native to Southeast Asia. Until the late 18th century, it only grew in one place in the world: a small group of islands in the Banda Sea, part of the Moluccas – or <mark class="vocab-word" data-word="spice">Spice</mark> Islands – in northeastern Indonesia. The <mark class="vocab-word" data-word="tree">tree</mark> is thickly branched with <mark class="vocab-word" data-word="dense">dense</mark> <mark class="vocab-word" data-word="foliage">foliage</mark> of tough, dark green <mark class="vocab-word" data-word="oval">oval</mark> leaves, and produces small, yellow, bell-shaped flowers and pale yellow pear-shaped fruits. The fruit is <mark class="vocab-word" data-word="encase">encased</mark> in a fleshy <mark class="vocab-word" data-word="husk">husk</mark>. When the fruit is <mark class="vocab-word" data-word="ripe">ripe</mark>, this <mark class="vocab-word" data-word="husk">husk</mark> splits into two <mark class="vocab-word" data-word="halve">halves</mark> along a <mark class="vocab-word" data-word="ridge">ridge</mark> running the length of the fruit. Inside is a purple-brown shiny seed, 2-3 cm long by about 2cm across, surrounded by a lacy red or crimson covering called an ‘aril’. These are the sources of the two <mark class="vocab-word" data-word="spice">spices</mark> nutmeg and mace, the former being produced from the dried seed and the <mark class="vocab-word" data-word="latter">latter</mark> from the aril.</p><p>Nutmeg was a highly prized and <mark class="vocab-word" data-word="costly">costly</mark> <mark class="vocab-word" data-word="ingredient">ingredient</mark> in European <mark class="vocab-word" data-word="cuisine">cuisine</mark> in the Middle Ages, and was used as a flavouring, medicinal, and preservative agent. Throughout this period, the Arabs were the <mark class="vocab-word" data-word="exclusive">exclusive</mark> importers of the <mark class="vocab-word" data-word="spice">spice</mark> to Europe. They sold nutmeg for high prices to <mark class="vocab-word" data-word="merchant">merchants</mark> based in Venice, but they never <mark class="vocab-word" data-word="reveal">revealed</mark> the exact location of the source of this extremely valuable <mark class="vocab-word" data-word="commodity">commodity</mark>. The Arab-Venetian dominance of the trade finally ended in 1512, when the <mark class="vocab-word" data-word="portuguese">Portuguese</mark> reached the Banda Islands and began <mark class="vocab-word" data-word="exploit">exploiting</mark> its <mark class="vocab-word" data-word="precious">precious</mark> resources.</p><p>Always in danger of competition from neighbouring Spain, the <mark class="vocab-word" data-word="portuguese">Portuguese</mark> began subcontracting their <mark class="vocab-word" data-word="spice">spice</mark> <mark class="vocab-word" data-word="distribution">distribution</mark> to Dutch traders. Profits began to flow into the Netherlands, and the Dutch commercial <mark class="vocab-word" data-word="fleet">fleet</mark> <mark class="vocab-word" data-word="swift">swiftly</mark> grew into one of the largest in the world. The Dutch quietly gained control of most of the shipping and trading of <mark class="vocab-word" data-word="spice">spices</mark> in Northern Europe. Then, in 1580, Portugal fell under <mark class="vocab-word" data-word="spanish">Spanish</mark> rule, and by the end of the 16th century the Dutch found themselves locked out of the market. As prices for <mark class="vocab-word" data-word="pepper">pepper</mark>, nutmeg, and other <mark class="vocab-word" data-word="spice">spices</mark> <mark class="vocab-word" data-word="soar">soared</mark> across Europe, they decided to fight back.</p><p>In 1602, Dutch <mark class="vocab-word" data-word="merchant">merchants</mark> founded the VOC, a trading <mark class="vocab-word" data-word="corporation">corporation</mark> better known as the Dutch East India Company. By 1617, the VOC was the richest commercial operation in the world. The company had 50,000 employees worldwide, with a private army of 30,000 men and a <mark class="vocab-word" data-word="fleet">fleet</mark> of 200 ships. At the same time, thousands of people across Europe were dying of the <mark class="vocab-word" data-word="plague">plague</mark>, a highly <mark class="vocab-word" data-word="contagious">contagious</mark> and <mark class="vocab-word" data-word="deadly">deadly</mark> disease. Doctors were <mark class="vocab-word" data-word="desperate">desperate</mark> for a way to stop the spread of this disease, and they decided nutmeg held the cure. Everybody wanted nutmeg, and many were willing to <mark class="vocab-word" data-word="spare">spare</mark> no expense to have it. Nutmeg bought for a few pennies in Indonesia could be sold for 68,000 times its original cost on the streets of London. The only problem was the short supply. And that’s where the Dutch found their opportunity.</p><p>The Banda Islands were ruled by local sultans who insisted on maintaining a <mark class="vocab-word" data-word="neutral">neutral</mark> trading policy towards foreign powers. This allowed them to avoid the presence of <mark class="vocab-word" data-word="portuguese">Portuguese</mark> or <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="troop">troops</mark> on their soil, but it also left them unprotected from other <mark class="vocab-word" data-word="invader">invaders</mark>. In 1621, the Dutch arrived and took over. Once <mark class="vocab-word" data-word="securely">securely</mark> in control of the Bandas, the Dutch went to work protecting their new investment. They concentrated all nutmeg production into a few easily guarded areas, <mark class="vocab-word" data-word="uproot">uprooting</mark> and destroying any <mark class="vocab-word" data-word="tree">trees</mark> outside the <mark class="vocab-word" data-word="plantation">plantation</mark> zones. Anyone caught growing a nutmeg <mark class="vocab-word" data-word="seedling">seedling</mark> or carrying seeds without the proper <mark class="vocab-word" data-word="authority">authority</mark> was <mark class="vocab-word" data-word="severely">severely</mark> punished. In addition, all exported nutmeg was covered with <mark class="vocab-word" data-word="lime">lime</mark> to make sure there was no chance a <mark class="vocab-word" data-word="fertile">fertile</mark> seed which could be grown elsewhere would leave the islands. There was only one <mark class="vocab-word" data-word="obstacle">obstacle</mark> to Dutch <mark class="vocab-word" data-word="domination">domination</mark>. One of the Banda Islands, a sliver of land called Run, only 3 km long by less than 1 km wide, was under the control of the British. After <mark class="vocab-word" data-word="decade">decades</mark> of fighting for control of this tiny island, the Dutch and British arrived at a <mark class="vocab-word" data-word="compromise">compromise</mark> <mark class="vocab-word" data-word="settlement">settlement</mark>, the <mark class="vocab-word" data-word="treaty">Treaty</mark> of Breda, in 1667. <mark class="vocab-word" data-word="intent">Intent</mark> on securing their hold over every nutmeg-producing island, the Dutch offered a trade: if the British would give them the island of Run, they would in turn give Britain a <mark class="vocab-word" data-word="distant">distant</mark> and much less valuable island in North America. The British agreed. That other island was Manhattan, which is how New Amsterdam became New York. The Dutch now had a <mark class="vocab-word" data-word="monopoly">monopoly</mark> over the nutmeg trade which would last for another century.</p><p>Then, in 1770, a Frenchman named Pierre Poivre successfully <mark class="vocab-word" data-word="smuggle">smuggled</mark> nutmeg plants to safety in Mauritius, an island off the coast of Africa. Some of these were later exported to the Caribbean where they <mark class="vocab-word" data-word="thrive">thrived</mark>, especially on the island of Grenada. Next, in 1778, a volcanic <mark class="vocab-word" data-word="eruption">eruption</mark> in the Banda region caused a tsunami that <mark class="vocab-word" data-word="wipe">wiped</mark> out half the nutmeg <mark class="vocab-word" data-word="grove">groves</mark>. Finally, in 1809, the British returned to Indonesia and <mark class="vocab-word" data-word="seize">seized</mark> the Banda Islands by force. They returned the islands to the Dutch in 1817, but not before <mark class="vocab-word" data-word="transplant">transplanting</mark> hundreds of nutmeg <mark class="vocab-word" data-word="seedling">seedlings</mark> to <mark class="vocab-word" data-word="plantation">plantations</mark> in several locations across southern Asia. The Dutch nutmeg <mark class="vocab-word" data-word="monopoly">monopoly</mark> was over.</p><p>Today, nutmeg is grown in Indonesia, the Caribbean, India, Malaysia, Papua New <mark class="vocab-word" data-word="guinea">Guinea</mark> and Sri Lanka, and world nutmeg production is estimated to average between 10,000 and 12,000 tonnes per year.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>肉豆蔻树，也被称作Myristica fragrans，是一种东南亚本土的大型常绿树木。直到18世纪末，它在世界上都只生长于一个地方：印度尼西亚东北部班达海域的小型群岛，即马鲁古群岛或香料群岛的一部分。这种树木枝干繁密，覆盖着厚厚一层坚硬的墨绿色椭圆形树叶，开出小小的、黄色的铃铛形花朵，并结出浅黄色的梨形果实。果实被包裹在肉质外壳里。当果实成熟时，外壳会沿着果实较长一边的凸起分成两半。里面是一颗紫褐色的光洁种子，长2到3厘米，宽约2厘米，包裹着一层被称为“子衣”的红色或者深红色外皮。这些正是肉豆蔻和肉豆蔻种衣这两种香料的来源。前者产自干燥后的种子，而后者则产自子衣。</p><p>中世纪时，肉豆蔻是欧洲饮食中一种备受珍视、价格昂贵的原料，被当作调味料、药品和防腐剂使用。在这一时期，阿拉伯人是将这种香料带到欧洲的唯一进口商。他们将肉豆蔻高价卖给驻扎在威尼斯的商人，但从来都没有透漏过这一价值极高的商品的准确来源。阿拉伯人和威尼斯人对该贸易的垄断最终于1512年结束。当时，葡萄牙人抵达班达群岛并开始开发其宝贵的资源。</p><p>一直处于邻国西班牙的竞争威胁之下，葡萄牙人开始将香料的经销分包给荷兰商人。利润开始流向荷兰，荷兰商用舰队很快成长为世界上最大的舰队之一。荷兰人悄悄控制了欧洲北部大部分香料的运输和贸易。随后，1580年，葡萄牙陷入西班牙的统治。到16世纪末期，荷兰人发现自己被隔绝在市场之外。由于欧洲各地胡椒、肉豆蔻和其他香料的价格急剧上涨，他们决定还击。</p><p>1602年，荷兰商人成立了VOC贸易公司。它更广为人知的名字是荷兰东印度公司。到了1617年时，VOC已经是世界上最富有的商业机构。公司在全球范围内拥有50000名员工，还配备一只由30000人组成的私人军队和一支由200艘船只组成的舰队。同时，欧洲各地正有数千人死于瘟疫，一种具有极高传染性和致死率的疾病。医生迫切寻找一种能够阻止该疾病扩散的方法，而他们认为肉豆蔻中藏有解药。每个人都想要肉豆蔻，许多人愿意倾家荡产得到它。在印度尼西亚只用几便士就可以买到的肉豆蔻在伦敦街头可以被卖到初始价格的68000倍。唯一的问题就是供应短缺，而荷兰人正是在这里找到了他们的机会。</p><p>当时班达群岛处于本地苏丹人的统治之下。他们对外国势力秉持中立的贸易政策。 这使得他们可以避免葡萄牙或西班牙军队踏上其土地，但这也让他们不受保护的暴露于其他入侵者面前。1621年，荷兰人来到这里，进行接管。牢牢控制住班达群岛之后，荷兰人立刻开始着手保护他们的最新投资。他们将所有的肉豆蔻生产集中在少数几个容易守卫的区域，将种植区外的树木连根拔起并摧毁。任何未经许可种植肉豆蔻幼苗或携带种子的人被发现之后都会受到严厉的惩罚。除此之外，所有出口的肉豆蔻都被撒上石灰，以确保离开岛屿的种子没有任何机会在其他地方生根发芽。荷兰人的统治只有一个障碍。班达群岛中一座被称为Run的狭长岛屿位于英国人的控制之下。它只有3公里长，不到1公里宽。在数十年为争夺该弹丸小岛控制权的斗争之后，荷兰人和英国人达成妥协，于1667年签订Breda协议。为了确保自己对每一个生长肉豆蔻岛屿的控制，荷兰人提出以下交易：如果英国人让出Run岛，那么他们会在遥远的北美给予英国人一座价值远不及Run岛的岛屿。英国人同意了。那个另外的岛屿是曼哈顿，新阿姆斯特丹就这样变成了纽约。荷兰人现在垄断了肉豆蔻贸易，这种垄断地位还会继续延续一个世纪。</p><p>1770年，一名叫做Perre Poivre的法国人成功将肉豆蔻植株走私到毛里求斯的安全地带。那是一座位于非洲海岸线外的岛屿。其中一些随后被出口到加勒比地区。它们在那里茁壮成长，尤其是在格林纳达岛上。随后，1778年，班达地区的火山爆发引起海啸，毁掉了那里一半的肉豆蔻植株。最终，1809年，英国人回到印度尼西亚，用武力控制了班达群岛。他们在1817年将岛屿还给荷兰人，但在此之前已经将上百株肉豆蔻幼苗转移到了散布在东南亚的几个种植园中。荷兰人对肉豆蔻的垄断自此结束。</p><p>如今，肉豆蔻被广泛种植在印度尼西亚，加勒比，印度，马拉西亚，巴布亚新几内亚和斯里兰卡。每年全世界的肉豆蔻产量平均在10000吨到12000吨之间。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The nutmeg <mark class="vocab-word" data-word="tree">tree</mark>, Myristica fragrans, is a large <mark class="vocab-word" data-word="evergreen">evergreen</mark> <mark class="vocab-word" data-word="tree">tree</mark> native to Southeast Asia. Until the late 18th century, it only grew in one place in the world: a small group of islands in the Banda Sea, part of the Moluccas – or <mark class="vocab-word" data-word="spice">Spice</mark> Islands – in northeastern Indonesia. The <mark class="vocab-word" data-word="tree">tree</mark> is thickly branched with <mark class="vocab-word" data-word="dense">dense</mark> <mark class="vocab-word" data-word="foliage">foliage</mark> of tough, dark green <mark class="vocab-word" data-word="oval">oval</mark> leaves, and produces small, yellow, bell-shaped flowers and pale yellow pear-shaped fruits. The fruit is <mark class="vocab-word" data-word="encase">encased</mark> in a fleshy <mark class="vocab-word" data-word="husk">husk</mark>. When the fruit is <mark class="vocab-word" data-word="ripe">ripe</mark>, this <mark class="vocab-word" data-word="husk">husk</mark> splits into two <mark class="vocab-word" data-word="halve">halves</mark> along a <mark class="vocab-word" data-word="ridge">ridge</mark> running the length of the fruit. Inside is a purple-brown shiny seed, 2-3 cm long by about 2cm across, surrounded by a lacy red or crimson covering called an ‘aril’. These are the sources of the two <mark class="vocab-word" data-word="spice">spices</mark> nutmeg and mace, the former being produced from the dried seed and the <mark class="vocab-word" data-word="latter">latter</mark> from the aril.</p></div>  <div class="parallel-zh"><p>肉豆蔻树，也被称作Myristica fragrans，是一种东南亚本土的大型常绿树木。直到18世纪末，它在世界上都只生长于一个地方：印度尼西亚东北部班达海域的小型群岛，即马鲁古群岛或香料群岛的一部分。这种树木枝干繁密，覆盖着厚厚一层坚硬的墨绿色椭圆形树叶，开出小小的、黄色的铃铛形花朵，并结出浅黄色的梨形果实。果实被包裹在肉质外壳里。当果实成熟时，外壳会沿着果实较长一边的凸起分成两半。里面是一颗紫褐色的光洁种子，长2到3厘米，宽约2厘米，包裹着一层被称为“子衣”的红色或者深红色外皮。这些正是肉豆蔻和肉豆蔻种衣这两种香料的来源。前者产自干燥后的种子，而后者则产自子衣。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Nutmeg was a highly prized and <mark class="vocab-word" data-word="costly">costly</mark> <mark class="vocab-word" data-word="ingredient">ingredient</mark> in European <mark class="vocab-word" data-word="cuisine">cuisine</mark> in the Middle Ages, and was used as a flavouring, medicinal, and preservative agent. Throughout this period, the Arabs were the <mark class="vocab-word" data-word="exclusive">exclusive</mark> importers of the <mark class="vocab-word" data-word="spice">spice</mark> to Europe. They sold nutmeg for high prices to <mark class="vocab-word" data-word="merchant">merchants</mark> based in Venice, but they never <mark class="vocab-word" data-word="reveal">revealed</mark> the exact location of the source of this extremely valuable <mark class="vocab-word" data-word="commodity">commodity</mark>. The Arab-Venetian dominance of the trade finally ended in 1512, when the <mark class="vocab-word" data-word="portuguese">Portuguese</mark> reached the Banda Islands and began <mark class="vocab-word" data-word="exploit">exploiting</mark> its <mark class="vocab-word" data-word="precious">precious</mark> resources.</p></div>  <div class="parallel-zh"><p>中世纪时，肉豆蔻是欧洲饮食中一种备受珍视、价格昂贵的原料，被当作调味料、药品和防腐剂使用。在这一时期，阿拉伯人是将这种香料带到欧洲的唯一进口商。他们将肉豆蔻高价卖给驻扎在威尼斯的商人，但从来都没有透漏过这一价值极高的商品的准确来源。阿拉伯人和威尼斯人对该贸易的垄断最终于1512年结束。当时，葡萄牙人抵达班达群岛并开始开发其宝贵的资源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Always in danger of competition from neighbouring Spain, the <mark class="vocab-word" data-word="portuguese">Portuguese</mark> began subcontracting their <mark class="vocab-word" data-word="spice">spice</mark> <mark class="vocab-word" data-word="distribution">distribution</mark> to Dutch traders. Profits began to flow into the Netherlands, and the Dutch commercial <mark class="vocab-word" data-word="fleet">fleet</mark> <mark class="vocab-word" data-word="swift">swiftly</mark> grew into one of the largest in the world. The Dutch quietly gained control of most of the shipping and trading of <mark class="vocab-word" data-word="spice">spices</mark> in Northern Europe. Then, in 1580, Portugal fell under <mark class="vocab-word" data-word="spanish">Spanish</mark> rule, and by the end of the 16th century the Dutch found themselves locked out of the market. As prices for <mark class="vocab-word" data-word="pepper">pepper</mark>, nutmeg, and other <mark class="vocab-word" data-word="spice">spices</mark> <mark class="vocab-word" data-word="soar">soared</mark> across Europe, they decided to fight back.</p></div>  <div class="parallel-zh"><p>一直处于邻国西班牙的竞争威胁之下，葡萄牙人开始将香料的经销分包给荷兰商人。利润开始流向荷兰，荷兰商用舰队很快成长为世界上最大的舰队之一。荷兰人悄悄控制了欧洲北部大部分香料的运输和贸易。随后，1580年，葡萄牙陷入西班牙的统治。到16世纪末期，荷兰人发现自己被隔绝在市场之外。由于欧洲各地胡椒、肉豆蔻和其他香料的价格急剧上涨，他们决定还击。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 1602, Dutch <mark class="vocab-word" data-word="merchant">merchants</mark> founded the VOC, a trading <mark class="vocab-word" data-word="corporation">corporation</mark> better known as the Dutch East India Company. By 1617, the VOC was the richest commercial operation in the world. The company had 50,000 employees worldwide, with a private army of 30,000 men and a <mark class="vocab-word" data-word="fleet">fleet</mark> of 200 ships. At the same time, thousands of people across Europe were dying of the <mark class="vocab-word" data-word="plague">plague</mark>, a highly <mark class="vocab-word" data-word="contagious">contagious</mark> and <mark class="vocab-word" data-word="deadly">deadly</mark> disease. Doctors were <mark class="vocab-word" data-word="desperate">desperate</mark> for a way to stop the spread of this disease, and they decided nutmeg held the cure. Everybody wanted nutmeg, and many were willing to <mark class="vocab-word" data-word="spare">spare</mark> no expense to have it. Nutmeg bought for a few pennies in Indonesia could be sold for 68,000 times its original cost on the streets of London. The only problem was the short supply. And that’s where the Dutch found their opportunity.</p></div>  <div class="parallel-zh"><p>1602年，荷兰商人成立了VOC贸易公司。它更广为人知的名字是荷兰东印度公司。到了1617年时，VOC已经是世界上最富有的商业机构。公司在全球范围内拥有50000名员工，还配备一只由30000人组成的私人军队和一支由200艘船只组成的舰队。同时，欧洲各地正有数千人死于瘟疫，一种具有极高传染性和致死率的疾病。医生迫切寻找一种能够阻止该疾病扩散的方法，而他们认为肉豆蔻中藏有解药。每个人都想要肉豆蔻，许多人愿意倾家荡产得到它。在印度尼西亚只用几便士就可以买到的肉豆蔻在伦敦街头可以被卖到初始价格的68000倍。唯一的问题就是供应短缺，而荷兰人正是在这里找到了他们的机会。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Banda Islands were ruled by local sultans who insisted on maintaining a <mark class="vocab-word" data-word="neutral">neutral</mark> trading policy towards foreign powers. This allowed them to avoid the presence of <mark class="vocab-word" data-word="portuguese">Portuguese</mark> or <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="troop">troops</mark> on their soil, but it also left them unprotected from other <mark class="vocab-word" data-word="invader">invaders</mark>. In 1621, the Dutch arrived and took over. Once <mark class="vocab-word" data-word="securely">securely</mark> in control of the Bandas, the Dutch went to work protecting their new investment. They concentrated all nutmeg production into a few easily guarded areas, <mark class="vocab-word" data-word="uproot">uprooting</mark> and destroying any <mark class="vocab-word" data-word="tree">trees</mark> outside the <mark class="vocab-word" data-word="plantation">plantation</mark> zones. Anyone caught growing a nutmeg <mark class="vocab-word" data-word="seedling">seedling</mark> or carrying seeds without the proper <mark class="vocab-word" data-word="authority">authority</mark> was <mark class="vocab-word" data-word="severely">severely</mark> punished. In addition, all exported nutmeg was covered with <mark class="vocab-word" data-word="lime">lime</mark> to make sure there was no chance a <mark class="vocab-word" data-word="fertile">fertile</mark> seed which could be grown elsewhere would leave the islands. There was only one <mark class="vocab-word" data-word="obstacle">obstacle</mark> to Dutch <mark class="vocab-word" data-word="domination">domination</mark>. One of the Banda Islands, a sliver of land called Run, only 3 km long by less than 1 km wide, was under the control of the British. After <mark class="vocab-word" data-word="decade">decades</mark> of fighting for control of this tiny island, the Dutch and British arrived at a <mark class="vocab-word" data-word="compromise">compromise</mark> <mark class="vocab-word" data-word="settlement">settlement</mark>, the <mark class="vocab-word" data-word="treaty">Treaty</mark> of Breda, in 1667. <mark class="vocab-word" data-word="intent">Intent</mark> on securing their hold over every nutmeg-producing island, the Dutch offered a trade: if the British would give them the island of Run, they would in turn give Britain a <mark class="vocab-word" data-word="distant">distant</mark> and much less valuable island in North America. The British agreed. That other island was Manhattan, which is how New Amsterdam became New York. The Dutch now had a <mark class="vocab-word" data-word="monopoly">monopoly</mark> over the nutmeg trade which would last for another century.</p></div>  <div class="parallel-zh"><p>当时班达群岛处于本地苏丹人的统治之下。他们对外国势力秉持中立的贸易政策。 这使得他们可以避免葡萄牙或西班牙军队踏上其土地，但这也让他们不受保护的暴露于其他入侵者面前。1621年，荷兰人来到这里，进行接管。牢牢控制住班达群岛之后，荷兰人立刻开始着手保护他们的最新投资。他们将所有的肉豆蔻生产集中在少数几个容易守卫的区域，将种植区外的树木连根拔起并摧毁。任何未经许可种植肉豆蔻幼苗或携带种子的人被发现之后都会受到严厉的惩罚。除此之外，所有出口的肉豆蔻都被撒上石灰，以确保离开岛屿的种子没有任何机会在其他地方生根发芽。荷兰人的统治只有一个障碍。班达群岛中一座被称为Run的狭长岛屿位于英国人的控制之下。它只有3公里长，不到1公里宽。在数十年为争夺该弹丸小岛控制权的斗争之后，荷兰人和英国人达成妥协，于1667年签订Breda协议。为了确保自己对每一个生长肉豆蔻岛屿的控制，荷兰人提出以下交易：如果英国人让出Run岛，那么他们会在遥远的北美给予英国人一座价值远不及Run岛的岛屿。英国人同意了。那个另外的岛屿是曼哈顿，新阿姆斯特丹就这样变成了纽约。荷兰人现在垄断了肉豆蔻贸易，这种垄断地位还会继续延续一个世纪。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Then, in 1770, a Frenchman named Pierre Poivre successfully <mark class="vocab-word" data-word="smuggle">smuggled</mark> nutmeg plants to safety in Mauritius, an island off the coast of Africa. Some of these were later exported to the Caribbean where they <mark class="vocab-word" data-word="thrive">thrived</mark>, especially on the island of Grenada. Next, in 1778, a volcanic <mark class="vocab-word" data-word="eruption">eruption</mark> in the Banda region caused a tsunami that <mark class="vocab-word" data-word="wipe">wiped</mark> out half the nutmeg <mark class="vocab-word" data-word="grove">groves</mark>. Finally, in 1809, the British returned to Indonesia and <mark class="vocab-word" data-word="seize">seized</mark> the Banda Islands by force. They returned the islands to the Dutch in 1817, but not before <mark class="vocab-word" data-word="transplant">transplanting</mark> hundreds of nutmeg <mark class="vocab-word" data-word="seedling">seedlings</mark> to <mark class="vocab-word" data-word="plantation">plantations</mark> in several locations across southern Asia. The Dutch nutmeg <mark class="vocab-word" data-word="monopoly">monopoly</mark> was over.</p></div>  <div class="parallel-zh"><p>1770年，一名叫做Perre Poivre的法国人成功将肉豆蔻植株走私到毛里求斯的安全地带。那是一座位于非洲海岸线外的岛屿。其中一些随后被出口到加勒比地区。它们在那里茁壮成长，尤其是在格林纳达岛上。随后，1778年，班达地区的火山爆发引起海啸，毁掉了那里一半的肉豆蔻植株。最终，1809年，英国人回到印度尼西亚，用武力控制了班达群岛。他们在1817年将岛屿还给荷兰人，但在此之前已经将上百株肉豆蔻幼苗转移到了散布在东南亚的几个种植园中。荷兰人对肉豆蔻的垄断自此结束。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Today, nutmeg is grown in Indonesia, the Caribbean, India, Malaysia, Papua New <mark class="vocab-word" data-word="guinea">Guinea</mark> and Sri Lanka, and world nutmeg production is estimated to average between 10,000 and 12,000 tonnes per year.</p></div>  <div class="parallel-zh"><p>如今，肉豆蔻被广泛种植在印度尼西亚，加勒比，印度，马拉西亚，巴布亚新几内亚和斯里兰卡。每年全世界的肉豆蔻产量平均在10000吨到12000吨之间。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"tree": 4, "evergreen": 1, "spice": 6, "dense": 1, "foliage": 1, "oval": 1, "encase": 1, "husk": 2, "ripe": 1, "halve": 1, "ridge": 1, "latter": 1, "costly": 1, "ingredient": 1, "cuisine": 1, "exclusive": 1, "merchant": 2, "reveal": 1, "commodity": 1, "portuguese": 3, "exploit": 1, "precious": 1, "distribution": 1, "fleet": 2, "swift": 1, "spanish": 2, "pepper": 1, "soar": 1, "corporation": 1, "plague": 1, "contagious": 1, "deadly": 1, "desperate": 1, "spare": 1, "neutral": 1, "troop": 1, "invader": 1, "securely": 1, "uproot": 1, "plantation": 2, "seedling": 2, "authority": 1, "severely": 1, "lime": 1, "fertile": 1, "obstacle": 1, "domination": 1, "decade": 1, "compromise": 1, "settlement": 1, "treaty": 1, "intent": 1, "distant": 1, "monopoly": 2, "smuggle": 1, "thrive": 1, "eruption": 1, "wipe": 1, "grove": 1, "seize": 1, "transplant": 1, "guinea": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

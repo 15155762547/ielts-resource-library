@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dead Sea Scrolls 死海古卷 - 剑桥雅思17 Test 2 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思17</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The Dead Sea Scrolls 死海古卷</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/52100.html" target="_blank">https://www.laokaoya.com/52100.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>In late 1946 or early 1947, three Bedouin teenagers were tending their <mark class="vocab-word" data-word="goat">goats</mark> and sheep near the ancient <mark class="vocab-word" data-word="settlement">settlement</mark> of Qumran, located on the northwest <mark class="vocab-word" data-word="shore">shore</mark> of the Dead Sea in what is now known as the West Bank. One of these young <mark class="vocab-word" data-word="shepherd">shepherds</mark> <mark class="vocab-word" data-word="toss">tossed</mark> a rock into an opening on the side of a <mark class="vocab-word" data-word="cliff">cliff</mark> and was surprised to hear a <mark class="vocab-word" data-word="shatter">shattering</mark> sound. He and his <mark class="vocab-word" data-word="companion">companions</mark> later entered the <mark class="vocab-word" data-word="cave">cave</mark> and <mark class="vocab-word" data-word="stumble">stumbled</mark> across a collection of large <mark class="vocab-word" data-word="clay">clay</mark> <mark class="vocab-word" data-word="jar">jars</mark>, seven of which contained <mark class="vocab-word" data-word="scroll">scrolls</mark> with writing on them. The teenagers took the seven <mark class="vocab-word" data-word="scroll">scrolls</mark> to a nearby town where they were sold for a small sum to a local antiquities <mark class="vocab-word" data-word="dealer">dealer</mark>. Word of the find spread, and Bedouins and archaeologists eventually <mark class="vocab-word" data-word="unearth">unearthed</mark> tens of thousands of additional <mark class="vocab-word" data-word="scroll">scroll</mark> <mark class="vocab-word" data-word="fragment">fragments</mark> from 10 nearby <mark class="vocab-word" data-word="cave">caves</mark>; together they make up between 800 and 900 <mark class="vocab-word" data-word="manuscript">manuscripts</mark>. It soon became clear that this was one of the greatest archaeological discoveries ever made.</p><p>The origin of the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark>, which were written around 2,000 years ago between 150 BCE and 70 CE, is still the subject of <mark class="vocab-word" data-word="scholarly">scholarly</mark> debate even today. <mark class="vocab-word" data-word="accord">According</mark> to the <mark class="vocab-word" data-word="prevail">prevailing</mark> theory, they are the work of a population that <mark class="vocab-word" data-word="inhabit">inhabited</mark> the area until Roman <mark class="vocab-word" data-word="troop">troops</mark> destroyed the <mark class="vocab-word" data-word="settlement">settlement</mark> around 70 CE. The area was known as Judea at that time, and the people are thought to have belonged to a group called the Essenes, a devout Jewish sect.</p><p>The majority of the texts on the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> are in Hebrew, with some <mark class="vocab-word" data-word="fragment">fragments</mark> written in an ancient version of its alphabet thought to have fallen out of use in the fifth century BCE. But there are other languages as well. Some <mark class="vocab-word" data-word="scroll">scrolls</mark> are in Aramaic, the language spoken by many <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> of the region from the sixth century BCE to the <mark class="vocab-word" data-word="siege">siege</mark> of Jerusalem in 70 CE. In addition, several texts feature <mark class="vocab-word" data-word="translation">translations</mark> of the Hebrew <mark class="vocab-word" data-word="bible">Bible</mark> into Greek.</p><p>The Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> include <mark class="vocab-word" data-word="fragment">fragments</mark> from every book of the Old Testament of the <mark class="vocab-word" data-word="bible">Bible</mark> except for the Book of Esther. The only entire book of the Hebrew <mark class="vocab-word" data-word="bible">Bible</mark> preserved among the <mark class="vocab-word" data-word="manuscript">manuscripts</mark> from Qumran is Isaiah; this copy, dated to the first century BCE, is considered the earliest biblical <mark class="vocab-word" data-word="manuscript">manuscript</mark> still in existence. This article is from  website. Along with biblical texts, the <mark class="vocab-word" data-word="scroll">scrolls</mark> include documents about sectarian regulations and religious writings that do not appear in the Old Testament.</p><p>The writing on the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> is mostly in black or <mark class="vocab-word" data-word="occasional">occasionally</mark> red <mark class="vocab-word" data-word="ink">ink</mark>, and the <mark class="vocab-word" data-word="scroll">scrolls</mark> themselves are nearly all made of either <mark class="vocab-word" data-word="parchment">parchment</mark> (animal skin) or an early form of paper called ‘papyrus’. The only <mark class="vocab-word" data-word="exception">exception</mark> is the <mark class="vocab-word" data-word="scroll">scroll</mark> numbered 3Q15, which was created out of a combination of <mark class="vocab-word" data-word="copper">copper</mark> and <mark class="vocab-word" data-word="tin">tin</mark>. Known as the <mark class="vocab-word" data-word="copper">Copper</mark> <mark class="vocab-word" data-word="scroll">Scroll</mark>, this <mark class="vocab-word" data-word="curious">curious</mark> document features letters chiselled onto metal – perhaps, as some have theorized, to better <mark class="vocab-word" data-word="withstand">withstand</mark> the passage of time. One of the most <mark class="vocab-word" data-word="intriguing">intriguing</mark> <mark class="vocab-word" data-word="manuscript">manuscripts</mark> from Qumran, this is a sort of ancient <mark class="vocab-word" data-word="treasure">treasure</mark> map that lists dozens of gold and silver caches. Using an <mark class="vocab-word" data-word="unconventional">unconventional</mark> <mark class="vocab-word" data-word="vocabulary">vocabulary</mark> and odd spelling, it describes 64 underground hiding places that <mark class="vocab-word" data-word="supposedly">supposedly</mark> contain riches buried for safekeeping. None of these <mark class="vocab-word" data-word="hoard">hoards</mark> have been recovered, possibly because the Romans <mark class="vocab-word" data-word="pillage">pillaged</mark> Judea during the first century CE. <mark class="vocab-word" data-word="accord">According</mark> to various hypotheses, the <mark class="vocab-word" data-word="treasure">treasure</mark> belonged to local people, or was rescued from the Second <mark class="vocab-word" data-word="temple">Temple</mark> before its <mark class="vocab-word" data-word="destruction">destruction</mark> or never existed to begin with.</p><p>Some of the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> have been on interesting journeys. In 1948, a Syrian <mark class="vocab-word" data-word="orthodox">Orthodox</mark> archbishop known as Mar Samuel acquired four of the original seven <mark class="vocab-word" data-word="scroll">scrolls</mark> from a Jerusalem shoemaker and part-time <mark class="vocab-word" data-word="antiquity">antiquity</mark> <mark class="vocab-word" data-word="dealer">dealer</mark>, paying less than $100 for them. He then travelled to the <mark class="vocab-word" data-word="unite">United</mark> States and unsuccessfully offered them to a number of universities, including Yale. Finally, in 1954, he placed an advertisement in the business newspaperThe Wall Street Journal– under the category ‘<mark class="vocab-word" data-word="miscellaneous">Miscellaneous</mark> Items for Sale’ – that read: ‘Biblical <mark class="vocab-word" data-word="manuscript">Manuscripts</mark> dating back to at least 200 B.C. are for sale. This would be an ideal gift to an educational or religious <mark class="vocab-word" data-word="institution">institution</mark> by an individual or group.’ <mark class="vocab-word" data-word="fortunate">Fortunately</mark>, Israeli archaeologist and <mark class="vocab-word" data-word="statesman">statesman</mark> Yigael Yadin <mark class="vocab-word" data-word="negotiate">negotiated</mark> their purchase and brought the <mark class="vocab-word" data-word="scroll">scrolls</mark> back to Jerusalem, where they remain to this day.</p><p>In 2017, researchers from the University of Haifa <mark class="vocab-word" data-word="restore">restored</mark> and <mark class="vocab-word" data-word="decipher">deciphered</mark> one of the last untranslated <mark class="vocab-word" data-word="scroll">scrolls</mark>. The university’s Eshbal Ratson and Jonathan Ben-Dov spent one year reassembling the 60 <mark class="vocab-word" data-word="fragment">fragments</mark> that make up the <mark class="vocab-word" data-word="scroll">scroll</mark>. <mark class="vocab-word" data-word="decipher">Deciphered</mark> from a band of <mark class="vocab-word" data-word="cod">coded</mark> text on <mark class="vocab-word" data-word="parchment">parchment</mark>, the find provides <mark class="vocab-word" data-word="insight">insight</mark> into the community of people who wrote it and the 364-day calendar they would have used. The <mark class="vocab-word" data-word="scroll">scroll</mark> names celebrations that indicate shifts in seasons and details two <mark class="vocab-word" data-word="yearly">yearly</mark> religious events known from another Dead Sea <mark class="vocab-word" data-word="scroll">Scroll</mark>. Only one more known <mark class="vocab-word" data-word="scroll">scroll</mark> <mark class="vocab-word" data-word="remains">remains</mark> untranslated.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>1946年末或者1947年初的时候，三个贝都因少年正在古代库姆兰定居点附近放羊。它位于死海西北岸，如今被称为西岸。其中一名年轻的牧羊人朝悬崖旁边的洞口扔了块石头，惊奇地听到什么东西被打碎的声音。他和他的同伴随后进入洞穴，跌跌撞撞地穿过大片巨型陶罐，发现其中七个装有带着字迹的卷轴。这些青少年将七幅卷轴带到附近的城镇，卖给当地的古董商，换取少许金钱。这一发现的消息扩散开来。最终，贝都因人和考古学家从10个附近的洞穴里又挖掘出数万枚卷轴碎片。它们一起组成800到900张手稿。很快人们意识到，这是有史以来最伟大的考古发现之一。</p><p>这些创作于2000年前（公元前150年到公园70年）的死海古卷的起源至今仍然是学术争论的主题。根据主流理论，它们是当地居民的作品。这些人一直居住在此，直到公元70年左右罗马军队摧毁了这一定居点。该地区当时被称为Judea，而其居民则被认为是艾赛尼派信徒，一支虔诚的犹太教派。</p><p>死海古卷上大部分的内容都由希伯来文组成。其中一些则使用更为古老的字母体系。该体系被认为于公元5世纪被淘汰。但也有其他语言。一些文卷是用亚拉姆语完成的，一种从公元前6世纪到公元70年耶路撒冷被围期间在该地区居住的民众所使用的语言。除此之外，一些文本还将希伯来文的圣经翻译为希腊文。</p><p>死海古卷中包含《圣经·旧约》每一卷的片段，除了《以斯帖之书》。在库姆兰发现的手稿中，唯一一部保存完整的希伯来圣经是《以赛亚书》。这一可以追溯到公元前1世纪的版本被认为是现存最早的圣经手稿。除了圣经内容之外，这些卷轴还包括教派制度和没有出现在《旧约》中的宗教内容。</p><p>死海古卷上的笔迹大多是黑色，偶尔为红色。卷轴本身几乎全部由羊皮纸（动物皮革）或者一种被称为“papyrus”的早期纸张构成。唯一的例外是编号为3Q15的卷轴。它由铜锡混合制作而成。这份神奇的文档被称为“铜卷轴”，其文字被錾刻在金属上 – 或许，正如一些人所设想的那样，这么做是为了抵御时间的流逝。作为库兰姆地区最有趣的手稿之一，它是某种古代的藏宝图，列出了数十处藏宝之地。利用非常规的词汇和古怪的拼写，它描述了64处应该埋藏有宝藏的地方。但尚未有一处被发现。这或许是因为罗马人在公元1世纪洗劫了Judea地区。根据各种假说，这些财宝属于当地民众，或者在第二圣殿毁坏之前被抢救出来，或者一开始就并不存在。</p><p>一些死海古卷曾经踏上奇妙的旅程。1948年，一位叫作Mar Samuel的叙利亚东正教大主教只用了不到100美元，就从一个耶路撒冷鞋匠兼业余古董商那里买下来最初七个卷轴中的四个。他随后前往美国，试图将它们卖给一些大学（其中也包括耶鲁），但并未成功。。最终，他于1954年在商务报纸《华尔街日报》上刊登了一则广告，放在杂项物品出售这一类别下。其内容为“出售可以至少追溯到公元前200年的圣经手稿。无论是个人还是团体，这将是赠予教育或宗教机构的理想礼物”。幸运的是，以色列考古学家、政治家Yigael Yadin协商买下了它们，并将这些卷轴带回耶路撒冷。它们至今仍然保存在那里。</p><p>2017年，海法大学的研究者复原并破译了某个最后一批未翻译的卷轴。来自该学校的Eshbal Ratson和Jonathan Ben-Dov用了一年的时间将60块残片重新组合在一起，拼接成卷轴。羊皮卷上一系列加密文本的破译让我们得以窥视写下这些文字的族群，以及他们所使用的一年364天的历法。卷轴中提到了昭示季节变化的庆典的名字，以及从另一部死海古卷中所得知的一年两次宗教仪式的细节。如今，只剩下一部已知的卷轴还未破译。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>In late 1946 or early 1947, three Bedouin teenagers were tending their <mark class="vocab-word" data-word="goat">goats</mark> and sheep near the ancient <mark class="vocab-word" data-word="settlement">settlement</mark> of Qumran, located on the northwest <mark class="vocab-word" data-word="shore">shore</mark> of the Dead Sea in what is now known as the West Bank. One of these young <mark class="vocab-word" data-word="shepherd">shepherds</mark> <mark class="vocab-word" data-word="toss">tossed</mark> a rock into an opening on the side of a <mark class="vocab-word" data-word="cliff">cliff</mark> and was surprised to hear a <mark class="vocab-word" data-word="shatter">shattering</mark> sound. He and his <mark class="vocab-word" data-word="companion">companions</mark> later entered the <mark class="vocab-word" data-word="cave">cave</mark> and <mark class="vocab-word" data-word="stumble">stumbled</mark> across a collection of large <mark class="vocab-word" data-word="clay">clay</mark> <mark class="vocab-word" data-word="jar">jars</mark>, seven of which contained <mark class="vocab-word" data-word="scroll">scrolls</mark> with writing on them. The teenagers took the seven <mark class="vocab-word" data-word="scroll">scrolls</mark> to a nearby town where they were sold for a small sum to a local antiquities <mark class="vocab-word" data-word="dealer">dealer</mark>. Word of the find spread, and Bedouins and archaeologists eventually <mark class="vocab-word" data-word="unearth">unearthed</mark> tens of thousands of additional <mark class="vocab-word" data-word="scroll">scroll</mark> <mark class="vocab-word" data-word="fragment">fragments</mark> from 10 nearby <mark class="vocab-word" data-word="cave">caves</mark>; together they make up between 800 and 900 <mark class="vocab-word" data-word="manuscript">manuscripts</mark>. It soon became clear that this was one of the greatest archaeological discoveries ever made.</p></div>  <div class="parallel-zh"><p>1946年末或者1947年初的时候，三个贝都因少年正在古代库姆兰定居点附近放羊。它位于死海西北岸，如今被称为西岸。其中一名年轻的牧羊人朝悬崖旁边的洞口扔了块石头，惊奇地听到什么东西被打碎的声音。他和他的同伴随后进入洞穴，跌跌撞撞地穿过大片巨型陶罐，发现其中七个装有带着字迹的卷轴。这些青少年将七幅卷轴带到附近的城镇，卖给当地的古董商，换取少许金钱。这一发现的消息扩散开来。最终，贝都因人和考古学家从10个附近的洞穴里又挖掘出数万枚卷轴碎片。它们一起组成800到900张手稿。很快人们意识到，这是有史以来最伟大的考古发现之一。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The origin of the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark>, which were written around 2,000 years ago between 150 BCE and 70 CE, is still the subject of <mark class="vocab-word" data-word="scholarly">scholarly</mark> debate even today. <mark class="vocab-word" data-word="accord">According</mark> to the <mark class="vocab-word" data-word="prevail">prevailing</mark> theory, they are the work of a population that <mark class="vocab-word" data-word="inhabit">inhabited</mark> the area until Roman <mark class="vocab-word" data-word="troop">troops</mark> destroyed the <mark class="vocab-word" data-word="settlement">settlement</mark> around 70 CE. The area was known as Judea at that time, and the people are thought to have belonged to a group called the Essenes, a devout Jewish sect.</p></div>  <div class="parallel-zh"><p>这些创作于2000年前（公元前150年到公园70年）的死海古卷的起源至今仍然是学术争论的主题。根据主流理论，它们是当地居民的作品。这些人一直居住在此，直到公元70年左右罗马军队摧毁了这一定居点。该地区当时被称为Judea，而其居民则被认为是艾赛尼派信徒，一支虔诚的犹太教派。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The majority of the texts on the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> are in Hebrew, with some <mark class="vocab-word" data-word="fragment">fragments</mark> written in an ancient version of its alphabet thought to have fallen out of use in the fifth century BCE. But there are other languages as well. Some <mark class="vocab-word" data-word="scroll">scrolls</mark> are in Aramaic, the language spoken by many <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> of the region from the sixth century BCE to the <mark class="vocab-word" data-word="siege">siege</mark> of Jerusalem in 70 CE. In addition, several texts feature <mark class="vocab-word" data-word="translation">translations</mark> of the Hebrew <mark class="vocab-word" data-word="bible">Bible</mark> into Greek.</p></div>  <div class="parallel-zh"><p>死海古卷上大部分的内容都由希伯来文组成。其中一些则使用更为古老的字母体系。该体系被认为于公元5世纪被淘汰。但也有其他语言。一些文卷是用亚拉姆语完成的，一种从公元前6世纪到公元70年耶路撒冷被围期间在该地区居住的民众所使用的语言。除此之外，一些文本还将希伯来文的圣经翻译为希腊文。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> include <mark class="vocab-word" data-word="fragment">fragments</mark> from every book of the Old Testament of the <mark class="vocab-word" data-word="bible">Bible</mark> except for the Book of Esther. The only entire book of the Hebrew <mark class="vocab-word" data-word="bible">Bible</mark> preserved among the <mark class="vocab-word" data-word="manuscript">manuscripts</mark> from Qumran is Isaiah; this copy, dated to the first century BCE, is considered the earliest biblical <mark class="vocab-word" data-word="manuscript">manuscript</mark> still in existence. This article is from  website. Along with biblical texts, the <mark class="vocab-word" data-word="scroll">scrolls</mark> include documents about sectarian regulations and religious writings that do not appear in the Old Testament.</p></div>  <div class="parallel-zh"><p>死海古卷中包含《圣经·旧约》每一卷的片段，除了《以斯帖之书》。在库姆兰发现的手稿中，唯一一部保存完整的希伯来圣经是《以赛亚书》。这一可以追溯到公元前1世纪的版本被认为是现存最早的圣经手稿。除了圣经内容之外，这些卷轴还包括教派制度和没有出现在《旧约》中的宗教内容。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The writing on the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> is mostly in black or <mark class="vocab-word" data-word="occasional">occasionally</mark> red <mark class="vocab-word" data-word="ink">ink</mark>, and the <mark class="vocab-word" data-word="scroll">scrolls</mark> themselves are nearly all made of either <mark class="vocab-word" data-word="parchment">parchment</mark> (animal skin) or an early form of paper called ‘papyrus’. The only <mark class="vocab-word" data-word="exception">exception</mark> is the <mark class="vocab-word" data-word="scroll">scroll</mark> numbered 3Q15, which was created out of a combination of <mark class="vocab-word" data-word="copper">copper</mark> and <mark class="vocab-word" data-word="tin">tin</mark>. Known as the <mark class="vocab-word" data-word="copper">Copper</mark> <mark class="vocab-word" data-word="scroll">Scroll</mark>, this <mark class="vocab-word" data-word="curious">curious</mark> document features letters chiselled onto metal – perhaps, as some have theorized, to better <mark class="vocab-word" data-word="withstand">withstand</mark> the passage of time. One of the most <mark class="vocab-word" data-word="intriguing">intriguing</mark> <mark class="vocab-word" data-word="manuscript">manuscripts</mark> from Qumran, this is a sort of ancient <mark class="vocab-word" data-word="treasure">treasure</mark> map that lists dozens of gold and silver caches. Using an <mark class="vocab-word" data-word="unconventional">unconventional</mark> <mark class="vocab-word" data-word="vocabulary">vocabulary</mark> and odd spelling, it describes 64 underground hiding places that <mark class="vocab-word" data-word="supposedly">supposedly</mark> contain riches buried for safekeeping. None of these <mark class="vocab-word" data-word="hoard">hoards</mark> have been recovered, possibly because the Romans <mark class="vocab-word" data-word="pillage">pillaged</mark> Judea during the first century CE. <mark class="vocab-word" data-word="accord">According</mark> to various hypotheses, the <mark class="vocab-word" data-word="treasure">treasure</mark> belonged to local people, or was rescued from the Second <mark class="vocab-word" data-word="temple">Temple</mark> before its <mark class="vocab-word" data-word="destruction">destruction</mark> or never existed to begin with.</p></div>  <div class="parallel-zh"><p>死海古卷上的笔迹大多是黑色，偶尔为红色。卷轴本身几乎全部由羊皮纸（动物皮革）或者一种被称为“papyrus”的早期纸张构成。唯一的例外是编号为3Q15的卷轴。它由铜锡混合制作而成。这份神奇的文档被称为“铜卷轴”，其文字被錾刻在金属上 – 或许，正如一些人所设想的那样，这么做是为了抵御时间的流逝。作为库兰姆地区最有趣的手稿之一，它是某种古代的藏宝图，列出了数十处藏宝之地。利用非常规的词汇和古怪的拼写，它描述了64处应该埋藏有宝藏的地方。但尚未有一处被发现。这或许是因为罗马人在公元1世纪洗劫了Judea地区。根据各种假说，这些财宝属于当地民众，或者在第二圣殿毁坏之前被抢救出来，或者一开始就并不存在。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Some of the Dead Sea <mark class="vocab-word" data-word="scroll">Scrolls</mark> have been on interesting journeys. In 1948, a Syrian <mark class="vocab-word" data-word="orthodox">Orthodox</mark> archbishop known as Mar Samuel acquired four of the original seven <mark class="vocab-word" data-word="scroll">scrolls</mark> from a Jerusalem shoemaker and part-time <mark class="vocab-word" data-word="antiquity">antiquity</mark> <mark class="vocab-word" data-word="dealer">dealer</mark>, paying less than $100 for them. He then travelled to the <mark class="vocab-word" data-word="unite">United</mark> States and unsuccessfully offered them to a number of universities, including Yale. Finally, in 1954, he placed an advertisement in the business newspaperThe Wall Street Journal– under the category ‘<mark class="vocab-word" data-word="miscellaneous">Miscellaneous</mark> Items for Sale’ – that read: ‘Biblical <mark class="vocab-word" data-word="manuscript">Manuscripts</mark> dating back to at least 200 B.C. are for sale. This would be an ideal gift to an educational or religious <mark class="vocab-word" data-word="institution">institution</mark> by an individual or group.’ <mark class="vocab-word" data-word="fortunate">Fortunately</mark>, Israeli archaeologist and <mark class="vocab-word" data-word="statesman">statesman</mark> Yigael Yadin <mark class="vocab-word" data-word="negotiate">negotiated</mark> their purchase and brought the <mark class="vocab-word" data-word="scroll">scrolls</mark> back to Jerusalem, where they remain to this day.</p></div>  <div class="parallel-zh"><p>一些死海古卷曾经踏上奇妙的旅程。1948年，一位叫作Mar Samuel的叙利亚东正教大主教只用了不到100美元，就从一个耶路撒冷鞋匠兼业余古董商那里买下来最初七个卷轴中的四个。他随后前往美国，试图将它们卖给一些大学（其中也包括耶鲁），但并未成功。。最终，他于1954年在商务报纸《华尔街日报》上刊登了一则广告，放在杂项物品出售这一类别下。其内容为“出售可以至少追溯到公元前200年的圣经手稿。无论是个人还是团体，这将是赠予教育或宗教机构的理想礼物”。幸运的是，以色列考古学家、政治家Yigael Yadin协商买下了它们，并将这些卷轴带回耶路撒冷。它们至今仍然保存在那里。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 2017, researchers from the University of Haifa <mark class="vocab-word" data-word="restore">restored</mark> and <mark class="vocab-word" data-word="decipher">deciphered</mark> one of the last untranslated <mark class="vocab-word" data-word="scroll">scrolls</mark>. The university’s Eshbal Ratson and Jonathan Ben-Dov spent one year reassembling the 60 <mark class="vocab-word" data-word="fragment">fragments</mark> that make up the <mark class="vocab-word" data-word="scroll">scroll</mark>. <mark class="vocab-word" data-word="decipher">Deciphered</mark> from a band of <mark class="vocab-word" data-word="cod">coded</mark> text on <mark class="vocab-word" data-word="parchment">parchment</mark>, the find provides <mark class="vocab-word" data-word="insight">insight</mark> into the community of people who wrote it and the 364-day calendar they would have used. The <mark class="vocab-word" data-word="scroll">scroll</mark> names celebrations that indicate shifts in seasons and details two <mark class="vocab-word" data-word="yearly">yearly</mark> religious events known from another Dead Sea <mark class="vocab-word" data-word="scroll">Scroll</mark>. Only one more known <mark class="vocab-word" data-word="scroll">scroll</mark> <mark class="vocab-word" data-word="remains">remains</mark> untranslated.</p></div>  <div class="parallel-zh"><p>2017年，海法大学的研究者复原并破译了某个最后一批未翻译的卷轴。来自该学校的Eshbal Ratson和Jonathan Ben-Dov用了一年的时间将60块残片重新组合在一起，拼接成卷轴。羊皮卷上一系列加密文本的破译让我们得以窥视写下这些文字的族群，以及他们所使用的一年364天的历法。卷轴中提到了昭示季节变化的庆典的名字，以及从另一部死海古卷中所得知的一年两次宗教仪式的细节。如今，只剩下一部已知的卷轴还未破译。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"goat": 1, "settlement": 2, "shore": 1, "shepherd": 1, "toss": 1, "cliff": 1, "shatter": 1, "companion": 1, "cave": 2, "stumble": 1, "clay": 1, "jar": 1, "scroll": 20, "dealer": 2, "unearth": 1, "fragment": 4, "manuscript": 5, "scholarly": 1, "accord": 2, "prevail": 1, "inhabit": 1, "troop": 1, "inhabitant": 1, "siege": 1, "translation": 1, "bible": 3, "occasional": 1, "ink": 1, "parchment": 2, "exception": 1, "copper": 2, "tin": 1, "curious": 1, "withstand": 1, "intriguing": 1, "treasure": 2, "unconventional": 1, "vocabulary": 1, "supposedly": 1, "hoard": 1, "pillage": 1, "temple": 1, "destruction": 1, "orthodox": 1, "antiquity": 1, "unite": 1, "miscellaneous": 1, "institution": 1, "fortunate": 1, "statesman": 1, "negotiate": 1, "restore": 1, "decipher": 2, "cod": 1, "insight": 1, "yearly": 1, "remains": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

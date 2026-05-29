@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autumn leaves - 剑桥雅思10 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思10</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Autumn leaves</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29161.html" target="_blank">https://www.laokaoya.com/29161.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>One of the most <mark class="vocab-word" data-word="captivate">captivating</mark> natural events of the year in many areas throughout North America is the turning of the leaves in the fall. The colours are <mark class="vocab-word" data-word="magnificent">magnificent</mark>, but the question of exactly why some <mark class="vocab-word" data-word="tree">trees</mark> turn yellow or orange, and others red or purple, is something which has long <mark class="vocab-word" data-word="puzzled">puzzled</mark> scientists.</p><p>Summer leaves are green because they are full of <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark>, the <mark class="vocab-word" data-word="molecule">molecule</mark> that captures sunlight and converts that energy into new building materials for the <mark class="vocab-word" data-word="tree">tree</mark>. As fall approaches in the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark>, the amount of <mark class="vocab-word" data-word="solar">solar</mark> energy available declines considerably. For many <mark class="vocab-word" data-word="tree">trees</mark> —­ <mark class="vocab-word" data-word="evergreen">evergreen</mark> <mark class="vocab-word" data-word="conifer">conifers</mark> being an <mark class="vocab-word" data-word="exception">exception</mark> -the best strategy is to abandon <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark>* until the <mark class="vocab-word" data-word="spring">spring</mark>. So rather than maintaining the now <mark class="vocab-word" data-word="redundant">redundant</mark> leaves throughout the winter, the <mark class="vocab-word" data-word="tree">tree</mark> saves its <mark class="vocab-word" data-word="precious">precious</mark> resources and <mark class="vocab-word" data-word="discard">discards</mark> them. But before letting its leaves go, the <mark class="vocab-word" data-word="tree">tree</mark> <mark class="vocab-word" data-word="dismantle">dismantles</mark> their <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> <mark class="vocab-word" data-word="molecule">molecules</mark> and ships their valuable <mark class="vocab-word" data-word="nitrogen">nitrogen</mark> back into the <mark class="vocab-word" data-word="twig">twigs</mark>. As <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> is <mark class="vocab-word" data-word="deplete">depleted</mark>, other colours that have been <mark class="vocab-word" data-word="dominate">dominated</mark> by it throughout the summer begin to be <mark class="vocab-word" data-word="reveal">revealed</mark>. This unmasking explains the autumn colours of yellow and orange, but not the brilliant reds and purples of <mark class="vocab-word" data-word="tree">trees</mark> such as the <mark class="vocab-word" data-word="maple">maple</mark> or sumac.</p><p>The source of the red is widely known: it is created by anthocyanins, water-soluble plant <mark class="vocab-word" data-word="pigment">pigments</mark> reflecting the red to blue range of the <mark class="vocab-word" data-word="visible">visible</mark> <mark class="vocab-word" data-word="spectrum">spectrum</mark>. They belong to a class of sugar-based chemical <mark class="vocab-word" data-word="compound">compounds</mark> also known as flavonoids. What’s <mark class="vocab-word" data-word="puzzle">puzzling</mark> is that anthocyanins are actually newly <mark class="vocab-word" data-word="mint">minted</mark>, made in the leaves at the same time as the <mark class="vocab-word" data-word="tree">tree</mark> is preparing to drop them. But it is hard to make sense of the <mark class="vocab-word" data-word="manufacture">manufacture</mark> of anthocyanins—why should a <mark class="vocab-word" data-word="tree">tree</mark> bother making new chemicals in its leaves when it’s already <mark class="vocab-word" data-word="scramble">scrambling</mark> to <mark class="vocab-word" data-word="withdraw">withdraw</mark> and preserve the ones already there?</p><p>Some theories about anthocyanins have argued that they might act as a chemical defence against attacks by insects or fungi, or that they might attract fruit-eating birds or increase a <mark class="vocab-word" data-word="leaf">leaf</mark>’s <mark class="vocab-word" data-word="tolerance">tolerance</mark> to freezing. However there are problems with each of these theories, including the fact that leaves are red for such a relatively short period that the expense of energy needed to <mark class="vocab-word" data-word="manufacture">manufacture</mark> the anthocyanins would <mark class="vocab-word" data-word="outweigh">outweigh</mark> any anti-fungal or anti-herbivore activity achieved.</p><p>It has also been <mark class="vocab-word" data-word="propose">proposed</mark> that <mark class="vocab-word" data-word="tree">trees</mark> may produce <mark class="vocab-word" data-word="vivid">vivid</mark> red colours to <mark class="vocab-word" data-word="convince">convince</mark> herbivorous insects that they are healthy and <mark class="vocab-word" data-word="robust">robust</mark> and would be easily able to mount chemical defences against infestation. If insects paid attention to such advertisements, they might be <mark class="vocab-word" data-word="prompt">prompted</mark> to lay their eggs on a duller, and <mark class="vocab-word" data-word="presumably">presumably</mark> less <mark class="vocab-word" data-word="resistant">resistant</mark> host. The <mark class="vocab-word" data-word="flaw">flaw</mark> in this theory lies in the lack of <mark class="vocab-word" data-word="proof">proof</mark> to support it. No one has as yet <mark class="vocab-word" data-word="ascertain">ascertained</mark> whether more <mark class="vocab-word" data-word="robust">robust</mark> <mark class="vocab-word" data-word="tree">trees</mark> sport the brightest leaves, or whether insects make choices <mark class="vocab-word" data-word="accord">according</mark> to colour <mark class="vocab-word" data-word="intensity">intensity</mark>.</p><p>Perhaps the most <mark class="vocab-word" data-word="plausible">plausible</mark> suggestion as to why leaves would go to the trouble of making anthocyanins when they’re busy packing up for the winter is the theory known as the ‘light screen’ <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>. It sounds <mark class="vocab-word" data-word="paradoxical">paradoxical</mark>, because the idea behind this <mark class="vocab-word" data-word="hypothesis">hypothesis</mark> is that the red <mark class="vocab-word" data-word="pigment">pigment</mark> is made in autumn leaves to protect <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark>, the light-absorbing chemical, from too much light. Why does <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> need protection when it is the natural world’s <mark class="vocab-word" data-word="supreme">supreme</mark> light absorber? Why protect <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> at a time when the <mark class="vocab-word" data-word="tree">tree</mark> is breaking it down to <mark class="vocab-word" data-word="salvage">salvage</mark> as much of it as possible?</p><p><mark class="vocab-word" data-word="chlorophyll">Chlorophyll</mark>, although <mark class="vocab-word" data-word="exquisite">exquisitely</mark> <mark class="vocab-word" data-word="evolve">evolved</mark> to capture the energy of sunlight, can sometimes be <mark class="vocab-word" data-word="overwhelm">overwhelmed</mark> by it, especially in situations of <mark class="vocab-word" data-word="drought">drought</mark>, low temperatures, or <mark class="vocab-word" data-word="nutrient">nutrient</mark> <mark class="vocab-word" data-word="deficiency">deficiency</mark>. Moreover, the problem of oversensitivity to light is even more <mark class="vocab-word" data-word="acute">acute</mark> in the fall, when the <mark class="vocab-word" data-word="leaf">leaf</mark> is busy preparing for winter by <mark class="vocab-word" data-word="dismantle">dismantling</mark> its internal <mark class="vocab-word" data-word="machinery">machinery</mark>. The energy <mark class="vocab-word" data-word="absorb">absorbed</mark> by the <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> <mark class="vocab-word" data-word="molecule">molecules</mark> of the unstable autumn <mark class="vocab-word" data-word="leaf">leaf</mark> is not immediately channeled into useful products and processes, as it would be in an <mark class="vocab-word" data-word="intact">intact</mark> summer <mark class="vocab-word" data-word="leaf">leaf</mark>. The <mark class="vocab-word" data-word="weaken">weakened</mark> fall <mark class="vocab-word" data-word="leaf">leaf</mark> then becomes <mark class="vocab-word" data-word="vulnerable">vulnerable</mark> to the highly <mark class="vocab-word" data-word="destructive">destructive</mark> effects of the <mark class="vocab-word" data-word="oxygen">oxygen</mark> created by the <mark class="vocab-word" data-word="excite">excited</mark> <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> <mark class="vocab-word" data-word="molecule">molecules</mark>.</p><p>Even if you had never suspected that this is what was going on when leaves turn red, there are <mark class="vocab-word" data-word="clue">clues</mark> out there. One is <mark class="vocab-word" data-word="straightforward">straightforward</mark>: on many <mark class="vocab-word" data-word="tree">trees</mark>, the leaves that are the reddest are those on the side of the <mark class="vocab-word" data-word="tree">tree</mark> which gets most sun. Not only that, but the red is brighter on the upper side of the <mark class="vocab-word" data-word="leaf">leaf</mark>. It has also been recognised for <mark class="vocab-word" data-word="decade">decades</mark> that the best conditions for intense red colours are dry, sunny days and cool nights, conditions that nicely <mark class="vocab-word" data-word="match">match</mark> those that make leaves <mark class="vocab-word" data-word="susceptible">susceptible</mark> to <mark class="vocab-word" data-word="excess">excess</mark> light. And finally, <mark class="vocab-word" data-word="tree">trees</mark> such as <mark class="vocab-word" data-word="maple">maples</mark> usually get much redder the more north you travel in the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark>. It’s colder there, they’re more stressed, their <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> is more sensitive and it needs more sunblock.</p><p>What is still not fully understood, however, is why some <mark class="vocab-word" data-word="tree">trees</mark> <mark class="vocab-word" data-word="resort">resort</mark> to producing red <mark class="vocab-word" data-word="pigment">pigments</mark> while others don’t bother, and simply <mark class="vocab-word" data-word="reveal">reveal</mark> their orange or yellow <mark class="vocab-word" data-word="hue">hues</mark>. Do these <mark class="vocab-word" data-word="tree">trees</mark> have other means at their <mark class="vocab-word" data-word="disposal">disposal</mark> to prevent overexposure to light in autumn? Their <mark class="vocab-word" data-word="story">story</mark>, though not as <mark class="vocab-word" data-word="spectacular">spectacular</mark> to the eye, will surely turn out to be as <mark class="vocab-word" data-word="subtle">subtle</mark> and as complex.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在北美许多地区，一年之中最引人注目的自然现象之一就是秋天里树叶的变化。其颜色绚丽夺目。但究竟为什么一些树木变成黄色或橙色，而其他却变成红色或紫色？这一问题长期以来都困扰着科学家。</p><p>夏天的叶子是绿色的，因为它们充满了叶绿素。叶绿素是一种捕获阳光并将该能量转化为新的树木增长材料的分子。随着北半球秋天的到来，可利用的太阳能数量大大减少。对于许多树木来说- 常绿针叶树除外-最佳策略是放弃光合作用直到春天来临。因此，与其保留冬季里十分多余的叶子，树木选择节省其宝贵的资源而抛弃它们。但在弃置这些叶子之前，树木会分解其中的叶绿素分子，并将里面含有的宝贵的氮元素运回枝干。随着叶绿素的枯竭，夏季里被它主导的颜色开始显现出来。这一显露过程解释了秋天里出现的黄色和橙色，但却无法解释诸如枫树或漆树之类的树木所呈现的艳丽的红色和紫色。</p><p>红色的来源广为人知：它是由花青素（一种可反射可见光谱中红色到蓝色范围的水溶性植物色素）产生的。它们属于一类糖基化合物，也被称为类黄酮。令人费解的是，花青素实际上是新合成的，是在树木准备将树叶丢弃的同时在里面产生的。但是，很难理解合成花青素的意义-为什么树木在急于收回并保存原本存在于树叶中的化学物质时，还要在里面再制造出新的来呢？</p><p>一些有关花青素的理论认为，它们可能是作为抵御昆虫或真菌攻击的化学防御，或者说，它们可能会吸引以果实维生的鸟类或者提升树叶对寒冷的耐受性。但是，这些理论都存在问题，例如树叶变红的时间如此之短，以至于制造花青素所需要耗费的能量会超过任何抗真菌或防食草动物行为所取得的收益。</p><p>还有一种理论认为，树木产生鲜艳的红色是为了让那些食草昆虫相信，它们十分健康强壮，能够轻松的发起抵御侵扰的化学防御。如果昆虫会注意到这些现象，它们可能会将卵产在颜色更为暗淡，不太可能进行抵抗的宿主上。这一理论的缺陷在于缺乏证据支持。尚无人能够确定，更健壮的树木是否会产生最鲜艳的叶子，又或者昆虫是否根据颜色强度来进行选择。</p><p>树叶为什么会在忙于为冬季做准备的时候还不嫌麻烦的生产叶绿素。这一现象最合理的解释是一种被称为“光屏障”的假说。它听起来有些自相矛盾。因为这种假说背后的想法是，秋天里树叶产生的红色素是为了防止叶绿素这种吸光物质吸收太多的阳光。为什么叶绿素作为自然界的吸光能手还需要保护呢？为什么要在树木分解叶绿素以拯救尽可能多的营养物质时去保护它呢？</p><p>虽然叶绿素经过精巧的演变来捕捉太阳光中的能量，但它有时也会被过多的阳光所伤害，尤其是在干旱、低温、或者营养缺乏的时候。此外，秋天里，当树叶正忙于拆解其内部结构为冬天做准备的时候，对阳光过度敏感的问题会更加严重。不稳定的秋叶中，叶绿素分子所吸收的能量并不会被立刻输送到有用的产品或过程中，就像夏天里完好无损的叶子里所发生的那样。这时候，衰弱的落叶十分容易受到活跃的叶绿素分子所产生的氧气的破坏。</p><p>即使你从未怀疑过这就是树叶变红时所发生的事情，也仍然存在许多提示线索。最简单明了的一条是：在许多树木上，最红的叶子出现在光照最多的那一侧。不仅如此，叶子上部的红色会更加鲜亮。几十年来，如下事实都广为人知，产生鲜艳红色的最佳条件为干燥、阳光充足的白天和寒冷的夜晚。这些条件恰好与那些使叶子容易遭受过度阳光损害的条件相匹配。最后，在北半球越往北去，枫树之类的树木就会变得越红。那里更加寒冷，它们要承受更多的压力，它们的叶绿素更加敏感，需要更多的光屏障。</p><p>然而，至今仍未被完全理解的是，为什么一些树木会选择产生红色素，而其他的则嫌麻烦，只是显露出其橙色或者黄色而已。难道这些树木在抛弃叶子的时候拥有其他手段来防止过度暴露于秋天的阳光之下吗？它们的故事虽然不那么引人注目，但肯定也同样微妙和复杂。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>One of the most <mark class="vocab-word" data-word="captivate">captivating</mark> natural events of the year in many areas throughout North America is the turning of the leaves in the fall. The colours are <mark class="vocab-word" data-word="magnificent">magnificent</mark>, but the question of exactly why some <mark class="vocab-word" data-word="tree">trees</mark> turn yellow or orange, and others red or purple, is something which has long <mark class="vocab-word" data-word="puzzled">puzzled</mark> scientists.</p></div>  <div class="parallel-zh"><p>在北美许多地区，一年之中最引人注目的自然现象之一就是秋天里树叶的变化。其颜色绚丽夺目。但究竟为什么一些树木变成黄色或橙色，而其他却变成红色或紫色？这一问题长期以来都困扰着科学家。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Summer leaves are green because they are full of <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark>, the <mark class="vocab-word" data-word="molecule">molecule</mark> that captures sunlight and converts that energy into new building materials for the <mark class="vocab-word" data-word="tree">tree</mark>. As fall approaches in the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark>, the amount of <mark class="vocab-word" data-word="solar">solar</mark> energy available declines considerably. For many <mark class="vocab-word" data-word="tree">trees</mark> —­ <mark class="vocab-word" data-word="evergreen">evergreen</mark> <mark class="vocab-word" data-word="conifer">conifers</mark> being an <mark class="vocab-word" data-word="exception">exception</mark> -the best strategy is to abandon <mark class="vocab-word" data-word="photosynthesis">photosynthesis</mark>* until the <mark class="vocab-word" data-word="spring">spring</mark>. So rather than maintaining the now <mark class="vocab-word" data-word="redundant">redundant</mark> leaves throughout the winter, the <mark class="vocab-word" data-word="tree">tree</mark> saves its <mark class="vocab-word" data-word="precious">precious</mark> resources and <mark class="vocab-word" data-word="discard">discards</mark> them. But before letting its leaves go, the <mark class="vocab-word" data-word="tree">tree</mark> <mark class="vocab-word" data-word="dismantle">dismantles</mark> their <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> <mark class="vocab-word" data-word="molecule">molecules</mark> and ships their valuable <mark class="vocab-word" data-word="nitrogen">nitrogen</mark> back into the <mark class="vocab-word" data-word="twig">twigs</mark>. As <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> is <mark class="vocab-word" data-word="deplete">depleted</mark>, other colours that have been <mark class="vocab-word" data-word="dominate">dominated</mark> by it throughout the summer begin to be <mark class="vocab-word" data-word="reveal">revealed</mark>. This unmasking explains the autumn colours of yellow and orange, but not the brilliant reds and purples of <mark class="vocab-word" data-word="tree">trees</mark> such as the <mark class="vocab-word" data-word="maple">maple</mark> or sumac.</p></div>  <div class="parallel-zh"><p>夏天的叶子是绿色的，因为它们充满了叶绿素。叶绿素是一种捕获阳光并将该能量转化为新的树木增长材料的分子。随着北半球秋天的到来，可利用的太阳能数量大大减少。对于许多树木来说- 常绿针叶树除外-最佳策略是放弃光合作用直到春天来临。因此，与其保留冬季里十分多余的叶子，树木选择节省其宝贵的资源而抛弃它们。但在弃置这些叶子之前，树木会分解其中的叶绿素分子，并将里面含有的宝贵的氮元素运回枝干。随着叶绿素的枯竭，夏季里被它主导的颜色开始显现出来。这一显露过程解释了秋天里出现的黄色和橙色，但却无法解释诸如枫树或漆树之类的树木所呈现的艳丽的红色和紫色。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The source of the red is widely known: it is created by anthocyanins, water-soluble plant <mark class="vocab-word" data-word="pigment">pigments</mark> reflecting the red to blue range of the <mark class="vocab-word" data-word="visible">visible</mark> <mark class="vocab-word" data-word="spectrum">spectrum</mark>. They belong to a class of sugar-based chemical <mark class="vocab-word" data-word="compound">compounds</mark> also known as flavonoids. What’s <mark class="vocab-word" data-word="puzzle">puzzling</mark> is that anthocyanins are actually newly <mark class="vocab-word" data-word="mint">minted</mark>, made in the leaves at the same time as the <mark class="vocab-word" data-word="tree">tree</mark> is preparing to drop them. But it is hard to make sense of the <mark class="vocab-word" data-word="manufacture">manufacture</mark> of anthocyanins—why should a <mark class="vocab-word" data-word="tree">tree</mark> bother making new chemicals in its leaves when it’s already <mark class="vocab-word" data-word="scramble">scrambling</mark> to <mark class="vocab-word" data-word="withdraw">withdraw</mark> and preserve the ones already there?</p></div>  <div class="parallel-zh"><p>红色的来源广为人知：它是由花青素（一种可反射可见光谱中红色到蓝色范围的水溶性植物色素）产生的。它们属于一类糖基化合物，也被称为类黄酮。令人费解的是，花青素实际上是新合成的，是在树木准备将树叶丢弃的同时在里面产生的。但是，很难理解合成花青素的意义-为什么树木在急于收回并保存原本存在于树叶中的化学物质时，还要在里面再制造出新的来呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Some theories about anthocyanins have argued that they might act as a chemical defence against attacks by insects or fungi, or that they might attract fruit-eating birds or increase a <mark class="vocab-word" data-word="leaf">leaf</mark>’s <mark class="vocab-word" data-word="tolerance">tolerance</mark> to freezing. However there are problems with each of these theories, including the fact that leaves are red for such a relatively short period that the expense of energy needed to <mark class="vocab-word" data-word="manufacture">manufacture</mark> the anthocyanins would <mark class="vocab-word" data-word="outweigh">outweigh</mark> any anti-fungal or anti-herbivore activity achieved.</p></div>  <div class="parallel-zh"><p>一些有关花青素的理论认为，它们可能是作为抵御昆虫或真菌攻击的化学防御，或者说，它们可能会吸引以果实维生的鸟类或者提升树叶对寒冷的耐受性。但是，这些理论都存在问题，例如树叶变红的时间如此之短，以至于制造花青素所需要耗费的能量会超过任何抗真菌或防食草动物行为所取得的收益。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It has also been <mark class="vocab-word" data-word="propose">proposed</mark> that <mark class="vocab-word" data-word="tree">trees</mark> may produce <mark class="vocab-word" data-word="vivid">vivid</mark> red colours to <mark class="vocab-word" data-word="convince">convince</mark> herbivorous insects that they are healthy and <mark class="vocab-word" data-word="robust">robust</mark> and would be easily able to mount chemical defences against infestation. If insects paid attention to such advertisements, they might be <mark class="vocab-word" data-word="prompt">prompted</mark> to lay their eggs on a duller, and <mark class="vocab-word" data-word="presumably">presumably</mark> less <mark class="vocab-word" data-word="resistant">resistant</mark> host. The <mark class="vocab-word" data-word="flaw">flaw</mark> in this theory lies in the lack of <mark class="vocab-word" data-word="proof">proof</mark> to support it. No one has as yet <mark class="vocab-word" data-word="ascertain">ascertained</mark> whether more <mark class="vocab-word" data-word="robust">robust</mark> <mark class="vocab-word" data-word="tree">trees</mark> sport the brightest leaves, or whether insects make choices <mark class="vocab-word" data-word="accord">according</mark> to colour <mark class="vocab-word" data-word="intensity">intensity</mark>.</p></div>  <div class="parallel-zh"><p>还有一种理论认为，树木产生鲜艳的红色是为了让那些食草昆虫相信，它们十分健康强壮，能够轻松的发起抵御侵扰的化学防御。如果昆虫会注意到这些现象，它们可能会将卵产在颜色更为暗淡，不太可能进行抵抗的宿主上。这一理论的缺陷在于缺乏证据支持。尚无人能够确定，更健壮的树木是否会产生最鲜艳的叶子，又或者昆虫是否根据颜色强度来进行选择。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Perhaps the most <mark class="vocab-word" data-word="plausible">plausible</mark> suggestion as to why leaves would go to the trouble of making anthocyanins when they’re busy packing up for the winter is the theory known as the ‘light screen’ <mark class="vocab-word" data-word="hypothesis">hypothesis</mark>. It sounds <mark class="vocab-word" data-word="paradoxical">paradoxical</mark>, because the idea behind this <mark class="vocab-word" data-word="hypothesis">hypothesis</mark> is that the red <mark class="vocab-word" data-word="pigment">pigment</mark> is made in autumn leaves to protect <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark>, the light-absorbing chemical, from too much light. Why does <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> need protection when it is the natural world’s <mark class="vocab-word" data-word="supreme">supreme</mark> light absorber? Why protect <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> at a time when the <mark class="vocab-word" data-word="tree">tree</mark> is breaking it down to <mark class="vocab-word" data-word="salvage">salvage</mark> as much of it as possible?</p></div>  <div class="parallel-zh"><p>树叶为什么会在忙于为冬季做准备的时候还不嫌麻烦的生产叶绿素。这一现象最合理的解释是一种被称为“光屏障”的假说。它听起来有些自相矛盾。因为这种假说背后的想法是，秋天里树叶产生的红色素是为了防止叶绿素这种吸光物质吸收太多的阳光。为什么叶绿素作为自然界的吸光能手还需要保护呢？为什么要在树木分解叶绿素以拯救尽可能多的营养物质时去保护它呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="chlorophyll">Chlorophyll</mark>, although <mark class="vocab-word" data-word="exquisite">exquisitely</mark> <mark class="vocab-word" data-word="evolve">evolved</mark> to capture the energy of sunlight, can sometimes be <mark class="vocab-word" data-word="overwhelm">overwhelmed</mark> by it, especially in situations of <mark class="vocab-word" data-word="drought">drought</mark>, low temperatures, or <mark class="vocab-word" data-word="nutrient">nutrient</mark> <mark class="vocab-word" data-word="deficiency">deficiency</mark>. Moreover, the problem of oversensitivity to light is even more <mark class="vocab-word" data-word="acute">acute</mark> in the fall, when the <mark class="vocab-word" data-word="leaf">leaf</mark> is busy preparing for winter by <mark class="vocab-word" data-word="dismantle">dismantling</mark> its internal <mark class="vocab-word" data-word="machinery">machinery</mark>. The energy <mark class="vocab-word" data-word="absorb">absorbed</mark> by the <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> <mark class="vocab-word" data-word="molecule">molecules</mark> of the unstable autumn <mark class="vocab-word" data-word="leaf">leaf</mark> is not immediately channeled into useful products and processes, as it would be in an <mark class="vocab-word" data-word="intact">intact</mark> summer <mark class="vocab-word" data-word="leaf">leaf</mark>. The <mark class="vocab-word" data-word="weaken">weakened</mark> fall <mark class="vocab-word" data-word="leaf">leaf</mark> then becomes <mark class="vocab-word" data-word="vulnerable">vulnerable</mark> to the highly <mark class="vocab-word" data-word="destructive">destructive</mark> effects of the <mark class="vocab-word" data-word="oxygen">oxygen</mark> created by the <mark class="vocab-word" data-word="excite">excited</mark> <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> <mark class="vocab-word" data-word="molecule">molecules</mark>.</p></div>  <div class="parallel-zh"><p>虽然叶绿素经过精巧的演变来捕捉太阳光中的能量，但它有时也会被过多的阳光所伤害，尤其是在干旱、低温、或者营养缺乏的时候。此外，秋天里，当树叶正忙于拆解其内部结构为冬天做准备的时候，对阳光过度敏感的问题会更加严重。不稳定的秋叶中，叶绿素分子所吸收的能量并不会被立刻输送到有用的产品或过程中，就像夏天里完好无损的叶子里所发生的那样。这时候，衰弱的落叶十分容易受到活跃的叶绿素分子所产生的氧气的破坏。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Even if you had never suspected that this is what was going on when leaves turn red, there are <mark class="vocab-word" data-word="clue">clues</mark> out there. One is <mark class="vocab-word" data-word="straightforward">straightforward</mark>: on many <mark class="vocab-word" data-word="tree">trees</mark>, the leaves that are the reddest are those on the side of the <mark class="vocab-word" data-word="tree">tree</mark> which gets most sun. Not only that, but the red is brighter on the upper side of the <mark class="vocab-word" data-word="leaf">leaf</mark>. It has also been recognised for <mark class="vocab-word" data-word="decade">decades</mark> that the best conditions for intense red colours are dry, sunny days and cool nights, conditions that nicely <mark class="vocab-word" data-word="match">match</mark> those that make leaves <mark class="vocab-word" data-word="susceptible">susceptible</mark> to <mark class="vocab-word" data-word="excess">excess</mark> light. And finally, <mark class="vocab-word" data-word="tree">trees</mark> such as <mark class="vocab-word" data-word="maple">maples</mark> usually get much redder the more north you travel in the northern <mark class="vocab-word" data-word="hemisphere">hemisphere</mark>. It’s colder there, they’re more stressed, their <mark class="vocab-word" data-word="chlorophyll">chlorophyll</mark> is more sensitive and it needs more sunblock.</p></div>  <div class="parallel-zh"><p>即使你从未怀疑过这就是树叶变红时所发生的事情，也仍然存在许多提示线索。最简单明了的一条是：在许多树木上，最红的叶子出现在光照最多的那一侧。不仅如此，叶子上部的红色会更加鲜亮。几十年来，如下事实都广为人知，产生鲜艳红色的最佳条件为干燥、阳光充足的白天和寒冷的夜晚。这些条件恰好与那些使叶子容易遭受过度阳光损害的条件相匹配。最后，在北半球越往北去，枫树之类的树木就会变得越红。那里更加寒冷，它们要承受更多的压力，它们的叶绿素更加敏感，需要更多的光屏障。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What is still not fully understood, however, is why some <mark class="vocab-word" data-word="tree">trees</mark> <mark class="vocab-word" data-word="resort">resort</mark> to producing red <mark class="vocab-word" data-word="pigment">pigments</mark> while others don’t bother, and simply <mark class="vocab-word" data-word="reveal">reveal</mark> their orange or yellow <mark class="vocab-word" data-word="hue">hues</mark>. Do these <mark class="vocab-word" data-word="tree">trees</mark> have other means at their <mark class="vocab-word" data-word="disposal">disposal</mark> to prevent overexposure to light in autumn? Their <mark class="vocab-word" data-word="story">story</mark>, though not as <mark class="vocab-word" data-word="spectacular">spectacular</mark> to the eye, will surely turn out to be as <mark class="vocab-word" data-word="subtle">subtle</mark> and as complex.</p></div>  <div class="parallel-zh"><p>然而，至今仍未被完全理解的是，为什么一些树木会选择产生红色素，而其他的则嫌麻烦，只是显露出其橙色或者黄色而已。难道这些树木在抛弃叶子的时候拥有其他手段来防止过度暴露于秋天的阳光之下吗？它们的故事虽然不那么引人注目，但肯定也同样微妙和复杂。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"captivate": 1, "magnificent": 1, "tree": 16, "puzzled": 1, "chlorophyll": 10, "molecule": 4, "hemisphere": 2, "solar": 1, "evergreen": 1, "conifer": 1, "exception": 1, "photosynthesis": 1, "spring": 1, "redundant": 1, "precious": 1, "discard": 1, "dismantle": 2, "nitrogen": 1, "twig": 1, "deplete": 1, "dominate": 1, "reveal": 2, "maple": 2, "pigment": 3, "visible": 1, "spectrum": 1, "compound": 1, "puzzle": 1, "mint": 1, "manufacture": 2, "scramble": 1, "withdraw": 1, "leaf": 6, "tolerance": 1, "outweigh": 1, "propose": 1, "vivid": 1, "convince": 1, "robust": 2, "prompt": 1, "presumably": 1, "resistant": 1, "flaw": 1, "proof": 1, "ascertain": 1, "accord": 1, "intensity": 1, "plausible": 1, "hypothesis": 2, "paradoxical": 1, "supreme": 1, "salvage": 1, "exquisite": 1, "evolve": 1, "overwhelm": 1, "drought": 1, "nutrient": 1, "deficiency": 1, "acute": 1, "machinery": 1, "absorb": 1, "intact": 1, "weaken": 1, "vulnerable": 1, "destructive": 1, "oxygen": 1, "excite": 1, "clue": 1, "straightforward": 1, "decade": 1, "match": 1, "susceptible": 1, "excess": 1, "resort": 1, "hue": 1, "disposal": 1, "story": 1, "spectacular": 1, "subtle": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

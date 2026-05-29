@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crop-growing skyscrappers 垂直农业 - 剑桥雅思11 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思11</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>crop-growing skyscrappers 垂直农业</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29445.html" target="_blank">https://www.laokaoya.com/29445.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>By the year 2050, nearly 80% of the Earth’s population will live in <mark class="vocab-word" data-word="urban">urban</mark> centres. Applying the most <mark class="vocab-word" data-word="conservative">conservative</mark> estimates to current <mark class="vocab-word" data-word="demographic">demographic</mark> trends, the human population will increase by about three billion people by then. An estimated 10 <mark class="vocab-word" data-word="hectare">hectares</mark> of new land (about 20% larger than Brazil) will be needed to grow enough food to feed them, if traditional farming methods continue as they are practised today. At present, throughout the world, over 80% of the land that is suitable for raising crops is in use. Historically, some 15% of that has been laid waste by poor management practices. What can be done to ensure enough food for the world’s population to live on?</p><p>The concept of indoor farming is not new, since hothouse production of tomatoes and other produce has been in <mark class="vocab-word" data-word="vogue">vogue</mark> for some time. What is new is the <mark class="vocab-word" data-word="urgent">urgent</mark> need to scale up this technology to <mark class="vocab-word" data-word="accommodate">accommodate</mark> another three billion people. Many believe an entirely new approach to indoor farming is required, employing cutting-edge technologies. This is from  website. One such <mark class="vocab-word" data-word="proposal">proposal</mark> is for the ‘<mark class="vocab-word" data-word="vertical">Vertical</mark> Farm’. The concept is of multi-storey buildings in which food crops are grown in environmentally controlled conditions. <mark class="vocab-word" data-word="situated">Situated</mark> in the heart of <mark class="vocab-word" data-word="urban">urban</mark> centres, they would drastically reduce the amount of <mark class="vocab-word" data-word="transportation">transportation</mark> required to bring food to consumers. <mark class="vocab-word" data-word="vertical">Vertical</mark> farms would need to be efficient, cheap to <mark class="vocab-word" data-word="construct">construct</mark> and safe to operate. If successfully <mark class="vocab-word" data-word="implement">implemented</mark>, <mark class="vocab-word" data-word="proponent">proponents</mark> claim, <mark class="vocab-word" data-word="vertical">vertical</mark> farms offer the promise of <mark class="vocab-word" data-word="urban">urban</mark> <mark class="vocab-word" data-word="renewal">renewal</mark>, <mark class="vocab-word" data-word="sustainable">sustainable</mark> production of a safe and <mark class="vocab-word" data-word="varied">varied</mark> food supply (through year-round production of all crops), and the eventual repair of <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> that have been <mark class="vocab-word" data-word="sacrifice">sacrificed</mark> for <mark class="vocab-word" data-word="horizontal">horizontal</mark> farming.</p><p>It took humans 10,000 years to learn how to grow most of the crops we now take for granted. Along the way, we <mark class="vocab-word" data-word="despoil">despoiled</mark> most of the land we worked, often turning verdant, natural ecozones into semi-arid deserts. Within that same time frame, we <mark class="vocab-word" data-word="evolve">evolved</mark> into an <mark class="vocab-word" data-word="urban">urban</mark> species, in which 60% of the human population now lives <mark class="vocab-word" data-word="vertical">vertically</mark> in cities. This means that, for the majority, we humans have shelter from the elements, yet we subject our food-bearing plants to the rigours of the great outdoors and can do no more than hope for a good weather year. However, more often than not now, due to a rapidly changing climate, that is not what happens. <mark class="vocab-word" data-word="massive">Massive</mark> floods, long <mark class="vocab-word" data-word="drought">droughts</mark>, <mark class="vocab-word" data-word="hurricane">hurricanes</mark> and <mark class="vocab-word" data-word="severe">severe</mark> <mark class="vocab-word" data-word="monsoon">monsoons</mark> take their <mark class="vocab-word" data-word="toll">toll</mark> each year, destroying millions of <mark class="vocab-word" data-word="ton">tons</mark> of valuable crops.</p><p>The supporters of <mark class="vocab-word" data-word="vertical">vertical</mark> farming claim many potential advantages for the system. For instance, crops would be produced all year round, as they would be kept in <mark class="vocab-word" data-word="artificial">artificially</mark> controlled, <mark class="vocab-word" data-word="optimum">optimum</mark> growing conditions. There would be no weather-related crop failures due to <mark class="vocab-word" data-word="drought">droughts</mark>, floods or <mark class="vocab-word" data-word="pest">pests</mark>. All the food could be grown organically, <mark class="vocab-word" data-word="eliminate">eliminating</mark> the need for <mark class="vocab-word" data-word="herbicide">herbicides</mark>, <mark class="vocab-word" data-word="pesticide">pesticides</mark> and fertilisers. The system would greatly reduce the <mark class="vocab-word" data-word="incidence">incidence</mark> of many <mark class="vocab-word" data-word="infectious">infectious</mark> diseases that are acquired at the <mark class="vocab-word" data-word="agricultural">agricultural</mark> <mark class="vocab-word" data-word="interface">interface</mark>. Although the system would consume energy, it would return energy to the <mark class="vocab-word" data-word="grid">grid</mark> via <mark class="vocab-word" data-word="methane">methane</mark> generation from <mark class="vocab-word" data-word="compost">composting</mark> non- <mark class="vocab-word" data-word="edible">edible</mark> parts of plants. It would also <mark class="vocab-word" data-word="dramatically">dramatically</mark> reduce <mark class="vocab-word" data-word="fossil">fossil</mark> fuel use, by cutting out the need for <mark class="vocab-word" data-word="tractor">tractors</mark>, ploughs and shipping.</p><p>A major <mark class="vocab-word" data-word="drawback">drawback</mark> of <mark class="vocab-word" data-word="vertical">vertical</mark> farming, however, is that the plants would require <mark class="vocab-word" data-word="artificial">artificial</mark> light. Without it, those plants nearest the windows would be <mark class="vocab-word" data-word="exposed">exposed</mark> to more sunlight and grow more quickly, reducing the <mark class="vocab-word" data-word="efficiency">efficiency</mark> of the system. Single- <mark class="vocab-word" data-word="storey">storey</mark> <mark class="vocab-word" data-word="greenhouse">greenhouses</mark> have the benefit of natural <mark class="vocab-word" data-word="overhead">overhead</mark> light: even so, many still need <mark class="vocab-word" data-word="artificial">artificial</mark> lighting. A multi-storey <mark class="vocab-word" data-word="facility">facility</mark> with no natural <mark class="vocab-word" data-word="overhead">overhead</mark> light would require far more. Generating enough light could be <mark class="vocab-word" data-word="prohibitive">prohibitively</mark> expensive, unless cheap, <mark class="vocab-word" data-word="renewable">renewable</mark> energy is available, and this appears to be rather a future <mark class="vocab-word" data-word="aspiration">aspiration</mark> than a <mark class="vocab-word" data-word="likelihood">likelihood</mark> for the near future.</p><p>One <mark class="vocab-word" data-word="variation">variation</mark> on <mark class="vocab-word" data-word="vertical">vertical</mark> farming that has been developed is to grow plants in <mark class="vocab-word" data-word="stack">stacked</mark> <mark class="vocab-word" data-word="tray">trays</mark> that move on <mark class="vocab-word" data-word="rail">rails</mark>. Moving the <mark class="vocab-word" data-word="tray">trays</mark> allows the plants to get enough sunlight. This system is already in operation, and works well within a single-storey <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> with light reaching it from above: it is not certain, however, that it can be made to work without that <mark class="vocab-word" data-word="overhead">overhead</mark> natural light.</p><p><mark class="vocab-word" data-word="vertical">Vertical</mark> farming is an attempt to address the undoubted problems that we face in producing enough food for a growing population. At the moment, though, more needs to be done to reduce the <mark class="vocab-word" data-word="detrimental">detrimental</mark> <mark class="vocab-word" data-word="impact">impact</mark> it would have on the environment, particularly as regards the use of energy. While it is possible that much of our food will be grown in <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> in future, most experts currently believe it is far more likely that we will simply use the space available on <mark class="vocab-word" data-word="urban">urban</mark> rooftops.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>到2050年，地球上将有近80％的人口居住在城市中心。将最保守的估计应用于当前的人口发展趋势，到那时，人口将增加约30亿。如果继续采用现在传统的耕作方法，预计需要10的9次方公顷的新土地（比巴西大20％）才能够种出足够的粮食来养活他们。目前，全世界适合耕种农作物的土地中，有80%已被使用。从历史上看，其中约15％由于管理不善而荒废。那么如何才能确保世界人民有足够的食物生存呢？</p><p>室内耕作的概念并不是什么新鲜事物，因为温室栽培西红柿和其他农产品已经流行了一段时间。新鲜的是扩展此技术以容纳另外30亿人口的迫切需求。许多人认为，需要利用尖端技术采用全新的室内耕作方法。而其中一项提议就是“垂直农场”。这一概念是将粮食作物种植在环境条件受控的多层建筑中。它们位于城市中心地带，会急剧减少将食物运送到消费者手中所需要的运输量。垂直农场的效率要高，建造要便宜，运营要安全。支持者声称，如果成功实施的话，垂直农场将会带来城市复兴的希望，持续提供安全多样的食物（一年到头都可以生产各类作物），并最终修复由于水平农业而牺牲的生态系统。</p><p>人类花了10,000年的时间来学习如何种植我们现在认为理所当然的大多数作物。在此过程中，我们破坏了耕作的大部分土地，经常将翠绿的自然生态区变成半干旱的沙漠。在相同的时间范围里，我们进化成城市物种，其中60％的人口现在在城市中垂直居住。这意味着，对于大多数人来说，我们人类可以躲避各种因素的影响，但我们将生产食物的植物置于严酷的户外条件下，只能祈祷天气良好。然而，由于快速变化的气候，情况并不如人们所愿。洪灾、长期干旱、飓风和严重的季风每年都会造成巨大的损失，摧毁数百万吨宝贵的农作物。</p><p>垂直农业的支持者声称该系统具有许多潜在优势。例如，由于农作物生长在人为控制的、理想的环境中，它们可以整年产出粮食。不会由于干旱、洪水或虫灾等与天气有关的因素而造成粮食欠收。所有食物都可以有机种植，从而消除对除草剂、杀虫剂和肥料的需求。该系统将大大降低在农业接触中感染一些传染病的概率。虽然该系统会消耗能量，但通过利用植物不可食用的部分进行沼气发电，可以将能量返还给电网。通过减少对拖拉机、犁和运输的需求，它也会大量减少化石燃料的使用。</p><p>然而，垂直耕作的主要缺点在于植物需要人造光。没有它，那些最靠近窗户的植物将暴露在更多的阳光下并且生长得更快，从而降低了系统的效率。单层温室受益于顶部的自然光线：即使如此，许多仍然需要人造光。缺乏自然顶部光线的多层设施则需要更多的人造光。除非能够获得廉价的可再生能源，否则产生足够的光线太过昂贵。而这似乎是一种未来的愿望，并非近期就可能实现的事情。</p><p>已经开发出来的垂直耕作的一种变体是将植物种植在堆叠式的、可以在轨道上移动的托盘里。移动托盘可使植物获得足够的阳光。该系统已经在运行，并且可以在顶部有光线的单层温室中正常工作：但是，不确定该系统是否可以在顶部没有自然光的情况下运转。</p><p>垂直耕作试图解决我们在为日益增长的人口生产足够的粮食时所必然面对的问题，但是现在需要做更多的工作来减少它对环境的不利影响，特别是在能源使用方面。虽然将来我们的大部分食物可能种植在摩天大楼里，但大多数专家目前认为，我们仅使用城市屋顶上的可用空间的可能性更大。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>By the year 2050, nearly 80% of the Earth’s population will live in <mark class="vocab-word" data-word="urban">urban</mark> centres. Applying the most <mark class="vocab-word" data-word="conservative">conservative</mark> estimates to current <mark class="vocab-word" data-word="demographic">demographic</mark> trends, the human population will increase by about three billion people by then. An estimated 10 <mark class="vocab-word" data-word="hectare">hectares</mark> of new land (about 20% larger than Brazil) will be needed to grow enough food to feed them, if traditional farming methods continue as they are practised today. At present, throughout the world, over 80% of the land that is suitable for raising crops is in use. Historically, some 15% of that has been laid waste by poor management practices. What can be done to ensure enough food for the world’s population to live on?</p></div>  <div class="parallel-zh"><p>到2050年，地球上将有近80％的人口居住在城市中心。将最保守的估计应用于当前的人口发展趋势，到那时，人口将增加约30亿。如果继续采用现在传统的耕作方法，预计需要10的9次方公顷的新土地（比巴西大20％）才能够种出足够的粮食来养活他们。目前，全世界适合耕种农作物的土地中，有80%已被使用。从历史上看，其中约15％由于管理不善而荒废。那么如何才能确保世界人民有足够的食物生存呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The concept of indoor farming is not new, since hothouse production of tomatoes and other produce has been in <mark class="vocab-word" data-word="vogue">vogue</mark> for some time. What is new is the <mark class="vocab-word" data-word="urgent">urgent</mark> need to scale up this technology to <mark class="vocab-word" data-word="accommodate">accommodate</mark> another three billion people. Many believe an entirely new approach to indoor farming is required, employing cutting-edge technologies. This is from  website. One such <mark class="vocab-word" data-word="proposal">proposal</mark> is for the ‘<mark class="vocab-word" data-word="vertical">Vertical</mark> Farm’. The concept is of multi-storey buildings in which food crops are grown in environmentally controlled conditions. <mark class="vocab-word" data-word="situated">Situated</mark> in the heart of <mark class="vocab-word" data-word="urban">urban</mark> centres, they would drastically reduce the amount of <mark class="vocab-word" data-word="transportation">transportation</mark> required to bring food to consumers. <mark class="vocab-word" data-word="vertical">Vertical</mark> farms would need to be efficient, cheap to <mark class="vocab-word" data-word="construct">construct</mark> and safe to operate. If successfully <mark class="vocab-word" data-word="implement">implemented</mark>, <mark class="vocab-word" data-word="proponent">proponents</mark> claim, <mark class="vocab-word" data-word="vertical">vertical</mark> farms offer the promise of <mark class="vocab-word" data-word="urban">urban</mark> <mark class="vocab-word" data-word="renewal">renewal</mark>, <mark class="vocab-word" data-word="sustainable">sustainable</mark> production of a safe and <mark class="vocab-word" data-word="varied">varied</mark> food supply (through year-round production of all crops), and the eventual repair of <mark class="vocab-word" data-word="ecosystem">ecosystems</mark> that have been <mark class="vocab-word" data-word="sacrifice">sacrificed</mark> for <mark class="vocab-word" data-word="horizontal">horizontal</mark> farming.</p></div>  <div class="parallel-zh"><p>室内耕作的概念并不是什么新鲜事物，因为温室栽培西红柿和其他农产品已经流行了一段时间。新鲜的是扩展此技术以容纳另外30亿人口的迫切需求。许多人认为，需要利用尖端技术采用全新的室内耕作方法。而其中一项提议就是“垂直农场”。这一概念是将粮食作物种植在环境条件受控的多层建筑中。它们位于城市中心地带，会急剧减少将食物运送到消费者手中所需要的运输量。垂直农场的效率要高，建造要便宜，运营要安全。支持者声称，如果成功实施的话，垂直农场将会带来城市复兴的希望，持续提供安全多样的食物（一年到头都可以生产各类作物），并最终修复由于水平农业而牺牲的生态系统。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It took humans 10,000 years to learn how to grow most of the crops we now take for granted. Along the way, we <mark class="vocab-word" data-word="despoil">despoiled</mark> most of the land we worked, often turning verdant, natural ecozones into semi-arid deserts. Within that same time frame, we <mark class="vocab-word" data-word="evolve">evolved</mark> into an <mark class="vocab-word" data-word="urban">urban</mark> species, in which 60% of the human population now lives <mark class="vocab-word" data-word="vertical">vertically</mark> in cities. This means that, for the majority, we humans have shelter from the elements, yet we subject our food-bearing plants to the rigours of the great outdoors and can do no more than hope for a good weather year. However, more often than not now, due to a rapidly changing climate, that is not what happens. <mark class="vocab-word" data-word="massive">Massive</mark> floods, long <mark class="vocab-word" data-word="drought">droughts</mark>, <mark class="vocab-word" data-word="hurricane">hurricanes</mark> and <mark class="vocab-word" data-word="severe">severe</mark> <mark class="vocab-word" data-word="monsoon">monsoons</mark> take their <mark class="vocab-word" data-word="toll">toll</mark> each year, destroying millions of <mark class="vocab-word" data-word="ton">tons</mark> of valuable crops.</p></div>  <div class="parallel-zh"><p>人类花了10,000年的时间来学习如何种植我们现在认为理所当然的大多数作物。在此过程中，我们破坏了耕作的大部分土地，经常将翠绿的自然生态区变成半干旱的沙漠。在相同的时间范围里，我们进化成城市物种，其中60％的人口现在在城市中垂直居住。这意味着，对于大多数人来说，我们人类可以躲避各种因素的影响，但我们将生产食物的植物置于严酷的户外条件下，只能祈祷天气良好。然而，由于快速变化的气候，情况并不如人们所愿。洪灾、长期干旱、飓风和严重的季风每年都会造成巨大的损失，摧毁数百万吨宝贵的农作物。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The supporters of <mark class="vocab-word" data-word="vertical">vertical</mark> farming claim many potential advantages for the system. For instance, crops would be produced all year round, as they would be kept in <mark class="vocab-word" data-word="artificial">artificially</mark> controlled, <mark class="vocab-word" data-word="optimum">optimum</mark> growing conditions. There would be no weather-related crop failures due to <mark class="vocab-word" data-word="drought">droughts</mark>, floods or <mark class="vocab-word" data-word="pest">pests</mark>. All the food could be grown organically, <mark class="vocab-word" data-word="eliminate">eliminating</mark> the need for <mark class="vocab-word" data-word="herbicide">herbicides</mark>, <mark class="vocab-word" data-word="pesticide">pesticides</mark> and fertilisers. The system would greatly reduce the <mark class="vocab-word" data-word="incidence">incidence</mark> of many <mark class="vocab-word" data-word="infectious">infectious</mark> diseases that are acquired at the <mark class="vocab-word" data-word="agricultural">agricultural</mark> <mark class="vocab-word" data-word="interface">interface</mark>. Although the system would consume energy, it would return energy to the <mark class="vocab-word" data-word="grid">grid</mark> via <mark class="vocab-word" data-word="methane">methane</mark> generation from <mark class="vocab-word" data-word="compost">composting</mark> non- <mark class="vocab-word" data-word="edible">edible</mark> parts of plants. It would also <mark class="vocab-word" data-word="dramatically">dramatically</mark> reduce <mark class="vocab-word" data-word="fossil">fossil</mark> fuel use, by cutting out the need for <mark class="vocab-word" data-word="tractor">tractors</mark>, ploughs and shipping.</p></div>  <div class="parallel-zh"><p>垂直农业的支持者声称该系统具有许多潜在优势。例如，由于农作物生长在人为控制的、理想的环境中，它们可以整年产出粮食。不会由于干旱、洪水或虫灾等与天气有关的因素而造成粮食欠收。所有食物都可以有机种植，从而消除对除草剂、杀虫剂和肥料的需求。该系统将大大降低在农业接触中感染一些传染病的概率。虽然该系统会消耗能量，但通过利用植物不可食用的部分进行沼气发电，可以将能量返还给电网。通过减少对拖拉机、犁和运输的需求，它也会大量减少化石燃料的使用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A major <mark class="vocab-word" data-word="drawback">drawback</mark> of <mark class="vocab-word" data-word="vertical">vertical</mark> farming, however, is that the plants would require <mark class="vocab-word" data-word="artificial">artificial</mark> light. Without it, those plants nearest the windows would be <mark class="vocab-word" data-word="exposed">exposed</mark> to more sunlight and grow more quickly, reducing the <mark class="vocab-word" data-word="efficiency">efficiency</mark> of the system. Single- <mark class="vocab-word" data-word="storey">storey</mark> <mark class="vocab-word" data-word="greenhouse">greenhouses</mark> have the benefit of natural <mark class="vocab-word" data-word="overhead">overhead</mark> light: even so, many still need <mark class="vocab-word" data-word="artificial">artificial</mark> lighting. A multi-storey <mark class="vocab-word" data-word="facility">facility</mark> with no natural <mark class="vocab-word" data-word="overhead">overhead</mark> light would require far more. Generating enough light could be <mark class="vocab-word" data-word="prohibitive">prohibitively</mark> expensive, unless cheap, <mark class="vocab-word" data-word="renewable">renewable</mark> energy is available, and this appears to be rather a future <mark class="vocab-word" data-word="aspiration">aspiration</mark> than a <mark class="vocab-word" data-word="likelihood">likelihood</mark> for the near future.</p></div>  <div class="parallel-zh"><p>然而，垂直耕作的主要缺点在于植物需要人造光。没有它，那些最靠近窗户的植物将暴露在更多的阳光下并且生长得更快，从而降低了系统的效率。单层温室受益于顶部的自然光线：即使如此，许多仍然需要人造光。缺乏自然顶部光线的多层设施则需要更多的人造光。除非能够获得廉价的可再生能源，否则产生足够的光线太过昂贵。而这似乎是一种未来的愿望，并非近期就可能实现的事情。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One <mark class="vocab-word" data-word="variation">variation</mark> on <mark class="vocab-word" data-word="vertical">vertical</mark> farming that has been developed is to grow plants in <mark class="vocab-word" data-word="stack">stacked</mark> <mark class="vocab-word" data-word="tray">trays</mark> that move on <mark class="vocab-word" data-word="rail">rails</mark>. Moving the <mark class="vocab-word" data-word="tray">trays</mark> allows the plants to get enough sunlight. This system is already in operation, and works well within a single-storey <mark class="vocab-word" data-word="greenhouse">greenhouse</mark> with light reaching it from above: it is not certain, however, that it can be made to work without that <mark class="vocab-word" data-word="overhead">overhead</mark> natural light.</p></div>  <div class="parallel-zh"><p>已经开发出来的垂直耕作的一种变体是将植物种植在堆叠式的、可以在轨道上移动的托盘里。移动托盘可使植物获得足够的阳光。该系统已经在运行，并且可以在顶部有光线的单层温室中正常工作：但是，不确定该系统是否可以在顶部没有自然光的情况下运转。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="vertical">Vertical</mark> farming is an attempt to address the undoubted problems that we face in producing enough food for a growing population. At the moment, though, more needs to be done to reduce the <mark class="vocab-word" data-word="detrimental">detrimental</mark> <mark class="vocab-word" data-word="impact">impact</mark> it would have on the environment, particularly as regards the use of energy. While it is possible that much of our food will be grown in <mark class="vocab-word" data-word="skyscraper">skyscrapers</mark> in future, most experts currently believe it is far more likely that we will simply use the space available on <mark class="vocab-word" data-word="urban">urban</mark> rooftops.</p></div>  <div class="parallel-zh"><p>垂直耕作试图解决我们在为日益增长的人口生产足够的粮食时所必然面对的问题，但是现在需要做更多的工作来减少它对环境的不利影响，特别是在能源使用方面。虽然将来我们的大部分食物可能种植在摩天大楼里，但大多数专家目前认为，我们仅使用城市屋顶上的可用空间的可能性更大。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"urban": 5, "conservative": 1, "demographic": 1, "hectare": 1, "vogue": 1, "urgent": 1, "accommodate": 1, "proposal": 1, "vertical": 8, "situated": 1, "transportation": 1, "construct": 1, "implement": 1, "proponent": 1, "renewal": 1, "sustainable": 1, "varied": 1, "ecosystem": 1, "sacrifice": 1, "horizontal": 1, "despoil": 1, "evolve": 1, "massive": 1, "drought": 2, "hurricane": 1, "severe": 1, "monsoon": 1, "toll": 1, "ton": 1, "artificial": 3, "optimum": 1, "pest": 1, "eliminate": 1, "herbicide": 1, "pesticide": 1, "incidence": 1, "infectious": 1, "agricultural": 1, "interface": 1, "grid": 1, "methane": 1, "compost": 1, "edible": 1, "dramatically": 1, "fossil": 1, "tractor": 1, "drawback": 1, "exposed": 1, "efficiency": 1, "storey": 1, "greenhouse": 2, "overhead": 3, "facility": 1, "prohibitive": 1, "renewable": 1, "aspiration": 1, "likelihood": 1, "variation": 1, "stack": 1, "tray": 2, "rail": 1, "detrimental": 1, "impact": 1, "skyscraper": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music and the emotions 音乐与情感 - 剑桥雅思12 Test 7 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思12</span>
+                    <span class="badge-tag">Test 7</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Music and the emotions 音乐与情感</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/31342.html" target="_blank">https://www.laokaoya.com/31342.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Why does music make us feel?On the one hand, music is a purely <mark class="vocab-word" data-word="abstract">abstract</mark> art form, <mark class="vocab-word" data-word="devoid">devoid</mark> of language orexplicitideas.And yet, even though music says little, it still manages to touch us deeply.When listening to our favourite songs, our body <mark class="vocab-word" data-word="betray">betrays</mark> all the <mark class="vocab-word" data-word="symptom">symptoms</mark> of emotionalarousal.The <mark class="vocab-word" data-word="pupil">pupils</mark> in our eyes <mark class="vocab-word" data-word="dilate">dilate</mark>, ourpulseand blood pressure rise, the <mark class="vocab-word" data-word="electrical">electrical</mark> conductance of our skin is lowered, and the cerebellum, a brain region associated with bodily movement, becomes strangely active.Blood is even re-directed to the muscles in our legs.In other words, sound <mark class="vocab-word" data-word="stir">stirs</mark> us at ourbiologicalroots.</p><p>A recent paper in NatureNeuroscienceby a research team in Montreal, Canada, marks an important step in <mark class="vocab-word" data-word="revealing">revealing</mark> the <mark class="vocab-word" data-word="precise">precise</mark> underpinnings of ‘the potentpleasurablestimulus‘ that is music.Although the study involves plenty of fancy technology, including functionalmagneticresonanceimaging (FMRI) and ligand-based positronemissiontomography (PET) scanning, the experiment itself was ratherstraightforward.After screening 217 individuals who responded to advertisements requesting people who experience ‘<mark class="vocab-word" data-word="chill">chills</mark>’ to <mark class="vocab-word" data-word="instrumental">instrumental</mark> music, the scientists narrowed down the subject pool to ten.They then asked the subjects to bring in their playlist of favourite songs –virtuallyeverygenrewas represented, from techno to tango – and played them the music while their brain activity was monitored.Because the scientists were combining methodologies (PET and fMRI), they were able to <mark class="vocab-word" data-word="obtain">obtain</mark> an <mark class="vocab-word" data-word="impressively">impressively</mark> exact and detailed <mark class="vocab-word" data-word="portrait">portrait</mark> of music in the brain.The first thing they discovered is that music <mark class="vocab-word" data-word="trigger">triggers</mark> the production of dopamine – a chemical with a key role in setting people’s moods – by the <mark class="vocab-word" data-word="neuron">neurons</mark> (nerve cells) in both thedorsaland ventral regions of the brain.As these two regions have long been linked with the experience of pleasure, this finding isn’t particularly surprising.</p><p>What is rather more significant is the finding that the dopamine <mark class="vocab-word" data-word="neuron">neurons</mark> in the caudate – a region of the brain <mark class="vocab-word" data-word="involved">involved</mark> in learning stimulus-response associations, and in <mark class="vocab-word" data-word="anticipate">anticipating</mark> food and other ‘reward’ stimuli – were at their most active around 15 seconds before the participants’ favourite moments in the music.The researchers call this the ‘anticipatoryphase’； and argue that the purpose of this activity is to help us <mark class="vocab-word" data-word="predict">predict</mark> the arrival of our favourite part.The question, of course, is what all these dopamine <mark class="vocab-word" data-word="neuron">neurons</mark> are up to.Why are they so active in the period <mark class="vocab-word" data-word="preceding">preceding</mark> theacousticclimax?After all, we typicallyassociatesurges of dopamine with pleasure, with the <mark class="vocab-word" data-word="processing">processing</mark> of actual rewards.And yet, thisclusterof cells is most active when the ‘<mark class="vocab-word" data-word="chill">chills</mark>’ have yet to arrive, when themelodicpattern is still unresolved.</p><p>One way to answer the question is to look at the music and not the <mark class="vocab-word" data-word="neuron">neurons</mark>.While music can often seem (at least to the <mark class="vocab-word" data-word="outsider">outsider</mark>) like alabyrinthofintricatepatterns, it turns out that the most important part of every song orsymphonyis when the patterns break down, when the sound becomesunpredictable.If the music is too obvious, it is annoyingly <mark class="vocab-word" data-word="bore">boring</mark>, like an alarm clock.Numerous studies, after all, have demonstrated that dopamine <mark class="vocab-word" data-word="neuron">neurons</mark> quickly adapt to <mark class="vocab-word" data-word="predictable">predictable</mark> rewards.If we know what’s going to happen next, then we don’t get <mark class="vocab-word" data-word="excite">excited</mark>.This is why composers often introduce a key note in the beginning of a song, spend most of the rest of the piece in the <mark class="vocab-word" data-word="studious">studious</mark> <mark class="vocab-word" data-word="avoidance">avoidance</mark> of the pattern, and then finally repeat it only at the end.The longer we are denied the pattern we expect, the greater the emotional release when the pattern returns, safe and sound.</p><p>To demonstrate this psychologicalprinciple, themusicologistLeonard Meyer, in his classic book Emotion and Meaning in Music (1956), analysed the 5th movement of Beethoven’s StringQuartetin C-sharp minor, Op. 131.Meyer wanted to show how music is defined by itsflirtationwith – but not submission to – our expectations of order.Meyer dissected 50 measures (bars) of themasterpiece, showing how Beethoven begins with the clear statement of arhythmicand harmonic pattern and then, in aningenioustonaldance, carefully holds off repeating it.What Beethoven does instead is <mark class="vocab-word" data-word="suggest">suggest</mark> <mark class="vocab-word" data-word="variation">variations</mark> of the pattern.He wants topreservean element of <mark class="vocab-word" data-word="uncertainty">uncertainty</mark> in his music, making our brains beg for the one <mark class="vocab-word" data-word="chord">chord</mark> he refuses to give us.Beethoven saves that <mark class="vocab-word" data-word="chord">chord</mark> for the end.</p><p><mark class="vocab-word" data-word="accord">According</mark> to Meyer, it is the suspenseful <mark class="vocab-word" data-word="tension">tension</mark> of music, arising out of our unfulfilled expectations, that is the source of the music’s feeling.While earlier theories of music focused on the way a sound can refer to the real world of images and experiences – its ‘connotative‘ meaning – Meyer argued that the emotions we find in music come from the <mark class="vocab-word" data-word="unfold">unfolding</mark> events of the music itself.This ‘embodied meaning’ arises from the patterns thesymphonyinvokes and then ignores.It is this <mark class="vocab-word" data-word="uncertainty">uncertainty</mark> that <mark class="vocab-word" data-word="trigger">triggers</mark> thesurgeof dopamine in the caudate, as we struggle to figure out what will happen next.We can <mark class="vocab-word" data-word="predict">predict</mark> some of the notes, but we can’t <mark class="vocab-word" data-word="predict">predict</mark> them all, and that is what keeps us listening, waiting expectantly for our reward, for the pattern to be completed.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>音乐为什么能让我们有所触动？一方面，音乐是种完全抽象的艺术形式，没有任何语言或者清晰的想法。但即便音乐什么都没有说，它仍然可以触及我们的心底深处。当听到我们最喜爱的歌曲时，我们的身体会显示出各种情绪受到激发的现象。眼睛瞳孔会扩张，心跳加快，血压上升，皮肤的电导率会下降，而小脑-与身体运动有关的大脑区域-会变得异常活跃。血液甚至会重新导入我们腿部的肌肉。换句话说，声音会从我们最深处的生物根源撩动我们。</p><p>最近由加拿大蒙特利尔的一个研究团队发表在《自然神经科学》上的一篇论文标志着在揭示音乐这一“强烈愉悦刺激”的本质上向前迈出了一步。虽然该研究涉及到许多高端技术，包括功能性核磁共振成像以及基于配体的正电子释放层成像扫描，但实验自身其实十分简单明了。在对217名响应广告的个体进行筛选之后（广告征集那些听到器乐感到“全身颤抖”的人），科学家将实验对象缩小到10人。然后，他们让这些人提供自己最喜欢的歌曲的播放清单-几乎包括了所有风格，从科技电音到探戈曲目等等，并在为他们播放这些音乐的时候对他们的大脑活动进行监测。由于科学家结合了PET和fMRI这两种方法，他们可以获得大脑中音乐十分准确细致的图像。他们的第一个发现是，音乐刺激大脑背面和腹面的神经元产生多巴胺-一种调节人们情绪的关键化学物质。由于这两个区域早已被证明与愉悦的体验有关，这一发现并不是很让人惊讶。</p><p>更重要的一项发现是，尾状核（大脑区域中负责学习刺激-应激关联和预期食物与其他奖励刺激的区域）中的多巴胺神经元在实验对象最喜欢的乐曲部分到来之前的15秒处于最活跃的状态。研究者将其称之为“预期阶段”，并认为这一活动的目的是帮助我们迎接最喜欢的部分的到来。当然，问题在于这些多巴胺神经元究竟想做什么。它们为什么在乐曲高潮之前如此活跃？毕竟，我们通常将多巴胺的激增与愉悦，以及处理实际的奖励联系在一起。然而，这些细胞在“颤抖”还没到来，在旋律结构尚未完全展开的时候就处于最活跃的状态。</p><p>回答该问题的一种方法是研究音乐而非神经元。虽然音乐常常像精致模式组成的迷宫一样（至少在外人看来），但每首歌或者交响曲最重要的部分其实发生在这些模式破裂，声音变得不可预测的时候。如果音乐模式太过明显，它就会变得像闹钟一样无聊至极，惹人厌烦。毕竟，无数的研究都证明多巴胺神经元会快速适应可预测的奖励。如果我们知道接下来会发生什么，那么我们就不会变的兴奋。因此，作曲家经常会在一首歌开始的地方引入一个关键音符，在接下来的篇幅中竭尽全力避免出现该模式，然后只在结尾的地方对它进行重复。我们期待该模式却不得的时间越长，当这一模式最终圆满回归的时候，我们的情感释放也会越强烈。</p><p>为了证实这一心理学原理，音乐学家Leonard Meyer在他发表于1956年的经典著作《音乐中的情绪与意义》中，分析了贝多芬弦乐四重奏升C小调131号作品中的第五乐章。Meyer希望展示出，音乐如何通过挑逗而非服从我们对秩序的期待定义自身。Meyer分解了这首大师之作的50个小节，由此展示贝多芬如何以节奏分明并和谐的模式开始，然后在接下来独具匠心的音符舞蹈中小心翼翼地避免重复它。贝多芬所做的是暗示该模式的种种变化。他希望在他的音乐中保留一种不确定的元素，让我们的大脑祈求那一组他拒绝赐予我们的和弦。贝多芬将那组和弦一直留到最后。</p><p>根据Meryer的看法，正是音乐这种从我们得不到满足的期望中诞生的悬而未决的张力构成音乐触及我们感受的根源。虽然音乐的早期理论关注于声音指向真实世界图像或经验的方式-即它的“隐晦”含义，Meryer认为我们在音乐中发现的种种情感来自于音乐本身所展开的事项。这一“体现型含义”来自于交响乐所激发又可以忽视的模式。正是这种不确定性引发尾状核中多巴胺的激增，因为我们会努力弄清楚接下来要发生什么。我们能够预测到一些音符，但我们无法预测到所有的旋律。这是这一点让我们继续听下去，充满期待地等待着我们的奖励，等待着模式最终完成。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Why does music make us feel?On the one hand, music is a purely <mark class="vocab-word" data-word="abstract">abstract</mark> art form, <mark class="vocab-word" data-word="devoid">devoid</mark> of language orexplicitideas.And yet, even though music says little, it still manages to touch us deeply.When listening to our favourite songs, our body <mark class="vocab-word" data-word="betray">betrays</mark> all the <mark class="vocab-word" data-word="symptom">symptoms</mark> of emotionalarousal.The <mark class="vocab-word" data-word="pupil">pupils</mark> in our eyes <mark class="vocab-word" data-word="dilate">dilate</mark>, ourpulseand blood pressure rise, the <mark class="vocab-word" data-word="electrical">electrical</mark> conductance of our skin is lowered, and the cerebellum, a brain region associated with bodily movement, becomes strangely active.Blood is even re-directed to the muscles in our legs.In other words, sound <mark class="vocab-word" data-word="stir">stirs</mark> us at ourbiologicalroots.</p></div>  <div class="parallel-zh"><p>音乐为什么能让我们有所触动？一方面，音乐是种完全抽象的艺术形式，没有任何语言或者清晰的想法。但即便音乐什么都没有说，它仍然可以触及我们的心底深处。当听到我们最喜爱的歌曲时，我们的身体会显示出各种情绪受到激发的现象。眼睛瞳孔会扩张，心跳加快，血压上升，皮肤的电导率会下降，而小脑-与身体运动有关的大脑区域-会变得异常活跃。血液甚至会重新导入我们腿部的肌肉。换句话说，声音会从我们最深处的生物根源撩动我们。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A recent paper in NatureNeuroscienceby a research team in Montreal, Canada, marks an important step in <mark class="vocab-word" data-word="revealing">revealing</mark> the <mark class="vocab-word" data-word="precise">precise</mark> underpinnings of ‘the potentpleasurablestimulus‘ that is music.Although the study involves plenty of fancy technology, including functionalmagneticresonanceimaging (FMRI) and ligand-based positronemissiontomography (PET) scanning, the experiment itself was ratherstraightforward.After screening 217 individuals who responded to advertisements requesting people who experience ‘<mark class="vocab-word" data-word="chill">chills</mark>’ to <mark class="vocab-word" data-word="instrumental">instrumental</mark> music, the scientists narrowed down the subject pool to ten.They then asked the subjects to bring in their playlist of favourite songs –virtuallyeverygenrewas represented, from techno to tango – and played them the music while their brain activity was monitored.Because the scientists were combining methodologies (PET and fMRI), they were able to <mark class="vocab-word" data-word="obtain">obtain</mark> an <mark class="vocab-word" data-word="impressively">impressively</mark> exact and detailed <mark class="vocab-word" data-word="portrait">portrait</mark> of music in the brain.The first thing they discovered is that music <mark class="vocab-word" data-word="trigger">triggers</mark> the production of dopamine – a chemical with a key role in setting people’s moods – by the <mark class="vocab-word" data-word="neuron">neurons</mark> (nerve cells) in both thedorsaland ventral regions of the brain.As these two regions have long been linked with the experience of pleasure, this finding isn’t particularly surprising.</p></div>  <div class="parallel-zh"><p>最近由加拿大蒙特利尔的一个研究团队发表在《自然神经科学》上的一篇论文标志着在揭示音乐这一“强烈愉悦刺激”的本质上向前迈出了一步。虽然该研究涉及到许多高端技术，包括功能性核磁共振成像以及基于配体的正电子释放层成像扫描，但实验自身其实十分简单明了。在对217名响应广告的个体进行筛选之后（广告征集那些听到器乐感到“全身颤抖”的人），科学家将实验对象缩小到10人。然后，他们让这些人提供自己最喜欢的歌曲的播放清单-几乎包括了所有风格，从科技电音到探戈曲目等等，并在为他们播放这些音乐的时候对他们的大脑活动进行监测。由于科学家结合了PET和fMRI这两种方法，他们可以获得大脑中音乐十分准确细致的图像。他们的第一个发现是，音乐刺激大脑背面和腹面的神经元产生多巴胺-一种调节人们情绪的关键化学物质。由于这两个区域早已被证明与愉悦的体验有关，这一发现并不是很让人惊讶。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What is rather more significant is the finding that the dopamine <mark class="vocab-word" data-word="neuron">neurons</mark> in the caudate – a region of the brain <mark class="vocab-word" data-word="involved">involved</mark> in learning stimulus-response associations, and in <mark class="vocab-word" data-word="anticipate">anticipating</mark> food and other ‘reward’ stimuli – were at their most active around 15 seconds before the participants’ favourite moments in the music.The researchers call this the ‘anticipatoryphase’； and argue that the purpose of this activity is to help us <mark class="vocab-word" data-word="predict">predict</mark> the arrival of our favourite part.The question, of course, is what all these dopamine <mark class="vocab-word" data-word="neuron">neurons</mark> are up to.Why are they so active in the period <mark class="vocab-word" data-word="preceding">preceding</mark> theacousticclimax?After all, we typicallyassociatesurges of dopamine with pleasure, with the <mark class="vocab-word" data-word="processing">processing</mark> of actual rewards.And yet, thisclusterof cells is most active when the ‘<mark class="vocab-word" data-word="chill">chills</mark>’ have yet to arrive, when themelodicpattern is still unresolved.</p></div>  <div class="parallel-zh"><p>更重要的一项发现是，尾状核（大脑区域中负责学习刺激-应激关联和预期食物与其他奖励刺激的区域）中的多巴胺神经元在实验对象最喜欢的乐曲部分到来之前的15秒处于最活跃的状态。研究者将其称之为“预期阶段”，并认为这一活动的目的是帮助我们迎接最喜欢的部分的到来。当然，问题在于这些多巴胺神经元究竟想做什么。它们为什么在乐曲高潮之前如此活跃？毕竟，我们通常将多巴胺的激增与愉悦，以及处理实际的奖励联系在一起。然而，这些细胞在“颤抖”还没到来，在旋律结构尚未完全展开的时候就处于最活跃的状态。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One way to answer the question is to look at the music and not the <mark class="vocab-word" data-word="neuron">neurons</mark>.While music can often seem (at least to the <mark class="vocab-word" data-word="outsider">outsider</mark>) like alabyrinthofintricatepatterns, it turns out that the most important part of every song orsymphonyis when the patterns break down, when the sound becomesunpredictable.If the music is too obvious, it is annoyingly <mark class="vocab-word" data-word="bore">boring</mark>, like an alarm clock.Numerous studies, after all, have demonstrated that dopamine <mark class="vocab-word" data-word="neuron">neurons</mark> quickly adapt to <mark class="vocab-word" data-word="predictable">predictable</mark> rewards.If we know what’s going to happen next, then we don’t get <mark class="vocab-word" data-word="excite">excited</mark>.This is why composers often introduce a key note in the beginning of a song, spend most of the rest of the piece in the <mark class="vocab-word" data-word="studious">studious</mark> <mark class="vocab-word" data-word="avoidance">avoidance</mark> of the pattern, and then finally repeat it only at the end.The longer we are denied the pattern we expect, the greater the emotional release when the pattern returns, safe and sound.</p></div>  <div class="parallel-zh"><p>回答该问题的一种方法是研究音乐而非神经元。虽然音乐常常像精致模式组成的迷宫一样（至少在外人看来），但每首歌或者交响曲最重要的部分其实发生在这些模式破裂，声音变得不可预测的时候。如果音乐模式太过明显，它就会变得像闹钟一样无聊至极，惹人厌烦。毕竟，无数的研究都证明多巴胺神经元会快速适应可预测的奖励。如果我们知道接下来会发生什么，那么我们就不会变的兴奋。因此，作曲家经常会在一首歌开始的地方引入一个关键音符，在接下来的篇幅中竭尽全力避免出现该模式，然后只在结尾的地方对它进行重复。我们期待该模式却不得的时间越长，当这一模式最终圆满回归的时候，我们的情感释放也会越强烈。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>To demonstrate this psychologicalprinciple, themusicologistLeonard Meyer, in his classic book Emotion and Meaning in Music (1956), analysed the 5th movement of Beethoven’s StringQuartetin C-sharp minor, Op. 131.Meyer wanted to show how music is defined by itsflirtationwith – but not submission to – our expectations of order.Meyer dissected 50 measures (bars) of themasterpiece, showing how Beethoven begins with the clear statement of arhythmicand harmonic pattern and then, in aningenioustonaldance, carefully holds off repeating it.What Beethoven does instead is <mark class="vocab-word" data-word="suggest">suggest</mark> <mark class="vocab-word" data-word="variation">variations</mark> of the pattern.He wants topreservean element of <mark class="vocab-word" data-word="uncertainty">uncertainty</mark> in his music, making our brains beg for the one <mark class="vocab-word" data-word="chord">chord</mark> he refuses to give us.Beethoven saves that <mark class="vocab-word" data-word="chord">chord</mark> for the end.</p></div>  <div class="parallel-zh"><p>为了证实这一心理学原理，音乐学家Leonard Meyer在他发表于1956年的经典著作《音乐中的情绪与意义》中，分析了贝多芬弦乐四重奏升C小调131号作品中的第五乐章。Meyer希望展示出，音乐如何通过挑逗而非服从我们对秩序的期待定义自身。Meyer分解了这首大师之作的50个小节，由此展示贝多芬如何以节奏分明并和谐的模式开始，然后在接下来独具匠心的音符舞蹈中小心翼翼地避免重复它。贝多芬所做的是暗示该模式的种种变化。他希望在他的音乐中保留一种不确定的元素，让我们的大脑祈求那一组他拒绝赐予我们的和弦。贝多芬将那组和弦一直留到最后。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="accord">According</mark> to Meyer, it is the suspenseful <mark class="vocab-word" data-word="tension">tension</mark> of music, arising out of our unfulfilled expectations, that is the source of the music’s feeling.While earlier theories of music focused on the way a sound can refer to the real world of images and experiences – its ‘connotative‘ meaning – Meyer argued that the emotions we find in music come from the <mark class="vocab-word" data-word="unfold">unfolding</mark> events of the music itself.This ‘embodied meaning’ arises from the patterns thesymphonyinvokes and then ignores.It is this <mark class="vocab-word" data-word="uncertainty">uncertainty</mark> that <mark class="vocab-word" data-word="trigger">triggers</mark> thesurgeof dopamine in the caudate, as we struggle to figure out what will happen next.We can <mark class="vocab-word" data-word="predict">predict</mark> some of the notes, but we can’t <mark class="vocab-word" data-word="predict">predict</mark> them all, and that is what keeps us listening, waiting expectantly for our reward, for the pattern to be completed.</p></div>  <div class="parallel-zh"><p>根据Meryer的看法，正是音乐这种从我们得不到满足的期望中诞生的悬而未决的张力构成音乐触及我们感受的根源。虽然音乐的早期理论关注于声音指向真实世界图像或经验的方式-即它的“隐晦”含义，Meryer认为我们在音乐中发现的种种情感来自于音乐本身所展开的事项。这一“体现型含义”来自于交响乐所激发又可以忽视的模式。正是这种不确定性引发尾状核中多巴胺的激增，因为我们会努力弄清楚接下来要发生什么。我们能够预测到一些音符，但我们无法预测到所有的旋律。这是这一点让我们继续听下去，充满期待地等待着我们的奖励，等待着模式最终完成。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"abstract": 1, "devoid": 1, "betray": 1, "symptom": 1, "pupil": 1, "dilate": 1, "electrical": 1, "stir": 1, "revealing": 1, "precise": 1, "chill": 2, "instrumental": 1, "obtain": 1, "impressively": 1, "portrait": 1, "trigger": 2, "neuron": 5, "involved": 1, "anticipate": 1, "predict": 3, "preceding": 1, "processing": 1, "outsider": 1, "bore": 1, "predictable": 1, "excite": 1, "studious": 1, "avoidance": 1, "suggest": 1, "variation": 1, "uncertainty": 2, "chord": 2, "accord": 1, "tension": 1, "unfold": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

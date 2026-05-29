@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is exploration 探索是什么 - 剑桥雅思15 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>What is exploration 探索是什么</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39600.html" target="_blank">https://www.laokaoya.com/39600.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>We are all <mark class="vocab-word" data-word="explorer">explorers</mark>. Our desire to discover, and then share that new-found knowledge, is part of what makes us human 一 indeed, this has played an important part in our success as a species. Long before the first caveman <mark class="vocab-word" data-word="slump">slumped</mark> down beside the fire and grunted news that there were plenty of wildebeest over yonder, our <mark class="vocab-word" data-word="ancestor">ancestors</mark> had learnt the value of sending out <mark class="vocab-word" data-word="scout">scouts</mark> to <mark class="vocab-word" data-word="investigate">investigate</mark> the unknown. This <mark class="vocab-word" data-word="quest">questing</mark> nature of ours <mark class="vocab-word" data-word="undoubtedly">undoubtedly</mark> helped our species spread around the <mark class="vocab-word" data-word="globe">globe</mark>, just as it nowadays no doubt helps the last <mark class="vocab-word" data-word="nomadic">nomadic</mark> Penan maintain their existence in the <mark class="vocab-word" data-word="deplete">depleted</mark> forests of Borneo, and a visitor <mark class="vocab-word" data-word="negotiate">negotiate</mark> the <mark class="vocab-word" data-word="subway">subways</mark> of New York.</p><p>Over the years, we’ve come to think of <mark class="vocab-word" data-word="explorer">explorers</mark> as a <mark class="vocab-word" data-word="peculiar">peculiar</mark> <mark class="vocab-word" data-word="breed">breed</mark> – different from the rest of us, different from those of us who are <mark class="vocab-word" data-word="merely">merely</mark> ‘well travelled’, even; and perhaps there is a type of person more <mark class="vocab-word" data-word="suite">suited</mark> to seeking out the new, a type of caveman more <mark class="vocab-word" data-word="incline">inclined</mark> to risk <mark class="vocab-word" data-word="venture">venturing</mark> out. That, however, doesn’t take away from the fact that we all have this <mark class="vocab-word" data-word="enquire">enquiring</mark> <mark class="vocab-word" data-word="instinct">instinct</mark>, even today; and that in all sorts of professions 一 whether artist, <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="biologist">biologist</mark> or <mark class="vocab-word" data-word="astronomer">astronomer</mark> 一 borders of the unknown are being tested each day.</p><p>Thomas <mark class="vocab-word" data-word="hardy">Hardy</mark> set some of his novels in Egdon Heath, a <mark class="vocab-word" data-word="fictional">fictional</mark> area of uncultivated land, and used the landscape to <mark class="vocab-word" data-word="suggest">suggest</mark> the desires and fears of his characters. He is delving into <mark class="vocab-word" data-word="matter">matters</mark> we all recognise because they are common to <mark class="vocab-word" data-word="humanity">humanity</mark>. This is surely an act of exploration, and into a world as remote as the author chooses. <mark class="vocab-word" data-word="explorer">Explorer</mark> and travel writer Peter Fleming talks of the moment when the <mark class="vocab-word" data-word="explorer">explorer</mark> returns to the existence he has left behind with his loved ones. The traveller ‘who has for weeks or months seen himself only as a puny and <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> <mark class="vocab-word" data-word="alien">alien</mark> <mark class="vocab-word" data-word="crawl">crawling</mark> <mark class="vocab-word" data-word="laborious">laboriously</mark> over a country in which he has no roots and no background, suddenly encounters his other self, a relatively solid figure, with a place in the minds of certain people’.</p><p>In this book about the exploration of the earth’s surface, I have <mark class="vocab-word" data-word="confine">confined</mark> myself to those whose travels were real and who also aimed at more than personal discovery. But that still left me with another problem: the word ‘<mark class="vocab-word" data-word="explorer">explorer</mark>’ has become associated with a past <mark class="vocab-word" data-word="era">era</mark>. We think back to a golden age, as if exploration <mark class="vocab-word" data-word="peak">peaked</mark> somehow in the 19th century 一 as if the process of discovery is now on the decline, though the truth is that we have named only one and a half million of this planet’s species, and there may be more than 10 million 一 and that’s not including <mark class="vocab-word" data-word="bacteria">bacteria</mark>. We have studied only 5 per cent of the species we know. We have <mark class="vocab-word" data-word="scarcely">scarcely</mark> mapped the ocean floors, and know even less about ourselves; we fully understand the workings of only 10 per cent of our brains.</p><p>Here is how some of today’s ‘<mark class="vocab-word" data-word="explorer">explorers</mark>’ define the word. Ran Fiennes, dubbed the ‘greatest living <mark class="vocab-word" data-word="explorer">explorer</mark>’, said, ‘An <mark class="vocab-word" data-word="explorer">explorer</mark> is someone who has done something that no human has done before – and also done something scientifically useful.’ Chris Bonington, a <mark class="vocab-word" data-word="lead">leading</mark> <mark class="vocab-word" data-word="mountaineer">mountaineer</mark>, felt exploration was to be found in the act of physically <mark class="vocab-word" data-word="touching">touching</mark> the unknown: ‘You have to have gone somewhere new.’ Then <mark class="vocab-word" data-word="robin">Robin</mark> Hanbury-Tenison, a campaigner on <mark class="vocab-word" data-word="behalf">behalf</mark> of remote <mark class="vocab-word" data-word="so-called">so-called</mark> ‘<mark class="vocab-word" data-word="tribal">tribal</mark>’ peoples, said, ‘A traveller simply records information about some far-off world, and reports back; but an <mark class="vocab-word" data-word="explorer">explorer</mark> changes the world.’ Wilfred Thesiger, who <mark class="vocab-word" data-word="cross">crossed</mark> Arabia’s Empty <mark class="vocab-word" data-word="quarter">Quarter</mark> in 1946, and belongs to an <mark class="vocab-word" data-word="era">era</mark> of unmechanised travel now lost to the rest of us, told me, ‘If I’d gone across by <mark class="vocab-word" data-word="camel">camel</mark> when I could have gone by car, it would have been a <mark class="vocab-word" data-word="stunt">stunt</mark>.’ To him, exploration meant bringing back information from a remote place <mark class="vocab-word" data-word="regardless">regardless</mark> of any great self-discovery.</p><p>Each definition is slightly different – and tends to reflect the field of <mark class="vocab-word" data-word="endeavour">endeavour</mark> of each <mark class="vocab-word" data-word="pioneer">pioneer</mark>. It was the same whoever I asked: the <mark class="vocab-word" data-word="prominent">prominent</mark> <mark class="vocab-word" data-word="historian">historian</mark> would say exploration was a thing of the past, the cutting-edge scientist would say it was of the present. And so on. They each set their own particular criteria; the common <mark class="vocab-word" data-word="factor">factor</mark> in their approach being that they all had, unlike many of us who simply enjoy travel or discovering new things, both a very <mark class="vocab-word" data-word="definite">definite</mark> objective from the <mark class="vocab-word" data-word="outset">outset</mark> and also a desire to record their findings.</p><p>I’d best declare my own <mark class="vocab-word" data-word="bias">bias</mark>. As a writer, I’m interested in the exploration of ideas. I’ve done a great many <mark class="vocab-word" data-word="expedition">expeditions</mark> and each one was unique. I’ve lived for months alone with <mark class="vocab-word" data-word="isolated">isolated</mark> groups of people all around the world, even two ‘uncontacted <mark class="vocab-word" data-word="tribe">tribes</mark>’. But none of these things is of the slightest interest to anyone unless, through my books, I’ve found a new <mark class="vocab-word" data-word="slant">slant</mark>, explored a new idea. Why? Because the world has moved on. The time has long passed for the great <mark class="vocab-word" data-word="continental">continental</mark> <mark class="vocab-word" data-word="voyage">voyages</mark> – another walk to the <mark class="vocab-word" data-word="pole">poles</mark>, another <mark class="vocab-word" data-word="cross">crossing</mark> of the Empty <mark class="vocab-word" data-word="quarter">Quarter</mark>. We know how the land surface of our planet lies; exploration of it is now down to the details 一 the habits of <mark class="vocab-word" data-word="microbe">microbes</mark>, say, or the <mark class="vocab-word" data-word="graze">grazing</mark> behaviour of <mark class="vocab-word" data-word="buffalo">buffalo</mark>. Aside from the deep sea and deep underground, it’s the <mark class="vocab-word" data-word="era">era</mark> of specialists. However, this is to <mark class="vocab-word" data-word="disregard">disregard</mark> the role the human mind has in <mark class="vocab-word" data-word="convey">conveying</mark> remote places; and this is what interests me: how a fresh <mark class="vocab-word" data-word="interpretation">interpretation</mark>, even of a well-travelled route, can give its readers new <mark class="vocab-word" data-word="insight">insights</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>我们都是探索者。我们对发现以及随后分享新发现知识的渴望是我们之所以成为人类的部分原因 – 确实，这一特质在我们作为一个物种所取得的成功中扮演着重要角色。早在第一个洞穴人卧倒在篝火旁，嘟囔地说着那边有很多野兽的消息之前，我们的祖先已经了解到派遣侦查员探索未知区域的价值。我们这一探索追寻的本质无疑帮助我们的族群在全球扩散开来，正如它仍然毫无疑问地帮助着最后一只Penan游牧部落在Borneo荒芜的森林中维持生存，以及一名游客在纽约地铁中摸索方向。</p><p>最近几年，我们将探索者看成一种独特的物种 – 与我们其他人不同，甚至与我们之中那些仅仅是去过许多地方的人不同。或许有一类人更适合探索新鲜事物，有一类洞穴人更加倾向于冒险外出。然而，即便是现在，这也并未改变我们都有这一探索追寻的本能的事实。在所有职业中 – 无论是艺术家、生物学家还是天文学家 – 未知的边界每天都在经受测试。</p><p>Thomas Hardy将其小说的背景设定在Egdon Heath，一块尚未开发的虚构疆域，并且利用风景暗示其人物的渴望与恐惧。他所挖掘的事物我们都能识别出来，因为它们是我们人类所共有的。这当然是一种探索行为，而且是对一个作者所选择的遥远世界的探索。探险家与旅行作家Peter Fleming谈到这样的时刻：探险家回到他之前与所爱的人一起抛之身后的存在。旅行者“在几周或几个月的时间里将自己看作是一个微不足道的、毫不相干的外乡人，费劲全力缓慢行走在一片他既没有根基也没有背景的异域大陆上，突然之间，他遇到另一个自我，一个相对更加坚固的身份，在特定人群的心中占有了一席之地”。</p><p>在这本关于探索地球表面的书籍中，我将自己的目光限定在那些进行过真正的旅行，并且目标不仅仅是自我发现的人群身上。但这仍然给我造成另一个问题：“探索者”一词已经与过去的时代相关联。我们会回想某个黄金时代，好像探索莫名地在19世纪达到顶峰 – 好像发现的过程如今已在衰退，虽然事实是我们才仅仅命名了这座行星上150万个物种而已，而全部的物种可能超过1000万，并且这还不包括细菌。我们只研究了已知物种的5%。我们尚未绘制海洋底部的地图，对我们自身更是知之甚少；我们只对大脑10%的区域的工作原理有充分了解。</p><p>如下是一些今天的“探索者”对这个词的定义。被称为“现存的最伟大的探索者”的Ran Fiennes说：“探索者是一位完成了之前没有人完成过的事情的人 – 并且这件事情也对科学有益”。Chris Bonington，一位顶尖的登山专家，认为探索在于用实际行为触碰未知领域：“你必须得去一些全新的地方”。Robin Hanbury-Tenison， 一位代表偏远地区所谓“部落”群体的活动家，说：“旅行者仅仅记录关于遥远世界的信息，然后报道回来；但探索者则会改变世界”。Wilfred Thesiger于1946年穿越阿拉伯的空域沙漠，属于那个我们已经无法触及的不借助机械设备出行的年代。他告诉我，“如果我在能够使用汽车的时候选择乘坐骆驼进行穿越，那么这一切就成了噱头”。对他而言，探索意味着将信息从遥远的地方带回来，至于任何探索者自身伟大的自我发现则无关紧要“。</p><p>每种定义都稍有不同 – 并且倾向于反映每位先驱者各自付出努力的领域。无论我问的是谁，结果都一样：杰出的历史学家会说探索是过去的事情，前沿科学家会说探索是现在的事情。等等等等。他们每个人都设立了自己独特的标准。但他们的看法中有一个共同点：不像我们许多人那样只是享受旅行或者发现新鲜事物，他们所有人一开始都有着十分明确的目标，并且想要记录自己的发现。</p><p>我最好坦白一下我自己的偏颇。作为作家，我对探索观念很感兴趣。我进行过许多次考察，每一次都十分独特。我曾孤身一人和世界上与世隔绝的人群一起生活过几个月，其中甚至包括两个“从未与外界接触的部落”。但所有这些事情都无法引起其他人的丝毫兴趣，除非我通过自己的书籍找到新的切入点，探索新的观念。为什么？因为世界已经向前发展。伟大的洲际旅行的时光早已过去 – 比如再次徒步前往极地，比如再次穿过空域沙漠。我们知道地球表面是什么样子。对它的探索现在集中于细节 – 比如微生物的习性或者水牛的进食行为。除了深海和地底深处之外，如今已经是专业人员的时代。然而，这忽视了人类思想在传播遥远地域信息中的作用。而这也是我的兴趣所在：一种新的解释，甚至是一条熟悉的旅途，如何能赋予其读者全新的想法。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>We are all <mark class="vocab-word" data-word="explorer">explorers</mark>. Our desire to discover, and then share that new-found knowledge, is part of what makes us human 一 indeed, this has played an important part in our success as a species. Long before the first caveman <mark class="vocab-word" data-word="slump">slumped</mark> down beside the fire and grunted news that there were plenty of wildebeest over yonder, our <mark class="vocab-word" data-word="ancestor">ancestors</mark> had learnt the value of sending out <mark class="vocab-word" data-word="scout">scouts</mark> to <mark class="vocab-word" data-word="investigate">investigate</mark> the unknown. This <mark class="vocab-word" data-word="quest">questing</mark> nature of ours <mark class="vocab-word" data-word="undoubtedly">undoubtedly</mark> helped our species spread around the <mark class="vocab-word" data-word="globe">globe</mark>, just as it nowadays no doubt helps the last <mark class="vocab-word" data-word="nomadic">nomadic</mark> Penan maintain their existence in the <mark class="vocab-word" data-word="deplete">depleted</mark> forests of Borneo, and a visitor <mark class="vocab-word" data-word="negotiate">negotiate</mark> the <mark class="vocab-word" data-word="subway">subways</mark> of New York.</p></div>  <div class="parallel-zh"><p>我们都是探索者。我们对发现以及随后分享新发现知识的渴望是我们之所以成为人类的部分原因 – 确实，这一特质在我们作为一个物种所取得的成功中扮演着重要角色。早在第一个洞穴人卧倒在篝火旁，嘟囔地说着那边有很多野兽的消息之前，我们的祖先已经了解到派遣侦查员探索未知区域的价值。我们这一探索追寻的本质无疑帮助我们的族群在全球扩散开来，正如它仍然毫无疑问地帮助着最后一只Penan游牧部落在Borneo荒芜的森林中维持生存，以及一名游客在纽约地铁中摸索方向。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Over the years, we’ve come to think of <mark class="vocab-word" data-word="explorer">explorers</mark> as a <mark class="vocab-word" data-word="peculiar">peculiar</mark> <mark class="vocab-word" data-word="breed">breed</mark> – different from the rest of us, different from those of us who are <mark class="vocab-word" data-word="merely">merely</mark> ‘well travelled’, even; and perhaps there is a type of person more <mark class="vocab-word" data-word="suite">suited</mark> to seeking out the new, a type of caveman more <mark class="vocab-word" data-word="incline">inclined</mark> to risk <mark class="vocab-word" data-word="venture">venturing</mark> out. That, however, doesn’t take away from the fact that we all have this <mark class="vocab-word" data-word="enquire">enquiring</mark> <mark class="vocab-word" data-word="instinct">instinct</mark>, even today; and that in all sorts of professions 一 whether artist, <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="biologist">biologist</mark> or <mark class="vocab-word" data-word="astronomer">astronomer</mark> 一 borders of the unknown are being tested each day.</p></div>  <div class="parallel-zh"><p>最近几年，我们将探索者看成一种独特的物种 – 与我们其他人不同，甚至与我们之中那些仅仅是去过许多地方的人不同。或许有一类人更适合探索新鲜事物，有一类洞穴人更加倾向于冒险外出。然而，即便是现在，这也并未改变我们都有这一探索追寻的本能的事实。在所有职业中 – 无论是艺术家、生物学家还是天文学家 – 未知的边界每天都在经受测试。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Thomas <mark class="vocab-word" data-word="hardy">Hardy</mark> set some of his novels in Egdon Heath, a <mark class="vocab-word" data-word="fictional">fictional</mark> area of uncultivated land, and used the landscape to <mark class="vocab-word" data-word="suggest">suggest</mark> the desires and fears of his characters. He is delving into <mark class="vocab-word" data-word="matter">matters</mark> we all recognise because they are common to <mark class="vocab-word" data-word="humanity">humanity</mark>. This is surely an act of exploration, and into a world as remote as the author chooses. <mark class="vocab-word" data-word="explorer">Explorer</mark> and travel writer Peter Fleming talks of the moment when the <mark class="vocab-word" data-word="explorer">explorer</mark> returns to the existence he has left behind with his loved ones. The traveller ‘who has for weeks or months seen himself only as a puny and <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> <mark class="vocab-word" data-word="alien">alien</mark> <mark class="vocab-word" data-word="crawl">crawling</mark> <mark class="vocab-word" data-word="laborious">laboriously</mark> over a country in which he has no roots and no background, suddenly encounters his other self, a relatively solid figure, with a place in the minds of certain people’.</p></div>  <div class="parallel-zh"><p>Thomas Hardy将其小说的背景设定在Egdon Heath，一块尚未开发的虚构疆域，并且利用风景暗示其人物的渴望与恐惧。他所挖掘的事物我们都能识别出来，因为它们是我们人类所共有的。这当然是一种探索行为，而且是对一个作者所选择的遥远世界的探索。探险家与旅行作家Peter Fleming谈到这样的时刻：探险家回到他之前与所爱的人一起抛之身后的存在。旅行者“在几周或几个月的时间里将自己看作是一个微不足道的、毫不相干的外乡人，费劲全力缓慢行走在一片他既没有根基也没有背景的异域大陆上，突然之间，他遇到另一个自我，一个相对更加坚固的身份，在特定人群的心中占有了一席之地”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In this book about the exploration of the earth’s surface, I have <mark class="vocab-word" data-word="confine">confined</mark> myself to those whose travels were real and who also aimed at more than personal discovery. But that still left me with another problem: the word ‘<mark class="vocab-word" data-word="explorer">explorer</mark>’ has become associated with a past <mark class="vocab-word" data-word="era">era</mark>. We think back to a golden age, as if exploration <mark class="vocab-word" data-word="peak">peaked</mark> somehow in the 19th century 一 as if the process of discovery is now on the decline, though the truth is that we have named only one and a half million of this planet’s species, and there may be more than 10 million 一 and that’s not including <mark class="vocab-word" data-word="bacteria">bacteria</mark>. We have studied only 5 per cent of the species we know. We have <mark class="vocab-word" data-word="scarcely">scarcely</mark> mapped the ocean floors, and know even less about ourselves; we fully understand the workings of only 10 per cent of our brains.</p></div>  <div class="parallel-zh"><p>在这本关于探索地球表面的书籍中，我将自己的目光限定在那些进行过真正的旅行，并且目标不仅仅是自我发现的人群身上。但这仍然给我造成另一个问题：“探索者”一词已经与过去的时代相关联。我们会回想某个黄金时代，好像探索莫名地在19世纪达到顶峰 – 好像发现的过程如今已在衰退，虽然事实是我们才仅仅命名了这座行星上150万个物种而已，而全部的物种可能超过1000万，并且这还不包括细菌。我们只研究了已知物种的5%。我们尚未绘制海洋底部的地图，对我们自身更是知之甚少；我们只对大脑10%的区域的工作原理有充分了解。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Here is how some of today’s ‘<mark class="vocab-word" data-word="explorer">explorers</mark>’ define the word. Ran Fiennes, dubbed the ‘greatest living <mark class="vocab-word" data-word="explorer">explorer</mark>’, said, ‘An <mark class="vocab-word" data-word="explorer">explorer</mark> is someone who has done something that no human has done before – and also done something scientifically useful.’ Chris Bonington, a <mark class="vocab-word" data-word="lead">leading</mark> <mark class="vocab-word" data-word="mountaineer">mountaineer</mark>, felt exploration was to be found in the act of physically <mark class="vocab-word" data-word="touching">touching</mark> the unknown: ‘You have to have gone somewhere new.’ Then <mark class="vocab-word" data-word="robin">Robin</mark> Hanbury-Tenison, a campaigner on <mark class="vocab-word" data-word="behalf">behalf</mark> of remote <mark class="vocab-word" data-word="so-called">so-called</mark> ‘<mark class="vocab-word" data-word="tribal">tribal</mark>’ peoples, said, ‘A traveller simply records information about some far-off world, and reports back; but an <mark class="vocab-word" data-word="explorer">explorer</mark> changes the world.’ Wilfred Thesiger, who <mark class="vocab-word" data-word="cross">crossed</mark> Arabia’s Empty <mark class="vocab-word" data-word="quarter">Quarter</mark> in 1946, and belongs to an <mark class="vocab-word" data-word="era">era</mark> of unmechanised travel now lost to the rest of us, told me, ‘If I’d gone across by <mark class="vocab-word" data-word="camel">camel</mark> when I could have gone by car, it would have been a <mark class="vocab-word" data-word="stunt">stunt</mark>.’ To him, exploration meant bringing back information from a remote place <mark class="vocab-word" data-word="regardless">regardless</mark> of any great self-discovery.</p></div>  <div class="parallel-zh"><p>如下是一些今天的“探索者”对这个词的定义。被称为“现存的最伟大的探索者”的Ran Fiennes说：“探索者是一位完成了之前没有人完成过的事情的人 – 并且这件事情也对科学有益”。Chris Bonington，一位顶尖的登山专家，认为探索在于用实际行为触碰未知领域：“你必须得去一些全新的地方”。Robin Hanbury-Tenison， 一位代表偏远地区所谓“部落”群体的活动家，说：“旅行者仅仅记录关于遥远世界的信息，然后报道回来；但探索者则会改变世界”。Wilfred Thesiger于1946年穿越阿拉伯的空域沙漠，属于那个我们已经无法触及的不借助机械设备出行的年代。他告诉我，“如果我在能够使用汽车的时候选择乘坐骆驼进行穿越，那么这一切就成了噱头”。对他而言，探索意味着将信息从遥远的地方带回来，至于任何探索者自身伟大的自我发现则无关紧要“。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Each definition is slightly different – and tends to reflect the field of <mark class="vocab-word" data-word="endeavour">endeavour</mark> of each <mark class="vocab-word" data-word="pioneer">pioneer</mark>. It was the same whoever I asked: the <mark class="vocab-word" data-word="prominent">prominent</mark> <mark class="vocab-word" data-word="historian">historian</mark> would say exploration was a thing of the past, the cutting-edge scientist would say it was of the present. And so on. They each set their own particular criteria; the common <mark class="vocab-word" data-word="factor">factor</mark> in their approach being that they all had, unlike many of us who simply enjoy travel or discovering new things, both a very <mark class="vocab-word" data-word="definite">definite</mark> objective from the <mark class="vocab-word" data-word="outset">outset</mark> and also a desire to record their findings.</p></div>  <div class="parallel-zh"><p>每种定义都稍有不同 – 并且倾向于反映每位先驱者各自付出努力的领域。无论我问的是谁，结果都一样：杰出的历史学家会说探索是过去的事情，前沿科学家会说探索是现在的事情。等等等等。他们每个人都设立了自己独特的标准。但他们的看法中有一个共同点：不像我们许多人那样只是享受旅行或者发现新鲜事物，他们所有人一开始都有着十分明确的目标，并且想要记录自己的发现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>I’d best declare my own <mark class="vocab-word" data-word="bias">bias</mark>. As a writer, I’m interested in the exploration of ideas. I’ve done a great many <mark class="vocab-word" data-word="expedition">expeditions</mark> and each one was unique. I’ve lived for months alone with <mark class="vocab-word" data-word="isolated">isolated</mark> groups of people all around the world, even two ‘uncontacted <mark class="vocab-word" data-word="tribe">tribes</mark>’. But none of these things is of the slightest interest to anyone unless, through my books, I’ve found a new <mark class="vocab-word" data-word="slant">slant</mark>, explored a new idea. Why? Because the world has moved on. The time has long passed for the great <mark class="vocab-word" data-word="continental">continental</mark> <mark class="vocab-word" data-word="voyage">voyages</mark> – another walk to the <mark class="vocab-word" data-word="pole">poles</mark>, another <mark class="vocab-word" data-word="cross">crossing</mark> of the Empty <mark class="vocab-word" data-word="quarter">Quarter</mark>. We know how the land surface of our planet lies; exploration of it is now down to the details 一 the habits of <mark class="vocab-word" data-word="microbe">microbes</mark>, say, or the <mark class="vocab-word" data-word="graze">grazing</mark> behaviour of <mark class="vocab-word" data-word="buffalo">buffalo</mark>. Aside from the deep sea and deep underground, it’s the <mark class="vocab-word" data-word="era">era</mark> of specialists. However, this is to <mark class="vocab-word" data-word="disregard">disregard</mark> the role the human mind has in <mark class="vocab-word" data-word="convey">conveying</mark> remote places; and this is what interests me: how a fresh <mark class="vocab-word" data-word="interpretation">interpretation</mark>, even of a well-travelled route, can give its readers new <mark class="vocab-word" data-word="insight">insights</mark>.</p></div>  <div class="parallel-zh"><p>我最好坦白一下我自己的偏颇。作为作家，我对探索观念很感兴趣。我进行过许多次考察，每一次都十分独特。我曾孤身一人和世界上与世隔绝的人群一起生活过几个月，其中甚至包括两个“从未与外界接触的部落”。但所有这些事情都无法引起其他人的丝毫兴趣，除非我通过自己的书籍找到新的切入点，探索新的观念。为什么？因为世界已经向前发展。伟大的洲际旅行的时光早已过去 – 比如再次徒步前往极地，比如再次穿过空域沙漠。我们知道地球表面是什么样子。对它的探索现在集中于细节 – 比如微生物的习性或者水牛的进食行为。除了深海和地底深处之外，如今已经是专业人员的时代。然而，这忽视了人类思想在传播遥远地域信息中的作用。而这也是我的兴趣所在：一种新的解释，甚至是一条熟悉的旅途，如何能赋予其读者全新的想法。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"explorer": 9, "slump": 1, "ancestor": 1, "scout": 1, "investigate": 1, "quest": 1, "undoubtedly": 1, "globe": 1, "nomadic": 1, "deplete": 1, "negotiate": 1, "subway": 1, "peculiar": 1, "breed": 1, "merely": 1, "suite": 1, "incline": 1, "venture": 1, "enquire": 1, "instinct": 1, "marine": 1, "biologist": 1, "astronomer": 1, "hardy": 1, "fictional": 1, "suggest": 1, "matter": 1, "humanity": 1, "irrelevant": 1, "alien": 1, "crawl": 1, "laborious": 1, "confine": 1, "era": 3, "peak": 1, "bacteria": 1, "scarcely": 1, "lead": 1, "mountaineer": 1, "touching": 1, "robin": 1, "behalf": 1, "so-called": 1, "tribal": 1, "cross": 2, "quarter": 2, "camel": 1, "stunt": 1, "regardless": 1, "endeavour": 1, "pioneer": 1, "prominent": 1, "historian": 1, "factor": 1, "definite": 1, "outset": 1, "bias": 1, "expedition": 1, "isolated": 1, "tribe": 1, "slant": 1, "continental": 1, "voyage": 1, "pole": 1, "microbe": 1, "graze": 1, "buffalo": 1, "disregard": 1, "convey": 1, "interpretation": 1, "insight": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

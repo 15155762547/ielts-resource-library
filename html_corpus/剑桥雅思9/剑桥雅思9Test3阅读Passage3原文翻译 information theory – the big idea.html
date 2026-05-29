@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>information theory – the big idea - 剑桥雅思9 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>information theory – the big idea</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/27263.html" target="_blank">https://www.laokaoya.com/27263.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Information theory lies at the heart of everything—from DVD players and the <mark class="vocab-word" data-word="genetic">genetic</mark> code of DNA to the physics of the universe at its most fundamental. It has been central to the development of the science of communication, which enables data to be sent electronically and has therefore had a major <mark class="vocab-word" data-word="impact">impact</mark> on our lives</p><p>In April 2002 an event took place which demonstrated one of the many applications of information theory. The space <mark class="vocab-word" data-word="probe">probe</mark> Voyager I, launched in 1977, had sent back <mark class="vocab-word" data-word="spectacular">spectacular</mark> images of <mark class="vocab-word" data-word="jupiter">Jupiter</mark> and <mark class="vocab-word" data-word="saturn">Saturn</mark> and then <mark class="vocab-word" data-word="soar">soared</mark> out of the <mark class="vocab-word" data-word="solar">Solar</mark> System on a one-way mission to the stars. After 25 years of <mark class="vocab-word" data-word="exposure">exposure</mark> to the freezing temperatures of deep space, the <mark class="vocab-word" data-word="probe">probe</mark> was beginning to show its age. <mark class="vocab-word" data-word="sensor">Sensors</mark> and <mark class="vocab-word" data-word="circuit">circuits</mark> were on the <mark class="vocab-word" data-word="brink">brink</mark> of failing and NASA experts realized that they had to do something or lose contact with their <mark class="vocab-word" data-word="probe">probe</mark> forever. The solution was to get a message to Voyager I to <mark class="vocab-word" data-word="instruct">instruct</mark> it to use <mark class="vocab-word" data-word="spare">spares</mark> to change the failing parts. With the <mark class="vocab-word" data-word="probe">probe</mark> 12 billion <mark class="vocab-word" data-word="kilometer">kilometers</mark> from Earth, this was not an easy task. By means of a radio <mark class="vocab-word" data-word="dish">dish</mark> <mark class="vocab-word" data-word="belonging">belonging</mark> to NASA’s Deep Space Network, the message was sent out into the depths of space. Even travelling at the speed of light, it took over 11 hours to reach its target, far beyond the <mark class="vocab-word" data-word="orbit">orbit</mark> of <mark class="vocab-word" data-word="pluto">Pluto</mark>. Yet, incredibly, the little <mark class="vocab-word" data-word="probe">probe</mark> managed to hear the <mark class="vocab-word" data-word="faint">faint</mark> call from its home planet and successfully made the switchover.</p><p>It was the longest-distance repair job history, and a <mark class="vocab-word" data-word="triumph">triumph</mark> for the NASA engineers. But it also highlighted the <mark class="vocab-word" data-word="astonish">astonishing</mark> power of the techniques developed by American communications engineer Claude Shannon, who had died just a year earlier. Born in 1916 in Petoskey, Michigan, Shannon showed an early talent for maths and for building <mark class="vocab-word" data-word="gadget">gadgets</mark> and made <mark class="vocab-word" data-word="breakthrough">breakthroughs</mark> in the <mark class="vocab-word" data-word="foundation">foundations</mark> of computer technology when still a student. While at <mark class="vocab-word" data-word="bell">Bell</mark> Laboratories, Shannon developed information theory but shunned the resulting <mark class="vocab-word" data-word="acclaim">acclaim</mark>. In the 1940s, he single-handedly created an entire science of communication which has since inveigled its way into a host of applications, from DVDs to <mark class="vocab-word" data-word="satellite">satellite</mark> communications to bar <mark class="vocab-word" data-word="cod">codes</mark>— any area, in short, where data has to be <mark class="vocab-word" data-word="convey">conveyed</mark> rapidly yet <mark class="vocab-word" data-word="accurate">accurately</mark>.</p><p>This all seems light years away from the down-to-earth uses Shannon originally had for his work, which began when he was a 22-year-old graduate <mark class="vocab-word" data-word="engineering">engineering</mark> student at the <mark class="vocab-word" data-word="prestigious">prestigious</mark> Massachusetts <mark class="vocab-word" data-word="institute">Institute</mark> of Technology in 1939. He set out with an apparently simple aim: to <mark class="vocab-word" data-word="pin">pin</mark> down the <mark class="vocab-word" data-word="precise">precise</mark> meaning of the concept of ‘information’. The most basic form of information, Shannon argued, is whether something is true or false—which can be captured in the <mark class="vocab-word" data-word="binary">binary</mark> unit, or ‘bit’, of form 1 or 0. Having identified this fundamental unit, Shannon set about defining otherwise <mark class="vocab-word" data-word="vague">vague</mark> ideas about information and how to <mark class="vocab-word" data-word="transit">transit</mark> it from place to place. In the process he discovered something surprising: it is always possible to guarantee the information will get through <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="interference">interference</mark>—‘noise’—<mark class="vocab-word" data-word="intact">intact</mark>.</p><p>Noise usually means unwanted sounds which <mark class="vocab-word" data-word="interfere">interfere</mark> with <mark class="vocab-word" data-word="genuine">genuine</mark> information. Information theory <mark class="vocab-word" data-word="generalize">generalizes</mark> this idea via theorems that capture the effects of noise with <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="precision">precision</mark>. In particular, Shannon showed that noise sets a limit on the rate at which information can pass along communication channels while remaining error-free. This rate depends on the relative strengths of the signal and noise travelling down the communication channel, and on its <mark class="vocab-word" data-word="capacity">capacity</mark> (its ‘<mark class="vocab-word" data-word="bandwidth">bandwidth</mark>’). The resulting limit, given in units of bits per second, is the absolute maximum rate of error-free communication given signal strength and noise level. The trick, Shannon showed, is to find ways of packaging up —‘<mark class="vocab-word" data-word="cod">coding</mark>’—information to <mark class="vocab-word" data-word="cope">cope</mark> with the <mark class="vocab-word" data-word="ravage">ravages</mark> of noise, while staying within the information-carrying <mark class="vocab-word" data-word="capacity">capacity</mark>—‘<mark class="vocab-word" data-word="bandwidth">bandwidth</mark>’—of the communication system being used.</p><p>Over the years scientists have <mark class="vocab-word" data-word="devise">devised</mark> many such <mark class="vocab-word" data-word="cod">coding</mark> methods, and they have proved crucial in many technological <mark class="vocab-word" data-word="feat">feats</mark>. The voyager <mark class="vocab-word" data-word="spacecraft">spacecraft</mark> transmitted data using <mark class="vocab-word" data-word="cod">codes</mark> which added one extra bit for every single bit of information; the result was an error rate of just one bit in 10,000—and <mark class="vocab-word" data-word="stunning">stunningly</mark> clear pictures of the planets. Other <mark class="vocab-word" data-word="cod">codes</mark> have become part of everyday life—such as the <mark class="vocab-word" data-word="universal">Universal</mark> Product Code, or bar code. Which uses a simple error-detecting system that ensures supermarket check-out <mark class="vocab-word" data-word="laser">lasers</mark> can read the price even on, say, a <mark class="vocab-word" data-word="crumple">crumpled</mark> bag of <mark class="vocab-word" data-word="crisp">crisps</mark>. As recently as 1993, engineers made a major <mark class="vocab-word" data-word="breakthrough">breakthrough</mark> by discovering <mark class="vocab-word" data-word="so-called">so-called</mark> turbo—which come very close to Shannon’s <mark class="vocab-word" data-word="ultimate">ultimate</mark> limit for the maximum rate that data can be transmitted reliably, and now play a key role in the mobile videophone revolution.</p><p>Shannon also laid the <mark class="vocab-word" data-word="foundation">foundations</mark> of more efficient ways of storing information, by stripping out <mark class="vocab-word" data-word="superfluous">superfluous</mark> (‘<mark class="vocab-word" data-word="redundant">redundant</mark>’) bits from data which contributed little real information. As mobile phone text messages like ‘ I CN C U’ show, it is often possible to leave out a lot of data without losing much meaning. As with error correction, however, there’s a limit beyond which message become too <mark class="vocab-word" data-word="ambiguous">ambiguous</mark>. Shannon showed how to calculate this limit, opening the way to the design of compression methods that <mark class="vocab-word" data-word="cram">cram</mark> maximum information into the minimum space.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>信息理论是一切的核心-从DVD播放机和DNA的遗传密码到最根本的宇宙物理学。它一直是传播学发展的核心所在。它使数据能够以电子方式发送，并因此已经对我们的生活产生重大影响</p><p>2002年4月发生了一起事件。它证明了信息理论的许多应用之一。于1977年发射升空的“旅行者1号”太空探测器送回了木星和土星的壮观影像，然后飞离太阳系执行探索恒星的单程任务。暴露于深空的冰冻温度25年后，该探测器开始老化。传感器和电路位于崩溃的边缘。NASA专家意识到他们必须做些什么，否则的话就会永远与探测器失去联系。解决办法是向旅行者1号发送一条消息，指示其使用备用零件更换出现故障的零件。考虑到探测器距地球有120亿公里，这并非易事。通过属于NASA深空网络的无线电天线，该消息被发送到太空深处。即使以光速行进，也花了11个多小时才能到达目标，远远超出冥王星的轨道。然而，令人难以置信的是，这一小型探测器设法听到了来自其母星的微弱声音，并成功进行了转换。</p><p>这是历史上跨越最长距离的修理，也是NASA工程师的胜利。但是，它也突显了一年前去世的美国通信工程师克劳德·香农（Claude Shannon）所开发的技术的惊人力量。香农于1916年在密歇根州的佩托斯基（Petoskey）出生。他从小就展现出数学和搭建小工具方面的天赋，并在还是学生的时候就在计算机技术的基础上取得了突破。在贝尔实验室时，香农提出了信息理论，但回避了由此产生的好评。在20世纪40年代，他一手创建了后来应用于各种领域的通信科学，从DVD到卫星通讯再到条形码。简言之，任何需要对信息进行快速而准确的传输的领域。</p><p>这一切似乎与香农最初的应用相差很远。1993年他22岁，是著名的麻省理工学院工程学的研究生。他一开始的目的很简单：确定“信息”这一概念的确切含义。香农认为，基本的信息形式是判断事物正确与否，这可以用二进制单位“比特”以1或者0的形式来记录。香农确定了此基本形式后，便着手定义关于信息和信息跨地区传输的其他模糊概念。在这个过程中，他发现了一些令人吃惊事情：总是有可能使信息穿过随机的干扰-噪音-而保持完整。</p><p>噪音通常表示会干扰到真正信息的多余声音。信息理论通过定理概括了这一概念。它以数学的精确度确定了噪声的影响。更确切的说，香农表示噪音在速度方面存在限制。在特定的速度上，信息可以通过通信频道并保持完整。该速度单位为比特/秒，是在给定的信号强度和噪音水平下，信息无误差传送的最大绝对速度。香农指出，提供这一速度的有效方法是在所使用的通信系统的传送能力（即带宽）范围内，找到将信息打包（即编码）的方式，来应对噪声的破坏。</p><p>多年来，科学家们已经设计出许多这样的编码方法，也证明了它们对许多技术成就至关重要。旅行者号航天器利用编码传输数据，这些编码在每比特信息上都额外增加了一比特信息，使错误率仅为万分之一，得到清晰度惊人的行星图片。其他编码已成为日常生活的一部分，例如通用产品代码或条形码。它使用一种简单的错误检测系统，确保超市的激光结账设备甚至可以在皱巴巴的薯片袋上读取价格。就在1993年，工程师们取得了一项重大突破，发现所谓的Turbo码，这与香农提出的信息可以安全传送的最大速度极限非常接近。现在，Turbo码在移动可视电话变革中发挥着关键的作用，</p><p>通过去除含有较少真实信息的多余数据，香农也会开发更有效率地储存信息的方式奠定了基础。正如手机短信“I CN C U”（I can see you的缩写）一样，有可能在省略了很多数据之后，基本意思保持不变。但是，正如纠错一样，省略存在一定的限制。超过该限制信息就会变得模糊不清。香农说明了如何计算这一限制，为设计信息压缩方法，从而将最多的信息塞进最小的空间开辟了道路。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Information theory lies at the heart of everything—from DVD players and the <mark class="vocab-word" data-word="genetic">genetic</mark> code of DNA to the physics of the universe at its most fundamental. It has been central to the development of the science of communication, which enables data to be sent electronically and has therefore had a major <mark class="vocab-word" data-word="impact">impact</mark> on our lives</p></div>  <div class="parallel-zh"><p>信息理论是一切的核心-从DVD播放机和DNA的遗传密码到最根本的宇宙物理学。它一直是传播学发展的核心所在。它使数据能够以电子方式发送，并因此已经对我们的生活产生重大影响</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In April 2002 an event took place which demonstrated one of the many applications of information theory. The space <mark class="vocab-word" data-word="probe">probe</mark> Voyager I, launched in 1977, had sent back <mark class="vocab-word" data-word="spectacular">spectacular</mark> images of <mark class="vocab-word" data-word="jupiter">Jupiter</mark> and <mark class="vocab-word" data-word="saturn">Saturn</mark> and then <mark class="vocab-word" data-word="soar">soared</mark> out of the <mark class="vocab-word" data-word="solar">Solar</mark> System on a one-way mission to the stars. After 25 years of <mark class="vocab-word" data-word="exposure">exposure</mark> to the freezing temperatures of deep space, the <mark class="vocab-word" data-word="probe">probe</mark> was beginning to show its age. <mark class="vocab-word" data-word="sensor">Sensors</mark> and <mark class="vocab-word" data-word="circuit">circuits</mark> were on the <mark class="vocab-word" data-word="brink">brink</mark> of failing and NASA experts realized that they had to do something or lose contact with their <mark class="vocab-word" data-word="probe">probe</mark> forever. The solution was to get a message to Voyager I to <mark class="vocab-word" data-word="instruct">instruct</mark> it to use <mark class="vocab-word" data-word="spare">spares</mark> to change the failing parts. With the <mark class="vocab-word" data-word="probe">probe</mark> 12 billion <mark class="vocab-word" data-word="kilometer">kilometers</mark> from Earth, this was not an easy task. By means of a radio <mark class="vocab-word" data-word="dish">dish</mark> <mark class="vocab-word" data-word="belonging">belonging</mark> to NASA’s Deep Space Network, the message was sent out into the depths of space. Even travelling at the speed of light, it took over 11 hours to reach its target, far beyond the <mark class="vocab-word" data-word="orbit">orbit</mark> of <mark class="vocab-word" data-word="pluto">Pluto</mark>. Yet, incredibly, the little <mark class="vocab-word" data-word="probe">probe</mark> managed to hear the <mark class="vocab-word" data-word="faint">faint</mark> call from its home planet and successfully made the switchover.</p></div>  <div class="parallel-zh"><p>2002年4月发生了一起事件。它证明了信息理论的许多应用之一。于1977年发射升空的“旅行者1号”太空探测器送回了木星和土星的壮观影像，然后飞离太阳系执行探索恒星的单程任务。暴露于深空的冰冻温度25年后，该探测器开始老化。传感器和电路位于崩溃的边缘。NASA专家意识到他们必须做些什么，否则的话就会永远与探测器失去联系。解决办法是向旅行者1号发送一条消息，指示其使用备用零件更换出现故障的零件。考虑到探测器距地球有120亿公里，这并非易事。通过属于NASA深空网络的无线电天线，该消息被发送到太空深处。即使以光速行进，也花了11个多小时才能到达目标，远远超出冥王星的轨道。然而，令人难以置信的是，这一小型探测器设法听到了来自其母星的微弱声音，并成功进行了转换。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It was the longest-distance repair job history, and a <mark class="vocab-word" data-word="triumph">triumph</mark> for the NASA engineers. But it also highlighted the <mark class="vocab-word" data-word="astonish">astonishing</mark> power of the techniques developed by American communications engineer Claude Shannon, who had died just a year earlier. Born in 1916 in Petoskey, Michigan, Shannon showed an early talent for maths and for building <mark class="vocab-word" data-word="gadget">gadgets</mark> and made <mark class="vocab-word" data-word="breakthrough">breakthroughs</mark> in the <mark class="vocab-word" data-word="foundation">foundations</mark> of computer technology when still a student. While at <mark class="vocab-word" data-word="bell">Bell</mark> Laboratories, Shannon developed information theory but shunned the resulting <mark class="vocab-word" data-word="acclaim">acclaim</mark>. In the 1940s, he single-handedly created an entire science of communication which has since inveigled its way into a host of applications, from DVDs to <mark class="vocab-word" data-word="satellite">satellite</mark> communications to bar <mark class="vocab-word" data-word="cod">codes</mark>— any area, in short, where data has to be <mark class="vocab-word" data-word="convey">conveyed</mark> rapidly yet <mark class="vocab-word" data-word="accurate">accurately</mark>.</p></div>  <div class="parallel-zh"><p>这是历史上跨越最长距离的修理，也是NASA工程师的胜利。但是，它也突显了一年前去世的美国通信工程师克劳德·香农（Claude Shannon）所开发的技术的惊人力量。香农于1916年在密歇根州的佩托斯基（Petoskey）出生。他从小就展现出数学和搭建小工具方面的天赋，并在还是学生的时候就在计算机技术的基础上取得了突破。在贝尔实验室时，香农提出了信息理论，但回避了由此产生的好评。在20世纪40年代，他一手创建了后来应用于各种领域的通信科学，从DVD到卫星通讯再到条形码。简言之，任何需要对信息进行快速而准确的传输的领域。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This all seems light years away from the down-to-earth uses Shannon originally had for his work, which began when he was a 22-year-old graduate <mark class="vocab-word" data-word="engineering">engineering</mark> student at the <mark class="vocab-word" data-word="prestigious">prestigious</mark> Massachusetts <mark class="vocab-word" data-word="institute">Institute</mark> of Technology in 1939. He set out with an apparently simple aim: to <mark class="vocab-word" data-word="pin">pin</mark> down the <mark class="vocab-word" data-word="precise">precise</mark> meaning of the concept of ‘information’. The most basic form of information, Shannon argued, is whether something is true or false—which can be captured in the <mark class="vocab-word" data-word="binary">binary</mark> unit, or ‘bit’, of form 1 or 0. Having identified this fundamental unit, Shannon set about defining otherwise <mark class="vocab-word" data-word="vague">vague</mark> ideas about information and how to <mark class="vocab-word" data-word="transit">transit</mark> it from place to place. In the process he discovered something surprising: it is always possible to guarantee the information will get through <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="interference">interference</mark>—‘noise’—<mark class="vocab-word" data-word="intact">intact</mark>.</p></div>  <div class="parallel-zh"><p>这一切似乎与香农最初的应用相差很远。1993年他22岁，是著名的麻省理工学院工程学的研究生。他一开始的目的很简单：确定“信息”这一概念的确切含义。香农认为，基本的信息形式是判断事物正确与否，这可以用二进制单位“比特”以1或者0的形式来记录。香农确定了此基本形式后，便着手定义关于信息和信息跨地区传输的其他模糊概念。在这个过程中，他发现了一些令人吃惊事情：总是有可能使信息穿过随机的干扰-噪音-而保持完整。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Noise usually means unwanted sounds which <mark class="vocab-word" data-word="interfere">interfere</mark> with <mark class="vocab-word" data-word="genuine">genuine</mark> information. Information theory <mark class="vocab-word" data-word="generalize">generalizes</mark> this idea via theorems that capture the effects of noise with <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="precision">precision</mark>. In particular, Shannon showed that noise sets a limit on the rate at which information can pass along communication channels while remaining error-free. This rate depends on the relative strengths of the signal and noise travelling down the communication channel, and on its <mark class="vocab-word" data-word="capacity">capacity</mark> (its ‘<mark class="vocab-word" data-word="bandwidth">bandwidth</mark>’). The resulting limit, given in units of bits per second, is the absolute maximum rate of error-free communication given signal strength and noise level. The trick, Shannon showed, is to find ways of packaging up —‘<mark class="vocab-word" data-word="cod">coding</mark>’—information to <mark class="vocab-word" data-word="cope">cope</mark> with the <mark class="vocab-word" data-word="ravage">ravages</mark> of noise, while staying within the information-carrying <mark class="vocab-word" data-word="capacity">capacity</mark>—‘<mark class="vocab-word" data-word="bandwidth">bandwidth</mark>’—of the communication system being used.</p></div>  <div class="parallel-zh"><p>噪音通常表示会干扰到真正信息的多余声音。信息理论通过定理概括了这一概念。它以数学的精确度确定了噪声的影响。更确切的说，香农表示噪音在速度方面存在限制。在特定的速度上，信息可以通过通信频道并保持完整。该速度单位为比特/秒，是在给定的信号强度和噪音水平下，信息无误差传送的最大绝对速度。香农指出，提供这一速度的有效方法是在所使用的通信系统的传送能力（即带宽）范围内，找到将信息打包（即编码）的方式，来应对噪声的破坏。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Over the years scientists have <mark class="vocab-word" data-word="devise">devised</mark> many such <mark class="vocab-word" data-word="cod">coding</mark> methods, and they have proved crucial in many technological <mark class="vocab-word" data-word="feat">feats</mark>. The voyager <mark class="vocab-word" data-word="spacecraft">spacecraft</mark> transmitted data using <mark class="vocab-word" data-word="cod">codes</mark> which added one extra bit for every single bit of information; the result was an error rate of just one bit in 10,000—and <mark class="vocab-word" data-word="stunning">stunningly</mark> clear pictures of the planets. Other <mark class="vocab-word" data-word="cod">codes</mark> have become part of everyday life—such as the <mark class="vocab-word" data-word="universal">Universal</mark> Product Code, or bar code. Which uses a simple error-detecting system that ensures supermarket check-out <mark class="vocab-word" data-word="laser">lasers</mark> can read the price even on, say, a <mark class="vocab-word" data-word="crumple">crumpled</mark> bag of <mark class="vocab-word" data-word="crisp">crisps</mark>. As recently as 1993, engineers made a major <mark class="vocab-word" data-word="breakthrough">breakthrough</mark> by discovering <mark class="vocab-word" data-word="so-called">so-called</mark> turbo—which come very close to Shannon’s <mark class="vocab-word" data-word="ultimate">ultimate</mark> limit for the maximum rate that data can be transmitted reliably, and now play a key role in the mobile videophone revolution.</p></div>  <div class="parallel-zh"><p>多年来，科学家们已经设计出许多这样的编码方法，也证明了它们对许多技术成就至关重要。旅行者号航天器利用编码传输数据，这些编码在每比特信息上都额外增加了一比特信息，使错误率仅为万分之一，得到清晰度惊人的行星图片。其他编码已成为日常生活的一部分，例如通用产品代码或条形码。它使用一种简单的错误检测系统，确保超市的激光结账设备甚至可以在皱巴巴的薯片袋上读取价格。就在1993年，工程师们取得了一项重大突破，发现所谓的Turbo码，这与香农提出的信息可以安全传送的最大速度极限非常接近。现在，Turbo码在移动可视电话变革中发挥着关键的作用，</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Shannon also laid the <mark class="vocab-word" data-word="foundation">foundations</mark> of more efficient ways of storing information, by stripping out <mark class="vocab-word" data-word="superfluous">superfluous</mark> (‘<mark class="vocab-word" data-word="redundant">redundant</mark>’) bits from data which contributed little real information. As mobile phone text messages like ‘ I CN C U’ show, it is often possible to leave out a lot of data without losing much meaning. As with error correction, however, there’s a limit beyond which message become too <mark class="vocab-word" data-word="ambiguous">ambiguous</mark>. Shannon showed how to calculate this limit, opening the way to the design of compression methods that <mark class="vocab-word" data-word="cram">cram</mark> maximum information into the minimum space.</p></div>  <div class="parallel-zh"><p>通过去除含有较少真实信息的多余数据，香农也会开发更有效率地储存信息的方式奠定了基础。正如手机短信“I CN C U”（I can see you的缩写）一样，有可能在省略了很多数据之后，基本意思保持不变。但是，正如纠错一样，省略存在一定的限制。超过该限制信息就会变得模糊不清。香农说明了如何计算这一限制，为设计信息压缩方法，从而将最多的信息塞进最小的空间开辟了道路。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"genetic": 1, "impact": 1, "probe": 5, "spectacular": 1, "jupiter": 1, "saturn": 1, "soar": 1, "solar": 1, "exposure": 1, "sensor": 1, "circuit": 1, "brink": 1, "instruct": 1, "spare": 1, "kilometer": 1, "dish": 1, "belonging": 1, "orbit": 1, "pluto": 1, "faint": 1, "triumph": 1, "astonish": 1, "gadget": 1, "breakthrough": 2, "foundation": 2, "bell": 1, "acclaim": 1, "satellite": 1, "cod": 5, "convey": 1, "accurate": 1, "engineering": 1, "prestigious": 1, "institute": 1, "pin": 1, "precise": 1, "binary": 1, "vague": 1, "transit": 1, "random": 1, "interference": 1, "intact": 1, "interfere": 1, "genuine": 1, "generalize": 1, "mathematical": 1, "precision": 1, "capacity": 2, "bandwidth": 2, "cope": 1, "ravage": 1, "devise": 1, "feat": 1, "spacecraft": 1, "stunning": 1, "universal": 1, "laser": 1, "crumple": 1, "crisp": 1, "so-called": 1, "ultimate": 1, "superfluous": 1, "redundant": 1, "ambiguous": 1, "cram": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

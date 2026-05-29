@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raising the Mary Rose 玛丽玫瑰号 - 剑桥雅思11 Test 2 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思11</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Raising the Mary Rose 玛丽玫瑰号</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29681.html" target="_blank">https://www.laokaoya.com/29681.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>On 19 July 1545, English and French <mark class="vocab-word" data-word="fleet">fleets</mark> were engaged in a sea battle off the coast of southern England in the area of water called the Solent, between Portsmouth and the <mark class="vocab-word" data-word="isle">Isle</mark> of Wight.Among the English <mark class="vocab-word" data-word="vessel">vessels</mark> was a warship by the name of Mary Rose.Built in Portsmouth some 35 years earlier, she had had a long and successful fighting career, and was a favourite of King Henry VIII.Accounts of what happened to the ship vary: while <mark class="vocab-word" data-word="witness">witnesses</mark> agree that she was not hit by the French, some maintain that she was <mark class="vocab-word" data-word="outdated">outdated</mark>, overladen and sailing too low in the water, others that she was <mark class="vocab-word" data-word="mishandle">mishandled</mark> by undisciplined crew.What is undisputed, however, is that the Mary Rose sank into the Solent that day, taking at least 500 men with her.After the battle, attempts were made to recover the ship, but these failed.</p><p>The Mary Rose came to rest on theseabed, lying on her starboard (right) side at an angle ofapproximately60 degrees.Thehull(the body of the ship) acted as a <mark class="vocab-word" data-word="trap">trap</mark> for the sand and mud carried by Solent currents.As a result, the starboard side filled rapidly, leaving theexposedport (left) side to be <mark class="vocab-word" data-word="erode">eroded</mark> by <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="organism">organisms</mark> andmechanicaldegradation.Because of the way the ship sank, nearly all of the starboard half survivedintact.During the seventeenth and eighteenth centuries, the entire <mark class="vocab-word" data-word="site">site</mark> became covered with a layer of hard greyclay, which minimised furthererosion.</p><p>Then, on 16 June 1836, some fishermen in the Solent found that their equipment was caught on an underwaterobstruction, which turned out to be the Mary Rose.Diver John Deane happened to be exploring another sunken ship nearby, and the fishermen approached him, asking him to free theirgear.Deane <mark class="vocab-word" data-word="dive">dived</mark> down, and found the equipment caught on atimberprotruding slightly from theseabed.Exploring further, he <mark class="vocab-word" data-word="uncover">uncovered</mark> several other <mark class="vocab-word" data-word="timber">timbers</mark> and abronzegun.Deane continued <mark class="vocab-word" data-word="diving">diving</mark> on the siteintermittentlyuntil 1840, recovering several more guns, two <mark class="vocab-word" data-word="bow">bows</mark>, various <mark class="vocab-word" data-word="timber">timbers</mark>, part of apumpand various other small finds.</p><p>The Mary Rose then <mark class="vocab-word" data-word="fade">faded</mark> intoobscurityfor another hundred years.But in 1965, military <mark class="vocab-word" data-word="historian">historian</mark> andamateurdiver Alexander McKee, inconjunctionwith the British Sub-Aqua Club, <mark class="vocab-word" data-word="initiate">initiated</mark> a project called ‘Solent Ships’.While on paper this was a plan to examine a number of known <mark class="vocab-word" data-word="wreck">wrecks</mark> in the Solent, what McKee really <mark class="vocab-word" data-word="hop">hoped</mark> for was to find the Mary Rose.Ordinary search techniques proved <mark class="vocab-word" data-word="unsatisfactory">unsatisfactory</mark>, so McKee entered into <mark class="vocab-word" data-word="collaboration">collaboration</mark> with Harold E. Edgerton, professor of <mark class="vocab-word" data-word="electrical">electrical</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> at the Massachusetts <mark class="vocab-word" data-word="institute">Institute</mark> of Technology.In 1967, Edgerton’s side-scansonarsystems <mark class="vocab-word" data-word="reveal">revealed</mark> a large, unusually shaped object, which McKee believed was the Mary Rose.</p><p>Further <mark class="vocab-word" data-word="excavation">excavations</mark> revealedstraypieces oftimberand an iron gun.But the <mark class="vocab-word" data-word="climax">climax</mark> to the operation came when, on 5 May 1971, part of the ship’s frame was <mark class="vocab-word" data-word="uncover">uncovered</mark>.McKee and his team now knew for certain that they had found the <mark class="vocab-word" data-word="wreck">wreck</mark>, but were as yet <mark class="vocab-word" data-word="unaware">unaware</mark> that it also housed atreasuretrove of beautifully preserved <mark class="vocab-word" data-word="artefact">artefacts</mark>.Interest in the project grew, and in 1979, The Mary Rose Trust was formed, with Prince Charles as its President and Dr Margaret Rule itsArchaeologicalDirector.The decision whether or not tosalvagethe <mark class="vocab-word" data-word="wreck">wreck</mark> was not an easy one, although anexcavationin 1978 had shown that it might be possible to raise thehull.While the original aim was to raise thehullif at allfeasible, the operation was not given the go-ahead until January 1982, when all the necessary information was available.</p><p>An important <mark class="vocab-word" data-word="factor">factor</mark> in trying tosalvagethe Mary Rose was that the remaininghullwas an open shell.This led to an important decision being taken: <mark class="vocab-word" data-word="namely">namely</mark> to carry out the lifting operation in three verydistinctstages.Thehullwas attached to a lifting frame via a network of <mark class="vocab-word" data-word="bolt">bolts</mark> and lifting wires.The problem of thehullbeing <mark class="vocab-word" data-word="suck">sucked</mark> back <mark class="vocab-word" data-word="downward">downwards</mark> into the mud was overcome by using 12 <mark class="vocab-word" data-word="hydraulic">hydraulic</mark> jacks.These raised it a few centimetres over a period of several days, as the lifting frame rose slowly up its four legs.It was only when thehullwas hanging freely from the lifting frame, clear of theseabedand the suction effect of the <mark class="vocab-word" data-word="surrounding">surrounding</mark> mud, that thesalvageoperation progressed to the second stage.In this stage, the lifting frame was <mark class="vocab-word" data-word="fixed">fixed</mark> to ahookattached to acrane, and thehullwas lifted completely clear of theseabedand transferred <mark class="vocab-word" data-word="underwater">underwater</mark> into the liftingcradle.This required <mark class="vocab-word" data-word="precise">precise</mark> positioning to locate the legs into the ‘stabbing guides’ of the liftingcradle.The liftingcradlewas designed to fit thehullusingarchaeologicalsurvey drawings, and was fitted with air bags to provide additional <mark class="vocab-word" data-word="cushion">cushioning</mark> for thehull‘s delicatetimberframework.The third and final stage was to lift the entire structure into the air, by which time thehullwas also supported from below.Finally, on 11 October 1982, millions of people around the world held their breath as thetimberskeletonof the Mary Rose was lifted clear of the water, ready to be returned home to Portsmouth.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>1545年7月19日，英国和法国舰队在英格兰南部海域发生了一起海战。该海域被称为索伦特，位于朴茨茅次和怀特岛之间。英国舰队中有一艘名为玛丽玫瑰号的战舰。她于35年前在朴茨茅次建造，拥有长久而成功的战斗历史，是国王亨利八世的挚爱。关于这艘战舰发生的事情描述各异：虽然目击者都认为她没有被法国舰队击中，但一些人坚持认为她已经过时，装载了太多的东西，吃水太深；而其他人则认为是纪律不良的船员进行了错误操作。然而，毫无争议的是，玛丽玫瑰号在那天沉入了索伦特水域。一同沉没的还有至少500名船员。战斗之后，人们尝试寻找这艘战舰，但都失败了。</p><p>玛丽玫瑰号靠在海床上，右舷着地成60度角。船体吞噬索伦特洋流所带来沙子和泥土。因此，右舷一侧迅速被填满，使得左侧暴露在外面，很快被海洋生物和机械降解侵蚀。由于船只的沉没方式，右舷一侧几乎被完整地保留了下来。17世纪和18世纪，整个沉船区域被一层坚硬的灰色粘土覆盖，最大程度减少了进一步的侵蚀。</p><p>随后，1836年6月16日，索伦特海域的一些渔民发现他们的设备被某种水下障碍物卡住。而该障碍物正是玛丽玫瑰号。潜水员John Deane恰好在附近探索另外一艘沉船。渔民找到他，请他帮助解开他们的设备。Deane潜入水中，发现设备被挂在微微伸出海床的木杆上。进一步探查之后，他发现了一些其他木料，以及一把铜火枪。Deane断断续续地潜入该地点直到1840年。他发现了更多的火枪、两把弓、各种木材、水泵部件，以及其他各种各样的小东西。</p><p>玛丽玫瑰号随后又销声匿迹了100多年。1965年，军事历史学家、业余潜水员Axexander Mckee与英国潜水俱乐部合作，发起了一项被称为“索伦特沉船”的项目。纸面上，该计划是要研究一些索伦特海域已知的沉船，但Mckee真正希望的是找到玛丽玫瑰号。常规的搜索技术被证明差强人意，所以Mckee开始与麻省理工学院的电子工程学教授Harold E. Edgerton合作。1967年，Edgerton的侧向扫描声纳系统发现了一个巨大的、形状与众不同的物体。Mckee相信这正是玛丽玫瑰号。</p><p>进一步的发掘找到了一些散落的木头片和一支铁制火枪。但整个行动的高潮发生在1971年5月5日。当时找到了部分船只框架。Mckee和他的团队现在明确知道他们发现了沉船，但还没有意识到里面储藏着保存完好的精美艺术品宝藏。人们对该项目的兴趣日益高涨。1979年玛丽玫瑰号信托基金成立，查尔斯王子担任主席，Margaret Rule担任考古负责人。尽管1978年的发掘显示有可能打捞起整个船体，但是否打捞船只的决定却并不容易做出。虽然最初的目的是只要有可能就将船体打捞上来，但该行动直到1982年1月所有信息完备之后才得到批准。</p><p>影响尝试打捞玛丽玫瑰号的一个重要因素在于残存的船体是一个开放的外壳。这导致做出一项重要的决定，即整个提升操作分为三个截然不同的阶段。船体通过螺栓和起吊绳索组成的网固定到起重框架上。利用12个液压起重机解决了船体向下被吸回到泥土中的问题。随着起吊框架缓慢抬升自己的四个支架，船体在几天的时间里被升起几厘米。只有当船体完全悬挂在起吊框架上，离开海床，不受周围泥土吸力的影响时，打捞行动才进行到第二阶段。在该阶段，起重框架被固定在起重机的吊钩上。船体完全脱离海床，在水下被转移到升降篮中。通过考古调查绘画，升降篮被设计的贴合船体，并用空气包填充，从而为船只脆弱的木制框架提供额外的缓冲。第三也是最后一个阶段是将整个船体升至空中。同时船体从下方得到支撑。最终，1982年10月11日，全球数百万人屏息见证了玛丽玫瑰号的木制骨架脱离水面，准备回到朴茨茅次。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>On 19 July 1545, English and French <mark class="vocab-word" data-word="fleet">fleets</mark> were engaged in a sea battle off the coast of southern England in the area of water called the Solent, between Portsmouth and the <mark class="vocab-word" data-word="isle">Isle</mark> of Wight.Among the English <mark class="vocab-word" data-word="vessel">vessels</mark> was a warship by the name of Mary Rose.Built in Portsmouth some 35 years earlier, she had had a long and successful fighting career, and was a favourite of King Henry VIII.Accounts of what happened to the ship vary: while <mark class="vocab-word" data-word="witness">witnesses</mark> agree that she was not hit by the French, some maintain that she was <mark class="vocab-word" data-word="outdated">outdated</mark>, overladen and sailing too low in the water, others that she was <mark class="vocab-word" data-word="mishandle">mishandled</mark> by undisciplined crew.What is undisputed, however, is that the Mary Rose sank into the Solent that day, taking at least 500 men with her.After the battle, attempts were made to recover the ship, but these failed.</p></div>  <div class="parallel-zh"><p>1545年7月19日，英国和法国舰队在英格兰南部海域发生了一起海战。该海域被称为索伦特，位于朴茨茅次和怀特岛之间。英国舰队中有一艘名为玛丽玫瑰号的战舰。她于35年前在朴茨茅次建造，拥有长久而成功的战斗历史，是国王亨利八世的挚爱。关于这艘战舰发生的事情描述各异：虽然目击者都认为她没有被法国舰队击中，但一些人坚持认为她已经过时，装载了太多的东西，吃水太深；而其他人则认为是纪律不良的船员进行了错误操作。然而，毫无争议的是，玛丽玫瑰号在那天沉入了索伦特水域。一同沉没的还有至少500名船员。战斗之后，人们尝试寻找这艘战舰，但都失败了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Mary Rose came to rest on theseabed, lying on her starboard (right) side at an angle ofapproximately60 degrees.Thehull(the body of the ship) acted as a <mark class="vocab-word" data-word="trap">trap</mark> for the sand and mud carried by Solent currents.As a result, the starboard side filled rapidly, leaving theexposedport (left) side to be <mark class="vocab-word" data-word="erode">eroded</mark> by <mark class="vocab-word" data-word="marine">marine</mark> <mark class="vocab-word" data-word="organism">organisms</mark> andmechanicaldegradation.Because of the way the ship sank, nearly all of the starboard half survivedintact.During the seventeenth and eighteenth centuries, the entire <mark class="vocab-word" data-word="site">site</mark> became covered with a layer of hard greyclay, which minimised furthererosion.</p></div>  <div class="parallel-zh"><p>玛丽玫瑰号靠在海床上，右舷着地成60度角。船体吞噬索伦特洋流所带来沙子和泥土。因此，右舷一侧迅速被填满，使得左侧暴露在外面，很快被海洋生物和机械降解侵蚀。由于船只的沉没方式，右舷一侧几乎被完整地保留了下来。17世纪和18世纪，整个沉船区域被一层坚硬的灰色粘土覆盖，最大程度减少了进一步的侵蚀。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Then, on 16 June 1836, some fishermen in the Solent found that their equipment was caught on an underwaterobstruction, which turned out to be the Mary Rose.Diver John Deane happened to be exploring another sunken ship nearby, and the fishermen approached him, asking him to free theirgear.Deane <mark class="vocab-word" data-word="dive">dived</mark> down, and found the equipment caught on atimberprotruding slightly from theseabed.Exploring further, he <mark class="vocab-word" data-word="uncover">uncovered</mark> several other <mark class="vocab-word" data-word="timber">timbers</mark> and abronzegun.Deane continued <mark class="vocab-word" data-word="diving">diving</mark> on the siteintermittentlyuntil 1840, recovering several more guns, two <mark class="vocab-word" data-word="bow">bows</mark>, various <mark class="vocab-word" data-word="timber">timbers</mark>, part of apumpand various other small finds.</p></div>  <div class="parallel-zh"><p>随后，1836年6月16日，索伦特海域的一些渔民发现他们的设备被某种水下障碍物卡住。而该障碍物正是玛丽玫瑰号。潜水员John Deane恰好在附近探索另外一艘沉船。渔民找到他，请他帮助解开他们的设备。Deane潜入水中，发现设备被挂在微微伸出海床的木杆上。进一步探查之后，他发现了一些其他木料，以及一把铜火枪。Deane断断续续地潜入该地点直到1840年。他发现了更多的火枪、两把弓、各种木材、水泵部件，以及其他各种各样的小东西。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Mary Rose then <mark class="vocab-word" data-word="fade">faded</mark> intoobscurityfor another hundred years.But in 1965, military <mark class="vocab-word" data-word="historian">historian</mark> andamateurdiver Alexander McKee, inconjunctionwith the British Sub-Aqua Club, <mark class="vocab-word" data-word="initiate">initiated</mark> a project called ‘Solent Ships’.While on paper this was a plan to examine a number of known <mark class="vocab-word" data-word="wreck">wrecks</mark> in the Solent, what McKee really <mark class="vocab-word" data-word="hop">hoped</mark> for was to find the Mary Rose.Ordinary search techniques proved <mark class="vocab-word" data-word="unsatisfactory">unsatisfactory</mark>, so McKee entered into <mark class="vocab-word" data-word="collaboration">collaboration</mark> with Harold E. Edgerton, professor of <mark class="vocab-word" data-word="electrical">electrical</mark> <mark class="vocab-word" data-word="engineering">engineering</mark> at the Massachusetts <mark class="vocab-word" data-word="institute">Institute</mark> of Technology.In 1967, Edgerton’s side-scansonarsystems <mark class="vocab-word" data-word="reveal">revealed</mark> a large, unusually shaped object, which McKee believed was the Mary Rose.</p></div>  <div class="parallel-zh"><p>玛丽玫瑰号随后又销声匿迹了100多年。1965年，军事历史学家、业余潜水员Axexander Mckee与英国潜水俱乐部合作，发起了一项被称为“索伦特沉船”的项目。纸面上，该计划是要研究一些索伦特海域已知的沉船，但Mckee真正希望的是找到玛丽玫瑰号。常规的搜索技术被证明差强人意，所以Mckee开始与麻省理工学院的电子工程学教授Harold E. Edgerton合作。1967年，Edgerton的侧向扫描声纳系统发现了一个巨大的、形状与众不同的物体。Mckee相信这正是玛丽玫瑰号。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Further <mark class="vocab-word" data-word="excavation">excavations</mark> revealedstraypieces oftimberand an iron gun.But the <mark class="vocab-word" data-word="climax">climax</mark> to the operation came when, on 5 May 1971, part of the ship’s frame was <mark class="vocab-word" data-word="uncover">uncovered</mark>.McKee and his team now knew for certain that they had found the <mark class="vocab-word" data-word="wreck">wreck</mark>, but were as yet <mark class="vocab-word" data-word="unaware">unaware</mark> that it also housed atreasuretrove of beautifully preserved <mark class="vocab-word" data-word="artefact">artefacts</mark>.Interest in the project grew, and in 1979, The Mary Rose Trust was formed, with Prince Charles as its President and Dr Margaret Rule itsArchaeologicalDirector.The decision whether or not tosalvagethe <mark class="vocab-word" data-word="wreck">wreck</mark> was not an easy one, although anexcavationin 1978 had shown that it might be possible to raise thehull.While the original aim was to raise thehullif at allfeasible, the operation was not given the go-ahead until January 1982, when all the necessary information was available.</p></div>  <div class="parallel-zh"><p>进一步的发掘找到了一些散落的木头片和一支铁制火枪。但整个行动的高潮发生在1971年5月5日。当时找到了部分船只框架。Mckee和他的团队现在明确知道他们发现了沉船，但还没有意识到里面储藏着保存完好的精美艺术品宝藏。人们对该项目的兴趣日益高涨。1979年玛丽玫瑰号信托基金成立，查尔斯王子担任主席，Margaret Rule担任考古负责人。尽管1978年的发掘显示有可能打捞起整个船体，但是否打捞船只的决定却并不容易做出。虽然最初的目的是只要有可能就将船体打捞上来，但该行动直到1982年1月所有信息完备之后才得到批准。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>An important <mark class="vocab-word" data-word="factor">factor</mark> in trying tosalvagethe Mary Rose was that the remaininghullwas an open shell.This led to an important decision being taken: <mark class="vocab-word" data-word="namely">namely</mark> to carry out the lifting operation in three verydistinctstages.Thehullwas attached to a lifting frame via a network of <mark class="vocab-word" data-word="bolt">bolts</mark> and lifting wires.The problem of thehullbeing <mark class="vocab-word" data-word="suck">sucked</mark> back <mark class="vocab-word" data-word="downward">downwards</mark> into the mud was overcome by using 12 <mark class="vocab-word" data-word="hydraulic">hydraulic</mark> jacks.These raised it a few centimetres over a period of several days, as the lifting frame rose slowly up its four legs.It was only when thehullwas hanging freely from the lifting frame, clear of theseabedand the suction effect of the <mark class="vocab-word" data-word="surrounding">surrounding</mark> mud, that thesalvageoperation progressed to the second stage.In this stage, the lifting frame was <mark class="vocab-word" data-word="fixed">fixed</mark> to ahookattached to acrane, and thehullwas lifted completely clear of theseabedand transferred <mark class="vocab-word" data-word="underwater">underwater</mark> into the liftingcradle.This required <mark class="vocab-word" data-word="precise">precise</mark> positioning to locate the legs into the ‘stabbing guides’ of the liftingcradle.The liftingcradlewas designed to fit thehullusingarchaeologicalsurvey drawings, and was fitted with air bags to provide additional <mark class="vocab-word" data-word="cushion">cushioning</mark> for thehull‘s delicatetimberframework.The third and final stage was to lift the entire structure into the air, by which time thehullwas also supported from below.Finally, on 11 October 1982, millions of people around the world held their breath as thetimberskeletonof the Mary Rose was lifted clear of the water, ready to be returned home to Portsmouth.</p></div>  <div class="parallel-zh"><p>影响尝试打捞玛丽玫瑰号的一个重要因素在于残存的船体是一个开放的外壳。这导致做出一项重要的决定，即整个提升操作分为三个截然不同的阶段。船体通过螺栓和起吊绳索组成的网固定到起重框架上。利用12个液压起重机解决了船体向下被吸回到泥土中的问题。随着起吊框架缓慢抬升自己的四个支架，船体在几天的时间里被升起几厘米。只有当船体完全悬挂在起吊框架上，离开海床，不受周围泥土吸力的影响时，打捞行动才进行到第二阶段。在该阶段，起重框架被固定在起重机的吊钩上。船体完全脱离海床，在水下被转移到升降篮中。通过考古调查绘画，升降篮被设计的贴合船体，并用空气包填充，从而为船只脆弱的木制框架提供额外的缓冲。第三也是最后一个阶段是将整个船体升至空中。同时船体从下方得到支撑。最终，1982年10月11日，全球数百万人屏息见证了玛丽玫瑰号的木制骨架脱离水面，准备回到朴茨茅次。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"fleet": 1, "isle": 1, "vessel": 1, "witness": 1, "outdated": 1, "mishandle": 1, "trap": 1, "erode": 1, "marine": 1, "organism": 1, "site": 1, "dive": 1, "uncover": 2, "timber": 2, "diving": 1, "bow": 1, "fade": 1, "historian": 1, "initiate": 1, "wreck": 3, "hop": 1, "unsatisfactory": 1, "collaboration": 1, "electrical": 1, "engineering": 1, "institute": 1, "reveal": 1, "excavation": 1, "climax": 1, "unaware": 1, "artefact": 1, "factor": 1, "namely": 1, "bolt": 1, "suck": 1, "downward": 1, "hydraulic": 1, "surrounding": 1, "fixed": 1, "underwater": 1, "precise": 1, "cushion": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

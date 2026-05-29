@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Population movements and genetics - 剑桥雅思7 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Population movements and genetics</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24499.html" target="_blank">https://www.laokaoya.com/24499.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Study of the origins and <mark class="vocab-word" data-word="distribution">distribution</mark> of human populations used to be based on archaeological and <mark class="vocab-word" data-word="fossil">fossil</mark> evidence. A number of techniques developed since the 1950s, however, have placed the study of these subjects on a sounder and more objective footing. The best information on early population movements is now being <mark class="vocab-word" data-word="obtain">obtained</mark> from the ‘archaeology of the living body’, the <mark class="vocab-word" data-word="clue">clues</mark> to be found in <mark class="vocab-word" data-word="genetic">genetic</mark> material.</p><p>Recent work on the problem of when people first entered the Americas is an example of the value of these new techniques. <mark class="vocab-word" data-word="north-east">North-east</mark> Asia and Siberia have long been accepted as the launching ground for the first human colonisers of the New World1. But was there one major wave of <mark class="vocab-word" data-word="migration">migration</mark> across the Bering <mark class="vocab-word" data-word="strait">Strait</mark> into the Americas, or several? And when did this event, or events, take place? In recent years, new <mark class="vocab-word" data-word="clue">clues</mark> have come from research into <mark class="vocab-word" data-word="genetics">genetics</mark>, including the <mark class="vocab-word" data-word="distribution">distribution</mark> of <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="marker">markers</mark> in modern Native Americans2.</p><p>An important project, led by the <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Robert Williams, focused on the <mark class="vocab-word" data-word="variant">variants</mark> (called Gm allotypes) of one particular <mark class="vocab-word" data-word="protein">protein</mark> immunoglobin G – found in the <mark class="vocab-word" data-word="fluid">fluid</mark> <mark class="vocab-word" data-word="portion">portion</mark> of human blood. All <mark class="vocab-word" data-word="protein">proteins</mark> ‘<mark class="vocab-word" data-word="drift">drift</mark>’, or produce <mark class="vocab-word" data-word="variant">variants</mark>, over the generations, and members of an <mark class="vocab-word" data-word="interbreed">interbreeding</mark> human population will share a set of such <mark class="vocab-word" data-word="variant">variants</mark>. Thus, by comparing the Gm allotypes of two different populations (e.g. two Indian <mark class="vocab-word" data-word="tribe">tribes</mark>), one can establish their <mark class="vocab-word" data-word="genetic">genetic</mark> ‘distance’, which itself can be <mark class="vocab-word" data-word="calibrate">calibrated</mark> to give an <mark class="vocab-word" data-word="indication">indication</mark> of the length of time since these populations last interbred.</p><p>Williams and his colleagues sampled the blood of over 5,000 American Indians in western North America during a twenty-year period. They found that their Gm allotypes could be divided into two groups, one of which also <mark class="vocab-word" data-word="correspond">corresponded</mark> to the <mark class="vocab-word" data-word="genetic">genetic</mark> typing of Central and South American Indians. Other tests showed that the Inuit (or Eskimo) and Aleut3formed a third group. From this evidence it was <mark class="vocab-word" data-word="deduce">deduced</mark> that there had been three major waves of <mark class="vocab-word" data-word="migration">migration</mark> across the Bering <mark class="vocab-word" data-word="strait">Strait</mark>. The first, Paleo-Indian, wave more than 15,000 years ago was <mark class="vocab-word" data-word="ancestral">ancestral</mark> to all Central and South American Indians. The second wave, about 14,000-12,000 years ago, brought Na-Dene hunters, <mark class="vocab-word" data-word="ancestor">ancestors</mark> of the Navajo and Apache (who only <mark class="vocab-word" data-word="migrate">migrated</mark> south from Canada about 600 or 700 years ago). The third wave, perhaps 10,000 or 9,000 years ago, saw the <mark class="vocab-word" data-word="migration">migration</mark> from <mark class="vocab-word" data-word="north-east">North-east</mark> Asia of groups <mark class="vocab-word" data-word="ancestral">ancestral</mark> to the modern Eskimo and Aleut.</p><p>How far does other research support these conclusions? Geneticist Douglas Wallace has studied mitochondrial DNA4in blood samples from three widely separated Native American groups: Pima-Papago Indians in Arizona, <mark class="vocab-word" data-word="maya">Maya</mark> Indians on the Yucatán <mark class="vocab-word" data-word="peninsula">peninsula</mark>, Mexico, and Ticuna Indians in the Upper Amazon region of Brazil. As would have been <mark class="vocab-word" data-word="predict">predicted</mark> by Robert Williams’s work, all three groups appear to be <mark class="vocab-word" data-word="descend">descended</mark> from the same <mark class="vocab-word" data-word="ancestral">ancestral</mark> (Paleo-Indian) population.</p><p>There are two other kinds of research that have thrown some light on the origins of the Native American population; they involve the study of teeth and of languages. The <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Christy Turner is an expert in the analysis of changing physical characteristics in human teeth. He argues that tooth <mark class="vocab-word" data-word="crown">crowns</mark> and roots5have a high <mark class="vocab-word" data-word="genetic">genetic</mark> component, <mark class="vocab-word" data-word="minimal">minimally</mark> affected by environmental and other <mark class="vocab-word" data-word="factor">factors</mark>. Studies carried out by Turner of many thousands of New and Old World <mark class="vocab-word" data-word="specimen">specimens</mark>, both ancient and modern, <mark class="vocab-word" data-word="suggest">suggest</mark> that the majority of <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> Americans are linked to Northern Asian populations by <mark class="vocab-word" data-word="crown">crown</mark> and root <mark class="vocab-word" data-word="trait">traits</mark> such as incisor6<mark class="vocab-word" data-word="shovel">shoveling</mark> (a scooping out on one or both surfaces of the tooth), single-rooted upper first premolars6 and triple-rooted lower first molars6.</p><p><mark class="vocab-word" data-word="accord">According</mark> to Turner, this ties in with the idea of a single Paleo-lndian <mark class="vocab-word" data-word="migration">migration</mark> out of North Asia, which he sets at before 14,000 years ago by <mark class="vocab-word" data-word="calibrate">calibrating</mark> rates of <mark class="vocab-word" data-word="dental">dental</mark> micro-evolution. Tooth analyses also <mark class="vocab-word" data-word="suggest">suggest</mark> that there were two later <mark class="vocab-word" data-word="migration">migrations</mark> of Na-Denes and Eskimo-Aleut.</p><p>The linguist Joseph Greenberg has, since the 1950s, argued that all Native American languages belong to a single ‘Amerind’ family, except for Na-Dene and Eskimo-Aleut – a view that gives <mark class="vocab-word" data-word="credence">credence</mark> to the idea of three main <mark class="vocab-word" data-word="migration">migrations</mark>. Greenberg is in a minority among fellow linguists, most of whom favour the notion of a great many waves of <mark class="vocab-word" data-word="migration">migration</mark> to account for the more than 1,000 languages spoken at one time by American Indians. But there is no doubt that the new <mark class="vocab-word" data-word="genetic">genetic</mark> and <mark class="vocab-word" data-word="dental">dental</mark> evidence provides strong backing for Greenberg’s view. Dates given for the <mark class="vocab-word" data-word="migration">migrations</mark> should nevertheless be treated with <mark class="vocab-word" data-word="caution">caution</mark>, except where supported by hard archaeological evidence.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>过去，对人类起源和分布的研究主要建立在考古和化石证据之上。但是，自20世纪50年代以来许多技术的发展使对这些课题的研究拥有了更合理，更客观的基础。现在可以从“活体考古学”（遗传材料中包含的线索）中获得有关早期人口迁移的最佳信息。</p><p>关于人们何时首次进入美洲问题的最新研究是这些新技术价值的一个例子。东北亚地区和西伯利亚地区长期被认为是新世界第一批人类探索者的出发地。但是，是只有一次穿过白令海峡到达美洲的大规模移民浪潮，还是有几次？并且它，或它们是什么时候发生的？近年来，遗传学研究通过现代美洲原住民中遗传标记的分布提供了新的线索。</p><p>由生物人类学家罗伯特·威廉姆斯主持的重要项目将注意力放在一种人类血液中发现的特定的蛋白质-免疫球蛋白G的变种上。世代之间，所有蛋白质都会“漂移”或产生变体，而相互繁殖的人类种群成员将共享一组此类变体。因此，通过比较两个不同群体的Gm免疫球蛋白（例如两个印度部落），研究人员可以确立他们的遗传“距离”。通过校准，它们可以揭示这些种群上一次互相繁殖的时间。</p><p>威廉姆斯和他的同事用了20年的时间在北美西部采集了超过5000名美洲印第安人的血液样本。他们发现他们的Gm免疫球蛋白可以分为两组，其中一组对应中美洲和南美洲印第安人的基因类型。其他测试表明，因纽特人（或爱斯基摩人）和阿留申人组成了第三组。从这一证据可以推断出白令海峡发生了三次大的移民浪潮。15000多年前的第一波Paleo-Indian浪潮构成所有中美洲和南美洲印第安人的祖先。大约12000年到14000之前的第二波浪潮带来了Na-Dene猎人。他们是Navajo和Apache的祖先，600或700年前才从加拿大向南迁移。9000年到10000年前的第三波浪潮见证了现代爱斯基摩人和阿申留人的祖先从东北亚的迁徙。</p><p>其他研究在多大程度上支持了这些结论呢？遗传学家道格拉斯· 华莱士研究了三个广泛分布的美洲本土人群（Arizona的Pima-Papago印第安人，墨西哥Yucatan半岛的玛雅印第安人，以及巴西北部亚马逊地区的Ticuna印第安人）血液样本中的线粒体DNA。正如罗伯特·威廉姆斯的研究所预测的那样，所有三组人群似乎来自同一祖先群体（Paleo-Indian）。</p><p>有另外两种研究在某种程度上揭示了美国原住民的起源。他们涉及对牙齿和语言的研究。生物人类学家克里斯蒂·特纳（Christy Turner）是分析人类牙齿物理特性变化的专家。他认为，牙冠和牙根具有很高的遗传成分，很少受环境和其他因素的影响。特纳对成千上万个古代和现代的新旧世界标本进行的研究表明，大多数史前美国人的牙冠与牙床特征与北亚人口存在联系。</p><p>特纳认为，这与Paleo-India人一次从北亚迁出的想法有关。他通过校准牙齿微观进化的速率将这一时间定在14000年前。牙齿分析还表明，后来存在Na-Denes和Eskimo – Aleut的两次迁移。</p><p>语言学家约瑟夫·格林伯格（Joseph Greenberg）自20世纪50年代以来一直认为，除了Na-Dene和Eskimo-Aleut以外，所有美洲原住民的语言都属于“Amerind”族-这种观点支持三次主要移民浪潮的想法。格林伯格是语言学家中的少数派，其中大多数人都赞成多批次移民浪潮的概念，以解释美洲印第安人同时所讲的1000 多种语言。但是毫无疑问，新的遗传学和牙科证据为格林伯格的观点提供了强有力的支持。但是，除非有确凿的考古证据支持，否则我们应谨慎对待迁徙时间。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Study of the origins and <mark class="vocab-word" data-word="distribution">distribution</mark> of human populations used to be based on archaeological and <mark class="vocab-word" data-word="fossil">fossil</mark> evidence. A number of techniques developed since the 1950s, however, have placed the study of these subjects on a sounder and more objective footing. The best information on early population movements is now being <mark class="vocab-word" data-word="obtain">obtained</mark> from the ‘archaeology of the living body’, the <mark class="vocab-word" data-word="clue">clues</mark> to be found in <mark class="vocab-word" data-word="genetic">genetic</mark> material.</p></div>  <div class="parallel-zh"><p>过去，对人类起源和分布的研究主要建立在考古和化石证据之上。但是，自20世纪50年代以来许多技术的发展使对这些课题的研究拥有了更合理，更客观的基础。现在可以从“活体考古学”（遗传材料中包含的线索）中获得有关早期人口迁移的最佳信息。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Recent work on the problem of when people first entered the Americas is an example of the value of these new techniques. <mark class="vocab-word" data-word="north-east">North-east</mark> Asia and Siberia have long been accepted as the launching ground for the first human colonisers of the New World1. But was there one major wave of <mark class="vocab-word" data-word="migration">migration</mark> across the Bering <mark class="vocab-word" data-word="strait">Strait</mark> into the Americas, or several? And when did this event, or events, take place? In recent years, new <mark class="vocab-word" data-word="clue">clues</mark> have come from research into <mark class="vocab-word" data-word="genetics">genetics</mark>, including the <mark class="vocab-word" data-word="distribution">distribution</mark> of <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="marker">markers</mark> in modern Native Americans2.</p></div>  <div class="parallel-zh"><p>关于人们何时首次进入美洲问题的最新研究是这些新技术价值的一个例子。东北亚地区和西伯利亚地区长期被认为是新世界第一批人类探索者的出发地。但是，是只有一次穿过白令海峡到达美洲的大规模移民浪潮，还是有几次？并且它，或它们是什么时候发生的？近年来，遗传学研究通过现代美洲原住民中遗传标记的分布提供了新的线索。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>An important project, led by the <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Robert Williams, focused on the <mark class="vocab-word" data-word="variant">variants</mark> (called Gm allotypes) of one particular <mark class="vocab-word" data-word="protein">protein</mark> immunoglobin G – found in the <mark class="vocab-word" data-word="fluid">fluid</mark> <mark class="vocab-word" data-word="portion">portion</mark> of human blood. All <mark class="vocab-word" data-word="protein">proteins</mark> ‘<mark class="vocab-word" data-word="drift">drift</mark>’, or produce <mark class="vocab-word" data-word="variant">variants</mark>, over the generations, and members of an <mark class="vocab-word" data-word="interbreed">interbreeding</mark> human population will share a set of such <mark class="vocab-word" data-word="variant">variants</mark>. Thus, by comparing the Gm allotypes of two different populations (e.g. two Indian <mark class="vocab-word" data-word="tribe">tribes</mark>), one can establish their <mark class="vocab-word" data-word="genetic">genetic</mark> ‘distance’, which itself can be <mark class="vocab-word" data-word="calibrate">calibrated</mark> to give an <mark class="vocab-word" data-word="indication">indication</mark> of the length of time since these populations last interbred.</p></div>  <div class="parallel-zh"><p>由生物人类学家罗伯特·威廉姆斯主持的重要项目将注意力放在一种人类血液中发现的特定的蛋白质-免疫球蛋白G的变种上。世代之间，所有蛋白质都会“漂移”或产生变体，而相互繁殖的人类种群成员将共享一组此类变体。因此，通过比较两个不同群体的Gm免疫球蛋白（例如两个印度部落），研究人员可以确立他们的遗传“距离”。通过校准，它们可以揭示这些种群上一次互相繁殖的时间。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Williams and his colleagues sampled the blood of over 5,000 American Indians in western North America during a twenty-year period. They found that their Gm allotypes could be divided into two groups, one of which also <mark class="vocab-word" data-word="correspond">corresponded</mark> to the <mark class="vocab-word" data-word="genetic">genetic</mark> typing of Central and South American Indians. Other tests showed that the Inuit (or Eskimo) and Aleut3formed a third group. From this evidence it was <mark class="vocab-word" data-word="deduce">deduced</mark> that there had been three major waves of <mark class="vocab-word" data-word="migration">migration</mark> across the Bering <mark class="vocab-word" data-word="strait">Strait</mark>. The first, Paleo-Indian, wave more than 15,000 years ago was <mark class="vocab-word" data-word="ancestral">ancestral</mark> to all Central and South American Indians. The second wave, about 14,000-12,000 years ago, brought Na-Dene hunters, <mark class="vocab-word" data-word="ancestor">ancestors</mark> of the Navajo and Apache (who only <mark class="vocab-word" data-word="migrate">migrated</mark> south from Canada about 600 or 700 years ago). The third wave, perhaps 10,000 or 9,000 years ago, saw the <mark class="vocab-word" data-word="migration">migration</mark> from <mark class="vocab-word" data-word="north-east">North-east</mark> Asia of groups <mark class="vocab-word" data-word="ancestral">ancestral</mark> to the modern Eskimo and Aleut.</p></div>  <div class="parallel-zh"><p>威廉姆斯和他的同事用了20年的时间在北美西部采集了超过5000名美洲印第安人的血液样本。他们发现他们的Gm免疫球蛋白可以分为两组，其中一组对应中美洲和南美洲印第安人的基因类型。其他测试表明，因纽特人（或爱斯基摩人）和阿留申人组成了第三组。从这一证据可以推断出白令海峡发生了三次大的移民浪潮。15000多年前的第一波Paleo-Indian浪潮构成所有中美洲和南美洲印第安人的祖先。大约12000年到14000之前的第二波浪潮带来了Na-Dene猎人。他们是Navajo和Apache的祖先，600或700年前才从加拿大向南迁移。9000年到10000年前的第三波浪潮见证了现代爱斯基摩人和阿申留人的祖先从东北亚的迁徙。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>How far does other research support these conclusions? Geneticist Douglas Wallace has studied mitochondrial DNA4in blood samples from three widely separated Native American groups: Pima-Papago Indians in Arizona, <mark class="vocab-word" data-word="maya">Maya</mark> Indians on the Yucatán <mark class="vocab-word" data-word="peninsula">peninsula</mark>, Mexico, and Ticuna Indians in the Upper Amazon region of Brazil. As would have been <mark class="vocab-word" data-word="predict">predicted</mark> by Robert Williams’s work, all three groups appear to be <mark class="vocab-word" data-word="descend">descended</mark> from the same <mark class="vocab-word" data-word="ancestral">ancestral</mark> (Paleo-Indian) population.</p></div>  <div class="parallel-zh"><p>其他研究在多大程度上支持了这些结论呢？遗传学家道格拉斯· 华莱士研究了三个广泛分布的美洲本土人群（Arizona的Pima-Papago印第安人，墨西哥Yucatan半岛的玛雅印第安人，以及巴西北部亚马逊地区的Ticuna印第安人）血液样本中的线粒体DNA。正如罗伯特·威廉姆斯的研究所预测的那样，所有三组人群似乎来自同一祖先群体（Paleo-Indian）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There are two other kinds of research that have thrown some light on the origins of the Native American population; they involve the study of teeth and of languages. The <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Christy Turner is an expert in the analysis of changing physical characteristics in human teeth. He argues that tooth <mark class="vocab-word" data-word="crown">crowns</mark> and roots5have a high <mark class="vocab-word" data-word="genetic">genetic</mark> component, <mark class="vocab-word" data-word="minimal">minimally</mark> affected by environmental and other <mark class="vocab-word" data-word="factor">factors</mark>. Studies carried out by Turner of many thousands of New and Old World <mark class="vocab-word" data-word="specimen">specimens</mark>, both ancient and modern, <mark class="vocab-word" data-word="suggest">suggest</mark> that the majority of <mark class="vocab-word" data-word="prehistoric">prehistoric</mark> Americans are linked to Northern Asian populations by <mark class="vocab-word" data-word="crown">crown</mark> and root <mark class="vocab-word" data-word="trait">traits</mark> such as incisor6<mark class="vocab-word" data-word="shovel">shoveling</mark> (a scooping out on one or both surfaces of the tooth), single-rooted upper first premolars6 and triple-rooted lower first molars6.</p></div>  <div class="parallel-zh"><p>有另外两种研究在某种程度上揭示了美国原住民的起源。他们涉及对牙齿和语言的研究。生物人类学家克里斯蒂·特纳（Christy Turner）是分析人类牙齿物理特性变化的专家。他认为，牙冠和牙根具有很高的遗传成分，很少受环境和其他因素的影响。特纳对成千上万个古代和现代的新旧世界标本进行的研究表明，大多数史前美国人的牙冠与牙床特征与北亚人口存在联系。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="accord">According</mark> to Turner, this ties in with the idea of a single Paleo-lndian <mark class="vocab-word" data-word="migration">migration</mark> out of North Asia, which he sets at before 14,000 years ago by <mark class="vocab-word" data-word="calibrate">calibrating</mark> rates of <mark class="vocab-word" data-word="dental">dental</mark> micro-evolution. Tooth analyses also <mark class="vocab-word" data-word="suggest">suggest</mark> that there were two later <mark class="vocab-word" data-word="migration">migrations</mark> of Na-Denes and Eskimo-Aleut.</p></div>  <div class="parallel-zh"><p>特纳认为，这与Paleo-India人一次从北亚迁出的想法有关。他通过校准牙齿微观进化的速率将这一时间定在14000年前。牙齿分析还表明，后来存在Na-Denes和Eskimo – Aleut的两次迁移。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The linguist Joseph Greenberg has, since the 1950s, argued that all Native American languages belong to a single ‘Amerind’ family, except for Na-Dene and Eskimo-Aleut – a view that gives <mark class="vocab-word" data-word="credence">credence</mark> to the idea of three main <mark class="vocab-word" data-word="migration">migrations</mark>. Greenberg is in a minority among fellow linguists, most of whom favour the notion of a great many waves of <mark class="vocab-word" data-word="migration">migration</mark> to account for the more than 1,000 languages spoken at one time by American Indians. But there is no doubt that the new <mark class="vocab-word" data-word="genetic">genetic</mark> and <mark class="vocab-word" data-word="dental">dental</mark> evidence provides strong backing for Greenberg’s view. Dates given for the <mark class="vocab-word" data-word="migration">migrations</mark> should nevertheless be treated with <mark class="vocab-word" data-word="caution">caution</mark>, except where supported by hard archaeological evidence.</p></div>  <div class="parallel-zh"><p>语言学家约瑟夫·格林伯格（Joseph Greenberg）自20世纪50年代以来一直认为，除了Na-Dene和Eskimo-Aleut以外，所有美洲原住民的语言都属于“Amerind”族-这种观点支持三次主要移民浪潮的想法。格林伯格是语言学家中的少数派，其中大多数人都赞成多批次移民浪潮的概念，以解释美洲印第安人同时所讲的1000 多种语言。但是毫无疑问，新的遗传学和牙科证据为格林伯格的观点提供了强有力的支持。但是，除非有确凿的考古证据支持，否则我们应谨慎对待迁徙时间。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"distribution": 2, "fossil": 1, "obtain": 1, "clue": 2, "genetic": 6, "north-east": 2, "migration": 8, "strait": 2, "genetics": 1, "marker": 1, "biological": 2, "anthropologist": 2, "variant": 3, "protein": 2, "fluid": 1, "portion": 1, "drift": 1, "interbreed": 1, "tribe": 1, "calibrate": 2, "indication": 1, "correspond": 1, "deduce": 1, "ancestral": 3, "ancestor": 1, "migrate": 1, "maya": 1, "peninsula": 1, "predict": 1, "descend": 1, "crown": 2, "minimal": 1, "factor": 1, "specimen": 1, "suggest": 2, "prehistoric": 1, "trait": 1, "shovel": 1, "accord": 1, "dental": 2, "credence": 1, "caution": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

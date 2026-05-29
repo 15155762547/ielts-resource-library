@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The persistence and peril of misinformation 错误消息的顽固存在与潜在危害 - 剑桥雅思19 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思19</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>The persistence and peril of misinformation 错误消息的顽固存在与潜在危害</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/59478.html" target="_blank">https://www.laokaoya.com/59478.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Misinformation – both <mark class="vocab-word" data-word="deliberate">deliberately</mark> promoted and <mark class="vocab-word" data-word="accidental">accidentally</mark> shared – is perhaps an <mark class="vocab-word" data-word="inevitable">inevitable</mark> part of the world in which we live, but it is not a new problem. People likely have lied to one another for roughly as long as <mark class="vocab-word" data-word="verbal">verbal</mark> communication has existed. <mark class="vocab-word" data-word="deceive">Deceiving</mark> others can offer an apparent opportunity to gain <mark class="vocab-word" data-word="strategic">strategic</mark> advantage, to <mark class="vocab-word" data-word="motivate">motivate</mark> others to <mark class="vocab-word" data-word="action">action</mark>, or even to protect interpersonal <mark class="vocab-word" data-word="bond">bonds</mark>. Moreover, people <mark class="vocab-word" data-word="inadvertent">inadvertently</mark> have been sharing <mark class="vocab-word" data-word="inaccurate">inaccurate</mark> information with one another for thousands of years.</p><p>However, we currently live in an <mark class="vocab-word" data-word="era">era</mark> in which technology enables information to reach large audiences distributed across the <mark class="vocab-word" data-word="globe">globe</mark>, and thus the potential for immediate and <mark class="vocab-word" data-word="widespread">widespread</mark> effects from misinformation now <mark class="vocab-word" data-word="loom">looms</mark> larger than in the past. Yet the means to correct misinformation might, over time, be found in those same patterns of mass communication and of the <mark class="vocab-word" data-word="facilitate">facilitated</mark> spread of information.</p><p>The main worry <mark class="vocab-word" data-word="regarding">regarding</mark> misinformation is its potential to unduly <mark class="vocab-word" data-word="influence">influence</mark> attitudes and behavior, <mark class="vocab-word" data-word="lead">leading</mark> people to think and act differently than they would if they were correctly informed, as <mark class="vocab-word" data-word="suggest">suggested</mark> by the research teams of Stephan Lewandowsky of the University of Bristol and Elizabeth <mark class="vocab-word" data-word="marsh">Marsh</mark> of Duke University, among others. In other words, we worry that misinformation might <mark class="vocab-word" data-word="lead">lead</mark> people to hold misperceptions (or false beliefs) and that these misperceptions, especially when they occur among large groups of people, may have <mark class="vocab-word" data-word="detrimental">detrimental</mark>, downstream consequences for health, social <mark class="vocab-word" data-word="harmony">harmony</mark>, and the political climate.</p><p>At least three observations related to misinformation in the <mark class="vocab-word" data-word="contemporary">contemporary</mark> mass-media environment <mark class="vocab-word" data-word="warrant">warrant</mark> the attention of researchers, policy makers, and really everyone who watches television, listens to the radio, or reads information online. This article is from  website. First of all, people who encounter misinformation tend to believe it, at least initially. Secondly, electronic and print media often do not block many types of misinformation before it appears in content available to large audiences. Thirdly, <mark class="vocab-word" data-word="counter">countering</mark> misinformation once it has enjoyed wide <mark class="vocab-word" data-word="exposure">exposure</mark> can be a resource-intensive effort.</p><p>Knowing what happens when people initially encounter misinformation holds <mark class="vocab-word" data-word="tremendous">tremendous</mark> importance for estimating the potential for <mark class="vocab-word" data-word="subsequent">subsequent</mark> problems. Although it is fairly routine for individuals to come across information that is false, the question of exactly how -and when -we mentally label information as true or false has garnered <mark class="vocab-word" data-word="philosophical">philosophical</mark> debate. The <mark class="vocab-word" data-word="dilemma">dilemma</mark> is <mark class="vocab-word" data-word="neat">neatly</mark> summarized by a contrast between how the 17th-century <mark class="vocab-word" data-word="philosopher">philosophers</mark> Rene Descartes and Baruch Spinoza described human information <mark class="vocab-word" data-word="engagement">engagement</mark>, with conflicting <mark class="vocab-word" data-word="prediction">predictions</mark> that only recently have been <mark class="vocab-word" data-word="empirical">empirically</mark> tested in <mark class="vocab-word" data-word="robust">robust</mark> ways. Descartes argued that a person only accepts or rejects information after considering its truth or <mark class="vocab-word" data-word="falsehood">falsehood</mark>; Spinoza argued that people accept all encountered information (or misinformation) by <mark class="vocab-word" data-word="default">default</mark> and then <mark class="vocab-word" data-word="subsequently">subsequently</mark> verily or reject it through a separate <mark class="vocab-word" data-word="cognitive">cognitive</mark> process. In recent <mark class="vocab-word" data-word="decade">decades</mark>, <mark class="vocab-word" data-word="empirical">empirical</mark> evidence from the research teams of Erik Asp of the University of Chicago and Daniel Gilbert at Harvard University, among others, has supported Spinoza’s account: people appear to <mark class="vocab-word" data-word="encode">encode</mark> all new information as if it were true, even if only momentarily, and later <mark class="vocab-word" data-word="tag">tag</mark> the information as being either true or false, a pattern that seems consistent with the observation that mental resources for skepticism physically <mark class="vocab-word" data-word="reside">reside</mark> in a different part of the brain than the resources used in <mark class="vocab-word" data-word="perceive">perceiving</mark> and <mark class="vocab-word" data-word="encode">encoding</mark>.</p><p>What about our second observation that misinformation often can appear in electronic or print media without being preemptively blocked? In support of this, one might consider the nature of regulatory structures in the <mark class="vocab-word" data-word="unite">United</mark> States: regulatory agencies here tend to focus on post hoc detection of broadcast information. Organizations such as the Food and Drug Administration (FDA) offer <mark class="vocab-word" data-word="considerable">considerable</mark> monitoring and notification functions, but these roles typically do not involve preemptive <mark class="vocab-word" data-word="censor">censoring</mark>. The FDA <mark class="vocab-word" data-word="oversee">oversees</mark> direct-to-consumer <mark class="vocab-word" data-word="prescription">prescription</mark> drug advertising, for example, and has developed <mark class="vocab-word" data-word="mechanism">mechanisms</mark> such as the ‘Bad Ad’ program, through which people can report advertising in apparent <mark class="vocab-word" data-word="violation">violation</mark> of FDA <mark class="vocab-word" data-word="guideline">guidelines</mark> on drug risks. Such programs, although <mark class="vocab-word" data-word="laudable">laudable</mark> and useful, do not keep false advertising off the airwaves. In addition, even misinformation that is successfully corrected can continue to affect attitudes.</p><p>This <mark class="vocab-word" data-word="lead">leads</mark> us to our third observation: a <mark class="vocab-word" data-word="campaign">campaign</mark> to correct misinformation, even if rhetorically <mark class="vocab-word" data-word="compelling">compelling</mark>, requires resources and planning to <mark class="vocab-word" data-word="accomplish">accomplish</mark> necessary reach and frequency. For corrective <mark class="vocab-word" data-word="campaign">campaigns</mark> to be persuasive, audiences need to be able to <mark class="vocab-word" data-word="comprehend">comprehend</mark> them, which requires either effort to frame messages in ways that are <mark class="vocab-word" data-word="accessible">accessible</mark> or effort to educate and sensitize audiences to the possibility of misinformation. That some audiences might be <mark class="vocab-word" data-word="unaware">unaware</mark> of the potential for misinformation also <mark class="vocab-word" data-word="suggest">suggests</mark> the <mark class="vocab-word" data-word="utility">utility</mark> of media <mark class="vocab-word" data-word="literacy">literacy</mark> efforts as early as <mark class="vocab-word" data-word="elementary">elementary</mark> school. Even with <mark class="vocab-word" data-word="journalist">journalists</mark> and <mark class="vocab-word" data-word="scholar">scholars</mark> pointing to the <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> of ‘<mark class="vocab-word" data-word="fake">fake</mark> news’, people do not <mark class="vocab-word" data-word="distinguish">distinguish</mark> between demonstrably false stories and those based in fact when scanning and <mark class="vocab-word" data-word="processing">processing</mark> written information.</p><p>We live at a time when <mark class="vocab-word" data-word="widespread">widespread</mark> misinformation is common. Yet at this time many people also are <mark class="vocab-word" data-word="passionate">passionately</mark> developing potential solutions and remedies. The journey forward <mark class="vocab-word" data-word="undoubtedly">undoubtedly</mark> will be a long and <mark class="vocab-word" data-word="arduous">arduous</mark> one. Future remedies will require not only continued <mark class="vocab-word" data-word="theoretical">theoretical</mark> consideration but also the development and <mark class="vocab-word" data-word="maintenance">maintenance</mark> of consistent monitoring tools-and a <mark class="vocab-word" data-word="recognition">recognition</mark> among fellow members of society that claims which find <mark class="vocab-word" data-word="prominence">prominence</mark> in the media that are <mark class="vocab-word" data-word="insufficient">insufficiently</mark> based in scientific <mark class="vocab-word" data-word="consensus">consensus</mark> and social reality should be <mark class="vocab-word" data-word="counter">countered</mark>. Misinformation arises as a result of human fallibility and human information needs. To overcome the worst effects of the <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>, we will need <mark class="vocab-word" data-word="coordinate">coordinated</mark> efforts over time, rather than any <mark class="vocab-word" data-word="singular">singular</mark> one-time panacea we could hope to offer.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>无论是被有意散播，还是无心分享，错误信息或许是我们所处世界中不可避免的一部分，但这并不是一个全新的问题。人类很可能从语言诞生之初，就已经开始相互撒谎了。欺骗他人有时能够带来显著的战略优势、激发他人采取行动，甚至维护人际关系。此外，人们在无意中传播不准确信息的情况也已经持续了几千年。</p><p>然而，如今我们生活在一个技术高度发达的时代，信息可以迅速传播到全球各地的广大受众。因此，与过去相比，错误信息可能带来的即时性和广泛性影响更加显著。不过，随着时间的推移，或许也正可以从这些大众传播模式和信息快速扩散的机制中找到纠正错误信息的手段。</p><p>人们对错误信息的主要担忧在于：它可能会对人们的态度和行为产生不当影响，使他们在错误认知的引导下改变思考方式和行为模式。正如布里斯托大学的斯蒂芬·卢万多夫斯基（Stephan Lewandowsky）和杜克大学的伊丽莎白·马什（Elizabeth Marsh）等研究团队所指出的那样，如果人们获取的是正确信息，他们本不会如此思考或行动。换句话说，我们担心错误信息会让人形成误解（或错误信念），而这些误解，尤其当它们在大规模人群中广泛存在时，可能会对公共健康、社会和谐以及政治氛围带来有害的后续影响。</p><p>在当今的大众媒体环境中，至少有三个与错误信息相关的现象值得研究者、政策制定者，甚至每一个看电视、听广播或在网上阅读信息的人重视。首先，人们一旦接触到错误信息，往往会在最初就相信它。其次，无论是电子媒体还是印刷媒体，往往无法在信息发布前阻止各种类型的错误信息传播给大众。第三，一旦错误信息被广泛传播，再想对其进行纠正，就会变成一项耗费大量资源的工作。</p><p>了解人们最初接触到错误信息时的反应，对于评估未来可能出现的问题至关重要。虽然个体在日常生活中经常会遇到虚假信息，但我们究竟是在何时、又是如何在心理上将信息标记为“真”或“假”的，这个问题长期以来一直是哲学争论的焦点。这个难题可以通过17世纪两位哲学家-勒内·笛卡尔（René Descartes）和巴鲁赫·斯宾诺莎（Baruch Spinoza）-对人类接收信息过程的不同描述来很好地概括。他们的观点彼此矛盾，而这些预测直到最近才被实证研究以可靠方式加以检验。笛卡尔认为，人们在接受或拒绝一条信息之前，必须首先判断它是真还是假；而斯宾诺莎则认为，人们对遇到的所有信息（包括错误信息）在第一时间都是默认接受的，之后才通过另一个认知过程进行验证或否定。近几十年来，来自芝加哥大学的埃里克·阿斯普（Erik Asp）和哈佛大学的丹尼尔·吉尔伯特（Daniel Gilbert）等研究团队的实证研究支持了斯宾诺莎的观点：人们似乎总是把新接收到的信息先当作真实的来编码处理，即使只是一瞬间，然后再为其贴上“真”或“假”的标签。这种模式也与另一个发现相一致：大脑中负责怀疑的资源与负责感知和编码信息的资源位于不同的区域。</p><p>那么，我们的第二个观察-错误信息常常在电子或印刷媒体中出现而未被事先阻止-又该如何理解呢？对此可以参考美国监管体系的特点：在美国，监管机构通常侧重于对广播内容的事后审查，而非事前的屏蔽。像美国食品药品监督管理局（FDA）这样的机构，虽然承担着大量的监控和通报职责，但这些职责通常不包括事前审查。以FDA监管的面向消费者的处方药广告为例，该机构推出了“虚假广告举报”（Bad Ad）项目，允许公众举报违反FDA药品风险宣传规范的广告行为。这类项目虽然值得称赞，也确实起到了积极作用，但并不能在错误信息被播出之前就阻止其传播。而且，即使某些错误信息在之后得到了纠正，它们依然可能对人们的态度产生持续影响。</p><p>这就引出了我们的第三个观察：纠正错误信息的宣传活动，即便措辞得当、观点有力，也需要耗费大量资源并经过周密计划，才能实现必要的传播广度与频率。要让纠正信息真正发挥作用，受众必须能够理解这些信息，这就要求我们要么以通俗易懂的方式来设计内容，要么通过教育手段提升公众对错误信息可能存在敏感度。某些受众甚至可能完全意识不到信息有误的可能性，这进一步表明，有必要从小学开始开展媒体素养教育。尽管有记者和学者不断揭示“假新闻”这一现象，但人们在快速浏览和处理书面信息时，往往无法区分那些明显虚假的内容与以事实为基础的报道。</p><p>我们生活在一个错误信息泛滥的时代。然而，也正是在这个时代，许多人正满怀热情地探索各种潜在的解决方案与应对策略。未来的道路无疑将漫长而艰难。要真正解决这一问题，不仅需要持续的理论探讨，还需要构建并维护一套稳定可靠的监测机制-同时，社会成员也需要达成共识：对于那些在媒体中占据主导地位、却缺乏科学共识与社会现实支撑的言论，应该进行有力回应与纠正。错误信息的产生源于人类的认知局限和信息需求。若要减轻这一现象带来的严重后果，我们需要的是持续的、共同的社会努力，而不是某种一次性的灵丹妙药。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Misinformation – both <mark class="vocab-word" data-word="deliberate">deliberately</mark> promoted and <mark class="vocab-word" data-word="accidental">accidentally</mark> shared – is perhaps an <mark class="vocab-word" data-word="inevitable">inevitable</mark> part of the world in which we live, but it is not a new problem. People likely have lied to one another for roughly as long as <mark class="vocab-word" data-word="verbal">verbal</mark> communication has existed. <mark class="vocab-word" data-word="deceive">Deceiving</mark> others can offer an apparent opportunity to gain <mark class="vocab-word" data-word="strategic">strategic</mark> advantage, to <mark class="vocab-word" data-word="motivate">motivate</mark> others to <mark class="vocab-word" data-word="action">action</mark>, or even to protect interpersonal <mark class="vocab-word" data-word="bond">bonds</mark>. Moreover, people <mark class="vocab-word" data-word="inadvertent">inadvertently</mark> have been sharing <mark class="vocab-word" data-word="inaccurate">inaccurate</mark> information with one another for thousands of years.</p></div>  <div class="parallel-zh"><p>无论是被有意散播，还是无心分享，错误信息或许是我们所处世界中不可避免的一部分，但这并不是一个全新的问题。人类很可能从语言诞生之初，就已经开始相互撒谎了。欺骗他人有时能够带来显著的战略优势、激发他人采取行动，甚至维护人际关系。此外，人们在无意中传播不准确信息的情况也已经持续了几千年。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, we currently live in an <mark class="vocab-word" data-word="era">era</mark> in which technology enables information to reach large audiences distributed across the <mark class="vocab-word" data-word="globe">globe</mark>, and thus the potential for immediate and <mark class="vocab-word" data-word="widespread">widespread</mark> effects from misinformation now <mark class="vocab-word" data-word="loom">looms</mark> larger than in the past. Yet the means to correct misinformation might, over time, be found in those same patterns of mass communication and of the <mark class="vocab-word" data-word="facilitate">facilitated</mark> spread of information.</p></div>  <div class="parallel-zh"><p>然而，如今我们生活在一个技术高度发达的时代，信息可以迅速传播到全球各地的广大受众。因此，与过去相比，错误信息可能带来的即时性和广泛性影响更加显著。不过，随着时间的推移，或许也正可以从这些大众传播模式和信息快速扩散的机制中找到纠正错误信息的手段。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The main worry <mark class="vocab-word" data-word="regarding">regarding</mark> misinformation is its potential to unduly <mark class="vocab-word" data-word="influence">influence</mark> attitudes and behavior, <mark class="vocab-word" data-word="lead">leading</mark> people to think and act differently than they would if they were correctly informed, as <mark class="vocab-word" data-word="suggest">suggested</mark> by the research teams of Stephan Lewandowsky of the University of Bristol and Elizabeth <mark class="vocab-word" data-word="marsh">Marsh</mark> of Duke University, among others. In other words, we worry that misinformation might <mark class="vocab-word" data-word="lead">lead</mark> people to hold misperceptions (or false beliefs) and that these misperceptions, especially when they occur among large groups of people, may have <mark class="vocab-word" data-word="detrimental">detrimental</mark>, downstream consequences for health, social <mark class="vocab-word" data-word="harmony">harmony</mark>, and the political climate.</p></div>  <div class="parallel-zh"><p>人们对错误信息的主要担忧在于：它可能会对人们的态度和行为产生不当影响，使他们在错误认知的引导下改变思考方式和行为模式。正如布里斯托大学的斯蒂芬·卢万多夫斯基（Stephan Lewandowsky）和杜克大学的伊丽莎白·马什（Elizabeth Marsh）等研究团队所指出的那样，如果人们获取的是正确信息，他们本不会如此思考或行动。换句话说，我们担心错误信息会让人形成误解（或错误信念），而这些误解，尤其当它们在大规模人群中广泛存在时，可能会对公共健康、社会和谐以及政治氛围带来有害的后续影响。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At least three observations related to misinformation in the <mark class="vocab-word" data-word="contemporary">contemporary</mark> mass-media environment <mark class="vocab-word" data-word="warrant">warrant</mark> the attention of researchers, policy makers, and really everyone who watches television, listens to the radio, or reads information online. This article is from  website. First of all, people who encounter misinformation tend to believe it, at least initially. Secondly, electronic and print media often do not block many types of misinformation before it appears in content available to large audiences. Thirdly, <mark class="vocab-word" data-word="counter">countering</mark> misinformation once it has enjoyed wide <mark class="vocab-word" data-word="exposure">exposure</mark> can be a resource-intensive effort.</p></div>  <div class="parallel-zh"><p>在当今的大众媒体环境中，至少有三个与错误信息相关的现象值得研究者、政策制定者，甚至每一个看电视、听广播或在网上阅读信息的人重视。首先，人们一旦接触到错误信息，往往会在最初就相信它。其次，无论是电子媒体还是印刷媒体，往往无法在信息发布前阻止各种类型的错误信息传播给大众。第三，一旦错误信息被广泛传播，再想对其进行纠正，就会变成一项耗费大量资源的工作。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Knowing what happens when people initially encounter misinformation holds <mark class="vocab-word" data-word="tremendous">tremendous</mark> importance for estimating the potential for <mark class="vocab-word" data-word="subsequent">subsequent</mark> problems. Although it is fairly routine for individuals to come across information that is false, the question of exactly how -and when -we mentally label information as true or false has garnered <mark class="vocab-word" data-word="philosophical">philosophical</mark> debate. The <mark class="vocab-word" data-word="dilemma">dilemma</mark> is <mark class="vocab-word" data-word="neat">neatly</mark> summarized by a contrast between how the 17th-century <mark class="vocab-word" data-word="philosopher">philosophers</mark> Rene Descartes and Baruch Spinoza described human information <mark class="vocab-word" data-word="engagement">engagement</mark>, with conflicting <mark class="vocab-word" data-word="prediction">predictions</mark> that only recently have been <mark class="vocab-word" data-word="empirical">empirically</mark> tested in <mark class="vocab-word" data-word="robust">robust</mark> ways. Descartes argued that a person only accepts or rejects information after considering its truth or <mark class="vocab-word" data-word="falsehood">falsehood</mark>; Spinoza argued that people accept all encountered information (or misinformation) by <mark class="vocab-word" data-word="default">default</mark> and then <mark class="vocab-word" data-word="subsequently">subsequently</mark> verily or reject it through a separate <mark class="vocab-word" data-word="cognitive">cognitive</mark> process. In recent <mark class="vocab-word" data-word="decade">decades</mark>, <mark class="vocab-word" data-word="empirical">empirical</mark> evidence from the research teams of Erik Asp of the University of Chicago and Daniel Gilbert at Harvard University, among others, has supported Spinoza’s account: people appear to <mark class="vocab-word" data-word="encode">encode</mark> all new information as if it were true, even if only momentarily, and later <mark class="vocab-word" data-word="tag">tag</mark> the information as being either true or false, a pattern that seems consistent with the observation that mental resources for skepticism physically <mark class="vocab-word" data-word="reside">reside</mark> in a different part of the brain than the resources used in <mark class="vocab-word" data-word="perceive">perceiving</mark> and <mark class="vocab-word" data-word="encode">encoding</mark>.</p></div>  <div class="parallel-zh"><p>了解人们最初接触到错误信息时的反应，对于评估未来可能出现的问题至关重要。虽然个体在日常生活中经常会遇到虚假信息，但我们究竟是在何时、又是如何在心理上将信息标记为“真”或“假”的，这个问题长期以来一直是哲学争论的焦点。这个难题可以通过17世纪两位哲学家-勒内·笛卡尔（René Descartes）和巴鲁赫·斯宾诺莎（Baruch Spinoza）-对人类接收信息过程的不同描述来很好地概括。他们的观点彼此矛盾，而这些预测直到最近才被实证研究以可靠方式加以检验。笛卡尔认为，人们在接受或拒绝一条信息之前，必须首先判断它是真还是假；而斯宾诺莎则认为，人们对遇到的所有信息（包括错误信息）在第一时间都是默认接受的，之后才通过另一个认知过程进行验证或否定。近几十年来，来自芝加哥大学的埃里克·阿斯普（Erik Asp）和哈佛大学的丹尼尔·吉尔伯特（Daniel Gilbert）等研究团队的实证研究支持了斯宾诺莎的观点：人们似乎总是把新接收到的信息先当作真实的来编码处理，即使只是一瞬间，然后再为其贴上“真”或“假”的标签。这种模式也与另一个发现相一致：大脑中负责怀疑的资源与负责感知和编码信息的资源位于不同的区域。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What about our second observation that misinformation often can appear in electronic or print media without being preemptively blocked? In support of this, one might consider the nature of regulatory structures in the <mark class="vocab-word" data-word="unite">United</mark> States: regulatory agencies here tend to focus on post hoc detection of broadcast information. Organizations such as the Food and Drug Administration (FDA) offer <mark class="vocab-word" data-word="considerable">considerable</mark> monitoring and notification functions, but these roles typically do not involve preemptive <mark class="vocab-word" data-word="censor">censoring</mark>. The FDA <mark class="vocab-word" data-word="oversee">oversees</mark> direct-to-consumer <mark class="vocab-word" data-word="prescription">prescription</mark> drug advertising, for example, and has developed <mark class="vocab-word" data-word="mechanism">mechanisms</mark> such as the ‘Bad Ad’ program, through which people can report advertising in apparent <mark class="vocab-word" data-word="violation">violation</mark> of FDA <mark class="vocab-word" data-word="guideline">guidelines</mark> on drug risks. Such programs, although <mark class="vocab-word" data-word="laudable">laudable</mark> and useful, do not keep false advertising off the airwaves. In addition, even misinformation that is successfully corrected can continue to affect attitudes.</p></div>  <div class="parallel-zh"><p>那么，我们的第二个观察-错误信息常常在电子或印刷媒体中出现而未被事先阻止-又该如何理解呢？对此可以参考美国监管体系的特点：在美国，监管机构通常侧重于对广播内容的事后审查，而非事前的屏蔽。像美国食品药品监督管理局（FDA）这样的机构，虽然承担着大量的监控和通报职责，但这些职责通常不包括事前审查。以FDA监管的面向消费者的处方药广告为例，该机构推出了“虚假广告举报”（Bad Ad）项目，允许公众举报违反FDA药品风险宣传规范的广告行为。这类项目虽然值得称赞，也确实起到了积极作用，但并不能在错误信息被播出之前就阻止其传播。而且，即使某些错误信息在之后得到了纠正，它们依然可能对人们的态度产生持续影响。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This <mark class="vocab-word" data-word="lead">leads</mark> us to our third observation: a <mark class="vocab-word" data-word="campaign">campaign</mark> to correct misinformation, even if rhetorically <mark class="vocab-word" data-word="compelling">compelling</mark>, requires resources and planning to <mark class="vocab-word" data-word="accomplish">accomplish</mark> necessary reach and frequency. For corrective <mark class="vocab-word" data-word="campaign">campaigns</mark> to be persuasive, audiences need to be able to <mark class="vocab-word" data-word="comprehend">comprehend</mark> them, which requires either effort to frame messages in ways that are <mark class="vocab-word" data-word="accessible">accessible</mark> or effort to educate and sensitize audiences to the possibility of misinformation. That some audiences might be <mark class="vocab-word" data-word="unaware">unaware</mark> of the potential for misinformation also <mark class="vocab-word" data-word="suggest">suggests</mark> the <mark class="vocab-word" data-word="utility">utility</mark> of media <mark class="vocab-word" data-word="literacy">literacy</mark> efforts as early as <mark class="vocab-word" data-word="elementary">elementary</mark> school. Even with <mark class="vocab-word" data-word="journalist">journalists</mark> and <mark class="vocab-word" data-word="scholar">scholars</mark> pointing to the <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> of ‘<mark class="vocab-word" data-word="fake">fake</mark> news’, people do not <mark class="vocab-word" data-word="distinguish">distinguish</mark> between demonstrably false stories and those based in fact when scanning and <mark class="vocab-word" data-word="processing">processing</mark> written information.</p></div>  <div class="parallel-zh"><p>这就引出了我们的第三个观察：纠正错误信息的宣传活动，即便措辞得当、观点有力，也需要耗费大量资源并经过周密计划，才能实现必要的传播广度与频率。要让纠正信息真正发挥作用，受众必须能够理解这些信息，这就要求我们要么以通俗易懂的方式来设计内容，要么通过教育手段提升公众对错误信息可能存在敏感度。某些受众甚至可能完全意识不到信息有误的可能性，这进一步表明，有必要从小学开始开展媒体素养教育。尽管有记者和学者不断揭示“假新闻”这一现象，但人们在快速浏览和处理书面信息时，往往无法区分那些明显虚假的内容与以事实为基础的报道。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>We live at a time when <mark class="vocab-word" data-word="widespread">widespread</mark> misinformation is common. Yet at this time many people also are <mark class="vocab-word" data-word="passionate">passionately</mark> developing potential solutions and remedies. The journey forward <mark class="vocab-word" data-word="undoubtedly">undoubtedly</mark> will be a long and <mark class="vocab-word" data-word="arduous">arduous</mark> one. Future remedies will require not only continued <mark class="vocab-word" data-word="theoretical">theoretical</mark> consideration but also the development and <mark class="vocab-word" data-word="maintenance">maintenance</mark> of consistent monitoring tools-and a <mark class="vocab-word" data-word="recognition">recognition</mark> among fellow members of society that claims which find <mark class="vocab-word" data-word="prominence">prominence</mark> in the media that are <mark class="vocab-word" data-word="insufficient">insufficiently</mark> based in scientific <mark class="vocab-word" data-word="consensus">consensus</mark> and social reality should be <mark class="vocab-word" data-word="counter">countered</mark>. Misinformation arises as a result of human fallibility and human information needs. To overcome the worst effects of the <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>, we will need <mark class="vocab-word" data-word="coordinate">coordinated</mark> efforts over time, rather than any <mark class="vocab-word" data-word="singular">singular</mark> one-time panacea we could hope to offer.</p></div>  <div class="parallel-zh"><p>我们生活在一个错误信息泛滥的时代。然而，也正是在这个时代，许多人正满怀热情地探索各种潜在的解决方案与应对策略。未来的道路无疑将漫长而艰难。要真正解决这一问题，不仅需要持续的理论探讨，还需要构建并维护一套稳定可靠的监测机制-同时，社会成员也需要达成共识：对于那些在媒体中占据主导地位、却缺乏科学共识与社会现实支撑的言论，应该进行有力回应与纠正。错误信息的产生源于人类的认知局限和信息需求。若要减轻这一现象带来的严重后果，我们需要的是持续的、共同的社会努力，而不是某种一次性的灵丹妙药。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"deliberate": 1, "accidental": 1, "inevitable": 1, "verbal": 1, "deceive": 1, "strategic": 1, "motivate": 1, "action": 1, "bond": 1, "inadvertent": 1, "inaccurate": 1, "era": 1, "globe": 1, "widespread": 2, "loom": 1, "facilitate": 1, "regarding": 1, "influence": 1, "lead": 3, "suggest": 2, "marsh": 1, "detrimental": 1, "harmony": 1, "contemporary": 1, "warrant": 1, "counter": 2, "exposure": 1, "tremendous": 1, "subsequent": 1, "philosophical": 1, "dilemma": 1, "neat": 1, "philosopher": 1, "engagement": 1, "prediction": 1, "empirical": 2, "robust": 1, "falsehood": 1, "default": 1, "subsequently": 1, "cognitive": 1, "decade": 1, "encode": 2, "tag": 1, "reside": 1, "perceive": 1, "unite": 1, "considerable": 1, "censor": 1, "oversee": 1, "prescription": 1, "mechanism": 1, "violation": 1, "guideline": 1, "laudable": 1, "campaign": 2, "compelling": 1, "accomplish": 1, "comprehend": 1, "accessible": 1, "unaware": 1, "utility": 1, "literacy": 1, "elementary": 1, "journalist": 1, "scholar": 1, "phenomenon": 2, "fake": 1, "distinguish": 1, "processing": 1, "passionate": 1, "undoubtedly": 1, "arduous": 1, "theoretical": 1, "maintenance": 1, "recognition": 1, "prominence": 1, "insufficient": 1, "consensus": 1, "coordinate": 1, "singular": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

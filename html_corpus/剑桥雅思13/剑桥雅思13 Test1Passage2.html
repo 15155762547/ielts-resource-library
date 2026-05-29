@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why being bored is stimulating and useful too - 剑桥雅思13 Test 1 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思13</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Why being bored is stimulating and useful too</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/38450.html" target="_blank">https://www.laokaoya.com/38450.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>We all know how it feels – it’s impossible to keep your mind on anything, time stretches out, and all the things you could do seem equally unlikely to make you feel better. But defining boredom so that it can be studied in the lab has proved difficult. For a start, it can include a lot of other mental states, such as <mark class="vocab-word" data-word="frustration">frustration</mark>, <mark class="vocab-word" data-word="apathy">apathy</mark>, <mark class="vocab-word" data-word="depression">depression</mark> and indifference. There isn’t even <mark class="vocab-word" data-word="agreement">agreement</mark> over whether boredom is always a low-energy, <mark class="vocab-word" data-word="flat">flat</mark> kind of emotion or whether feeling <mark class="vocab-word" data-word="agitate">agitated</mark> and <mark class="vocab-word" data-word="restless">restless</mark> counts as boredom, too. In his book, Boredom: A Lively History, Peter Toohey at the University of Calgary, Canada, compares it to <mark class="vocab-word" data-word="disgust">disgust</mark> – an emotion that <mark class="vocab-word" data-word="motivate">motivates</mark> us to stay away from certain situations. ‘If <mark class="vocab-word" data-word="disgust">disgust</mark> protects humans from infection, boredom may protect them from “<mark class="vocab-word" data-word="infectious">infectious</mark>” social situations,’ he <mark class="vocab-word" data-word="suggest">suggests</mark>.</p><p>By asking people about their experiences of boredom, Thomas Goetz and his team at the University of Konstanz in Germany have recently identified five <mark class="vocab-word" data-word="distinct">distinct</mark> types: <mark class="vocab-word" data-word="indifferent">indifferent</mark>, <mark class="vocab-word" data-word="calibrate">calibrating</mark>, searching, reactant and <mark class="vocab-word" data-word="apathetic">apathetic</mark>. These can be plotted on two axes – one running left to right, which measures low to high <mark class="vocab-word" data-word="arousal">arousal</mark>, and the other from top to bottom, which measures how positive or <mark class="vocab-word" data-word="negative">negative</mark> the feeling is. <mark class="vocab-word" data-word="intriguing">Intriguingly</mark>, Goetz has found that while people experience all kinds of boredom, they tend to specialise in one. Of the five types, the most damaging is ‘reactant’ boredom with its <mark class="vocab-word" data-word="explosive">explosive</mark> combination of high <mark class="vocab-word" data-word="arousal">arousal</mark> and <mark class="vocab-word" data-word="negative">negative</mark> emotion. The most useful is what Goetz calls ‘<mark class="vocab-word" data-word="indifferent">indifferent</mark>’ boredom: someone isn’t engaged in anything satisfying but still feels <mark class="vocab-word" data-word="relaxed">relaxed</mark> and calm. However, it <mark class="vocab-word" data-word="remains">remains</mark> to be seen whether there are any character <mark class="vocab-word" data-word="trait">traits</mark> that <mark class="vocab-word" data-word="predict">predict</mark> the kind of boredom each of us might be <mark class="vocab-word" data-word="prone">prone</mark> to.</p><p>Psychologist Sandi Mann at the University of Central Lancashire, UK, goes further. ‘All emotions are there for a reason, including boredom,’ she says. Mann has found that being <mark class="vocab-word" data-word="bore">bored</mark> makes us more creative. ‘We’re all afraid of being <mark class="vocab-word" data-word="bore">bored</mark> but in actual fact it can <mark class="vocab-word" data-word="lead">lead</mark> to all kinds of amazing things,’ she says. In experiments published last year, Mann found that people who had been made to feel <mark class="vocab-word" data-word="bore">bored</mark> by copying numbers out of the phone book for 15 minutes came up with more creative ideas about how to use a polystyrene cup than a control group. This article is from  website. Mann concluded that a <mark class="vocab-word" data-word="passive">passive</mark>, <mark class="vocab-word" data-word="bore">boring</mark> activity is best for <mark class="vocab-word" data-word="creativity">creativity</mark> because it allows the mind to <mark class="vocab-word" data-word="wander">wander</mark>. In fact, she goes so far as to <mark class="vocab-word" data-word="suggest">suggest</mark> that we should seek out more boredom in our lives.</p><p>Psychologist John Eastwood at York University in Toronto, Canada, isn’t <mark class="vocab-word" data-word="convince">convinced</mark>. ‘If you are in a state of mind-wandering you are not <mark class="vocab-word" data-word="bore">bored</mark>,’ he says. ‘In my view, by definition boredom is an <mark class="vocab-word" data-word="undesirable">undesirable</mark> state.’ That doesn’t necessarily mean that it isn’t adaptive, he adds. ‘Pain is adaptive – if we didn’t have physical pain, bad things would happen to us. Does that mean that we should actively cause pain? No. But even if boredom has <mark class="vocab-word" data-word="evolve">evolved</mark> to help us survive, it can still be <mark class="vocab-word" data-word="toxic">toxic</mark> if allowed to fester.’ For Eastwood, the central feature of boredom is a failure to put our ‘attention system’ into <mark class="vocab-word" data-word="gear">gear</mark>. This causes an <mark class="vocab-word" data-word="inability">inability</mark> to focus on anything, which makes time seem to go painfully slowly. What’s more, your efforts to improve the situation can end up making you feel worse. ‘People try to connect with the world and if they are not successful there’s that <mark class="vocab-word" data-word="frustration">frustration</mark> and irritability,’ he says. Perhaps most worryingly, says Eastwood, <mark class="vocab-word" data-word="repeatedly">repeatedly</mark> failing to engage attention can <mark class="vocab-word" data-word="lead">lead</mark> to a state where we don’t know what to do anymore, and no longer care.</p><p>Eastwood’s team is now trying to explore why the attention system fails. It’s early days but they think that at least some of it comes down to personality. Boredom proneness has been linked with a variety of <mark class="vocab-word" data-word="trait">traits</mark>. People who are <mark class="vocab-word" data-word="motivated">motivated</mark> by pleasure seem to suffer particularly badly. Other personality <mark class="vocab-word" data-word="trait">traits</mark>, such as <mark class="vocab-word" data-word="curiosity">curiosity</mark>, are associated with a high boredom <mark class="vocab-word" data-word="threshold">threshold</mark>. More evidence that boredom has <mark class="vocab-word" data-word="detrimental">detrimental</mark> effects comes from studies of people who are more or less <mark class="vocab-word" data-word="prone">prone</mark> to boredom. It seems those who <mark class="vocab-word" data-word="bore">bore</mark> easily face poorer <mark class="vocab-word" data-word="prospect">prospects</mark> in education, their career and even life in general. But of course, boredom itself cannot kill – it’s the things we do to deal with it that may put us in danger. What can we do to <mark class="vocab-word" data-word="alleviate">alleviate</mark> it before it comes to that? Goetz’s group has one suggestion. Working with teenagers, they found that those who ‘approach’ a <mark class="vocab-word" data-word="bore">boring</mark> situation-in other words, see that it’s <mark class="vocab-word" data-word="bore">boring</mark> and get <mark class="vocab-word" data-word="stuck">stuck</mark> in any way -report less boredom than those who try to avoid it by using <mark class="vocab-word" data-word="snack">snacks</mark>, TV or social media for <mark class="vocab-word" data-word="distraction">distraction</mark>.</p><p>Psychologist Francoise Wemelsfelder <mark class="vocab-word" data-word="speculate">speculates</mark> that our over-connected lifestyles might even be a new source of boredom. ‘In modern human society there is a lot of overstimulation but still a lot of problems finding meaning,’ she says. So instead of seeking yet more mental <mark class="vocab-word" data-word="stimulation">stimulation</mark>, perhaps we should leave our phones alone, and use boredom to <mark class="vocab-word" data-word="motivate">motivate</mark> us to engage with the world in a more <mark class="vocab-word" data-word="meaningful">meaningful</mark> way.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>我们都知道这种感觉——无法集中注意力到任何事情上，时间变得格外迟缓，所有事情都似乎无法让自己感觉好受一些。但要定义厌烦这种情绪，以便它可以在实验室里接受研究，却被证明十分困难。首先，它包含许多其他精神状态，如沮丧、冷漠、压抑和漠不关心。人们甚至对于“厌烦是否总是一种低能量、平淡的情绪状态”，或者“焦躁不安、坐立不宁是否算作厌烦”都存在争议。加拿大卡尔加里大学的Peter Toohey在其著作《厌烦：一段鲜活的历史》中将它与厌恶（一种促使我们脱离特定情景的情绪）进行了比较。 他提出：“如果厌恶保护人类免受感染，那么厌烦可能保护他们远离“感染性”的社会情景。</p><p>通过询问人们厌烦的经历，德国康斯坦茨大学的Thomas Goetz及其团队最近界定出五种不同的类型：漠不关心，摇摆不定，有所期待、应激反应和无动于衷。这些类型可以被置于两条坐标轴中：一条从左到右，表示从低到高的情感激发；另一条从上到下，表示情绪的积极或消极程度。有趣的是，Goetz发现，虽然人们会体验各种各样的厌烦情绪，但他们常常集中于其中一种。在五种类型中，最具破坏性的是“应激反应型”厌烦。它综合了高应激反应和消极情绪的爆发式力量。最有用的类型是被Goetz称为“漠不关心型”的厌烦，即某人并没有从事任何让人满足的活动，但依然感到放松和平静。然而，是否存在一些可以预示我们更加倾向于哪种厌烦类型的性格特点仍然有待研究。</p><p>英国兰卡斯特中央大学的心理学家-Sandi Mann更进一步。她说：“所有情绪的存在都有其原因，厌烦也不例外”。Mann发现，厌烦可以使我们更具创造性。“我们都害怕处于厌烦之中，但实际上，它能导向各种各样奇妙的事情”。在去年发布的实验中，Mann发现，与对照组相比，那些被要求从电话簿中连抄15分钟数字，从而感到厌烦的实验对象在如何使用一个聚苯乙烯杯子上提出了更加有创意的想法。Mann总结到，无聊的活动最有利于创造性的发挥，因为它让思维得以发散开来。事实上，她甚至建议我们应该在生活总寻找更多的无聊。</p><p>加拿大多伦多约克大学的心理学家John Eastwood并没有被说服。他说，“如果你处于思维发散的状态，那么你并没有感到无聊。在我看来，无聊从定义上来讲是种不良的状态”。这并不必然意味着它无法被适应，他补充道。“痛苦能够被适应 – 如果我们感受不到身体疼痛的话，坏事就会发生。这难道意味着我们应该主动触发疼痛吗？不。但即便无聊已经进化到可以帮助我们生存，如果任由其发展的话，仍然是有害的”。对于Eastwood来说，无聊的核心特征是无法正常运转我们的注意力系统。这导致我们无法将注意力集中在任何事情上，使得时间似乎慢的让人痛苦。此外，改善该情况的努力可能反而让你感觉更差。“人们努力与世界联系，如果失败的话，就会感到沮丧和易怒”，他说。Eastwood认为，或许最让人担心的是，集中注意力反复失败会导致一种不知道该做什么，也不再关心的状态。</p><p>Eastwood的团队如今正在努力探索为什么注意力系统会失效。虽然为时尚早，但他们认为至少部分原因可以归结为性格。无聊倾向已经与多种性格特点联系起来。受到快乐驱动的人们似乎尤其糟糕。其他性格特点，比如好奇，则不那么容易无聊。更多无聊有害的证据来自于对那些或多或少有无聊倾向的人群的研究。大体而言，似乎那些容易无聊的人在教育、职业发展、甚至生活方面的前景更差。但当然，无聊自身并没有负面影响 – 反而是那些我们为了应对它而做的事情可能将我们置于危险之中。那么在它达到这种程度之前，我们能做些什么来缓解呢？Goetz的团队给出如下建议，跟青少年待在一起。他们发现与那些利用零食、电视或社交媒体分散注意力从而努力避免无聊的人群相比，那些“接近”无聊状态的人 – 换句话说，认为其无聊，但仍然身陷其中的人 – 更少感到无聊。</p><p>心理学家Francoise Wemelsfelder推测，我们过度连接的生活方式可能成为新的无聊来源。“现代人类社会存在许多过度刺激，但在寻找意义方面仍然有许多问题”，她说。因此，与其寻求更多的精神刺激，或许我们应该将手机放在一边，利用无聊来促使我们跟世界建立更有意义的联系。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>We all know how it feels – it’s impossible to keep your mind on anything, time stretches out, and all the things you could do seem equally unlikely to make you feel better. But defining boredom so that it can be studied in the lab has proved difficult. For a start, it can include a lot of other mental states, such as <mark class="vocab-word" data-word="frustration">frustration</mark>, <mark class="vocab-word" data-word="apathy">apathy</mark>, <mark class="vocab-word" data-word="depression">depression</mark> and indifference. There isn’t even <mark class="vocab-word" data-word="agreement">agreement</mark> over whether boredom is always a low-energy, <mark class="vocab-word" data-word="flat">flat</mark> kind of emotion or whether feeling <mark class="vocab-word" data-word="agitate">agitated</mark> and <mark class="vocab-word" data-word="restless">restless</mark> counts as boredom, too. In his book, Boredom: A Lively History, Peter Toohey at the University of Calgary, Canada, compares it to <mark class="vocab-word" data-word="disgust">disgust</mark> – an emotion that <mark class="vocab-word" data-word="motivate">motivates</mark> us to stay away from certain situations. ‘If <mark class="vocab-word" data-word="disgust">disgust</mark> protects humans from infection, boredom may protect them from “<mark class="vocab-word" data-word="infectious">infectious</mark>” social situations,’ he <mark class="vocab-word" data-word="suggest">suggests</mark>.</p></div>  <div class="parallel-zh"><p>我们都知道这种感觉——无法集中注意力到任何事情上，时间变得格外迟缓，所有事情都似乎无法让自己感觉好受一些。但要定义厌烦这种情绪，以便它可以在实验室里接受研究，却被证明十分困难。首先，它包含许多其他精神状态，如沮丧、冷漠、压抑和漠不关心。人们甚至对于“厌烦是否总是一种低能量、平淡的情绪状态”，或者“焦躁不安、坐立不宁是否算作厌烦”都存在争议。加拿大卡尔加里大学的Peter Toohey在其著作《厌烦：一段鲜活的历史》中将它与厌恶（一种促使我们脱离特定情景的情绪）进行了比较。 他提出：“如果厌恶保护人类免受感染，那么厌烦可能保护他们远离“感染性”的社会情景。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>By asking people about their experiences of boredom, Thomas Goetz and his team at the University of Konstanz in Germany have recently identified five <mark class="vocab-word" data-word="distinct">distinct</mark> types: <mark class="vocab-word" data-word="indifferent">indifferent</mark>, <mark class="vocab-word" data-word="calibrate">calibrating</mark>, searching, reactant and <mark class="vocab-word" data-word="apathetic">apathetic</mark>. These can be plotted on two axes – one running left to right, which measures low to high <mark class="vocab-word" data-word="arousal">arousal</mark>, and the other from top to bottom, which measures how positive or <mark class="vocab-word" data-word="negative">negative</mark> the feeling is. <mark class="vocab-word" data-word="intriguing">Intriguingly</mark>, Goetz has found that while people experience all kinds of boredom, they tend to specialise in one. Of the five types, the most damaging is ‘reactant’ boredom with its <mark class="vocab-word" data-word="explosive">explosive</mark> combination of high <mark class="vocab-word" data-word="arousal">arousal</mark> and <mark class="vocab-word" data-word="negative">negative</mark> emotion. The most useful is what Goetz calls ‘<mark class="vocab-word" data-word="indifferent">indifferent</mark>’ boredom: someone isn’t engaged in anything satisfying but still feels <mark class="vocab-word" data-word="relaxed">relaxed</mark> and calm. However, it <mark class="vocab-word" data-word="remains">remains</mark> to be seen whether there are any character <mark class="vocab-word" data-word="trait">traits</mark> that <mark class="vocab-word" data-word="predict">predict</mark> the kind of boredom each of us might be <mark class="vocab-word" data-word="prone">prone</mark> to.</p></div>  <div class="parallel-zh"><p>通过询问人们厌烦的经历，德国康斯坦茨大学的Thomas Goetz及其团队最近界定出五种不同的类型：漠不关心，摇摆不定，有所期待、应激反应和无动于衷。这些类型可以被置于两条坐标轴中：一条从左到右，表示从低到高的情感激发；另一条从上到下，表示情绪的积极或消极程度。有趣的是，Goetz发现，虽然人们会体验各种各样的厌烦情绪，但他们常常集中于其中一种。在五种类型中，最具破坏性的是“应激反应型”厌烦。它综合了高应激反应和消极情绪的爆发式力量。最有用的类型是被Goetz称为“漠不关心型”的厌烦，即某人并没有从事任何让人满足的活动，但依然感到放松和平静。然而，是否存在一些可以预示我们更加倾向于哪种厌烦类型的性格特点仍然有待研究。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Psychologist Sandi Mann at the University of Central Lancashire, UK, goes further. ‘All emotions are there for a reason, including boredom,’ she says. Mann has found that being <mark class="vocab-word" data-word="bore">bored</mark> makes us more creative. ‘We’re all afraid of being <mark class="vocab-word" data-word="bore">bored</mark> but in actual fact it can <mark class="vocab-word" data-word="lead">lead</mark> to all kinds of amazing things,’ she says. In experiments published last year, Mann found that people who had been made to feel <mark class="vocab-word" data-word="bore">bored</mark> by copying numbers out of the phone book for 15 minutes came up with more creative ideas about how to use a polystyrene cup than a control group. This article is from  website. Mann concluded that a <mark class="vocab-word" data-word="passive">passive</mark>, <mark class="vocab-word" data-word="bore">boring</mark> activity is best for <mark class="vocab-word" data-word="creativity">creativity</mark> because it allows the mind to <mark class="vocab-word" data-word="wander">wander</mark>. In fact, she goes so far as to <mark class="vocab-word" data-word="suggest">suggest</mark> that we should seek out more boredom in our lives.</p></div>  <div class="parallel-zh"><p>英国兰卡斯特中央大学的心理学家-Sandi Mann更进一步。她说：“所有情绪的存在都有其原因，厌烦也不例外”。Mann发现，厌烦可以使我们更具创造性。“我们都害怕处于厌烦之中，但实际上，它能导向各种各样奇妙的事情”。在去年发布的实验中，Mann发现，与对照组相比，那些被要求从电话簿中连抄15分钟数字，从而感到厌烦的实验对象在如何使用一个聚苯乙烯杯子上提出了更加有创意的想法。Mann总结到，无聊的活动最有利于创造性的发挥，因为它让思维得以发散开来。事实上，她甚至建议我们应该在生活总寻找更多的无聊。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Psychologist John Eastwood at York University in Toronto, Canada, isn’t <mark class="vocab-word" data-word="convince">convinced</mark>. ‘If you are in a state of mind-wandering you are not <mark class="vocab-word" data-word="bore">bored</mark>,’ he says. ‘In my view, by definition boredom is an <mark class="vocab-word" data-word="undesirable">undesirable</mark> state.’ That doesn’t necessarily mean that it isn’t adaptive, he adds. ‘Pain is adaptive – if we didn’t have physical pain, bad things would happen to us. Does that mean that we should actively cause pain? No. But even if boredom has <mark class="vocab-word" data-word="evolve">evolved</mark> to help us survive, it can still be <mark class="vocab-word" data-word="toxic">toxic</mark> if allowed to fester.’ For Eastwood, the central feature of boredom is a failure to put our ‘attention system’ into <mark class="vocab-word" data-word="gear">gear</mark>. This causes an <mark class="vocab-word" data-word="inability">inability</mark> to focus on anything, which makes time seem to go painfully slowly. What’s more, your efforts to improve the situation can end up making you feel worse. ‘People try to connect with the world and if they are not successful there’s that <mark class="vocab-word" data-word="frustration">frustration</mark> and irritability,’ he says. Perhaps most worryingly, says Eastwood, <mark class="vocab-word" data-word="repeatedly">repeatedly</mark> failing to engage attention can <mark class="vocab-word" data-word="lead">lead</mark> to a state where we don’t know what to do anymore, and no longer care.</p></div>  <div class="parallel-zh"><p>加拿大多伦多约克大学的心理学家John Eastwood并没有被说服。他说，“如果你处于思维发散的状态，那么你并没有感到无聊。在我看来，无聊从定义上来讲是种不良的状态”。这并不必然意味着它无法被适应，他补充道。“痛苦能够被适应 – 如果我们感受不到身体疼痛的话，坏事就会发生。这难道意味着我们应该主动触发疼痛吗？不。但即便无聊已经进化到可以帮助我们生存，如果任由其发展的话，仍然是有害的”。对于Eastwood来说，无聊的核心特征是无法正常运转我们的注意力系统。这导致我们无法将注意力集中在任何事情上，使得时间似乎慢的让人痛苦。此外，改善该情况的努力可能反而让你感觉更差。“人们努力与世界联系，如果失败的话，就会感到沮丧和易怒”，他说。Eastwood认为，或许最让人担心的是，集中注意力反复失败会导致一种不知道该做什么，也不再关心的状态。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Eastwood’s team is now trying to explore why the attention system fails. It’s early days but they think that at least some of it comes down to personality. Boredom proneness has been linked with a variety of <mark class="vocab-word" data-word="trait">traits</mark>. People who are <mark class="vocab-word" data-word="motivated">motivated</mark> by pleasure seem to suffer particularly badly. Other personality <mark class="vocab-word" data-word="trait">traits</mark>, such as <mark class="vocab-word" data-word="curiosity">curiosity</mark>, are associated with a high boredom <mark class="vocab-word" data-word="threshold">threshold</mark>. More evidence that boredom has <mark class="vocab-word" data-word="detrimental">detrimental</mark> effects comes from studies of people who are more or less <mark class="vocab-word" data-word="prone">prone</mark> to boredom. It seems those who <mark class="vocab-word" data-word="bore">bore</mark> easily face poorer <mark class="vocab-word" data-word="prospect">prospects</mark> in education, their career and even life in general. But of course, boredom itself cannot kill – it’s the things we do to deal with it that may put us in danger. What can we do to <mark class="vocab-word" data-word="alleviate">alleviate</mark> it before it comes to that? Goetz’s group has one suggestion. Working with teenagers, they found that those who ‘approach’ a <mark class="vocab-word" data-word="bore">boring</mark> situation-in other words, see that it’s <mark class="vocab-word" data-word="bore">boring</mark> and get <mark class="vocab-word" data-word="stuck">stuck</mark> in any way -report less boredom than those who try to avoid it by using <mark class="vocab-word" data-word="snack">snacks</mark>, TV or social media for <mark class="vocab-word" data-word="distraction">distraction</mark>.</p></div>  <div class="parallel-zh"><p>Eastwood的团队如今正在努力探索为什么注意力系统会失效。虽然为时尚早，但他们认为至少部分原因可以归结为性格。无聊倾向已经与多种性格特点联系起来。受到快乐驱动的人们似乎尤其糟糕。其他性格特点，比如好奇，则不那么容易无聊。更多无聊有害的证据来自于对那些或多或少有无聊倾向的人群的研究。大体而言，似乎那些容易无聊的人在教育、职业发展、甚至生活方面的前景更差。但当然，无聊自身并没有负面影响 – 反而是那些我们为了应对它而做的事情可能将我们置于危险之中。那么在它达到这种程度之前，我们能做些什么来缓解呢？Goetz的团队给出如下建议，跟青少年待在一起。他们发现与那些利用零食、电视或社交媒体分散注意力从而努力避免无聊的人群相比，那些“接近”无聊状态的人 – 换句话说，认为其无聊，但仍然身陷其中的人 – 更少感到无聊。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Psychologist Francoise Wemelsfelder <mark class="vocab-word" data-word="speculate">speculates</mark> that our over-connected lifestyles might even be a new source of boredom. ‘In modern human society there is a lot of overstimulation but still a lot of problems finding meaning,’ she says. So instead of seeking yet more mental <mark class="vocab-word" data-word="stimulation">stimulation</mark>, perhaps we should leave our phones alone, and use boredom to <mark class="vocab-word" data-word="motivate">motivate</mark> us to engage with the world in a more <mark class="vocab-word" data-word="meaningful">meaningful</mark> way.</p></div>  <div class="parallel-zh"><p>心理学家Francoise Wemelsfelder推测，我们过度连接的生活方式可能成为新的无聊来源。“现代人类社会存在许多过度刺激，但在寻找意义方面仍然有许多问题”，她说。因此，与其寻求更多的精神刺激，或许我们应该将手机放在一边，利用无聊来促使我们跟世界建立更有意义的联系。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"frustration": 2, "apathy": 1, "depression": 1, "agreement": 1, "flat": 1, "agitate": 1, "restless": 1, "disgust": 2, "motivate": 2, "infectious": 1, "suggest": 2, "distinct": 1, "indifferent": 2, "calibrate": 1, "apathetic": 1, "arousal": 2, "negative": 2, "intriguing": 1, "explosive": 1, "relaxed": 1, "remains": 1, "trait": 3, "predict": 1, "prone": 2, "bore": 8, "lead": 2, "passive": 1, "creativity": 1, "wander": 1, "convince": 1, "undesirable": 1, "evolve": 1, "toxic": 1, "gear": 1, "inability": 1, "repeatedly": 1, "motivated": 1, "curiosity": 1, "threshold": 1, "detrimental": 1, "prospect": 1, "alleviate": 1, "stuck": 1, "snack": 1, "distraction": 1, "speculate": 1, "stimulation": 1, "meaningful": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

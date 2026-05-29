@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>palm oil 棕榈油 - 剑桥雅思17 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思17</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>palm oil 棕榈油</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/52441.html" target="_blank">https://www.laokaoya.com/52441.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="palm">Palm</mark> oil is an <mark class="vocab-word" data-word="edible">edible</mark> oil <mark class="vocab-word" data-word="derive">derived</mark> from the fruit of the African oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">tree</mark>, and is currently the most consumed vegetable oil in the world. It’s almost certainly in the <mark class="vocab-word" data-word="soap">soap</mark> we wash with in the morning, the sandwich we have for lunch, and the <mark class="vocab-word" data-word="biscuit">biscuits</mark> we <mark class="vocab-word" data-word="snack">snack</mark> on during the day. Why is <mark class="vocab-word" data-word="palm">palm</mark> oil so attractive for <mark class="vocab-word" data-word="manufacturer">manufacturers</mark>? <mark class="vocab-word" data-word="primarily">Primarily</mark> because its unique properties – such as remaining solid at room temperature – make it an ideal <mark class="vocab-word" data-word="ingredient">ingredient</mark> for <mark class="vocab-word" data-word="long-term">long-term</mark> preservation, allowing many packaged foods on supermarket shelves to have ‘best before’ dates of months, even years, into the future.</p><p>Many farmers have <mark class="vocab-word" data-word="seize">seized</mark> the opportunity to maximise the planting of oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark>. Between 1990 and 2012, the global land area <mark class="vocab-word" data-word="devoted">devoted</mark> to growing oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark> grew from 6 to 17 million <mark class="vocab-word" data-word="hectare">hectares</mark>, now <mark class="vocab-word" data-word="accounting">accounting</mark> for around ten percent of total <mark class="vocab-word" data-word="cropland">cropland</mark> in the entire world. From a <mark class="vocab-word" data-word="mere">mere</mark> two million tonnes of <mark class="vocab-word" data-word="palm">palm</mark> oil being produced <mark class="vocab-word" data-word="annually">annually</mark> globally 50 years ago, there are now around 60 million tonnes produced every single year, a figure looking likely to double or even <mark class="vocab-word" data-word="triple">triple</mark> by the middle of the century.</p><p>However, there are multiple reasons why <mark class="vocab-word" data-word="conservationist">conservationists</mark> <mark class="vocab-word" data-word="cite">cite</mark> the rapid spread of oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> as a major concern. There are <mark class="vocab-word" data-word="countless">countless</mark> news stories of <mark class="vocab-word" data-word="deforestation">deforestation</mark>, <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="destruction">destruction</mark> and <mark class="vocab-word" data-word="dwindle">dwindling</mark> species populations, all as a direct result of land clearing to establish oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">tree</mark> monoculture on an industrial scale, particularly in Malaysia and Indonesia. <mark class="vocab-word" data-word="endanger">Endangered</mark> species – most famously the Sumatran orangutan, but also <mark class="vocab-word" data-word="rhino">rhinos</mark>, elephants, tigers, and numerous other <mark class="vocab-word" data-word="fauna">fauna</mark> – have suffered from the unstoppable spread of oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark>.</p><p>‘<mark class="vocab-word" data-word="palm">Palm</mark> oil is surely one of the greatest <mark class="vocab-word" data-word="threat">threats</mark> to global <mark class="vocab-word" data-word="biodiversity">biodiversity</mark>,’ declares Dr Farnon Ellwood of the University of the West of England, Bristol. ‘<mark class="vocab-word" data-word="palm">Palm</mark> oil is replacing rainforest, and rainforest is where all the species are. That’s a problem.’ This has led to some <mark class="vocab-word" data-word="radical">radical</mark> questions among environmentalists, such as whether consumers should try to <mark class="vocab-word" data-word="boycott">boycott</mark> <mark class="vocab-word" data-word="palm">palm</mark> oil entirely.</p><p>Meanwhile Bhavani Shankar, Professor at London’s School of <mark class="vocab-word" data-word="oriental">Oriental</mark> and African Studies, argues, ‘It’s easy to say that <mark class="vocab-word" data-word="palm">palm</mark> oil is the enemy and we should be against it. It makes for a more dramatic <mark class="vocab-word" data-word="story">story</mark>, and it’s very <mark class="vocab-word" data-word="intuitive">intuitive</mark>. But given the <mark class="vocab-word" data-word="complexity">complexity</mark> of the argument, I think a much more <mark class="vocab-word" data-word="nuance">nuanced</mark> <mark class="vocab-word" data-word="story">story</mark> is closer to the truth.’</p><p>One response to the <mark class="vocab-word" data-word="boycott">boycott</mark> movement has been the argument for the <mark class="vocab-word" data-word="vital">vital</mark> role <mark class="vocab-word" data-word="palm">palm</mark> oil plays in lifting many millions of people in the developing world out of <mark class="vocab-word" data-word="poverty">poverty</mark>. Is it <mark class="vocab-word" data-word="desirable">desirable</mark> to have <mark class="vocab-word" data-word="palm">palm</mark> oil <mark class="vocab-word" data-word="boycott">boycotted</mark>, replaced, <mark class="vocab-word" data-word="eliminate">eliminated</mark> from the global supply chain, given how many this article is from  website low-income people in developing countries depend on it for their <mark class="vocab-word" data-word="livelihood">livelihoods</mark>? How best to strike a <mark class="vocab-word" data-word="utilitarian">utilitarian</mark> balance between these competing <mark class="vocab-word" data-word="factor">factors</mark> has become a serious bone of <mark class="vocab-word" data-word="contention">contention</mark>.</p><p>Even the <mark class="vocab-word" data-word="deforestation">deforestation</mark> argument isn’t as <mark class="vocab-word" data-word="straightforward">straightforward</mark> as it seems. Oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> produce at least four and potentially up to ten times more oil per <mark class="vocab-word" data-word="hectare">hectare</mark> than <mark class="vocab-word" data-word="soybean">soybean</mark>, rapeseed, sunflower or other competing oils. That <mark class="vocab-word" data-word="immense">immensely</mark> high <mark class="vocab-word" data-word="yield">yield</mark> – which is <mark class="vocab-word" data-word="predominantly">predominantly</mark> what makes it so <mark class="vocab-word" data-word="profitable">profitable</mark> – is potentially also an <mark class="vocab-word" data-word="ecological">ecological</mark> benefit. If ten times more <mark class="vocab-word" data-word="palm">palm</mark> oil can be produced from a <mark class="vocab-word" data-word="patch">patch</mark> of land than any competing oil, then ten times more land would need to be cleared in order to produce the same volume of oil from that competitor.</p><p>As for the question of <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark>, the issue really depends on what oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark> are replacing. Crops vary in the degree to which they sequester <mark class="vocab-word" data-word="carbon">carbon</mark> – in other words, the amount of <mark class="vocab-word" data-word="carbon">carbon</mark> they capture from the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark> and store within the plant. The more <mark class="vocab-word" data-word="carbon">carbon</mark> a plant sequesters, the more it reduces the effect of climate change. As Shankar explains: ‘[<mark class="vocab-word" data-word="palm">Palm</mark> oil production] actually sequesters more <mark class="vocab-word" data-word="carbon">carbon</mark> in some ways than other alternatives. […] Of course, if you’re cutting down <mark class="vocab-word" data-word="virgin">virgin</mark> forest it’s terrible – that’s what’s happening in Indonesia and Malaysia, it’s been allowed to get out of hand. But if it’s replacing rice, for example, it might actually sequester more <mark class="vocab-word" data-word="carbon">carbon</mark>.’</p><p>The industry is now <mark class="vocab-word" data-word="regulate">regulated</mark> by a group called the Roundtable on <mark class="vocab-word" data-word="sustainable">Sustainable</mark> <mark class="vocab-word" data-word="palm">Palm</mark> Oil (RSPO), consisting of <mark class="vocab-word" data-word="palm">palm</mark> growers, <mark class="vocab-word" data-word="retailer">retailers</mark>, product <mark class="vocab-word" data-word="manufacturer">manufacturers</mark>, and other interested parties. Over the past <mark class="vocab-word" data-word="decade">decade</mark> or so, an <mark class="vocab-word" data-word="agreement">agreement</mark> has <mark class="vocab-word" data-word="gradual">gradually</mark> been reached <mark class="vocab-word" data-word="regarding">regarding</mark> standards that producers of <mark class="vocab-word" data-word="palm">palm</mark> oil have to meet in order for their product to be regarded as officially ‘<mark class="vocab-word" data-word="sustainable">sustainable</mark>’. The RSPO insists upon no <mark class="vocab-word" data-word="virgin">virgin</mark> forest clearing, transparency and regular assessment of <mark class="vocab-word" data-word="carbon">carbon</mark> stocks, among other criteria. Only once these requirements are fully satisfied is the oil allowed to be sold as certified <mark class="vocab-word" data-word="sustainable">sustainable</mark> <mark class="vocab-word" data-word="palm">palm</mark> oil (CSPO). Recent figures show that the RSPO now certifies around 12 million tonnes of <mark class="vocab-word" data-word="palm">palm</mark> oil <mark class="vocab-word" data-word="annually">annually</mark>, <mark class="vocab-word" data-word="equivalent">equivalent</mark> to roughly 21 percent of the world’s total <mark class="vocab-word" data-word="palm">palm</mark> oil production.</p><p>There is even hope that oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> might not need to be such <mark class="vocab-word" data-word="sterile">sterile</mark> monocultures, or ‘green deserts’, as Ellwood describes them. New research at Ellwood’s lab <mark class="vocab-word" data-word="hint">hints</mark> at one plant which might make all the difference. The bird’s <mark class="vocab-word" data-word="nest">nest</mark> <mark class="vocab-word" data-word="fern">fern</mark>(Asplenium nidus)grows on <mark class="vocab-word" data-word="tree">trees</mark> in an epiphytic fashion (meaning it’s <mark class="vocab-word" data-word="dependent">dependent</mark> on the <mark class="vocab-word" data-word="tree">tree</mark> only for support, not for <mark class="vocab-word" data-word="nutrient">nutrients</mark>), and is native to many <mark class="vocab-word" data-word="tropical">tropical</mark> regions, where as a <mark class="vocab-word" data-word="keystone">keystone</mark> species it <mark class="vocab-word" data-word="perform">performs</mark> a <mark class="vocab-word" data-word="vital">vital</mark> <mark class="vocab-word" data-word="ecological">ecological</mark> role. Ellwood believes that reintroducing the bird’s <mark class="vocab-word" data-word="nest">nest</mark> <mark class="vocab-word" data-word="fern">fern</mark> into oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> could potentially allow these areas to recover their <mark class="vocab-word" data-word="biodiversity">biodiversity</mark>, providing a home for all manner of species, from fungi and <mark class="vocab-word" data-word="bacteria">bacteria</mark>, to <mark class="vocab-word" data-word="invertebrate">invertebrates</mark> such as insects, <mark class="vocab-word" data-word="amphibian">amphibians</mark>, <mark class="vocab-word" data-word="reptile">reptiles</mark> and even <mark class="vocab-word" data-word="mammal">mammals</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>棕榈油是从非洲油棕榈树果实中提炼出的一种可食用油，也是目前世界上消耗量最大的植物油。它几乎必然存在于我们早上清洗所使用的肥皂中，午餐所吃的三明治里，以及一天之中当做零食吃的饼干里。为什么棕榈油对生产商具有如此大的吸引力？主要原因在于它独特的属性 – 比如室温条件下为固态 – 十分利于长期保存，让那些超市货架上包装好的食物可以拥有数月、甚至数年的保质期。</p><p>许多农民都抓住这个机会尽可能多的种植油棕榈树。在1990年和2012年间，全球用于种植油棕榈树的土地面积从600万公顷增长到1700万公顷，如今大约占到全球耕地面积的百分之十。50年前，全球棕榈油的年产量还只有200万吨，如今每年的产量已经达到6000万吨左右。这一数字到本世纪中叶时还可能有两倍甚至三倍的增长。</p><p>然而，多重原因使得环保主义者对油棕榈树种植园的快速扩张感到担心。有关森林砍伐，栖息地破坏，以及物种数量下降的新闻报道层出不穷。这些都是清理土地用于工业规模种植油棕榈树这一单一植物的直接后果。这点在马来西亚和印度尼西亚尤为明显。濒危物种 – 其中最知名的就是苏门答腊猩猩，但也包括河马、大象、狮子和众多其他动物 – 饱受油棕榈树种植园不停扩张的痛苦。</p><p>布里斯托西英格兰大学的Farnon Ellwood博士认为：“棕榈油当然是全球生物多样性最大的威胁之一。棕榈油正在取代热带雨林，而雨林是所有物种的栖身之处。这正是问题所在”。这在环保主义者之间引发激烈的争论，例如消费者是否应该彻底抵制棕榈油。</p><p>与此同时，伦敦东方与非洲研究学院的Bhavani Shankar认为：“嘴上说说棕榈油是敌人，我们应该抵制它十分容易。这样故事更有戏剧性，而且非常直观。但考虑到这场争论的复杂性，我认为一个更加细致入微的故事才更接近真相”。</p><p>对抵制运动的一种回应为，棕榈油在帮助发展中国家数百万人口脱离贫困方面发挥着至关重要的作用。考虑到发展中国家如此多的低收入人群以此为生，对棕榈油进行抵制、替换、甚至从全球供应链中将其剔除出去是否可取呢？如何在众多互相冲突的因素中达成最佳平衡已经成为争论焦点。</p><p>即便是砍伐森林这种观点也不像它看起来那么简单。相比于大豆、油菜籽、向日葵或者其他油料作物，每公顷油棕榈种植园的产油量是它们的至少四倍，甚至可能是十倍。这种极高的产量 – 这也正是其利润如此丰厚的主要原因 – 可能有益于生态系统。如果一块土地上产出的棕榈油数量比其他油料作物多10倍，那么利用其他油料作物生产相同数量的食用油就意味着需要清理10倍的土地。</p><p>至于碳排放的问题，这实际上取决于油棕榈树所取代的究竟是什么。农作物在碳隔离方面的程度各有不同 – 换句话说，即它们从大气中所捕捉并贮藏在植株内的碳的数量。一种植物所隔离的碳越多，它对减少气候变化影响的贡献也就越大。正如Shankar所阐述的那样：“从某种方式上来讲，棕榈油的生产实际上比其他替代方案隔离更多的碳。当然，如果你砍伐的是原始森林，那肯定糟透了 – 这也是印度尼西亚和马拉西亚正在发生的事情，事态被允许脱离控制。但如果它取代的是，比如说，水稻，那么它实际上隔离了更多的碳”。</p><p>该行业目前受到一个叫做“可持续棕榈油圆桌会议”的组织的管控。它包括棕榈树种植者，零售商，生产商，以及其他利益团体。在过去十年左右的时间里，人们逐渐在棕榈油生产商应该满足什么标准才能使其产品被官方认证为“可持续”上达成一致。RSPO坚持的原则包括：不准砍伐原始森林，生产透明，以及定期评估碳储量。一旦这些要求得以满足，油品就可以作为官方认证的可持续棕榈油销售。最近的数据表示，RSPO如今每年认证1200万吨左右的棕榈油，大约相当于全世界棕榈油总产量的21%。</p><p>甚至有这样子的期望，油棕榈树种植园可能并不需要如此单一栽培，或者成为如Ellwood所说的“绿色荒漠”。Ellwood实验室一项新的研究表明，有一种植物可能带来翻天覆地的变化。鸟巢蕨以一种附生的方式生长在树上（它仅仅依赖树的支撑，而不需要养分），是许多热带地区土生土长的品种。它作为关键物种，在生态系统中扮演着至关重要的角色。Ellwood相信，将鸟巢蕨重新引入油棕榈树种植园中可能会让这些区域恢复其生物多样性，为各种各样的物种提供栖息地，从真菌和细菌，到诸如昆虫这样的无脊椎动物，两栖动物，爬行动物，甚至哺乳动物等。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="palm">Palm</mark> oil is an <mark class="vocab-word" data-word="edible">edible</mark> oil <mark class="vocab-word" data-word="derive">derived</mark> from the fruit of the African oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">tree</mark>, and is currently the most consumed vegetable oil in the world. It’s almost certainly in the <mark class="vocab-word" data-word="soap">soap</mark> we wash with in the morning, the sandwich we have for lunch, and the <mark class="vocab-word" data-word="biscuit">biscuits</mark> we <mark class="vocab-word" data-word="snack">snack</mark> on during the day. Why is <mark class="vocab-word" data-word="palm">palm</mark> oil so attractive for <mark class="vocab-word" data-word="manufacturer">manufacturers</mark>? <mark class="vocab-word" data-word="primarily">Primarily</mark> because its unique properties – such as remaining solid at room temperature – make it an ideal <mark class="vocab-word" data-word="ingredient">ingredient</mark> for <mark class="vocab-word" data-word="long-term">long-term</mark> preservation, allowing many packaged foods on supermarket shelves to have ‘best before’ dates of months, even years, into the future.</p></div>  <div class="parallel-zh"><p>棕榈油是从非洲油棕榈树果实中提炼出的一种可食用油，也是目前世界上消耗量最大的植物油。它几乎必然存在于我们早上清洗所使用的肥皂中，午餐所吃的三明治里，以及一天之中当做零食吃的饼干里。为什么棕榈油对生产商具有如此大的吸引力？主要原因在于它独特的属性 – 比如室温条件下为固态 – 十分利于长期保存，让那些超市货架上包装好的食物可以拥有数月、甚至数年的保质期。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many farmers have <mark class="vocab-word" data-word="seize">seized</mark> the opportunity to maximise the planting of oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark>. Between 1990 and 2012, the global land area <mark class="vocab-word" data-word="devoted">devoted</mark> to growing oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark> grew from 6 to 17 million <mark class="vocab-word" data-word="hectare">hectares</mark>, now <mark class="vocab-word" data-word="accounting">accounting</mark> for around ten percent of total <mark class="vocab-word" data-word="cropland">cropland</mark> in the entire world. From a <mark class="vocab-word" data-word="mere">mere</mark> two million tonnes of <mark class="vocab-word" data-word="palm">palm</mark> oil being produced <mark class="vocab-word" data-word="annually">annually</mark> globally 50 years ago, there are now around 60 million tonnes produced every single year, a figure looking likely to double or even <mark class="vocab-word" data-word="triple">triple</mark> by the middle of the century.</p></div>  <div class="parallel-zh"><p>许多农民都抓住这个机会尽可能多的种植油棕榈树。在1990年和2012年间，全球用于种植油棕榈树的土地面积从600万公顷增长到1700万公顷，如今大约占到全球耕地面积的百分之十。50年前，全球棕榈油的年产量还只有200万吨，如今每年的产量已经达到6000万吨左右。这一数字到本世纪中叶时还可能有两倍甚至三倍的增长。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, there are multiple reasons why <mark class="vocab-word" data-word="conservationist">conservationists</mark> <mark class="vocab-word" data-word="cite">cite</mark> the rapid spread of oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> as a major concern. There are <mark class="vocab-word" data-word="countless">countless</mark> news stories of <mark class="vocab-word" data-word="deforestation">deforestation</mark>, <mark class="vocab-word" data-word="habitat">habitat</mark> <mark class="vocab-word" data-word="destruction">destruction</mark> and <mark class="vocab-word" data-word="dwindle">dwindling</mark> species populations, all as a direct result of land clearing to establish oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">tree</mark> monoculture on an industrial scale, particularly in Malaysia and Indonesia. <mark class="vocab-word" data-word="endanger">Endangered</mark> species – most famously the Sumatran orangutan, but also <mark class="vocab-word" data-word="rhino">rhinos</mark>, elephants, tigers, and numerous other <mark class="vocab-word" data-word="fauna">fauna</mark> – have suffered from the unstoppable spread of oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark>.</p></div>  <div class="parallel-zh"><p>然而，多重原因使得环保主义者对油棕榈树种植园的快速扩张感到担心。有关森林砍伐，栖息地破坏，以及物种数量下降的新闻报道层出不穷。这些都是清理土地用于工业规模种植油棕榈树这一单一植物的直接后果。这点在马来西亚和印度尼西亚尤为明显。濒危物种 – 其中最知名的就是苏门答腊猩猩，但也包括河马、大象、狮子和众多其他动物 – 饱受油棕榈树种植园不停扩张的痛苦。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘<mark class="vocab-word" data-word="palm">Palm</mark> oil is surely one of the greatest <mark class="vocab-word" data-word="threat">threats</mark> to global <mark class="vocab-word" data-word="biodiversity">biodiversity</mark>,’ declares Dr Farnon Ellwood of the University of the West of England, Bristol. ‘<mark class="vocab-word" data-word="palm">Palm</mark> oil is replacing rainforest, and rainforest is where all the species are. That’s a problem.’ This has led to some <mark class="vocab-word" data-word="radical">radical</mark> questions among environmentalists, such as whether consumers should try to <mark class="vocab-word" data-word="boycott">boycott</mark> <mark class="vocab-word" data-word="palm">palm</mark> oil entirely.</p></div>  <div class="parallel-zh"><p>布里斯托西英格兰大学的Farnon Ellwood博士认为：“棕榈油当然是全球生物多样性最大的威胁之一。棕榈油正在取代热带雨林，而雨林是所有物种的栖身之处。这正是问题所在”。这在环保主义者之间引发激烈的争论，例如消费者是否应该彻底抵制棕榈油。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Meanwhile Bhavani Shankar, Professor at London’s School of <mark class="vocab-word" data-word="oriental">Oriental</mark> and African Studies, argues, ‘It’s easy to say that <mark class="vocab-word" data-word="palm">palm</mark> oil is the enemy and we should be against it. It makes for a more dramatic <mark class="vocab-word" data-word="story">story</mark>, and it’s very <mark class="vocab-word" data-word="intuitive">intuitive</mark>. But given the <mark class="vocab-word" data-word="complexity">complexity</mark> of the argument, I think a much more <mark class="vocab-word" data-word="nuance">nuanced</mark> <mark class="vocab-word" data-word="story">story</mark> is closer to the truth.’</p></div>  <div class="parallel-zh"><p>与此同时，伦敦东方与非洲研究学院的Bhavani Shankar认为：“嘴上说说棕榈油是敌人，我们应该抵制它十分容易。这样故事更有戏剧性，而且非常直观。但考虑到这场争论的复杂性，我认为一个更加细致入微的故事才更接近真相”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One response to the <mark class="vocab-word" data-word="boycott">boycott</mark> movement has been the argument for the <mark class="vocab-word" data-word="vital">vital</mark> role <mark class="vocab-word" data-word="palm">palm</mark> oil plays in lifting many millions of people in the developing world out of <mark class="vocab-word" data-word="poverty">poverty</mark>. Is it <mark class="vocab-word" data-word="desirable">desirable</mark> to have <mark class="vocab-word" data-word="palm">palm</mark> oil <mark class="vocab-word" data-word="boycott">boycotted</mark>, replaced, <mark class="vocab-word" data-word="eliminate">eliminated</mark> from the global supply chain, given how many this article is from  website low-income people in developing countries depend on it for their <mark class="vocab-word" data-word="livelihood">livelihoods</mark>? How best to strike a <mark class="vocab-word" data-word="utilitarian">utilitarian</mark> balance between these competing <mark class="vocab-word" data-word="factor">factors</mark> has become a serious bone of <mark class="vocab-word" data-word="contention">contention</mark>.</p></div>  <div class="parallel-zh"><p>对抵制运动的一种回应为，棕榈油在帮助发展中国家数百万人口脱离贫困方面发挥着至关重要的作用。考虑到发展中国家如此多的低收入人群以此为生，对棕榈油进行抵制、替换、甚至从全球供应链中将其剔除出去是否可取呢？如何在众多互相冲突的因素中达成最佳平衡已经成为争论焦点。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Even the <mark class="vocab-word" data-word="deforestation">deforestation</mark> argument isn’t as <mark class="vocab-word" data-word="straightforward">straightforward</mark> as it seems. Oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> produce at least four and potentially up to ten times more oil per <mark class="vocab-word" data-word="hectare">hectare</mark> than <mark class="vocab-word" data-word="soybean">soybean</mark>, rapeseed, sunflower or other competing oils. That <mark class="vocab-word" data-word="immense">immensely</mark> high <mark class="vocab-word" data-word="yield">yield</mark> – which is <mark class="vocab-word" data-word="predominantly">predominantly</mark> what makes it so <mark class="vocab-word" data-word="profitable">profitable</mark> – is potentially also an <mark class="vocab-word" data-word="ecological">ecological</mark> benefit. If ten times more <mark class="vocab-word" data-word="palm">palm</mark> oil can be produced from a <mark class="vocab-word" data-word="patch">patch</mark> of land than any competing oil, then ten times more land would need to be cleared in order to produce the same volume of oil from that competitor.</p></div>  <div class="parallel-zh"><p>即便是砍伐森林这种观点也不像它看起来那么简单。相比于大豆、油菜籽、向日葵或者其他油料作物，每公顷油棕榈种植园的产油量是它们的至少四倍，甚至可能是十倍。这种极高的产量 – 这也正是其利润如此丰厚的主要原因 – 可能有益于生态系统。如果一块土地上产出的棕榈油数量比其他油料作物多10倍，那么利用其他油料作物生产相同数量的食用油就意味着需要清理10倍的土地。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As for the question of <mark class="vocab-word" data-word="carbon">carbon</mark> <mark class="vocab-word" data-word="emission">emissions</mark>, the issue really depends on what oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="tree">trees</mark> are replacing. Crops vary in the degree to which they sequester <mark class="vocab-word" data-word="carbon">carbon</mark> – in other words, the amount of <mark class="vocab-word" data-word="carbon">carbon</mark> they capture from the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark> and store within the plant. The more <mark class="vocab-word" data-word="carbon">carbon</mark> a plant sequesters, the more it reduces the effect of climate change. As Shankar explains: ‘[<mark class="vocab-word" data-word="palm">Palm</mark> oil production] actually sequesters more <mark class="vocab-word" data-word="carbon">carbon</mark> in some ways than other alternatives. […] Of course, if you’re cutting down <mark class="vocab-word" data-word="virgin">virgin</mark> forest it’s terrible – that’s what’s happening in Indonesia and Malaysia, it’s been allowed to get out of hand. But if it’s replacing rice, for example, it might actually sequester more <mark class="vocab-word" data-word="carbon">carbon</mark>.’</p></div>  <div class="parallel-zh"><p>至于碳排放的问题，这实际上取决于油棕榈树所取代的究竟是什么。农作物在碳隔离方面的程度各有不同 – 换句话说，即它们从大气中所捕捉并贮藏在植株内的碳的数量。一种植物所隔离的碳越多，它对减少气候变化影响的贡献也就越大。正如Shankar所阐述的那样：“从某种方式上来讲，棕榈油的生产实际上比其他替代方案隔离更多的碳。当然，如果你砍伐的是原始森林，那肯定糟透了 – 这也是印度尼西亚和马拉西亚正在发生的事情，事态被允许脱离控制。但如果它取代的是，比如说，水稻，那么它实际上隔离了更多的碳”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The industry is now <mark class="vocab-word" data-word="regulate">regulated</mark> by a group called the Roundtable on <mark class="vocab-word" data-word="sustainable">Sustainable</mark> <mark class="vocab-word" data-word="palm">Palm</mark> Oil (RSPO), consisting of <mark class="vocab-word" data-word="palm">palm</mark> growers, <mark class="vocab-word" data-word="retailer">retailers</mark>, product <mark class="vocab-word" data-word="manufacturer">manufacturers</mark>, and other interested parties. Over the past <mark class="vocab-word" data-word="decade">decade</mark> or so, an <mark class="vocab-word" data-word="agreement">agreement</mark> has <mark class="vocab-word" data-word="gradual">gradually</mark> been reached <mark class="vocab-word" data-word="regarding">regarding</mark> standards that producers of <mark class="vocab-word" data-word="palm">palm</mark> oil have to meet in order for their product to be regarded as officially ‘<mark class="vocab-word" data-word="sustainable">sustainable</mark>’. The RSPO insists upon no <mark class="vocab-word" data-word="virgin">virgin</mark> forest clearing, transparency and regular assessment of <mark class="vocab-word" data-word="carbon">carbon</mark> stocks, among other criteria. Only once these requirements are fully satisfied is the oil allowed to be sold as certified <mark class="vocab-word" data-word="sustainable">sustainable</mark> <mark class="vocab-word" data-word="palm">palm</mark> oil (CSPO). Recent figures show that the RSPO now certifies around 12 million tonnes of <mark class="vocab-word" data-word="palm">palm</mark> oil <mark class="vocab-word" data-word="annually">annually</mark>, <mark class="vocab-word" data-word="equivalent">equivalent</mark> to roughly 21 percent of the world’s total <mark class="vocab-word" data-word="palm">palm</mark> oil production.</p></div>  <div class="parallel-zh"><p>该行业目前受到一个叫做“可持续棕榈油圆桌会议”的组织的管控。它包括棕榈树种植者，零售商，生产商，以及其他利益团体。在过去十年左右的时间里，人们逐渐在棕榈油生产商应该满足什么标准才能使其产品被官方认证为“可持续”上达成一致。RSPO坚持的原则包括：不准砍伐原始森林，生产透明，以及定期评估碳储量。一旦这些要求得以满足，油品就可以作为官方认证的可持续棕榈油销售。最近的数据表示，RSPO如今每年认证1200万吨左右的棕榈油，大约相当于全世界棕榈油总产量的21%。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There is even hope that oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> might not need to be such <mark class="vocab-word" data-word="sterile">sterile</mark> monocultures, or ‘green deserts’, as Ellwood describes them. New research at Ellwood’s lab <mark class="vocab-word" data-word="hint">hints</mark> at one plant which might make all the difference. The bird’s <mark class="vocab-word" data-word="nest">nest</mark> <mark class="vocab-word" data-word="fern">fern</mark>(Asplenium nidus)grows on <mark class="vocab-word" data-word="tree">trees</mark> in an epiphytic fashion (meaning it’s <mark class="vocab-word" data-word="dependent">dependent</mark> on the <mark class="vocab-word" data-word="tree">tree</mark> only for support, not for <mark class="vocab-word" data-word="nutrient">nutrients</mark>), and is native to many <mark class="vocab-word" data-word="tropical">tropical</mark> regions, where as a <mark class="vocab-word" data-word="keystone">keystone</mark> species it <mark class="vocab-word" data-word="perform">performs</mark> a <mark class="vocab-word" data-word="vital">vital</mark> <mark class="vocab-word" data-word="ecological">ecological</mark> role. Ellwood believes that reintroducing the bird’s <mark class="vocab-word" data-word="nest">nest</mark> <mark class="vocab-word" data-word="fern">fern</mark> into oil <mark class="vocab-word" data-word="palm">palm</mark> <mark class="vocab-word" data-word="plantation">plantations</mark> could potentially allow these areas to recover their <mark class="vocab-word" data-word="biodiversity">biodiversity</mark>, providing a home for all manner of species, from fungi and <mark class="vocab-word" data-word="bacteria">bacteria</mark>, to <mark class="vocab-word" data-word="invertebrate">invertebrates</mark> such as insects, <mark class="vocab-word" data-word="amphibian">amphibians</mark>, <mark class="vocab-word" data-word="reptile">reptiles</mark> and even <mark class="vocab-word" data-word="mammal">mammals</mark>.</p></div>  <div class="parallel-zh"><p>甚至有这样子的期望，油棕榈树种植园可能并不需要如此单一栽培，或者成为如Ellwood所说的“绿色荒漠”。Ellwood实验室一项新的研究表明，有一种植物可能带来翻天覆地的变化。鸟巢蕨以一种附生的方式生长在树上（它仅仅依赖树的支撑，而不需要养分），是许多热带地区土生土长的品种。它作为关键物种，在生态系统中扮演着至关重要的角色。Ellwood相信，将鸟巢蕨重新引入油棕榈树种植园中可能会让这些区域恢复其生物多样性，为各种各样的物种提供栖息地，从真菌和细菌，到诸如昆虫这样的无脊椎动物，两栖动物，爬行动物，甚至哺乳动物等。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"palm": 27, "edible": 1, "derive": 1, "tree": 7, "soap": 1, "biscuit": 1, "snack": 1, "manufacturer": 2, "primarily": 1, "ingredient": 1, "long-term": 1, "seize": 1, "devoted": 1, "hectare": 2, "accounting": 1, "cropland": 1, "mere": 1, "annually": 2, "triple": 1, "conservationist": 1, "cite": 1, "plantation": 5, "countless": 1, "deforestation": 2, "habitat": 1, "destruction": 1, "dwindle": 1, "endanger": 1, "rhino": 1, "fauna": 1, "threat": 1, "biodiversity": 2, "radical": 1, "boycott": 3, "oriental": 1, "story": 2, "intuitive": 1, "complexity": 1, "nuance": 1, "vital": 2, "poverty": 1, "desirable": 1, "eliminate": 1, "livelihood": 1, "utilitarian": 1, "factor": 1, "contention": 1, "straightforward": 1, "soybean": 1, "immense": 1, "yield": 1, "predominantly": 1, "profitable": 1, "ecological": 2, "patch": 1, "carbon": 7, "emission": 1, "atmosphere": 1, "virgin": 2, "regulate": 1, "sustainable": 3, "retailer": 1, "decade": 1, "agreement": 1, "gradual": 1, "regarding": 1, "equivalent": 1, "sterile": 1, "hint": 1, "nest": 2, "fern": 2, "dependent": 1, "nutrient": 1, "tropical": 1, "keystone": 1, "perform": 1, "bacteria": 1, "invertebrate": 1, "amphibian": 1, "reptile": 1, "mammal": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

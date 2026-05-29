@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why pagodas don’t fall down - 剑桥雅思7 Test 2 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Why pagodas don’t fall down</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24291.html" target="_blank">https://www.laokaoya.com/24291.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>In a land swept by <mark class="vocab-word" data-word="typhoon">typhoons</mark> and shaken by earthquakes, how have Japan’s tallest and seemingly flimsiest old buildings – 500 or so wooden <mark class="vocab-word" data-word="pagoda">pagodas</mark> – remained <mark class="vocab-word" data-word="standing">standing</mark> for centuries? Records show that only two have collapsed during the past 1400 years. Those that have disappeared were destroyed by fire as a result of <mark class="vocab-word" data-word="lightning">lightning</mark> or civil war. The <mark class="vocab-word" data-word="disastrous">disastrous</mark> Hanshin earthquake in 1995 killed 6,400 people, <mark class="vocab-word" data-word="topple">toppled</mark> <mark class="vocab-word" data-word="elevate">elevated</mark> <mark class="vocab-word" data-word="highway">highways</mark>, flattened office blocks and <mark class="vocab-word" data-word="devastate">devastated</mark> the port area of Kobe. Yet it left the <mark class="vocab-word" data-word="magnificent">magnificent</mark> five-storey <mark class="vocab-word" data-word="pagoda">pagoda</mark> at the Toji <mark class="vocab-word" data-word="temple">temple</mark> in nearby Kyoto unscathed, though it levelled a number of buildings in the neighbourhood.</p><p>Japanese <mark class="vocab-word" data-word="scholar">scholars</mark> have been mystified for ages about why these tall, <mark class="vocab-word" data-word="slender">slender</mark> buildings are so <mark class="vocab-word" data-word="stable">stable</mark>. It was only thirty years ago that the building industry felt confident enough to <mark class="vocab-word" data-word="erect">erect</mark> office blocks of steel and <mark class="vocab-word" data-word="reinforce">reinforced</mark> <mark class="vocab-word" data-word="concrete">concrete</mark> that had more than a dozen floors. With its special shock absorbers to <mark class="vocab-word" data-word="dampen">dampen</mark> the effect of sudden <mark class="vocab-word" data-word="sideways">sideways</mark> movements from an earthquake, the thirty-six-storey Kasumigaseki building in central Tokyo – Japan’s first <mark class="vocab-word" data-word="skyscraper">skyscraper</mark> – was considered a <mark class="vocab-word" data-word="masterpiece">masterpiece</mark> of modern <mark class="vocab-word" data-word="engineering">engineering</mark> when it was built in 1968.</p><p>Yet in 826, with only pegs and <mark class="vocab-word" data-word="wedge">wedges</mark> to keep his wooden structure <mark class="vocab-word" data-word="upright">upright</mark>, the master builder Kobodaishi had no <mark class="vocab-word" data-word="hesitation">hesitation</mark> in sending his majestic Toji <mark class="vocab-word" data-word="pagoda">pagoda</mark> <mark class="vocab-word" data-word="soar">soaring</mark> fifty-five metres into the sky – nearly half as high as the Kasumigaseki <mark class="vocab-word" data-word="skyscraper">skyscraper</mark> built some eleven centuries later. Clearly, Japanese <mark class="vocab-word" data-word="carpenter">carpenters</mark> of the day knew a few tricks about allowing a building to <mark class="vocab-word" data-word="sway">sway</mark> and <mark class="vocab-word" data-word="settle">settle</mark> itself rather than fight nature’s forces. But what sort of tricks?</p><p>The multi-storey <mark class="vocab-word" data-word="pagoda">pagoda</mark> came to Japan from <mark class="vocab-word" data-word="china">China</mark> in the sixth century. As in <mark class="vocab-word" data-word="china">China</mark>, they were first introduced with <mark class="vocab-word" data-word="buddhism">Buddhism</mark> and were attached to important <mark class="vocab-word" data-word="temple">temples</mark>. The <mark class="vocab-word" data-word="chinese">Chinese</mark> built their <mark class="vocab-word" data-word="pagoda">pagodas</mark> in <mark class="vocab-word" data-word="brick">brick</mark> or stone, with <mark class="vocab-word" data-word="inner">inner</mark> <mark class="vocab-word" data-word="staircase">staircases</mark>, and used them in later centuries mainly as watchtowers. When the <mark class="vocab-word" data-word="pagoda">pagoda</mark> reached Japan, however, its <mark class="vocab-word" data-word="architecture">architecture</mark> was freely adapted to local conditions – they were built less high, typically five rather than nine <mark class="vocab-word" data-word="storey">storeys</mark>, made mainly of wood and the <mark class="vocab-word" data-word="staircase">staircase</mark> was <mark class="vocab-word" data-word="dispense">dispensed</mark> with because the Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark> did not have any practical use but became more of an art object. Because of the <mark class="vocab-word" data-word="typhoon">typhoons</mark> that batter Japan in the summer, Japanese builders <mark class="vocab-word" data-word="learned">learned</mark> to extend the <mark class="vocab-word" data-word="eaves">eaves</mark> of buildings further beyond the walls. This prevents rainwater <mark class="vocab-word" data-word="gush">gushing</mark> down the walls. <mark class="vocab-word" data-word="pagoda">Pagodas</mark> in <mark class="vocab-word" data-word="china">China</mark> and Korea have nothing like the <mark class="vocab-word" data-word="overhang">overhang</mark> that is found on <mark class="vocab-word" data-word="pagoda">pagodas</mark> in Japan.</p><p>The roof of a Japanese <mark class="vocab-word" data-word="temple">temple</mark> building can be made to <mark class="vocab-word" data-word="overhang">overhang</mark> the sides of the structure by fifty per cent or more of the building’s overall <mark class="vocab-word" data-word="width">width</mark>. For the same reason, the builders of Japanese <mark class="vocab-word" data-word="pagoda">pagodas</mark> seem to have further increased their weight by choosing to cover these extended <mark class="vocab-word" data-word="eaves">eaves</mark> not with the <mark class="vocab-word" data-word="porcelain">porcelain</mark> <mark class="vocab-word" data-word="tile">tiles</mark> of many <mark class="vocab-word" data-word="chinese">Chinese</mark> <mark class="vocab-word" data-word="pagoda">pagodas</mark> but with much heavier <mark class="vocab-word" data-word="earthenware">earthenware</mark> <mark class="vocab-word" data-word="tile">tiles</mark>.</p><p>But this does not totally explain the great <mark class="vocab-word" data-word="resilience">resilience</mark> of Japanese <mark class="vocab-word" data-word="pagoda">pagodas</mark>. Is the answer that, like a tall <mark class="vocab-word" data-word="pine">pine</mark> <mark class="vocab-word" data-word="tree">tree</mark>, the Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark> – with its <mark class="vocab-word" data-word="massive">massive</mark> trunk-like central <mark class="vocab-word" data-word="pillar">pillar</mark> known as shinbashira – simply flexes and <mark class="vocab-word" data-word="sway">sways</mark> during a <mark class="vocab-word" data-word="typhoon">typhoon</mark> or earthquake? For centuries, many thought so. But the answer is not so simple because the <mark class="vocab-word" data-word="startle">startling</mark> thing is that the shinbashira actually carries no load at all. In fact, in some <mark class="vocab-word" data-word="pagoda">pagoda</mark> designs, it does not even rest on the ground, but is <mark class="vocab-word" data-word="suspend">suspended</mark> from the top of the <mark class="vocab-word" data-word="pagoda">pagoda</mark> – hanging loosely down through the middle of the building. The weight of the building is supported entirely by twelve outer and four <mark class="vocab-word" data-word="inner">inner</mark> <mark class="vocab-word" data-word="column">columns</mark>.</p><p>And what is the role of the shinbashira, the central <mark class="vocab-word" data-word="pillar">pillar</mark>? The best way to understand the shinbashira’s role is to watch a video made by Shuzo Ishida, a <mark class="vocab-word" data-word="structural">structural</mark> engineer at Kyoto <mark class="vocab-word" data-word="institute">Institute</mark> of Technology. Mr Ishida, known to his students as ‘Professor <mark class="vocab-word" data-word="pagoda">Pagoda</mark>’ because of his passion to understand the <mark class="vocab-word" data-word="pagoda">pagoda</mark>, has built a series of models and tested them on a ‘shake- table’ in his laboratory. In short, the shinbashira was acting like an enormous <mark class="vocab-word" data-word="stationary">stationary</mark> <mark class="vocab-word" data-word="pendulum">pendulum</mark>. The ancient craftsmen, apparently without the <mark class="vocab-word" data-word="assistance">assistance</mark> of very <mark class="vocab-word" data-word="advanced">advanced</mark> mathematics, seemed to <mark class="vocab-word" data-word="grasp">grasp</mark> the principles that were, more than a thousand years later, <mark class="vocab-word" data-word="applied">applied</mark> in the construction of Japan’s first <mark class="vocab-word" data-word="skyscraper">skyscraper</mark>. What those early craftsmen had found by trial and error was that under pressure a <mark class="vocab-word" data-word="pagoda">pagoda</mark>’s loose <mark class="vocab-word" data-word="stack">stack</mark> of floors could be made to slither to and fro independent of one another. Viewed from the side, the <mark class="vocab-word" data-word="pagoda">pagoda</mark> seemed to be doing a snake dance – with each <mark class="vocab-word" data-word="consecutive">consecutive</mark> floor moving in the opposite direction to its neighbours above and below. The shinbashira, running up through a hole in the centre of the building, <mark class="vocab-word" data-word="constrain">constrained</mark> individual <mark class="vocab-word" data-word="storey">storeys</mark> from moving too far because, after moving a certain distance, they <mark class="vocab-word" data-word="bang">banged</mark> into it, transmitting energy away along the <mark class="vocab-word" data-word="column">column</mark>.</p><p>Another strange feature of the Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark> is that, because the building <mark class="vocab-word" data-word="taper">tapers</mark>, with each <mark class="vocab-word" data-word="successive">successive</mark> floor plan being smaller than the one below, none of the <mark class="vocab-word" data-word="vertical">vertical</mark> <mark class="vocab-word" data-word="pillar">pillars</mark> that carry the weight of the building is connected to its <mark class="vocab-word" data-word="corresponding">corresponding</mark> <mark class="vocab-word" data-word="pillar">pillar</mark> above. In other words, a five- <mark class="vocab-word" data-word="storey">storey</mark> <mark class="vocab-word" data-word="pagoda">pagoda</mark> contains not even one <mark class="vocab-word" data-word="pillar">pillar</mark> that travels right up through the building to carry the <mark class="vocab-word" data-word="structural">structural</mark> loads from the top to the bottom. More surprising is the fact that the individual <mark class="vocab-word" data-word="storey">storeys</mark> of a Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark>, unlike their <mark class="vocab-word" data-word="counterpart">counterparts</mark> elsewhere, are not actually connected to each other. They are simply <mark class="vocab-word" data-word="stack">stacked</mark> one on top of another like a pile of hats. <mark class="vocab-word" data-word="interestingly">Interestingly</mark>, such a design would not be permitted under current Japanese building regulations.</p><p>And the extra-wide <mark class="vocab-word" data-word="eaves">eaves</mark>? Think of them as a tightrope walker’s balancing <mark class="vocab-word" data-word="pole">pole</mark>. The bigger the mass at each end of the <mark class="vocab-word" data-word="pole">pole</mark>, the easier it is for the tightrope walker to maintain his or her balance. The same holds true for a <mark class="vocab-word" data-word="pagoda">pagoda</mark>. ‘With the <mark class="vocab-word" data-word="eaves">eaves</mark> extending out on all sides like balancing <mark class="vocab-word" data-word="pole">poles</mark>,’ says Mr Ishida, ‘the building responds to even the most powerful jolt of an earthquake with a <mark class="vocab-word" data-word="graceful">graceful</mark> <mark class="vocab-word" data-word="sway">swaying</mark>, never an <mark class="vocab-word" data-word="abrupt">abrupt</mark> shaking.’ Here again, Japanese master builders of a thousand years ago <mark class="vocab-word" data-word="anticipate">anticipated</mark> concepts of modern <mark class="vocab-word" data-word="structural">structural</mark> <mark class="vocab-word" data-word="engineering">engineering</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在台风席卷，地震频繁的土地上，日本最高、看似最脆弱的老建筑-500座左右的木制宝塔-如何屹立了几个世纪？记录显示在过去的1400年中只有两座倒塌。大多数都是被闪电或内战导致的大火摧毁。在1995年灾难性的阪神地震中遇难6400人，高架公路倒塌，办公块被夷为平地和神户港区被破坏。尽管它摧毁了附近的许多建筑物，但却毫发无损地保留了京都东寺附近的五层宝塔。</p><p>对于这些高大而纤细的建筑物为何如此稳定，古往今来日本学者一直感到困惑。仅仅在30年前，建筑行业才感到足够自信，可以竖立有十多个楼层的钢筋混凝土办公楼。凭借其特殊的减震器来减轻地震中突然侧向运动的影响，位于东京市中心的这栋三十六层的霞关大厦-日本的第一座摩天大楼-于1968年建成时被认为是现代工程学的杰作。</p><p>然而，在826年，仅用钉子和楔子将木结构保持直立，建筑工匠大师Kobodaishi毫不犹豫地将雄伟的Toji塔修建成高耸入云的55米-几乎是十一世纪后霞关大厦高度的一半。显然，那时的日本木匠知道一些技巧，可以使建筑物摇摆并自行安顿下来，而不是与自然力量作斗争。但是究竟是什么样的技巧呢？</p><p>多层宝塔于六世纪从中国传入日本。像在中国一样，它们最初是由佛教引入的，并作为重要寺庙的附属物。中国人用砖或石头建造宝塔，内部带有楼梯，并在以后的几个世纪中主要将其用作瞭望塔。但是，当宝塔到达日本后，其结构适应当地条件-它们的建造高度较低，通常只有五层而不是九层，主要由木头制成，并且由于日本宝塔没有任何实际用途并且更多的被当作艺术品，因此取消了楼梯。由于夏季遭受台风袭击，日本建筑工人将建筑物的屋檐延伸到墙外。这样可以防止雨水冲击墙壁。中国和韩国的宝塔没有日本宝塔上的这种突出物。</p><p>日本寺庙建筑的屋顶可以超出建筑物整体宽度的50％或更多。出于同样的原因，日本宝塔的建造者似乎通过选择重的多的陶器砖而非像中国那样的瓷砖来覆盖延伸的屋檐，以进一步增加宝塔的重量。</p><p>但这并不能完全解释日本宝塔的强大韧性。答案是像下面这样吗？就像一棵高大的松树一样，日本宝塔（其巨大的树干状中央支柱被称为shinbashira）在台风或地震中只是弯曲和摇摆？几个世纪以来，许多人都这样认为。但是答案并非如此简单，因为令人吃惊的是shinbashira实际上根本没有承重。实际上，在某些宝塔设计中，它甚至没有置于地面，而是从宝塔的顶部悬挂下来-松散地挂在建筑物中间。建筑物的重量完全由十二个外柱和四个内柱支撑。</p><p>那么，核心支柱shinbashira的作用是什么？了解shinbashira作用的最好方法是观看京都工业大学结构工程师石田修三制作的视频。石田先生因热衷于研究宝塔而被学生称为“宝塔教授”，他已经建立了一系列模型并在实验室的“振动台”上对其进行了测试。简而言之，shinbashira像一个巨大的静止钟摆。古代工匠显然没有先进数学方法的辅助，但似乎掌握了一千多年后在日本建造第一座摩天大楼时所应用的原理。这些早期的工匠通过反复试验发现，宝塔松散楼层在压力下可以相互独立地来回滑动。从侧面看，宝塔似乎在做蛇舞-相邻的楼层按照与上下楼层相反的方向移动。穿过建筑物中心孔洞的shinbashira限制了各个楼层的移动幅度，因为在其移动一定距离后，就会撞到柱子上，沿着圆柱将能量传递出去。</p><p>日本宝塔的另一个奇怪特征是，由于建筑物逐渐变细，每个连续的楼层的面积都小于下面的楼层，因此没有任何承载建筑物重量的垂直支柱与上方的相应支柱相连。换句话说，一座五层楼的宝塔甚至不包含一根贯穿整个建筑物的柱子，以将结构荷载从顶部传递到底部。更令人惊讶的是，与其他地方的宝塔不同，日本塔的各个楼层实际上并未相互连接。它们就像一堆帽子一样，一个接一个地堆叠在一起。有趣的是，根据当前的日本建筑法规，这种设计是不允许的。</p><p>超宽屋檐呢？将它们想象成走钢丝的人的平衡杆。杆子两端的质量越大，走钢丝的人就越容易保持平衡。宝塔也是如此。石田先生说：“屋檐像平衡杆一样向四面八方延伸，即使是地震中最强烈的颠簸，建筑物也可以平稳地摇摆，而不会突然晃动”。又一次的，一千年前的日本建筑大师们预测到了现代结构工程的概念。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>In a land swept by <mark class="vocab-word" data-word="typhoon">typhoons</mark> and shaken by earthquakes, how have Japan’s tallest and seemingly flimsiest old buildings – 500 or so wooden <mark class="vocab-word" data-word="pagoda">pagodas</mark> – remained <mark class="vocab-word" data-word="standing">standing</mark> for centuries? Records show that only two have collapsed during the past 1400 years. Those that have disappeared were destroyed by fire as a result of <mark class="vocab-word" data-word="lightning">lightning</mark> or civil war. The <mark class="vocab-word" data-word="disastrous">disastrous</mark> Hanshin earthquake in 1995 killed 6,400 people, <mark class="vocab-word" data-word="topple">toppled</mark> <mark class="vocab-word" data-word="elevate">elevated</mark> <mark class="vocab-word" data-word="highway">highways</mark>, flattened office blocks and <mark class="vocab-word" data-word="devastate">devastated</mark> the port area of Kobe. Yet it left the <mark class="vocab-word" data-word="magnificent">magnificent</mark> five-storey <mark class="vocab-word" data-word="pagoda">pagoda</mark> at the Toji <mark class="vocab-word" data-word="temple">temple</mark> in nearby Kyoto unscathed, though it levelled a number of buildings in the neighbourhood.</p></div>  <div class="parallel-zh"><p>在台风席卷，地震频繁的土地上，日本最高、看似最脆弱的老建筑-500座左右的木制宝塔-如何屹立了几个世纪？记录显示在过去的1400年中只有两座倒塌。大多数都是被闪电或内战导致的大火摧毁。在1995年灾难性的阪神地震中遇难6400人，高架公路倒塌，办公块被夷为平地和神户港区被破坏。尽管它摧毁了附近的许多建筑物，但却毫发无损地保留了京都东寺附近的五层宝塔。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Japanese <mark class="vocab-word" data-word="scholar">scholars</mark> have been mystified for ages about why these tall, <mark class="vocab-word" data-word="slender">slender</mark> buildings are so <mark class="vocab-word" data-word="stable">stable</mark>. It was only thirty years ago that the building industry felt confident enough to <mark class="vocab-word" data-word="erect">erect</mark> office blocks of steel and <mark class="vocab-word" data-word="reinforce">reinforced</mark> <mark class="vocab-word" data-word="concrete">concrete</mark> that had more than a dozen floors. With its special shock absorbers to <mark class="vocab-word" data-word="dampen">dampen</mark> the effect of sudden <mark class="vocab-word" data-word="sideways">sideways</mark> movements from an earthquake, the thirty-six-storey Kasumigaseki building in central Tokyo – Japan’s first <mark class="vocab-word" data-word="skyscraper">skyscraper</mark> – was considered a <mark class="vocab-word" data-word="masterpiece">masterpiece</mark> of modern <mark class="vocab-word" data-word="engineering">engineering</mark> when it was built in 1968.</p></div>  <div class="parallel-zh"><p>对于这些高大而纤细的建筑物为何如此稳定，古往今来日本学者一直感到困惑。仅仅在30年前，建筑行业才感到足够自信，可以竖立有十多个楼层的钢筋混凝土办公楼。凭借其特殊的减震器来减轻地震中突然侧向运动的影响，位于东京市中心的这栋三十六层的霞关大厦-日本的第一座摩天大楼-于1968年建成时被认为是现代工程学的杰作。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Yet in 826, with only pegs and <mark class="vocab-word" data-word="wedge">wedges</mark> to keep his wooden structure <mark class="vocab-word" data-word="upright">upright</mark>, the master builder Kobodaishi had no <mark class="vocab-word" data-word="hesitation">hesitation</mark> in sending his majestic Toji <mark class="vocab-word" data-word="pagoda">pagoda</mark> <mark class="vocab-word" data-word="soar">soaring</mark> fifty-five metres into the sky – nearly half as high as the Kasumigaseki <mark class="vocab-word" data-word="skyscraper">skyscraper</mark> built some eleven centuries later. Clearly, Japanese <mark class="vocab-word" data-word="carpenter">carpenters</mark> of the day knew a few tricks about allowing a building to <mark class="vocab-word" data-word="sway">sway</mark> and <mark class="vocab-word" data-word="settle">settle</mark> itself rather than fight nature’s forces. But what sort of tricks?</p></div>  <div class="parallel-zh"><p>然而，在826年，仅用钉子和楔子将木结构保持直立，建筑工匠大师Kobodaishi毫不犹豫地将雄伟的Toji塔修建成高耸入云的55米-几乎是十一世纪后霞关大厦高度的一半。显然，那时的日本木匠知道一些技巧，可以使建筑物摇摆并自行安顿下来，而不是与自然力量作斗争。但是究竟是什么样的技巧呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The multi-storey <mark class="vocab-word" data-word="pagoda">pagoda</mark> came to Japan from <mark class="vocab-word" data-word="china">China</mark> in the sixth century. As in <mark class="vocab-word" data-word="china">China</mark>, they were first introduced with <mark class="vocab-word" data-word="buddhism">Buddhism</mark> and were attached to important <mark class="vocab-word" data-word="temple">temples</mark>. The <mark class="vocab-word" data-word="chinese">Chinese</mark> built their <mark class="vocab-word" data-word="pagoda">pagodas</mark> in <mark class="vocab-word" data-word="brick">brick</mark> or stone, with <mark class="vocab-word" data-word="inner">inner</mark> <mark class="vocab-word" data-word="staircase">staircases</mark>, and used them in later centuries mainly as watchtowers. When the <mark class="vocab-word" data-word="pagoda">pagoda</mark> reached Japan, however, its <mark class="vocab-word" data-word="architecture">architecture</mark> was freely adapted to local conditions – they were built less high, typically five rather than nine <mark class="vocab-word" data-word="storey">storeys</mark>, made mainly of wood and the <mark class="vocab-word" data-word="staircase">staircase</mark> was <mark class="vocab-word" data-word="dispense">dispensed</mark> with because the Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark> did not have any practical use but became more of an art object. Because of the <mark class="vocab-word" data-word="typhoon">typhoons</mark> that batter Japan in the summer, Japanese builders <mark class="vocab-word" data-word="learned">learned</mark> to extend the <mark class="vocab-word" data-word="eaves">eaves</mark> of buildings further beyond the walls. This prevents rainwater <mark class="vocab-word" data-word="gush">gushing</mark> down the walls. <mark class="vocab-word" data-word="pagoda">Pagodas</mark> in <mark class="vocab-word" data-word="china">China</mark> and Korea have nothing like the <mark class="vocab-word" data-word="overhang">overhang</mark> that is found on <mark class="vocab-word" data-word="pagoda">pagodas</mark> in Japan.</p></div>  <div class="parallel-zh"><p>多层宝塔于六世纪从中国传入日本。像在中国一样，它们最初是由佛教引入的，并作为重要寺庙的附属物。中国人用砖或石头建造宝塔，内部带有楼梯，并在以后的几个世纪中主要将其用作瞭望塔。但是，当宝塔到达日本后，其结构适应当地条件-它们的建造高度较低，通常只有五层而不是九层，主要由木头制成，并且由于日本宝塔没有任何实际用途并且更多的被当作艺术品，因此取消了楼梯。由于夏季遭受台风袭击，日本建筑工人将建筑物的屋檐延伸到墙外。这样可以防止雨水冲击墙壁。中国和韩国的宝塔没有日本宝塔上的这种突出物。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The roof of a Japanese <mark class="vocab-word" data-word="temple">temple</mark> building can be made to <mark class="vocab-word" data-word="overhang">overhang</mark> the sides of the structure by fifty per cent or more of the building’s overall <mark class="vocab-word" data-word="width">width</mark>. For the same reason, the builders of Japanese <mark class="vocab-word" data-word="pagoda">pagodas</mark> seem to have further increased their weight by choosing to cover these extended <mark class="vocab-word" data-word="eaves">eaves</mark> not with the <mark class="vocab-word" data-word="porcelain">porcelain</mark> <mark class="vocab-word" data-word="tile">tiles</mark> of many <mark class="vocab-word" data-word="chinese">Chinese</mark> <mark class="vocab-word" data-word="pagoda">pagodas</mark> but with much heavier <mark class="vocab-word" data-word="earthenware">earthenware</mark> <mark class="vocab-word" data-word="tile">tiles</mark>.</p></div>  <div class="parallel-zh"><p>日本寺庙建筑的屋顶可以超出建筑物整体宽度的50％或更多。出于同样的原因，日本宝塔的建造者似乎通过选择重的多的陶器砖而非像中国那样的瓷砖来覆盖延伸的屋檐，以进一步增加宝塔的重量。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But this does not totally explain the great <mark class="vocab-word" data-word="resilience">resilience</mark> of Japanese <mark class="vocab-word" data-word="pagoda">pagodas</mark>. Is the answer that, like a tall <mark class="vocab-word" data-word="pine">pine</mark> <mark class="vocab-word" data-word="tree">tree</mark>, the Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark> – with its <mark class="vocab-word" data-word="massive">massive</mark> trunk-like central <mark class="vocab-word" data-word="pillar">pillar</mark> known as shinbashira – simply flexes and <mark class="vocab-word" data-word="sway">sways</mark> during a <mark class="vocab-word" data-word="typhoon">typhoon</mark> or earthquake? For centuries, many thought so. But the answer is not so simple because the <mark class="vocab-word" data-word="startle">startling</mark> thing is that the shinbashira actually carries no load at all. In fact, in some <mark class="vocab-word" data-word="pagoda">pagoda</mark> designs, it does not even rest on the ground, but is <mark class="vocab-word" data-word="suspend">suspended</mark> from the top of the <mark class="vocab-word" data-word="pagoda">pagoda</mark> – hanging loosely down through the middle of the building. The weight of the building is supported entirely by twelve outer and four <mark class="vocab-word" data-word="inner">inner</mark> <mark class="vocab-word" data-word="column">columns</mark>.</p></div>  <div class="parallel-zh"><p>但这并不能完全解释日本宝塔的强大韧性。答案是像下面这样吗？就像一棵高大的松树一样，日本宝塔（其巨大的树干状中央支柱被称为shinbashira）在台风或地震中只是弯曲和摇摆？几个世纪以来，许多人都这样认为。但是答案并非如此简单，因为令人吃惊的是shinbashira实际上根本没有承重。实际上，在某些宝塔设计中，它甚至没有置于地面，而是从宝塔的顶部悬挂下来-松散地挂在建筑物中间。建筑物的重量完全由十二个外柱和四个内柱支撑。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>And what is the role of the shinbashira, the central <mark class="vocab-word" data-word="pillar">pillar</mark>? The best way to understand the shinbashira’s role is to watch a video made by Shuzo Ishida, a <mark class="vocab-word" data-word="structural">structural</mark> engineer at Kyoto <mark class="vocab-word" data-word="institute">Institute</mark> of Technology. Mr Ishida, known to his students as ‘Professor <mark class="vocab-word" data-word="pagoda">Pagoda</mark>’ because of his passion to understand the <mark class="vocab-word" data-word="pagoda">pagoda</mark>, has built a series of models and tested them on a ‘shake- table’ in his laboratory. In short, the shinbashira was acting like an enormous <mark class="vocab-word" data-word="stationary">stationary</mark> <mark class="vocab-word" data-word="pendulum">pendulum</mark>. The ancient craftsmen, apparently without the <mark class="vocab-word" data-word="assistance">assistance</mark> of very <mark class="vocab-word" data-word="advanced">advanced</mark> mathematics, seemed to <mark class="vocab-word" data-word="grasp">grasp</mark> the principles that were, more than a thousand years later, <mark class="vocab-word" data-word="applied">applied</mark> in the construction of Japan’s first <mark class="vocab-word" data-word="skyscraper">skyscraper</mark>. What those early craftsmen had found by trial and error was that under pressure a <mark class="vocab-word" data-word="pagoda">pagoda</mark>’s loose <mark class="vocab-word" data-word="stack">stack</mark> of floors could be made to slither to and fro independent of one another. Viewed from the side, the <mark class="vocab-word" data-word="pagoda">pagoda</mark> seemed to be doing a snake dance – with each <mark class="vocab-word" data-word="consecutive">consecutive</mark> floor moving in the opposite direction to its neighbours above and below. The shinbashira, running up through a hole in the centre of the building, <mark class="vocab-word" data-word="constrain">constrained</mark> individual <mark class="vocab-word" data-word="storey">storeys</mark> from moving too far because, after moving a certain distance, they <mark class="vocab-word" data-word="bang">banged</mark> into it, transmitting energy away along the <mark class="vocab-word" data-word="column">column</mark>.</p></div>  <div class="parallel-zh"><p>那么，核心支柱shinbashira的作用是什么？了解shinbashira作用的最好方法是观看京都工业大学结构工程师石田修三制作的视频。石田先生因热衷于研究宝塔而被学生称为“宝塔教授”，他已经建立了一系列模型并在实验室的“振动台”上对其进行了测试。简而言之，shinbashira像一个巨大的静止钟摆。古代工匠显然没有先进数学方法的辅助，但似乎掌握了一千多年后在日本建造第一座摩天大楼时所应用的原理。这些早期的工匠通过反复试验发现，宝塔松散楼层在压力下可以相互独立地来回滑动。从侧面看，宝塔似乎在做蛇舞-相邻的楼层按照与上下楼层相反的方向移动。穿过建筑物中心孔洞的shinbashira限制了各个楼层的移动幅度，因为在其移动一定距离后，就会撞到柱子上，沿着圆柱将能量传递出去。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Another strange feature of the Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark> is that, because the building <mark class="vocab-word" data-word="taper">tapers</mark>, with each <mark class="vocab-word" data-word="successive">successive</mark> floor plan being smaller than the one below, none of the <mark class="vocab-word" data-word="vertical">vertical</mark> <mark class="vocab-word" data-word="pillar">pillars</mark> that carry the weight of the building is connected to its <mark class="vocab-word" data-word="corresponding">corresponding</mark> <mark class="vocab-word" data-word="pillar">pillar</mark> above. In other words, a five- <mark class="vocab-word" data-word="storey">storey</mark> <mark class="vocab-word" data-word="pagoda">pagoda</mark> contains not even one <mark class="vocab-word" data-word="pillar">pillar</mark> that travels right up through the building to carry the <mark class="vocab-word" data-word="structural">structural</mark> loads from the top to the bottom. More surprising is the fact that the individual <mark class="vocab-word" data-word="storey">storeys</mark> of a Japanese <mark class="vocab-word" data-word="pagoda">pagoda</mark>, unlike their <mark class="vocab-word" data-word="counterpart">counterparts</mark> elsewhere, are not actually connected to each other. They are simply <mark class="vocab-word" data-word="stack">stacked</mark> one on top of another like a pile of hats. <mark class="vocab-word" data-word="interestingly">Interestingly</mark>, such a design would not be permitted under current Japanese building regulations.</p></div>  <div class="parallel-zh"><p>日本宝塔的另一个奇怪特征是，由于建筑物逐渐变细，每个连续的楼层的面积都小于下面的楼层，因此没有任何承载建筑物重量的垂直支柱与上方的相应支柱相连。换句话说，一座五层楼的宝塔甚至不包含一根贯穿整个建筑物的柱子，以将结构荷载从顶部传递到底部。更令人惊讶的是，与其他地方的宝塔不同，日本塔的各个楼层实际上并未相互连接。它们就像一堆帽子一样，一个接一个地堆叠在一起。有趣的是，根据当前的日本建筑法规，这种设计是不允许的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>And the extra-wide <mark class="vocab-word" data-word="eaves">eaves</mark>? Think of them as a tightrope walker’s balancing <mark class="vocab-word" data-word="pole">pole</mark>. The bigger the mass at each end of the <mark class="vocab-word" data-word="pole">pole</mark>, the easier it is for the tightrope walker to maintain his or her balance. The same holds true for a <mark class="vocab-word" data-word="pagoda">pagoda</mark>. ‘With the <mark class="vocab-word" data-word="eaves">eaves</mark> extending out on all sides like balancing <mark class="vocab-word" data-word="pole">poles</mark>,’ says Mr Ishida, ‘the building responds to even the most powerful jolt of an earthquake with a <mark class="vocab-word" data-word="graceful">graceful</mark> <mark class="vocab-word" data-word="sway">swaying</mark>, never an <mark class="vocab-word" data-word="abrupt">abrupt</mark> shaking.’ Here again, Japanese master builders of a thousand years ago <mark class="vocab-word" data-word="anticipate">anticipated</mark> concepts of modern <mark class="vocab-word" data-word="structural">structural</mark> <mark class="vocab-word" data-word="engineering">engineering</mark>.</p></div>  <div class="parallel-zh"><p>超宽屋檐呢？将它们想象成走钢丝的人的平衡杆。杆子两端的质量越大，走钢丝的人就越容易保持平衡。宝塔也是如此。石田先生说：“屋檐像平衡杆一样向四面八方延伸，即使是地震中最强烈的颠簸，建筑物也可以平稳地摇摆，而不会突然晃动”。又一次的，一千年前的日本建筑大师们预测到了现代结构工程的概念。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"typhoon": 3, "pagoda": 23, "standing": 1, "lightning": 1, "disastrous": 1, "topple": 1, "elevate": 1, "highway": 1, "devastate": 1, "magnificent": 1, "temple": 3, "scholar": 1, "slender": 1, "stable": 1, "erect": 1, "reinforce": 1, "concrete": 1, "dampen": 1, "sideways": 1, "skyscraper": 3, "masterpiece": 1, "engineering": 2, "wedge": 1, "upright": 1, "hesitation": 1, "soar": 1, "carpenter": 1, "sway": 3, "settle": 1, "china": 3, "buddhism": 1, "chinese": 2, "brick": 1, "inner": 2, "staircase": 2, "architecture": 1, "storey": 4, "dispense": 1, "learned": 1, "eaves": 4, "gush": 1, "overhang": 2, "width": 1, "porcelain": 1, "tile": 2, "earthenware": 1, "resilience": 1, "pine": 1, "tree": 1, "massive": 1, "pillar": 5, "startle": 1, "suspend": 1, "column": 2, "structural": 3, "institute": 1, "stationary": 1, "pendulum": 1, "assistance": 1, "advanced": 1, "grasp": 1, "applied": 1, "stack": 2, "consecutive": 1, "constrain": 1, "bang": 1, "taper": 1, "successive": 1, "vertical": 1, "corresponding": 1, "counterpart": 1, "interestingly": 1, "pole": 3, "graceful": 1, "abrupt": 1, "anticipate": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思阅读高亮资源库 - 剑桥雅思真语料</title>
+    <!-- Outfit Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
+            --primary: #1e3a8a;
+            --primary-dark: #1e40af;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --accent: #d97706;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 48px 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Hero Header */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: white;
+            padding: 56px 48px;
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .search-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            outline: none;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+        }
+
+        /* Search Results Drawer */
+        .search-results {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .search-results.active {
+            display: flex;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: var(--bg-color);
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .result-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+            transform: translateX(4px);
+        }
+
+        .result-title {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .result-meta {
+            font-size: 13px;
+            color: #64748b;
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Corpus Directory Grid */
+        .corpus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .book-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-card .article-count {
+            font-size: 12px;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 2px 10px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        .article-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .article-link {
+            display: block;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: #334155;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .article-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .stat-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .stat-card .val {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-card .lbl {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+            
+            header {
+                padding: 32px 24px;
+            }
+
+            header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner Header -->
+        <header>
+            <h1>雅思阅读高亮真题语料库</h1>
+            <p>基于《剑桥雅思 4–19》全部官方文章构建，针对大纲核心词汇进行完美高亮与对齐，支持英文、中文与左右对照阅读模式。</p>
+        </header>
+
+        <!-- Stats Banner -->
+        <div class="stat-banner">
+            <div class="stat-card">
+                <span class="val">16 本</span>
+                <span class="lbl">剑雅书籍覆盖</span>
+            </div>
+            <div class="stat-card">
+                <span class="val">192 篇</span>
+                <span class="lbl">经典学术阅读文章</span>
+            </div>
+            <div class="stat-card">
+                <span class="val">3678 词</span>
+                <span class="lbl">高亮大纲词汇量</span>
+            </div>
+        </div>
+
+        <!-- Word search box -->
+        <div class="search-section">
+            <div class="search-header">
+                <span class="search-title">🔍 全文词汇检索</span>
+                <span id="search-info" style="font-size: 13px; color: #64748b;">输入任意大纲单词，快速查找包含该词的真题文章</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="输入大纲单词进行搜索 (例如: federal, evidence, logic)..." oninput="searchVocab()">
+            </div>
+            <div class="search-results" id="search-results-drawer">
+                <!-- Search results will show here -->
+            </div>
+        </div>
+
+        <!-- Main Corpus Grid -->
+        <div class="corpus-grid">
+            <div class="book-card">  <h3>    <span>📘 剑桥雅思4</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思4/剑桥雅思4 Test 1阅读原文翻译 Passage 1 独家.html" class="article-link" title="Passage 1 独家">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Passage 1 独家</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 1阅读原文翻译 Passage 2 鲸鱼感官 What do whales feel.html" class="article-link" title="Passage 2 鲸鱼感官 What do whales feel">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Passage 2 鲸鱼感官 What do whales feel</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 1阅读原文翻译 Passage 3 visual symbols and the blind.html" class="article-link" title="Passage 3 visual symbols and the blind">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Passage 3 visual symbols and the blind</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 2阅读Passage 2原文翻译 alternative medicine in Australia.html" class="article-link" title="alternative medicine in Australia">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">alternative medicine in Australia</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 2阅读Passage 3原文翻译 play is a serious business.html" class="article-link" title="play is a serious business">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">play is a serious business</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 2阅读原文翻译 Passage 1 消失的语言 lost for words.html" class="article-link" title="Passage 1 消失的语言 lost for words">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Passage 1 消失的语言 lost for words</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 3阅读Passage 1原文翻译 micro-enterprise credit for street youth.html" class="article-link" title="micro-enterprise credit for street youth">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">micro-enterprise credit for street youth</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 3阅读Passage 2原文翻译 volcanoes – earth-shattering news.html" class="article-link" title="volcanoes – earth-shattering news">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">volcanoes – earth-shattering news</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 3阅读Passage 3原文翻译 obtaining linguistic data.html" class="article-link" title="obtaining linguistic data">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">obtaining linguistic data</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 4阅读Passage 1原文翻译 How much higher? How much faster?.html" class="article-link" title="How much higher? How much faster?">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">How much higher? How much faster?</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 4阅读Passage 2原文翻译 The Nature and Aims of Archaeology.html" class="article-link" title="The Nature and Aims of Archaeology">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Nature and Aims of Archaeology</div>  </a></li><li>  <a href="剑桥雅思4/剑桥雅思4 Test 4阅读Passage 3原文翻译 the problem of scare resource.html" class="article-link" title="the problem of scare resource">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">the problem of scare resource</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思5</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思5/剑桥雅思5 Test 1阅读Passage 1原文翻译 Johnson’s Dictionary.html" class="article-link" title="Johnson’s Dictionary">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Johnson’s Dictionary</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 1阅读Passage 2原文翻译 Nature or Nurture.html" class="article-link" title="Nature or Nurture">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Nature or Nurture</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 1阅读Passage 3原文翻译 The truth about the environment.html" class="article-link" title="The truth about the environment">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The truth about the environment</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 2阅读Passage 1原文翻译 Bakelite-the birth of modern plastics.html" class="article-link" title="Bakelite-the birth of modern plastics">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Bakelite-the birth of modern plastics</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 2阅读Passage 2原文翻译 what’s so funny.html" class="article-link" title="what’s so funny">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">what’s so funny</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 2阅读Passage 3原文翻译 The Birth of Scientific English.html" class="article-link" title="The Birth of Scientific English">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Birth of Scientific English</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 3阅读Passage 1原文翻译 Early Childhood Education 独家.html" class="article-link" title="Early Childhood Education 独家">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Early Childhood Education 独家</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 3阅读Passage 2原文翻译 Disappearing Delta.html" class="article-link" title="Disappearing Delta">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Disappearing Delta</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 3阅读Passage 3原文翻译 The return of Artificial Intelligence.html" class="article-link" title="The return of Artificial Intelligence">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The return of Artificial Intelligence</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 4阅读Passage 1原文翻译 The Impact of wilderness tourism.html" class="article-link" title="The Impact of wilderness tourism">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Impact of wilderness tourism</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 4阅读Passage 2原文翻译 Flawed Beauty: the problem with toughened glass.html" class="article-link" title="Flawed Beauty: the problem with toughened glass">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Flawed Beauty: the problem with toughened glass</div>  </a></li><li>  <a href="剑桥雅思5/剑桥雅思5 Test 4阅读Passage 3原文翻译 the effects of light on plant and animal species.html" class="article-link" title="the effects of light on plant and animal species">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">the effects of light on plant and animal species</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思6</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思6/剑桥雅思6 Test 1阅读Passage 1原文翻译 Australia’s Sporting Success.html" class="article-link" title="Australia’s Sporting Success">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Australia’s Sporting Success</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6 Test1阅读Passage2原文翻译 Delivering the Goods.html" class="article-link" title="Delivering the Goods">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Delivering the Goods</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test1阅读Passage3原文翻译 Climate Change and the Inuit.html" class="article-link" title="Climate Change and the Inuit">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Climate Change and the Inuit</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test2阅读Passage1原文翻译 Advantages of public transport.html" class="article-link" title="Advantages of public transport">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Advantages of public transport</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test2阅读Passage2原文翻译 Greying Population Stays in the Pink.html" class="article-link" title="Greying Population Stays in the Pink">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Greying Population Stays in the Pink</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test2阅读Passage3原文翻译 Numeration.html" class="article-link" title="Numeration">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Numeration</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test3阅读Passage1原文翻译 电影的诞生与发展.html" class="article-link" title="电影的诞生与发展">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">电影的诞生与发展</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test3阅读Passage2原文翻译 Motivating Employees under Adverse Conditions.html" class="article-link" title="Motivating Employees under Adverse Conditions">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Motivating Employees under Adverse Conditions</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test3阅读Passage3原文翻译 The Search for the Anti-aging Pill.html" class="article-link" title="The Search for the Anti-aging Pill">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Search for the Anti-aging Pill</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test4阅读Passage1原文翻译 Dotoring Sales.html" class="article-link" title="Dotoring Sales">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Dotoring Sales</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test4阅读Passage2原文翻译 Do literate women make better mothers.html" class="article-link" title="Do literate women make better mothers">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Do literate women make better mothers</div>  </a></li><li>  <a href="剑桥雅思6/剑桥雅思6Test4阅读Passage3原文翻译 persistent bullying.html" class="article-link" title="persistent bullying">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">persistent bullying</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思7</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思7/剑桥雅思7Test1阅读Passage1原文翻译 Let’s go bats.html" class="article-link" title="Let’s go bats">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Let’s go bats</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test1阅读Passage2原文翻译 making every drop count.html" class="article-link" title="making every drop count">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">making every drop count</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test1阅读Passage3原文翻译 educating psyche.html" class="article-link" title="educating psyche">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">educating psyche</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test2阅读Passage1原文翻译 Why pagodas don’t fall down.html" class="article-link" title="Why pagodas don’t fall down">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Why pagodas don’t fall down</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test2阅读Passage2原文翻译 The True Cost of Food.html" class="article-link" title="The True Cost of Food">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The True Cost of Food</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test2阅读Passage3原文翻译 Makete Integrated Rural Transport Project.html" class="article-link" title="Makete Integrated Rural Transport Project">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Makete Integrated Rural Transport Project</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test3阅读Passage1原文翻译 Ant Intelligence.html" class="article-link" title="Ant Intelligence">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Ant Intelligence</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test3阅读Passage2原文翻译 Population movements and genetics.html" class="article-link" title="Population movements and genetics">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Population movements and genetics</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test3阅读Passage3原文翻译 European forests.html" class="article-link" title="European forests">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">European forests</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test4阅读Passage1原文翻译 Pulling strings to build pyramids.html" class="article-link" title="Pulling strings to build pyramids">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Pulling strings to build pyramids</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test4阅读Passage2原文翻译 Endless Harvest.html" class="article-link" title="Endless Harvest">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Endless Harvest</div>  </a></li><li>  <a href="剑桥雅思7/剑桥雅思7Test4阅读Passage3原文翻译 Effects of Noise.html" class="article-link" title="Effects of Noise">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Effects of Noise</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思8</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思8/剑桥雅思8Test1阅读Passage1原文翻译 A Chronicle of Timekeeping.html" class="article-link" title="A Chronicle of Timekeeping">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">A Chronicle of Timekeeping</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test1阅读Passage2原文翻译 Air Traffic Control in the USA.html" class="article-link" title="Air Traffic Control in the USA">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Air Traffic Control in the USA</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test1阅读Passage3原文翻译 Telepathy.html" class="article-link" title="Telepathy">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Telepathy</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test2阅读Passage1原文翻译 sheet glass manufacture: the float process.html" class="article-link" title="sheet glass manufacture: the float process">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">sheet glass manufacture: the float process</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test2阅读Passage2原文翻译 the little ice age.html" class="article-link" title="the little ice age">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">the little ice age</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test2阅读Passage3原文翻译 The meaning and power of smell.html" class="article-link" title="The meaning and power of smell">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The meaning and power of smell</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test3阅读Passage1原文翻译 Striking Back at Lightning with Lasers.html" class="article-link" title="Striking Back at Lightning with Lasers">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Striking Back at Lightning with Lasers</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test3阅读Passage2原文翻译 The Nature of Genius.html" class="article-link" title="The Nature of Genius">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Nature of Genius</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test3阅读Passage3原文翻译 How Does the Biological Clock Tick.html" class="article-link" title="How Does the Biological Clock Tick">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">How Does the Biological Clock Tick</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test4阅读Passage1原文翻译 Land of the Rising Sum.html" class="article-link" title="Land of the Rising Sum">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Land of the Rising Sum</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test4阅读Passage2原文翻译 Biological control of pests.html" class="article-link" title="Biological control of pests">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Biological control of pests</div>  </a></li><li>  <a href="剑桥雅思8/剑桥雅思8Test4阅读Passage3原文翻译 Collecting Ant Specimens.html" class="article-link" title="Collecting Ant Specimens">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Collecting Ant Specimens</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思9</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思9/剑桥雅思9Test1阅读Passage1原文翻译 William Henry Perkin.html" class="article-link" title="William Henry Perkin">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">William Henry Perkin</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test1阅读Passage2原文翻译 Is there anybody out there.html" class="article-link" title="Is there anybody out there">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Is there anybody out there</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test1阅读Passage3原文翻译 The history of the tortoise.html" class="article-link" title="The history of the tortoise">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The history of the tortoise</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test2阅读Passage1原文翻译 Hearing impairment.html" class="article-link" title="Hearing impairment">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Hearing impairment</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test2阅读Passage2原文翻译 venus in transit.html" class="article-link" title="venus in transit">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">venus in transit</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test2阅读Passage3原文翻译 A neuroscientist reveals how to think differently.html" class="article-link" title="A neuroscientist reveals how to think differently">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">A neuroscientist reveals how to think differently</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test3阅读Passage1原文翻译 Attitudes to language.html" class="article-link" title="Attitudes to language">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Attitudes to language</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test3阅读Passage2原文翻译 Tidal Power.html" class="article-link" title="Tidal Power">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Tidal Power</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test3阅读Passage3原文翻译 information theory – the big idea.html" class="article-link" title="information theory – the big idea">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">information theory – the big idea</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test4阅读Passage1原文翻译 The life and work of Marie Curie.html" class="article-link" title="The life and work of Marie Curie">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The life and work of Marie Curie</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test4阅读Passage2原文翻译 Young children’s sense of identity.html" class="article-link" title="Young children’s sense of identity">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Young children’s sense of identity</div>  </a></li><li>  <a href="剑桥雅思9/剑桥雅思9Test4阅读Passage3原文翻译 The Development of Museums.html" class="article-link" title="The Development of Museums">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Development of Museums</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思10</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思10/剑桥雅思10 Test4Passage1.html" class="article-link" title="The megafires of California 加利福尼亚超级大火">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The megafires of California 加利福尼亚超级大火</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10 Test4Passage2.html" class="article-link" title="Second Nature 第二天性">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Second Nature 第二天性</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10 Test4Passage3.html" class="article-link" title="When evolution runs backwards 进化后退">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">When evolution runs backwards 进化后退</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test1阅读Passage1原文翻译 stepwells.html" class="article-link" title="stepwells">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">stepwells</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test1阅读Passage2原文翻译 European Transport Systems 1990-2010.html" class="article-link" title="European Transport Systems 1990-2010">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">European Transport Systems 1990-2010</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test1阅读Passage3原文翻译 The psychology of innovation.html" class="article-link" title="The psychology of innovation">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The psychology of innovation</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test2阅读Passage1原文翻译 Tea and the Industrial Revolution.html" class="article-link" title="Tea and the Industrial Revolution">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Tea and the Industrial Revolution</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test2阅读Passage2原文翻译 Gifted children and learning.html" class="article-link" title="Gifted children and learning">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Gifted children and learning</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test2阅读Passage3原文翻译 Museums of fine arts and their public.html" class="article-link" title="Museums of fine arts and their public">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Museums of fine arts and their public</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test3阅读Passage1原文翻译 The Context, Meaning and Scope of Tourism.html" class="article-link" title="The Context, Meaning and Scope of Tourism">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Context, Meaning and Scope of Tourism</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test3阅读Passage2原文翻译 Autumn leaves.html" class="article-link" title="Autumn leaves">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Autumn leaves</div>  </a></li><li>  <a href="剑桥雅思10/剑桥雅思10Test3阅读Passage3原文翻译 Beyond the blue horizon.html" class="article-link" title="Beyond the blue horizon">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Beyond the blue horizon</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思11</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思11/剑桥雅思11 Test1Passage1.html" class="article-link" title="crop-growing skyscrappers 垂直农业">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">crop-growing skyscrappers 垂直农业</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test1Passage2.html" class="article-link" title="The Falkirk Wheel 法尔柯克水轮">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Falkirk Wheel 法尔柯克水轮</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test1Passage3.html" class="article-link" title="Reducing the Effects of Climate Change 改善全球变暖">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Reducing the Effects of Climate Change 改善全球变暖</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test2Passage1.html" class="article-link" title="Raising the Mary Rose 玛丽玫瑰号">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Raising the Mary Rose 玛丽玫瑰号</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test2Passage2.html" class="article-link" title="：">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">：</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test2Passage3.html" class="article-link" title="：">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">：</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test3Passage1.html" class="article-link" title="The story of silk 丝绸的故事">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The story of silk 丝绸的故事</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test3Passage2.html" class="article-link" title="Great Migrations 伟大的迁徙">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Great Migrations 伟大的迁徙</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test3Passage3.html" class="article-link" title="Preface to How the other half thinks: Adventures in the mathematical reasoning">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Preface to How the other half thinks: Adventures in the mathematical reasoning</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test4Passage1.html" class="article-link" title="Research using twins 利用双胞胎研究">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Research using twins 利用双胞胎研究</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test4Passage2.html" class="article-link" title="An Introduction to Film Sound 电影声音介绍">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">An Introduction to Film Sound 电影声音介绍</div>  </a></li><li>  <a href="剑桥雅思11/剑桥雅思11 Test4Passage3.html" class="article-link" title="This Marvellous Invention 伟大的发明">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">This Marvellous Invention 伟大的发明</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思12</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思12/剑桥雅思12 Test5Passage1.html" class="article-link" title="cork 木栓">    <strong>Test 5 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">cork 木栓</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test5Passage2.html" class="article-link" title="Collecting as a hobby 作为爱好的收藏">    <strong>Test 5 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Collecting as a hobby 作为爱好的收藏</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test5Passage3.html" class="article-link" title="What’s the purpose of gaining knowledge 获取知识的目的是什么">    <strong>Test 5 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">What’s the purpose of gaining knowledge 获取知识的目的是什么</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test6Passage1.html" class="article-link" title="The risks agriculture faces in developing countries 发展中国家农业面临的风险">    <strong>Test 6 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The risks agriculture faces in developing countries 发展中国家农业面临的风险</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test6Passage2.html" class="article-link" title="The lost city 失落的城市">    <strong>Test 6 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The lost city 失落的城市</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test6Passage3.html" class="article-link" title="The Benefits of Being Bilingual 双语使用者的优势">    <strong>Test 6 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Benefits of Being Bilingual 双语使用者的优势</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test7Passage1.html" class="article-link" title="Flying tortoises 飞翔的乌龟">    <strong>Test 7 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Flying tortoises 飞翔的乌龟</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test7Passage2.html" class="article-link" title="The Intersection of Health Sciences and Geography">    <strong>Test 7 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Intersection of Health Sciences and Geography</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test7Passage3.html" class="article-link" title="Music and the emotions 音乐与情感">    <strong>Test 7 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Music and the emotions 音乐与情感</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test8Passage1.html" class="article-link" title="The History of Glass 玻璃的历史">    <strong>Test 8 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The History of Glass 玻璃的历史</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test8Passage2.html" class="article-link" title="bring back the big cats">    <strong>Test 8 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">bring back the big cats</div>  </a></li><li>  <a href="剑桥雅思12/剑桥雅思12 Test8Passage3.html" class="article-link" title="UK companies need more effective boards of directors">    <strong>Test 8 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">UK companies need more effective boards of directors</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思13</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思13/剑桥雅思13 Test1Passage1.html" class="article-link" title="Case Study: Tourism New Zealand website">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Case Study: Tourism New Zealand website</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test1Passage2.html" class="article-link" title="Why being bored is stimulating and useful too">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Why being bored is stimulating and useful too</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test1Passage3.html" class="article-link" title="Artificial artists 人工智能艺术家">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Artificial artists 人工智能艺术家</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test2Passage1.html" class="article-link" title="Bring cinnamon to Europe 肉桂在欧洲的历史">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Bring cinnamon to Europe 肉桂在欧洲的历史</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test2Passage2.html" class="article-link" title="Oxytocin 催产素">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Oxytocin 催产素</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test2Passage3.html" class="article-link" title="Making the most of trends 潮流对商业策略的影响">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Making the most of trends 潮流对商业策略的影响</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test3Passage1.html" class="article-link" title="The coconut palm 椰子树">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The coconut palm 椰子树</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test3Passage2.html" class="article-link" title="How baby talk gives infant brans a boost 儿语在婴儿大脑发育中的作用">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">How baby talk gives infant brans a boost 儿语在婴儿大脑发育中的作用</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test3Passage3.html" class="article-link" title="Whatever happened to the Harappan Civilisation 哈拉帕文明的衰落">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Whatever happened to the Harappan Civilisation 哈拉帕文明的衰落</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test4Passage1.html" class="article-link" title="Cutty Sark: the fastest sailing ship of all time 卡蒂萨克号帆船">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Cutty Sark: the fastest sailing ship of all time 卡蒂萨克号帆船</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test4Passage2.html" class="article-link" title="Saving the soil 拯救土壤">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Saving the soil 拯救土壤</div>  </a></li><li>  <a href="剑桥雅思13/剑桥雅思13 Test4Passage3.html" class="article-link" title="Book Review 图书评论">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Book Review 图书评论</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思14</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思14/剑桥雅思14 Test1Passage1.html" class="article-link" title="The Importance of Children’s Play 孩子玩耍的重要性">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Importance of Children’s Play 孩子玩耍的重要性</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test1Passage2.html" class="article-link" title="The growth of bike-sharing schemes around the world 共享单车">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The growth of bike-sharing schemes around the world 共享单车</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test1Passage3.html" class="article-link" title="Motivational factors and the hospitality industry">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Motivational factors and the hospitality industry</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test2Passage1.html" class="article-link" title="Alexander Henderson (1831-1913)">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Alexander Henderson (1831-1913)</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test2Passage2.html" class="article-link" title="Back to the future of skyscraper design 摩天大楼设计">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Back to the future of skyscraper design 摩天大楼设计</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test2Passage3.html" class="article-link" title="why companies should welcome disorder">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">why companies should welcome disorder</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test3Passage1.html" class="article-link" title="The concept of intelligence 智力的概念">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The concept of intelligence 智力的概念</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test3Passage2.html" class="article-link" title="Saving bugs to find new drugs 利用昆虫开发药物">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Saving bugs to find new drugs 利用昆虫开发药物</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test3Passage3.html" class="article-link" title="The power of play 玩耍的作用">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The power of play 玩耍的作用</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test4Passage1.html" class="article-link" title="the secret of staying young 年轻的秘密">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">the secret of staying young 年轻的秘密</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test4Passage2.html" class="article-link" title="Why zoos are good 动物园的好处">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Why zoos are good 动物园的好处</div>  </a></li><li>  <a href="剑桥雅思14/剑桥雅思14 Test4Passage3.html" class="article-link" title="Chelsea Rochman 海洋废弃物">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Chelsea Rochman 海洋废弃物</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思15</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思15/剑桥雅思15 Test1Passage1.html" class="article-link" title="Nutmeg – a valuable spice 肉豆蔻">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Nutmeg – a valuable spice 肉豆蔻</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test1Passage2.html" class="article-link" title="driverless cars 无人驾驶">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">driverless cars 无人驾驶</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test1Passage3.html" class="article-link" title="What is exploration 探索是什么">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">What is exploration 探索是什么</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test2Passage1.html" class="article-link" title="Could urban engineers learn from dance 舞蹈对城市交通设计的启示">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Could urban engineers learn from dance 舞蹈对城市交通设计的启示</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test2Passage2.html" class="article-link" title="Should we try to bring extinct species back to life 复活已灭绝的物种">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Should we try to bring extinct species back to life 复活已灭绝的物种</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test2Passage3.html" class="article-link" title="having a laugh 笑一笑">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">having a laugh 笑一笑</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test3Passage1.html" class="article-link" title="Henry Moore  亨利·摩尔">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Henry Moore  亨利·摩尔</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test3Passage2.html" class="article-link" title="The Desolenator: producing clean water 净水设备">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Desolenator: producing clean water 净水设备</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test3Passage3.html" class="article-link" title="Why fairy tales are really scary tales 为什么童话是真正可怕的故事">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Why fairy tales are really scary tales 为什么童话是真正可怕的故事</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test4Passage1.html" class="article-link" title="The return of the huarango Huarango树的回归">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The return of the huarango Huarango树的回归</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test4Passage2.html" class="article-link" title="Silbo Gomero – the whistle language of the Canary Islands 加那利群岛的口哨语言">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Silbo Gomero – the whistle language of the Canary Islands 加那利群岛的口哨语言</div>  </a></li><li>  <a href="剑桥雅思15/剑桥雅思15 Test4Passage3.html" class="article-link" title="Environmental practices of big business 大企业的环保实践">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Environmental practices of big business 大企业的环保实践</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思16</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思16/剑桥雅思16 Test1Passage1.html" class="article-link" title="Why we need to protect polar bears 我们为什么要保护北极熊">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Why we need to protect polar bears 我们为什么要保护北极熊</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test1Passage2.html" class="article-link" title="The Step Pyramid of Djoser 乔塞尔阶梯金字塔">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Step Pyramid of Djoser 乔塞尔阶梯金字塔</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test1Passage3.html" class="article-link" title="The future of work 未来工作展望">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The future of work 未来工作展望</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test2Passage1.html" class="article-link" title="The White Horse of Uffington 阿芬顿的白马">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The White Horse of Uffington 阿芬顿的白马</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test2Passage2.html" class="article-link" title="I contain multitudes 微生物">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">I contain multitudes 微生物</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test2Passage3.html" class="article-link" title="How to make wise decisions 如何做出明智的决策">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">How to make wise decisions 如何做出明智的决策</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test3Passage1.html" class="article-link" title="Roman shipbuilding and navigation 罗马造船与航海">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Roman shipbuilding and navigation 罗马造船与航海</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test3Passage2.html" class="article-link" title="Climate change reveals ancient artefacts in Norway’s glaciers">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Climate change reveals ancient artefacts in Norway’s glaciers</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test3Passage3.html" class="article-link" title="Plant thermometer triggers springtime growth by measuring night time heat">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Plant thermometer triggers springtime growth by measuring night time heat</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test4Passage1.html" class="article-link" title="Roman tunnels 罗马隧道">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Roman tunnels 罗马隧道</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test4Passage2.html" class="article-link" title="Changes in reading habits 阅读习惯的改变">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Changes in reading habits 阅读习惯的改变</div>  </a></li><li>  <a href="剑桥雅思16/剑桥雅思16 Test4Passage3.html" class="article-link" title="Attitudes towards Artificial Intelligence 对待人工智能的态度">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Attitudes towards Artificial Intelligence 对待人工智能的态度</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思17</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思17/剑桥雅思17 Test1Passage1.html" class="article-link" title="The development of the London underground railway 伦敦地铁的发展">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The development of the London underground railway 伦敦地铁的发展</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test1Passage2.html" class="article-link" title="Stadiums: Past, present and future 体育场的过去，现在与未来">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Stadiums: Past, present and future 体育场的过去，现在与未来</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test1Passage3.html" class="article-link" title="To catch a king 抓捕国王">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">To catch a king 抓捕国王</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test2Passage1.html" class="article-link" title="The Dead Sea Scrolls 死海古卷">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Dead Sea Scrolls 死海古卷</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test2Passage2.html" class="article-link" title="A second attempt at domesticating the tomato 第二次驯化番茄">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">A second attempt at domesticating the tomato 第二次驯化番茄</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test2Passage3.html" class="article-link" title="Insight or evolution 洞见还是进化">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Insight or evolution 洞见还是进化</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test3Passage1.html" class="article-link" title="The thylacine 袋狼">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The thylacine 袋狼</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test3Passage2.html" class="article-link" title="palm oil 棕榈油">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">palm oil 棕榈油</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test3Passage3.html" class="article-link" title="Building the skyline: The birth and growth of Manhattan’s skyscrapers">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Building the skyline: The birth and growth of Manhattan’s skyscrapers</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test4Passage1.html" class="article-link" title="Bats to the rescue 马达加斯加蝙蝠">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Bats to the rescue 马达加斯加蝙蝠</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test4Passage2.html" class="article-link" title="Does education fuel economic growth 教育会促进经济发展吗">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Does education fuel economic growth 教育会促进经济发展吗</div>  </a></li><li>  <a href="剑桥雅思17/剑桥雅思17 Test4Passage3.html" class="article-link" title="Timur Gareyev – blindfold chess champion 盲棋冠军">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Timur Gareyev – blindfold chess champion 盲棋冠军</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思18</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思18/剑桥雅思18 Test1Passage1.html" class="article-link" title="Urban farming 城市农业">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Urban farming 城市农业</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test1Passage2.html" class="article-link" title="Forest management in Pennsylvania, USA 美国宾夕法尼亚州的丛林管理">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Forest management in Pennsylvania, USA 美国宾夕法尼亚州的丛林管理</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test1Passage3.html" class="article-link" title="Conquering Earth’s space junk problem 解决地球的太空垃圾问题">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Conquering Earth’s space junk problem 解决地球的太空垃圾问题</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test2Passage1.html" class="article-link" title="Stonehenge 巨石阵">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Stonehenge 巨石阵</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test2Passage2.html" class="article-link" title="Living with artificial intelligence 与人工智能共存">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Living with artificial intelligence 与人工智能共存</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test2Passage3.html" class="article-link" title="An ideal city 理想城市">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">An ideal city 理想城市</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test3Passage1.html" class="article-link" title="Materials to take us beyond concrete 混凝土的替代材料">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Materials to take us beyond concrete 混凝土的替代材料</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test3Passage2.html" class="article-link" title="The steam Car 蒸汽汽车">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The steam Car 蒸汽汽车</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test3Passage3.html" class="article-link" title="The case for mixed-ability classes 混合能力的班级">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The case for mixed-ability classes 混合能力的班级</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test4Passage1.html" class="article-link" title="Green roofs 绿色屋顶">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Green roofs 绿色屋顶</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test4Passage2.html" class="article-link" title="The growth mindset 成长心态">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The growth mindset 成长心态</div>  </a></li><li>  <a href="剑桥雅思18/剑桥雅思18 Test4Passage3.html" class="article-link" title="Alfred Wegener: science, exploration, and the theory of continental drift 阿尔弗雷德·韦格纳">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Alfred Wegener: science, exploration, and the theory of continental drift 阿尔弗雷德·韦格纳</div>  </a></li>  </ul></div><div class="book-card">  <h3>    <span>📘 剑桥雅思19</span>    <span class="article-count">12 篇</span>  </h3>  <ul class="article-list">    <li>  <a href="剑桥雅思19/剑桥雅思19 Test1Passage1.html" class="article-link" title="How tennis rackets have changed 网球拍的变化">    <strong>Test 1 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">How tennis rackets have changed 网球拍的变化</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test1Passage2.html" class="article-link" title="The pirates of the ancient Mediterranean 古地中海强盗">    <strong>Test 1 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The pirates of the ancient Mediterranean 古地中海强盗</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test1Passage3.html" class="article-link" title="The persistence and peril of misinformation 错误消息的顽固存在与潜在危害">    <strong>Test 1 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The persistence and peril of misinformation 错误消息的顽固存在与潜在危害</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test2Passage1.html" class="article-link" title="The Industrial Revolution in Britain 英国工业革命">    <strong>Test 2 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Industrial Revolution in Britain 英国工业革命</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test2Passage2.html" class="article-link" title="Athletes and Stress 运动员与压力">    <strong>Test 2 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Athletes and Stress 运动员与压力</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test2Passage3.html" class="article-link" title="An Inquiry into the existence of the gifted child 天才儿童">    <strong>Test 2 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">An Inquiry into the existence of the gifted child 天才儿童</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test3Passage1.html" class="article-link" title="Archaeologists discover evidence of prehistoric island settlers 考古发现">    <strong>Test 3 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Archaeologists discover evidence of prehistoric island settlers 考古发现</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test3Passage2.html" class="article-link" title="The Global Importance of Wetlands 湿地的重要性">    <strong>Test 3 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Global Importance of Wetlands 湿地的重要性</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test3Passage3.html" class="article-link" title="Is the era of artificial speech translation upon us 人工智能语言翻译">    <strong>Test 3 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Is the era of artificial speech translation upon us 人工智能语言翻译</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test4Passage1.html" class="article-link" title="The impact of climate change on butterflies in Britain 气候变化对蝴蝶的影响">    <strong>Test 4 Passage 1</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The impact of climate change on butterflies in Britain 气候变化对蝴蝶的影响</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test4Passage2.html" class="article-link" title="Deep-sea Mining 深海采矿">    <strong>Test 4 Passage 2</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Deep-sea Mining 深海采矿</div>  </a></li><li>  <a href="剑桥雅思19/剑桥雅思19 Test4Passage3.html" class="article-link" title="The Unselfish Gene 不自私的基因">    <strong>Test 4 Passage 3</strong>    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">The Unselfish Gene 不自私的基因</div>  </a></li>  </ul></div>
+        </div>
+    </div>
+
+    <script>
+        // Load the compiled search index
+        let searchIndex = null;
+        
+        async function loadSearchIndex() {
+            try {
+                const res = await fetch('search_index.json');
+                searchIndex = await res.json();
+                console.log("搜索索引加载成功", Object.keys(searchIndex).length, "个单词");
+            } catch(e) {
+                console.error("加载搜索索引失败", e);
+            }
+        }
+
+        // Trigger loading
+        loadSearchIndex();
+
+        function searchVocab() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            const drawer = document.getElementById('search-results-drawer');
+            const info = document.getElementById('search-info');
+            
+            if (!query) {
+                drawer.classList.remove('active');
+                drawer.innerHTML = '';
+                info.textContent = '输入任意大纲单词，快速查找包含该词的真题文章';
+                return;
+            }
+            
+            if (!searchIndex) {
+                info.textContent = '索引正在加载中，请稍后...';
+                return;
+            }
+            
+            // Exact word search and suffix search
+            // If the query exists as a key in searchIndex
+            let matches = [];
+            if (searchIndex[query]) {
+                matches = searchIndex[query];
+            } else {
+                // Fuzzy/prefix match keys
+                const matchingKeys = Object.keys(searchIndex).filter(key => key.startsWith(query));
+                // Gather articles
+                const uniqueArticles = new Set();
+                matchingKeys.slice(0, 10).forEach(key => {
+                    searchIndex[key].forEach(art => {
+                        const keyStr = art.path;
+                        if (!uniqueArticles.has(keyStr)) {
+                            uniqueArticles.add(keyStr);
+                            matches.push(art);
+                        }
+                    });
+                });
+            }
+            
+            if (matches.length === 0) {
+                drawer.classList.add('active');
+                drawer.innerHTML = `<div style="text-align: center; color: #64748b; padding: 20px;">未找到包含单词 "${query}" 的文章</div>`;
+                info.textContent = `找到 0 篇包含词汇的文章`;
+                return;
+            }
+            
+            drawer.classList.add('active');
+            drawer.innerHTML = '';
+            
+            matches.slice(0, 15).forEach(item => {
+                const a = document.createElement('a');
+                a.className = 'result-item';
+                a.href = item.path;
+                a.innerHTML = `
+                    <span class="result-title">${item.book} ${item.test} ${item.passage}</span>
+                    <span class="result-meta">${item.title}</span>
+                `;
+                drawer.appendChild(a);
+            });
+            
+            info.textContent = `为您展示前 ${Math.min(15, matches.length)} 篇匹配的文章 (总共 ${matches.length} 篇)`;
+        }
+    </script>
+</body>
+</html>

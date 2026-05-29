@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The psychology of innovation - 剑桥雅思10 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思10</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>The psychology of innovation</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/28748.html" target="_blank">https://www.laokaoya.com/28748.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="innovation">Innovation</mark> is key to business <mark class="vocab-word" data-word="survival">survival</mark>, and companies put <mark class="vocab-word" data-word="substantial">substantial</mark> resources into <mark class="vocab-word" data-word="inspiring">inspiring</mark> employees to develop new ideas. There are, nevertheless, people working in <mark class="vocab-word" data-word="luxurious">luxurious</mark>, state-of-the-art centres designed to <mark class="vocab-word" data-word="stimulate">stimulate</mark> <mark class="vocab-word" data-word="innovation">innovation</mark> who find that their environment doesn’t make them feel at all creative. And there are those who don’t have a budget, or much space, but who <mark class="vocab-word" data-word="innovate">innovate</mark> successfully.</p><p>For Robert B. Cialdini, Professor of <mark class="vocab-word" data-word="psychology">Psychology</mark> at Arizona State University, one reason that companies don’t succeed as often as they should is that <mark class="vocab-word" data-word="innovation">Innovation</mark> starts with <mark class="vocab-word" data-word="recruitment">recruitment</mark>. Research shows that the fit between an employee’s values and a company’s values makes a difference to what contribution they make and whether, two years after they join, they’re still at the company. Studies at Harvard Business School show that, although some individuals may be more creative than others, almost every individual can be creative in the right <mark class="vocab-word" data-word="circumstance">circumstances</mark>.</p><p>One of the most famous photographs in the <mark class="vocab-word" data-word="story">story</mark> of rock’n’roll emphasises Cialdini’s views. The 1956 picture of singers Elvis Presley, Carl Perkins, Johnny Cash and Jerry Lee Lewis jamming at a piano in Sun Studios in Memphis tells a hidden <mark class="vocab-word" data-word="story">story</mark>. Sun’s ‘million-dollar quartet’ could have been a quintet. Missing from the picture is Roy Orbison, a greater natural singer than Lewis, Perkins or Cash. Sam Phillips, who owned Sun, wanted to revolutionise popular music with songs that <mark class="vocab-word" data-word="fuse">fused</mark> black and white music, and country and blues. Presley, Cash, Perkins and Lewis <mark class="vocab-word" data-word="instinctive">instinctively</mark> understood Phillips’s <mark class="vocab-word" data-word="ambition">ambition</mark> and believed in it. Orbison wasn’t inspired by the goal, and only ever achieved one hit with the Sun label.</p><p>The value fit <mark class="vocab-word" data-word="matter">matters</mark>, says Cialdini, because <mark class="vocab-word" data-word="innovation">innovation</mark> is, in part, a process of change, and under that pressure we, as a species, behave differently, ‘When things change, we are hard-wired to play it safe.’ Managers should therefore adopt an approach that appears counterintuitive ­— they should explain what stands to be lost if the company fails to <mark class="vocab-word" data-word="seize">seize</mark> a particular opportunity. Studies show that we <mark class="vocab-word" data-word="invariably">invariably</mark> take more <mark class="vocab-word" data-word="gamble">gambles</mark> when threatened with a loss than when offered a reward.</p><p>Managing <mark class="vocab-word" data-word="innovation">innovation</mark> is a <mark class="vocab-word" data-word="delicate">delicate</mark> art. It’s easy for a company to be pulled in conflicting directions as the marketing, product development, and finance departments each get different <mark class="vocab-word" data-word="feedback">feedback</mark> from different sets of people. And without a system which ensures collaborative exchanges within the company, it’s also easy for small ‘pockets of <mark class="vocab-word" data-word="innovation">innovation</mark>’ to disappear. <mark class="vocab-word" data-word="innovation">Innovation</mark> is a contact sport. You can’t brief people just by saying, ‘We’re going in this direction and I’m going to take you with me.’</p><p>Cialdini believes that this ‘follow-the-leader <mark class="vocab-word" data-word="syndrome">syndrome</mark>, is dangerous, not least because it encourages bosses to go it alone. ‘It’s been scientifically proven that three people will be better than one at solving problems, even if that one person is the smartest person in the field.’ To prove his point, Cialdini <mark class="vocab-word" data-word="cite">cites</mark> an interview with <mark class="vocab-word" data-word="molecular">molecular</mark> <mark class="vocab-word" data-word="biologist">biologist</mark> <mark class="vocab-word" data-word="jam">James</mark> Watson. Watson, together with Francis Crick, discovered the structure of DNA, the <mark class="vocab-word" data-word="genetic">genetic</mark> information <mark class="vocab-word" data-word="carrier">carrier</mark> of all living <mark class="vocab-word" data-word="organism">organisms</mark>. ‘When asked how they had <mark class="vocab-word" data-word="crack">cracked</mark> the code ahead of an <mark class="vocab-word" data-word="array">array</mark> of highly <mark class="vocab-word" data-word="accomplish">accomplished</mark> <mark class="vocab-word" data-word="rival">rival</mark> investigators, he said something that stunned me. He said he and Crick had succeeded because they were aware that they weren’t the most <mark class="vocab-word" data-word="intelligent">intelligent</mark> of the scientists pursuing the answer. The smartest scientist was called Rosalind Franklin who, Watson said, “was so <mark class="vocab-word" data-word="intelligent">intelligent</mark> she rarely sought advice”.’</p><p><mark class="vocab-word" data-word="teamwork">Teamwork</mark> <mark class="vocab-word" data-word="tap">taps</mark> into one of the basic drivers of human behaviour. ‘The principle of social <mark class="vocab-word" data-word="proof">proof</mark> is so <mark class="vocab-word" data-word="pervasive">pervasive</mark> that we don’t even recognise it,’ says Cialdini. ‘If your project is being resisted, for example, by a group of <mark class="vocab-word" data-word="veteran">veteran</mark> employees, ask another <mark class="vocab-word" data-word="old-timer">old-timer</mark> to speak up for it.’ Cialdini is not alone in <mark class="vocab-word" data-word="advocate">advocating</mark> this strategy. Research shows that <mark class="vocab-word" data-word="peer">peer</mark> power, used <mark class="vocab-word" data-word="horizontally">horizontally</mark> not <mark class="vocab-word" data-word="vertical">vertically</mark>, is much more powerful than any boss’s speech.</p><p>Writing, visualising and <mark class="vocab-word" data-word="prototype">prototyping</mark> can <mark class="vocab-word" data-word="stimulate">stimulate</mark> the flow of new ideas. Cialdini <mark class="vocab-word" data-word="cite">cites</mark> scores of research papers and historical events that prove that even something as simple as writing <mark class="vocab-word" data-word="deepen">deepens</mark> every individual’s <mark class="vocab-word" data-word="engagement">engagement</mark> in the project. It is, he says, the reason why all those competitions on breakfast <mark class="vocab-word" data-word="cereal">cereal</mark> <mark class="vocab-word" data-word="packet">packets</mark> encouraged us to write in saying, in no more than 10 words: ‘I like Kellogg’s Corn <mark class="vocab-word" data-word="flake">Flakes</mark> because….’ The very act of writing makes us more likely to believe it.</p><p><mark class="vocab-word" data-word="authority">Authority</mark> doesn’t have to <mark class="vocab-word" data-word="inhibit">inhibit</mark> <mark class="vocab-word" data-word="innovation">innovation</mark> but it often does. The wrong kind of leadership will <mark class="vocab-word" data-word="lead">lead</mark> to what Cialdini calls ‘captainitis, the regrettable <mark class="vocab-word" data-word="tendency">tendency</mark> of team members to <mark class="vocab-word" data-word="opt">opt</mark> out of team responsibilities that are properly theirs’. He calls it captainitis because, he says, ‘crew members of multipilot aircraft <mark class="vocab-word" data-word="exhibit">exhibit</mark> a sometimes <mark class="vocab-word" data-word="deadly">deadly</mark> passivity when the flight captain makes a clearly wrong-headed decision’. This behaviour is not, he says, unique to air travel, but can happen in any workplace where the leader is overbearing.</p><p>At the other end of the scale is the 1980s Memphis design <mark class="vocab-word" data-word="collective">collective</mark>, a group of young designers for whom ‘the only rule was that there were no rules’. This environment encouraged a free <mark class="vocab-word" data-word="interchange">interchange</mark> of ideas, which led to more <mark class="vocab-word" data-word="creativity">creativity</mark> with form, function, colour and materials that revolutionised attitudes to furniture design.</p><p>Many theorists believe the ideal boss should <mark class="vocab-word" data-word="lead">lead</mark> from behind, taking pride in <mark class="vocab-word" data-word="collective">collective</mark> accomplishment and giving credit where it is due. Cialdini says: ‘Leaders should encourage everyone to contribute and <mark class="vocab-word" data-word="simultaneously">simultaneously</mark> <mark class="vocab-word" data-word="assure">assure</mark> all <mark class="vocab-word" data-word="concerned">concerned</mark> that every <mark class="vocab-word" data-word="recommendation">recommendation</mark> is important to making the right decision and will be given full attention.’ The <mark class="vocab-word" data-word="frustrating">frustrating</mark> thing about <mark class="vocab-word" data-word="innovation">innovation</mark> is that there are many approaches, but no magic <mark class="vocab-word" data-word="formula">formula</mark>. However, a manager who wants to create a truly <mark class="vocab-word" data-word="innovative">innovative</mark> culture can make their job a lot easier by recognising these <mark class="vocab-word" data-word="psychological">psychological</mark> realities.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>创新是商业赖以生存的关键，公司将大量的资源用于激励员工提出新想法。但是，仍然有那么一些人虽然在豪华、先进、并以刺激创新为目的而设计的中心工作，却觉得环境一点也没有让他们感到有创造的动力。也有一些人虽然没有充足的预算，或者足够的空间，却成功地实现了创新。</p><p>对于亚利桑那州立大学心理学教授Robert B.Cialdini而言，公司未能获得应有的成功的原因之一在于创新始于招聘。研究表明，员工价值观与公司价值观之间的契合度会影响他们做出的贡献以及加入两年后是否仍在该公司工作。哈佛商学院的研究表明，尽管某些人可能比其他人更具创造力，但几乎每个人都可以在适当的情况下发挥创造力。</p><p>一张摇滚故事中最著名的照片印证了Cialdini的观点。这张1956年，歌手Elvis Presley，Carl Perkins，Johnny Cash和Jerry Lee Lewis在孟菲斯Sun Studios的照片讲述了一个隐藏的故事。Sun的“百万美元四重奏”本来可以说是五重奏。照片中缺少的是Roy Orbison，一个比Lewis，Perkins或Cash更有天赋的歌手。拥有Sun的Sam Phillips希望通过融合黑白音乐，乡村音乐和布鲁斯音乐来革新流行音乐。Presley，Cash，Perkins和Lewis本能地理解Phillips的抱负，并对此抱有信心。而Orbison则没有受到这一目标的启发，只在唱片公司进行了一次演出。</p><p>Cialdini说，价值观的契合很重要，因为创新在某种程度上是变革的过程，在这种压力下，作为一个物种，我们的行为方式有所不同，“当事情发生变化时，我们本能地想要安全行事。”因此，管理者应该采用一种看起来违反直觉的方法-他们应该阐明如果公司未能抓住特定机会将会损失什么。研究表明，在遭受损失威胁时，我们总是会比面对奖励时更多地进行赌博。</p><p>管理创新是一门精致的艺术。由于市场营销，产品开发和财务部门各自从不同的人员那里获得不同的反馈，因此很容易将公司拉向相互矛盾的方向。而且，如果没有确保公司内部协作交流的系统，小型“创新项目”也很容易消失。创新是一种需要沟通的活动。你不能仅仅通过说：“我们正在朝这个方向前进，而你将跟我一起”来说服别人。</p><p>Cialdini认为，这种“跟随领导综合症”是危险的，不仅仅因为它鼓励老板一意孤行。“科学证明，即使一个人是该领域最聪明的人，三个人在解决问题上也会比一个人更好。” 为了证明他的观点，Cialdini引用了分子生物学家James Watson（詹姆斯·沃森）的采访。沃森与弗朗西斯·克里克（Francis Crick）一起发现了DNA的结构，DNA是所有活着的生物体的遗传信息载体。当被问及他们是如何领先众多高水平的竞争者破解密码时，他说了一些令我震惊的东西。他说，他和克里克之所以成功，是因为他们意识到自己并不是追求答案的最聪明的科学家。沃森说，最聪明的科学家叫罗莎琳德·富兰克林（Rosalind Franklin），“他非常聪明，以至于很少寻求他人的建议”。</p><p>团队合作是人类行为的基本动力之一。Cialdini说：“社会认同的原则是如此普遍，以至于我们甚至都没有意识到。” “例如，如果你的项目遭到一群资深员工的抵制，那就争取另一位老员工的支持。” 并非只有Cialdini提倡这种策略。研究表明，水平而非垂直使用的同事权力比任何老板的讲话都强大得多。</p><p>写作，想象和原型设计都可以激发新想法。Cialdini引用了许多研究论文和历史事件，证明即使是像写作这样简单的事情也能加深每个人对项目的参与。他说，这就是为什么所有那些早餐麦片包装比赛都鼓励我们用不超过10个词来书写：“我喜欢凯洛格的玉米片是因为……”。写作这一行为使我们更有可能相信它。</p><p>权威并不一定抑制创新，但却经常如此。错误的领导方式会导致Cialdini称为captainitis的现象。即团队成员推卸本属于他们责任的遗憾趋势。他称之为captainitis是因为“当机长做出错误的决定时，多飞行员的飞机机组有时会表现出一种致命的被动性”。他说，这种行为并非航空业所独有，可能在任何领导者过于专制的工作场所中发生。</p><p>与之相反的情况是20世纪80年代孟菲斯的设计团队。这是一群年轻的设计师，他们“唯一的规则是没有规则” 。这种环境鼓励思想的自由交流，从而在形式，功能，颜色和材料方面带来了更多的创造性，进而彻底改变了家具设计的理念。</p><p>许多理论家认为，理想的老板应该在幕后领导，以集体成就为荣，并在适当的时候给予赞扬。Cialdini说：“领导应鼓励每个人做出贡献，同时向所有有关方面保证，每一项建议对于做出正确决定都是重要的，并将得到充分重视。” 令人沮丧的是，创新有很多方法，但不存在神奇的公式。然而，通过认识到这些心理层面的事实，想要创造真正创新文化的经理可以让自己的工作变得轻松许多。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="innovation">Innovation</mark> is key to business <mark class="vocab-word" data-word="survival">survival</mark>, and companies put <mark class="vocab-word" data-word="substantial">substantial</mark> resources into <mark class="vocab-word" data-word="inspiring">inspiring</mark> employees to develop new ideas. There are, nevertheless, people working in <mark class="vocab-word" data-word="luxurious">luxurious</mark>, state-of-the-art centres designed to <mark class="vocab-word" data-word="stimulate">stimulate</mark> <mark class="vocab-word" data-word="innovation">innovation</mark> who find that their environment doesn’t make them feel at all creative. And there are those who don’t have a budget, or much space, but who <mark class="vocab-word" data-word="innovate">innovate</mark> successfully.</p></div>  <div class="parallel-zh"><p>创新是商业赖以生存的关键，公司将大量的资源用于激励员工提出新想法。但是，仍然有那么一些人虽然在豪华、先进、并以刺激创新为目的而设计的中心工作，却觉得环境一点也没有让他们感到有创造的动力。也有一些人虽然没有充足的预算，或者足够的空间，却成功地实现了创新。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>For Robert B. Cialdini, Professor of <mark class="vocab-word" data-word="psychology">Psychology</mark> at Arizona State University, one reason that companies don’t succeed as often as they should is that <mark class="vocab-word" data-word="innovation">Innovation</mark> starts with <mark class="vocab-word" data-word="recruitment">recruitment</mark>. Research shows that the fit between an employee’s values and a company’s values makes a difference to what contribution they make and whether, two years after they join, they’re still at the company. Studies at Harvard Business School show that, although some individuals may be more creative than others, almost every individual can be creative in the right <mark class="vocab-word" data-word="circumstance">circumstances</mark>.</p></div>  <div class="parallel-zh"><p>对于亚利桑那州立大学心理学教授Robert B.Cialdini而言，公司未能获得应有的成功的原因之一在于创新始于招聘。研究表明，员工价值观与公司价值观之间的契合度会影响他们做出的贡献以及加入两年后是否仍在该公司工作。哈佛商学院的研究表明，尽管某些人可能比其他人更具创造力，但几乎每个人都可以在适当的情况下发挥创造力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One of the most famous photographs in the <mark class="vocab-word" data-word="story">story</mark> of rock’n’roll emphasises Cialdini’s views. The 1956 picture of singers Elvis Presley, Carl Perkins, Johnny Cash and Jerry Lee Lewis jamming at a piano in Sun Studios in Memphis tells a hidden <mark class="vocab-word" data-word="story">story</mark>. Sun’s ‘million-dollar quartet’ could have been a quintet. Missing from the picture is Roy Orbison, a greater natural singer than Lewis, Perkins or Cash. Sam Phillips, who owned Sun, wanted to revolutionise popular music with songs that <mark class="vocab-word" data-word="fuse">fused</mark> black and white music, and country and blues. Presley, Cash, Perkins and Lewis <mark class="vocab-word" data-word="instinctive">instinctively</mark> understood Phillips’s <mark class="vocab-word" data-word="ambition">ambition</mark> and believed in it. Orbison wasn’t inspired by the goal, and only ever achieved one hit with the Sun label.</p></div>  <div class="parallel-zh"><p>一张摇滚故事中最著名的照片印证了Cialdini的观点。这张1956年，歌手Elvis Presley，Carl Perkins，Johnny Cash和Jerry Lee Lewis在孟菲斯Sun Studios的照片讲述了一个隐藏的故事。Sun的“百万美元四重奏”本来可以说是五重奏。照片中缺少的是Roy Orbison，一个比Lewis，Perkins或Cash更有天赋的歌手。拥有Sun的Sam Phillips希望通过融合黑白音乐，乡村音乐和布鲁斯音乐来革新流行音乐。Presley，Cash，Perkins和Lewis本能地理解Phillips的抱负，并对此抱有信心。而Orbison则没有受到这一目标的启发，只在唱片公司进行了一次演出。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The value fit <mark class="vocab-word" data-word="matter">matters</mark>, says Cialdini, because <mark class="vocab-word" data-word="innovation">innovation</mark> is, in part, a process of change, and under that pressure we, as a species, behave differently, ‘When things change, we are hard-wired to play it safe.’ Managers should therefore adopt an approach that appears counterintuitive ­— they should explain what stands to be lost if the company fails to <mark class="vocab-word" data-word="seize">seize</mark> a particular opportunity. Studies show that we <mark class="vocab-word" data-word="invariably">invariably</mark> take more <mark class="vocab-word" data-word="gamble">gambles</mark> when threatened with a loss than when offered a reward.</p></div>  <div class="parallel-zh"><p>Cialdini说，价值观的契合很重要，因为创新在某种程度上是变革的过程，在这种压力下，作为一个物种，我们的行为方式有所不同，“当事情发生变化时，我们本能地想要安全行事。”因此，管理者应该采用一种看起来违反直觉的方法-他们应该阐明如果公司未能抓住特定机会将会损失什么。研究表明，在遭受损失威胁时，我们总是会比面对奖励时更多地进行赌博。</p><p>管理创新是一门精致的艺术。由于市场营销，产品开发和财务部门各自从不同的人员那里获得不同的反馈，因此很容易将公司拉向相互矛盾的方向。而且，如果没有确保公司内部协作交流的系统，小型“创新项目”也很容易消失。创新是一种需要沟通的活动。你不能仅仅通过说：“我们正在朝这个方向前进，而你将跟我一起”来说服别人。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Managing <mark class="vocab-word" data-word="innovation">innovation</mark> is a <mark class="vocab-word" data-word="delicate">delicate</mark> art. It’s easy for a company to be pulled in conflicting directions as the marketing, product development, and finance departments each get different <mark class="vocab-word" data-word="feedback">feedback</mark> from different sets of people. And without a system which ensures collaborative exchanges within the company, it’s also easy for small ‘pockets of <mark class="vocab-word" data-word="innovation">innovation</mark>’ to disappear. <mark class="vocab-word" data-word="innovation">Innovation</mark> is a contact sport. You can’t brief people just by saying, ‘We’re going in this direction and I’m going to take you with me.’</p><p>Cialdini believes that this ‘follow-the-leader <mark class="vocab-word" data-word="syndrome">syndrome</mark>, is dangerous, not least because it encourages bosses to go it alone. ‘It’s been scientifically proven that three people will be better than one at solving problems, even if that one person is the smartest person in the field.’ To prove his point, Cialdini <mark class="vocab-word" data-word="cite">cites</mark> an interview with <mark class="vocab-word" data-word="molecular">molecular</mark> <mark class="vocab-word" data-word="biologist">biologist</mark> <mark class="vocab-word" data-word="jam">James</mark> Watson. Watson, together with Francis Crick, discovered the structure of DNA, the <mark class="vocab-word" data-word="genetic">genetic</mark> information <mark class="vocab-word" data-word="carrier">carrier</mark> of all living <mark class="vocab-word" data-word="organism">organisms</mark>. ‘When asked how they had <mark class="vocab-word" data-word="crack">cracked</mark> the code ahead of an <mark class="vocab-word" data-word="array">array</mark> of highly <mark class="vocab-word" data-word="accomplish">accomplished</mark> <mark class="vocab-word" data-word="rival">rival</mark> investigators, he said something that stunned me. He said he and Crick had succeeded because they were aware that they weren’t the most <mark class="vocab-word" data-word="intelligent">intelligent</mark> of the scientists pursuing the answer. The smartest scientist was called Rosalind Franklin who, Watson said, “was so <mark class="vocab-word" data-word="intelligent">intelligent</mark> she rarely sought advice”.’</p></div>  <div class="parallel-zh"><p>Cialdini认为，这种“跟随领导综合症”是危险的，不仅仅因为它鼓励老板一意孤行。“科学证明，即使一个人是该领域最聪明的人，三个人在解决问题上也会比一个人更好。” 为了证明他的观点，Cialdini引用了分子生物学家James Watson（詹姆斯·沃森）的采访。沃森与弗朗西斯·克里克（Francis Crick）一起发现了DNA的结构，DNA是所有活着的生物体的遗传信息载体。当被问及他们是如何领先众多高水平的竞争者破解密码时，他说了一些令我震惊的东西。他说，他和克里克之所以成功，是因为他们意识到自己并不是追求答案的最聪明的科学家。沃森说，最聪明的科学家叫罗莎琳德·富兰克林（Rosalind Franklin），“他非常聪明，以至于很少寻求他人的建议”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="teamwork">Teamwork</mark> <mark class="vocab-word" data-word="tap">taps</mark> into one of the basic drivers of human behaviour. ‘The principle of social <mark class="vocab-word" data-word="proof">proof</mark> is so <mark class="vocab-word" data-word="pervasive">pervasive</mark> that we don’t even recognise it,’ says Cialdini. ‘If your project is being resisted, for example, by a group of <mark class="vocab-word" data-word="veteran">veteran</mark> employees, ask another <mark class="vocab-word" data-word="old-timer">old-timer</mark> to speak up for it.’ Cialdini is not alone in <mark class="vocab-word" data-word="advocate">advocating</mark> this strategy. Research shows that <mark class="vocab-word" data-word="peer">peer</mark> power, used <mark class="vocab-word" data-word="horizontally">horizontally</mark> not <mark class="vocab-word" data-word="vertical">vertically</mark>, is much more powerful than any boss’s speech.</p></div>  <div class="parallel-zh"><p>团队合作是人类行为的基本动力之一。Cialdini说：“社会认同的原则是如此普遍，以至于我们甚至都没有意识到。” “例如，如果你的项目遭到一群资深员工的抵制，那就争取另一位老员工的支持。” 并非只有Cialdini提倡这种策略。研究表明，水平而非垂直使用的同事权力比任何老板的讲话都强大得多。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Writing, visualising and <mark class="vocab-word" data-word="prototype">prototyping</mark> can <mark class="vocab-word" data-word="stimulate">stimulate</mark> the flow of new ideas. Cialdini <mark class="vocab-word" data-word="cite">cites</mark> scores of research papers and historical events that prove that even something as simple as writing <mark class="vocab-word" data-word="deepen">deepens</mark> every individual’s <mark class="vocab-word" data-word="engagement">engagement</mark> in the project. It is, he says, the reason why all those competitions on breakfast <mark class="vocab-word" data-word="cereal">cereal</mark> <mark class="vocab-word" data-word="packet">packets</mark> encouraged us to write in saying, in no more than 10 words: ‘I like Kellogg’s Corn <mark class="vocab-word" data-word="flake">Flakes</mark> because….’ The very act of writing makes us more likely to believe it.</p></div>  <div class="parallel-zh"><p>写作，想象和原型设计都可以激发新想法。Cialdini引用了许多研究论文和历史事件，证明即使是像写作这样简单的事情也能加深每个人对项目的参与。他说，这就是为什么所有那些早餐麦片包装比赛都鼓励我们用不超过10个词来书写：“我喜欢凯洛格的玉米片是因为……”。写作这一行为使我们更有可能相信它。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="authority">Authority</mark> doesn’t have to <mark class="vocab-word" data-word="inhibit">inhibit</mark> <mark class="vocab-word" data-word="innovation">innovation</mark> but it often does. The wrong kind of leadership will <mark class="vocab-word" data-word="lead">lead</mark> to what Cialdini calls ‘captainitis, the regrettable <mark class="vocab-word" data-word="tendency">tendency</mark> of team members to <mark class="vocab-word" data-word="opt">opt</mark> out of team responsibilities that are properly theirs’. He calls it captainitis because, he says, ‘crew members of multipilot aircraft <mark class="vocab-word" data-word="exhibit">exhibit</mark> a sometimes <mark class="vocab-word" data-word="deadly">deadly</mark> passivity when the flight captain makes a clearly wrong-headed decision’. This behaviour is not, he says, unique to air travel, but can happen in any workplace where the leader is overbearing.</p></div>  <div class="parallel-zh"><p>权威并不一定抑制创新，但却经常如此。错误的领导方式会导致Cialdini称为captainitis的现象。即团队成员推卸本属于他们责任的遗憾趋势。他称之为captainitis是因为“当机长做出错误的决定时，多飞行员的飞机机组有时会表现出一种致命的被动性”。他说，这种行为并非航空业所独有，可能在任何领导者过于专制的工作场所中发生。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At the other end of the scale is the 1980s Memphis design <mark class="vocab-word" data-word="collective">collective</mark>, a group of young designers for whom ‘the only rule was that there were no rules’. This environment encouraged a free <mark class="vocab-word" data-word="interchange">interchange</mark> of ideas, which led to more <mark class="vocab-word" data-word="creativity">creativity</mark> with form, function, colour and materials that revolutionised attitudes to furniture design.</p></div>  <div class="parallel-zh"><p>与之相反的情况是20世纪80年代孟菲斯的设计团队。这是一群年轻的设计师，他们“唯一的规则是没有规则” 。这种环境鼓励思想的自由交流，从而在形式，功能，颜色和材料方面带来了更多的创造性，进而彻底改变了家具设计的理念。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Many theorists believe the ideal boss should <mark class="vocab-word" data-word="lead">lead</mark> from behind, taking pride in <mark class="vocab-word" data-word="collective">collective</mark> accomplishment and giving credit where it is due. Cialdini says: ‘Leaders should encourage everyone to contribute and <mark class="vocab-word" data-word="simultaneously">simultaneously</mark> <mark class="vocab-word" data-word="assure">assure</mark> all <mark class="vocab-word" data-word="concerned">concerned</mark> that every <mark class="vocab-word" data-word="recommendation">recommendation</mark> is important to making the right decision and will be given full attention.’ The <mark class="vocab-word" data-word="frustrating">frustrating</mark> thing about <mark class="vocab-word" data-word="innovation">innovation</mark> is that there are many approaches, but no magic <mark class="vocab-word" data-word="formula">formula</mark>. However, a manager who wants to create a truly <mark class="vocab-word" data-word="innovative">innovative</mark> culture can make their job a lot easier by recognising these <mark class="vocab-word" data-word="psychological">psychological</mark> realities.</p></div>  <div class="parallel-zh"><p>许多理论家认为，理想的老板应该在幕后领导，以集体成就为荣，并在适当的时候给予赞扬。Cialdini说：“领导应鼓励每个人做出贡献，同时向所有有关方面保证，每一项建议对于做出正确决定都是重要的，并将得到充分重视。” 令人沮丧的是，创新有很多方法，但不存在神奇的公式。然而，通过认识到这些心理层面的事实，想要创造真正创新文化的经理可以让自己的工作变得轻松许多。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"innovation": 9, "survival": 1, "substantial": 1, "inspiring": 1, "luxurious": 1, "stimulate": 2, "innovate": 1, "psychology": 1, "recruitment": 1, "circumstance": 1, "story": 2, "fuse": 1, "instinctive": 1, "ambition": 1, "matter": 1, "seize": 1, "invariably": 1, "gamble": 1, "delicate": 1, "feedback": 1, "syndrome": 1, "cite": 2, "molecular": 1, "biologist": 1, "jam": 1, "genetic": 1, "carrier": 1, "organism": 1, "crack": 1, "array": 1, "accomplish": 1, "rival": 1, "intelligent": 2, "teamwork": 1, "tap": 1, "proof": 1, "pervasive": 1, "veteran": 1, "old-timer": 1, "advocate": 1, "peer": 1, "horizontally": 1, "vertical": 1, "prototype": 1, "deepen": 1, "engagement": 1, "cereal": 1, "packet": 1, "flake": 1, "authority": 1, "inhibit": 1, "lead": 2, "tendency": 1, "opt": 1, "exhibit": 1, "deadly": 1, "collective": 2, "interchange": 1, "creativity": 1, "simultaneously": 1, "assure": 1, "concerned": 1, "recommendation": 1, "frustrating": 1, "formula": 1, "innovative": 1, "psychological": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

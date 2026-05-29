@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The White Horse of Uffington 阿芬顿的白马 - 剑桥雅思16 Test 2 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思16</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The White Horse of Uffington 阿芬顿的白马</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/42780.html" target="_blank">https://www.laokaoya.com/42780.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The cutting of huge figures or ‘geoglyphs’ into the earth of English <mark class="vocab-word" data-word="hillside">hillsides</mark> has taken place for more than 3,000 years. There are 56 hill figures <mark class="vocab-word" data-word="scatter">scattered</mark> around England, with the vast majority on the <mark class="vocab-word" data-word="chalk">chalk</mark> downlands of the country’s southern counties. The figures include giants, horses, <mark class="vocab-word" data-word="cross">crosses</mark> and regimental <mark class="vocab-word" data-word="badge">badges</mark>. Although the majority of these geoglyphs date within the last 300 years or so, there are one or two that are much older.</p><p>The most famous of these figures is perhaps also the most <mark class="vocab-word" data-word="mysterious">mysterious</mark> – the Uffington White Horse in Oxfordshire. The White Horse has recently been re-dated and shown to be even older than its previously <mark class="vocab-word" data-word="assign">assigned</mark> ancient pre-Roman Iron Age date. More <mark class="vocab-word" data-word="controversial">controversial</mark> is the date of the enigmatic Long Man of Wilmington in Sussex. While many <mark class="vocab-word" data-word="historian">historians</mark> are <mark class="vocab-word" data-word="convince">convinced</mark> the figure is <mark class="vocab-word" data-word="prehistoric">prehistoric</mark>, others believe that it was the work of an artistic <mark class="vocab-word" data-word="monk">monk</mark> from a nearby priory and was created between the 11th and 15th centuries.</p><p>The method of cutting these huge figures was simply to remove the overlying grass to <mark class="vocab-word" data-word="reveal">reveal</mark> the <mark class="vocab-word" data-word="gleam">gleaming</mark> white <mark class="vocab-word" data-word="chalk">chalk</mark> below. However, the grass would soon grow over the geoglyph again unless it was regularly cleaned or <mark class="vocab-word" data-word="scour">scoured</mark> by a fairly large team of people. One reason that the vast majority of hill figures have disappeared is that when the traditions associated with the figures <mark class="vocab-word" data-word="fade">faded</mark>, people no longer bothered or remembered to clear away the grass to expose the <mark class="vocab-word" data-word="chalk">chalk</mark> outline. Furthermore, over hundreds of years the outlines would sometimes change due to people not always cutting in exactly the same place, thus creating a different shape to the original geoglyph. The fact that any ancient hill figures survive at all in England today is testament to the strength and <mark class="vocab-word" data-word="continuity">continuity</mark> of local customs and beliefs which, in one case at least, must stretch back over millennia.</p><p>The Uffington White Horse is a unique, stylised <mark class="vocab-word" data-word="representation">representation</mark> of a horse consisting of a long, <mark class="vocab-word" data-word="sleek">sleek</mark> back, thin disjointed legs, a streaming tail, and a bird-like <mark class="vocab-word" data-word="beak">beaked</mark> head. The <mark class="vocab-word" data-word="elegant">elegant</mark> creature almost <mark class="vocab-word" data-word="melt">melts</mark> into the landscape. The horse is <mark class="vocab-word" data-word="situated">situated</mark> 2.5 km from Uffington village on a <mark class="vocab-word" data-word="steep">steep</mark> <mark class="vocab-word" data-word="slope">slope</mark> close to the Late <mark class="vocab-word" data-word="bronze">Bronze</mark> Age (c. 7th century BCE) hillfort of Uffington Castle and below the Ridgeway, a long-distance <mark class="vocab-word" data-word="neolithic">Neolithic</mark> track.</p><p>The Uffington Horse is also surrounded by <mark class="vocab-word" data-word="bronze">Bronze</mark> Age <mark class="vocab-word" data-word="burial">burial</mark> <mark class="vocab-word" data-word="mound">mounds</mark>. It is not far from the <mark class="vocab-word" data-word="bronze">Bronze</mark> Age <mark class="vocab-word" data-word="cemetery">cemetery</mark> of Lambourn Seven Barrows, which consists of more than 30 well-preserved <mark class="vocab-word" data-word="burial">burial</mark> <mark class="vocab-word" data-word="mound">mounds</mark>. The <mark class="vocab-word" data-word="carve">carving</mark> has been placed in such a way as to make it extremely difficult to see from close <mark class="vocab-word" data-word="quarter">quarters</mark>, and like many geoglyphs is best appreciated from the air. This article is from  website. Nevertheless, there are certain areas of the Vale of the White Horse, the valley containing and named after the enigmatic creature, from which an <mark class="vocab-word" data-word="adequate">adequate</mark> impression may be gained. Indeed on a clear day the <mark class="vocab-word" data-word="carve">carving</mark> can be seen from up to 30 km away.</p><p>The earliest evidence of a horse at Uffington is from the 1070s CE when ‘White Horse Hill’ is mentioned in documents from the nearby Abbey of Abingdon, and the first reference to the horse itself is soon after, in 1190 CE. However, the <mark class="vocab-word" data-word="carve">carving</mark> is believed to date back much further than that. Due to the <mark class="vocab-word" data-word="similarity">similarity</mark> of the Uffington White Horse to the stylised depictions of horses on 1st century BCE coins, it had been thought that the creature must also date to that period.</p><p>However, in 1995 <mark class="vocab-word" data-word="optical">Optically</mark> <mark class="vocab-word" data-word="stimulate">Stimulated</mark> Luminescence (OSL) testing was carried out by the Oxford Archaeological Unit on soil from two of the lower layers of the horse’s body, and from another cut near the base. The result was a date for the horse’s construction somewhere between 1400 and 600 BCE – in other words, it had a Late <mark class="vocab-word" data-word="bronze">Bronze</mark> Age or Early Iron Age origin …</p><p>The <mark class="vocab-word" data-word="latter">latter</mark> end of this date range would tie the <mark class="vocab-word" data-word="carve">carving</mark> of the horse in with <mark class="vocab-word" data-word="occupation">occupation</mark> of the nearby Uffington hillfort, indicating that it may represent a <mark class="vocab-word" data-word="tribal">tribal</mark> <mark class="vocab-word" data-word="emblem">emblem</mark> marking the land of the <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> of the hillfort. <mark class="vocab-word" data-word="alternatively">Alternatively</mark>, the <mark class="vocab-word" data-word="carve">carving</mark> may have been carried out during a <mark class="vocab-word" data-word="bronze">Bronze</mark> or Iron Age <mark class="vocab-word" data-word="ritual">ritual</mark>. Some researchers see the horse as representing the Celtic horse goddess Epona, who was worshipped as a protector of horses, and for her associations with fertility. However, the <mark class="vocab-word" data-word="cult">cult</mark> of Epona was not imported from Gaul (France) until around the first century CE. This date is at least six centuries after the Uffington Horse was probably <mark class="vocab-word" data-word="carve">carved</mark>. Nevertheless, the horse had great <mark class="vocab-word" data-word="ritual">ritual</mark> and economic <mark class="vocab-word" data-word="significance">significance</mark> during the <mark class="vocab-word" data-word="bronze">Bronze</mark> and Iron Ages, as <mark class="vocab-word" data-word="attest">attested</mark> by its depictions on jewellery and other metal objects. It is possible that the <mark class="vocab-word" data-word="carve">carving</mark> represents a goddess in native <mark class="vocab-word" data-word="mythology">mythology</mark>, such as Rhiannon, described in later Welsh <mark class="vocab-word" data-word="mythology">mythology</mark> as beautiful woman dressed in gold and riding a white horse.</p><p>The fact that geoglyphs can disappear easily, along with their associated <mark class="vocab-word" data-word="ritual">rituals</mark> and meaning, indicates that they were never intended to be anything more than temporary <mark class="vocab-word" data-word="gesture">gestures</mark>. But this does not <mark class="vocab-word" data-word="lessen">lessen</mark> their importance. These giant carvings are a <mark class="vocab-word" data-word="fascinating">fascinating</mark> <mark class="vocab-word" data-word="glimpse">glimpse</mark> into the minds of their creators and how they viewed the landscape in which they lived.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在英格兰山坡上雕刻巨大的图形（地雕）已经有超过3000年的历史。如今英格兰各地分布着56幅山地图形，大多数都位于该国南部的白垩丘陵地带。这些图形包括巨人，马，十字，以及团队徽章。虽然这些地雕大多数都是在近300年里造就的，但也有那么一两个的历史要久远许多。</p><p>这些图形中最著名、或许也是最具有神秘色彩的是位于牛津郡的阿芬顿白马。白马最近被重新测定了年代，结果表明它的历史比之前认为的古代前罗马铁器时代还要久远。更加具有争议的创作时间是位于苏赛克斯的威明顿巨人。虽然许多历史学家认为该图形出现于有文字记载之前，但其他人认为它是附近修道院一名艺术僧侣的作品，大约创作于11世纪到15世纪之间。</p><p>切割这些巨型图形的方法十分简单，只用移除表面覆盖的植被，显露下面的白垩石就好。然而，除非有相对大型的团队进行周期性清理或者冲刷，杂草很快就会再长出来遮盖住地雕。大多数山地图形消失的原因就在于，当与其相关的传统逐渐没落时，人们不再想费力或者不再记得清除杂草以显露出白垩轮廓。此外，在几百年的时间里，其轮廓有时会因为人们并不总是在相同的地方进行清理而发生变化，由此造成与最初地雕不同的形状。英格兰地区任何存留至今的古代山地图形都展示了当地习俗与信仰的力量和连续性。至少在某一副地雕中，这些习俗和信仰可以追溯到1000多年前。</p><p>阿芬顿白马是一副独特的、非写实的作品，包括线条流畅的长脊背、纤细分离的马腿、飘逸的尾巴、以及如同鸟儿一般有喙的头部。这一优雅的生物几乎融入到景色之中。马儿距阿芬顿2.5公里远，位于陡峭的山坡上，靠近青铜时代晚期的阿芬顿hillfort，在一条悠长的新石器时代小径（Ridgeway）之下。</p><p>阿芬顿白马被大量青铜时代的墓穴环绕着。它离Lambourn Seven Barrows的青铜时代墓地不远。该墓地包括30多个保存完好的坟丘。该图形的陈列方式让它很难在近处看到，跟许多地雕一样，最好是从空中欣赏。然而，白马谷有一些地方可以看到相对完整的图像。天气晴朗的时候，30公里外就可以看到该雕像。</p><p>阿芬顿马儿的最早证据来自于公元11世纪70年代。当时附近的阿宾顿修道院的文档里第一次提到了“白马山丘”的名字。不久之后（公元1190年），马儿自己也被第一次提到。然而，人们认为这一图雕的历史可以追溯到很久之前。由于阿芬顿白马与公元前1世纪发行的硬币上马儿的简笔形象十分类似，人们认为，该生物也一定是那个年代的。</p><p>然而，1995年牛津考古队对马儿身体下方的两处土层，以及底部附近的土层进行了光释光测试。结果表明，马儿的刻画时间位于公元前1400年到公元前600年之间。换句话说，它出现于青铜时代晚期或者铁器时代初期。</p><p>这一时间区间的末尾会将马儿的刻画与附近阿芬顿hillfort的占据联系起来，说明它可能代表部落的徽记，标注这是hillfort居民的土地。除此之外，该图形也有可能是在青铜时代或者铁器时代的仪式中被刻画出来的。一些研究者认为马儿代表了凯尔特人的马神Epona。它作为马儿的保护者，并因为与生育的联系而接受人们的朝拜。然而，Epona崇拜直到公元1世纪才从高卢（法国）引入进来。这一时间相比于阿芬顿马儿可能出现的时间至少晚了六个世纪。不过，马儿在青铜时代和铁器时代有着很重要的仪式意义和经济意义。这一点可以通过珠宝与其他金属物品上的描绘得到证明。这一图形有可能代表了本土神话中的神袛，例如来安诺。她在随后的威尔士神话中被描绘成一位穿着金衣，骑着白马的漂亮女性。</p><p>地雕容易消失的事实，再加上与之相连的仪式和意义表明它们只是被当作暂时的姿态而已。但这并没有削弱它们的重要性。这些巨幅画作让我们得以窥视其创作者的思想以及他们如何看到自己生活的环境。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The cutting of huge figures or ‘geoglyphs’ into the earth of English <mark class="vocab-word" data-word="hillside">hillsides</mark> has taken place for more than 3,000 years. There are 56 hill figures <mark class="vocab-word" data-word="scatter">scattered</mark> around England, with the vast majority on the <mark class="vocab-word" data-word="chalk">chalk</mark> downlands of the country’s southern counties. The figures include giants, horses, <mark class="vocab-word" data-word="cross">crosses</mark> and regimental <mark class="vocab-word" data-word="badge">badges</mark>. Although the majority of these geoglyphs date within the last 300 years or so, there are one or two that are much older.</p></div>  <div class="parallel-zh"><p>在英格兰山坡上雕刻巨大的图形（地雕）已经有超过3000年的历史。如今英格兰各地分布着56幅山地图形，大多数都位于该国南部的白垩丘陵地带。这些图形包括巨人，马，十字，以及团队徽章。虽然这些地雕大多数都是在近300年里造就的，但也有那么一两个的历史要久远许多。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The most famous of these figures is perhaps also the most <mark class="vocab-word" data-word="mysterious">mysterious</mark> – the Uffington White Horse in Oxfordshire. The White Horse has recently been re-dated and shown to be even older than its previously <mark class="vocab-word" data-word="assign">assigned</mark> ancient pre-Roman Iron Age date. More <mark class="vocab-word" data-word="controversial">controversial</mark> is the date of the enigmatic Long Man of Wilmington in Sussex. While many <mark class="vocab-word" data-word="historian">historians</mark> are <mark class="vocab-word" data-word="convince">convinced</mark> the figure is <mark class="vocab-word" data-word="prehistoric">prehistoric</mark>, others believe that it was the work of an artistic <mark class="vocab-word" data-word="monk">monk</mark> from a nearby priory and was created between the 11th and 15th centuries.</p></div>  <div class="parallel-zh"><p>这些图形中最著名、或许也是最具有神秘色彩的是位于牛津郡的阿芬顿白马。白马最近被重新测定了年代，结果表明它的历史比之前认为的古代前罗马铁器时代还要久远。更加具有争议的创作时间是位于苏赛克斯的威明顿巨人。虽然许多历史学家认为该图形出现于有文字记载之前，但其他人认为它是附近修道院一名艺术僧侣的作品，大约创作于11世纪到15世纪之间。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The method of cutting these huge figures was simply to remove the overlying grass to <mark class="vocab-word" data-word="reveal">reveal</mark> the <mark class="vocab-word" data-word="gleam">gleaming</mark> white <mark class="vocab-word" data-word="chalk">chalk</mark> below. However, the grass would soon grow over the geoglyph again unless it was regularly cleaned or <mark class="vocab-word" data-word="scour">scoured</mark> by a fairly large team of people. One reason that the vast majority of hill figures have disappeared is that when the traditions associated with the figures <mark class="vocab-word" data-word="fade">faded</mark>, people no longer bothered or remembered to clear away the grass to expose the <mark class="vocab-word" data-word="chalk">chalk</mark> outline. Furthermore, over hundreds of years the outlines would sometimes change due to people not always cutting in exactly the same place, thus creating a different shape to the original geoglyph. The fact that any ancient hill figures survive at all in England today is testament to the strength and <mark class="vocab-word" data-word="continuity">continuity</mark> of local customs and beliefs which, in one case at least, must stretch back over millennia.</p></div>  <div class="parallel-zh"><p>切割这些巨型图形的方法十分简单，只用移除表面覆盖的植被，显露下面的白垩石就好。然而，除非有相对大型的团队进行周期性清理或者冲刷，杂草很快就会再长出来遮盖住地雕。大多数山地图形消失的原因就在于，当与其相关的传统逐渐没落时，人们不再想费力或者不再记得清除杂草以显露出白垩轮廓。此外，在几百年的时间里，其轮廓有时会因为人们并不总是在相同的地方进行清理而发生变化，由此造成与最初地雕不同的形状。英格兰地区任何存留至今的古代山地图形都展示了当地习俗与信仰的力量和连续性。至少在某一副地雕中，这些习俗和信仰可以追溯到1000多年前。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Uffington White Horse is a unique, stylised <mark class="vocab-word" data-word="representation">representation</mark> of a horse consisting of a long, <mark class="vocab-word" data-word="sleek">sleek</mark> back, thin disjointed legs, a streaming tail, and a bird-like <mark class="vocab-word" data-word="beak">beaked</mark> head. The <mark class="vocab-word" data-word="elegant">elegant</mark> creature almost <mark class="vocab-word" data-word="melt">melts</mark> into the landscape. The horse is <mark class="vocab-word" data-word="situated">situated</mark> 2.5 km from Uffington village on a <mark class="vocab-word" data-word="steep">steep</mark> <mark class="vocab-word" data-word="slope">slope</mark> close to the Late <mark class="vocab-word" data-word="bronze">Bronze</mark> Age (c. 7th century BCE) hillfort of Uffington Castle and below the Ridgeway, a long-distance <mark class="vocab-word" data-word="neolithic">Neolithic</mark> track.</p></div>  <div class="parallel-zh"><p>阿芬顿白马是一副独特的、非写实的作品，包括线条流畅的长脊背、纤细分离的马腿、飘逸的尾巴、以及如同鸟儿一般有喙的头部。这一优雅的生物几乎融入到景色之中。马儿距阿芬顿2.5公里远，位于陡峭的山坡上，靠近青铜时代晚期的阿芬顿hillfort，在一条悠长的新石器时代小径（Ridgeway）之下。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Uffington Horse is also surrounded by <mark class="vocab-word" data-word="bronze">Bronze</mark> Age <mark class="vocab-word" data-word="burial">burial</mark> <mark class="vocab-word" data-word="mound">mounds</mark>. It is not far from the <mark class="vocab-word" data-word="bronze">Bronze</mark> Age <mark class="vocab-word" data-word="cemetery">cemetery</mark> of Lambourn Seven Barrows, which consists of more than 30 well-preserved <mark class="vocab-word" data-word="burial">burial</mark> <mark class="vocab-word" data-word="mound">mounds</mark>. The <mark class="vocab-word" data-word="carve">carving</mark> has been placed in such a way as to make it extremely difficult to see from close <mark class="vocab-word" data-word="quarter">quarters</mark>, and like many geoglyphs is best appreciated from the air. This article is from  website. Nevertheless, there are certain areas of the Vale of the White Horse, the valley containing and named after the enigmatic creature, from which an <mark class="vocab-word" data-word="adequate">adequate</mark> impression may be gained. Indeed on a clear day the <mark class="vocab-word" data-word="carve">carving</mark> can be seen from up to 30 km away.</p></div>  <div class="parallel-zh"><p>阿芬顿白马被大量青铜时代的墓穴环绕着。它离Lambourn Seven Barrows的青铜时代墓地不远。该墓地包括30多个保存完好的坟丘。该图形的陈列方式让它很难在近处看到，跟许多地雕一样，最好是从空中欣赏。然而，白马谷有一些地方可以看到相对完整的图像。天气晴朗的时候，30公里外就可以看到该雕像。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The earliest evidence of a horse at Uffington is from the 1070s CE when ‘White Horse Hill’ is mentioned in documents from the nearby Abbey of Abingdon, and the first reference to the horse itself is soon after, in 1190 CE. However, the <mark class="vocab-word" data-word="carve">carving</mark> is believed to date back much further than that. Due to the <mark class="vocab-word" data-word="similarity">similarity</mark> of the Uffington White Horse to the stylised depictions of horses on 1st century BCE coins, it had been thought that the creature must also date to that period.</p></div>  <div class="parallel-zh"><p>阿芬顿马儿的最早证据来自于公元11世纪70年代。当时附近的阿宾顿修道院的文档里第一次提到了“白马山丘”的名字。不久之后（公元1190年），马儿自己也被第一次提到。然而，人们认为这一图雕的历史可以追溯到很久之前。由于阿芬顿白马与公元前1世纪发行的硬币上马儿的简笔形象十分类似，人们认为，该生物也一定是那个年代的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, in 1995 <mark class="vocab-word" data-word="optical">Optically</mark> <mark class="vocab-word" data-word="stimulate">Stimulated</mark> Luminescence (OSL) testing was carried out by the Oxford Archaeological Unit on soil from two of the lower layers of the horse’s body, and from another cut near the base. The result was a date for the horse’s construction somewhere between 1400 and 600 BCE – in other words, it had a Late <mark class="vocab-word" data-word="bronze">Bronze</mark> Age or Early Iron Age origin …</p></div>  <div class="parallel-zh"><p>然而，1995年牛津考古队对马儿身体下方的两处土层，以及底部附近的土层进行了光释光测试。结果表明，马儿的刻画时间位于公元前1400年到公元前600年之间。换句话说，它出现于青铜时代晚期或者铁器时代初期。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="latter">latter</mark> end of this date range would tie the <mark class="vocab-word" data-word="carve">carving</mark> of the horse in with <mark class="vocab-word" data-word="occupation">occupation</mark> of the nearby Uffington hillfort, indicating that it may represent a <mark class="vocab-word" data-word="tribal">tribal</mark> <mark class="vocab-word" data-word="emblem">emblem</mark> marking the land of the <mark class="vocab-word" data-word="inhabitant">inhabitants</mark> of the hillfort. <mark class="vocab-word" data-word="alternatively">Alternatively</mark>, the <mark class="vocab-word" data-word="carve">carving</mark> may have been carried out during a <mark class="vocab-word" data-word="bronze">Bronze</mark> or Iron Age <mark class="vocab-word" data-word="ritual">ritual</mark>. Some researchers see the horse as representing the Celtic horse goddess Epona, who was worshipped as a protector of horses, and for her associations with fertility. However, the <mark class="vocab-word" data-word="cult">cult</mark> of Epona was not imported from Gaul (France) until around the first century CE. This date is at least six centuries after the Uffington Horse was probably <mark class="vocab-word" data-word="carve">carved</mark>. Nevertheless, the horse had great <mark class="vocab-word" data-word="ritual">ritual</mark> and economic <mark class="vocab-word" data-word="significance">significance</mark> during the <mark class="vocab-word" data-word="bronze">Bronze</mark> and Iron Ages, as <mark class="vocab-word" data-word="attest">attested</mark> by its depictions on jewellery and other metal objects. It is possible that the <mark class="vocab-word" data-word="carve">carving</mark> represents a goddess in native <mark class="vocab-word" data-word="mythology">mythology</mark>, such as Rhiannon, described in later Welsh <mark class="vocab-word" data-word="mythology">mythology</mark> as beautiful woman dressed in gold and riding a white horse.</p></div>  <div class="parallel-zh"><p>这一时间区间的末尾会将马儿的刻画与附近阿芬顿hillfort的占据联系起来，说明它可能代表部落的徽记，标注这是hillfort居民的土地。除此之外，该图形也有可能是在青铜时代或者铁器时代的仪式中被刻画出来的。一些研究者认为马儿代表了凯尔特人的马神Epona。它作为马儿的保护者，并因为与生育的联系而接受人们的朝拜。然而，Epona崇拜直到公元1世纪才从高卢（法国）引入进来。这一时间相比于阿芬顿马儿可能出现的时间至少晚了六个世纪。不过，马儿在青铜时代和铁器时代有着很重要的仪式意义和经济意义。这一点可以通过珠宝与其他金属物品上的描绘得到证明。这一图形有可能代表了本土神话中的神袛，例如来安诺。她在随后的威尔士神话中被描绘成一位穿着金衣，骑着白马的漂亮女性。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The fact that geoglyphs can disappear easily, along with their associated <mark class="vocab-word" data-word="ritual">rituals</mark> and meaning, indicates that they were never intended to be anything more than temporary <mark class="vocab-word" data-word="gesture">gestures</mark>. But this does not <mark class="vocab-word" data-word="lessen">lessen</mark> their importance. These giant carvings are a <mark class="vocab-word" data-word="fascinating">fascinating</mark> <mark class="vocab-word" data-word="glimpse">glimpse</mark> into the minds of their creators and how they viewed the landscape in which they lived.</p></div>  <div class="parallel-zh"><p>地雕容易消失的事实，再加上与之相连的仪式和意义表明它们只是被当作暂时的姿态而已。但这并没有削弱它们的重要性。这些巨幅画作让我们得以窥视其创作者的思想以及他们如何看到自己生活的环境。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"hillside": 1, "scatter": 1, "chalk": 3, "cross": 1, "badge": 1, "mysterious": 1, "assign": 1, "controversial": 1, "historian": 1, "convince": 1, "prehistoric": 1, "monk": 1, "reveal": 1, "gleam": 1, "scour": 1, "fade": 1, "continuity": 1, "representation": 1, "sleek": 1, "beak": 1, "elegant": 1, "melt": 1, "situated": 1, "steep": 1, "slope": 1, "bronze": 6, "neolithic": 1, "burial": 2, "mound": 2, "cemetery": 1, "carve": 7, "quarter": 1, "adequate": 1, "similarity": 1, "optical": 1, "stimulate": 1, "latter": 1, "occupation": 1, "tribal": 1, "emblem": 1, "inhabitant": 1, "alternatively": 1, "ritual": 3, "cult": 1, "significance": 1, "attest": 1, "mythology": 2, "gesture": 1, "lessen": 1, "fascinating": 1, "glimpse": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

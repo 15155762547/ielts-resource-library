@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivating Employees under Adverse Conditions - 剑桥雅思6 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思6</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Motivating Employees under Adverse Conditions</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/23683.html" target="_blank">https://www.laokaoya.com/23683.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>It is a great deal easier to <mark class="vocab-word" data-word="motivate">motivate</mark> employees in a growing organisation than a declining one. When organisations are expanding and adding <mark class="vocab-word" data-word="personnel">personnel</mark>, promotional opportunities, pay rises, and the excitement of being associated with a <mark class="vocab-word" data-word="dynamic">dynamic</mark> organisation create feelings of <mark class="vocab-word" data-word="optimism">optimism</mark>. Management is able to use the growth to <mark class="vocab-word" data-word="entice">entice</mark> and encourage employees. When an organisation is <mark class="vocab-word" data-word="shrink">shrinking</mark>, the best and most mobile workers are <mark class="vocab-word" data-word="prone">prone</mark> to leave <mark class="vocab-word" data-word="voluntarily">voluntarily</mark>. <mark class="vocab-word" data-word="unfortunate">Unfortunately</mark>, they are the ones the organisation can least afford to lose – those with the highest skills and experience. The minor employees remain because their job options are limited.</p><p><mark class="vocab-word" data-word="morale">Morale</mark> also suffers during decline. People fear they may be the next to be made <mark class="vocab-word" data-word="redundant">redundant</mark>. <mark class="vocab-word" data-word="productivity">Productivity</mark> often suffers, as employees spend their time sharing rumours and providing one another with moral support rather than focusing on their jobs. For those whose jobs are secure, pay increases are rarely possible. Pay cuts, unheard of during times of growth, may even be <mark class="vocab-word" data-word="impose">imposed</mark>. The challenge to management is how to <mark class="vocab-word" data-word="motivate">motivate</mark> employees under such <mark class="vocab-word" data-word="retrenchment">retrenchment</mark> conditions. The ways of meeting this challenge can be broadly divided into six Key Points, which are outlined below.</p><p>There is an <mark class="vocab-word" data-word="abundance">abundance</mark> of evidence to support the <mark class="vocab-word" data-word="motivational">motivational</mark> benefits that result from carefully <mark class="vocab-word" data-word="matching">matching</mark> people to jobs. For example, if the job is running a small business or an <mark class="vocab-word" data-word="autonomous">autonomous</mark> unit within a larger business, high <mark class="vocab-word" data-word="achiever">achievers</mark> should be sought. However, if the job to be filled is a <mark class="vocab-word" data-word="managerial">managerial</mark> post in a large bureaucratic organisation, a <mark class="vocab-word" data-word="candidate">candidate</mark> who has a high need for power and a low need for affiliation should be selected. <mark class="vocab-word" data-word="accordingly">Accordingly</mark>, high <mark class="vocab-word" data-word="achiever">achievers</mark> should not be put into jobs that are inconsistent with their needs. High <mark class="vocab-word" data-word="achiever">achievers</mark> will do best when the job provides <mark class="vocab-word" data-word="moderately">moderately</mark> <mark class="vocab-word" data-word="challenging">challenging</mark> goals and where there is <mark class="vocab-word" data-word="independence">independence</mark> and <mark class="vocab-word" data-word="feedback">feedback</mark>. However, it should be remembered that not everybody is <mark class="vocab-word" data-word="motivated">motivated</mark> by jobs that are high in <mark class="vocab-word" data-word="independence">independence</mark>, variety and responsibility.</p><p>The literature on goal-setting theory <mark class="vocab-word" data-word="suggest">suggests</mark> that managers should ensure that all employees have specific goals and receive comments on how well they are doing in those goals. For those with high achievement needs, typically a minority in any organisation, the existence of <mark class="vocab-word" data-word="external">external</mark> goals is less important because high <mark class="vocab-word" data-word="achiever">achievers</mark> are already internally <mark class="vocab-word" data-word="motivated">motivated</mark>. The next <mark class="vocab-word" data-word="factor">factor</mark> to be <mark class="vocab-word" data-word="determined">determined</mark> is whether the goals should be <mark class="vocab-word" data-word="assign">assigned</mark> by a manager or <mark class="vocab-word" data-word="collective">collectively</mark> set in <mark class="vocab-word" data-word="conjunction">conjunction</mark> with the employees. The answer to that depends on <mark class="vocab-word" data-word="perception">perceptions</mark> of goal <mark class="vocab-word" data-word="acceptance">acceptance</mark> and the organisation’s culture. If <mark class="vocab-word" data-word="resistance">resistance</mark> to goals is expected, the use of <mark class="vocab-word" data-word="participation">participation</mark> in goal-setting should increase <mark class="vocab-word" data-word="acceptance">acceptance</mark>. If <mark class="vocab-word" data-word="participation">participation</mark> is inconsistent with the culture, however, goals should be <mark class="vocab-word" data-word="assign">assigned</mark>. If <mark class="vocab-word" data-word="participation">participation</mark> and the culture are <mark class="vocab-word" data-word="incongruous">incongruous</mark>, employees are likely to <mark class="vocab-word" data-word="perceive">perceive</mark> the <mark class="vocab-word" data-word="participation">participation</mark> process as <mark class="vocab-word" data-word="manipulative">manipulative</mark> and be <mark class="vocab-word" data-word="negative">negatively</mark> affected by it.</p><p><mark class="vocab-word" data-word="regardless">Regardless</mark> of whether goals are achievable or well within management’s <mark class="vocab-word" data-word="perception">perceptions</mark> of the employee’s ability, if employees see them as unachievable they will reduce their effort. Managers must be sure, therefore, that employees feel confident that their efforts can <mark class="vocab-word" data-word="lead">lead</mark> to performance goals. For managers, this means that employees must have the capability of doing the job and must regard the <mark class="vocab-word" data-word="appraisal">appraisal</mark> process as <mark class="vocab-word" data-word="valid">valid</mark>.</p><p>Since employees have different needs, what acts as a <mark class="vocab-word" data-word="reinforcement">reinforcement</mark> for one may not for another. Managers could use their knowledge of each employee to personalise the rewards over which they have control. Some of the more obvious rewards that managers <mark class="vocab-word" data-word="allocate">allocate</mark> include pay, <mark class="vocab-word" data-word="promotion">promotions</mark>, <mark class="vocab-word" data-word="autonomy">autonomy</mark>, job <mark class="vocab-word" data-word="scope">scope</mark> and depth, and the opportunity to participate in goal-setting and decision-making.</p><p>Managers need to make rewards <mark class="vocab-word" data-word="contingent">contingent</mark> on performance. To reward <mark class="vocab-word" data-word="factor">factors</mark> other than performance will only <mark class="vocab-word" data-word="reinforce">reinforce</mark> those other <mark class="vocab-word" data-word="factor">factors</mark>. Key rewards such as pay increases and <mark class="vocab-word" data-word="promotion">promotions</mark> or advancements should be <mark class="vocab-word" data-word="allocate">allocated</mark> for the <mark class="vocab-word" data-word="attainment">attainment</mark> of the employee’s specific goals. Consistent with maximising the <mark class="vocab-word" data-word="impact">impact</mark> of rewards, managers should look for ways to increase their visibility. <mark class="vocab-word" data-word="eliminate">Eliminating</mark> the <mark class="vocab-word" data-word="secrecy">secrecy</mark> <mark class="vocab-word" data-word="surrounding">surrounding</mark> pay by openly communicating everyone’s <mark class="vocab-word" data-word="remuneration">remuneration</mark>, publicising performance <mark class="vocab-word" data-word="bonus">bonuses</mark> and <mark class="vocab-word" data-word="allocate">allocating</mark> annual salary increases in a <mark class="vocab-word" data-word="lump">lump</mark> sum rather than spreading them out over an entire year are examples of <mark class="vocab-word" data-word="action">actions</mark> that will make rewards more <mark class="vocab-word" data-word="visible">visible</mark> and potentially more <mark class="vocab-word" data-word="motivate">motivating</mark>.</p><p>The way rewards are distributed should be <mark class="vocab-word" data-word="transparent">transparent</mark> so that employees <mark class="vocab-word" data-word="perceive">perceive</mark> that rewards or outcomes are <mark class="vocab-word" data-word="equitable">equitable</mark> and equal to the inputs given. On a <mark class="vocab-word" data-word="simplistic">simplistic</mark> level, experience, abilities, effort and other obvious inputs should explain differences in pay, responsibility and other obvious outcomes. The problem, however, is <mark class="vocab-word" data-word="complicated">complicated</mark> by the existence of dozens of inputs and outcomes and by the fact that employee groups place different degrees of importance on them. For instance, a study comparing <mark class="vocab-word" data-word="clerical">clerical</mark> and production workers identified nearly twenty inputs and outcomes. The <mark class="vocab-word" data-word="clerical">clerical</mark> workers considered <mark class="vocab-word" data-word="factor">factors</mark> such as quality of work <mark class="vocab-word" data-word="perform">performed</mark> and job knowledge near the top of their list, but these were at the bottom of the production workers’ list. Similarly, production workers thought that the most important inputs were intelligence and personal <mark class="vocab-word" data-word="involvement">involvement</mark> with task accomplishment, two <mark class="vocab-word" data-word="factor">factors</mark> that were quite low in the importance ratings of the <mark class="vocab-word" data-word="clerk">clerks</mark>. There were also important, though less dramatic, differences on the outcome side. For example, production workers rated advancement very highly, whereas <mark class="vocab-word" data-word="clerical">clerical</mark> workers rated advancement in the lower third of their list. Such findings <mark class="vocab-word" data-word="suggest">suggest</mark> that one person’s <mark class="vocab-word" data-word="equity">equity</mark> is another’s inequity, so an ideal should probably weigh different inputs and outcomes <mark class="vocab-word" data-word="accord">according</mark> to employee group.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在成长中的组织中激励员工要比在衰落中的组织这么做容易得多。当组织不断壮大并增加人员时，晋升机会，加薪以及与充满活力的组织相关联的兴奋会产生乐观的感觉。管理层能够利用这一增长来吸引和鼓励员工。当组织机构萎缩时，最优秀，流动性最好的员工往往会自愿离开。不幸的是，他们是组织最无法承受的损失-具有最好技能和经验的人。次要的雇员留下是因为他们的工作选择有限。</p><p>士气在衰落期间也遭受苦难。人们担心他们可能会成为下一个多余的人。由于员工将大部分时间用于传播谣言并相互提供道德支持，而不是专注于工作，因此生产力通常会受到影响。对于那些工作稳定的人来说，加薪几乎不可能。甚至还可能实行降薪，这在增长时期闻所未闻。管理人员面临的挑战是如何在这种紧缩的条件下激励员工。应对挑战的方法大致可分为六个关键点，概述如下。</p><p>有充分的证据支持将人们精心匹配工作所产生的动机收益。例如，如果工作是经营小型企业或大型企业中的自主部门，则应寻求高成就者。但是，如果要担任的职务是大型官僚组织中的管理职位，则应选择对权力有较高要求而对隶属关系需求不大的候选人。因此，高成就者不应从事与其需求不一致的工作。当工作提供中等难度的目标且有独立性和反馈时，高成就者将会做到最好。但是，应该记住，并不是每个人都会受到独立性，多样性和责任感高的工作的激励。</p><p>关于目标设定理论的文献表明，管理者应确保所有员工都有特定的目标，并接受有关他们在这些目标中 表现的评价。对于那些具有较高成就要求的人（任何组织中的少数派），外部目标的存在不那么重要，因为高成就者往往已经具有内部动机。下一个要确定的因素是目标应该由经理分配还是与员工共同设定。答案取决于目标接受度和组织文化。如果对目标可能存在抵触，那么参与目标制定会增加接受度。但是，如果参与与公司文化不一致，则应指定目标。因为如果参与和公司文化不匹配，则员工可能会认为参与过程受到操控，并因此受到负面影响。</p><p>无论目标是否可以实现，或者是否在管理层对员工能力的认知之内，如果员工认为目标无法实现，他们将减少工作量。因此，管理人员必须确保员工对自己通过努力能够实现绩效目标充满信心。对于管理人员来说，这意味着员工必须具有完成工作的能力，并且必须认为评估过程是有效的。</p><p>由于员工有不同的需求，因此对一个人的激励可能不适合另外一个人。管理人员可以利用他们对每个员工的了解来个性化他们所控制的奖励。管理人员分配的一些显而易见的奖励包括薪资，晋升，自主权，工作范围和深度，以及参与目标设定和决策的机会。</p><p>管理人员需要根据绩效来给予奖励。奖励绩效以外的其他因素只会增强这些因素。应根据员工是否实现特定目标来给予关键性奖励，如加薪和晋升。与最大程度地发挥奖励的作用相一致，管理人员应寻求提高可见度的方法。通过公开地交流每个人的薪酬，公布绩效奖金并一次性分配年薪增长而不是将其分摊到整个年度中，消除围绕工资的保密性。这些举动将使奖励更加显眼并且可能更具激励作用。</p><p>奖励的分配方式应该保持透明，以便员工认为奖励或成果是公正的，与投入相当。简单来说，经验、能力、努力和其他明显的投入应该足以解释薪酬、责任和其他明显成果的差异。但是，由于存在数十种投入和成果以及员工群体对它们的重视程度不同，这一问题其实非常复杂。例如，一项比较办公职员和生产工人的研究确定了近二十种投入和成果。办公职员将诸如工作质量和工作知识之类的因素放在他们的列表的顶部，但是这些因素却在生产工人列表的底部。同样，生产工人认为最重要的投入是智力和完成任务的个人参与度，这两个因素在文员的重要等级中都很低。结果方面也存在着重要的差异，尽管没有那么戏剧性。例如，生产工人将晋升列地很高，而文职人员则将晋升放在他们列表的后三分之一处。这些发现表明，一个人的公平意味着另一个人的不公平，因此理想情况下，应该根据员工群体权衡不同的投入和结果。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>It is a great deal easier to <mark class="vocab-word" data-word="motivate">motivate</mark> employees in a growing organisation than a declining one. When organisations are expanding and adding <mark class="vocab-word" data-word="personnel">personnel</mark>, promotional opportunities, pay rises, and the excitement of being associated with a <mark class="vocab-word" data-word="dynamic">dynamic</mark> organisation create feelings of <mark class="vocab-word" data-word="optimism">optimism</mark>. Management is able to use the growth to <mark class="vocab-word" data-word="entice">entice</mark> and encourage employees. When an organisation is <mark class="vocab-word" data-word="shrink">shrinking</mark>, the best and most mobile workers are <mark class="vocab-word" data-word="prone">prone</mark> to leave <mark class="vocab-word" data-word="voluntarily">voluntarily</mark>. <mark class="vocab-word" data-word="unfortunate">Unfortunately</mark>, they are the ones the organisation can least afford to lose – those with the highest skills and experience. The minor employees remain because their job options are limited.</p></div>  <div class="parallel-zh"><p>在成长中的组织中激励员工要比在衰落中的组织这么做容易得多。当组织不断壮大并增加人员时，晋升机会，加薪以及与充满活力的组织相关联的兴奋会产生乐观的感觉。管理层能够利用这一增长来吸引和鼓励员工。当组织机构萎缩时，最优秀，流动性最好的员工往往会自愿离开。不幸的是，他们是组织最无法承受的损失-具有最好技能和经验的人。次要的雇员留下是因为他们的工作选择有限。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="morale">Morale</mark> also suffers during decline. People fear they may be the next to be made <mark class="vocab-word" data-word="redundant">redundant</mark>. <mark class="vocab-word" data-word="productivity">Productivity</mark> often suffers, as employees spend their time sharing rumours and providing one another with moral support rather than focusing on their jobs. For those whose jobs are secure, pay increases are rarely possible. Pay cuts, unheard of during times of growth, may even be <mark class="vocab-word" data-word="impose">imposed</mark>. The challenge to management is how to <mark class="vocab-word" data-word="motivate">motivate</mark> employees under such <mark class="vocab-word" data-word="retrenchment">retrenchment</mark> conditions. The ways of meeting this challenge can be broadly divided into six Key Points, which are outlined below.</p></div>  <div class="parallel-zh"><p>士气在衰落期间也遭受苦难。人们担心他们可能会成为下一个多余的人。由于员工将大部分时间用于传播谣言并相互提供道德支持，而不是专注于工作，因此生产力通常会受到影响。对于那些工作稳定的人来说，加薪几乎不可能。甚至还可能实行降薪，这在增长时期闻所未闻。管理人员面临的挑战是如何在这种紧缩的条件下激励员工。应对挑战的方法大致可分为六个关键点，概述如下。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There is an <mark class="vocab-word" data-word="abundance">abundance</mark> of evidence to support the <mark class="vocab-word" data-word="motivational">motivational</mark> benefits that result from carefully <mark class="vocab-word" data-word="matching">matching</mark> people to jobs. For example, if the job is running a small business or an <mark class="vocab-word" data-word="autonomous">autonomous</mark> unit within a larger business, high <mark class="vocab-word" data-word="achiever">achievers</mark> should be sought. However, if the job to be filled is a <mark class="vocab-word" data-word="managerial">managerial</mark> post in a large bureaucratic organisation, a <mark class="vocab-word" data-word="candidate">candidate</mark> who has a high need for power and a low need for affiliation should be selected. <mark class="vocab-word" data-word="accordingly">Accordingly</mark>, high <mark class="vocab-word" data-word="achiever">achievers</mark> should not be put into jobs that are inconsistent with their needs. High <mark class="vocab-word" data-word="achiever">achievers</mark> will do best when the job provides <mark class="vocab-word" data-word="moderately">moderately</mark> <mark class="vocab-word" data-word="challenging">challenging</mark> goals and where there is <mark class="vocab-word" data-word="independence">independence</mark> and <mark class="vocab-word" data-word="feedback">feedback</mark>. However, it should be remembered that not everybody is <mark class="vocab-word" data-word="motivated">motivated</mark> by jobs that are high in <mark class="vocab-word" data-word="independence">independence</mark>, variety and responsibility.</p></div>  <div class="parallel-zh"><p>有充分的证据支持将人们精心匹配工作所产生的动机收益。例如，如果工作是经营小型企业或大型企业中的自主部门，则应寻求高成就者。但是，如果要担任的职务是大型官僚组织中的管理职位，则应选择对权力有较高要求而对隶属关系需求不大的候选人。因此，高成就者不应从事与其需求不一致的工作。当工作提供中等难度的目标且有独立性和反馈时，高成就者将会做到最好。但是，应该记住，并不是每个人都会受到独立性，多样性和责任感高的工作的激励。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The literature on goal-setting theory <mark class="vocab-word" data-word="suggest">suggests</mark> that managers should ensure that all employees have specific goals and receive comments on how well they are doing in those goals. For those with high achievement needs, typically a minority in any organisation, the existence of <mark class="vocab-word" data-word="external">external</mark> goals is less important because high <mark class="vocab-word" data-word="achiever">achievers</mark> are already internally <mark class="vocab-word" data-word="motivated">motivated</mark>. The next <mark class="vocab-word" data-word="factor">factor</mark> to be <mark class="vocab-word" data-word="determined">determined</mark> is whether the goals should be <mark class="vocab-word" data-word="assign">assigned</mark> by a manager or <mark class="vocab-word" data-word="collective">collectively</mark> set in <mark class="vocab-word" data-word="conjunction">conjunction</mark> with the employees. The answer to that depends on <mark class="vocab-word" data-word="perception">perceptions</mark> of goal <mark class="vocab-word" data-word="acceptance">acceptance</mark> and the organisation’s culture. If <mark class="vocab-word" data-word="resistance">resistance</mark> to goals is expected, the use of <mark class="vocab-word" data-word="participation">participation</mark> in goal-setting should increase <mark class="vocab-word" data-word="acceptance">acceptance</mark>. If <mark class="vocab-word" data-word="participation">participation</mark> is inconsistent with the culture, however, goals should be <mark class="vocab-word" data-word="assign">assigned</mark>. If <mark class="vocab-word" data-word="participation">participation</mark> and the culture are <mark class="vocab-word" data-word="incongruous">incongruous</mark>, employees are likely to <mark class="vocab-word" data-word="perceive">perceive</mark> the <mark class="vocab-word" data-word="participation">participation</mark> process as <mark class="vocab-word" data-word="manipulative">manipulative</mark> and be <mark class="vocab-word" data-word="negative">negatively</mark> affected by it.</p></div>  <div class="parallel-zh"><p>关于目标设定理论的文献表明，管理者应确保所有员工都有特定的目标，并接受有关他们在这些目标中 表现的评价。对于那些具有较高成就要求的人（任何组织中的少数派），外部目标的存在不那么重要，因为高成就者往往已经具有内部动机。下一个要确定的因素是目标应该由经理分配还是与员工共同设定。答案取决于目标接受度和组织文化。如果对目标可能存在抵触，那么参与目标制定会增加接受度。但是，如果参与与公司文化不一致，则应指定目标。因为如果参与和公司文化不匹配，则员工可能会认为参与过程受到操控，并因此受到负面影响。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="regardless">Regardless</mark> of whether goals are achievable or well within management’s <mark class="vocab-word" data-word="perception">perceptions</mark> of the employee’s ability, if employees see them as unachievable they will reduce their effort. Managers must be sure, therefore, that employees feel confident that their efforts can <mark class="vocab-word" data-word="lead">lead</mark> to performance goals. For managers, this means that employees must have the capability of doing the job and must regard the <mark class="vocab-word" data-word="appraisal">appraisal</mark> process as <mark class="vocab-word" data-word="valid">valid</mark>.</p></div>  <div class="parallel-zh"><p>无论目标是否可以实现，或者是否在管理层对员工能力的认知之内，如果员工认为目标无法实现，他们将减少工作量。因此，管理人员必须确保员工对自己通过努力能够实现绩效目标充满信心。对于管理人员来说，这意味着员工必须具有完成工作的能力，并且必须认为评估过程是有效的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Since employees have different needs, what acts as a <mark class="vocab-word" data-word="reinforcement">reinforcement</mark> for one may not for another. Managers could use their knowledge of each employee to personalise the rewards over which they have control. Some of the more obvious rewards that managers <mark class="vocab-word" data-word="allocate">allocate</mark> include pay, <mark class="vocab-word" data-word="promotion">promotions</mark>, <mark class="vocab-word" data-word="autonomy">autonomy</mark>, job <mark class="vocab-word" data-word="scope">scope</mark> and depth, and the opportunity to participate in goal-setting and decision-making.</p></div>  <div class="parallel-zh"><p>由于员工有不同的需求，因此对一个人的激励可能不适合另外一个人。管理人员可以利用他们对每个员工的了解来个性化他们所控制的奖励。管理人员分配的一些显而易见的奖励包括薪资，晋升，自主权，工作范围和深度，以及参与目标设定和决策的机会。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Managers need to make rewards <mark class="vocab-word" data-word="contingent">contingent</mark> on performance. To reward <mark class="vocab-word" data-word="factor">factors</mark> other than performance will only <mark class="vocab-word" data-word="reinforce">reinforce</mark> those other <mark class="vocab-word" data-word="factor">factors</mark>. Key rewards such as pay increases and <mark class="vocab-word" data-word="promotion">promotions</mark> or advancements should be <mark class="vocab-word" data-word="allocate">allocated</mark> for the <mark class="vocab-word" data-word="attainment">attainment</mark> of the employee’s specific goals. Consistent with maximising the <mark class="vocab-word" data-word="impact">impact</mark> of rewards, managers should look for ways to increase their visibility. <mark class="vocab-word" data-word="eliminate">Eliminating</mark> the <mark class="vocab-word" data-word="secrecy">secrecy</mark> <mark class="vocab-word" data-word="surrounding">surrounding</mark> pay by openly communicating everyone’s <mark class="vocab-word" data-word="remuneration">remuneration</mark>, publicising performance <mark class="vocab-word" data-word="bonus">bonuses</mark> and <mark class="vocab-word" data-word="allocate">allocating</mark> annual salary increases in a <mark class="vocab-word" data-word="lump">lump</mark> sum rather than spreading them out over an entire year are examples of <mark class="vocab-word" data-word="action">actions</mark> that will make rewards more <mark class="vocab-word" data-word="visible">visible</mark> and potentially more <mark class="vocab-word" data-word="motivate">motivating</mark>.</p></div>  <div class="parallel-zh"><p>管理人员需要根据绩效来给予奖励。奖励绩效以外的其他因素只会增强这些因素。应根据员工是否实现特定目标来给予关键性奖励，如加薪和晋升。与最大程度地发挥奖励的作用相一致，管理人员应寻求提高可见度的方法。通过公开地交流每个人的薪酬，公布绩效奖金并一次性分配年薪增长而不是将其分摊到整个年度中，消除围绕工资的保密性。这些举动将使奖励更加显眼并且可能更具激励作用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The way rewards are distributed should be <mark class="vocab-word" data-word="transparent">transparent</mark> so that employees <mark class="vocab-word" data-word="perceive">perceive</mark> that rewards or outcomes are <mark class="vocab-word" data-word="equitable">equitable</mark> and equal to the inputs given. On a <mark class="vocab-word" data-word="simplistic">simplistic</mark> level, experience, abilities, effort and other obvious inputs should explain differences in pay, responsibility and other obvious outcomes. The problem, however, is <mark class="vocab-word" data-word="complicated">complicated</mark> by the existence of dozens of inputs and outcomes and by the fact that employee groups place different degrees of importance on them. For instance, a study comparing <mark class="vocab-word" data-word="clerical">clerical</mark> and production workers identified nearly twenty inputs and outcomes. The <mark class="vocab-word" data-word="clerical">clerical</mark> workers considered <mark class="vocab-word" data-word="factor">factors</mark> such as quality of work <mark class="vocab-word" data-word="perform">performed</mark> and job knowledge near the top of their list, but these were at the bottom of the production workers’ list. Similarly, production workers thought that the most important inputs were intelligence and personal <mark class="vocab-word" data-word="involvement">involvement</mark> with task accomplishment, two <mark class="vocab-word" data-word="factor">factors</mark> that were quite low in the importance ratings of the <mark class="vocab-word" data-word="clerk">clerks</mark>. There were also important, though less dramatic, differences on the outcome side. For example, production workers rated advancement very highly, whereas <mark class="vocab-word" data-word="clerical">clerical</mark> workers rated advancement in the lower third of their list. Such findings <mark class="vocab-word" data-word="suggest">suggest</mark> that one person’s <mark class="vocab-word" data-word="equity">equity</mark> is another’s inequity, so an ideal should probably weigh different inputs and outcomes <mark class="vocab-word" data-word="accord">according</mark> to employee group.</p></div>  <div class="parallel-zh"><p>奖励的分配方式应该保持透明，以便员工认为奖励或成果是公正的，与投入相当。简单来说，经验、能力、努力和其他明显的投入应该足以解释薪酬、责任和其他明显成果的差异。但是，由于存在数十种投入和成果以及员工群体对它们的重视程度不同，这一问题其实非常复杂。例如，一项比较办公职员和生产工人的研究确定了近二十种投入和成果。办公职员将诸如工作质量和工作知识之类的因素放在他们的列表的顶部，但是这些因素却在生产工人列表的底部。同样，生产工人认为最重要的投入是智力和完成任务的个人参与度，这两个因素在文员的重要等级中都很低。结果方面也存在着重要的差异，尽管没有那么戏剧性。例如，生产工人将晋升列地很高，而文职人员则将晋升放在他们列表的后三分之一处。这些发现表明，一个人的公平意味着另一个人的不公平，因此理想情况下，应该根据员工群体权衡不同的投入和结果。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"motivate": 3, "personnel": 1, "dynamic": 1, "optimism": 1, "entice": 1, "shrink": 1, "prone": 1, "voluntarily": 1, "unfortunate": 1, "morale": 1, "redundant": 1, "productivity": 1, "impose": 1, "retrenchment": 1, "abundance": 1, "motivational": 1, "matching": 1, "autonomous": 1, "achiever": 4, "managerial": 1, "candidate": 1, "accordingly": 1, "moderately": 1, "challenging": 1, "independence": 2, "feedback": 1, "motivated": 2, "suggest": 2, "external": 1, "factor": 5, "determined": 1, "assign": 2, "collective": 1, "conjunction": 1, "perception": 2, "acceptance": 2, "resistance": 1, "participation": 4, "incongruous": 1, "perceive": 2, "manipulative": 1, "negative": 1, "regardless": 1, "lead": 1, "appraisal": 1, "valid": 1, "reinforcement": 1, "allocate": 3, "promotion": 2, "autonomy": 1, "scope": 1, "contingent": 1, "reinforce": 1, "attainment": 1, "impact": 1, "eliminate": 1, "secrecy": 1, "surrounding": 1, "remuneration": 1, "bonus": 1, "lump": 1, "action": 1, "visible": 1, "transparent": 1, "equitable": 1, "simplistic": 1, "complicated": 1, "clerical": 3, "perform": 1, "involvement": 1, "clerk": 1, "equity": 1, "accord": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

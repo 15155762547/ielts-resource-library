@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight or evolution 洞见还是进化 - 剑桥雅思17 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思17</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Insight or evolution 洞见还是进化</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/52286.html" target="_blank">https://www.laokaoya.com/52286.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Scientific discovery is popularly believed to result from the <mark class="vocab-word" data-word="sheer">sheer</mark> <mark class="vocab-word" data-word="genius">genius</mark> of such <mark class="vocab-word" data-word="intellectual">intellectual</mark> stars as naturalist Charles Darwin and <mark class="vocab-word" data-word="theoretical">theoretical</mark> <mark class="vocab-word" data-word="physicist">physicist</mark> Albert Einstein. Our view of such unique contributions to science often <mark class="vocab-word" data-word="disregard">disregards</mark> the person’s <mark class="vocab-word" data-word="prior">prior</mark> experience and the efforts of their lesser-known <mark class="vocab-word" data-word="predecessor">predecessors</mark>. <mark class="vocab-word" data-word="conventional">Conventional</mark> <mark class="vocab-word" data-word="wisdom">wisdom</mark> also places great weight on <mark class="vocab-word" data-word="insight">insight</mark> in promoting <mark class="vocab-word" data-word="breakthrough">breakthrough</mark> scientific achievements, as if ideas <mark class="vocab-word" data-word="spontaneous">spontaneously</mark> pop into someone’s head – fully formed and <mark class="vocab-word" data-word="functional">functional</mark>.</p><p>There may be some limited truth to this view. However, we believe that it largely misrepresents the real nature of scientific discovery, as well as that of <mark class="vocab-word" data-word="creativity">creativity</mark> and <mark class="vocab-word" data-word="innovation">innovation</mark> in many other <mark class="vocab-word" data-word="realm">realms</mark> of human endeavor.</p><p>Setting aside such greats as Darwin and Einstein – whose <mark class="vocab-word" data-word="monumental">monumental</mark> contributions are duly <mark class="vocab-word" data-word="celebrated">celebrated</mark> – we <mark class="vocab-word" data-word="suggest">suggest</mark> that <mark class="vocab-word" data-word="innovation">innovation</mark> is more a process of trial and error, where two steps forward may sometimes come with one step back, as well as one or more steps to the right or left. This evolutionary view of human <mark class="vocab-word" data-word="innovation">innovation</mark> <mark class="vocab-word" data-word="undermine">undermines</mark> the notion of creative <mark class="vocab-word" data-word="genius">genius</mark> and recognizes the <mark class="vocab-word" data-word="cumulative">cumulative</mark> nature of scientific progress.</p><p>Consider one unheralded scientist: John Nicholson, a <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="physicist">physicist</mark> working in the 1910s who <mark class="vocab-word" data-word="postulate">postulated</mark> the existence of ‘proto-elements’ in outer space. By combining different numbers of weights of these proto-elements’ <mark class="vocab-word" data-word="atom">atoms</mark>, Nicholson could recover the weights of all the elements in the then-known periodic table. These successes are all the more <mark class="vocab-word" data-word="noteworthy">noteworthy</mark> given the fact that Nicholson was wrong about the presence of proto-elements: they do not actually exist. Yet, <mark class="vocab-word" data-word="amid">amid</mark> his often <mark class="vocab-word" data-word="fanciful">fanciful</mark> theories and wild <mark class="vocab-word" data-word="speculation">speculations</mark>, Nicholson also <mark class="vocab-word" data-word="propose">proposed</mark> a novel theory about the structure of <mark class="vocab-word" data-word="atom">atoms</mark>. Niels Bohr, the Nobel prize-winning father of modern <mark class="vocab-word" data-word="atomic">atomic</mark> theory, jumped off from this interesting idea to <mark class="vocab-word" data-word="conceive">conceive</mark> his now-famous model of the <mark class="vocab-word" data-word="atom">atom</mark>.</p><p>What are we to make of this <mark class="vocab-word" data-word="story">story</mark>? One might simply conclude that science is a <mark class="vocab-word" data-word="collective">collective</mark> and <mark class="vocab-word" data-word="cumulative">cumulative</mark> <mark class="vocab-word" data-word="enterprise">enterprise</mark>. That may be true, but there may be a deeper <mark class="vocab-word" data-word="insight">insight</mark> to be gleaned. We <mark class="vocab-word" data-word="propose">propose</mark> that science is constantly <mark class="vocab-word" data-word="evolve">evolving</mark>, much as species of animals do. This article is from  website. In <mark class="vocab-word" data-word="biological">biological</mark> systems, <mark class="vocab-word" data-word="organism">organisms</mark> may display new characteristics that result from <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="mutation">mutations</mark>. In the same way, <mark class="vocab-word" data-word="random">random</mark>, <mark class="vocab-word" data-word="arbitrary">arbitrary</mark> or <mark class="vocab-word" data-word="accidental">accidental</mark> <mark class="vocab-word" data-word="mutation">mutations</mark> of ideas may help <mark class="vocab-word" data-word="pave">pave</mark> the way for advances in science. If <mark class="vocab-word" data-word="mutation">mutations</mark> prove <mark class="vocab-word" data-word="beneficial">beneficial</mark>, then the animal or the scientific theory will continue to <mark class="vocab-word" data-word="thrive">thrive</mark> and perhaps <mark class="vocab-word" data-word="reproduce">reproduce</mark>.</p><p>Support for this evolutionary view of behavioral <mark class="vocab-word" data-word="innovation">innovation</mark> comes from many <mark class="vocab-word" data-word="domain">domains</mark>. Consider one example of an <mark class="vocab-word" data-word="influential">influential</mark> <mark class="vocab-word" data-word="innovation">innovation</mark> in US horseracing. The <mark class="vocab-word" data-word="so-called">so-called</mark> ‘acey-deucy’ stirrup placement, in which the rider’s foot in his left stirrup is placed as much as 25 <mark class="vocab-word" data-word="centimeter">centimeters</mark> lower than the right, is believed to <mark class="vocab-word" data-word="confer">confer</mark> important speed advantages when turning on <mark class="vocab-word" data-word="oval">oval</mark> tracks. It was developed by a relatively unknown jockey named Jackie Westrope. Had Westrope conducted <mark class="vocab-word" data-word="methodical">methodical</mark> investigations or examined <mark class="vocab-word" data-word="extensive">extensive</mark> film records in a <mark class="vocab-word" data-word="shrewd">shrewd</mark> plan to <mark class="vocab-word" data-word="outrun">outrun</mark> his <mark class="vocab-word" data-word="rival">rivals</mark>? Had he foreseen the speed advantage that would be conferred by riding acey-deucy? No. He suffered a leg injury, which left him unable to fully <mark class="vocab-word" data-word="bend">bend</mark> his left knee. His <mark class="vocab-word" data-word="modification">modification</mark> just happened to <mark class="vocab-word" data-word="coincide">coincide</mark> with enhanced left-hand turning performance. This led to the rapid and <mark class="vocab-word" data-word="widespread">widespread</mark> adoption of riding acey-deucy by many riders, a racing style which continues in today’s thoroughbred racing.</p><p>Plenty of other stories show that fresh advances can arise from error, misadventure, and also pure serendipity – a happy accident. For example, in the early 1970s, two employees of the company 3M each had a problem: Spencer Silver had a product – a <mark class="vocab-word" data-word="glue">glue</mark> which was only slightly sticky – and no use for it, while his colleague Art <mark class="vocab-word" data-word="fry">Fry</mark> was trying to figure out how to affix temporary bookmarks in his <mark class="vocab-word" data-word="hymn">hymn</mark> book without damaging its pages. The solution to both these problems was the invention of the brilliantly simple yet phenomenally successful Post-It note. Such examples give lie to the claim that <mark class="vocab-word" data-word="ingenious">ingenious</mark>, designing minds are responsible for human <mark class="vocab-word" data-word="creativity">creativity</mark> and invention. Far more banal and <mark class="vocab-word" data-word="mechanical">mechanical</mark> forces may be at work; forces that are fundamentally connected to the laws of science.</p><p>The notions of <mark class="vocab-word" data-word="insight">insight</mark>, <mark class="vocab-word" data-word="creativity">creativity</mark> and <mark class="vocab-word" data-word="genius">genius</mark> are often <mark class="vocab-word" data-word="invoke">invoked</mark>, but they remain <mark class="vocab-word" data-word="vague">vague</mark> and of <mark class="vocab-word" data-word="doubtful">doubtful</mark> scientific <mark class="vocab-word" data-word="utility">utility</mark>, especially when one considers the <mark class="vocab-word" data-word="diverse">diverse</mark> and <mark class="vocab-word" data-word="endure">enduring</mark> contributions of individuals such as Plato, Leonardo da Vinci, Shakespeare, Beethoven, Galileo, Newton, Kepler, Curie, Pasteur and Edison. These notions <mark class="vocab-word" data-word="merely">merely</mark> label rather than explain the <mark class="vocab-word" data-word="evolution">evolution</mark> of human <mark class="vocab-word" data-word="innovation">innovations</mark>. We need another approach, and there is a <mark class="vocab-word" data-word="promising">promising</mark> <mark class="vocab-word" data-word="candidate">candidate</mark>.</p><p>The Law of Effect was <mark class="vocab-word" data-word="advanced">advanced</mark> by psychologist Edward Thorndike in 1898, some 40 years after Charles Darwin published his groundbreaking work on <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="evolution">evolution</mark>,On the Originof Species. This simple law holds that <mark class="vocab-word" data-word="organism">organisms</mark> tend to repeat successful behaviors and to <mark class="vocab-word" data-word="refrain">refrain</mark> from <mark class="vocab-word" data-word="perform">performing</mark> unsuccessful ones. Just like Darwin’s Law of Natural Selection, the Law of Effect involves an entirely <mark class="vocab-word" data-word="mechanical">mechanical</mark> process of <mark class="vocab-word" data-word="variation">variation</mark> and selection, without any end objective in sight.</p><p>Of course, the origin of human <mark class="vocab-word" data-word="innovation">innovation</mark> demands much further study. In particular, the <mark class="vocab-word" data-word="provenance">provenance</mark> of the <mark class="vocab-word" data-word="raw">raw</mark> material on which the Law of Effect operates is not as clearly known as that of the <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="mutation">mutations</mark> on which the Law of Natural Selection operates. The generation of novel ideas and behaviors may not be entirely <mark class="vocab-word" data-word="random">random</mark>, but <mark class="vocab-word" data-word="constrain">constrained</mark> by <mark class="vocab-word" data-word="prior">prior</mark> successes and failures – of the current individual (such as Bohr) or of <mark class="vocab-word" data-word="predecessor">predecessors</mark> (such as Nicholson).</p><p>The time seems right for abandoning the <mark class="vocab-word" data-word="naive">naive</mark> notions of <mark class="vocab-word" data-word="intelligent">intelligent</mark> design and <mark class="vocab-word" data-word="genius">genius</mark>, and for scientifically exploring the true origins of creative behavior.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人们普遍认为，科学发现来自于智力超群的天才，如博物学者查尔斯·达尔文和理论物理学家阿尔伯特·爱因斯坦。我们关于这些独特科学贡献的看法往往忽视了这个人之前的经历，以及他们鲜为人知的前辈的努力。传统的观念十分重视洞察力在推动科学研究突破上的作用，仿佛想法会自然而然地突然出现在一个人的脑子里-完全成型且可用。</p><p>这一观点可能不无道理。然而，我们认为它在很大程度上错误地呈现了科学发现的真正本质，也同样歪曲了许多人类努力探索的其他领域里的创造和创新。</p><p>抛开达尔文和爱因斯坦这样的伟人不提，他们的伟大贡献确实值得称赞，我们认为创新更多的是实验与犯错的过程。在往前走两步的同时伴随着后退一步，当然也有可能是往左或者往右走一两步。这种进化论式的人类创新观念动摇了创造性天才的认知，并认可科学进步是逐渐积累的本质。</p><p>想想下面这位名不见经传的科学家，John Nicholson。作为一名20世纪10年代的数学物理学家，他提出外太空中存在“元初元素”的假说。通过合并不同数量的元初元素原子的重量，Nicholson能够复原当时所知的元素周期表中所有元素的重量。考虑到Nicholson在元初元素的存在上犯了错误（它们并不存在），这些成就就更加引人注目。然而，在他往往充满幻想的观念和缺乏依据的推测中，Nicholson也提出了一个有关原子结构的新颖理论。诺贝尔奖获得者、现代原子理论之父Niels Boher从这一有趣的想法出发，构想出如今著名的原子模型。</p><p>我们该如何看待这个故事呢？一个人可能很轻易地得出以下结论：科学是一项集体性的、积累的事业。这或许是正确的，但也可能需要更进一步的认识。我们认为，科学是不断发展进化的，正如大多数动物那样。在生物系统中，有机物可能会由于基因突变而展现出新的特点。同样的，观念上随机、任意或者偶然的突变会为科学进步铺平道路。如果突变被证明是有益的，那么动物或者科学理论会继续茁壮成长，或许还能够繁衍生息。</p><p>支持这一行为创新进化观点的证据来自许多领域。以美国赛马中一个颇具影响的创新为例。所谓“左低右高”的马镫设置，即骑手左脚马镫比右边低25厘米，被认为可以在椭圆赛道转弯时带来重要的速度优势。它由一位相对默默无闻的骑手Jackie Westrope发明。Westrope有计划地进行过方法周密的调查或大量查看过影视记录，以击败其竞争对手吗？他事先预见了左低右高的骑行方式所赋予的速度优势吗？并没有。他的腿受过伤，左膝盖无法完全弯曲。其调整凑巧提升了左转弯的表现。这导致许多骑手迅速而广泛的采用了左低右高的骑行方式。这种风格一直延续到今天的纯种马比赛中。</p><p>还有许多其他故事表明，崭新的进步可能诞生于错误、不幸的遭遇，以及纯粹的意外 – 一场美好的事故。例如，20世纪70年代早期，3M公司的两名员工各自遇到了一个问题：Spencer Silver有种产品 – 一种只有少量黏性的胶水 – 却找不到用途，而其同事Art Fry则在努力探索如何将临时性的书签粘在赞美诗集上而不破坏书页。这两个问题的解决方案即简单到令人惊叹却也大获成功的便利贴的发明。这些例子证明了并非是那些天才的、善于设计的头脑产生了人类的创新。更为平平无奇的、机械的力量可能在发挥作用。这些力量与科学规律在根本上联系在一起。</p><p>洞见、创造与天才的概念经常被引用，但它们依然模糊不清，对科学研究的有用性也存疑，尤其是当人们考虑到诸如柏拉图、莱昂纳多·达芬奇、莎士比亚、贝多芬、伽利略、牛顿、开普来、居里、巴斯德和爱迪生这些人多样而持久的贡献。这些理念仅仅标注了人类创新的进化，而非对其进行解释。我们需要另外一种方法，而眼前就有一个充满希望的备选。</p><p>效果定律由心理学家Edward Thorndike在1898年提出，即查尔斯·达尔文发表其有关生物进化的开天辟地的作品《物种起源》40多年后。这一定律认为有机物倾向于重复成功的行为，并克制表现不成功的那些。正如达尔文的自然选择定律一样，效果定律涉及一套有关变化与选择的完全机械的过程，没有任何终极目标。</p><p>当然，人类创新的起源需要更进一步的研究。尤其是效果定律所作用的原材料的起源并不如自然选择所描述的基因突变那么清晰地为人所知。新颖观点与行为的产生可能并不是完全随机的，而是受到之前成功与失败的制约 – 它们要么是生活在当下的个人的（如Bohr），要么是其先行者们的（如Nicholson）。</p><p>如今正是抛弃智慧设计与天才的幼稚观念，转而科学地探索创造性行为真正起源的好时候。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Scientific discovery is popularly believed to result from the <mark class="vocab-word" data-word="sheer">sheer</mark> <mark class="vocab-word" data-word="genius">genius</mark> of such <mark class="vocab-word" data-word="intellectual">intellectual</mark> stars as naturalist Charles Darwin and <mark class="vocab-word" data-word="theoretical">theoretical</mark> <mark class="vocab-word" data-word="physicist">physicist</mark> Albert Einstein. Our view of such unique contributions to science often <mark class="vocab-word" data-word="disregard">disregards</mark> the person’s <mark class="vocab-word" data-word="prior">prior</mark> experience and the efforts of their lesser-known <mark class="vocab-word" data-word="predecessor">predecessors</mark>. <mark class="vocab-word" data-word="conventional">Conventional</mark> <mark class="vocab-word" data-word="wisdom">wisdom</mark> also places great weight on <mark class="vocab-word" data-word="insight">insight</mark> in promoting <mark class="vocab-word" data-word="breakthrough">breakthrough</mark> scientific achievements, as if ideas <mark class="vocab-word" data-word="spontaneous">spontaneously</mark> pop into someone’s head – fully formed and <mark class="vocab-word" data-word="functional">functional</mark>.</p></div>  <div class="parallel-zh"><p>人们普遍认为，科学发现来自于智力超群的天才，如博物学者查尔斯·达尔文和理论物理学家阿尔伯特·爱因斯坦。我们关于这些独特科学贡献的看法往往忽视了这个人之前的经历，以及他们鲜为人知的前辈的努力。传统的观念十分重视洞察力在推动科学研究突破上的作用，仿佛想法会自然而然地突然出现在一个人的脑子里-完全成型且可用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There may be some limited truth to this view. However, we believe that it largely misrepresents the real nature of scientific discovery, as well as that of <mark class="vocab-word" data-word="creativity">creativity</mark> and <mark class="vocab-word" data-word="innovation">innovation</mark> in many other <mark class="vocab-word" data-word="realm">realms</mark> of human endeavor.</p></div>  <div class="parallel-zh"><p>这一观点可能不无道理。然而，我们认为它在很大程度上错误地呈现了科学发现的真正本质，也同样歪曲了许多人类努力探索的其他领域里的创造和创新。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Setting aside such greats as Darwin and Einstein – whose <mark class="vocab-word" data-word="monumental">monumental</mark> contributions are duly <mark class="vocab-word" data-word="celebrated">celebrated</mark> – we <mark class="vocab-word" data-word="suggest">suggest</mark> that <mark class="vocab-word" data-word="innovation">innovation</mark> is more a process of trial and error, where two steps forward may sometimes come with one step back, as well as one or more steps to the right or left. This evolutionary view of human <mark class="vocab-word" data-word="innovation">innovation</mark> <mark class="vocab-word" data-word="undermine">undermines</mark> the notion of creative <mark class="vocab-word" data-word="genius">genius</mark> and recognizes the <mark class="vocab-word" data-word="cumulative">cumulative</mark> nature of scientific progress.</p></div>  <div class="parallel-zh"><p>抛开达尔文和爱因斯坦这样的伟人不提，他们的伟大贡献确实值得称赞，我们认为创新更多的是实验与犯错的过程。在往前走两步的同时伴随着后退一步，当然也有可能是往左或者往右走一两步。这种进化论式的人类创新观念动摇了创造性天才的认知，并认可科学进步是逐渐积累的本质。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Consider one unheralded scientist: John Nicholson, a <mark class="vocab-word" data-word="mathematical">mathematical</mark> <mark class="vocab-word" data-word="physicist">physicist</mark> working in the 1910s who <mark class="vocab-word" data-word="postulate">postulated</mark> the existence of ‘proto-elements’ in outer space. By combining different numbers of weights of these proto-elements’ <mark class="vocab-word" data-word="atom">atoms</mark>, Nicholson could recover the weights of all the elements in the then-known periodic table. These successes are all the more <mark class="vocab-word" data-word="noteworthy">noteworthy</mark> given the fact that Nicholson was wrong about the presence of proto-elements: they do not actually exist. Yet, <mark class="vocab-word" data-word="amid">amid</mark> his often <mark class="vocab-word" data-word="fanciful">fanciful</mark> theories and wild <mark class="vocab-word" data-word="speculation">speculations</mark>, Nicholson also <mark class="vocab-word" data-word="propose">proposed</mark> a novel theory about the structure of <mark class="vocab-word" data-word="atom">atoms</mark>. Niels Bohr, the Nobel prize-winning father of modern <mark class="vocab-word" data-word="atomic">atomic</mark> theory, jumped off from this interesting idea to <mark class="vocab-word" data-word="conceive">conceive</mark> his now-famous model of the <mark class="vocab-word" data-word="atom">atom</mark>.</p></div>  <div class="parallel-zh"><p>想想下面这位名不见经传的科学家，John Nicholson。作为一名20世纪10年代的数学物理学家，他提出外太空中存在“元初元素”的假说。通过合并不同数量的元初元素原子的重量，Nicholson能够复原当时所知的元素周期表中所有元素的重量。考虑到Nicholson在元初元素的存在上犯了错误（它们并不存在），这些成就就更加引人注目。然而，在他往往充满幻想的观念和缺乏依据的推测中，Nicholson也提出了一个有关原子结构的新颖理论。诺贝尔奖获得者、现代原子理论之父Niels Boher从这一有趣的想法出发，构想出如今著名的原子模型。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What are we to make of this <mark class="vocab-word" data-word="story">story</mark>? One might simply conclude that science is a <mark class="vocab-word" data-word="collective">collective</mark> and <mark class="vocab-word" data-word="cumulative">cumulative</mark> <mark class="vocab-word" data-word="enterprise">enterprise</mark>. That may be true, but there may be a deeper <mark class="vocab-word" data-word="insight">insight</mark> to be gleaned. We <mark class="vocab-word" data-word="propose">propose</mark> that science is constantly <mark class="vocab-word" data-word="evolve">evolving</mark>, much as species of animals do. This article is from  website. In <mark class="vocab-word" data-word="biological">biological</mark> systems, <mark class="vocab-word" data-word="organism">organisms</mark> may display new characteristics that result from <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="mutation">mutations</mark>. In the same way, <mark class="vocab-word" data-word="random">random</mark>, <mark class="vocab-word" data-word="arbitrary">arbitrary</mark> or <mark class="vocab-word" data-word="accidental">accidental</mark> <mark class="vocab-word" data-word="mutation">mutations</mark> of ideas may help <mark class="vocab-word" data-word="pave">pave</mark> the way for advances in science. If <mark class="vocab-word" data-word="mutation">mutations</mark> prove <mark class="vocab-word" data-word="beneficial">beneficial</mark>, then the animal or the scientific theory will continue to <mark class="vocab-word" data-word="thrive">thrive</mark> and perhaps <mark class="vocab-word" data-word="reproduce">reproduce</mark>.</p></div>  <div class="parallel-zh"><p>我们该如何看待这个故事呢？一个人可能很轻易地得出以下结论：科学是一项集体性的、积累的事业。这或许是正确的，但也可能需要更进一步的认识。我们认为，科学是不断发展进化的，正如大多数动物那样。在生物系统中，有机物可能会由于基因突变而展现出新的特点。同样的，观念上随机、任意或者偶然的突变会为科学进步铺平道路。如果突变被证明是有益的，那么动物或者科学理论会继续茁壮成长，或许还能够繁衍生息。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Support for this evolutionary view of behavioral <mark class="vocab-word" data-word="innovation">innovation</mark> comes from many <mark class="vocab-word" data-word="domain">domains</mark>. Consider one example of an <mark class="vocab-word" data-word="influential">influential</mark> <mark class="vocab-word" data-word="innovation">innovation</mark> in US horseracing. The <mark class="vocab-word" data-word="so-called">so-called</mark> ‘acey-deucy’ stirrup placement, in which the rider’s foot in his left stirrup is placed as much as 25 <mark class="vocab-word" data-word="centimeter">centimeters</mark> lower than the right, is believed to <mark class="vocab-word" data-word="confer">confer</mark> important speed advantages when turning on <mark class="vocab-word" data-word="oval">oval</mark> tracks. It was developed by a relatively unknown jockey named Jackie Westrope. Had Westrope conducted <mark class="vocab-word" data-word="methodical">methodical</mark> investigations or examined <mark class="vocab-word" data-word="extensive">extensive</mark> film records in a <mark class="vocab-word" data-word="shrewd">shrewd</mark> plan to <mark class="vocab-word" data-word="outrun">outrun</mark> his <mark class="vocab-word" data-word="rival">rivals</mark>? Had he foreseen the speed advantage that would be conferred by riding acey-deucy? No. He suffered a leg injury, which left him unable to fully <mark class="vocab-word" data-word="bend">bend</mark> his left knee. His <mark class="vocab-word" data-word="modification">modification</mark> just happened to <mark class="vocab-word" data-word="coincide">coincide</mark> with enhanced left-hand turning performance. This led to the rapid and <mark class="vocab-word" data-word="widespread">widespread</mark> adoption of riding acey-deucy by many riders, a racing style which continues in today’s thoroughbred racing.</p></div>  <div class="parallel-zh"><p>支持这一行为创新进化观点的证据来自许多领域。以美国赛马中一个颇具影响的创新为例。所谓“左低右高”的马镫设置，即骑手左脚马镫比右边低25厘米，被认为可以在椭圆赛道转弯时带来重要的速度优势。它由一位相对默默无闻的骑手Jackie Westrope发明。Westrope有计划地进行过方法周密的调查或大量查看过影视记录，以击败其竞争对手吗？他事先预见了左低右高的骑行方式所赋予的速度优势吗？并没有。他的腿受过伤，左膝盖无法完全弯曲。其调整凑巧提升了左转弯的表现。这导致许多骑手迅速而广泛的采用了左低右高的骑行方式。这种风格一直延续到今天的纯种马比赛中。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Plenty of other stories show that fresh advances can arise from error, misadventure, and also pure serendipity – a happy accident. For example, in the early 1970s, two employees of the company 3M each had a problem: Spencer Silver had a product – a <mark class="vocab-word" data-word="glue">glue</mark> which was only slightly sticky – and no use for it, while his colleague Art <mark class="vocab-word" data-word="fry">Fry</mark> was trying to figure out how to affix temporary bookmarks in his <mark class="vocab-word" data-word="hymn">hymn</mark> book without damaging its pages. The solution to both these problems was the invention of the brilliantly simple yet phenomenally successful Post-It note. Such examples give lie to the claim that <mark class="vocab-word" data-word="ingenious">ingenious</mark>, designing minds are responsible for human <mark class="vocab-word" data-word="creativity">creativity</mark> and invention. Far more banal and <mark class="vocab-word" data-word="mechanical">mechanical</mark> forces may be at work; forces that are fundamentally connected to the laws of science.</p></div>  <div class="parallel-zh"><p>还有许多其他故事表明，崭新的进步可能诞生于错误、不幸的遭遇，以及纯粹的意外 – 一场美好的事故。例如，20世纪70年代早期，3M公司的两名员工各自遇到了一个问题：Spencer Silver有种产品 – 一种只有少量黏性的胶水 – 却找不到用途，而其同事Art Fry则在努力探索如何将临时性的书签粘在赞美诗集上而不破坏书页。这两个问题的解决方案即简单到令人惊叹却也大获成功的便利贴的发明。这些例子证明了并非是那些天才的、善于设计的头脑产生了人类的创新。更为平平无奇的、机械的力量可能在发挥作用。这些力量与科学规律在根本上联系在一起。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The notions of <mark class="vocab-word" data-word="insight">insight</mark>, <mark class="vocab-word" data-word="creativity">creativity</mark> and <mark class="vocab-word" data-word="genius">genius</mark> are often <mark class="vocab-word" data-word="invoke">invoked</mark>, but they remain <mark class="vocab-word" data-word="vague">vague</mark> and of <mark class="vocab-word" data-word="doubtful">doubtful</mark> scientific <mark class="vocab-word" data-word="utility">utility</mark>, especially when one considers the <mark class="vocab-word" data-word="diverse">diverse</mark> and <mark class="vocab-word" data-word="endure">enduring</mark> contributions of individuals such as Plato, Leonardo da Vinci, Shakespeare, Beethoven, Galileo, Newton, Kepler, Curie, Pasteur and Edison. These notions <mark class="vocab-word" data-word="merely">merely</mark> label rather than explain the <mark class="vocab-word" data-word="evolution">evolution</mark> of human <mark class="vocab-word" data-word="innovation">innovations</mark>. We need another approach, and there is a <mark class="vocab-word" data-word="promising">promising</mark> <mark class="vocab-word" data-word="candidate">candidate</mark>.</p></div>  <div class="parallel-zh"><p>洞见、创造与天才的概念经常被引用，但它们依然模糊不清，对科学研究的有用性也存疑，尤其是当人们考虑到诸如柏拉图、莱昂纳多·达芬奇、莎士比亚、贝多芬、伽利略、牛顿、开普来、居里、巴斯德和爱迪生这些人多样而持久的贡献。这些理念仅仅标注了人类创新的进化，而非对其进行解释。我们需要另外一种方法，而眼前就有一个充满希望的备选。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Law of Effect was <mark class="vocab-word" data-word="advanced">advanced</mark> by psychologist Edward Thorndike in 1898, some 40 years after Charles Darwin published his groundbreaking work on <mark class="vocab-word" data-word="biological">biological</mark> <mark class="vocab-word" data-word="evolution">evolution</mark>,On the Originof Species. This simple law holds that <mark class="vocab-word" data-word="organism">organisms</mark> tend to repeat successful behaviors and to <mark class="vocab-word" data-word="refrain">refrain</mark> from <mark class="vocab-word" data-word="perform">performing</mark> unsuccessful ones. Just like Darwin’s Law of Natural Selection, the Law of Effect involves an entirely <mark class="vocab-word" data-word="mechanical">mechanical</mark> process of <mark class="vocab-word" data-word="variation">variation</mark> and selection, without any end objective in sight.</p></div>  <div class="parallel-zh"><p>效果定律由心理学家Edward Thorndike在1898年提出，即查尔斯·达尔文发表其有关生物进化的开天辟地的作品《物种起源》40多年后。这一定律认为有机物倾向于重复成功的行为，并克制表现不成功的那些。正如达尔文的自然选择定律一样，效果定律涉及一套有关变化与选择的完全机械的过程，没有任何终极目标。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Of course, the origin of human <mark class="vocab-word" data-word="innovation">innovation</mark> demands much further study. In particular, the <mark class="vocab-word" data-word="provenance">provenance</mark> of the <mark class="vocab-word" data-word="raw">raw</mark> material on which the Law of Effect operates is not as clearly known as that of the <mark class="vocab-word" data-word="genetic">genetic</mark> <mark class="vocab-word" data-word="mutation">mutations</mark> on which the Law of Natural Selection operates. The generation of novel ideas and behaviors may not be entirely <mark class="vocab-word" data-word="random">random</mark>, but <mark class="vocab-word" data-word="constrain">constrained</mark> by <mark class="vocab-word" data-word="prior">prior</mark> successes and failures – of the current individual (such as Bohr) or of <mark class="vocab-word" data-word="predecessor">predecessors</mark> (such as Nicholson).</p></div>  <div class="parallel-zh"><p>当然，人类创新的起源需要更进一步的研究。尤其是效果定律所作用的原材料的起源并不如自然选择所描述的基因突变那么清晰地为人所知。新颖观点与行为的产生可能并不是完全随机的，而是受到之前成功与失败的制约 – 它们要么是生活在当下的个人的（如Bohr），要么是其先行者们的（如Nicholson）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The time seems right for abandoning the <mark class="vocab-word" data-word="naive">naive</mark> notions of <mark class="vocab-word" data-word="intelligent">intelligent</mark> design and <mark class="vocab-word" data-word="genius">genius</mark>, and for scientifically exploring the true origins of creative behavior.</p></div>  <div class="parallel-zh"><p>如今正是抛弃智慧设计与天才的幼稚观念，转而科学地探索创造性行为真正起源的好时候。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"sheer": 1, "genius": 4, "intellectual": 1, "theoretical": 1, "physicist": 2, "disregard": 1, "prior": 2, "predecessor": 2, "conventional": 1, "wisdom": 1, "insight": 3, "breakthrough": 1, "spontaneous": 1, "functional": 1, "creativity": 3, "innovation": 7, "realm": 1, "monumental": 1, "celebrated": 1, "suggest": 1, "undermine": 1, "cumulative": 2, "mathematical": 1, "postulate": 1, "atom": 3, "noteworthy": 1, "amid": 1, "fanciful": 1, "speculation": 1, "propose": 2, "atomic": 1, "conceive": 1, "story": 1, "collective": 1, "enterprise": 1, "evolve": 1, "biological": 2, "organism": 2, "random": 3, "genetic": 2, "mutation": 4, "arbitrary": 1, "accidental": 1, "pave": 1, "beneficial": 1, "thrive": 1, "reproduce": 1, "domain": 1, "influential": 1, "so-called": 1, "centimeter": 1, "confer": 1, "oval": 1, "methodical": 1, "extensive": 1, "shrewd": 1, "outrun": 1, "rival": 1, "bend": 1, "modification": 1, "coincide": 1, "widespread": 1, "glue": 1, "fry": 1, "hymn": 1, "ingenious": 1, "mechanical": 2, "invoke": 1, "vague": 1, "doubtful": 1, "utility": 1, "diverse": 1, "endure": 1, "merely": 1, "evolution": 2, "promising": 1, "candidate": 1, "advanced": 1, "refrain": 1, "perform": 1, "variation": 1, "provenance": 1, "raw": 1, "constrain": 1, "naive": 1, "intelligent": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

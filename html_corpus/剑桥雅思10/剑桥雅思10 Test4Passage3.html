@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When evolution runs backwards 进化后退 - 剑桥雅思10 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思10</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>When evolution runs backwards 进化后退</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29385.html" target="_blank">https://www.laokaoya.com/29385.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The description of any animal as an ‘evolutionary throwback’ is <mark class="vocab-word" data-word="controversial">controversial</mark>. For the better part of a century, most <mark class="vocab-word" data-word="biologist">biologists</mark> have been <mark class="vocab-word" data-word="reluctant">reluctant</mark> to use those words, mindful of a principle of <mark class="vocab-word" data-word="evolution">evolution</mark> that says ‘<mark class="vocab-word" data-word="evolution">evolution</mark> cannot run <mark class="vocab-word" data-word="backwards">backwards</mark>’. But as more and more examples come to light and modern <mark class="vocab-word" data-word="genetics">genetics</mark> enters the scene, that principle is having to be rewritten. Not only are evolutionary throwbacks possible, they sometimes play an important role in the forward <mark class="vocab-word" data-word="march">march</mark> of <mark class="vocab-word" data-word="evolution">evolution</mark>.</p><p>The technical term for an evolutionary throwback is an ‘atavism’, from the <mark class="vocab-word" data-word="latin">Latin</mark> atavus, meaning forefather. The word has ugly connotations thanks largely to Cesare Lombroso, a 19th-century <mark class="vocab-word" data-word="italian">Italian</mark> medic who argued that criminals were born not made and could be identified by certain physical features that were throwbacks to a <mark class="vocab-word" data-word="primitive">primitive</mark>, sub-human state.</p><p>While Lombroso was measuring criminals, a Belgian palaeontologist called Louis Dollo was studying <mark class="vocab-word" data-word="fossil">fossil</mark> records and coming to the opposite conclusion. In 1890 he <mark class="vocab-word" data-word="propose">proposed</mark> that <mark class="vocab-word" data-word="evolution">evolution</mark> was <mark class="vocab-word" data-word="irreversible">irreversible</mark>: that ‘an <mark class="vocab-word" data-word="organism">organism</mark> is unable to return, even <mark class="vocab-word" data-word="partially">partially</mark>, to a previous stage already realised in the ranks of its <mark class="vocab-word" data-word="ancestor">ancestors</mark>’. Early 20th-century <mark class="vocab-word" data-word="biologist">biologists</mark> came to a similar conclusion, though they <mark class="vocab-word" data-word="qualified">qualified</mark> it in terms of <mark class="vocab-word" data-word="probability">probability</mark>, stating that there is no reason why <mark class="vocab-word" data-word="evolution">evolution</mark> cannot run <mark class="vocab-word" data-word="backwards">backwards</mark>—it is just very unlikely. And so the idea of irreversibility in <mark class="vocab-word" data-word="evolution">evolution</mark> <mark class="vocab-word" data-word="stuck">stuck</mark> and came to be known as ‘Dollo’s law’.</p><p>If Dollo’s law is right, atavisms should occur only very rarely, if at all. Yet almost since the idea took root, <mark class="vocab-word" data-word="exception">exceptions</mark> have been cropping up. In 1919, for example, a humpback whale with a pair of leg-like appendages over a metre long, complete with a full set of <mark class="vocab-word" data-word="limb">limb</mark> bones, was caught off Vancouver Island in Canada. <mark class="vocab-word" data-word="explorer">Explorer</mark> Roy Chapman Andrews argued at the time that the whale must be a throwback to a land-living <mark class="vocab-word" data-word="ancestor">ancestor</mark>. ‘I can see no other explanation,’ he wrote in 1921.</p><p>Since then, so many other examples have been discovered that it no longer makes sense to say that <mark class="vocab-word" data-word="evolution">evolution</mark> is as good as <mark class="vocab-word" data-word="irreversible">irreversible</mark>. And this poses a <mark class="vocab-word" data-word="puzzle">puzzle</mark>: how can characteristics that disappeared millions of years ago suddenly reappear? In 1994, Rudolf Raff and colleagues at Indiana University in the USA decided to use <mark class="vocab-word" data-word="genetics">genetics</mark> to put a number on the <mark class="vocab-word" data-word="probability">probability</mark> of <mark class="vocab-word" data-word="evolution">evolution</mark> going into <mark class="vocab-word" data-word="reverse">reverse</mark>. They reasoned that while some evolutionary changes involve the loss of <mark class="vocab-word" data-word="gene">genes</mark> and are therefore <mark class="vocab-word" data-word="irreversible">irreversible</mark>, others may be the result of <mark class="vocab-word" data-word="gene">genes</mark> being switched off. If these silent <mark class="vocab-word" data-word="gene">genes</mark> are somehow switched back on, they argued, long-lost <mark class="vocab-word" data-word="trait">traits</mark> could reappear.</p><p>Raff’s team went on to calculate the <mark class="vocab-word" data-word="likelihood">likelihood</mark> of it happening. Silent <mark class="vocab-word" data-word="gene">genes</mark> <mark class="vocab-word" data-word="accumulate">accumulate</mark> <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="mutation">mutations</mark>, they reasoned, eventually <mark class="vocab-word" data-word="rendering">rendering</mark> them <mark class="vocab-word" data-word="useless">useless</mark>. So how long can a <mark class="vocab-word" data-word="gene">gene</mark> survive in a species if it is no longer used? The team calculated that there is a good chance of silent <mark class="vocab-word" data-word="gene">genes</mark> surviving for up to 6 million years in at least a few individuals in a population, and that some might survive as long as 10 million years. In other words, throwbacks are possible, but only to the relatively recent evolutionary past.</p><p>As a possible example, the team <mark class="vocab-word" data-word="pointed">pointed</mark> to the <mark class="vocab-word" data-word="mole">mole</mark> salamanders of Mexico and California. Like most <mark class="vocab-word" data-word="amphibian">amphibians</mark> these begin life in a <mark class="vocab-word" data-word="juvenile">juvenile</mark> ‘<mark class="vocab-word" data-word="tadpole">tadpole</mark>’ state, then <mark class="vocab-word" data-word="metamorphose">metamorphose</mark> into the adult form—except for one species, the axolotl, which famously lives its entire life as a <mark class="vocab-word" data-word="juvenile">juvenile</mark>. The simplest explanation for this is that the axolotl <mark class="vocab-word" data-word="lineage">lineage</mark> alone lost the ability to <mark class="vocab-word" data-word="metamorphose">metamorphose</mark>, while others retained it. From a detailed analysis of the salamanders’ family <mark class="vocab-word" data-word="tree">tree</mark>, however, it is clear that the other <mark class="vocab-word" data-word="lineage">lineages</mark> <mark class="vocab-word" data-word="evolve">evolved</mark> from an <mark class="vocab-word" data-word="ancestor">ancestor</mark> that itself had lost the ability to <mark class="vocab-word" data-word="metamorphose">metamorphose</mark>. In other words, <mark class="vocab-word" data-word="metamorphosis">metamorphosis</mark> in <mark class="vocab-word" data-word="mole">mole</mark> salamanders is an atavism. The salamander example fits with Raff’s 10-million-year time frame.</p><p>More recently, however, examples have been reported that break the time limit, <mark class="vocab-word" data-word="suggest">suggesting</mark> that silent <mark class="vocab-word" data-word="gene">genes</mark> may not be the whole <mark class="vocab-word" data-word="story">story</mark>. In a paper published last year, <mark class="vocab-word" data-word="biologist">biologist</mark> Gunter Wagner of Yale University reported some work on the evolutionary history of a group of South American <mark class="vocab-word" data-word="lizard">lizards</mark> called Bachia. Many of these have <mark class="vocab-word" data-word="minuscule">minuscule</mark> <mark class="vocab-word" data-word="limb">limbs</mark>; some look more like snakes than <mark class="vocab-word" data-word="lizard">lizards</mark> and a few have completely lost the toes on their <mark class="vocab-word" data-word="hind">hind</mark> <mark class="vocab-word" data-word="limb">limbs</mark>. Other species, however, sport up to four toes on their <mark class="vocab-word" data-word="hind">hind</mark> legs. The simplest explanation is that the toed <mark class="vocab-word" data-word="lineage">lineages</mark> never lost their toes, but Wagner begs to <mark class="vocab-word" data-word="differ">differ</mark>. <mark class="vocab-word" data-word="accord">According</mark> to his analysis of the Bachia family <mark class="vocab-word" data-word="tree">tree</mark>, the toed species re-evolved toes from toeless <mark class="vocab-word" data-word="ancestor">ancestors</mark> and, what is more, digit loss and gain has occurred on more than one occasion over tens of millions of years.</p><p>So what’s going on? One possibility is that these <mark class="vocab-word" data-word="trait">traits</mark> are lost and then simply reappear, in much the same way that similar structures can <mark class="vocab-word" data-word="independently">independently</mark> arise in unrelated species, such as the dorsal <mark class="vocab-word" data-word="fin">fins</mark> of <mark class="vocab-word" data-word="shark">sharks</mark> and killer whales. Another more <mark class="vocab-word" data-word="intriguing">intriguing</mark> possibility is that the <mark class="vocab-word" data-word="genetic">genetic</mark> information needed to make toes somehow survived for tens or perhaps hundreds of millions of years in the <mark class="vocab-word" data-word="lizard">lizards</mark> and was reactivated. These atavistic <mark class="vocab-word" data-word="trait">traits</mark> <mark class="vocab-word" data-word="provided">provided</mark> an advantage and spread through the population, effectively <mark class="vocab-word" data-word="reverse">reversing</mark> <mark class="vocab-word" data-word="evolution">evolution</mark>.</p><p>But if silent <mark class="vocab-word" data-word="gene">genes</mark> <mark class="vocab-word" data-word="degrade">degrade</mark> within 6 to 10 million years, how can long-lost <mark class="vocab-word" data-word="trait">traits</mark> be reactivated over longer timescales? The answer may lie in the <mark class="vocab-word" data-word="womb">womb</mark>. Early <mark class="vocab-word" data-word="embryo">embryos</mark> of many species develop <mark class="vocab-word" data-word="ancestral">ancestral</mark> features. Snake <mark class="vocab-word" data-word="embryo">embryos</mark>, for example, <mark class="vocab-word" data-word="sprout">sprout</mark> <mark class="vocab-word" data-word="hind">hind</mark> <mark class="vocab-word" data-word="limb">limb</mark> <mark class="vocab-word" data-word="bud">buds</mark>. Later in development, these features disappear thanks to developmental programs that say ‘lose the leg’. If for any reason this does not happen, the <mark class="vocab-word" data-word="ancestral">ancestral</mark> feature may not disappear, <mark class="vocab-word" data-word="lead">leading</mark> to an atavism.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>将任何动物描述为“进化倒退”是有争议的。该世纪的大部分时间里，大多数生物学家一直不愿意使用这些词汇。他们谨记着进化的一条基础原则，“进化不能后退”。但随着越来越多的例子出现，以及现代基因科学的诞生，这条规则不得不被改写。进化的倒退不仅是可能的，它们还在向前的进化中起着重要作用。</p><p>用于描述进化后退的技术词汇是“返祖现象”，它来自于拉丁语atavus，意思是祖先。该词具有一定的丑陋含义。这在很大程度上要归功于19世纪意大利医务人员Cesare Lombroso。他认为犯罪分子是天生的，而不是后期造成的。并且可以根据特定的身体特征来进行识别。而这些特征可以追溯到原始的亚人类状态。</p><p>Lombroso在描述罪犯时，一名叫做Louis Dollo的比利时古生物学家正在研究化石记录，并得出相反的结论。1890年，他提出进化是不可逆的，“一种生物无法回到其祖先在进化序列中已经完成的任何先前阶段，即使是部分回归也不可能”。二十世纪早期的生物学家得出了相似的结论，尽管他们在概率上对其进行了限定，认为并没有任何理由支持进化无法后退，它仅仅是不太可能。因此，这种进化不可逆的观念扎根下来，并被称为“Dollo定律”。</p><p>如果Dollo定律是正确的，那么返祖现象哪怕确实存在，也应该十分少见。然而，几乎从这一概念扎根以来，例外就一直出现。例如，1919年，加拿大温哥华岛上捕获了一头座头鲸。它有一双类似于腿的、一米多长的附属物，并拥有完整的四肢骨骼。探险家Roy Chapman Andrews那时认为这头鲸鱼一定退化成了其生活在陆地上的祖先状态。他于1921年写到，“我找不到任何其他解释”。</p><p>从那时起，发现了如此之多的其他例子，以至于坚持进化不可逆这一理论不再有什么意义。这就提出了一个难题：那些几百万年前消失的特征怎么会再次突然出现？1994年，美国印第安纳大学Rudolf Raff和他的同事决定利用基因学量化进化倒退的可能性。他们考虑到，虽然一些进化变化涉及到基因的缺失，并因此是不可逆的。但其他的则可能是基因被关闭的结果。他们认为，如果这些沉默的基因以某种方式再次被打开，消失了很长时间的特征就会再次出现。</p><p>Raff的团队继续计算这一现象发生的可能性。他们认为沉默的基因会积累随机突变，并最终使得它们变得毫无用处。所以，如果一个基因不再被使用，那么它在一个物种中可以存在多长时间呢？该团队计算，有很大概率，沉默的基因在种群中的一些个体里可以存在600万年，一些甚至可能延续1000万年那么久。换句话说，退化完全可能，但仅仅是退回相对较近的进化阶段。</p><p>该团队列举了墨西哥和加利福尼亚的钝口螈为证。与大多数两栖动物类似，它们以一种年幼的“蝌蚪”形态开始自己的一生，然后转变为成年形态。只有一个品种例外：蝾螈。它因一生都保持着年幼状态而闻名。这一现象最简单的解释是，蝾螈这一单独分支失去了变形的能力，而其他分支则保留了这一能力。然而，通过对蝾螈家族谱系的细致分析发现，其他分支显然是从某一个已经失去变形能力的祖先进化而来的。话句话说，钝口螈的变形能力是一种返祖现象。钝口螈的例子符合Raff一千万年的时间框架。</p><p>然而，更近一些被报道的例子打破了时间限制，表明沉默的基因可能还不是故事的全部。在去年发表的一篇论文中，耶鲁大学生物学家Gunter Wagner公布了一些自己对一种名为Bachia的南美洲蜥蜴的进化历史所做的研究。它们许多都有微型四肢。一些看起来更像是蛇而不是蜥蜴。一些已经完全失去了后肢的指头。然而，其他物种的后肢上则出现了最多四个指头。最简单的解释是，有指头的分支从未丧失过这一特征。但Wagner持不同意见。根据他对Bachia家族谱系的研究，有指头的物种从没有指头的祖先那里再次进化出了指头。此外，这种脚趾的消失和再现在过去上千万年里曾不只出现过一次。</p><p>那么，到底是怎么回事呢？一种可能是，这些特征先是消失，然后只是简单的再次出现而已。就跟一些相似的结构可能独立出现在不相关的物种身上一样，比如鲨鱼和虎鲸的背鳍。另外一种更为有趣的可能是，需要用来制造指头的基因信息在蜥蜴中存在了数千万甚至上亿年，然后被再次激活了。这些返祖体征提供了一项优势，并在族群中传播开来，有效地逆转了进化进程。</p><p>但如果沉默的基因在600万到1000万年的时间里退化，那么已经消失了很久的特征又是如何在更长的时间跨度里重现的呢？答案可能存在于子宫内部。许多物种的早期胚胎都发展出祖先的特征。例如，蛇的胚胎会长出后腿突起物。在随后的发育过程中，这些特征会由于发育程序的命令（丢掉这些腿）而消失。如果因为某种原因，这一机制没有起作用，那么祖先的特征就不会消失，导致返祖现象。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The description of any animal as an ‘evolutionary throwback’ is <mark class="vocab-word" data-word="controversial">controversial</mark>. For the better part of a century, most <mark class="vocab-word" data-word="biologist">biologists</mark> have been <mark class="vocab-word" data-word="reluctant">reluctant</mark> to use those words, mindful of a principle of <mark class="vocab-word" data-word="evolution">evolution</mark> that says ‘<mark class="vocab-word" data-word="evolution">evolution</mark> cannot run <mark class="vocab-word" data-word="backwards">backwards</mark>’. But as more and more examples come to light and modern <mark class="vocab-word" data-word="genetics">genetics</mark> enters the scene, that principle is having to be rewritten. Not only are evolutionary throwbacks possible, they sometimes play an important role in the forward <mark class="vocab-word" data-word="march">march</mark> of <mark class="vocab-word" data-word="evolution">evolution</mark>.</p></div>  <div class="parallel-zh"><p>将任何动物描述为“进化倒退”是有争议的。该世纪的大部分时间里，大多数生物学家一直不愿意使用这些词汇。他们谨记着进化的一条基础原则，“进化不能后退”。但随着越来越多的例子出现，以及现代基因科学的诞生，这条规则不得不被改写。进化的倒退不仅是可能的，它们还在向前的进化中起着重要作用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The technical term for an evolutionary throwback is an ‘atavism’, from the <mark class="vocab-word" data-word="latin">Latin</mark> atavus, meaning forefather. The word has ugly connotations thanks largely to Cesare Lombroso, a 19th-century <mark class="vocab-word" data-word="italian">Italian</mark> medic who argued that criminals were born not made and could be identified by certain physical features that were throwbacks to a <mark class="vocab-word" data-word="primitive">primitive</mark>, sub-human state.</p></div>  <div class="parallel-zh"><p>用于描述进化后退的技术词汇是“返祖现象”，它来自于拉丁语atavus，意思是祖先。该词具有一定的丑陋含义。这在很大程度上要归功于19世纪意大利医务人员Cesare Lombroso。他认为犯罪分子是天生的，而不是后期造成的。并且可以根据特定的身体特征来进行识别。而这些特征可以追溯到原始的亚人类状态。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While Lombroso was measuring criminals, a Belgian palaeontologist called Louis Dollo was studying <mark class="vocab-word" data-word="fossil">fossil</mark> records and coming to the opposite conclusion. In 1890 he <mark class="vocab-word" data-word="propose">proposed</mark> that <mark class="vocab-word" data-word="evolution">evolution</mark> was <mark class="vocab-word" data-word="irreversible">irreversible</mark>: that ‘an <mark class="vocab-word" data-word="organism">organism</mark> is unable to return, even <mark class="vocab-word" data-word="partially">partially</mark>, to a previous stage already realised in the ranks of its <mark class="vocab-word" data-word="ancestor">ancestors</mark>’. Early 20th-century <mark class="vocab-word" data-word="biologist">biologists</mark> came to a similar conclusion, though they <mark class="vocab-word" data-word="qualified">qualified</mark> it in terms of <mark class="vocab-word" data-word="probability">probability</mark>, stating that there is no reason why <mark class="vocab-word" data-word="evolution">evolution</mark> cannot run <mark class="vocab-word" data-word="backwards">backwards</mark>—it is just very unlikely. And so the idea of irreversibility in <mark class="vocab-word" data-word="evolution">evolution</mark> <mark class="vocab-word" data-word="stuck">stuck</mark> and came to be known as ‘Dollo’s law’.</p></div>  <div class="parallel-zh"><p>Lombroso在描述罪犯时，一名叫做Louis Dollo的比利时古生物学家正在研究化石记录，并得出相反的结论。1890年，他提出进化是不可逆的，“一种生物无法回到其祖先在进化序列中已经完成的任何先前阶段，即使是部分回归也不可能”。二十世纪早期的生物学家得出了相似的结论，尽管他们在概率上对其进行了限定，认为并没有任何理由支持进化无法后退，它仅仅是不太可能。因此，这种进化不可逆的观念扎根下来，并被称为“Dollo定律”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>If Dollo’s law is right, atavisms should occur only very rarely, if at all. Yet almost since the idea took root, <mark class="vocab-word" data-word="exception">exceptions</mark> have been cropping up. In 1919, for example, a humpback whale with a pair of leg-like appendages over a metre long, complete with a full set of <mark class="vocab-word" data-word="limb">limb</mark> bones, was caught off Vancouver Island in Canada. <mark class="vocab-word" data-word="explorer">Explorer</mark> Roy Chapman Andrews argued at the time that the whale must be a throwback to a land-living <mark class="vocab-word" data-word="ancestor">ancestor</mark>. ‘I can see no other explanation,’ he wrote in 1921.</p></div>  <div class="parallel-zh"><p>如果Dollo定律是正确的，那么返祖现象哪怕确实存在，也应该十分少见。然而，几乎从这一概念扎根以来，例外就一直出现。例如，1919年，加拿大温哥华岛上捕获了一头座头鲸。它有一双类似于腿的、一米多长的附属物，并拥有完整的四肢骨骼。探险家Roy Chapman Andrews那时认为这头鲸鱼一定退化成了其生活在陆地上的祖先状态。他于1921年写到，“我找不到任何其他解释”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Since then, so many other examples have been discovered that it no longer makes sense to say that <mark class="vocab-word" data-word="evolution">evolution</mark> is as good as <mark class="vocab-word" data-word="irreversible">irreversible</mark>. And this poses a <mark class="vocab-word" data-word="puzzle">puzzle</mark>: how can characteristics that disappeared millions of years ago suddenly reappear? In 1994, Rudolf Raff and colleagues at Indiana University in the USA decided to use <mark class="vocab-word" data-word="genetics">genetics</mark> to put a number on the <mark class="vocab-word" data-word="probability">probability</mark> of <mark class="vocab-word" data-word="evolution">evolution</mark> going into <mark class="vocab-word" data-word="reverse">reverse</mark>. They reasoned that while some evolutionary changes involve the loss of <mark class="vocab-word" data-word="gene">genes</mark> and are therefore <mark class="vocab-word" data-word="irreversible">irreversible</mark>, others may be the result of <mark class="vocab-word" data-word="gene">genes</mark> being switched off. If these silent <mark class="vocab-word" data-word="gene">genes</mark> are somehow switched back on, they argued, long-lost <mark class="vocab-word" data-word="trait">traits</mark> could reappear.</p></div>  <div class="parallel-zh"><p>从那时起，发现了如此之多的其他例子，以至于坚持进化不可逆这一理论不再有什么意义。这就提出了一个难题：那些几百万年前消失的特征怎么会再次突然出现？1994年，美国印第安纳大学Rudolf Raff和他的同事决定利用基因学量化进化倒退的可能性。他们考虑到，虽然一些进化变化涉及到基因的缺失，并因此是不可逆的。但其他的则可能是基因被关闭的结果。他们认为，如果这些沉默的基因以某种方式再次被打开，消失了很长时间的特征就会再次出现。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Raff’s team went on to calculate the <mark class="vocab-word" data-word="likelihood">likelihood</mark> of it happening. Silent <mark class="vocab-word" data-word="gene">genes</mark> <mark class="vocab-word" data-word="accumulate">accumulate</mark> <mark class="vocab-word" data-word="random">random</mark> <mark class="vocab-word" data-word="mutation">mutations</mark>, they reasoned, eventually <mark class="vocab-word" data-word="rendering">rendering</mark> them <mark class="vocab-word" data-word="useless">useless</mark>. So how long can a <mark class="vocab-word" data-word="gene">gene</mark> survive in a species if it is no longer used? The team calculated that there is a good chance of silent <mark class="vocab-word" data-word="gene">genes</mark> surviving for up to 6 million years in at least a few individuals in a population, and that some might survive as long as 10 million years. In other words, throwbacks are possible, but only to the relatively recent evolutionary past.</p></div>  <div class="parallel-zh"><p>Raff的团队继续计算这一现象发生的可能性。他们认为沉默的基因会积累随机突变，并最终使得它们变得毫无用处。所以，如果一个基因不再被使用，那么它在一个物种中可以存在多长时间呢？该团队计算，有很大概率，沉默的基因在种群中的一些个体里可以存在600万年，一些甚至可能延续1000万年那么久。换句话说，退化完全可能，但仅仅是退回相对较近的进化阶段。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As a possible example, the team <mark class="vocab-word" data-word="pointed">pointed</mark> to the <mark class="vocab-word" data-word="mole">mole</mark> salamanders of Mexico and California. Like most <mark class="vocab-word" data-word="amphibian">amphibians</mark> these begin life in a <mark class="vocab-word" data-word="juvenile">juvenile</mark> ‘<mark class="vocab-word" data-word="tadpole">tadpole</mark>’ state, then <mark class="vocab-word" data-word="metamorphose">metamorphose</mark> into the adult form—except for one species, the axolotl, which famously lives its entire life as a <mark class="vocab-word" data-word="juvenile">juvenile</mark>. The simplest explanation for this is that the axolotl <mark class="vocab-word" data-word="lineage">lineage</mark> alone lost the ability to <mark class="vocab-word" data-word="metamorphose">metamorphose</mark>, while others retained it. From a detailed analysis of the salamanders’ family <mark class="vocab-word" data-word="tree">tree</mark>, however, it is clear that the other <mark class="vocab-word" data-word="lineage">lineages</mark> <mark class="vocab-word" data-word="evolve">evolved</mark> from an <mark class="vocab-word" data-word="ancestor">ancestor</mark> that itself had lost the ability to <mark class="vocab-word" data-word="metamorphose">metamorphose</mark>. In other words, <mark class="vocab-word" data-word="metamorphosis">metamorphosis</mark> in <mark class="vocab-word" data-word="mole">mole</mark> salamanders is an atavism. The salamander example fits with Raff’s 10-million-year time frame.</p></div>  <div class="parallel-zh"><p>该团队列举了墨西哥和加利福尼亚的钝口螈为证。与大多数两栖动物类似，它们以一种年幼的“蝌蚪”形态开始自己的一生，然后转变为成年形态。只有一个品种例外：蝾螈。它因一生都保持着年幼状态而闻名。这一现象最简单的解释是，蝾螈这一单独分支失去了变形的能力，而其他分支则保留了这一能力。然而，通过对蝾螈家族谱系的细致分析发现，其他分支显然是从某一个已经失去变形能力的祖先进化而来的。话句话说，钝口螈的变形能力是一种返祖现象。钝口螈的例子符合Raff一千万年的时间框架。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>More recently, however, examples have been reported that break the time limit, <mark class="vocab-word" data-word="suggest">suggesting</mark> that silent <mark class="vocab-word" data-word="gene">genes</mark> may not be the whole <mark class="vocab-word" data-word="story">story</mark>. In a paper published last year, <mark class="vocab-word" data-word="biologist">biologist</mark> Gunter Wagner of Yale University reported some work on the evolutionary history of a group of South American <mark class="vocab-word" data-word="lizard">lizards</mark> called Bachia. Many of these have <mark class="vocab-word" data-word="minuscule">minuscule</mark> <mark class="vocab-word" data-word="limb">limbs</mark>; some look more like snakes than <mark class="vocab-word" data-word="lizard">lizards</mark> and a few have completely lost the toes on their <mark class="vocab-word" data-word="hind">hind</mark> <mark class="vocab-word" data-word="limb">limbs</mark>. Other species, however, sport up to four toes on their <mark class="vocab-word" data-word="hind">hind</mark> legs. The simplest explanation is that the toed <mark class="vocab-word" data-word="lineage">lineages</mark> never lost their toes, but Wagner begs to <mark class="vocab-word" data-word="differ">differ</mark>. <mark class="vocab-word" data-word="accord">According</mark> to his analysis of the Bachia family <mark class="vocab-word" data-word="tree">tree</mark>, the toed species re-evolved toes from toeless <mark class="vocab-word" data-word="ancestor">ancestors</mark> and, what is more, digit loss and gain has occurred on more than one occasion over tens of millions of years.</p></div>  <div class="parallel-zh"><p>然而，更近一些被报道的例子打破了时间限制，表明沉默的基因可能还不是故事的全部。在去年发表的一篇论文中，耶鲁大学生物学家Gunter Wagner公布了一些自己对一种名为Bachia的南美洲蜥蜴的进化历史所做的研究。它们许多都有微型四肢。一些看起来更像是蛇而不是蜥蜴。一些已经完全失去了后肢的指头。然而，其他物种的后肢上则出现了最多四个指头。最简单的解释是，有指头的分支从未丧失过这一特征。但Wagner持不同意见。根据他对Bachia家族谱系的研究，有指头的物种从没有指头的祖先那里再次进化出了指头。此外，这种脚趾的消失和再现在过去上千万年里曾不只出现过一次。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>So what’s going on? One possibility is that these <mark class="vocab-word" data-word="trait">traits</mark> are lost and then simply reappear, in much the same way that similar structures can <mark class="vocab-word" data-word="independently">independently</mark> arise in unrelated species, such as the dorsal <mark class="vocab-word" data-word="fin">fins</mark> of <mark class="vocab-word" data-word="shark">sharks</mark> and killer whales. Another more <mark class="vocab-word" data-word="intriguing">intriguing</mark> possibility is that the <mark class="vocab-word" data-word="genetic">genetic</mark> information needed to make toes somehow survived for tens or perhaps hundreds of millions of years in the <mark class="vocab-word" data-word="lizard">lizards</mark> and was reactivated. These atavistic <mark class="vocab-word" data-word="trait">traits</mark> <mark class="vocab-word" data-word="provided">provided</mark> an advantage and spread through the population, effectively <mark class="vocab-word" data-word="reverse">reversing</mark> <mark class="vocab-word" data-word="evolution">evolution</mark>.</p></div>  <div class="parallel-zh"><p>那么，到底是怎么回事呢？一种可能是，这些特征先是消失，然后只是简单的再次出现而已。就跟一些相似的结构可能独立出现在不相关的物种身上一样，比如鲨鱼和虎鲸的背鳍。另外一种更为有趣的可能是，需要用来制造指头的基因信息在蜥蜴中存在了数千万甚至上亿年，然后被再次激活了。这些返祖体征提供了一项优势，并在族群中传播开来，有效地逆转了进化进程。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But if silent <mark class="vocab-word" data-word="gene">genes</mark> <mark class="vocab-word" data-word="degrade">degrade</mark> within 6 to 10 million years, how can long-lost <mark class="vocab-word" data-word="trait">traits</mark> be reactivated over longer timescales? The answer may lie in the <mark class="vocab-word" data-word="womb">womb</mark>. Early <mark class="vocab-word" data-word="embryo">embryos</mark> of many species develop <mark class="vocab-word" data-word="ancestral">ancestral</mark> features. Snake <mark class="vocab-word" data-word="embryo">embryos</mark>, for example, <mark class="vocab-word" data-word="sprout">sprout</mark> <mark class="vocab-word" data-word="hind">hind</mark> <mark class="vocab-word" data-word="limb">limb</mark> <mark class="vocab-word" data-word="bud">buds</mark>. Later in development, these features disappear thanks to developmental programs that say ‘lose the leg’. If for any reason this does not happen, the <mark class="vocab-word" data-word="ancestral">ancestral</mark> feature may not disappear, <mark class="vocab-word" data-word="lead">leading</mark> to an atavism.</p></div>  <div class="parallel-zh"><p>但如果沉默的基因在600万到1000万年的时间里退化，那么已经消失了很久的特征又是如何在更长的时间跨度里重现的呢？答案可能存在于子宫内部。许多物种的早期胚胎都发展出祖先的特征。例如，蛇的胚胎会长出后腿突起物。在随后的发育过程中，这些特征会由于发育程序的命令（丢掉这些腿）而消失。如果因为某种原因，这一机制没有起作用，那么祖先的特征就不会消失，导致返祖现象。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"controversial": 1, "biologist": 3, "reluctant": 1, "evolution": 9, "backwards": 2, "genetics": 2, "march": 1, "latin": 1, "italian": 1, "primitive": 1, "fossil": 1, "propose": 1, "irreversible": 3, "organism": 1, "partially": 1, "ancestor": 4, "qualified": 1, "probability": 2, "stuck": 1, "exception": 1, "limb": 4, "explorer": 1, "puzzle": 1, "reverse": 2, "gene": 8, "trait": 4, "likelihood": 1, "accumulate": 1, "random": 1, "mutation": 1, "rendering": 1, "useless": 1, "pointed": 1, "mole": 2, "amphibian": 1, "juvenile": 2, "tadpole": 1, "metamorphose": 3, "lineage": 3, "tree": 2, "evolve": 1, "metamorphosis": 1, "suggest": 1, "story": 1, "lizard": 3, "minuscule": 1, "hind": 3, "differ": 1, "accord": 1, "independently": 1, "fin": 1, "shark": 1, "intriguing": 1, "genetic": 1, "provided": 1, "degrade": 1, "womb": 1, "embryo": 2, "ancestral": 2, "sprout": 1, "bud": 1, "lead": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

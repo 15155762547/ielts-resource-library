@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman shipbuilding and navigation 罗马造船与航海 - 剑桥雅思16 Test 3 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思16</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Roman shipbuilding and navigation 罗马造船与航海</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/42875.html" target="_blank">https://www.laokaoya.com/42875.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Shipbuilding today is based on science and ships are built using computers and <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> tools. Shipbuilding in ancient Rome, however, was more of an art relying on estimation, <mark class="vocab-word" data-word="inherit">inherited</mark> techniques and personal experience. The Romans were not <mark class="vocab-word" data-word="traditionally">traditionally</mark> <mark class="vocab-word" data-word="sailor">sailors</mark> but mostly land-based people, who <mark class="vocab-word" data-word="learned">learned</mark> to build ships from the people that they <mark class="vocab-word" data-word="conquer">conquered</mark>, <mark class="vocab-word" data-word="namely">namely</mark> the Greeks and the Egyptians.</p><p>There are a few surviving written documents that give descriptions and <mark class="vocab-word" data-word="representation">representations</mark> of ancient Roman ships, including the sails and rigging. <mark class="vocab-word" data-word="excavate">Excavated</mark> <mark class="vocab-word" data-word="vessel">vessels</mark> also provide some <mark class="vocab-word" data-word="clue">clues</mark> about ancient shipbuilding techniques. Studies of these have taught us that ancient Roman shipbuilders built the outer <mark class="vocab-word" data-word="hull">hull</mark> first, then <mark class="vocab-word" data-word="proceed">proceeded</mark> with the frame and the rest of the ship. <mark class="vocab-word" data-word="plank">Planks</mark> used to build the outer <mark class="vocab-word" data-word="hull">hull</mark> were initially sewn together. Starting from the 6th century BCE, they were <mark class="vocab-word" data-word="fixed">fixed</mark> using a method called mortise and tenon, <mark class="vocab-word" data-word="whereby">whereby</mark> one <mark class="vocab-word" data-word="plank">plank</mark> locked into another without the need for <mark class="vocab-word" data-word="stitch">stitching</mark>. Then in the first centuries of the current <mark class="vocab-word" data-word="era">era</mark>, <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark> shipbuilders shifted to another shipbuilding method, still in use today, which consisted of building the frame first and then <mark class="vocab-word" data-word="proceeding">proceeding</mark> with the <mark class="vocab-word" data-word="hull">hull</mark> and the other components of the ship. This method was more <mark class="vocab-word" data-word="systematic">systematic</mark> and <mark class="vocab-word" data-word="dramatically">dramatically</mark> <mark class="vocab-word" data-word="shorten">shortened</mark> ship construction times. The ancient Romans built large <mark class="vocab-word" data-word="merchant">merchant</mark> ships and warships whose size and technology were unequalled until the 16th century CE.</p><p>Warships were built to be lightweight and very <mark class="vocab-word" data-word="speedy">speedy</mark>. They had to be able to sail near the coast, which is why they had no ballast or <mark class="vocab-word" data-word="excess">excess</mark> load and were built with a long, narrow <mark class="vocab-word" data-word="hull">hull</mark>. They did not sink when damaged and often would lie <mark class="vocab-word" data-word="cripple">crippled</mark> on the sea’s surface following <mark class="vocab-word" data-word="naval">naval</mark> battles. They had a <mark class="vocab-word" data-word="bronze">bronze</mark> battering ram, which was used to <mark class="vocab-word" data-word="pierce">pierce</mark> the <mark class="vocab-word" data-word="timber">timber</mark> <mark class="vocab-word" data-word="hull">hulls</mark> or break the <mark class="vocab-word" data-word="oar">oars</mark> of enemy <mark class="vocab-word" data-word="vessel">vessels</mark>. Warships used both <mark class="vocab-word" data-word="wind">wind</mark> (sails) and human power (oarsmen)and were therefore very fast. Eventually, Rome’s <mark class="vocab-word" data-word="navy">navy</mark> became the largest and most powerful in the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark>, and the Romans had control over what they therefore called Mare Nostrum meaning ‘our sea’.</p><p>There were many kinds of warship. The ‘trireme’ was the <mark class="vocab-word" data-word="dominant">dominant</mark> warship from the 7th to 4th century BCE. It had rowers in the top, middle and lower levels, and <mark class="vocab-word" data-word="approximate">approximately</mark> 50 rowers in each bank. The rowers at the bottom had the most uncomfortable position as they were under the other rowers and were <mark class="vocab-word" data-word="exposed">exposed</mark> to the water entering through the oar-holes. This article is from  website. It is worth noting that <mark class="vocab-word" data-word="contrary">contrary</mark> to popular <mark class="vocab-word" data-word="perception">perception</mark>, rowers were not slaves but mostly Roman citizens <mark class="vocab-word" data-word="enroll">enrolled</mark> in the military. The trireme was <mark class="vocab-word" data-word="supersede">superseded</mark> by larger ships with even more rowers.</p><p><mark class="vocab-word" data-word="merchant">Merchant</mark> ships were built to transport lots of <mark class="vocab-word" data-word="cargo">cargo</mark> over long distances and at a reasonable cost. They had a wider <mark class="vocab-word" data-word="hull">hull</mark>, double <mark class="vocab-word" data-word="plank">planking</mark> and a solid <mark class="vocab-word" data-word="interior">interior</mark> for added <mark class="vocab-word" data-word="stability">stability</mark>. Unlike warships, their V-shaped <mark class="vocab-word" data-word="hull">hull</mark> was deep <mark class="vocab-word" data-word="underwater">underwater</mark>, meaning that they could not sail too close to the coast. They usually had two huge side rudders located off the <mark class="vocab-word" data-word="stern">stern</mark> and controlled by a small tiller bar connected to a system of <mark class="vocab-word" data-word="cable">cables</mark>. They had from one to three <mark class="vocab-word" data-word="mast">masts</mark> with large square sails and a small <mark class="vocab-word" data-word="triangular">triangular</mark> sail at the <mark class="vocab-word" data-word="bow">bow</mark>. Just like warships, <mark class="vocab-word" data-word="merchant">merchant</mark> ships used oarsmen, but <mark class="vocab-word" data-word="coordinate">coordinating</mark> the hundreds of rowers in both types of ship was not an easy task. In order to assist them, music would be played on an <mark class="vocab-word" data-word="instrument">instrument</mark>, and <mark class="vocab-word" data-word="oar">oars</mark> would then keep time with this.</p><p>The <mark class="vocab-word" data-word="cargo">cargo</mark> on <mark class="vocab-word" data-word="merchant">merchant</mark> ships included <mark class="vocab-word" data-word="raw">raw</mark> materials (e.g. iron bars, <mark class="vocab-word" data-word="copper">copper</mark>, <mark class="vocab-word" data-word="marble">marble</mark> and <mark class="vocab-word" data-word="granite">granite</mark>), and <mark class="vocab-word" data-word="agricultural">agricultural</mark> products (e.g. grain from Egypt’s Nile valley). During the <mark class="vocab-word" data-word="empire">Empire</mark>, Rome was a huge city by ancient standards of about one million <mark class="vocab-word" data-word="inhabitant">inhabitants</mark>. <mark class="vocab-word" data-word="goods">Goods</mark> from all over the world would come to the city through the port of Pozzuoli <mark class="vocab-word" data-word="situated">situated</mark> west of the <mark class="vocab-word" data-word="bay">bay</mark> of Naples in Italy and through the <mark class="vocab-word" data-word="gigantic">gigantic</mark> port of Ostia <mark class="vocab-word" data-word="situated">situated</mark> at the mouth of the Tiber River. Large <mark class="vocab-word" data-word="merchant">merchant</mark> ships would approach the destination port and, just like today, be <mark class="vocab-word" data-word="intercept">intercepted</mark> by a number of towboats that would drag them to the <mark class="vocab-word" data-word="quay">quay</mark>.</p><p>The time of travel along the many sailing routes could vary widely. <mark class="vocab-word" data-word="navigation">Navigation</mark> in ancient Rome did not rely on <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> <mark class="vocab-word" data-word="instrument">instruments</mark> such as <mark class="vocab-word" data-word="compass">compasses</mark> but on experience, local knowledge and observation of natural phenomena. In conditions of good visibility, seamen in the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark> often had the <mark class="vocab-word" data-word="mainland">mainland</mark> or islands in sight, which greatly <mark class="vocab-word" data-word="facilitate">facilitated</mark> <mark class="vocab-word" data-word="navigation">navigation</mark>. They sailed by noting their position relative to a <mark class="vocab-word" data-word="succession">succession</mark> of recognisable <mark class="vocab-word" data-word="landmark">landmarks</mark>. When weather conditions were not good or where land was no longer <mark class="vocab-word" data-word="visible">visible</mark>, Roman mariners estimated directions from the <mark class="vocab-word" data-word="pole">pole</mark> star or, with less <mark class="vocab-word" data-word="accuracy">accuracy</mark>, from the Sun at noon. They also estimated directions relative to the <mark class="vocab-word" data-word="wind">wind</mark> and <mark class="vocab-word" data-word="swell">swell</mark>. Overall, shipping in ancient Roman times <mark class="vocab-word" data-word="resemble">resembled</mark> shipping today with large <mark class="vocab-word" data-word="vessel">vessels</mark> regularly <mark class="vocab-word" data-word="cross">crossing</mark> the seas and bringing supplies from their <mark class="vocab-word" data-word="empire">Empire</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>现代造船业建立在科技之上。人们利用电脑和精密的工具建造船只。然而，古罗马的造船业更多的是一种依赖于判断，祖传技术以及个人经验的艺术。罗马人以前并不是水手，大部分人都在陆地上生活。他们从自己占领区的人们那里（希腊人和埃及人）学会如何建造船舶。</p><p>有几份留存的文档描述了古罗马的船只，包括其风帆和绳索。考古发掘出来的轮船也为了解古代造船技术提供了一些线索。对这些东西的研究让我们得知，古罗马船匠首先建造外面的船身，然后才进行到框架和其余的部分。用于建造船身的木板一开始就被拼接在一起。从公元前六世纪开始，人们使用一种被称为榫 卯结构的方法（一块木板与另一块锁定，不需要缝补）将它们固定住。到了公元一世纪，地中海的造船者转向另一种如今仍在使用的造船方法，即先建造框架，然后是船体和船只的其他部分。这一方法更为系统，极大的缩减了船只的建造时间。古罗马人建造出大型商船和战舰。其尺寸和所涉及的技术一直到16世纪才有人可以匹敌。</p><p>战舰重量较轻，速度很快。它们必须能在近海航行。这也是它们为什么没有压舱物或额外负重，并且船体狭长的原因。它们受损之后不会沉没，而是在海战后残缺不全的飘在海面上。它们装有青铜撞角，用来刺穿木制船体或者破坏敌方船只的船桨。战舰同时使用风力和人力，所以速度很快。最终，罗马海军成为地中海规模最大、力量最强的舰队。罗马人控制这这片海域，将其称之为“我们的海”（内海）。</p><p>有许多种不同的战舰。“三层划桨战船”是公元前7世纪到公元前4世纪的主力。它在上中下三层都配备了划桨者，每层50人。底层的划桨者位置最不舒服，因为他们位于其他划桨者之下，而且会接触到从划桨口进来的水。值得注意的是，与大多数人的认知相反，大部分划桨者并不是奴隶，而是加入军队的罗马公民。</p><p>商船被用来以合理的成本远距离运输货物。它们拥有更宽的串题，双层甲板，以及加固的内部以增加稳定性。跟战舰不一样，他们的V型船体吃水很深。这意味着他们无法在太过靠近海岸的地方航行。它们在船尾拥有两个巨大的侧舵，通过与缆绳系统相连接的小型舵柄进行控制。它们拥有一到三根桅杆，装配着巨大的方形风帆，在船头还有一张小型三角风帆。与战舰一样，商船需要人划桨。但在两种船型中，协调数百名划桨者并不是一项简单的任务。为了辅助它们，音乐通过工具被播放出来，而划桨者则跟着音乐的节奏。</p><p>商船上的货物包括原材料（如铁棒，铜，大理石和花岗岩）和农产品（如来自埃及尼罗河谷的小麦）。在帝国时期，罗马是座巨型城市，按照古代标准，拥有100万的居民。通过意大利位于那不勒斯湾西侧的波佐力港和位于台伯河河口的奥斯提亚港，来自全世界的物品汇聚在这座城市里。大型商船会靠近目的港口，然后跟今天一样，被一些牵引船拦截，将它们拖进港口。</p><p>不同航海路线所需要的航行时间差别很大。古罗马时期的导航并不依赖于诸如罗盘这样精密的工具，而是依靠经验、当地知识和对自然现象的观察。在视野清晰的条件下，地中海上的海员经常能够看到大陆或者岛屿。这极大地方便了导航的进行。他们通过注意自己与一系列可辨识路标的相对位置来航行。当天气条件不好，或者看不到陆地的时候，罗马水手会通过北极星，或者正午的太阳来辨认方向。后者准确度不高。他们也会通过风和海浪辨认方向。整体而言，古罗马时期的船运跟今天十分类似。大型船只经常穿越海洋，从帝国带来补给。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Shipbuilding today is based on science and ships are built using computers and <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> tools. Shipbuilding in ancient Rome, however, was more of an art relying on estimation, <mark class="vocab-word" data-word="inherit">inherited</mark> techniques and personal experience. The Romans were not <mark class="vocab-word" data-word="traditionally">traditionally</mark> <mark class="vocab-word" data-word="sailor">sailors</mark> but mostly land-based people, who <mark class="vocab-word" data-word="learned">learned</mark> to build ships from the people that they <mark class="vocab-word" data-word="conquer">conquered</mark>, <mark class="vocab-word" data-word="namely">namely</mark> the Greeks and the Egyptians.</p></div>  <div class="parallel-zh"><p>现代造船业建立在科技之上。人们利用电脑和精密的工具建造船只。然而，古罗马的造船业更多的是一种依赖于判断，祖传技术以及个人经验的艺术。罗马人以前并不是水手，大部分人都在陆地上生活。他们从自己占领区的人们那里（希腊人和埃及人）学会如何建造船舶。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There are a few surviving written documents that give descriptions and <mark class="vocab-word" data-word="representation">representations</mark> of ancient Roman ships, including the sails and rigging. <mark class="vocab-word" data-word="excavate">Excavated</mark> <mark class="vocab-word" data-word="vessel">vessels</mark> also provide some <mark class="vocab-word" data-word="clue">clues</mark> about ancient shipbuilding techniques. Studies of these have taught us that ancient Roman shipbuilders built the outer <mark class="vocab-word" data-word="hull">hull</mark> first, then <mark class="vocab-word" data-word="proceed">proceeded</mark> with the frame and the rest of the ship. <mark class="vocab-word" data-word="plank">Planks</mark> used to build the outer <mark class="vocab-word" data-word="hull">hull</mark> were initially sewn together. Starting from the 6th century BCE, they were <mark class="vocab-word" data-word="fixed">fixed</mark> using a method called mortise and tenon, <mark class="vocab-word" data-word="whereby">whereby</mark> one <mark class="vocab-word" data-word="plank">plank</mark> locked into another without the need for <mark class="vocab-word" data-word="stitch">stitching</mark>. Then in the first centuries of the current <mark class="vocab-word" data-word="era">era</mark>, <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark> shipbuilders shifted to another shipbuilding method, still in use today, which consisted of building the frame first and then <mark class="vocab-word" data-word="proceeding">proceeding</mark> with the <mark class="vocab-word" data-word="hull">hull</mark> and the other components of the ship. This method was more <mark class="vocab-word" data-word="systematic">systematic</mark> and <mark class="vocab-word" data-word="dramatically">dramatically</mark> <mark class="vocab-word" data-word="shorten">shortened</mark> ship construction times. The ancient Romans built large <mark class="vocab-word" data-word="merchant">merchant</mark> ships and warships whose size and technology were unequalled until the 16th century CE.</p></div>  <div class="parallel-zh"><p>有几份留存的文档描述了古罗马的船只，包括其风帆和绳索。考古发掘出来的轮船也为了解古代造船技术提供了一些线索。对这些东西的研究让我们得知，古罗马船匠首先建造外面的船身，然后才进行到框架和其余的部分。用于建造船身的木板一开始就被拼接在一起。从公元前六世纪开始，人们使用一种被称为榫 卯结构的方法（一块木板与另一块锁定，不需要缝补）将它们固定住。到了公元一世纪，地中海的造船者转向另一种如今仍在使用的造船方法，即先建造框架，然后是船体和船只的其他部分。这一方法更为系统，极大的缩减了船只的建造时间。古罗马人建造出大型商船和战舰。其尺寸和所涉及的技术一直到16世纪才有人可以匹敌。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Warships were built to be lightweight and very <mark class="vocab-word" data-word="speedy">speedy</mark>. They had to be able to sail near the coast, which is why they had no ballast or <mark class="vocab-word" data-word="excess">excess</mark> load and were built with a long, narrow <mark class="vocab-word" data-word="hull">hull</mark>. They did not sink when damaged and often would lie <mark class="vocab-word" data-word="cripple">crippled</mark> on the sea’s surface following <mark class="vocab-word" data-word="naval">naval</mark> battles. They had a <mark class="vocab-word" data-word="bronze">bronze</mark> battering ram, which was used to <mark class="vocab-word" data-word="pierce">pierce</mark> the <mark class="vocab-word" data-word="timber">timber</mark> <mark class="vocab-word" data-word="hull">hulls</mark> or break the <mark class="vocab-word" data-word="oar">oars</mark> of enemy <mark class="vocab-word" data-word="vessel">vessels</mark>. Warships used both <mark class="vocab-word" data-word="wind">wind</mark> (sails) and human power (oarsmen)and were therefore very fast. Eventually, Rome’s <mark class="vocab-word" data-word="navy">navy</mark> became the largest and most powerful in the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark>, and the Romans had control over what they therefore called Mare Nostrum meaning ‘our sea’.</p></div>  <div class="parallel-zh"><p>战舰重量较轻，速度很快。它们必须能在近海航行。这也是它们为什么没有压舱物或额外负重，并且船体狭长的原因。它们受损之后不会沉没，而是在海战后残缺不全的飘在海面上。它们装有青铜撞角，用来刺穿木制船体或者破坏敌方船只的船桨。战舰同时使用风力和人力，所以速度很快。最终，罗马海军成为地中海规模最大、力量最强的舰队。罗马人控制这这片海域，将其称之为“我们的海”（内海）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There were many kinds of warship. The ‘trireme’ was the <mark class="vocab-word" data-word="dominant">dominant</mark> warship from the 7th to 4th century BCE. It had rowers in the top, middle and lower levels, and <mark class="vocab-word" data-word="approximate">approximately</mark> 50 rowers in each bank. The rowers at the bottom had the most uncomfortable position as they were under the other rowers and were <mark class="vocab-word" data-word="exposed">exposed</mark> to the water entering through the oar-holes. This article is from  website. It is worth noting that <mark class="vocab-word" data-word="contrary">contrary</mark> to popular <mark class="vocab-word" data-word="perception">perception</mark>, rowers were not slaves but mostly Roman citizens <mark class="vocab-word" data-word="enroll">enrolled</mark> in the military. The trireme was <mark class="vocab-word" data-word="supersede">superseded</mark> by larger ships with even more rowers.</p></div>  <div class="parallel-zh"><p>有许多种不同的战舰。“三层划桨战船”是公元前7世纪到公元前4世纪的主力。它在上中下三层都配备了划桨者，每层50人。底层的划桨者位置最不舒服，因为他们位于其他划桨者之下，而且会接触到从划桨口进来的水。值得注意的是，与大多数人的认知相反，大部分划桨者并不是奴隶，而是加入军队的罗马公民。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="merchant">Merchant</mark> ships were built to transport lots of <mark class="vocab-word" data-word="cargo">cargo</mark> over long distances and at a reasonable cost. They had a wider <mark class="vocab-word" data-word="hull">hull</mark>, double <mark class="vocab-word" data-word="plank">planking</mark> and a solid <mark class="vocab-word" data-word="interior">interior</mark> for added <mark class="vocab-word" data-word="stability">stability</mark>. Unlike warships, their V-shaped <mark class="vocab-word" data-word="hull">hull</mark> was deep <mark class="vocab-word" data-word="underwater">underwater</mark>, meaning that they could not sail too close to the coast. They usually had two huge side rudders located off the <mark class="vocab-word" data-word="stern">stern</mark> and controlled by a small tiller bar connected to a system of <mark class="vocab-word" data-word="cable">cables</mark>. They had from one to three <mark class="vocab-word" data-word="mast">masts</mark> with large square sails and a small <mark class="vocab-word" data-word="triangular">triangular</mark> sail at the <mark class="vocab-word" data-word="bow">bow</mark>. Just like warships, <mark class="vocab-word" data-word="merchant">merchant</mark> ships used oarsmen, but <mark class="vocab-word" data-word="coordinate">coordinating</mark> the hundreds of rowers in both types of ship was not an easy task. In order to assist them, music would be played on an <mark class="vocab-word" data-word="instrument">instrument</mark>, and <mark class="vocab-word" data-word="oar">oars</mark> would then keep time with this.</p></div>  <div class="parallel-zh"><p>商船被用来以合理的成本远距离运输货物。它们拥有更宽的串题，双层甲板，以及加固的内部以增加稳定性。跟战舰不一样，他们的V型船体吃水很深。这意味着他们无法在太过靠近海岸的地方航行。它们在船尾拥有两个巨大的侧舵，通过与缆绳系统相连接的小型舵柄进行控制。它们拥有一到三根桅杆，装配着巨大的方形风帆，在船头还有一张小型三角风帆。与战舰一样，商船需要人划桨。但在两种船型中，协调数百名划桨者并不是一项简单的任务。为了辅助它们，音乐通过工具被播放出来，而划桨者则跟着音乐的节奏。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="cargo">cargo</mark> on <mark class="vocab-word" data-word="merchant">merchant</mark> ships included <mark class="vocab-word" data-word="raw">raw</mark> materials (e.g. iron bars, <mark class="vocab-word" data-word="copper">copper</mark>, <mark class="vocab-word" data-word="marble">marble</mark> and <mark class="vocab-word" data-word="granite">granite</mark>), and <mark class="vocab-word" data-word="agricultural">agricultural</mark> products (e.g. grain from Egypt’s Nile valley). During the <mark class="vocab-word" data-word="empire">Empire</mark>, Rome was a huge city by ancient standards of about one million <mark class="vocab-word" data-word="inhabitant">inhabitants</mark>. <mark class="vocab-word" data-word="goods">Goods</mark> from all over the world would come to the city through the port of Pozzuoli <mark class="vocab-word" data-word="situated">situated</mark> west of the <mark class="vocab-word" data-word="bay">bay</mark> of Naples in Italy and through the <mark class="vocab-word" data-word="gigantic">gigantic</mark> port of Ostia <mark class="vocab-word" data-word="situated">situated</mark> at the mouth of the Tiber River. Large <mark class="vocab-word" data-word="merchant">merchant</mark> ships would approach the destination port and, just like today, be <mark class="vocab-word" data-word="intercept">intercepted</mark> by a number of towboats that would drag them to the <mark class="vocab-word" data-word="quay">quay</mark>.</p></div>  <div class="parallel-zh"><p>商船上的货物包括原材料（如铁棒，铜，大理石和花岗岩）和农产品（如来自埃及尼罗河谷的小麦）。在帝国时期，罗马是座巨型城市，按照古代标准，拥有100万的居民。通过意大利位于那不勒斯湾西侧的波佐力港和位于台伯河河口的奥斯提亚港，来自全世界的物品汇聚在这座城市里。大型商船会靠近目的港口，然后跟今天一样，被一些牵引船拦截，将它们拖进港口。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The time of travel along the many sailing routes could vary widely. <mark class="vocab-word" data-word="navigation">Navigation</mark> in ancient Rome did not rely on <mark class="vocab-word" data-word="sophisticated">sophisticated</mark> <mark class="vocab-word" data-word="instrument">instruments</mark> such as <mark class="vocab-word" data-word="compass">compasses</mark> but on experience, local knowledge and observation of natural phenomena. In conditions of good visibility, seamen in the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark> often had the <mark class="vocab-word" data-word="mainland">mainland</mark> or islands in sight, which greatly <mark class="vocab-word" data-word="facilitate">facilitated</mark> <mark class="vocab-word" data-word="navigation">navigation</mark>. They sailed by noting their position relative to a <mark class="vocab-word" data-word="succession">succession</mark> of recognisable <mark class="vocab-word" data-word="landmark">landmarks</mark>. When weather conditions were not good or where land was no longer <mark class="vocab-word" data-word="visible">visible</mark>, Roman mariners estimated directions from the <mark class="vocab-word" data-word="pole">pole</mark> star or, with less <mark class="vocab-word" data-word="accuracy">accuracy</mark>, from the Sun at noon. They also estimated directions relative to the <mark class="vocab-word" data-word="wind">wind</mark> and <mark class="vocab-word" data-word="swell">swell</mark>. Overall, shipping in ancient Roman times <mark class="vocab-word" data-word="resemble">resembled</mark> shipping today with large <mark class="vocab-word" data-word="vessel">vessels</mark> regularly <mark class="vocab-word" data-word="cross">crossing</mark> the seas and bringing supplies from their <mark class="vocab-word" data-word="empire">Empire</mark>.</p></div>  <div class="parallel-zh"><p>不同航海路线所需要的航行时间差别很大。古罗马时期的导航并不依赖于诸如罗盘这样精密的工具，而是依靠经验、当地知识和对自然现象的观察。在视野清晰的条件下，地中海上的海员经常能够看到大陆或者岛屿。这极大地方便了导航的进行。他们通过注意自己与一系列可辨识路标的相对位置来航行。当天气条件不好，或者看不到陆地的时候，罗马水手会通过北极星，或者正午的太阳来辨认方向。后者准确度不高。他们也会通过风和海浪辨认方向。整体而言，古罗马时期的船运跟今天十分类似。大型船只经常穿越海洋，从帝国带来补给。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"sophisticated": 2, "inherit": 1, "traditionally": 1, "sailor": 1, "learned": 1, "conquer": 1, "namely": 1, "representation": 1, "excavate": 1, "vessel": 3, "clue": 1, "hull": 7, "proceed": 1, "plank": 3, "fixed": 1, "whereby": 1, "stitch": 1, "era": 1, "mediterranean": 3, "proceeding": 1, "systematic": 1, "dramatically": 1, "shorten": 1, "merchant": 5, "speedy": 1, "excess": 1, "cripple": 1, "naval": 1, "bronze": 1, "pierce": 1, "timber": 1, "oar": 2, "wind": 2, "navy": 1, "dominant": 1, "approximate": 1, "exposed": 1, "contrary": 1, "perception": 1, "enroll": 1, "supersede": 1, "cargo": 2, "interior": 1, "stability": 1, "underwater": 1, "stern": 1, "cable": 1, "mast": 1, "triangular": 1, "bow": 1, "coordinate": 1, "instrument": 2, "raw": 1, "copper": 1, "marble": 1, "granite": 1, "agricultural": 1, "empire": 2, "inhabitant": 1, "goods": 1, "situated": 2, "bay": 1, "gigantic": 1, "intercept": 1, "quay": 1, "navigation": 2, "compass": 1, "mainland": 1, "facilitate": 1, "succession": 1, "landmark": 1, "visible": 1, "pole": 1, "accuracy": 1, "swell": 1, "resemble": 1, "cross": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

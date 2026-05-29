@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Chronicle of Timekeeping - 剑桥雅思8 Test 1 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>A Chronicle of Timekeeping</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24834.html" target="_blank">https://www.laokaoya.com/24834.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="accord">According</mark> to archaeological evidence, at least 5, 000 years ago, and long before the <mark class="vocab-word" data-word="advent">advent</mark> of the Roman <mark class="vocab-word" data-word="empire">Empire</mark>, the Babylonians began to measure time, introducing calendars to co-ordinate <mark class="vocab-word" data-word="communal">communal</mark> activities, to plan the <mark class="vocab-word" data-word="shipment">shipment</mark> of <mark class="vocab-word" data-word="goods">goods</mark> and, in particular, to <mark class="vocab-word" data-word="regulate">regulate</mark> planting and <mark class="vocab-word" data-word="harvest">harvesting</mark>. They based their calendars on three natural cycles: the <mark class="vocab-word" data-word="solar">solar</mark> day, <mark class="vocab-word" data-word="marked">marked</mark> by the <mark class="vocab-word" data-word="successive">successive</mark> periods of light and <mark class="vocab-word" data-word="darkness">darkness</mark> as the earth <mark class="vocab-word" data-word="rotate">rotates</mark> on its <mark class="vocab-word" data-word="axis">axis</mark>; the <mark class="vocab-word" data-word="lunar">lunar</mark> month, following the phases of the moon as it <mark class="vocab-word" data-word="orbit">orbits</mark> the earth; and the <mark class="vocab-word" data-word="solar">solar</mark> year, defined by the changing seasons that accompany our planet’s revolution around the sun.</p><p>Before the invention of <mark class="vocab-word" data-word="artificial">artificial</mark> light, the moon had greater social <mark class="vocab-word" data-word="impact">impact</mark>. And, for those living near the <mark class="vocab-word" data-word="equator">equator</mark> in particular, its <mark class="vocab-word" data-word="wax">waxing</mark> and <mark class="vocab-word" data-word="wane">waning</mark> was more <mark class="vocab-word" data-word="conspicuous">conspicuous</mark> than the <mark class="vocab-word" data-word="passing">passing</mark> of the seasons. <mark class="vocab-word" data-word="hence">Hence</mark>, this article is from  website, the calendars that were developed at the lower <mark class="vocab-word" data-word="latitude">latitudes</mark> were <mark class="vocab-word" data-word="influence">influenced</mark> more by the <mark class="vocab-word" data-word="lunar">lunar</mark> cycle than by the <mark class="vocab-word" data-word="solar">solar</mark> year. In more northern climes, however, where <mark class="vocab-word" data-word="seasonal">seasonal</mark> <mark class="vocab-word" data-word="agriculture">agriculture</mark> was practised, the <mark class="vocab-word" data-word="solar">solar</mark> year became more crucial. As the Roman <mark class="vocab-word" data-word="empire">Empire</mark> expanded <mark class="vocab-word" data-word="northward">northward</mark>, it organised its activity chart for the most part around the <mark class="vocab-word" data-word="solar">solar</mark> year.</p><p>Centuries before the Roman <mark class="vocab-word" data-word="empire">Empire</mark>, the Egyptians had <mark class="vocab-word" data-word="formulate">formulated</mark> a <mark class="vocab-word" data-word="municipal">municipal</mark> calendar having 12 months of 30 days, with five days added to <mark class="vocab-word" data-word="approximate">approximate</mark> the <mark class="vocab-word" data-word="solar">solar</mark> year. Each period of ten days was <mark class="vocab-word" data-word="marked">marked</mark> by the appearance of special groups of stars called decans. At the rise of the star Sirius just before <mark class="vocab-word" data-word="sunrise">sunrise</mark>, which occurred around the all-important annual flooding of the Nile, 12 decans could be seen spanning the heavens. The <mark class="vocab-word" data-word="cosmic">cosmic</mark> <mark class="vocab-word" data-word="significance">significance</mark> the Egyptians placed in the 12 decans led them to develop a system in which each <mark class="vocab-word" data-word="interval">interval</mark> of <mark class="vocab-word" data-word="darkness">darkness</mark> (and later, each <mark class="vocab-word" data-word="interval">interval</mark> of <mark class="vocab-word" data-word="daylight">daylight</mark>) was divided into a dozen equal parts. These periods became known as <mark class="vocab-word" data-word="temporal">temporal</mark> hours because their <mark class="vocab-word" data-word="duration">duration</mark> <mark class="vocab-word" data-word="varied">varied</mark> <mark class="vocab-word" data-word="accord">according</mark> to the changing length of days and nights with the <mark class="vocab-word" data-word="passing">passing</mark> of the seasons. Summer hours were long, winter ones short; only at the <mark class="vocab-word" data-word="spring">spring</mark> and autumn equinoxes were the hours of <mark class="vocab-word" data-word="daylight">daylight</mark> and <mark class="vocab-word" data-word="darkness">darkness</mark> equal. <mark class="vocab-word" data-word="temporal">Temporal</mark> hours, which were first adopted by the Greeks and then the Romans, who <mark class="vocab-word" data-word="disseminate">disseminated</mark> them through Europe, remained in use for more than 2, 500 years.</p><p>In order to track <mark class="vocab-word" data-word="temporal">temporal</mark> hours during the day, inventors created <mark class="vocab-word" data-word="sundial">sundials</mark>, which indicate time by the length or direction of the sun’s shadow. The <mark class="vocab-word" data-word="sundial">sundial</mark>’s <mark class="vocab-word" data-word="counterpart">counterpart</mark>, the water clock, was designed to measure <mark class="vocab-word" data-word="temporal">temporal</mark> hours at night. One of the first water clocks was a <mark class="vocab-word" data-word="basin">basin</mark> with a small hole near the bottom through which the water dripped out. The falling water level <mark class="vocab-word" data-word="denote">denoted</mark> the <mark class="vocab-word" data-word="passing">passing</mark> hour as it dipped below hour lines <mark class="vocab-word" data-word="inscribe">inscribed</mark> on the <mark class="vocab-word" data-word="inner">inner</mark> surface. Although these devices <mark class="vocab-word" data-word="perform">performed</mark> satisfactorily around the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark>, they could not always be depended on in the cloudy and often freezing weather of northern Europe.</p><p>The <mark class="vocab-word" data-word="advent">advent</mark> of the <mark class="vocab-word" data-word="mechanical">mechanical</mark> clock meant that although it could be <mark class="vocab-word" data-word="adjust">adjusted</mark> to maintain <mark class="vocab-word" data-word="temporal">temporal</mark> hours, it was naturally <mark class="vocab-word" data-word="suite">suited</mark> to keeping equal ones. With these, however, arose the question of when to begin counting, and so, in the early 14th century, a number of systems <mark class="vocab-word" data-word="evolve">evolved</mark>. The <mark class="vocab-word" data-word="scheme">schemes</mark> that divided the day into 24 equal parts <mark class="vocab-word" data-word="varied">varied</mark> <mark class="vocab-word" data-word="accord">according</mark> to the start of the count: <mark class="vocab-word" data-word="italian">Italian</mark> hours began at <mark class="vocab-word" data-word="sunset">sunset</mark>, Babylonian hours at <mark class="vocab-word" data-word="sunrise">sunrise</mark>, <mark class="vocab-word" data-word="astronomical">astronomical</mark> hours at <mark class="vocab-word" data-word="midday">midday</mark> and ‘great clock’ hours, used for some large public clocks in Germany, at midnight. Eventually these were <mark class="vocab-word" data-word="supersede">superseded</mark> by ‘small clock’, or French hours, which split the day into two 12-hour periods <mark class="vocab-word" data-word="commence">commencing</mark> at midnight.</p><p>The earliest recorded weight-driven <mark class="vocab-word" data-word="mechanical">mechanical</mark> clock was built in 1283 in Bedfordshire in England. The <mark class="vocab-word" data-word="revolutionary">revolutionary</mark> aspect of this new timekeeper was neither the <mark class="vocab-word" data-word="descend">descending</mark> weight that <mark class="vocab-word" data-word="provided">provided</mark> its <mark class="vocab-word" data-word="motive">motive</mark> force nor the <mark class="vocab-word" data-word="gear">gear</mark> wheels (which had been around for at least 1, 300 years) that transferred the power; it was the part called the escapement. In the early 1400s came the invention of the <mark class="vocab-word" data-word="coil">coiled</mark> <mark class="vocab-word" data-word="spring">spring</mark> or fusee which maintained constant force to the <mark class="vocab-word" data-word="gear">gear</mark> wheels of the timekeeper despite the changing <mark class="vocab-word" data-word="tension">tension</mark> of its mainspring. By the 16th century, a <mark class="vocab-word" data-word="pendulum">pendulum</mark> clock had been <mark class="vocab-word" data-word="devise">devised</mark>, but the <mark class="vocab-word" data-word="pendulum">pendulum</mark> swung in a large arc and thus was not very efficient.</p><p>To address this, a <mark class="vocab-word" data-word="variation">variation</mark> on the original escapement was invented in 1670, in England. It was called the <mark class="vocab-word" data-word="anchor">anchor</mark> escapement, which was a lever-based device shaped like a ship’s <mark class="vocab-word" data-word="anchor">anchor</mark>. The <mark class="vocab-word" data-word="motion">motion</mark> of a <mark class="vocab-word" data-word="pendulum">pendulum</mark> rocks this device so that it <mark class="vocab-word" data-word="catch">catches</mark> and then releases each tooth of the escape wheel, in turn allowing it to turn a <mark class="vocab-word" data-word="precise">precise</mark> amount. Unlike the original form used in early <mark class="vocab-word" data-word="pendulum">pendulum</mark> clocks, the <mark class="vocab-word" data-word="anchor">anchor</mark> escapement permitted the <mark class="vocab-word" data-word="pendulum">pendulum</mark> to travel in a very small arc. Moreover, this invention allowed the use of a long <mark class="vocab-word" data-word="pendulum">pendulum</mark> which could beat once a second and thus led to the development of a new floor-standing case design, which became known as the grandfather clock.</p><p>Today, highly <mark class="vocab-word" data-word="accurate">accurate</mark> timekeeping <mark class="vocab-word" data-word="instrument">instruments</mark> set the beat for most electronic devices. Nearly all computers contain a quartz-crystal clock to <mark class="vocab-word" data-word="regulate">regulate</mark> their operation. Moreover, not only do time signals <mark class="vocab-word" data-word="beam">beamed</mark> down from Global Positioning System <mark class="vocab-word" data-word="satellite">satellites</mark> <mark class="vocab-word" data-word="calibrate">calibrate</mark> the functions of <mark class="vocab-word" data-word="precision">precision</mark> <mark class="vocab-word" data-word="navigation">navigation</mark> equipment, they do so as well for mobile phones, <mark class="vocab-word" data-word="instant">instant</mark> stock-trading systems and nationwide power-distribution <mark class="vocab-word" data-word="grid">grids</mark>. So <mark class="vocab-word" data-word="integral">integral</mark> have these time-based technologies become to day-to-day existence that our dependency on them is recognised only when they fail to work.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>根据考古证据，至少在5000年前，距离罗马帝国出现还有很久的时候，巴比伦人已经开始计时，引入日历以协调公共活动，安排货物的运输，管理播种和收获。他们的日历基于三个自然周期：太阳日，以地球自转时连续产生的光明与黑暗为标志；阴历月，月球围绕地球旋转的阶段；以及太阳年，由随着地球围绕太阳公转而变化的季节定义。</p><p>在人造光发明之前，月亮具有更大的社会影响。对于那些生活在赤道附近的人来说更是如此，它的阴晴圆缺比季节的流逝更加明显。因此，在低纬度地区出现的日历受月球周期的影响大于受太阳年的影响。然而，在更北部实行季节性农业的气候中，太阳年变得更加关键。随着罗马帝国的向北扩张，它所组织的大多数活动都围绕太阳年展开。</p><p>罗马帝国出现前的几个世纪，埃及人制定了一种市历，共有12个月，每个月30天，最后加上五天以接近太阳年。每十天为一个周期，以被称为decan的特殊恒星群的出现为标志。天狼星刚好在日出前升起，这是12个decan横跨天空。而这一现象在每年十分重要的尼罗河泛滥期间出现。埃及人赋予12 decan的重大意义使他们开发出一种将黑夜（随后又将白天）12等分的体系。这些时段被称为日光时，因为它们的持续时间会随着季节的流逝和昼夜长短的变化而变化。夏天长，冬天短；只有在春分和秋分，白天和黑夜的时间才相等。日光时最初由希腊人采用，然后由罗马人通过欧洲传播，至今已使用了2500多年。</p><p>为了在白天记录日光时，发明者创造了日晷，通过太阳阴影的长度或方向指示时间。日晷的对应物，水钟，旨在测量晚上的时间。最早的水钟之一是一个水池。水池的底部附近有一个小孔，水从该孔滴出来。水位下降到水池内部表面所刻着的小时线以下，代表着时间的流逝。虽然这些设备在地中海地区的表现令人满意，但在北欧多云和寒冷的天气下却不总是那么可靠。</p><p>机械钟的问世意味着尽管可以对其进行调节以维持日光时，但它天然地适合记录相等的时间。然而，有了这些，就出现了何时开始计时的问题，因此，14世纪初出现了许多系统。根据计时起点的不同，将一天分成24等份的方案也各不相同：意大利的时间从日落开始，巴比伦的时间从日出开始，天文学时间从中午开始，而德国一些用于大型公共场所的巨大时钟则从午夜开始。最终，这些计时方式被“小时钟”或法国时间所取代。它将一天分为两个12小时的时间段，从午夜开始。</p><p>有记录的最早的重量驱动机械钟是于1283年在英格兰贝德福德郡建造的。这款崭新的计时器的革命性方面既不是由向下的重量进行驱动，也不是传递动力的齿轮（齿轮已经存在至少1300年了），而是所谓的擒纵机构。在15世纪初期，人们发明了一种螺旋弹簧，或者叫作均力圆锥轮，尽管其发条的张力发生变化，但它仍对计时装置的齿轮保持恒定的力。到了16世纪，摆钟被设计出来。但因为钟摆摆动弧度很大，因此效率不高。</p><p>为了解决这个问题，1670年人们在英国发明了原始擒纵装置的一种变型。这就是所谓的锚擒纵装置，它是一种基于杠杆原理的装置，形状像船的锚。摆锤的运动使该装置晃动，由此它抓住并随后释放擒纵轮的每个齿，从而使其精确的旋转。与早期的摆钟所使用的原始形式不同，锚式擒纵机构使钟摆能够以很小的弧度行进。而且，该发明使得使用较长的摆锤成为可能，它每秒跳动一次，从而推动新的落地柜式设计的发展。该设计被称为祖父钟（落地摆钟）。</p><p>如今，高精度的计时仪器为大多数电子设备的设置时间。几乎所有计算机都包含一个石英钟来控制其运行。此外，全球定位系统卫星发出的时间信号不仅可以校准精密导航设备的功能，而且还可以用于移动电话，即时股票交易系统和全国性的配电网。这些基于时间的技术已变得不可或缺，以至于只有它们在无法工作时我们才能意识到自己对它们的依赖。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="accord">According</mark> to archaeological evidence, at least 5, 000 years ago, and long before the <mark class="vocab-word" data-word="advent">advent</mark> of the Roman <mark class="vocab-word" data-word="empire">Empire</mark>, the Babylonians began to measure time, introducing calendars to co-ordinate <mark class="vocab-word" data-word="communal">communal</mark> activities, to plan the <mark class="vocab-word" data-word="shipment">shipment</mark> of <mark class="vocab-word" data-word="goods">goods</mark> and, in particular, to <mark class="vocab-word" data-word="regulate">regulate</mark> planting and <mark class="vocab-word" data-word="harvest">harvesting</mark>. They based their calendars on three natural cycles: the <mark class="vocab-word" data-word="solar">solar</mark> day, <mark class="vocab-word" data-word="marked">marked</mark> by the <mark class="vocab-word" data-word="successive">successive</mark> periods of light and <mark class="vocab-word" data-word="darkness">darkness</mark> as the earth <mark class="vocab-word" data-word="rotate">rotates</mark> on its <mark class="vocab-word" data-word="axis">axis</mark>; the <mark class="vocab-word" data-word="lunar">lunar</mark> month, following the phases of the moon as it <mark class="vocab-word" data-word="orbit">orbits</mark> the earth; and the <mark class="vocab-word" data-word="solar">solar</mark> year, defined by the changing seasons that accompany our planet’s revolution around the sun.</p></div>  <div class="parallel-zh"><p>根据考古证据，至少在5000年前，距离罗马帝国出现还有很久的时候，巴比伦人已经开始计时，引入日历以协调公共活动，安排货物的运输，管理播种和收获。他们的日历基于三个自然周期：太阳日，以地球自转时连续产生的光明与黑暗为标志；阴历月，月球围绕地球旋转的阶段；以及太阳年，由随着地球围绕太阳公转而变化的季节定义。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Before the invention of <mark class="vocab-word" data-word="artificial">artificial</mark> light, the moon had greater social <mark class="vocab-word" data-word="impact">impact</mark>. And, for those living near the <mark class="vocab-word" data-word="equator">equator</mark> in particular, its <mark class="vocab-word" data-word="wax">waxing</mark> and <mark class="vocab-word" data-word="wane">waning</mark> was more <mark class="vocab-word" data-word="conspicuous">conspicuous</mark> than the <mark class="vocab-word" data-word="passing">passing</mark> of the seasons. <mark class="vocab-word" data-word="hence">Hence</mark>, this article is from  website, the calendars that were developed at the lower <mark class="vocab-word" data-word="latitude">latitudes</mark> were <mark class="vocab-word" data-word="influence">influenced</mark> more by the <mark class="vocab-word" data-word="lunar">lunar</mark> cycle than by the <mark class="vocab-word" data-word="solar">solar</mark> year. In more northern climes, however, where <mark class="vocab-word" data-word="seasonal">seasonal</mark> <mark class="vocab-word" data-word="agriculture">agriculture</mark> was practised, the <mark class="vocab-word" data-word="solar">solar</mark> year became more crucial. As the Roman <mark class="vocab-word" data-word="empire">Empire</mark> expanded <mark class="vocab-word" data-word="northward">northward</mark>, it organised its activity chart for the most part around the <mark class="vocab-word" data-word="solar">solar</mark> year.</p></div>  <div class="parallel-zh"><p>在人造光发明之前，月亮具有更大的社会影响。对于那些生活在赤道附近的人来说更是如此，它的阴晴圆缺比季节的流逝更加明显。因此，在低纬度地区出现的日历受月球周期的影响大于受太阳年的影响。然而，在更北部实行季节性农业的气候中，太阳年变得更加关键。随着罗马帝国的向北扩张，它所组织的大多数活动都围绕太阳年展开。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Centuries before the Roman <mark class="vocab-word" data-word="empire">Empire</mark>, the Egyptians had <mark class="vocab-word" data-word="formulate">formulated</mark> a <mark class="vocab-word" data-word="municipal">municipal</mark> calendar having 12 months of 30 days, with five days added to <mark class="vocab-word" data-word="approximate">approximate</mark> the <mark class="vocab-word" data-word="solar">solar</mark> year. Each period of ten days was <mark class="vocab-word" data-word="marked">marked</mark> by the appearance of special groups of stars called decans. At the rise of the star Sirius just before <mark class="vocab-word" data-word="sunrise">sunrise</mark>, which occurred around the all-important annual flooding of the Nile, 12 decans could be seen spanning the heavens. The <mark class="vocab-word" data-word="cosmic">cosmic</mark> <mark class="vocab-word" data-word="significance">significance</mark> the Egyptians placed in the 12 decans led them to develop a system in which each <mark class="vocab-word" data-word="interval">interval</mark> of <mark class="vocab-word" data-word="darkness">darkness</mark> (and later, each <mark class="vocab-word" data-word="interval">interval</mark> of <mark class="vocab-word" data-word="daylight">daylight</mark>) was divided into a dozen equal parts. These periods became known as <mark class="vocab-word" data-word="temporal">temporal</mark> hours because their <mark class="vocab-word" data-word="duration">duration</mark> <mark class="vocab-word" data-word="varied">varied</mark> <mark class="vocab-word" data-word="accord">according</mark> to the changing length of days and nights with the <mark class="vocab-word" data-word="passing">passing</mark> of the seasons. Summer hours were long, winter ones short; only at the <mark class="vocab-word" data-word="spring">spring</mark> and autumn equinoxes were the hours of <mark class="vocab-word" data-word="daylight">daylight</mark> and <mark class="vocab-word" data-word="darkness">darkness</mark> equal. <mark class="vocab-word" data-word="temporal">Temporal</mark> hours, which were first adopted by the Greeks and then the Romans, who <mark class="vocab-word" data-word="disseminate">disseminated</mark> them through Europe, remained in use for more than 2, 500 years.</p></div>  <div class="parallel-zh"><p>罗马帝国出现前的几个世纪，埃及人制定了一种市历，共有12个月，每个月30天，最后加上五天以接近太阳年。每十天为一个周期，以被称为decan的特殊恒星群的出现为标志。天狼星刚好在日出前升起，这是12个decan横跨天空。而这一现象在每年十分重要的尼罗河泛滥期间出现。埃及人赋予12 decan的重大意义使他们开发出一种将黑夜（随后又将白天）12等分的体系。这些时段被称为日光时，因为它们的持续时间会随着季节的流逝和昼夜长短的变化而变化。夏天长，冬天短；只有在春分和秋分，白天和黑夜的时间才相等。日光时最初由希腊人采用，然后由罗马人通过欧洲传播，至今已使用了2500多年。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In order to track <mark class="vocab-word" data-word="temporal">temporal</mark> hours during the day, inventors created <mark class="vocab-word" data-word="sundial">sundials</mark>, which indicate time by the length or direction of the sun’s shadow. The <mark class="vocab-word" data-word="sundial">sundial</mark>’s <mark class="vocab-word" data-word="counterpart">counterpart</mark>, the water clock, was designed to measure <mark class="vocab-word" data-word="temporal">temporal</mark> hours at night. One of the first water clocks was a <mark class="vocab-word" data-word="basin">basin</mark> with a small hole near the bottom through which the water dripped out. The falling water level <mark class="vocab-word" data-word="denote">denoted</mark> the <mark class="vocab-word" data-word="passing">passing</mark> hour as it dipped below hour lines <mark class="vocab-word" data-word="inscribe">inscribed</mark> on the <mark class="vocab-word" data-word="inner">inner</mark> surface. Although these devices <mark class="vocab-word" data-word="perform">performed</mark> satisfactorily around the <mark class="vocab-word" data-word="mediterranean">Mediterranean</mark>, they could not always be depended on in the cloudy and often freezing weather of northern Europe.</p></div>  <div class="parallel-zh"><p>为了在白天记录日光时，发明者创造了日晷，通过太阳阴影的长度或方向指示时间。日晷的对应物，水钟，旨在测量晚上的时间。最早的水钟之一是一个水池。水池的底部附近有一个小孔，水从该孔滴出来。水位下降到水池内部表面所刻着的小时线以下，代表着时间的流逝。虽然这些设备在地中海地区的表现令人满意，但在北欧多云和寒冷的天气下却不总是那么可靠。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="advent">advent</mark> of the <mark class="vocab-word" data-word="mechanical">mechanical</mark> clock meant that although it could be <mark class="vocab-word" data-word="adjust">adjusted</mark> to maintain <mark class="vocab-word" data-word="temporal">temporal</mark> hours, it was naturally <mark class="vocab-word" data-word="suite">suited</mark> to keeping equal ones. With these, however, arose the question of when to begin counting, and so, in the early 14th century, a number of systems <mark class="vocab-word" data-word="evolve">evolved</mark>. The <mark class="vocab-word" data-word="scheme">schemes</mark> that divided the day into 24 equal parts <mark class="vocab-word" data-word="varied">varied</mark> <mark class="vocab-word" data-word="accord">according</mark> to the start of the count: <mark class="vocab-word" data-word="italian">Italian</mark> hours began at <mark class="vocab-word" data-word="sunset">sunset</mark>, Babylonian hours at <mark class="vocab-word" data-word="sunrise">sunrise</mark>, <mark class="vocab-word" data-word="astronomical">astronomical</mark> hours at <mark class="vocab-word" data-word="midday">midday</mark> and ‘great clock’ hours, used for some large public clocks in Germany, at midnight. Eventually these were <mark class="vocab-word" data-word="supersede">superseded</mark> by ‘small clock’, or French hours, which split the day into two 12-hour periods <mark class="vocab-word" data-word="commence">commencing</mark> at midnight.</p></div>  <div class="parallel-zh"><p>机械钟的问世意味着尽管可以对其进行调节以维持日光时，但它天然地适合记录相等的时间。然而，有了这些，就出现了何时开始计时的问题，因此，14世纪初出现了许多系统。根据计时起点的不同，将一天分成24等份的方案也各不相同：意大利的时间从日落开始，巴比伦的时间从日出开始，天文学时间从中午开始，而德国一些用于大型公共场所的巨大时钟则从午夜开始。最终，这些计时方式被“小时钟”或法国时间所取代。它将一天分为两个12小时的时间段，从午夜开始。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The earliest recorded weight-driven <mark class="vocab-word" data-word="mechanical">mechanical</mark> clock was built in 1283 in Bedfordshire in England. The <mark class="vocab-word" data-word="revolutionary">revolutionary</mark> aspect of this new timekeeper was neither the <mark class="vocab-word" data-word="descend">descending</mark> weight that <mark class="vocab-word" data-word="provided">provided</mark> its <mark class="vocab-word" data-word="motive">motive</mark> force nor the <mark class="vocab-word" data-word="gear">gear</mark> wheels (which had been around for at least 1, 300 years) that transferred the power; it was the part called the escapement. In the early 1400s came the invention of the <mark class="vocab-word" data-word="coil">coiled</mark> <mark class="vocab-word" data-word="spring">spring</mark> or fusee which maintained constant force to the <mark class="vocab-word" data-word="gear">gear</mark> wheels of the timekeeper despite the changing <mark class="vocab-word" data-word="tension">tension</mark> of its mainspring. By the 16th century, a <mark class="vocab-word" data-word="pendulum">pendulum</mark> clock had been <mark class="vocab-word" data-word="devise">devised</mark>, but the <mark class="vocab-word" data-word="pendulum">pendulum</mark> swung in a large arc and thus was not very efficient.</p></div>  <div class="parallel-zh"><p>有记录的最早的重量驱动机械钟是于1283年在英格兰贝德福德郡建造的。这款崭新的计时器的革命性方面既不是由向下的重量进行驱动，也不是传递动力的齿轮（齿轮已经存在至少1300年了），而是所谓的擒纵机构。在15世纪初期，人们发明了一种螺旋弹簧，或者叫作均力圆锥轮，尽管其发条的张力发生变化，但它仍对计时装置的齿轮保持恒定的力。到了16世纪，摆钟被设计出来。但因为钟摆摆动弧度很大，因此效率不高。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>To address this, a <mark class="vocab-word" data-word="variation">variation</mark> on the original escapement was invented in 1670, in England. It was called the <mark class="vocab-word" data-word="anchor">anchor</mark> escapement, which was a lever-based device shaped like a ship’s <mark class="vocab-word" data-word="anchor">anchor</mark>. The <mark class="vocab-word" data-word="motion">motion</mark> of a <mark class="vocab-word" data-word="pendulum">pendulum</mark> rocks this device so that it <mark class="vocab-word" data-word="catch">catches</mark> and then releases each tooth of the escape wheel, in turn allowing it to turn a <mark class="vocab-word" data-word="precise">precise</mark> amount. Unlike the original form used in early <mark class="vocab-word" data-word="pendulum">pendulum</mark> clocks, the <mark class="vocab-word" data-word="anchor">anchor</mark> escapement permitted the <mark class="vocab-word" data-word="pendulum">pendulum</mark> to travel in a very small arc. Moreover, this invention allowed the use of a long <mark class="vocab-word" data-word="pendulum">pendulum</mark> which could beat once a second and thus led to the development of a new floor-standing case design, which became known as the grandfather clock.</p></div>  <div class="parallel-zh"><p>为了解决这个问题，1670年人们在英国发明了原始擒纵装置的一种变型。这就是所谓的锚擒纵装置，它是一种基于杠杆原理的装置，形状像船的锚。摆锤的运动使该装置晃动，由此它抓住并随后释放擒纵轮的每个齿，从而使其精确的旋转。与早期的摆钟所使用的原始形式不同，锚式擒纵机构使钟摆能够以很小的弧度行进。而且，该发明使得使用较长的摆锤成为可能，它每秒跳动一次，从而推动新的落地柜式设计的发展。该设计被称为祖父钟（落地摆钟）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Today, highly <mark class="vocab-word" data-word="accurate">accurate</mark> timekeeping <mark class="vocab-word" data-word="instrument">instruments</mark> set the beat for most electronic devices. Nearly all computers contain a quartz-crystal clock to <mark class="vocab-word" data-word="regulate">regulate</mark> their operation. Moreover, not only do time signals <mark class="vocab-word" data-word="beam">beamed</mark> down from Global Positioning System <mark class="vocab-word" data-word="satellite">satellites</mark> <mark class="vocab-word" data-word="calibrate">calibrate</mark> the functions of <mark class="vocab-word" data-word="precision">precision</mark> <mark class="vocab-word" data-word="navigation">navigation</mark> equipment, they do so as well for mobile phones, <mark class="vocab-word" data-word="instant">instant</mark> stock-trading systems and nationwide power-distribution <mark class="vocab-word" data-word="grid">grids</mark>. So <mark class="vocab-word" data-word="integral">integral</mark> have these time-based technologies become to day-to-day existence that our dependency on them is recognised only when they fail to work.</p></div>  <div class="parallel-zh"><p>如今，高精度的计时仪器为大多数电子设备的设置时间。几乎所有计算机都包含一个石英钟来控制其运行。此外，全球定位系统卫星发出的时间信号不仅可以校准精密导航设备的功能，而且还可以用于移动电话，即时股票交易系统和全国性的配电网。这些基于时间的技术已变得不可或缺，以至于只有它们在无法工作时我们才能意识到自己对它们的依赖。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"accord": 3, "advent": 2, "empire": 3, "communal": 1, "shipment": 1, "goods": 1, "regulate": 2, "harvest": 1, "solar": 6, "marked": 2, "successive": 1, "darkness": 3, "rotate": 1, "axis": 1, "lunar": 2, "orbit": 1, "artificial": 1, "impact": 1, "equator": 1, "wax": 1, "wane": 1, "conspicuous": 1, "passing": 3, "hence": 1, "latitude": 1, "influence": 1, "seasonal": 1, "agriculture": 1, "northward": 1, "formulate": 1, "municipal": 1, "approximate": 1, "sunrise": 2, "cosmic": 1, "significance": 1, "interval": 2, "daylight": 2, "temporal": 5, "duration": 1, "varied": 2, "spring": 2, "disseminate": 1, "sundial": 2, "counterpart": 1, "basin": 1, "denote": 1, "inscribe": 1, "inner": 1, "perform": 1, "mediterranean": 1, "mechanical": 2, "adjust": 1, "suite": 1, "evolve": 1, "scheme": 1, "italian": 1, "sunset": 1, "astronomical": 1, "midday": 1, "supersede": 1, "commence": 1, "revolutionary": 1, "descend": 1, "provided": 1, "motive": 1, "gear": 2, "coil": 1, "tension": 1, "pendulum": 6, "devise": 1, "variation": 1, "anchor": 3, "motion": 1, "catch": 1, "precise": 1, "accurate": 1, "instrument": 1, "beam": 1, "satellite": 1, "calibrate": 1, "precision": 1, "navigation": 1, "instant": 1, "grid": 1, "integral": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

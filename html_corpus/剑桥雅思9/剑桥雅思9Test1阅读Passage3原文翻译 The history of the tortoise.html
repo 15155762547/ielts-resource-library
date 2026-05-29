@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The history of the tortoise - 剑桥雅思9 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思9</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>The history of the tortoise</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/26643.html" target="_blank">https://www.laokaoya.com/26643.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>If you go back far enough, everything lived in the sea. At various points in evolutionary history, <mark class="vocab-word" data-word="enterprising">enterprising</mark> individuals within many different animal groups moved out onto the land, sometimes even to the most parched deserts, taking their own private seawater with them in blood and <mark class="vocab-word" data-word="cellular">cellular</mark> <mark class="vocab-word" data-word="fluid">fluids</mark>. In addition to the <mark class="vocab-word" data-word="reptile">reptiles</mark>, birds, <mark class="vocab-word" data-word="mammal">mammals</mark> and insects which we see all around us, other groups that have succeeded out of water include <mark class="vocab-word" data-word="scorpion">scorpions</mark>, snails, <mark class="vocab-word" data-word="crustacean">crustaceans</mark> such as woodlice and land <mark class="vocab-word" data-word="crab">crabs</mark>, millipedes and centipedes, <mark class="vocab-word" data-word="spider">spider</mark> and various <mark class="vocab-word" data-word="worm">worms</mark>. And we mustn’t forget the plants, without whose <mark class="vocab-word" data-word="prior">prior</mark> <mark class="vocab-word" data-word="invasion">invasion</mark> of the land none of the other <mark class="vocab-word" data-word="migration">migrations</mark> could have happened.</p><p>Moving from water to land <mark class="vocab-word" data-word="involved">involved</mark> a major redesign of every aspect of life, including breathing and <mark class="vocab-word" data-word="reproduction">reproduction</mark>. Nevertheless, a good number of thoroughgoing land animals later turned around, abandoned their hard-earned <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> re-tooling, and returned to the water again. <mark class="vocab-word" data-word="seal">Seals</mark> have only gone part way back. They show us what the <mark class="vocab-word" data-word="intermediate">intermediates</mark> might have been like, on the way to extreme cases such as whales and dugongs. Whales (including the small whales we call <mark class="vocab-word" data-word="dolphin">dolphins</mark>) and dugongs, with their close cousins the manatees, <mark class="vocab-word" data-word="cease">ceased</mark> to be land creatures <mark class="vocab-word" data-word="altogether">altogether</mark> and <mark class="vocab-word" data-word="revert">reverted</mark> to the full <mark class="vocab-word" data-word="marine">marine</mark> habits of their remote <mark class="vocab-word" data-word="ancestor">ancestors</mark>. They don’t even come <mark class="vocab-word" data-word="ashore">ashore</mark> to <mark class="vocab-word" data-word="breed">breed</mark>. They do, however, still breathe air, having never developed anything <mark class="vocab-word" data-word="equivalent">equivalent</mark> to the <mark class="vocab-word" data-word="gill">gills</mark> of their earlier <mark class="vocab-word" data-word="marine">marine</mark> incarnation. <mark class="vocab-word" data-word="turtle">Turtles</mark> went back to the sea a very long time ago and, like all <mark class="vocab-word" data-word="vertebrate">vertebrate</mark> returnees to the water, they breathe air. However, they are, in one respect, less fully given back to the water than whales or dugongs, for <mark class="vocab-word" data-word="turtle">turtles</mark> still lay their eggs on beaches.</p><p>There is evidence that all modern <mark class="vocab-word" data-word="turtle">turtles</mark> are <mark class="vocab-word" data-word="descend">descended</mark> from a <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> <mark class="vocab-word" data-word="ancestor">ancestor</mark> which lived before most of the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark>. There are two key <mark class="vocab-word" data-word="fossil">fossils</mark> calledProganochleys quenstedti and Palaeochersis talampayensisdating from early <mark class="vocab-word" data-word="dinosaur">dinosaur</mark> times, which appear to be close to the ancestry of all modern <mark class="vocab-word" data-word="turtle">turtles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>. You might wonder how we can tell whether <mark class="vocab-word" data-word="fossil">fossil</mark> animal lived on land or in water, especially if only <mark class="vocab-word" data-word="fragment">fragments</mark> are found. Sometimes it’s obvious. Ichthyosaurs were <mark class="vocab-word" data-word="reptilian">reptilian</mark> contemporaries of the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark>, with <mark class="vocab-word" data-word="fin">fins</mark> and <mark class="vocab-word" data-word="streamline">streamlined</mark> bodies. The <mark class="vocab-word" data-word="fossil">fossils</mark> look like <mark class="vocab-word" data-word="dolphin">dolphins</mark>, and they surely lived like <mark class="vocab-word" data-word="dolphin">dolphines</mark>, in the water. With <mark class="vocab-word" data-word="turtle">turtles</mark> it is a little less obvious. One way to tell is by measuring the bones of their forelimbs.</p><p>Walter Joyce and Jacques Gauthier, at Yale University, <mark class="vocab-word" data-word="obtain">obtained</mark> three measurements in these particular bones of 71 species of living <mark class="vocab-word" data-word="turtle">turtles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>. They used a kind of <mark class="vocab-word" data-word="triangular">triangular</mark> <mark class="vocab-word" data-word="graph">graph</mark> paper to <mark class="vocab-word" data-word="plot">plot</mark> the three measurements against one another. All the land <mark class="vocab-word" data-word="tortoise">tortoise</mark> species formed a <mark class="vocab-word" data-word="tight">tight</mark> <mark class="vocab-word" data-word="cluster">cluster</mark> of points in the upper part of the <mark class="vocab-word" data-word="triangle">triangle</mark>; all the water <mark class="vocab-word" data-word="turtle">turtles</mark> <mark class="vocab-word" data-word="cluster">cluster</mark> in the lower part of the <mark class="vocab-word" data-word="triangular">triangular</mark> <mark class="vocab-word" data-word="graph">graph</mark>. There was no <mark class="vocab-word" data-word="overlap">overlap</mark> except when they added some species that spend time both in water and on land. Sure enough, these <mark class="vocab-word" data-word="amphibious">amphibious</mark> species show up on the <mark class="vocab-word" data-word="triangular">triangular</mark> <mark class="vocab-word" data-word="graph">graph</mark> <mark class="vocab-word" data-word="approximate">approximately</mark> halfway between the ‘wet <mark class="vocab-word" data-word="cluster">cluster</mark>’ of sea <mark class="vocab-word" data-word="turtle">turtles</mark> and the ‘dry <mark class="vocab-word" data-word="cluster">cluster</mark>’ of land <mark class="vocab-word" data-word="tortoise">tortoises</mark>. The next step was to determine where the <mark class="vocab-word" data-word="fossil">fossils</mark> fell. The bones ofP. quenstedtiandP. talampayensisleave us in no doubt. Their points on the <mark class="vocab-word" data-word="graph">graph</mark> are right in the thick of the dry <mark class="vocab-word" data-word="cluster">cluster</mark>. Both these <mark class="vocab-word" data-word="fossil">fossils</mark> were dry-land <mark class="vocab-word" data-word="tortoise">tortoises</mark>. They come from the <mark class="vocab-word" data-word="era">era</mark> before our <mark class="vocab-word" data-word="turtle">turtles</mark> returned to the water.</p><p>You might think, therefore, that modern land <mark class="vocab-word" data-word="tortoise">tortoises</mark> have probably stayed on land ever since those early <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> times, as most <mark class="vocab-word" data-word="mammal">mammals</mark> did after a few of them went back to the sea. But apparently not. If you draw out the family <mark class="vocab-word" data-word="tree">tree</mark> of all modern <mark class="vocab-word" data-word="turtle">turtles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>, nearly all the branches are <mark class="vocab-word" data-word="aquatic">aquatic</mark>. Today’s land <mark class="vocab-word" data-word="tortoise">tortoises</mark> <mark class="vocab-word" data-word="constitute">constitute</mark> a single branch, deeply <mark class="vocab-word" data-word="nest">nested</mark> among branches consisting of <mark class="vocab-word" data-word="aquatic">aquatic</mark> <mark class="vocab-word" data-word="turtle">turtles</mark>. This <mark class="vocab-word" data-word="suggest">suggests</mark> that modern land <mark class="vocab-word" data-word="tortoise">tortoises</mark> have not stayed on land <mark class="vocab-word" data-word="continuously">continuously</mark> since the time ofP. quenstedtiandP. talampayensis.Rather, their <mark class="vocab-word" data-word="ancestor">ancestors</mark> were among those who went back to the water, and they then re-emerged back onto the land in (relatively) more recent times.</p><p><mark class="vocab-word" data-word="tortoise">Tortoises</mark> therefore represent a <mark class="vocab-word" data-word="remarkable">remarkable</mark> double return. In common with all <mark class="vocab-word" data-word="mammal">mammals</mark>, <mark class="vocab-word" data-word="reptile">reptiles</mark> and birds, their remote <mark class="vocab-word" data-word="ancestor">ancestors</mark> were <mark class="vocab-word" data-word="marine">marine</mark> fish and before that various more or less worm-like creatures stretching back, still in the sea, to the <mark class="vocab-word" data-word="primeval">primeval</mark> <mark class="vocab-word" data-word="bacteria">bacteria</mark>. Later <mark class="vocab-word" data-word="ancestor">ancestors</mark> lived on land and stayed there for a very large number of generations. Later <mark class="vocab-word" data-word="ancestor">ancestors</mark> still <mark class="vocab-word" data-word="evolve">evolved</mark> back into the water and became sea <mark class="vocab-word" data-word="turtle">turtles</mark>. And finally they returned yet again to the land as <mark class="vocab-word" data-word="tortoise">tortoises</mark>, some of which now live in the driest of deserts.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>如果我们回溯的足够遥远，所有东西都生活在海洋之中。在进化史的各个阶段，许多不同动物群体的富有冒险精神的个体搬到陆地上，有时甚至到最干旱的沙漠里，将自己的海水融入血液和细胞液中。除了我们在身边看到的爬行动物，鸟类，哺乳动物和昆虫外，其他成功脱离水生生活的群体还包括蝎子，蜗牛，甲壳类动物（例如木虱和陆地蟹），千足虫和蜈蚣，蜘蛛和各种蠕虫。我们也千万不要忘记植物，没有它们事先侵入陆地，其他迁移都不会发生。</p><p>从水到陆地的迁移涉及到包括呼吸和生殖在内的生命各个方面的重大重新设计。但是，后来有大量的陆地动物转过身去，放弃了来之不易的适应陆地生活的器官，并再次回到水里。海豹只是返回了一部分。他们向我们展示了在鲸鱼和儒艮等极端情况下的中间体可能是什么样的。鲸鱼（包括我们称为海豚的小鲸鱼）和儒艮，以及它们的近亲海牛，完全不再是陆地生物，而是恢复了其远洋祖先的全部海洋习性。他们甚至不用上岸繁殖。但是，它们确实仍然需要呼吸空气，从未进化出类似于腮这样早期海洋生物的器官。海龟很久以前就回到了大海，就像所有返回海域的脊椎动物一样，他们呼吸空气。但是，从某种意义上讲，它们没有像鲸鱼或儒艮一样完全返回水中，因为海龟仍在海滩上产卵。</p><p>有证据表明，所有现代海龟均来自同一陆地祖先。它生活在比大多数恐龙还要遥远的时代。两个关键的化石，Proganochleys quenstedti 和Palaeochersis talampayensis，可以追溯到恐龙时代早期。它们似乎与所有现代乌龟和海龟的祖先十分接近。您可能想知道我们如何分辨化石中的动物究竟是生活在陆地上还是在水里，特别是如果仅发现碎片的时候。有时这很明显。带有鳍和流线型身体的鱼龙是生活在恐龙时代的爬行动物。其化石看起来像海豚，它们也肯定像海豚一样生活在水中。对于海龟来说，这一点并不那么明显。一种判断方法是测量前肢的骨头。</p><p>耶鲁大学的Walter Joyce和Jacques Gauthier 对71种现存乌龟和海龟的这些特殊骨骼进行了三项测量。他们使用一种三角形方格纸对比这三项测量数据。所有陆龟物种在三角形的上部形成了紧密的点簇。所有的水生乌龟都聚集在三角形的下部。除了部分同时生活在水中和陆地上的物种外，它们没有任何重叠。而不出意料的是，这些两栖物种在三角形中处于海龟和陆龟所形成的点簇的中间部分。下一步是确定这两个化石处于图中何种位置。P. quenstedti和P. talampayensis的骨头没有给我们留下疑惑。它们在图中的点正好位于干燥点群的中心位置。这两个化石都是陆生乌龟。它们来自我们的海龟回到水中之前的时代。</p><p>因此，你可能会认为，自陆地时代早期以来，现代陆龟就可能一直待在陆地上，就像大多数哺乳动物在一些同伴回到海中之后所做的那样。但显然不是。如果你绘制所有现代陆龟和海龟的家谱，则几乎所有分支都是水生的。如今的陆龟组成一个独立的分支，深深地嵌套在由水龟组成的分支之间。这表明，从P. quenstedti 和P. talampayensis 的时代以来，现代陆龟并没有一直待在陆地上。相反，它们的祖先是那些回到水中，但随后又在近期（相对意义上来讲）再次回到陆地上的那些。</p><p>因此，乌龟代表了引人注目的双重回归。与所有哺乳动物，爬行动物和鸟类一样，它们的远古祖先是海洋鱼类，在此之前是各种或多或少的蠕虫状生物，再往前延伸是原始的细菌。后来的祖先居住在土地上，并在此繁衍了许多世代。在此之后，一些祖先仍然进化回水中，成为海龟。而最后它们再次回到了陆地，成为陆龟，其中一些现在居住在最干旱的沙漠里。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>If you go back far enough, everything lived in the sea. At various points in evolutionary history, <mark class="vocab-word" data-word="enterprising">enterprising</mark> individuals within many different animal groups moved out onto the land, sometimes even to the most parched deserts, taking their own private seawater with them in blood and <mark class="vocab-word" data-word="cellular">cellular</mark> <mark class="vocab-word" data-word="fluid">fluids</mark>. In addition to the <mark class="vocab-word" data-word="reptile">reptiles</mark>, birds, <mark class="vocab-word" data-word="mammal">mammals</mark> and insects which we see all around us, other groups that have succeeded out of water include <mark class="vocab-word" data-word="scorpion">scorpions</mark>, snails, <mark class="vocab-word" data-word="crustacean">crustaceans</mark> such as woodlice and land <mark class="vocab-word" data-word="crab">crabs</mark>, millipedes and centipedes, <mark class="vocab-word" data-word="spider">spider</mark> and various <mark class="vocab-word" data-word="worm">worms</mark>. And we mustn’t forget the plants, without whose <mark class="vocab-word" data-word="prior">prior</mark> <mark class="vocab-word" data-word="invasion">invasion</mark> of the land none of the other <mark class="vocab-word" data-word="migration">migrations</mark> could have happened.</p></div>  <div class="parallel-zh"><p>如果我们回溯的足够遥远，所有东西都生活在海洋之中。在进化史的各个阶段，许多不同动物群体的富有冒险精神的个体搬到陆地上，有时甚至到最干旱的沙漠里，将自己的海水融入血液和细胞液中。除了我们在身边看到的爬行动物，鸟类，哺乳动物和昆虫外，其他成功脱离水生生活的群体还包括蝎子，蜗牛，甲壳类动物（例如木虱和陆地蟹），千足虫和蜈蚣，蜘蛛和各种蠕虫。我们也千万不要忘记植物，没有它们事先侵入陆地，其他迁移都不会发生。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Moving from water to land <mark class="vocab-word" data-word="involved">involved</mark> a major redesign of every aspect of life, including breathing and <mark class="vocab-word" data-word="reproduction">reproduction</mark>. Nevertheless, a good number of thoroughgoing land animals later turned around, abandoned their hard-earned <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> re-tooling, and returned to the water again. <mark class="vocab-word" data-word="seal">Seals</mark> have only gone part way back. They show us what the <mark class="vocab-word" data-word="intermediate">intermediates</mark> might have been like, on the way to extreme cases such as whales and dugongs. Whales (including the small whales we call <mark class="vocab-word" data-word="dolphin">dolphins</mark>) and dugongs, with their close cousins the manatees, <mark class="vocab-word" data-word="cease">ceased</mark> to be land creatures <mark class="vocab-word" data-word="altogether">altogether</mark> and <mark class="vocab-word" data-word="revert">reverted</mark> to the full <mark class="vocab-word" data-word="marine">marine</mark> habits of their remote <mark class="vocab-word" data-word="ancestor">ancestors</mark>. They don’t even come <mark class="vocab-word" data-word="ashore">ashore</mark> to <mark class="vocab-word" data-word="breed">breed</mark>. They do, however, still breathe air, having never developed anything <mark class="vocab-word" data-word="equivalent">equivalent</mark> to the <mark class="vocab-word" data-word="gill">gills</mark> of their earlier <mark class="vocab-word" data-word="marine">marine</mark> incarnation. <mark class="vocab-word" data-word="turtle">Turtles</mark> went back to the sea a very long time ago and, like all <mark class="vocab-word" data-word="vertebrate">vertebrate</mark> returnees to the water, they breathe air. However, they are, in one respect, less fully given back to the water than whales or dugongs, for <mark class="vocab-word" data-word="turtle">turtles</mark> still lay their eggs on beaches.</p></div>  <div class="parallel-zh"><p>从水到陆地的迁移涉及到包括呼吸和生殖在内的生命各个方面的重大重新设计。但是，后来有大量的陆地动物转过身去，放弃了来之不易的适应陆地生活的器官，并再次回到水里。海豹只是返回了一部分。他们向我们展示了在鲸鱼和儒艮等极端情况下的中间体可能是什么样的。鲸鱼（包括我们称为海豚的小鲸鱼）和儒艮，以及它们的近亲海牛，完全不再是陆地生物，而是恢复了其远洋祖先的全部海洋习性。他们甚至不用上岸繁殖。但是，它们确实仍然需要呼吸空气，从未进化出类似于腮这样早期海洋生物的器官。海龟很久以前就回到了大海，就像所有返回海域的脊椎动物一样，他们呼吸空气。但是，从某种意义上讲，它们没有像鲸鱼或儒艮一样完全返回水中，因为海龟仍在海滩上产卵。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>There is evidence that all modern <mark class="vocab-word" data-word="turtle">turtles</mark> are <mark class="vocab-word" data-word="descend">descended</mark> from a <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> <mark class="vocab-word" data-word="ancestor">ancestor</mark> which lived before most of the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark>. There are two key <mark class="vocab-word" data-word="fossil">fossils</mark> calledProganochleys quenstedti and Palaeochersis talampayensisdating from early <mark class="vocab-word" data-word="dinosaur">dinosaur</mark> times, which appear to be close to the ancestry of all modern <mark class="vocab-word" data-word="turtle">turtles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>. You might wonder how we can tell whether <mark class="vocab-word" data-word="fossil">fossil</mark> animal lived on land or in water, especially if only <mark class="vocab-word" data-word="fragment">fragments</mark> are found. Sometimes it’s obvious. Ichthyosaurs were <mark class="vocab-word" data-word="reptilian">reptilian</mark> contemporaries of the <mark class="vocab-word" data-word="dinosaur">dinosaurs</mark>, with <mark class="vocab-word" data-word="fin">fins</mark> and <mark class="vocab-word" data-word="streamline">streamlined</mark> bodies. The <mark class="vocab-word" data-word="fossil">fossils</mark> look like <mark class="vocab-word" data-word="dolphin">dolphins</mark>, and they surely lived like <mark class="vocab-word" data-word="dolphin">dolphines</mark>, in the water. With <mark class="vocab-word" data-word="turtle">turtles</mark> it is a little less obvious. One way to tell is by measuring the bones of their forelimbs.</p></div>  <div class="parallel-zh"><p>有证据表明，所有现代海龟均来自同一陆地祖先。它生活在比大多数恐龙还要遥远的时代。两个关键的化石，Proganochleys quenstedti 和Palaeochersis talampayensis，可以追溯到恐龙时代早期。它们似乎与所有现代乌龟和海龟的祖先十分接近。您可能想知道我们如何分辨化石中的动物究竟是生活在陆地上还是在水里，特别是如果仅发现碎片的时候。有时这很明显。带有鳍和流线型身体的鱼龙是生活在恐龙时代的爬行动物。其化石看起来像海豚，它们也肯定像海豚一样生活在水中。对于海龟来说，这一点并不那么明显。一种判断方法是测量前肢的骨头。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Walter Joyce and Jacques Gauthier, at Yale University, <mark class="vocab-word" data-word="obtain">obtained</mark> three measurements in these particular bones of 71 species of living <mark class="vocab-word" data-word="turtle">turtles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>. They used a kind of <mark class="vocab-word" data-word="triangular">triangular</mark> <mark class="vocab-word" data-word="graph">graph</mark> paper to <mark class="vocab-word" data-word="plot">plot</mark> the three measurements against one another. All the land <mark class="vocab-word" data-word="tortoise">tortoise</mark> species formed a <mark class="vocab-word" data-word="tight">tight</mark> <mark class="vocab-word" data-word="cluster">cluster</mark> of points in the upper part of the <mark class="vocab-word" data-word="triangle">triangle</mark>; all the water <mark class="vocab-word" data-word="turtle">turtles</mark> <mark class="vocab-word" data-word="cluster">cluster</mark> in the lower part of the <mark class="vocab-word" data-word="triangular">triangular</mark> <mark class="vocab-word" data-word="graph">graph</mark>. There was no <mark class="vocab-word" data-word="overlap">overlap</mark> except when they added some species that spend time both in water and on land. Sure enough, these <mark class="vocab-word" data-word="amphibious">amphibious</mark> species show up on the <mark class="vocab-word" data-word="triangular">triangular</mark> <mark class="vocab-word" data-word="graph">graph</mark> <mark class="vocab-word" data-word="approximate">approximately</mark> halfway between the ‘wet <mark class="vocab-word" data-word="cluster">cluster</mark>’ of sea <mark class="vocab-word" data-word="turtle">turtles</mark> and the ‘dry <mark class="vocab-word" data-word="cluster">cluster</mark>’ of land <mark class="vocab-word" data-word="tortoise">tortoises</mark>. The next step was to determine where the <mark class="vocab-word" data-word="fossil">fossils</mark> fell. The bones ofP. quenstedtiandP. talampayensisleave us in no doubt. Their points on the <mark class="vocab-word" data-word="graph">graph</mark> are right in the thick of the dry <mark class="vocab-word" data-word="cluster">cluster</mark>. Both these <mark class="vocab-word" data-word="fossil">fossils</mark> were dry-land <mark class="vocab-word" data-word="tortoise">tortoises</mark>. They come from the <mark class="vocab-word" data-word="era">era</mark> before our <mark class="vocab-word" data-word="turtle">turtles</mark> returned to the water.</p></div>  <div class="parallel-zh"><p>耶鲁大学的Walter Joyce和Jacques Gauthier 对71种现存乌龟和海龟的这些特殊骨骼进行了三项测量。他们使用一种三角形方格纸对比这三项测量数据。所有陆龟物种在三角形的上部形成了紧密的点簇。所有的水生乌龟都聚集在三角形的下部。除了部分同时生活在水中和陆地上的物种外，它们没有任何重叠。而不出意料的是，这些两栖物种在三角形中处于海龟和陆龟所形成的点簇的中间部分。下一步是确定这两个化石处于图中何种位置。P. quenstedti和P. talampayensis的骨头没有给我们留下疑惑。它们在图中的点正好位于干燥点群的中心位置。这两个化石都是陆生乌龟。它们来自我们的海龟回到水中之前的时代。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>You might think, therefore, that modern land <mark class="vocab-word" data-word="tortoise">tortoises</mark> have probably stayed on land ever since those early <mark class="vocab-word" data-word="terrestrial">terrestrial</mark> times, as most <mark class="vocab-word" data-word="mammal">mammals</mark> did after a few of them went back to the sea. But apparently not. If you draw out the family <mark class="vocab-word" data-word="tree">tree</mark> of all modern <mark class="vocab-word" data-word="turtle">turtles</mark> and <mark class="vocab-word" data-word="tortoise">tortoises</mark>, nearly all the branches are <mark class="vocab-word" data-word="aquatic">aquatic</mark>. Today’s land <mark class="vocab-word" data-word="tortoise">tortoises</mark> <mark class="vocab-word" data-word="constitute">constitute</mark> a single branch, deeply <mark class="vocab-word" data-word="nest">nested</mark> among branches consisting of <mark class="vocab-word" data-word="aquatic">aquatic</mark> <mark class="vocab-word" data-word="turtle">turtles</mark>. This <mark class="vocab-word" data-word="suggest">suggests</mark> that modern land <mark class="vocab-word" data-word="tortoise">tortoises</mark> have not stayed on land <mark class="vocab-word" data-word="continuously">continuously</mark> since the time ofP. quenstedtiandP. talampayensis.Rather, their <mark class="vocab-word" data-word="ancestor">ancestors</mark> were among those who went back to the water, and they then re-emerged back onto the land in (relatively) more recent times.</p></div>  <div class="parallel-zh"><p>因此，你可能会认为，自陆地时代早期以来，现代陆龟就可能一直待在陆地上，就像大多数哺乳动物在一些同伴回到海中之后所做的那样。但显然不是。如果你绘制所有现代陆龟和海龟的家谱，则几乎所有分支都是水生的。如今的陆龟组成一个独立的分支，深深地嵌套在由水龟组成的分支之间。这表明，从P. quenstedti 和P. talampayensis 的时代以来，现代陆龟并没有一直待在陆地上。相反，它们的祖先是那些回到水中，但随后又在近期（相对意义上来讲）再次回到陆地上的那些。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="tortoise">Tortoises</mark> therefore represent a <mark class="vocab-word" data-word="remarkable">remarkable</mark> double return. In common with all <mark class="vocab-word" data-word="mammal">mammals</mark>, <mark class="vocab-word" data-word="reptile">reptiles</mark> and birds, their remote <mark class="vocab-word" data-word="ancestor">ancestors</mark> were <mark class="vocab-word" data-word="marine">marine</mark> fish and before that various more or less worm-like creatures stretching back, still in the sea, to the <mark class="vocab-word" data-word="primeval">primeval</mark> <mark class="vocab-word" data-word="bacteria">bacteria</mark>. Later <mark class="vocab-word" data-word="ancestor">ancestors</mark> lived on land and stayed there for a very large number of generations. Later <mark class="vocab-word" data-word="ancestor">ancestors</mark> still <mark class="vocab-word" data-word="evolve">evolved</mark> back into the water and became sea <mark class="vocab-word" data-word="turtle">turtles</mark>. And finally they returned yet again to the land as <mark class="vocab-word" data-word="tortoise">tortoises</mark>, some of which now live in the driest of deserts.</p></div>  <div class="parallel-zh"><p>因此，乌龟代表了引人注目的双重回归。与所有哺乳动物，爬行动物和鸟类一样，它们的远古祖先是海洋鱼类，在此之前是各种或多或少的蠕虫状生物，再往前延伸是原始的细菌。后来的祖先居住在土地上，并在此繁衍了许多世代。在此之后，一些祖先仍然进化回水中，成为海龟。而最后它们再次回到了陆地，成为陆龟，其中一些现在居住在最干旱的沙漠里。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"enterprising": 1, "cellular": 1, "fluid": 1, "reptile": 2, "mammal": 3, "scorpion": 1, "crustacean": 1, "crab": 1, "spider": 1, "worm": 1, "prior": 1, "invasion": 1, "migration": 1, "involved": 1, "reproduction": 1, "terrestrial": 3, "seal": 1, "intermediate": 1, "dolphin": 3, "cease": 1, "altogether": 1, "revert": 1, "marine": 3, "ancestor": 6, "ashore": 1, "breed": 1, "equivalent": 1, "gill": 1, "turtle": 12, "vertebrate": 1, "descend": 1, "dinosaur": 3, "fossil": 5, "tortoise": 11, "fragment": 1, "reptilian": 1, "fin": 1, "streamline": 1, "obtain": 1, "triangular": 3, "graph": 4, "plot": 1, "tight": 1, "cluster": 5, "triangle": 1, "overlap": 1, "amphibious": 1, "approximate": 1, "era": 1, "tree": 1, "aquatic": 2, "constitute": 1, "nest": 1, "suggest": 1, "continuously": 1, "remarkable": 1, "primeval": 1, "bacteria": 1, "evolve": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

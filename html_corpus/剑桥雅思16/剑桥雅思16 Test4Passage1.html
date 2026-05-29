@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman tunnels 罗马隧道 - 剑桥雅思16 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思16</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Roman tunnels 罗马隧道</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/42970.html" target="_blank">https://www.laokaoya.com/42970.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>The Romans, who once controlled areas of Europe, North Africa and Asia Minor, adopted the construction techniques of other <mark class="vocab-word" data-word="civilization">civilizations</mark> to build <mark class="vocab-word" data-word="tunnel">tunnels</mark> in their territories.</p><p>The Persians, who lived in present-day Iran, were one of the first <mark class="vocab-word" data-word="civilization">civilizations</mark> to build <mark class="vocab-word" data-word="tunnel">tunnels</mark> that <mark class="vocab-word" data-word="provided">provided</mark> a reliable supply of water to human <mark class="vocab-word" data-word="settlement">settlements</mark> in dry areas. In the early first <mark class="vocab-word" data-word="millennium">millennium</mark> BCE, they introduced theqanatmethod of <mark class="vocab-word" data-word="tunnel">tunnel</mark> construction, which consisted of placing posts over a hill in a straight line, to ensure that the <mark class="vocab-word" data-word="tunnel">tunnel</mark> kept to its route, and then digging <mark class="vocab-word" data-word="vertical">vertical</mark> <mark class="vocab-word" data-word="shaft">shafts</mark> down into the ground at regular <mark class="vocab-word" data-word="interval">intervals</mark>. Underground, workers removed the earth from between the ends of the <mark class="vocab-word" data-word="shaft">shafts</mark>, creating a <mark class="vocab-word" data-word="tunnel">tunnel</mark>. The <mark class="vocab-word" data-word="excavate">excavated</mark> soil was taken up to the surface using the <mark class="vocab-word" data-word="shaft">shafts</mark>, which also <mark class="vocab-word" data-word="provided">provided</mark> <mark class="vocab-word" data-word="ventilation">ventilation</mark> during the work. Once the <mark class="vocab-word" data-word="tunnel">tunnel</mark> was completed, it allowed water to flow from the top of a <mark class="vocab-word" data-word="hillside">hillside</mark> down towards a <mark class="vocab-word" data-word="canal">canal</mark>, which supplied water for human use. Remarkably, someqanatsbuilt by the Persians 2,700 years ago are still in use today.</p><p>They later passed on their knowledge to the Romans, who also used theqanatmethod to <mark class="vocab-word" data-word="construct">construct</mark> water-supply <mark class="vocab-word" data-word="tunnel">tunnels</mark> for <mark class="vocab-word" data-word="agriculture">agriculture</mark>. Romanqanattunnels were <mark class="vocab-word" data-word="construct">constructed</mark> with <mark class="vocab-word" data-word="vertical">vertical</mark> <mark class="vocab-word" data-word="shaft">shafts</mark> dug at <mark class="vocab-word" data-word="interval">intervals</mark> of between 30 and 60 meters. The <mark class="vocab-word" data-word="shaft">shafts</mark> were equipped with handholds and footholds to help those <mark class="vocab-word" data-word="climb">climbing</mark> in and out of them and were covered with a wooden or stone <mark class="vocab-word" data-word="lid">lid</mark>. To ensure that the <mark class="vocab-word" data-word="shaft">shafts</mark> were <mark class="vocab-word" data-word="vertical">vertical</mark>, this article is from  website, Romans hung a <mark class="vocab-word" data-word="plumb">plumb</mark> line from a <mark class="vocab-word" data-word="rod">rod</mark> placed across the top of each <mark class="vocab-word" data-word="shaft">shaft</mark> and made sure that the weight at the end of it hung in the center of the <mark class="vocab-word" data-word="shaft">shaft</mark>. <mark class="vocab-word" data-word="plumb">Plumb</mark> lines were also used to measure the depth of the <mark class="vocab-word" data-word="shaft">shaft</mark> and to determine the <mark class="vocab-word" data-word="slope">slope</mark> of the <mark class="vocab-word" data-word="tunnel">tunnel</mark>. The 5.6-kilometer-long Claudius <mark class="vocab-word" data-word="tunnel">tunnel</mark>, built in 41 CE to <mark class="vocab-word" data-word="drain">drain</mark> the Fucine Lake in central Italy, had <mark class="vocab-word" data-word="shaft">shafts</mark> that were up to 122 meters deep, took 11 years to build and <mark class="vocab-word" data-word="involved">involved</mark> <mark class="vocab-word" data-word="approximate">approximately</mark> 30,000 workers.</p><p>By the 6th century BCE, a second method of <mark class="vocab-word" data-word="tunnel">tunnel</mark> construction appeared called the counter- <mark class="vocab-word" data-word="excavation">excavation</mark> method, in which the <mark class="vocab-word" data-word="tunnel">tunnel</mark> was <mark class="vocab-word" data-word="construct">constructed</mark> from both ends. It was used to cut through high mountains when theqanatmethod was not a practical alternative. This method required greater planning and <mark class="vocab-word" data-word="advanced">advanced</mark> knowledge of surveying, mathematics and <mark class="vocab-word" data-word="geometry">geometry</mark> as both ends of a <mark class="vocab-word" data-word="tunnel">tunnel</mark> had to meet correctly at the center of the mountain. Adjustments to the direction of the <mark class="vocab-word" data-word="tunnel">tunnel</mark> also had to be made whenever builders encountered <mark class="vocab-word" data-word="geological">geological</mark> problems or when it <mark class="vocab-word" data-word="deviate">deviated</mark> from its set path. They constantly <mark class="vocab-word" data-word="checked">checked</mark> the <mark class="vocab-word" data-word="tunnel">tunnel</mark>’s advancing direction, for example, by looking back at the light that <mark class="vocab-word" data-word="penetrate">penetrated</mark> through the <mark class="vocab-word" data-word="tunnel">tunnel</mark> mouth, and made corrections whenever necessary. Large deviations could happen, and they could result in one end of the <mark class="vocab-word" data-word="tunnel">tunnel</mark> not being usable. An inscription written on the side of a 428-meter <mark class="vocab-word" data-word="tunnel">tunnel</mark>, built by the Romans as part of the Saldae <mark class="vocab-word" data-word="aqueduct">aqueduct</mark> system in modern-day Algeria, describes how the two teams of builders missed each other in the mountain and how the later construction of a <mark class="vocab-word" data-word="lateral">lateral</mark> link between both <mark class="vocab-word" data-word="corridor">corridors</mark> corrected the initial error.</p><p>The Romans dug <mark class="vocab-word" data-word="tunnel">tunnels</mark> for their roads using the counter-excavation method, whenever they encountered <mark class="vocab-word" data-word="obstacle">obstacles</mark> such as hills or mountains that were too high for roads to pass over. An example is the 37-meter-long, 6-meter-high, Furlo Pass <mark class="vocab-word" data-word="tunnel">Tunnel</mark> built in Italy in 69-79 CE. Remarkably, a modern road still uses this <mark class="vocab-word" data-word="tunnel">tunnel</mark> today. <mark class="vocab-word" data-word="tunnel">Tunnels</mark> were also built for <mark class="vocab-word" data-word="mineral">mineral</mark> extraction. Miners would locate a <mark class="vocab-word" data-word="mineral">mineral</mark> <mark class="vocab-word" data-word="vein">vein</mark> and then pursue it with <mark class="vocab-word" data-word="shaft">shafts</mark> and <mark class="vocab-word" data-word="tunnel">tunnels</mark> underground. <mark class="vocab-word" data-word="trace">Traces</mark> of such <mark class="vocab-word" data-word="tunnel">tunnels</mark> used to mine gold can still be found at the Dolaucothi mines in Wales. When the <mark class="vocab-word" data-word="sole">sole</mark> purpose of a <mark class="vocab-word" data-word="tunnel">tunnel</mark> was <mark class="vocab-word" data-word="mineral">mineral</mark> extraction, construction required less planning, as the <mark class="vocab-word" data-word="tunnel">tunnel</mark> route was <mark class="vocab-word" data-word="determined">determined</mark> by the <mark class="vocab-word" data-word="mineral">mineral</mark> <mark class="vocab-word" data-word="vein">vein</mark>.</p><p>Roman <mark class="vocab-word" data-word="tunnel">tunnel</mark> projects were carefully planned and carried out. The length of time it took to <mark class="vocab-word" data-word="construct">construct</mark> a <mark class="vocab-word" data-word="tunnel">tunnel</mark> depended on the method being used and the type of rock being <mark class="vocab-word" data-word="excavate">excavated</mark>. Theqanatconstruction method was usually faster than the counter-excavation method as it was more <mark class="vocab-word" data-word="straightforward">straightforward</mark>. This was because the mountain could be <mark class="vocab-word" data-word="excavate">excavated</mark> not only from the <mark class="vocab-word" data-word="tunnel">tunnel</mark> mouths but also from <mark class="vocab-word" data-word="shaft">shafts</mark>. The type of rock could also <mark class="vocab-word" data-word="influence">influence</mark> construction times. When the rock was hard, the Romans employed a technique called fire <mark class="vocab-word" data-word="quench">quenching</mark> which consisted of <mark class="vocab-word" data-word="healing">healing</mark> the rock with fire, and then suddenly cooling it with cold water so that it would <mark class="vocab-word" data-word="crack">crack</mark>. Progress through hard rock could be very slow, and it was not <mark class="vocab-word" data-word="uncommon">uncommon</mark> for <mark class="vocab-word" data-word="tunnel">tunnels</mark> to take years, if not <mark class="vocab-word" data-word="decade">decades</mark>, to be built. Construction marks left on a Roman <mark class="vocab-word" data-word="tunnel">tunnel</mark> in Bologna show that the rate of advance through solid rock was 30 <mark class="vocab-word" data-word="centimeter">centimeters</mark> per day. In contrast, the rate of advance of the Claudius <mark class="vocab-word" data-word="tunnel">tunnel</mark> can be calculated at 1.4 meters per day. Most <mark class="vocab-word" data-word="tunnel">tunnels</mark> had inscriptions showing the names of <mark class="vocab-word" data-word="patron">patrons</mark> who ordered construction and sometimes the name of the <mark class="vocab-word" data-word="architect">architect</mark>. For example, the 1.4-kilometer Cevlik <mark class="vocab-word" data-word="tunnel">tunnel</mark> in <mark class="vocab-word" data-word="turkey">Turkey</mark>, built to <mark class="vocab-word" data-word="divert">divert</mark> the floodwater <mark class="vocab-word" data-word="threatening">threatening</mark> the <mark class="vocab-word" data-word="harbor">harbor</mark> of the ancient city of Seleuceia Pieria, had inscriptions on the entrance, still <mark class="vocab-word" data-word="visible">visible</mark> today, that also indicate that the <mark class="vocab-word" data-word="tunnel">tunnel</mark> was started in 69 CE and was completed in 81 CE.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>曾经控制欧洲、北非和小亚细亚的罗马人，使用其他文明的建筑技巧来在他们自己的领土上修建隧道。</p><p>生活在今天伊朗地区的波斯人是最早修建隧道从而为干燥地区的聚居点提供可靠水源的文明之一。早在公元前一千年，他们就采用暗渠法修建隧道。这包括在山上按照直线打桩，确保隧道沿其路线行进，然后以规律的间隔在地面上打出竖井。地下，工人将竖井末端之间的土壤挖出形成隧道。挖出的土壤通过竖井运送到地面。这些竖井也在工程期间提供通风。一旦隧道完成，水就可以从山顶流向水渠，供人类使用。令人惊讶的是，一些波斯人在2700年前修建的暗渠如今仍在使用。</p><p>他们随后将这些知识传给罗马人。罗马人使用这一暗渠法为农业修建供水隧道。罗马人暗渠隧道的竖井彼此之间间隔30到60米。竖井配备有扶手和脚蹬以帮助攀爬进出的人们，并且盖有木制或者石制的盖子。为了确保竖井垂直，罗马人将铅锤线挂在横跨竖井顶部的木棒上，确保尾端重物位于竖井中心。铅垂线也被用来测量竖井的深度，决定隧道的坡度。长达5.6千米的克劳狄隧道修建于公元41年，以便从意大利中部的Fucine湖抽水。其竖井深达122米，大约30000名工人用了11年的时间才完成。</p><p>公元前六世纪出现了第二种修建隧道的方法（反向挖掘法）。这种方法中，隧道从两端同时修建。它被用于穿越无法使用暗渠法的高山。这种方法需要更好的规划，以及测绘、数学和几何方面的高深知识，因为隧道两端必须在山的中央准确相遇。当建筑工人遇到地质问题，或者当它偏离设定路线时，就必须对隧道的方向进行调整。他们经常通过观察隧道口射进来的光线来检查隧道前进的方向，并在必要的时候做出调整。大幅偏离可能发生，导致隧道一端变得不可用。一条长达428米的隧道侧面的铭刻描述了两队建筑工人如何在山中错过彼此，以及如何在两条通道之间修建横向连接以纠正最初的错误。</p><p>当罗马人遇到障碍，如道路无法跨越的过高山峰时，他们就会使用反向挖掘法为道路挖掘隧道。一个例子是修建于公元69年到公元79年，位于意大利的Furlo Pass隧道。它长37米，高6米。令人惊讶的是，一条现代公路今天仍然在使用该隧道。隧道也被用于挖矿。矿工会定位矿脉，然后利用竖井和地下隧道追寻它。如今，我们在威尔士Dolaucothi矿区仍然可以看到一些用于挖掘金矿的隧道的痕迹。当隧道只用于挖矿时，其建造所需要的规划就少了许多，因为隧道路线由矿脉决定。</p><p>罗马隧道项目规划认真，施工仔细。修建一条隧道的时间长短取决于其所使用的方法，以及挖掘的岩石类型。暗渠法因为更加直接，要比反向挖掘法更快一点。这是因为山脉不仅可以从隧道口挖掘，而且也可以通过竖井。岩石类型也会影响建造时间。当岩石坚硬时，罗马人会使用一种叫作fire quenching的方法。他们先用火加热石头，然后突然用凉水将它冷却，从而造成裂缝。穿越坚硬岩石的进展会非常缓慢。用数年，甚至数十年的时间修建隧道并不少见。博洛尼亚一条罗马隧道内留下的建筑痕迹显示，它在坚硬岩石中前进的速度为每天30厘米。相比之下，计算出来的克劳狄隧道的前进速度为每天1.4米。大多数隧道都有铭刻，显示命令修建隧道的赞助人的名字，有时候也会有建筑师的名字。例如，土耳其境内，为了分流威胁到Seleuceia Pieria古城港口的洪水而修建的，长达1.4千米的Cevlik隧道，在入口处就有如今仍然可见的铭刻。它同时也表明该隧道的修建开始于公元69年，完成于公元81年。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>The Romans, who once controlled areas of Europe, North Africa and Asia Minor, adopted the construction techniques of other <mark class="vocab-word" data-word="civilization">civilizations</mark> to build <mark class="vocab-word" data-word="tunnel">tunnels</mark> in their territories.</p></div>  <div class="parallel-zh"><p>曾经控制欧洲、北非和小亚细亚的罗马人，使用其他文明的建筑技巧来在他们自己的领土上修建隧道。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Persians, who lived in present-day Iran, were one of the first <mark class="vocab-word" data-word="civilization">civilizations</mark> to build <mark class="vocab-word" data-word="tunnel">tunnels</mark> that <mark class="vocab-word" data-word="provided">provided</mark> a reliable supply of water to human <mark class="vocab-word" data-word="settlement">settlements</mark> in dry areas. In the early first <mark class="vocab-word" data-word="millennium">millennium</mark> BCE, they introduced theqanatmethod of <mark class="vocab-word" data-word="tunnel">tunnel</mark> construction, which consisted of placing posts over a hill in a straight line, to ensure that the <mark class="vocab-word" data-word="tunnel">tunnel</mark> kept to its route, and then digging <mark class="vocab-word" data-word="vertical">vertical</mark> <mark class="vocab-word" data-word="shaft">shafts</mark> down into the ground at regular <mark class="vocab-word" data-word="interval">intervals</mark>. Underground, workers removed the earth from between the ends of the <mark class="vocab-word" data-word="shaft">shafts</mark>, creating a <mark class="vocab-word" data-word="tunnel">tunnel</mark>. The <mark class="vocab-word" data-word="excavate">excavated</mark> soil was taken up to the surface using the <mark class="vocab-word" data-word="shaft">shafts</mark>, which also <mark class="vocab-word" data-word="provided">provided</mark> <mark class="vocab-word" data-word="ventilation">ventilation</mark> during the work. Once the <mark class="vocab-word" data-word="tunnel">tunnel</mark> was completed, it allowed water to flow from the top of a <mark class="vocab-word" data-word="hillside">hillside</mark> down towards a <mark class="vocab-word" data-word="canal">canal</mark>, which supplied water for human use. Remarkably, someqanatsbuilt by the Persians 2,700 years ago are still in use today.</p></div>  <div class="parallel-zh"><p>生活在今天伊朗地区的波斯人是最早修建隧道从而为干燥地区的聚居点提供可靠水源的文明之一。早在公元前一千年，他们就采用暗渠法修建隧道。这包括在山上按照直线打桩，确保隧道沿其路线行进，然后以规律的间隔在地面上打出竖井。地下，工人将竖井末端之间的土壤挖出形成隧道。挖出的土壤通过竖井运送到地面。这些竖井也在工程期间提供通风。一旦隧道完成，水就可以从山顶流向水渠，供人类使用。令人惊讶的是，一些波斯人在2700年前修建的暗渠如今仍在使用。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>They later passed on their knowledge to the Romans, who also used theqanatmethod to <mark class="vocab-word" data-word="construct">construct</mark> water-supply <mark class="vocab-word" data-word="tunnel">tunnels</mark> for <mark class="vocab-word" data-word="agriculture">agriculture</mark>. Romanqanattunnels were <mark class="vocab-word" data-word="construct">constructed</mark> with <mark class="vocab-word" data-word="vertical">vertical</mark> <mark class="vocab-word" data-word="shaft">shafts</mark> dug at <mark class="vocab-word" data-word="interval">intervals</mark> of between 30 and 60 meters. The <mark class="vocab-word" data-word="shaft">shafts</mark> were equipped with handholds and footholds to help those <mark class="vocab-word" data-word="climb">climbing</mark> in and out of them and were covered with a wooden or stone <mark class="vocab-word" data-word="lid">lid</mark>. To ensure that the <mark class="vocab-word" data-word="shaft">shafts</mark> were <mark class="vocab-word" data-word="vertical">vertical</mark>, this article is from  website, Romans hung a <mark class="vocab-word" data-word="plumb">plumb</mark> line from a <mark class="vocab-word" data-word="rod">rod</mark> placed across the top of each <mark class="vocab-word" data-word="shaft">shaft</mark> and made sure that the weight at the end of it hung in the center of the <mark class="vocab-word" data-word="shaft">shaft</mark>. <mark class="vocab-word" data-word="plumb">Plumb</mark> lines were also used to measure the depth of the <mark class="vocab-word" data-word="shaft">shaft</mark> and to determine the <mark class="vocab-word" data-word="slope">slope</mark> of the <mark class="vocab-word" data-word="tunnel">tunnel</mark>. The 5.6-kilometer-long Claudius <mark class="vocab-word" data-word="tunnel">tunnel</mark>, built in 41 CE to <mark class="vocab-word" data-word="drain">drain</mark> the Fucine Lake in central Italy, had <mark class="vocab-word" data-word="shaft">shafts</mark> that were up to 122 meters deep, took 11 years to build and <mark class="vocab-word" data-word="involved">involved</mark> <mark class="vocab-word" data-word="approximate">approximately</mark> 30,000 workers.</p></div>  <div class="parallel-zh"><p>他们随后将这些知识传给罗马人。罗马人使用这一暗渠法为农业修建供水隧道。罗马人暗渠隧道的竖井彼此之间间隔30到60米。竖井配备有扶手和脚蹬以帮助攀爬进出的人们，并且盖有木制或者石制的盖子。为了确保竖井垂直，罗马人将铅锤线挂在横跨竖井顶部的木棒上，确保尾端重物位于竖井中心。铅垂线也被用来测量竖井的深度，决定隧道的坡度。长达5.6千米的克劳狄隧道修建于公元41年，以便从意大利中部的Fucine湖抽水。其竖井深达122米，大约30000名工人用了11年的时间才完成。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>By the 6th century BCE, a second method of <mark class="vocab-word" data-word="tunnel">tunnel</mark> construction appeared called the counter- <mark class="vocab-word" data-word="excavation">excavation</mark> method, in which the <mark class="vocab-word" data-word="tunnel">tunnel</mark> was <mark class="vocab-word" data-word="construct">constructed</mark> from both ends. It was used to cut through high mountains when theqanatmethod was not a practical alternative. This method required greater planning and <mark class="vocab-word" data-word="advanced">advanced</mark> knowledge of surveying, mathematics and <mark class="vocab-word" data-word="geometry">geometry</mark> as both ends of a <mark class="vocab-word" data-word="tunnel">tunnel</mark> had to meet correctly at the center of the mountain. Adjustments to the direction of the <mark class="vocab-word" data-word="tunnel">tunnel</mark> also had to be made whenever builders encountered <mark class="vocab-word" data-word="geological">geological</mark> problems or when it <mark class="vocab-word" data-word="deviate">deviated</mark> from its set path. They constantly <mark class="vocab-word" data-word="checked">checked</mark> the <mark class="vocab-word" data-word="tunnel">tunnel</mark>’s advancing direction, for example, by looking back at the light that <mark class="vocab-word" data-word="penetrate">penetrated</mark> through the <mark class="vocab-word" data-word="tunnel">tunnel</mark> mouth, and made corrections whenever necessary. Large deviations could happen, and they could result in one end of the <mark class="vocab-word" data-word="tunnel">tunnel</mark> not being usable. An inscription written on the side of a 428-meter <mark class="vocab-word" data-word="tunnel">tunnel</mark>, built by the Romans as part of the Saldae <mark class="vocab-word" data-word="aqueduct">aqueduct</mark> system in modern-day Algeria, describes how the two teams of builders missed each other in the mountain and how the later construction of a <mark class="vocab-word" data-word="lateral">lateral</mark> link between both <mark class="vocab-word" data-word="corridor">corridors</mark> corrected the initial error.</p></div>  <div class="parallel-zh"><p>公元前六世纪出现了第二种修建隧道的方法（反向挖掘法）。这种方法中，隧道从两端同时修建。它被用于穿越无法使用暗渠法的高山。这种方法需要更好的规划，以及测绘、数学和几何方面的高深知识，因为隧道两端必须在山的中央准确相遇。当建筑工人遇到地质问题，或者当它偏离设定路线时，就必须对隧道的方向进行调整。他们经常通过观察隧道口射进来的光线来检查隧道前进的方向，并在必要的时候做出调整。大幅偏离可能发生，导致隧道一端变得不可用。一条长达428米的隧道侧面的铭刻描述了两队建筑工人如何在山中错过彼此，以及如何在两条通道之间修建横向连接以纠正最初的错误。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Romans dug <mark class="vocab-word" data-word="tunnel">tunnels</mark> for their roads using the counter-excavation method, whenever they encountered <mark class="vocab-word" data-word="obstacle">obstacles</mark> such as hills or mountains that were too high for roads to pass over. An example is the 37-meter-long, 6-meter-high, Furlo Pass <mark class="vocab-word" data-word="tunnel">Tunnel</mark> built in Italy in 69-79 CE. Remarkably, a modern road still uses this <mark class="vocab-word" data-word="tunnel">tunnel</mark> today. <mark class="vocab-word" data-word="tunnel">Tunnels</mark> were also built for <mark class="vocab-word" data-word="mineral">mineral</mark> extraction. Miners would locate a <mark class="vocab-word" data-word="mineral">mineral</mark> <mark class="vocab-word" data-word="vein">vein</mark> and then pursue it with <mark class="vocab-word" data-word="shaft">shafts</mark> and <mark class="vocab-word" data-word="tunnel">tunnels</mark> underground. <mark class="vocab-word" data-word="trace">Traces</mark> of such <mark class="vocab-word" data-word="tunnel">tunnels</mark> used to mine gold can still be found at the Dolaucothi mines in Wales. When the <mark class="vocab-word" data-word="sole">sole</mark> purpose of a <mark class="vocab-word" data-word="tunnel">tunnel</mark> was <mark class="vocab-word" data-word="mineral">mineral</mark> extraction, construction required less planning, as the <mark class="vocab-word" data-word="tunnel">tunnel</mark> route was <mark class="vocab-word" data-word="determined">determined</mark> by the <mark class="vocab-word" data-word="mineral">mineral</mark> <mark class="vocab-word" data-word="vein">vein</mark>.</p></div>  <div class="parallel-zh"><p>当罗马人遇到障碍，如道路无法跨越的过高山峰时，他们就会使用反向挖掘法为道路挖掘隧道。一个例子是修建于公元69年到公元79年，位于意大利的Furlo Pass隧道。它长37米，高6米。令人惊讶的是，一条现代公路今天仍然在使用该隧道。隧道也被用于挖矿。矿工会定位矿脉，然后利用竖井和地下隧道追寻它。如今，我们在威尔士Dolaucothi矿区仍然可以看到一些用于挖掘金矿的隧道的痕迹。当隧道只用于挖矿时，其建造所需要的规划就少了许多，因为隧道路线由矿脉决定。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Roman <mark class="vocab-word" data-word="tunnel">tunnel</mark> projects were carefully planned and carried out. The length of time it took to <mark class="vocab-word" data-word="construct">construct</mark> a <mark class="vocab-word" data-word="tunnel">tunnel</mark> depended on the method being used and the type of rock being <mark class="vocab-word" data-word="excavate">excavated</mark>. Theqanatconstruction method was usually faster than the counter-excavation method as it was more <mark class="vocab-word" data-word="straightforward">straightforward</mark>. This was because the mountain could be <mark class="vocab-word" data-word="excavate">excavated</mark> not only from the <mark class="vocab-word" data-word="tunnel">tunnel</mark> mouths but also from <mark class="vocab-word" data-word="shaft">shafts</mark>. The type of rock could also <mark class="vocab-word" data-word="influence">influence</mark> construction times. When the rock was hard, the Romans employed a technique called fire <mark class="vocab-word" data-word="quench">quenching</mark> which consisted of <mark class="vocab-word" data-word="healing">healing</mark> the rock with fire, and then suddenly cooling it with cold water so that it would <mark class="vocab-word" data-word="crack">crack</mark>. Progress through hard rock could be very slow, and it was not <mark class="vocab-word" data-word="uncommon">uncommon</mark> for <mark class="vocab-word" data-word="tunnel">tunnels</mark> to take years, if not <mark class="vocab-word" data-word="decade">decades</mark>, to be built. Construction marks left on a Roman <mark class="vocab-word" data-word="tunnel">tunnel</mark> in Bologna show that the rate of advance through solid rock was 30 <mark class="vocab-word" data-word="centimeter">centimeters</mark> per day. In contrast, the rate of advance of the Claudius <mark class="vocab-word" data-word="tunnel">tunnel</mark> can be calculated at 1.4 meters per day. Most <mark class="vocab-word" data-word="tunnel">tunnels</mark> had inscriptions showing the names of <mark class="vocab-word" data-word="patron">patrons</mark> who ordered construction and sometimes the name of the <mark class="vocab-word" data-word="architect">architect</mark>. For example, the 1.4-kilometer Cevlik <mark class="vocab-word" data-word="tunnel">tunnel</mark> in <mark class="vocab-word" data-word="turkey">Turkey</mark>, built to <mark class="vocab-word" data-word="divert">divert</mark> the floodwater <mark class="vocab-word" data-word="threatening">threatening</mark> the <mark class="vocab-word" data-word="harbor">harbor</mark> of the ancient city of Seleuceia Pieria, had inscriptions on the entrance, still <mark class="vocab-word" data-word="visible">visible</mark> today, that also indicate that the <mark class="vocab-word" data-word="tunnel">tunnel</mark> was started in 69 CE and was completed in 81 CE.</p></div>  <div class="parallel-zh"><p>罗马隧道项目规划认真，施工仔细。修建一条隧道的时间长短取决于其所使用的方法，以及挖掘的岩石类型。暗渠法因为更加直接，要比反向挖掘法更快一点。这是因为山脉不仅可以从隧道口挖掘，而且也可以通过竖井。岩石类型也会影响建造时间。当岩石坚硬时，罗马人会使用一种叫作fire quenching的方法。他们先用火加热石头，然后突然用凉水将它冷却，从而造成裂缝。穿越坚硬岩石的进展会非常缓慢。用数年，甚至数十年的时间修建隧道并不少见。博洛尼亚一条罗马隧道内留下的建筑痕迹显示，它在坚硬岩石中前进的速度为每天30厘米。相比之下，计算出来的克劳狄隧道的前进速度为每天1.4米。大多数隧道都有铭刻，显示命令修建隧道的赞助人的名字，有时候也会有建筑师的名字。例如，土耳其境内，为了分流威胁到Seleuceia Pieria古城港口的洪水而修建的，长达1.4千米的Cevlik隧道，在入口处就有如今仍然可见的铭刻。它同时也表明该隧道的修建开始于公元69年，完成于公元81年。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"civilization": 2, "tunnel": 34, "provided": 2, "settlement": 1, "millennium": 1, "vertical": 3, "shaft": 12, "interval": 2, "excavate": 3, "ventilation": 1, "hillside": 1, "canal": 1, "construct": 4, "agriculture": 1, "climb": 1, "lid": 1, "plumb": 2, "rod": 1, "slope": 1, "drain": 1, "involved": 1, "approximate": 1, "excavation": 1, "advanced": 1, "geometry": 1, "geological": 1, "deviate": 1, "checked": 1, "penetrate": 1, "aqueduct": 1, "lateral": 1, "corridor": 1, "obstacle": 1, "mineral": 4, "vein": 2, "trace": 1, "sole": 1, "determined": 1, "straightforward": 1, "influence": 1, "quench": 1, "healing": 1, "crack": 1, "uncommon": 1, "decade": 1, "centimeter": 1, "patron": 1, "architect": 1, "turkey": 1, "divert": 1, "threatening": 1, "harbor": 1, "visible": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

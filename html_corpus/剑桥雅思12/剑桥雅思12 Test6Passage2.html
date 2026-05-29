@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The lost city 失落的城市 - 剑桥雅思12 Test 6 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思12</span>
+                    <span class="badge-tag">Test 6</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>The lost city 失落的城市</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/30629.html" target="_blank">https://www.laokaoya.com/30629.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>When the US <mark class="vocab-word" data-word="explorer">explorer</mark> and <mark class="vocab-word" data-word="academic">academic</mark> Hiram Bingham arrived in South America in 1911, he was ready for what was to be the greatest achievement of his life: the exploration of the remotehinterlandto the west of Cusco, the old capital of the Inca <mark class="vocab-word" data-word="empire">empire</mark> in the <mark class="vocab-word" data-word="andes">Andes</mark> mountains of Peru.His goal was to locate the <mark class="vocab-word" data-word="remains">remains</mark> of a city called Vitcos, the last capital of the Inca civilisation.Cusco lies on a highplateauat anelevationof more than 3,000 metres, and Bingham’s plan was todescendfrom thisplateaualong the valley of the Urubamba river, which takes a circuitous route down to the Amazon and passes through an area ofdramaticcanyons and mountain ranges.</p><p>When Bingham and his team set off down the Urubamba in late July, they had an advantage over travellers who had <mark class="vocab-word" data-word="precede">preceded</mark> them: a track had recently been <mark class="vocab-word" data-word="blast">blasted</mark> down the valleycanyonto enable <mark class="vocab-word" data-word="rubber">rubber</mark> to be brought up by mules from the <mark class="vocab-word" data-word="jungle">jungle</mark>.Almost all previous travellers had left the river at Ollantaytambo and taken a high pass across the mountains to rejoin the river lower down, <mark class="vocab-word" data-word="thereby">thereby</mark> cutting a <mark class="vocab-word" data-word="substantial">substantial</mark> corner, but also therefore never <mark class="vocab-word" data-word="passing">passing</mark> through the area around Machu Picchu.</p><p>On 24 July they were a few days into theirdescentof the valley.The day began slowly, with Bingham trying to arrangesufficientmules for the next stage of thetrek.His <mark class="vocab-word" data-word="companion">companions</mark> showed no interest in accompanying him up the nearby hill to see some <mark class="vocab-word" data-word="ruin">ruins</mark> that a local farmer, Melchor Arteaga, had told them about the night before.The morning was <mark class="vocab-word" data-word="dull">dull</mark> anddamp, and Bingham also seems to have been less than <mark class="vocab-word" data-word="keen">keen</mark> on the <mark class="vocab-word" data-word="prospect">prospect</mark> of <mark class="vocab-word" data-word="climb">climbing</mark> the hill.In his book Lost City of the Incas, he relates that he made the ascent without having the least expectation that he would find anything at the top.</p><p>Bingham writes about the approach in <mark class="vocab-word" data-word="vivid">vivid</mark> style in his book.First, as he <mark class="vocab-word" data-word="climb">climbs</mark> up the hill, he describes the ever-present possibility of <mark class="vocab-word" data-word="deadly">deadly</mark> snakes, ‘capable of makingconsiderablesprings when inpursuitof theirprey’; not that he sees any.Then there’s a sense ofmountingdiscovery as he comes across great <mark class="vocab-word" data-word="sweep">sweeps</mark> of <mark class="vocab-word" data-word="terrace">terraces</mark>, then a mausoleum, followed bymonumentalstaircases and, finally, the grandceremonialbuildings of Machu Picchu.‘It seemed like an unbelievable dream … the sight held me spellbound …’ he wrote.</p><p>We should remember, however, that Lost City of the Incas is a work ofhindsight, not written until 1948, many years after his journey.His journal entries of the time <mark class="vocab-word" data-word="reveal">reveal</mark> a much more <mark class="vocab-word" data-word="gradual">gradual</mark> <mark class="vocab-word" data-word="appreciation">appreciation</mark> of his achievement.He spent the afternoon at the <mark class="vocab-word" data-word="ruin">ruins</mark> noting down the <mark class="vocab-word" data-word="dimension">dimensions</mark> of some of the buildings, then <mark class="vocab-word" data-word="descend">descended</mark> and rejoined his <mark class="vocab-word" data-word="companion">companions</mark>, to whom he seems to have said little about his discovery.At this stage, Bingham didn’t realise the extent or the importance of the <mark class="vocab-word" data-word="site">site</mark>, nor did he realise what use he could make of the discovery.</p><p>However, soon after returning it occurred to him that he could make a name for himself from this discovery.When he came to write the National Geographic magazine article that broke the <mark class="vocab-word" data-word="story">story</mark> to the world in April 1913, he knew he had to produce a big idea.He wondered whether it could have been the birthplace of the very first Inca, Manco the Great, and whether it could also have been what chroniclers described as ‘the last city of the Incas’.This term refers to Vilcabamba, the <mark class="vocab-word" data-word="settlement">settlement</mark> where the Incas had fled from <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="invader">invaders</mark> in the 1530s.Bingham made <mark class="vocab-word" data-word="desperate">desperate</mark> attempts to prove this belief for nearly 40 years.Sadly, his vision of the <mark class="vocab-word" data-word="site">site</mark> as both the beginning and end of the Inca civilisation, while a <mark class="vocab-word" data-word="magnificent">magnificent</mark> one, is <mark class="vocab-word" data-word="inaccurate">inaccurate</mark>.We now know that Vilcabamba actually lies 65 kilometres away in the depths of the <mark class="vocab-word" data-word="jungle">jungle</mark>.</p><p>One question that hasperplexedvisitors, <mark class="vocab-word" data-word="historian">historians</mark> and archaeologists alike ever since Bingham, is why the <mark class="vocab-word" data-word="site">site</mark> seems to have been abandoned before the <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="conquest">Conquest</mark>.There are no references to it by any of the <mark class="vocab-word" data-word="spanish">Spanish</mark> chroniclers – and if they had known of its existence so close to Cusco they would certainly have come in search of gold.An idea which has gained wide <mark class="vocab-word" data-word="acceptance">acceptance</mark> over the past few years is that Machu Picchu was a moya, a country <mark class="vocab-word" data-word="estate">estate</mark> built by an Incaemperorto escape the cold winters of Cusco, where the <mark class="vocab-word" data-word="elite">elite</mark> could enjoymonumentalarchitecture andspectacularviews.Furthermore, theparticulararchitecture of Machu Picchu <mark class="vocab-word" data-word="suggest">suggests</mark> that it was <mark class="vocab-word" data-word="construct">constructed</mark> at the time of the greatest of all the Incas, theemperorPachacuti (c. 1438-71).By custom, Pachacuti’s <mark class="vocab-word" data-word="descendant">descendants</mark> built other similar <mark class="vocab-word" data-word="estate">estates</mark> for their own use, and so Machu Picchu would have been abandoned after his death, some 50 years before the <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="conquest">Conquest</mark>.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>当美国探险家和学者Hiram Bingham于1911年到达南美大陆时，他已经为即将到来的自己人生中最伟大的成就做好了准备：探索库斯科西部遥远的内陆地区，秘鲁安第斯山脉印加帝国的古都所在。他的目标是找到被称为Vitcos的城市遗迹，印加文明最后的首都。库斯科位于海拔3000多米的高原之上。Bingham计划沿着乌鲁班巴河的河谷一路向下。走环形路线到达亚马逊，并穿过一片巨大的峡谷和山脉。</p><p>当Bingham和他的团队在7月末沿着乌鲁班巴河顺流而下时，他们与之前的旅行者相比拥有一项优势：一条沿着峡谷的小道刚刚被开辟出来，以方便骡马从森林中运输橡胶。几乎所有之前的旅行者都在Ollantaytambo离开河道，在高处穿过山脉，再在低处与河流汇合。这样虽然少走了不少路，但也因此从来都没有穿越过马丘比丘附近的区域。</p><p>7月24日，他们在山谷中已经走了一些日子。这天天亮的很慢。Bingham正努力为下一阶段的路途安排足够的骡子。他的同伴对陪同他登上附近的山丘，观察当地农民Melchor Arteaga前天晚上告诉他们的一些遗迹毫无兴趣。那天早晨阴暗潮湿，Bingham似乎也对攀登小山的前景不那么期待。他在《印加的失落城市》一书中提到，他爬山时根本就没有期望能在山顶发现任何东西。</p><p>Bingham在书中用生动的语言描述了这一过程。一开始在爬山过程中，他描述到致命毒蛇出现的风险。它们在捕捉猎物时能够高高弹起。虽然他并没有见到任何一条。随着他走过巨大的看台，陵墓，壮观的台阶，并最终达到马丘比丘宏伟的仪式建筑，他的发现越来越多。他写到，“这似乎是一场令人难以置信的梦境，那景象令我着迷”。</p><p>然而，我们应当记住，《印加的失落城市》是一部事后作品，直到1948年才写成。那时他的旅行已经结束许多年了。他按照时间写成的日志揭示了更多其成就逐渐被理解的过程。他在废墟中花了一下午，记录一些建筑的尺寸，然后下山与同伴汇合。他似乎并没有跟他们提及自己的发现。这时候，Bingham还没有意识到这个地方的重要性，他也没有意识到自己能利用这一发现做什么。</p><p>然而，在返回不久之后，他想到自己可以利用这一发现出名。当他终于在1913年四月在《国家地理》杂志刊登文章将这个故事公布于世时，他意识到自己需要一个更大胆的想法。他猜想，它有没有可能是印加文明的诞生地-伟大的曼科，或者它有没有可能是编年史作家所描述的印加最后的城市-Vilcabamba，即16世纪30年代印加人躲避西班牙入侵者的聚居地。Bingham用了将近40年的时间竭尽全力证明这一想法。遗憾的是，他所到之处虽然景象十分壮观，但无论是作为印加文明的起始之地，还是结束之处，均与史实不符。我们现在知道，Vilcabamba实际上位于65公里外的丛林深处。</p><p>自Bingham以来，一直困扰着游客、历史学家和考古学家的一个问题是，为什么这座城市在被西班牙占领之前就被抛弃。没有任何西班牙编年史作者提到此处。而如果他们知道它的位置与库斯科如此之近，他们肯定会来寻找黄金的。过去几年里被人们普遍接受的一种观点是，马丘比丘位于火山之上，一名印加国王在这里建造城市以逃避库斯科寒冷的冬季。而精英阶层则可以享受巨大的建筑并欣赏壮观的景象。此外，马丘比丘独特的建筑表明，它建设于印加文明最为鼎盛的时期-帕查库蒂国王在位期间（c.1438-1471年）。根据传统，帕查库蒂的后代们建造了其他相似的建筑供自己使用。因此，在他死后，马丘比丘就被遗弃了。差不多50年后，西班牙入侵者才到来。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>When the US <mark class="vocab-word" data-word="explorer">explorer</mark> and <mark class="vocab-word" data-word="academic">academic</mark> Hiram Bingham arrived in South America in 1911, he was ready for what was to be the greatest achievement of his life: the exploration of the remotehinterlandto the west of Cusco, the old capital of the Inca <mark class="vocab-word" data-word="empire">empire</mark> in the <mark class="vocab-word" data-word="andes">Andes</mark> mountains of Peru.His goal was to locate the <mark class="vocab-word" data-word="remains">remains</mark> of a city called Vitcos, the last capital of the Inca civilisation.Cusco lies on a highplateauat anelevationof more than 3,000 metres, and Bingham’s plan was todescendfrom thisplateaualong the valley of the Urubamba river, which takes a circuitous route down to the Amazon and passes through an area ofdramaticcanyons and mountain ranges.</p></div>  <div class="parallel-zh"><p>当美国探险家和学者Hiram Bingham于1911年到达南美大陆时，他已经为即将到来的自己人生中最伟大的成就做好了准备：探索库斯科西部遥远的内陆地区，秘鲁安第斯山脉印加帝国的古都所在。他的目标是找到被称为Vitcos的城市遗迹，印加文明最后的首都。库斯科位于海拔3000多米的高原之上。Bingham计划沿着乌鲁班巴河的河谷一路向下。走环形路线到达亚马逊，并穿过一片巨大的峡谷和山脉。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>When Bingham and his team set off down the Urubamba in late July, they had an advantage over travellers who had <mark class="vocab-word" data-word="precede">preceded</mark> them: a track had recently been <mark class="vocab-word" data-word="blast">blasted</mark> down the valleycanyonto enable <mark class="vocab-word" data-word="rubber">rubber</mark> to be brought up by mules from the <mark class="vocab-word" data-word="jungle">jungle</mark>.Almost all previous travellers had left the river at Ollantaytambo and taken a high pass across the mountains to rejoin the river lower down, <mark class="vocab-word" data-word="thereby">thereby</mark> cutting a <mark class="vocab-word" data-word="substantial">substantial</mark> corner, but also therefore never <mark class="vocab-word" data-word="passing">passing</mark> through the area around Machu Picchu.</p></div>  <div class="parallel-zh"><p>当Bingham和他的团队在7月末沿着乌鲁班巴河顺流而下时，他们与之前的旅行者相比拥有一项优势：一条沿着峡谷的小道刚刚被开辟出来，以方便骡马从森林中运输橡胶。几乎所有之前的旅行者都在Ollantaytambo离开河道，在高处穿过山脉，再在低处与河流汇合。这样虽然少走了不少路，但也因此从来都没有穿越过马丘比丘附近的区域。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>On 24 July they were a few days into theirdescentof the valley.The day began slowly, with Bingham trying to arrangesufficientmules for the next stage of thetrek.His <mark class="vocab-word" data-word="companion">companions</mark> showed no interest in accompanying him up the nearby hill to see some <mark class="vocab-word" data-word="ruin">ruins</mark> that a local farmer, Melchor Arteaga, had told them about the night before.The morning was <mark class="vocab-word" data-word="dull">dull</mark> anddamp, and Bingham also seems to have been less than <mark class="vocab-word" data-word="keen">keen</mark> on the <mark class="vocab-word" data-word="prospect">prospect</mark> of <mark class="vocab-word" data-word="climb">climbing</mark> the hill.In his book Lost City of the Incas, he relates that he made the ascent without having the least expectation that he would find anything at the top.</p></div>  <div class="parallel-zh"><p>7月24日，他们在山谷中已经走了一些日子。这天天亮的很慢。Bingham正努力为下一阶段的路途安排足够的骡子。他的同伴对陪同他登上附近的山丘，观察当地农民Melchor Arteaga前天晚上告诉他们的一些遗迹毫无兴趣。那天早晨阴暗潮湿，Bingham似乎也对攀登小山的前景不那么期待。他在《印加的失落城市》一书中提到，他爬山时根本就没有期望能在山顶发现任何东西。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Bingham writes about the approach in <mark class="vocab-word" data-word="vivid">vivid</mark> style in his book.First, as he <mark class="vocab-word" data-word="climb">climbs</mark> up the hill, he describes the ever-present possibility of <mark class="vocab-word" data-word="deadly">deadly</mark> snakes, ‘capable of makingconsiderablesprings when inpursuitof theirprey’; not that he sees any.Then there’s a sense ofmountingdiscovery as he comes across great <mark class="vocab-word" data-word="sweep">sweeps</mark> of <mark class="vocab-word" data-word="terrace">terraces</mark>, then a mausoleum, followed bymonumentalstaircases and, finally, the grandceremonialbuildings of Machu Picchu.‘It seemed like an unbelievable dream … the sight held me spellbound …’ he wrote.</p></div>  <div class="parallel-zh"><p>Bingham在书中用生动的语言描述了这一过程。一开始在爬山过程中，他描述到致命毒蛇出现的风险。它们在捕捉猎物时能够高高弹起。虽然他并没有见到任何一条。随着他走过巨大的看台，陵墓，壮观的台阶，并最终达到马丘比丘宏伟的仪式建筑，他的发现越来越多。他写到，“这似乎是一场令人难以置信的梦境，那景象令我着迷”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>We should remember, however, that Lost City of the Incas is a work ofhindsight, not written until 1948, many years after his journey.His journal entries of the time <mark class="vocab-word" data-word="reveal">reveal</mark> a much more <mark class="vocab-word" data-word="gradual">gradual</mark> <mark class="vocab-word" data-word="appreciation">appreciation</mark> of his achievement.He spent the afternoon at the <mark class="vocab-word" data-word="ruin">ruins</mark> noting down the <mark class="vocab-word" data-word="dimension">dimensions</mark> of some of the buildings, then <mark class="vocab-word" data-word="descend">descended</mark> and rejoined his <mark class="vocab-word" data-word="companion">companions</mark>, to whom he seems to have said little about his discovery.At this stage, Bingham didn’t realise the extent or the importance of the <mark class="vocab-word" data-word="site">site</mark>, nor did he realise what use he could make of the discovery.</p></div>  <div class="parallel-zh"><p>然而，我们应当记住，《印加的失落城市》是一部事后作品，直到1948年才写成。那时他的旅行已经结束许多年了。他按照时间写成的日志揭示了更多其成就逐渐被理解的过程。他在废墟中花了一下午，记录一些建筑的尺寸，然后下山与同伴汇合。他似乎并没有跟他们提及自己的发现。这时候，Bingham还没有意识到这个地方的重要性，他也没有意识到自己能利用这一发现做什么。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, soon after returning it occurred to him that he could make a name for himself from this discovery.When he came to write the National Geographic magazine article that broke the <mark class="vocab-word" data-word="story">story</mark> to the world in April 1913, he knew he had to produce a big idea.He wondered whether it could have been the birthplace of the very first Inca, Manco the Great, and whether it could also have been what chroniclers described as ‘the last city of the Incas’.This term refers to Vilcabamba, the <mark class="vocab-word" data-word="settlement">settlement</mark> where the Incas had fled from <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="invader">invaders</mark> in the 1530s.Bingham made <mark class="vocab-word" data-word="desperate">desperate</mark> attempts to prove this belief for nearly 40 years.Sadly, his vision of the <mark class="vocab-word" data-word="site">site</mark> as both the beginning and end of the Inca civilisation, while a <mark class="vocab-word" data-word="magnificent">magnificent</mark> one, is <mark class="vocab-word" data-word="inaccurate">inaccurate</mark>.We now know that Vilcabamba actually lies 65 kilometres away in the depths of the <mark class="vocab-word" data-word="jungle">jungle</mark>.</p></div>  <div class="parallel-zh"><p>然而，在返回不久之后，他想到自己可以利用这一发现出名。当他终于在1913年四月在《国家地理》杂志刊登文章将这个故事公布于世时，他意识到自己需要一个更大胆的想法。他猜想，它有没有可能是印加文明的诞生地-伟大的曼科，或者它有没有可能是编年史作家所描述的印加最后的城市-Vilcabamba，即16世纪30年代印加人躲避西班牙入侵者的聚居地。Bingham用了将近40年的时间竭尽全力证明这一想法。遗憾的是，他所到之处虽然景象十分壮观，但无论是作为印加文明的起始之地，还是结束之处，均与史实不符。我们现在知道，Vilcabamba实际上位于65公里外的丛林深处。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One question that hasperplexedvisitors, <mark class="vocab-word" data-word="historian">historians</mark> and archaeologists alike ever since Bingham, is why the <mark class="vocab-word" data-word="site">site</mark> seems to have been abandoned before the <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="conquest">Conquest</mark>.There are no references to it by any of the <mark class="vocab-word" data-word="spanish">Spanish</mark> chroniclers – and if they had known of its existence so close to Cusco they would certainly have come in search of gold.An idea which has gained wide <mark class="vocab-word" data-word="acceptance">acceptance</mark> over the past few years is that Machu Picchu was a moya, a country <mark class="vocab-word" data-word="estate">estate</mark> built by an Incaemperorto escape the cold winters of Cusco, where the <mark class="vocab-word" data-word="elite">elite</mark> could enjoymonumentalarchitecture andspectacularviews.Furthermore, theparticulararchitecture of Machu Picchu <mark class="vocab-word" data-word="suggest">suggests</mark> that it was <mark class="vocab-word" data-word="construct">constructed</mark> at the time of the greatest of all the Incas, theemperorPachacuti (c. 1438-71).By custom, Pachacuti’s <mark class="vocab-word" data-word="descendant">descendants</mark> built other similar <mark class="vocab-word" data-word="estate">estates</mark> for their own use, and so Machu Picchu would have been abandoned after his death, some 50 years before the <mark class="vocab-word" data-word="spanish">Spanish</mark> <mark class="vocab-word" data-word="conquest">Conquest</mark>.</p></div>  <div class="parallel-zh"><p>自Bingham以来，一直困扰着游客、历史学家和考古学家的一个问题是，为什么这座城市在被西班牙占领之前就被抛弃。没有任何西班牙编年史作者提到此处。而如果他们知道它的位置与库斯科如此之近，他们肯定会来寻找黄金的。过去几年里被人们普遍接受的一种观点是，马丘比丘位于火山之上，一名印加国王在这里建造城市以逃避库斯科寒冷的冬季。而精英阶层则可以享受巨大的建筑并欣赏壮观的景象。此外，马丘比丘独特的建筑表明，它建设于印加文明最为鼎盛的时期-帕查库蒂国王在位期间（c.1438-1471年）。根据传统，帕查库蒂的后代们建造了其他相似的建筑供自己使用。因此，在他死后，马丘比丘就被遗弃了。差不多50年后，西班牙入侵者才到来。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"explorer": 1, "academic": 1, "empire": 1, "andes": 1, "remains": 1, "precede": 1, "blast": 1, "rubber": 1, "jungle": 2, "thereby": 1, "substantial": 1, "passing": 1, "companion": 2, "ruin": 2, "dull": 1, "keen": 1, "prospect": 1, "climb": 2, "vivid": 1, "deadly": 1, "sweep": 1, "terrace": 1, "reveal": 1, "gradual": 1, "appreciation": 1, "dimension": 1, "descend": 1, "site": 3, "story": 1, "settlement": 1, "spanish": 4, "invader": 1, "desperate": 1, "magnificent": 1, "inaccurate": 1, "historian": 1, "conquest": 2, "acceptance": 1, "estate": 2, "elite": 1, "suggest": 1, "construct": 1, "descendant": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

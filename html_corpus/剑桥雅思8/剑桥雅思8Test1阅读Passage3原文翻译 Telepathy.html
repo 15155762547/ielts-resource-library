@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telepathy - 剑桥雅思8 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思8</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Telepathy</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24915.html" target="_blank">https://www.laokaoya.com/24915.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Can human beings communicate by thought alone? For more than a century the issue of telepathy has divided the scientific community, and even today it still <mark class="vocab-word" data-word="spark">sparks</mark> <mark class="vocab-word" data-word="bitter">bitter</mark> <mark class="vocab-word" data-word="controversy">controversy</mark> among top <mark class="vocab-word" data-word="academic">academics</mark>.</p><p>Since the 1970s, parapsychologists at <mark class="vocab-word" data-word="lead">leading</mark> universities and research <mark class="vocab-word" data-word="institute">institutes</mark> around the world have risked the derision of sceptical colleagues by putting the various claims for telepathy to the test in dozens of <mark class="vocab-word" data-word="rigorous">rigorous</mark> scientific studies. The results and their <mark class="vocab-word" data-word="implication">implications</mark> are dividing even the researchers who <mark class="vocab-word" data-word="uncover">uncovered</mark> them.</p><p>Some researchers say the results <mark class="vocab-word" data-word="constitute">constitute</mark> <mark class="vocab-word" data-word="compelling">compelling</mark> evidence that telepathy is <mark class="vocab-word" data-word="genuine">genuine</mark>. Other parapsychologists believe the field is on the <mark class="vocab-word" data-word="brink">brink</mark> of collapse, having tried to produce <mark class="vocab-word" data-word="definitive">definitive</mark> scientific <mark class="vocab-word" data-word="proof">proof</mark> and failed. Sceptics and <mark class="vocab-word" data-word="advocate">advocates</mark> alike do <mark class="vocab-word" data-word="concur">concur</mark> on one issue, however: that the most impressive evidence so far has come from the <mark class="vocab-word" data-word="so-called">so-called</mark> ‘ganzfeld’ experiments, a German term that means ‘whole field’. Reports of telepathic experiences had by people during meditation led parapsychologists to suspect that telepathy might involve ‘signals’ <mark class="vocab-word" data-word="passing">passing</mark> between people that were so <mark class="vocab-word" data-word="faint">faint</mark> that they were usually <mark class="vocab-word" data-word="swamp">swamped</mark> by normal brain activity. In this case, such signals might be more easily detected by those experiencing meditation-like tranquillity in a relaxing ‘whole field’ of light, sound and <mark class="vocab-word" data-word="warmth">warmth</mark>.</p><p>The ganzfeld experiment tries to <mark class="vocab-word" data-word="recreate">recreate</mark> these conditions with participants sitting in soft <mark class="vocab-word" data-word="recline">reclining</mark> chairs in a <mark class="vocab-word" data-word="seal">sealed</mark> room, listening to relaxing sounds while their eyes are covered with special <mark class="vocab-word" data-word="filter">filters</mark> letting in only soft pink light. In early ganzfeld experiments, the telepathy test <mark class="vocab-word" data-word="involved">involved</mark> <mark class="vocab-word" data-word="identification">identification</mark> of a picture chosen from a <mark class="vocab-word" data-word="random">random</mark> selection of four taken from a large image bank. This article is from  website. The idea was that a person acting as a ‘sender’ would attempt to <mark class="vocab-word" data-word="beam">beam</mark> the image over to the ‘<mark class="vocab-word" data-word="receiver">receiver</mark>’ relaxing in the <mark class="vocab-word" data-word="seal">sealed</mark> room. Once the session was over, this person was asked to identify which of the four images had been used. <mark class="vocab-word" data-word="random">Random</mark> guessing would give a hit-rate of 25 per cent; if telepathy is real, however, the hit-rate would be higher. In 1982, the results from the first ganzfeld studies were analysed by one of its <mark class="vocab-word" data-word="pioneer">pioneers</mark>, the American parapsychologist Charles Honorton. They <mark class="vocab-word" data-word="pointed">pointed</mark> to typical hit-rates of better than 30 per cent – a small effect, but one which statistical tests <mark class="vocab-word" data-word="suggest">suggested</mark> could not be put down to chance.</p><p>The <mark class="vocab-word" data-word="implication">implication</mark> was that the ganzfeld method had <mark class="vocab-word" data-word="reveal">revealed</mark> real evidence for telepathy. But there was a crucial <mark class="vocab-word" data-word="flaw">flaw</mark> in this argument – one routinely <mark class="vocab-word" data-word="overlook">overlooked</mark> in more <mark class="vocab-word" data-word="conventional">conventional</mark> areas of science. Just because chance had been ruled out as an explanation did not prove telepathy must exist; there were many other ways of getting positive results. These ranged from ‘<mark class="vocab-word" data-word="sensory">sensory</mark> leakage’ – where <mark class="vocab-word" data-word="clue">clues</mark> about the pictures <mark class="vocab-word" data-word="accidental">accidentally</mark> reach the <mark class="vocab-word" data-word="receiver">receiver</mark> – to <mark class="vocab-word" data-word="outright">outright</mark> <mark class="vocab-word" data-word="fraud">fraud</mark>. In response, the researchers issued a review of all the ganzfeld studies done up to 1985 to show that 80 per cent had found <mark class="vocab-word" data-word="statistically">statistically</mark> significant evidence. However, they also agreed that there were still too many problems in the experiments which could <mark class="vocab-word" data-word="lead">lead</mark> to positive results, and they drew up a list <mark class="vocab-word" data-word="demanding">demanding</mark> new standards for future research.</p><p>After this, many researchers switched to autoganzfeld tests – an automated <mark class="vocab-word" data-word="variant">variant</mark> of the technique which used computers to <mark class="vocab-word" data-word="perform">perform</mark> many of the key tasks such as the <mark class="vocab-word" data-word="random">random</mark> selection of images. By minimising human <mark class="vocab-word" data-word="involvement">involvement</mark>, the idea was to minimise the risk of <mark class="vocab-word" data-word="flaw">flawed</mark> results. In 1987, results from hundreds of autoganzfeld tests were studied by Honorton in a ‘meta-analysis’, a statistical technique for finding the overall results from a set of studies. Though less <mark class="vocab-word" data-word="compelling">compelling</mark> than before, the outcome was still impressive.</p><p>Yet some parapsychologists remain <mark class="vocab-word" data-word="disturb">disturbed</mark> by the lack of <mark class="vocab-word" data-word="consistency">consistency</mark> between individual ganzfeld studies. Defenders of telepathy point out that <mark class="vocab-word" data-word="demanding">demanding</mark> impressive evidence from every study ignores one basic statistical fact: it takes large samples to detect small effects. If, as current results <mark class="vocab-word" data-word="suggest">suggest</mark>, telepathy produces hit-rates only <mark class="vocab-word" data-word="marginally">marginally</mark> above the 25 per cent expected by chance, it’s unlikely to be detected by a typical ganzfeld study involving around 40 people: the group is just not big enough. Only when many studies are combined in a meta-analysis will the <mark class="vocab-word" data-word="faint">faint</mark> signal of telepathy really become apparent. And that is what researchers do seem to be finding.</p><p>What they are certainly not finding, however, is any change in attitude of <mark class="vocab-word" data-word="mainstream">mainstream</mark> scientists: most still totally reject the very idea of telepathy. The problem <mark class="vocab-word" data-word="stem">stems</mark> at least in part from the lack of any <mark class="vocab-word" data-word="plausible">plausible</mark> <mark class="vocab-word" data-word="mechanism">mechanism</mark> for telepathy.</p><p>Various theories have been put forward, many focusing on esoteric ideas from <mark class="vocab-word" data-word="theoretical">theoretical</mark> physics. They include ‘<mark class="vocab-word" data-word="quantum">quantum</mark> entanglement’, in which events affecting one group of <mark class="vocab-word" data-word="atom">atoms</mark> <mark class="vocab-word" data-word="instant">instantly</mark> affect another group, no <mark class="vocab-word" data-word="matter">matter</mark> how far apart they may be. While <mark class="vocab-word" data-word="physicist">physicists</mark> have demonstrated entanglement with specially prepared <mark class="vocab-word" data-word="atom">atoms</mark>, no-one knows if it also exists between <mark class="vocab-word" data-word="atom">atoms</mark> making up human minds. Answering such questions would transform parapsychology. This has <mark class="vocab-word" data-word="prompt">prompted</mark> some researchers to argue that the future lies not in collecting more evidence for telepathy, but in <mark class="vocab-word" data-word="probing">probing</mark> possible <mark class="vocab-word" data-word="mechanism">mechanisms</mark>. Some work has begun already, with researchers trying to identify people who are particularly successful in autoganzfeld trials. Early results show that creative and artistic people do much better than average: in one study at the University of Edinburgh, musicians achieved a hit-rate of 56 per cent. Perhaps more tests like these will eventually give the researchers the evidence they are seeking and <mark class="vocab-word" data-word="strengthen">strengthen</mark> the case for the existence of telepathy.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>人类可以单独通过思想交流吗？一个多世纪以来，心灵感应问题一直困扰着科学界。直到今天，它仍然引发顶级学者之间的激烈争论。</p><p>自20世纪70年代以来，全球领先大学和研究机构的超心理学家冒着受怀疑论者嘲笑的风险，在数十项严格的科学研究中对心灵感应进行测试。实验结果和它们的含义甚至使发现它们的研究人员也产生分歧。</p><p>一些研究人员认为，这些结果构成了令人信服的证据，证明心灵感应是真实的。其他超心理学家认为，该领域正处于崩溃的边缘。他们试图提供确切的科学证据，但失败了。然而，持怀疑态度的人和拥护者们在一个问题上的确是一致的：到目前为止，最令人印象深刻的证据来自所谓的“ganzfeld”实验。这是德语术语，意为“整个领域”。人们在冥想过程中对心灵感应经历的报道使超心理学家怀疑心灵感应可能牵涉到人与人之间的“信号”传递。这些信号如此微弱，以至于它们通常被正常的大脑活动所淹没。在这种情况下，那些在轻松、美好和温暖的“整个领域”中体验冥想般的宁静的人可能更容易检测到此类信号。</p><p>ganzfeld实验试图通过让参与者在密封的房间里坐在柔软的躺椅上，聆听放松的声音，用特殊的滤光片遮盖眼睛，只感受柔和的粉红色光线来重现这些条件。在早期的ganzfeld实验中，心灵感应测试涉及识别从大图像库中随机选取的四张图片中的图像。其想法是，一个充当“发送者”的人会试图将图像传送到在密封房间内放松的“接收者”。传输结束后，此人被要求确定使用了四个图像中的哪个。随机猜测的命中率为25％；然而如果心灵感应是真实的，那么命中率就会更高。1982年，第一批ganzfeld研究的结果由美国超心理学家查尔斯·霍顿（Charles Honorton），该领域的先驱者之一，进行了分析。他们指出典型的命中率要高于30％。虽然影响很小，但统计测试表明，不能仅仅将其归为偶然。</p><p>这意味着ganzfeld方法揭示了心灵感应存在的真实证据。但是这一论点存在一个在更为传统的科学领域经常被忽视的关键缺陷。仅仅排除偶然性因素，并不能证明心灵感应一定存在。还有很多其他方法可以取得积极的结果。它们从“感官泄漏”（有关图片的线索意外到达接收者）到彻底的欺诈。作为回应，研究人员发表了对1985年以前所做的所有ganzfeld研究的回顾，以显示80％的人发现了具有统计意义的证据。但是，他们也同意实验中仍然存在太多问题。这些问题可能会导致积极的结果。他们草拟了一份清单，要求为未来的研究制定新的标准。</p><p>此后，许多研究人员转而使用autoganzfeld测试-该技术的一种自动化变体。它使用计算机进行许多关键任务，例如图像的随机选择。其想法是通过减少人类的参与来降低产生错误结果的风险。1987年，Hontonon使用“元分析”（一种统计技术，可从一组研究中找到整体结果）研究了数百种autoganzfeld测试的结果。尽管它们没有以前那么引人注目，但仍然令人印象深刻。</p><p>然而，一些超心理学家仍然对不同ganzfeld研究之间缺乏一致性感到不安。心灵感应的辩护者指出，要求每项研究都得出令人印象深刻的证据忽略了一个基本的统计事实：需要大量样本才能检测出微小的影响。按照目前的实验结果，如果心灵感应的命中率仅仅因为偶然才勉强超过预期的25％，那么一项涉及约40人的典型ganzfeld研究不太可能发现这一差别：研究群体不够大。只有在“元分析”中结合了许多研究后，微弱的心灵感应标志才会真正显现出来。这就是研究人员似乎正在发现的东西。</p><p>但是，他们肯定没有发现主流科学家的态度有任何变化：大多数人仍然完全拒绝心灵感应的想法。该问题至少部分是由于心灵感应缺乏任何合理的机制。</p><p>各种各样的理论被提了出来。其中许多集中于理论物理学中的神秘思想。它们包括“量子纠缠”，即影响一组原子的事件会立即影响另一组原子，无论它们相距多远。尽管物理学家已经证明特殊制备的原子存在纠缠，但没人知道它是否也存在于组成人类思想的原子之间。回答这些问题将改变超心理学。这促使一些研究人员认为，未来不在于收集心灵感应的更多证据，而在于探索可能的机制。一些工作已经开始，研究人员试图找出在autoganzfeld试验中特别成功的人。早期的结果表明，富有创造力和艺术才能的人的表现要比平均水平要好得多：在爱丁堡大学的一项研究中，音乐家的命中率达到了56％。也许更多类似的测试最终将为研究人员提供他们正在寻找的证据，并增强了心灵感应的存在的理由。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Can human beings communicate by thought alone? For more than a century the issue of telepathy has divided the scientific community, and even today it still <mark class="vocab-word" data-word="spark">sparks</mark> <mark class="vocab-word" data-word="bitter">bitter</mark> <mark class="vocab-word" data-word="controversy">controversy</mark> among top <mark class="vocab-word" data-word="academic">academics</mark>.</p></div>  <div class="parallel-zh"><p>人类可以单独通过思想交流吗？一个多世纪以来，心灵感应问题一直困扰着科学界。直到今天，它仍然引发顶级学者之间的激烈争论。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Since the 1970s, parapsychologists at <mark class="vocab-word" data-word="lead">leading</mark> universities and research <mark class="vocab-word" data-word="institute">institutes</mark> around the world have risked the derision of sceptical colleagues by putting the various claims for telepathy to the test in dozens of <mark class="vocab-word" data-word="rigorous">rigorous</mark> scientific studies. The results and their <mark class="vocab-word" data-word="implication">implications</mark> are dividing even the researchers who <mark class="vocab-word" data-word="uncover">uncovered</mark> them.</p></div>  <div class="parallel-zh"><p>自20世纪70年代以来，全球领先大学和研究机构的超心理学家冒着受怀疑论者嘲笑的风险，在数十项严格的科学研究中对心灵感应进行测试。实验结果和它们的含义甚至使发现它们的研究人员也产生分歧。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Some researchers say the results <mark class="vocab-word" data-word="constitute">constitute</mark> <mark class="vocab-word" data-word="compelling">compelling</mark> evidence that telepathy is <mark class="vocab-word" data-word="genuine">genuine</mark>. Other parapsychologists believe the field is on the <mark class="vocab-word" data-word="brink">brink</mark> of collapse, having tried to produce <mark class="vocab-word" data-word="definitive">definitive</mark> scientific <mark class="vocab-word" data-word="proof">proof</mark> and failed. Sceptics and <mark class="vocab-word" data-word="advocate">advocates</mark> alike do <mark class="vocab-word" data-word="concur">concur</mark> on one issue, however: that the most impressive evidence so far has come from the <mark class="vocab-word" data-word="so-called">so-called</mark> ‘ganzfeld’ experiments, a German term that means ‘whole field’. Reports of telepathic experiences had by people during meditation led parapsychologists to suspect that telepathy might involve ‘signals’ <mark class="vocab-word" data-word="passing">passing</mark> between people that were so <mark class="vocab-word" data-word="faint">faint</mark> that they were usually <mark class="vocab-word" data-word="swamp">swamped</mark> by normal brain activity. In this case, such signals might be more easily detected by those experiencing meditation-like tranquillity in a relaxing ‘whole field’ of light, sound and <mark class="vocab-word" data-word="warmth">warmth</mark>.</p></div>  <div class="parallel-zh"><p>一些研究人员认为，这些结果构成了令人信服的证据，证明心灵感应是真实的。其他超心理学家认为，该领域正处于崩溃的边缘。他们试图提供确切的科学证据，但失败了。然而，持怀疑态度的人和拥护者们在一个问题上的确是一致的：到目前为止，最令人印象深刻的证据来自所谓的“ganzfeld”实验。这是德语术语，意为“整个领域”。人们在冥想过程中对心灵感应经历的报道使超心理学家怀疑心灵感应可能牵涉到人与人之间的“信号”传递。这些信号如此微弱，以至于它们通常被正常的大脑活动所淹没。在这种情况下，那些在轻松、美好和温暖的“整个领域”中体验冥想般的宁静的人可能更容易检测到此类信号。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The ganzfeld experiment tries to <mark class="vocab-word" data-word="recreate">recreate</mark> these conditions with participants sitting in soft <mark class="vocab-word" data-word="recline">reclining</mark> chairs in a <mark class="vocab-word" data-word="seal">sealed</mark> room, listening to relaxing sounds while their eyes are covered with special <mark class="vocab-word" data-word="filter">filters</mark> letting in only soft pink light. In early ganzfeld experiments, the telepathy test <mark class="vocab-word" data-word="involved">involved</mark> <mark class="vocab-word" data-word="identification">identification</mark> of a picture chosen from a <mark class="vocab-word" data-word="random">random</mark> selection of four taken from a large image bank. This article is from  website. The idea was that a person acting as a ‘sender’ would attempt to <mark class="vocab-word" data-word="beam">beam</mark> the image over to the ‘<mark class="vocab-word" data-word="receiver">receiver</mark>’ relaxing in the <mark class="vocab-word" data-word="seal">sealed</mark> room. Once the session was over, this person was asked to identify which of the four images had been used. <mark class="vocab-word" data-word="random">Random</mark> guessing would give a hit-rate of 25 per cent; if telepathy is real, however, the hit-rate would be higher. In 1982, the results from the first ganzfeld studies were analysed by one of its <mark class="vocab-word" data-word="pioneer">pioneers</mark>, the American parapsychologist Charles Honorton. They <mark class="vocab-word" data-word="pointed">pointed</mark> to typical hit-rates of better than 30 per cent – a small effect, but one which statistical tests <mark class="vocab-word" data-word="suggest">suggested</mark> could not be put down to chance.</p></div>  <div class="parallel-zh"><p>ganzfeld实验试图通过让参与者在密封的房间里坐在柔软的躺椅上，聆听放松的声音，用特殊的滤光片遮盖眼睛，只感受柔和的粉红色光线来重现这些条件。在早期的ganzfeld实验中，心灵感应测试涉及识别从大图像库中随机选取的四张图片中的图像。其想法是，一个充当“发送者”的人会试图将图像传送到在密封房间内放松的“接收者”。传输结束后，此人被要求确定使用了四个图像中的哪个。随机猜测的命中率为25％；然而如果心灵感应是真实的，那么命中率就会更高。1982年，第一批ganzfeld研究的结果由美国超心理学家查尔斯·霍顿（Charles Honorton），该领域的先驱者之一，进行了分析。他们指出典型的命中率要高于30％。虽然影响很小，但统计测试表明，不能仅仅将其归为偶然。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="implication">implication</mark> was that the ganzfeld method had <mark class="vocab-word" data-word="reveal">revealed</mark> real evidence for telepathy. But there was a crucial <mark class="vocab-word" data-word="flaw">flaw</mark> in this argument – one routinely <mark class="vocab-word" data-word="overlook">overlooked</mark> in more <mark class="vocab-word" data-word="conventional">conventional</mark> areas of science. Just because chance had been ruled out as an explanation did not prove telepathy must exist; there were many other ways of getting positive results. These ranged from ‘<mark class="vocab-word" data-word="sensory">sensory</mark> leakage’ – where <mark class="vocab-word" data-word="clue">clues</mark> about the pictures <mark class="vocab-word" data-word="accidental">accidentally</mark> reach the <mark class="vocab-word" data-word="receiver">receiver</mark> – to <mark class="vocab-word" data-word="outright">outright</mark> <mark class="vocab-word" data-word="fraud">fraud</mark>. In response, the researchers issued a review of all the ganzfeld studies done up to 1985 to show that 80 per cent had found <mark class="vocab-word" data-word="statistically">statistically</mark> significant evidence. However, they also agreed that there were still too many problems in the experiments which could <mark class="vocab-word" data-word="lead">lead</mark> to positive results, and they drew up a list <mark class="vocab-word" data-word="demanding">demanding</mark> new standards for future research.</p></div>  <div class="parallel-zh"><p>这意味着ganzfeld方法揭示了心灵感应存在的真实证据。但是这一论点存在一个在更为传统的科学领域经常被忽视的关键缺陷。仅仅排除偶然性因素，并不能证明心灵感应一定存在。还有很多其他方法可以取得积极的结果。它们从“感官泄漏”（有关图片的线索意外到达接收者）到彻底的欺诈。作为回应，研究人员发表了对1985年以前所做的所有ganzfeld研究的回顾，以显示80％的人发现了具有统计意义的证据。但是，他们也同意实验中仍然存在太多问题。这些问题可能会导致积极的结果。他们草拟了一份清单，要求为未来的研究制定新的标准。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>After this, many researchers switched to autoganzfeld tests – an automated <mark class="vocab-word" data-word="variant">variant</mark> of the technique which used computers to <mark class="vocab-word" data-word="perform">perform</mark> many of the key tasks such as the <mark class="vocab-word" data-word="random">random</mark> selection of images. By minimising human <mark class="vocab-word" data-word="involvement">involvement</mark>, the idea was to minimise the risk of <mark class="vocab-word" data-word="flaw">flawed</mark> results. In 1987, results from hundreds of autoganzfeld tests were studied by Honorton in a ‘meta-analysis’, a statistical technique for finding the overall results from a set of studies. Though less <mark class="vocab-word" data-word="compelling">compelling</mark> than before, the outcome was still impressive.</p></div>  <div class="parallel-zh"><p>此后，许多研究人员转而使用autoganzfeld测试-该技术的一种自动化变体。它使用计算机进行许多关键任务，例如图像的随机选择。其想法是通过减少人类的参与来降低产生错误结果的风险。1987年，Hontonon使用“元分析”（一种统计技术，可从一组研究中找到整体结果）研究了数百种autoganzfeld测试的结果。尽管它们没有以前那么引人注目，但仍然令人印象深刻。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Yet some parapsychologists remain <mark class="vocab-word" data-word="disturb">disturbed</mark> by the lack of <mark class="vocab-word" data-word="consistency">consistency</mark> between individual ganzfeld studies. Defenders of telepathy point out that <mark class="vocab-word" data-word="demanding">demanding</mark> impressive evidence from every study ignores one basic statistical fact: it takes large samples to detect small effects. If, as current results <mark class="vocab-word" data-word="suggest">suggest</mark>, telepathy produces hit-rates only <mark class="vocab-word" data-word="marginally">marginally</mark> above the 25 per cent expected by chance, it’s unlikely to be detected by a typical ganzfeld study involving around 40 people: the group is just not big enough. Only when many studies are combined in a meta-analysis will the <mark class="vocab-word" data-word="faint">faint</mark> signal of telepathy really become apparent. And that is what researchers do seem to be finding.</p></div>  <div class="parallel-zh"><p>然而，一些超心理学家仍然对不同ganzfeld研究之间缺乏一致性感到不安。心灵感应的辩护者指出，要求每项研究都得出令人印象深刻的证据忽略了一个基本的统计事实：需要大量样本才能检测出微小的影响。按照目前的实验结果，如果心灵感应的命中率仅仅因为偶然才勉强超过预期的25％，那么一项涉及约40人的典型ganzfeld研究不太可能发现这一差别：研究群体不够大。只有在“元分析”中结合了许多研究后，微弱的心灵感应标志才会真正显现出来。这就是研究人员似乎正在发现的东西。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What they are certainly not finding, however, is any change in attitude of <mark class="vocab-word" data-word="mainstream">mainstream</mark> scientists: most still totally reject the very idea of telepathy. The problem <mark class="vocab-word" data-word="stem">stems</mark> at least in part from the lack of any <mark class="vocab-word" data-word="plausible">plausible</mark> <mark class="vocab-word" data-word="mechanism">mechanism</mark> for telepathy.</p></div>  <div class="parallel-zh"><p>但是，他们肯定没有发现主流科学家的态度有任何变化：大多数人仍然完全拒绝心灵感应的想法。该问题至少部分是由于心灵感应缺乏任何合理的机制。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Various theories have been put forward, many focusing on esoteric ideas from <mark class="vocab-word" data-word="theoretical">theoretical</mark> physics. They include ‘<mark class="vocab-word" data-word="quantum">quantum</mark> entanglement’, in which events affecting one group of <mark class="vocab-word" data-word="atom">atoms</mark> <mark class="vocab-word" data-word="instant">instantly</mark> affect another group, no <mark class="vocab-word" data-word="matter">matter</mark> how far apart they may be. While <mark class="vocab-word" data-word="physicist">physicists</mark> have demonstrated entanglement with specially prepared <mark class="vocab-word" data-word="atom">atoms</mark>, no-one knows if it also exists between <mark class="vocab-word" data-word="atom">atoms</mark> making up human minds. Answering such questions would transform parapsychology. This has <mark class="vocab-word" data-word="prompt">prompted</mark> some researchers to argue that the future lies not in collecting more evidence for telepathy, but in <mark class="vocab-word" data-word="probing">probing</mark> possible <mark class="vocab-word" data-word="mechanism">mechanisms</mark>. Some work has begun already, with researchers trying to identify people who are particularly successful in autoganzfeld trials. Early results show that creative and artistic people do much better than average: in one study at the University of Edinburgh, musicians achieved a hit-rate of 56 per cent. Perhaps more tests like these will eventually give the researchers the evidence they are seeking and <mark class="vocab-word" data-word="strengthen">strengthen</mark> the case for the existence of telepathy.</p></div>  <div class="parallel-zh"><p>各种各样的理论被提了出来。其中许多集中于理论物理学中的神秘思想。它们包括“量子纠缠”，即影响一组原子的事件会立即影响另一组原子，无论它们相距多远。尽管物理学家已经证明特殊制备的原子存在纠缠，但没人知道它是否也存在于组成人类思想的原子之间。回答这些问题将改变超心理学。这促使一些研究人员认为，未来不在于收集心灵感应的更多证据，而在于探索可能的机制。一些工作已经开始，研究人员试图找出在autoganzfeld试验中特别成功的人。早期的结果表明，富有创造力和艺术才能的人的表现要比平均水平要好得多：在爱丁堡大学的一项研究中，音乐家的命中率达到了56％。也许更多类似的测试最终将为研究人员提供他们正在寻找的证据，并增强了心灵感应的存在的理由。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"spark": 1, "bitter": 1, "controversy": 1, "academic": 1, "lead": 2, "institute": 1, "rigorous": 1, "implication": 2, "uncover": 1, "constitute": 1, "compelling": 2, "genuine": 1, "brink": 1, "definitive": 1, "proof": 1, "advocate": 1, "concur": 1, "so-called": 1, "passing": 1, "faint": 2, "swamp": 1, "warmth": 1, "recreate": 1, "recline": 1, "seal": 2, "filter": 1, "involved": 1, "identification": 1, "random": 3, "beam": 1, "receiver": 2, "pioneer": 1, "pointed": 1, "suggest": 2, "reveal": 1, "flaw": 2, "overlook": 1, "conventional": 1, "sensory": 1, "clue": 1, "accidental": 1, "outright": 1, "fraud": 1, "statistically": 1, "demanding": 2, "variant": 1, "perform": 1, "involvement": 1, "disturb": 1, "consistency": 1, "marginally": 1, "mainstream": 1, "stem": 1, "plausible": 1, "mechanism": 2, "theoretical": 1, "quantum": 1, "atom": 3, "instant": 1, "matter": 1, "physicist": 1, "prompt": 1, "probing": 1, "strengthen": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preface to How the other half thinks: Adventures in the mathematical reasoning - 剑桥雅思11 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思11</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Preface to How the other half thinks: Adventures in the mathematical reasoning</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/30054.html" target="_blank">https://www.laokaoya.com/30054.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="occasional">Occasionally</mark>, in some difficult musical <mark class="vocab-word" data-word="composition">compositions</mark>, there are beautiful, but easy parts – parts so simple a beginner could play them. So it is with mathematics as well. There are some discoveries in <mark class="vocab-word" data-word="advanced">advanced</mark> mathematics that do not depend on <mark class="vocab-word" data-word="specialize">specialized</mark> knowledge, not even on <mark class="vocab-word" data-word="algebra">algebra</mark>, <mark class="vocab-word" data-word="geometry">geometry</mark>, or trigonometry. Instead they may involve, at most, a little <mark class="vocab-word" data-word="arithmetic">arithmetic</mark>, such as ‘the sum of two odd numbers is even’, and common sense. Each of the eight chapters in this book illustrates this <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>. Anyone can understand every step in the reasoning.</p><p>The thinking in each chapter uses at most only <mark class="vocab-word" data-word="elementary">elementary</mark> <mark class="vocab-word" data-word="arithmetic">arithmetic</mark>, and sometimes not even that. Thus all readers will have the chance to participate in a <mark class="vocab-word" data-word="mathematical">mathematical</mark> experience, to appreciate the beauty of mathematics, and to become familiar with its logical, yet <mark class="vocab-word" data-word="intuitive">intuitive</mark>, style of thinking.</p><p>One of my purposes in writing this book is to give readers who <mark class="vocab-word" data-word="haven">haven</mark>’t had the opportunity to see and enjoy real mathematics the chance to appreciate the <mark class="vocab-word" data-word="mathematical">mathematical</mark> way of thinking. I want to <mark class="vocab-word" data-word="reveal">reveal</mark> not only some of the <mark class="vocab-word" data-word="fascinating">fascinating</mark> discoveries, but, more importantly, the reasoning behind them.</p><p>In that respect, this book <mark class="vocab-word" data-word="differ">differs</mark> from most books on mathematics written for the general public. Some present the lives of colorful <mark class="vocab-word" data-word="mathematician">mathematicians</mark>. Others describe important applications of mathematics. Yet others go into <mark class="vocab-word" data-word="mathematical">mathematical</mark> procedures, but assume that the reader is <mark class="vocab-word" data-word="adept">adept</mark> in using <mark class="vocab-word" data-word="algebra">algebra</mark>.</p><p>I hope this book will help bridge that <mark class="vocab-word" data-word="notorious">notorious</mark> gap that separates the two cultures: the humanities and the sciences, or should I say the right brain (<mark class="vocab-word" data-word="intuitive">intuitive</mark>) and the left brain (<mark class="vocab-word" data-word="analytical">analytical</mark>, <mark class="vocab-word" data-word="numerical">numerical</mark>). As the chapters will illustrate, mathematics is not restricted to the <mark class="vocab-word" data-word="analytical">analytical</mark> and <mark class="vocab-word" data-word="numerical">numerical</mark>; <mark class="vocab-word" data-word="intuition">intuition</mark> plays a significant role. The <mark class="vocab-word" data-word="allege">alleged</mark> gap can be narrowed or completely overcome by anyone, in part because each of us is far from using the full <mark class="vocab-word" data-word="capacity">capacity</mark> of either side of the brain. To illustrate our human potential, I <mark class="vocab-word" data-word="cite">cite</mark> a <mark class="vocab-word" data-word="structural">structural</mark> engineer who is an artist, an <mark class="vocab-word" data-word="electrical">electrical</mark> engineer who is an <mark class="vocab-word" data-word="opera">opera</mark> singer, an <mark class="vocab-word" data-word="opera">opera</mark> singer who published <mark class="vocab-word" data-word="mathematical">mathematical</mark> research, and a <mark class="vocab-word" data-word="mathematician">mathematician</mark> who publishes short stories.</p><p>Other scientists have written books to explain their fields to non-scientists, but have necessarily had to <mark class="vocab-word" data-word="omit">omit</mark> the mathematics, although it provides the <mark class="vocab-word" data-word="foundation">foundation</mark> of their theories. The reader must remain a tantalized <mark class="vocab-word" data-word="spectator">spectator</mark> rather than an <mark class="vocab-word" data-word="involved">involved</mark> participant, since the appropriate language for describing the details in much of science is mathematics, whether the subject is expanding universe, subatomic <mark class="vocab-word" data-word="particle">particles</mark>, or <mark class="vocab-word" data-word="chromosome">chromosomes</mark>. Though the broad outline of a scientific theory can be <mark class="vocab-word" data-word="sketch">sketched</mark> <mark class="vocab-word" data-word="intuitive">intuitively</mark>, when a part of the physical universe is finally understood, its description often looks like a page in a mathematics text.</p><p>Still, the non-mathematical reader can go far in understanding <mark class="vocab-word" data-word="mathematical">mathematical</mark> reasoning. This book presents the details that illustrate the <mark class="vocab-word" data-word="mathematical">mathematical</mark> style of thinking, which involves <mark class="vocab-word" data-word="sustain">sustained</mark>, step-by-step analysis, experiments, and <mark class="vocab-word" data-word="insight">insights</mark>. You will turn these pages much more slowly than when reading a novel or a newspaper. It may help to have a pencil and paper ready to check claims and carry out experiments.</p><p>As I wrote, I kept in mind two types of readers: those who enjoyed mathematics until they were turned off by an unpleasant episode, usually around fifth <mark class="vocab-word" data-word="grade">grade</mark>, and mathematics aficionados, who will find much that is new throughout the book.</p><p>This book also serves readers who simply want to <mark class="vocab-word" data-word="sharpen">sharpen</mark> their <mark class="vocab-word" data-word="analytical">analytical</mark> skills. Many careers, such as law and medicine, require extended, <mark class="vocab-word" data-word="precise">precise</mark> analysis. Each chapter offers practice in following a <mark class="vocab-word" data-word="sustain">sustained</mark> and closely argued line of thought. That mathematics can develop this skill is shown by these two testimonials.</p><p>A <mark class="vocab-word" data-word="physician">physician</mark> wrote, ‘The discipline of <mark class="vocab-word" data-word="analytical">analytical</mark> thought processes [in mathematics] prepared me extremely well for medical school. In medicine one is faced with a problem which must be <mark class="vocab-word" data-word="thorough">thoroughly</mark> analyzed before a solution can be found. The process is similar to doing mathematics.’</p><p>A lawyer made the same point, ‘Although I had no background in law – not even one political science course – I did well at one of the best law schools. I <mark class="vocab-word" data-word="attribute">attribute</mark> much of my success there to having <mark class="vocab-word" data-word="learned">learned</mark>, through the study of mathematics, and, in particular, theorems, how to analyze <mark class="vocab-word" data-word="complicated">complicated</mark> principles. Lawyers who have studied mathematics can master the legal principles in a way that most others cannot.’</p><p>I hope you will share my delight in watching as simple, even naïve, questions <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="remarkable">remarkable</mark> solutions and purely <mark class="vocab-word" data-word="theoretical">theoretical</mark> discoveries find unanticipated applications.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在一些复杂的音乐作品中，偶尔会有优美却简单的部分。这些部分是如此容易，一名初学者也可以演奏。数学也是一样。高等数学中的一些发现并不依赖专业知识，甚至不需要代数、几何或者三角函数。与之相反，它们可能最多只涉及一些四则运算和常识，比如“两个奇数的和为偶数”。 这本书八个章节中的每一章都说明了这一现象。任何人都能够理解推理过程中的每个步骤。</p><p>每个章节中的思考最多只用到基础的算术法则，有时甚至连这都不需要。因此，所有读者都有机会参与到一场数学体验中去，来欣赏数学的美妙，熟悉它的富有逻辑却又充满直觉的思考方式。</p><p>我写这本书的目的之一，是为了给那些没有机会见到和享受真正数学的读者一个机会，让他们可以欣赏数学的思考方式。我想要揭示的不仅仅是一些引人入胜的发现，更重要的是它们背后的思考过程。</p><p>在该方面，这本书区别于大多数为普通大众而写就的数学书籍。它们或者呈现数学家丰富多彩的生活，或者描述数学的重要应用，还有一些深入研究数学步骤，却假定读者能够熟练的使用代数。</p><p>我希望这本书可以搭建起一座桥梁，跨越那道臭名昭著的间隙，从而沟通两种文化：人文与科学，或者我也许应该将其称之为右脑（直觉性的）与左脑（分析性的，数学的）。正如书中章节将要说明的那样，数学不仅仅是分析性的和数字性的。直觉也扮演着重要的角色。任何人都能够缩小或者完全克服这道所谓的间隙，部分是因为我们每个人都远远没有用出任何一侧大脑的全部能力。为了说明我们人类的潜力，我引用了如下例子：一名结构工程师同时也是一名艺术家；一名电气工程师同时也是一名歌剧演唱家；一名歌剧演唱家出版了一本数学研究著作，以及一名数学家发表了一些短篇小说。</p><p>其他科学家也写了一些书籍来向非科学家解释他们的领域，但却不得不忽略数学部分，尽管它为他们的理论提供了基础。由于细致描述大部分科学（无论主题是膨胀的宇宙，还是亚原子粒子，又或者是染色体）的恰当语言是数学，读者只好全程做一个跃跃欲试而不得的旁观者，而不是加入其中的参与者。虽然一个科学理论的大致轮廓可以通过直觉来刻画，但当某部分实体宇宙最终被人们所理解，它的描述经常看起来像是数学课本中的某一页。</p><p>非数学专业的读者仍然可以深入理解数学的推导过程。这本书呈现出的细节解释了数学的思维方式。它包含连续的、一步步的分析，实验和思考。与阅读小说或者报纸相比，你翻页的速度会慢很多。旁边放支铅笔和纸张，随时准备核验书中理论和进行实验会很有帮助。</p><p>我在写作时，脑子里有两种类型的读者：一类人直到被某一不愉快的插曲劝退之前都挺喜欢数学的，而这通常发生在5年级左右。另一类人是数学的狂热爱好者，他们会在书中发现许多全新的东西。</p><p>这本书也适合那些仅仅想要磨练自己分析技能的读者。诸如法律和医药等许多职业都需要全面、精确的分析能力。每一章在连续、严密的思维论证之后都会给出练习。下面两份证词可以展示数学确实能够提升该项能力。</p><p>一名医生写到：“（数学中）分析思维过程的原则让我为医学院的学习做足了准备。在医学中，一个人面临的问题必须经过透彻的分析才能够找到解决方案。这一过程与做数学题十分相似”。</p><p>一名律师也发表了相同的意见，“虽然我没有法律的相关背景，甚至也不曾修读过任何一门政治科学课程，但我在一所顶级法学院中成绩优异。我将自己在那里取得的成功归功于曾经的数学学习，尤其是对各种定理的学习，了解如何分析复杂的原理。学习过数学的律师能够以一种大多数其他律师所无法掌握的方式掌握法律原理”。</p><p>我希望你能够分享我的喜悦，去观察简单甚至幼稚的问题如何引向非同寻常的解决方案，以及纯粹的理论发现如何找到意料之外的用途。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="occasional">Occasionally</mark>, in some difficult musical <mark class="vocab-word" data-word="composition">compositions</mark>, there are beautiful, but easy parts – parts so simple a beginner could play them. So it is with mathematics as well. There are some discoveries in <mark class="vocab-word" data-word="advanced">advanced</mark> mathematics that do not depend on <mark class="vocab-word" data-word="specialize">specialized</mark> knowledge, not even on <mark class="vocab-word" data-word="algebra">algebra</mark>, <mark class="vocab-word" data-word="geometry">geometry</mark>, or trigonometry. Instead they may involve, at most, a little <mark class="vocab-word" data-word="arithmetic">arithmetic</mark>, such as ‘the sum of two odd numbers is even’, and common sense. Each of the eight chapters in this book illustrates this <mark class="vocab-word" data-word="phenomenon">phenomenon</mark>. Anyone can understand every step in the reasoning.</p></div>  <div class="parallel-zh"><p>在一些复杂的音乐作品中，偶尔会有优美却简单的部分。这些部分是如此容易，一名初学者也可以演奏。数学也是一样。高等数学中的一些发现并不依赖专业知识，甚至不需要代数、几何或者三角函数。与之相反，它们可能最多只涉及一些四则运算和常识，比如“两个奇数的和为偶数”。 这本书八个章节中的每一章都说明了这一现象。任何人都能够理解推理过程中的每个步骤。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The thinking in each chapter uses at most only <mark class="vocab-word" data-word="elementary">elementary</mark> <mark class="vocab-word" data-word="arithmetic">arithmetic</mark>, and sometimes not even that. Thus all readers will have the chance to participate in a <mark class="vocab-word" data-word="mathematical">mathematical</mark> experience, to appreciate the beauty of mathematics, and to become familiar with its logical, yet <mark class="vocab-word" data-word="intuitive">intuitive</mark>, style of thinking.</p></div>  <div class="parallel-zh"><p>每个章节中的思考最多只用到基础的算术法则，有时甚至连这都不需要。因此，所有读者都有机会参与到一场数学体验中去，来欣赏数学的美妙，熟悉它的富有逻辑却又充满直觉的思考方式。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One of my purposes in writing this book is to give readers who <mark class="vocab-word" data-word="haven">haven</mark>’t had the opportunity to see and enjoy real mathematics the chance to appreciate the <mark class="vocab-word" data-word="mathematical">mathematical</mark> way of thinking. I want to <mark class="vocab-word" data-word="reveal">reveal</mark> not only some of the <mark class="vocab-word" data-word="fascinating">fascinating</mark> discoveries, but, more importantly, the reasoning behind them.</p></div>  <div class="parallel-zh"><p>我写这本书的目的之一，是为了给那些没有机会见到和享受真正数学的读者一个机会，让他们可以欣赏数学的思考方式。我想要揭示的不仅仅是一些引人入胜的发现，更重要的是它们背后的思考过程。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In that respect, this book <mark class="vocab-word" data-word="differ">differs</mark> from most books on mathematics written for the general public. Some present the lives of colorful <mark class="vocab-word" data-word="mathematician">mathematicians</mark>. Others describe important applications of mathematics. Yet others go into <mark class="vocab-word" data-word="mathematical">mathematical</mark> procedures, but assume that the reader is <mark class="vocab-word" data-word="adept">adept</mark> in using <mark class="vocab-word" data-word="algebra">algebra</mark>.</p></div>  <div class="parallel-zh"><p>在该方面，这本书区别于大多数为普通大众而写就的数学书籍。它们或者呈现数学家丰富多彩的生活，或者描述数学的重要应用，还有一些深入研究数学步骤，却假定读者能够熟练的使用代数。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>I hope this book will help bridge that <mark class="vocab-word" data-word="notorious">notorious</mark> gap that separates the two cultures: the humanities and the sciences, or should I say the right brain (<mark class="vocab-word" data-word="intuitive">intuitive</mark>) and the left brain (<mark class="vocab-word" data-word="analytical">analytical</mark>, <mark class="vocab-word" data-word="numerical">numerical</mark>). As the chapters will illustrate, mathematics is not restricted to the <mark class="vocab-word" data-word="analytical">analytical</mark> and <mark class="vocab-word" data-word="numerical">numerical</mark>; <mark class="vocab-word" data-word="intuition">intuition</mark> plays a significant role. The <mark class="vocab-word" data-word="allege">alleged</mark> gap can be narrowed or completely overcome by anyone, in part because each of us is far from using the full <mark class="vocab-word" data-word="capacity">capacity</mark> of either side of the brain. To illustrate our human potential, I <mark class="vocab-word" data-word="cite">cite</mark> a <mark class="vocab-word" data-word="structural">structural</mark> engineer who is an artist, an <mark class="vocab-word" data-word="electrical">electrical</mark> engineer who is an <mark class="vocab-word" data-word="opera">opera</mark> singer, an <mark class="vocab-word" data-word="opera">opera</mark> singer who published <mark class="vocab-word" data-word="mathematical">mathematical</mark> research, and a <mark class="vocab-word" data-word="mathematician">mathematician</mark> who publishes short stories.</p></div>  <div class="parallel-zh"><p>我希望这本书可以搭建起一座桥梁，跨越那道臭名昭著的间隙，从而沟通两种文化：人文与科学，或者我也许应该将其称之为右脑（直觉性的）与左脑（分析性的，数学的）。正如书中章节将要说明的那样，数学不仅仅是分析性的和数字性的。直觉也扮演着重要的角色。任何人都能够缩小或者完全克服这道所谓的间隙，部分是因为我们每个人都远远没有用出任何一侧大脑的全部能力。为了说明我们人类的潜力，我引用了如下例子：一名结构工程师同时也是一名艺术家；一名电气工程师同时也是一名歌剧演唱家；一名歌剧演唱家出版了一本数学研究著作，以及一名数学家发表了一些短篇小说。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Other scientists have written books to explain their fields to non-scientists, but have necessarily had to <mark class="vocab-word" data-word="omit">omit</mark> the mathematics, although it provides the <mark class="vocab-word" data-word="foundation">foundation</mark> of their theories. The reader must remain a tantalized <mark class="vocab-word" data-word="spectator">spectator</mark> rather than an <mark class="vocab-word" data-word="involved">involved</mark> participant, since the appropriate language for describing the details in much of science is mathematics, whether the subject is expanding universe, subatomic <mark class="vocab-word" data-word="particle">particles</mark>, or <mark class="vocab-word" data-word="chromosome">chromosomes</mark>. Though the broad outline of a scientific theory can be <mark class="vocab-word" data-word="sketch">sketched</mark> <mark class="vocab-word" data-word="intuitive">intuitively</mark>, when a part of the physical universe is finally understood, its description often looks like a page in a mathematics text.</p></div>  <div class="parallel-zh"><p>其他科学家也写了一些书籍来向非科学家解释他们的领域，但却不得不忽略数学部分，尽管它为他们的理论提供了基础。由于细致描述大部分科学（无论主题是膨胀的宇宙，还是亚原子粒子，又或者是染色体）的恰当语言是数学，读者只好全程做一个跃跃欲试而不得的旁观者，而不是加入其中的参与者。虽然一个科学理论的大致轮廓可以通过直觉来刻画，但当某部分实体宇宙最终被人们所理解，它的描述经常看起来像是数学课本中的某一页。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Still, the non-mathematical reader can go far in understanding <mark class="vocab-word" data-word="mathematical">mathematical</mark> reasoning. This book presents the details that illustrate the <mark class="vocab-word" data-word="mathematical">mathematical</mark> style of thinking, which involves <mark class="vocab-word" data-word="sustain">sustained</mark>, step-by-step analysis, experiments, and <mark class="vocab-word" data-word="insight">insights</mark>. You will turn these pages much more slowly than when reading a novel or a newspaper. It may help to have a pencil and paper ready to check claims and carry out experiments.</p></div>  <div class="parallel-zh"><p>非数学专业的读者仍然可以深入理解数学的推导过程。这本书呈现出的细节解释了数学的思维方式。它包含连续的、一步步的分析，实验和思考。与阅读小说或者报纸相比，你翻页的速度会慢很多。旁边放支铅笔和纸张，随时准备核验书中理论和进行实验会很有帮助。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>As I wrote, I kept in mind two types of readers: those who enjoyed mathematics until they were turned off by an unpleasant episode, usually around fifth <mark class="vocab-word" data-word="grade">grade</mark>, and mathematics aficionados, who will find much that is new throughout the book.</p></div>  <div class="parallel-zh"><p>我在写作时，脑子里有两种类型的读者：一类人直到被某一不愉快的插曲劝退之前都挺喜欢数学的，而这通常发生在5年级左右。另一类人是数学的狂热爱好者，他们会在书中发现许多全新的东西。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This book also serves readers who simply want to <mark class="vocab-word" data-word="sharpen">sharpen</mark> their <mark class="vocab-word" data-word="analytical">analytical</mark> skills. Many careers, such as law and medicine, require extended, <mark class="vocab-word" data-word="precise">precise</mark> analysis. Each chapter offers practice in following a <mark class="vocab-word" data-word="sustain">sustained</mark> and closely argued line of thought. That mathematics can develop this skill is shown by these two testimonials.</p></div>  <div class="parallel-zh"><p>这本书也适合那些仅仅想要磨练自己分析技能的读者。诸如法律和医药等许多职业都需要全面、精确的分析能力。每一章在连续、严密的思维论证之后都会给出练习。下面两份证词可以展示数学确实能够提升该项能力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A <mark class="vocab-word" data-word="physician">physician</mark> wrote, ‘The discipline of <mark class="vocab-word" data-word="analytical">analytical</mark> thought processes [in mathematics] prepared me extremely well for medical school. In medicine one is faced with a problem which must be <mark class="vocab-word" data-word="thorough">thoroughly</mark> analyzed before a solution can be found. The process is similar to doing mathematics.’</p></div>  <div class="parallel-zh"><p>一名医生写到：“（数学中）分析思维过程的原则让我为医学院的学习做足了准备。在医学中，一个人面临的问题必须经过透彻的分析才能够找到解决方案。这一过程与做数学题十分相似”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>A lawyer made the same point, ‘Although I had no background in law – not even one political science course – I did well at one of the best law schools. I <mark class="vocab-word" data-word="attribute">attribute</mark> much of my success there to having <mark class="vocab-word" data-word="learned">learned</mark>, through the study of mathematics, and, in particular, theorems, how to analyze <mark class="vocab-word" data-word="complicated">complicated</mark> principles. Lawyers who have studied mathematics can master the legal principles in a way that most others cannot.’</p></div>  <div class="parallel-zh"><p>一名律师也发表了相同的意见，“虽然我没有法律的相关背景，甚至也不曾修读过任何一门政治科学课程，但我在一所顶级法学院中成绩优异。我将自己在那里取得的成功归功于曾经的数学学习，尤其是对各种定理的学习，了解如何分析复杂的原理。学习过数学的律师能够以一种大多数其他律师所无法掌握的方式掌握法律原理”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>I hope you will share my delight in watching as simple, even naïve, questions <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="remarkable">remarkable</mark> solutions and purely <mark class="vocab-word" data-word="theoretical">theoretical</mark> discoveries find unanticipated applications.</p></div>  <div class="parallel-zh"><p>我希望你能够分享我的喜悦，去观察简单甚至幼稚的问题如何引向非同寻常的解决方案，以及纯粹的理论发现如何找到意料之外的用途。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"occasional": 1, "composition": 1, "advanced": 1, "specialize": 1, "algebra": 2, "geometry": 1, "arithmetic": 2, "phenomenon": 1, "elementary": 1, "mathematical": 6, "intuitive": 3, "haven": 1, "reveal": 1, "fascinating": 1, "differ": 1, "mathematician": 2, "adept": 1, "notorious": 1, "analytical": 4, "numerical": 2, "intuition": 1, "allege": 1, "capacity": 1, "cite": 1, "structural": 1, "electrical": 1, "opera": 2, "omit": 1, "foundation": 1, "spectator": 1, "involved": 1, "particle": 1, "chromosome": 1, "sketch": 1, "sustain": 2, "insight": 1, "grade": 1, "sharpen": 1, "precise": 1, "physician": 1, "thorough": 1, "attribute": 1, "learned": 1, "complicated": 1, "lead": 1, "remarkable": 1, "theoretical": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

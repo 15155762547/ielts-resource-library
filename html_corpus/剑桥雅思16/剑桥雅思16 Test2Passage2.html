@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I contain multitudes 微生物 - 剑桥雅思16 Test 2 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思16</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>I contain multitudes 微生物</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/42815.html" target="_blank">https://www.laokaoya.com/42815.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p><mark class="vocab-word" data-word="microbe">Microbes</mark>, most of them <mark class="vocab-word" data-word="bacteria">bacteria</mark>, have <mark class="vocab-word" data-word="populate">populated</mark> this planet since long before animal life developed and they will <mark class="vocab-word" data-word="outlive">outlive</mark> us. <mark class="vocab-word" data-word="invisible">Invisible</mark> to the <mark class="vocab-word" data-word="naked">naked</mark> eye, they are <mark class="vocab-word" data-word="ubiquitous">ubiquitous</mark>. They <mark class="vocab-word" data-word="inhabit">inhabit</mark> the soil, air, rocks and water and are present within every form of life, from seaweed and <mark class="vocab-word" data-word="coral">coral</mark> to dogs and humans. And, as Yong explains in his <mark class="vocab-word" data-word="utterly">utterly</mark> <mark class="vocab-word" data-word="absorb">absorbing</mark> and hugely important book, we mess with them at our <mark class="vocab-word" data-word="peril">peril</mark>.</p><p>Every species has its own <mark class="vocab-word" data-word="colony">colony</mark> of <mark class="vocab-word" data-word="microbe">microbes</mark>, called a ‘microbiome’, and these <mark class="vocab-word" data-word="microbe">microbes</mark> vary not only between species but also between individuals and within different parts of each individual. What is amazing is that while the number of human cells in the average person is about 30 <mark class="vocab-word" data-word="trillion">trillion</mark>, the number of microbial ones is higher – about 39 <mark class="vocab-word" data-word="trillion">trillion</mark>. At best, Yong informs us, we are only 50 per cent human. Indeed, some scientists even <mark class="vocab-word" data-word="suggest">suggest</mark> we should think of each species and its <mark class="vocab-word" data-word="microbe">microbes</mark> as a single unit, dubbed a ‘holobiont’.</p><p>In each human there are <mark class="vocab-word" data-word="microbe">microbes</mark> that live only in the stomach, the mouth or the armpit and by and large they do so peacefully. So ‘bad’ <mark class="vocab-word" data-word="microbe">microbes</mark> are just <mark class="vocab-word" data-word="microbe">microbes</mark> out of context. <mark class="vocab-word" data-word="microbe">Microbes</mark> that sit contentedly in the human <mark class="vocab-word" data-word="gut">gut</mark> (where there are more <mark class="vocab-word" data-word="microbe">microbes</mark> than there are stars in the <mark class="vocab-word" data-word="galaxy">galaxy</mark>) can become <mark class="vocab-word" data-word="deadly">deadly</mark> if they find their way into the <mark class="vocab-word" data-word="bloodstream">bloodstream</mark>. This article is from  website. These communities are constantly changing too. The right hand shares just one sixth of its <mark class="vocab-word" data-word="microbe">microbes</mark> with the left hand. And, of course, we are surrounded by <mark class="vocab-word" data-word="microbe">microbes</mark>. Every time we eat, we <mark class="vocab-word" data-word="swallow">swallow</mark> a million <mark class="vocab-word" data-word="microbe">microbes</mark> in each <mark class="vocab-word" data-word="gram">gram</mark> of food; we are <mark class="vocab-word" data-word="continually">continually</mark> swapping <mark class="vocab-word" data-word="microbe">microbes</mark> with other humans, pets and the world at large…</p><p>It’s a <mark class="vocab-word" data-word="fascinating">fascinating</mark> topic and Yong, a young British science <mark class="vocab-word" data-word="journalist">journalist</mark>, is an extraordinarily <mark class="vocab-word" data-word="adept">adept</mark> guide. Writing with lightness and panache, he has a <mark class="vocab-word" data-word="knack">knack</mark> of explaining complex science in terms that are both easy to understand and totally <mark class="vocab-word" data-word="enthrall">enthralling</mark>. Yong is on a mission. <mark class="vocab-word" data-word="lead">Leading</mark> us gently by the hand, he takes us into the world of <mark class="vocab-word" data-word="microbe">microbes</mark> – a <mark class="vocab-word" data-word="bizarre">bizarre</mark>, <mark class="vocab-word" data-word="alien">alien</mark> planet – in a <mark class="vocab-word" data-word="bid">bid</mark> to <mark class="vocab-word" data-word="persuade">persuade</mark> us to love them as much as he does. By the end, we do.</p><p>For most of human history we had no idea that <mark class="vocab-word" data-word="microbe">microbes</mark> existed. The first man to see these extraordinarily <mark class="vocab-word" data-word="potent">potent</mark> creatures was a Dutch lens-maker called Antony van Leeuwenhoek in the 1670s. Using <mark class="vocab-word" data-word="microscope">microscopes</mark> of his own design that could <mark class="vocab-word" data-word="magnify">magnify</mark> up to 270 times, he examined a drop of water from a nearby lake and found it <mark class="vocab-word" data-word="teem">teeming</mark> with tiny creatures he called ‘animalcules’. It wasn’t until nearly two hundred years later that the research of French <mark class="vocab-word" data-word="biologist">biologist</mark> Louis Pasteur indicated that some <mark class="vocab-word" data-word="microbe">microbes</mark> caused disease. It was Pasteur’s ‘<mark class="vocab-word" data-word="germ">germ</mark> theory’ that gave <mark class="vocab-word" data-word="bacteria">bacteria</mark> the poor image that <mark class="vocab-word" data-word="endure">endures</mark> today.</p><p>Yong’s book is in many ways a <mark class="vocab-word" data-word="plea">plea</mark> for microbial <mark class="vocab-word" data-word="tolerance">tolerance</mark>, pointing out that while fewer than one hundred species of <mark class="vocab-word" data-word="bacteria">bacteria</mark> bring disease, many thousands more play a <mark class="vocab-word" data-word="vital">vital</mark> role in maintaining our health. The book also acknowledges that our attitude towards <mark class="vocab-word" data-word="bacteria">bacteria</mark> is no a simple one. We tend to see the dangers posed by <mark class="vocab-word" data-word="bacteria">bacteria</mark>, yet at the same time we are sold yoghurts and drinks that <mark class="vocab-word" data-word="supposedly">supposedly</mark> <mark class="vocab-word" data-word="nurture">nurture</mark> “friendly’ <mark class="vocab-word" data-word="bacteria">bacteria</mark>. In reality, says Yong, <mark class="vocab-word" data-word="bacteria">bacteria</mark> should not be viewed as either friends or foes, villains or heroes. Instead we should realise we have a <mark class="vocab-word" data-word="symbiotic">symbiotic</mark> relationship, that can be <mark class="vocab-word" data-word="mutual">mutually</mark> <mark class="vocab-word" data-word="beneficial">beneficial</mark> or <mark class="vocab-word" data-word="mutual">mutually</mark> <mark class="vocab-word" data-word="destructive">destructive</mark>.</p><p>What then do these millions of <mark class="vocab-word" data-word="organism">organisms</mark> do? The answer is pretty much everything. New research is now unravelling the ways in which <mark class="vocab-word" data-word="bacteria">bacteria</mark> aid <mark class="vocab-word" data-word="digestion">digestion</mark>, <mark class="vocab-word" data-word="regulate">regulate</mark> our <mark class="vocab-word" data-word="immune">immune</mark> systems, <mark class="vocab-word" data-word="eliminate">eliminate</mark> <mark class="vocab-word" data-word="toxin">toxins</mark>, produce <mark class="vocab-word" data-word="vitamin">vitamins</mark>, affect our behaviour and even <mark class="vocab-word" data-word="combat">combat</mark> obesity. ‘They actually help us become who we are,’ says Yong. But we are facing a growing problem. Our <mark class="vocab-word" data-word="obsession">obsession</mark> with <mark class="vocab-word" data-word="hygiene">hygiene</mark>, our overuse of <mark class="vocab-word" data-word="antibiotic">antibiotics</mark> and our unhealthy, low-fibre diets are <mark class="vocab-word" data-word="disrupt">disrupting</mark> the <mark class="vocab-word" data-word="bacterial">bacterial</mark> balance and may be responsible for <mark class="vocab-word" data-word="soar">soaring</mark> rates of allergies and <mark class="vocab-word" data-word="immune">immune</mark> problems, such as inflammatory <mark class="vocab-word" data-word="bowel">bowel</mark> disease (IBD).</p><p>The most recent research actually turns accepted <mark class="vocab-word" data-word="norm">norms</mark> upside down. For example, there are studies indicating that the <mark class="vocab-word" data-word="excessive">excessive</mark> use of <mark class="vocab-word" data-word="household">household</mark> <mark class="vocab-word" data-word="detergent">detergents</mark> and antibacterial products actually destroys the <mark class="vocab-word" data-word="microbe">microbes</mark> that normally keep the more dangerous <mark class="vocab-word" data-word="germ">germs</mark> at <mark class="vocab-word" data-word="bay">bay</mark>. Other studies show that keeping a dog as a pet gives children early <mark class="vocab-word" data-word="exposure">exposure</mark> to a <mark class="vocab-word" data-word="diverse">diverse</mark> range of <mark class="vocab-word" data-word="bacteria">bacteria</mark> which may help protect them against allergies later.</p><p>The readers of Yong’s book must be prepared for a decidedly unglamorous world. Among the less appealing case studies is one about a <mark class="vocab-word" data-word="fungus">fungus</mark> that is <mark class="vocab-word" data-word="wipe">wiping</mark> out entire populations of <mark class="vocab-word" data-word="frog">frogs</mark> and that can be <mark class="vocab-word" data-word="halt">halted</mark> by a rare microbial <mark class="vocab-word" data-word="bacterium">bacterium</mark>. Another is about <mark class="vocab-word" data-word="squid">squid</mark> that carry luminescent <mark class="vocab-word" data-word="bacteria">bacteria</mark> that protect them against <mark class="vocab-word" data-word="predator">predators</mark>. However, if you can overcome your distaste for some of the investigations, the reasons for Yong’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark> become clear. The microbial world is a place of wonder. Already, in an attempt to stop <mark class="vocab-word" data-word="mosquito">mosquitoes</mark> spreading dengue <mark class="vocab-word" data-word="fever">fever</mark> – a disease that <mark class="vocab-word" data-word="infect">infects</mark> 400 million people a year – <mark class="vocab-word" data-word="mosquito">mosquitoes</mark> are being loaded with a <mark class="vocab-word" data-word="bacterium">bacterium</mark> to block the disease. In the future, our ability to <mark class="vocab-word" data-word="manipulate">manipulate</mark> <mark class="vocab-word" data-word="microbe">microbes</mark> means we could <mark class="vocab-word" data-word="construct">construct</mark> buildings with useful <mark class="vocab-word" data-word="microbe">microbes</mark> built into their walls to fight off infections. Just imagine a neonatal hospital <mark class="vocab-word" data-word="ward">ward</mark> coated in a specially <mark class="vocab-word" data-word="mixed">mixed</mark> <mark class="vocab-word" data-word="cocktail">cocktail</mark> of <mark class="vocab-word" data-word="microbe">microbes</mark> so that babies get the best start in life.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>微生物，大多数都是细菌，在动物出现很早以前就生活在地球上，而且它们会在我们消失之后继续存在。虽然裸眼看不到，但它们到处都是。它们出现在土壤、空气、岩石和水中，也存在于任何形式的生命内部，从海草和珊瑚，到狗和人类。并且，正如杨在其十分引人入胜又至关重要的书中所说的那样，我们冒着危险操纵它们。</p><p>每个物种都有它们自己的微生物群落，被叫做“微生物群”。不同物种之间，不同个体之间，乃至每个个体的不同部分之间，微生物都各有不同。令人惊讶的是，虽然平均每个人身上拥有大约30万亿的细胞，微生物的个数要更高一些，大约39万亿。杨告诉我们，哪怕在最好的情况下，我们也仅有50%属于人类。确实，一些科学家甚至认为，我们应该将每个物种及其微生物视为一体，称之为“holobiont”。</p><p>在每个人身上，都有只存在于胃部，口腔或腋窝的微生物。大体而言，它们生活的十分平和。所以，“坏”微生物实际只是脱离相应环境的微生物。惬意地生活在人类消化道中的微生物（那里的微生物数量甚至比银河系里的星星还多）如果进入血液的话就会变得非常致命。这些群落也经常发生变化。右手上的微生物和左手相比只有六分之一相同。当然，我们也被微生物所围绕着。每次吃饭的时候，伴随每克食物，我们会吞下100万个微生物。我们与其他人类，宠物和整个世界一直都在持续进行微生物的交换。</p><p>这是个迷人的话题。杨，年轻的英国自然科学记者，是位十分娴熟的向导。他将复杂的科学术语用易于理解又让人着迷的方式解释出来。杨身负使命。轻轻地拉着我们的手，他将我们带入微生物的世界-一个光怪陆离而陌生的星球-尝试让我们像他一样爱上它们。在读完整本书之后，我们确实如此。</p><p>在人类历史的大部分时间，我们都不知道微生物的存在。17世纪70年代，一名叫做Antony van Leeuwenhoek的荷兰镜片工匠第一次看到了这些极其强大的生物。利用自己设计的、可以放大到270倍的显微镜，他检验了附近湖泊的一滴水，发现其中充满他称之为“animalcules”的微小生物。直到近200年后，法国生物学家Louis Pasteur的研究才表明，一些微生物会引发疾病。正是Pasteur的病菌理论赋予细菌一直延续到今天的不良形象。</p><p>杨的书用多种方式请求我们对微生物持容忍态度。他指出，虽然有不到100种细菌会带来疾病，但还有上千种在维护我们的健康方面发挥着举足轻重的作用。这本书也认识到，我们对待细菌的态度并不统一。我们会看到细菌所造成的危险，但与此同时我们也会购买培养益生菌的酸奶和饮料。事实上，杨认为细菌既不应该被当作是朋友，也不应该被认为是敌人。它们既不是恶棍，也不是英雄。与之相反，我们应该意识到我们之间存在共生关系，即可以互相增益，也可以互相毁灭。</p><p>那么，这些数以百万计的生命究竟做什么呢？答案是几乎任何事情。新的研究如今表明，细菌帮助消化，管理我们的免疫系统，消除毒素，生产维生素，影响我们的行为，甚至对抗肥胖。“它们实际上帮助我们塑造自身”，杨说。但我们也面临越来越严重的问题。我们对卫生的痴迷，对抗生素的过度使用，以及我们不健康的、低纤维的饮食正在破坏菌落平衡，并且可能要为越来越多的过敏和免疫系统疾病负责，如炎性肠病。</p><p>最新的研究实际上颠覆了我们普遍接受的观点。例如，有研究表明，在家庭中过度使用洗涤剂和抗菌产品会破坏平时阻碍更为危险的细菌入侵的微生物。其他研究表明，养一条狗作为宠物会让孩子早早接触到各类细菌，这有助于保护他们日后免受过敏的困扰。</p><p>杨的作品的读者必须做好了解一个十分乏味的世界的准备。在不那么让人喜欢的案例研究中有一项是关于某个正在灭绝整个青蛙群体的真菌的，而只有一种稀有的细菌才能终止这一过程。另外一项是关于乌贼的。它们所携带的可以发光的细菌保护他们远离捕食者。然而，如果你可以克服对一些研究的厌恶，杨热情背后的原因就会变得十分明显。微生物世界充满了惊喜。在阻止蚊子传播革登热（一种每年感染4亿人的疾病）的尝试中，蚊子被搭载上一种可以阻碍疾病的细菌。未来，我们操纵微生物的能力意味着我们可以建造墙壁中内嵌微生物以对抗感染的建筑。想象一下，崭新医院病房覆盖着经过特定混合后的微生物，以便婴儿可以完美开启他们的生命。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="microbe">Microbes</mark>, most of them <mark class="vocab-word" data-word="bacteria">bacteria</mark>, have <mark class="vocab-word" data-word="populate">populated</mark> this planet since long before animal life developed and they will <mark class="vocab-word" data-word="outlive">outlive</mark> us. <mark class="vocab-word" data-word="invisible">Invisible</mark> to the <mark class="vocab-word" data-word="naked">naked</mark> eye, they are <mark class="vocab-word" data-word="ubiquitous">ubiquitous</mark>. They <mark class="vocab-word" data-word="inhabit">inhabit</mark> the soil, air, rocks and water and are present within every form of life, from seaweed and <mark class="vocab-word" data-word="coral">coral</mark> to dogs and humans. And, as Yong explains in his <mark class="vocab-word" data-word="utterly">utterly</mark> <mark class="vocab-word" data-word="absorb">absorbing</mark> and hugely important book, we mess with them at our <mark class="vocab-word" data-word="peril">peril</mark>.</p></div>  <div class="parallel-zh"><p>微生物，大多数都是细菌，在动物出现很早以前就生活在地球上，而且它们会在我们消失之后继续存在。虽然裸眼看不到，但它们到处都是。它们出现在土壤、空气、岩石和水中，也存在于任何形式的生命内部，从海草和珊瑚，到狗和人类。并且，正如杨在其十分引人入胜又至关重要的书中所说的那样，我们冒着危险操纵它们。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Every species has its own <mark class="vocab-word" data-word="colony">colony</mark> of <mark class="vocab-word" data-word="microbe">microbes</mark>, called a ‘microbiome’, and these <mark class="vocab-word" data-word="microbe">microbes</mark> vary not only between species but also between individuals and within different parts of each individual. What is amazing is that while the number of human cells in the average person is about 30 <mark class="vocab-word" data-word="trillion">trillion</mark>, the number of microbial ones is higher – about 39 <mark class="vocab-word" data-word="trillion">trillion</mark>. At best, Yong informs us, we are only 50 per cent human. Indeed, some scientists even <mark class="vocab-word" data-word="suggest">suggest</mark> we should think of each species and its <mark class="vocab-word" data-word="microbe">microbes</mark> as a single unit, dubbed a ‘holobiont’.</p></div>  <div class="parallel-zh"><p>每个物种都有它们自己的微生物群落，被叫做“微生物群”。不同物种之间，不同个体之间，乃至每个个体的不同部分之间，微生物都各有不同。令人惊讶的是，虽然平均每个人身上拥有大约30万亿的细胞，微生物的个数要更高一些，大约39万亿。杨告诉我们，哪怕在最好的情况下，我们也仅有50%属于人类。确实，一些科学家甚至认为，我们应该将每个物种及其微生物视为一体，称之为“holobiont”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In each human there are <mark class="vocab-word" data-word="microbe">microbes</mark> that live only in the stomach, the mouth or the armpit and by and large they do so peacefully. So ‘bad’ <mark class="vocab-word" data-word="microbe">microbes</mark> are just <mark class="vocab-word" data-word="microbe">microbes</mark> out of context. <mark class="vocab-word" data-word="microbe">Microbes</mark> that sit contentedly in the human <mark class="vocab-word" data-word="gut">gut</mark> (where there are more <mark class="vocab-word" data-word="microbe">microbes</mark> than there are stars in the <mark class="vocab-word" data-word="galaxy">galaxy</mark>) can become <mark class="vocab-word" data-word="deadly">deadly</mark> if they find their way into the <mark class="vocab-word" data-word="bloodstream">bloodstream</mark>. This article is from  website. These communities are constantly changing too. The right hand shares just one sixth of its <mark class="vocab-word" data-word="microbe">microbes</mark> with the left hand. And, of course, we are surrounded by <mark class="vocab-word" data-word="microbe">microbes</mark>. Every time we eat, we <mark class="vocab-word" data-word="swallow">swallow</mark> a million <mark class="vocab-word" data-word="microbe">microbes</mark> in each <mark class="vocab-word" data-word="gram">gram</mark> of food; we are <mark class="vocab-word" data-word="continually">continually</mark> swapping <mark class="vocab-word" data-word="microbe">microbes</mark> with other humans, pets and the world at large…</p></div>  <div class="parallel-zh"><p>在每个人身上，都有只存在于胃部，口腔或腋窝的微生物。大体而言，它们生活的十分平和。所以，“坏”微生物实际只是脱离相应环境的微生物。惬意地生活在人类消化道中的微生物（那里的微生物数量甚至比银河系里的星星还多）如果进入血液的话就会变得非常致命。这些群落也经常发生变化。右手上的微生物和左手相比只有六分之一相同。当然，我们也被微生物所围绕着。每次吃饭的时候，伴随每克食物，我们会吞下100万个微生物。我们与其他人类，宠物和整个世界一直都在持续进行微生物的交换。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It’s a <mark class="vocab-word" data-word="fascinating">fascinating</mark> topic and Yong, a young British science <mark class="vocab-word" data-word="journalist">journalist</mark>, is an extraordinarily <mark class="vocab-word" data-word="adept">adept</mark> guide. Writing with lightness and panache, he has a <mark class="vocab-word" data-word="knack">knack</mark> of explaining complex science in terms that are both easy to understand and totally <mark class="vocab-word" data-word="enthrall">enthralling</mark>. Yong is on a mission. <mark class="vocab-word" data-word="lead">Leading</mark> us gently by the hand, he takes us into the world of <mark class="vocab-word" data-word="microbe">microbes</mark> – a <mark class="vocab-word" data-word="bizarre">bizarre</mark>, <mark class="vocab-word" data-word="alien">alien</mark> planet – in a <mark class="vocab-word" data-word="bid">bid</mark> to <mark class="vocab-word" data-word="persuade">persuade</mark> us to love them as much as he does. By the end, we do.</p></div>  <div class="parallel-zh"><p>这是个迷人的话题。杨，年轻的英国自然科学记者，是位十分娴熟的向导。他将复杂的科学术语用易于理解又让人着迷的方式解释出来。杨身负使命。轻轻地拉着我们的手，他将我们带入微生物的世界-一个光怪陆离而陌生的星球-尝试让我们像他一样爱上它们。在读完整本书之后，我们确实如此。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>For most of human history we had no idea that <mark class="vocab-word" data-word="microbe">microbes</mark> existed. The first man to see these extraordinarily <mark class="vocab-word" data-word="potent">potent</mark> creatures was a Dutch lens-maker called Antony van Leeuwenhoek in the 1670s. Using <mark class="vocab-word" data-word="microscope">microscopes</mark> of his own design that could <mark class="vocab-word" data-word="magnify">magnify</mark> up to 270 times, he examined a drop of water from a nearby lake and found it <mark class="vocab-word" data-word="teem">teeming</mark> with tiny creatures he called ‘animalcules’. It wasn’t until nearly two hundred years later that the research of French <mark class="vocab-word" data-word="biologist">biologist</mark> Louis Pasteur indicated that some <mark class="vocab-word" data-word="microbe">microbes</mark> caused disease. It was Pasteur’s ‘<mark class="vocab-word" data-word="germ">germ</mark> theory’ that gave <mark class="vocab-word" data-word="bacteria">bacteria</mark> the poor image that <mark class="vocab-word" data-word="endure">endures</mark> today.</p></div>  <div class="parallel-zh"><p>在人类历史的大部分时间，我们都不知道微生物的存在。17世纪70年代，一名叫做Antony van Leeuwenhoek的荷兰镜片工匠第一次看到了这些极其强大的生物。利用自己设计的、可以放大到270倍的显微镜，他检验了附近湖泊的一滴水，发现其中充满他称之为“animalcules”的微小生物。直到近200年后，法国生物学家Louis Pasteur的研究才表明，一些微生物会引发疾病。正是Pasteur的病菌理论赋予细菌一直延续到今天的不良形象。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Yong’s book is in many ways a <mark class="vocab-word" data-word="plea">plea</mark> for microbial <mark class="vocab-word" data-word="tolerance">tolerance</mark>, pointing out that while fewer than one hundred species of <mark class="vocab-word" data-word="bacteria">bacteria</mark> bring disease, many thousands more play a <mark class="vocab-word" data-word="vital">vital</mark> role in maintaining our health. The book also acknowledges that our attitude towards <mark class="vocab-word" data-word="bacteria">bacteria</mark> is no a simple one. We tend to see the dangers posed by <mark class="vocab-word" data-word="bacteria">bacteria</mark>, yet at the same time we are sold yoghurts and drinks that <mark class="vocab-word" data-word="supposedly">supposedly</mark> <mark class="vocab-word" data-word="nurture">nurture</mark> “friendly’ <mark class="vocab-word" data-word="bacteria">bacteria</mark>. In reality, says Yong, <mark class="vocab-word" data-word="bacteria">bacteria</mark> should not be viewed as either friends or foes, villains or heroes. Instead we should realise we have a <mark class="vocab-word" data-word="symbiotic">symbiotic</mark> relationship, that can be <mark class="vocab-word" data-word="mutual">mutually</mark> <mark class="vocab-word" data-word="beneficial">beneficial</mark> or <mark class="vocab-word" data-word="mutual">mutually</mark> <mark class="vocab-word" data-word="destructive">destructive</mark>.</p></div>  <div class="parallel-zh"><p>杨的书用多种方式请求我们对微生物持容忍态度。他指出，虽然有不到100种细菌会带来疾病，但还有上千种在维护我们的健康方面发挥着举足轻重的作用。这本书也认识到，我们对待细菌的态度并不统一。我们会看到细菌所造成的危险，但与此同时我们也会购买培养益生菌的酸奶和饮料。事实上，杨认为细菌既不应该被当作是朋友，也不应该被认为是敌人。它们既不是恶棍，也不是英雄。与之相反，我们应该意识到我们之间存在共生关系，即可以互相增益，也可以互相毁灭。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What then do these millions of <mark class="vocab-word" data-word="organism">organisms</mark> do? The answer is pretty much everything. New research is now unravelling the ways in which <mark class="vocab-word" data-word="bacteria">bacteria</mark> aid <mark class="vocab-word" data-word="digestion">digestion</mark>, <mark class="vocab-word" data-word="regulate">regulate</mark> our <mark class="vocab-word" data-word="immune">immune</mark> systems, <mark class="vocab-word" data-word="eliminate">eliminate</mark> <mark class="vocab-word" data-word="toxin">toxins</mark>, produce <mark class="vocab-word" data-word="vitamin">vitamins</mark>, affect our behaviour and even <mark class="vocab-word" data-word="combat">combat</mark> obesity. ‘They actually help us become who we are,’ says Yong. But we are facing a growing problem. Our <mark class="vocab-word" data-word="obsession">obsession</mark> with <mark class="vocab-word" data-word="hygiene">hygiene</mark>, our overuse of <mark class="vocab-word" data-word="antibiotic">antibiotics</mark> and our unhealthy, low-fibre diets are <mark class="vocab-word" data-word="disrupt">disrupting</mark> the <mark class="vocab-word" data-word="bacterial">bacterial</mark> balance and may be responsible for <mark class="vocab-word" data-word="soar">soaring</mark> rates of allergies and <mark class="vocab-word" data-word="immune">immune</mark> problems, such as inflammatory <mark class="vocab-word" data-word="bowel">bowel</mark> disease (IBD).</p></div>  <div class="parallel-zh"><p>那么，这些数以百万计的生命究竟做什么呢？答案是几乎任何事情。新的研究如今表明，细菌帮助消化，管理我们的免疫系统，消除毒素，生产维生素，影响我们的行为，甚至对抗肥胖。“它们实际上帮助我们塑造自身”，杨说。但我们也面临越来越严重的问题。我们对卫生的痴迷，对抗生素的过度使用，以及我们不健康的、低纤维的饮食正在破坏菌落平衡，并且可能要为越来越多的过敏和免疫系统疾病负责，如炎性肠病。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The most recent research actually turns accepted <mark class="vocab-word" data-word="norm">norms</mark> upside down. For example, there are studies indicating that the <mark class="vocab-word" data-word="excessive">excessive</mark> use of <mark class="vocab-word" data-word="household">household</mark> <mark class="vocab-word" data-word="detergent">detergents</mark> and antibacterial products actually destroys the <mark class="vocab-word" data-word="microbe">microbes</mark> that normally keep the more dangerous <mark class="vocab-word" data-word="germ">germs</mark> at <mark class="vocab-word" data-word="bay">bay</mark>. Other studies show that keeping a dog as a pet gives children early <mark class="vocab-word" data-word="exposure">exposure</mark> to a <mark class="vocab-word" data-word="diverse">diverse</mark> range of <mark class="vocab-word" data-word="bacteria">bacteria</mark> which may help protect them against allergies later.</p></div>  <div class="parallel-zh"><p>最新的研究实际上颠覆了我们普遍接受的观点。例如，有研究表明，在家庭中过度使用洗涤剂和抗菌产品会破坏平时阻碍更为危险的细菌入侵的微生物。其他研究表明，养一条狗作为宠物会让孩子早早接触到各类细菌，这有助于保护他们日后免受过敏的困扰。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The readers of Yong’s book must be prepared for a decidedly unglamorous world. Among the less appealing case studies is one about a <mark class="vocab-word" data-word="fungus">fungus</mark> that is <mark class="vocab-word" data-word="wipe">wiping</mark> out entire populations of <mark class="vocab-word" data-word="frog">frogs</mark> and that can be <mark class="vocab-word" data-word="halt">halted</mark> by a rare microbial <mark class="vocab-word" data-word="bacterium">bacterium</mark>. Another is about <mark class="vocab-word" data-word="squid">squid</mark> that carry luminescent <mark class="vocab-word" data-word="bacteria">bacteria</mark> that protect them against <mark class="vocab-word" data-word="predator">predators</mark>. However, if you can overcome your distaste for some of the investigations, the reasons for Yong’s <mark class="vocab-word" data-word="enthusiasm">enthusiasm</mark> become clear. The microbial world is a place of wonder. Already, in an attempt to stop <mark class="vocab-word" data-word="mosquito">mosquitoes</mark> spreading dengue <mark class="vocab-word" data-word="fever">fever</mark> – a disease that <mark class="vocab-word" data-word="infect">infects</mark> 400 million people a year – <mark class="vocab-word" data-word="mosquito">mosquitoes</mark> are being loaded with a <mark class="vocab-word" data-word="bacterium">bacterium</mark> to block the disease. In the future, our ability to <mark class="vocab-word" data-word="manipulate">manipulate</mark> <mark class="vocab-word" data-word="microbe">microbes</mark> means we could <mark class="vocab-word" data-word="construct">construct</mark> buildings with useful <mark class="vocab-word" data-word="microbe">microbes</mark> built into their walls to fight off infections. Just imagine a neonatal hospital <mark class="vocab-word" data-word="ward">ward</mark> coated in a specially <mark class="vocab-word" data-word="mixed">mixed</mark> <mark class="vocab-word" data-word="cocktail">cocktail</mark> of <mark class="vocab-word" data-word="microbe">microbes</mark> so that babies get the best start in life.</p></div>  <div class="parallel-zh"><p>杨的作品的读者必须做好了解一个十分乏味的世界的准备。在不那么让人喜欢的案例研究中有一项是关于某个正在灭绝整个青蛙群体的真菌的，而只有一种稀有的细菌才能终止这一过程。另外一项是关于乌贼的。它们所携带的可以发光的细菌保护他们远离捕食者。然而，如果你可以克服对一些研究的厌恶，杨热情背后的原因就会变得十分明显。微生物世界充满了惊喜。在阻止蚊子传播革登热（一种每年感染4亿人的疾病）的尝试中，蚊子被搭载上一种可以阻碍疾病的细菌。未来，我们操纵微生物的能力意味着我们可以建造墙壁中内嵌微生物以对抗感染的建筑。想象一下，崭新医院病房覆盖着经过特定混合后的微生物，以便婴儿可以完美开启他们的生命。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"microbe": 20, "bacteria": 10, "populate": 1, "outlive": 1, "invisible": 1, "naked": 1, "ubiquitous": 1, "inhabit": 1, "coral": 1, "utterly": 1, "absorb": 1, "peril": 1, "colony": 1, "trillion": 2, "suggest": 1, "gut": 1, "galaxy": 1, "deadly": 1, "bloodstream": 1, "swallow": 1, "gram": 1, "continually": 1, "fascinating": 1, "journalist": 1, "adept": 1, "knack": 1, "enthrall": 1, "lead": 1, "bizarre": 1, "alien": 1, "bid": 1, "persuade": 1, "potent": 1, "microscope": 1, "magnify": 1, "teem": 1, "biologist": 1, "germ": 2, "endure": 1, "plea": 1, "tolerance": 1, "vital": 1, "supposedly": 1, "nurture": 1, "symbiotic": 1, "mutual": 2, "beneficial": 1, "destructive": 1, "organism": 1, "digestion": 1, "regulate": 1, "immune": 2, "eliminate": 1, "toxin": 1, "vitamin": 1, "combat": 1, "obsession": 1, "hygiene": 1, "antibiotic": 1, "disrupt": 1, "bacterial": 1, "soar": 1, "bowel": 1, "norm": 1, "excessive": 1, "household": 1, "detergent": 1, "bay": 1, "exposure": 1, "diverse": 1, "fungus": 1, "wipe": 1, "frog": 1, "halt": 1, "bacterium": 2, "squid": 1, "predator": 1, "enthusiasm": 1, "mosquito": 2, "fever": 1, "infect": 1, "manipulate": 1, "construct": 1, "ward": 1, "mixed": 1, "cocktail": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

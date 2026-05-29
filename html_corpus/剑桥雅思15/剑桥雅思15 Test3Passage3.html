@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why fairy tales are really scary tales 为什么童话是真正可怕的故事 - 剑桥雅思15 Test 3 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思15</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Why fairy tales are really scary tales 为什么童话是真正可怕的故事</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/40014.html" target="_blank">https://www.laokaoya.com/40014.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>People of every culture tell each other <mark class="vocab-word" data-word="fairy">fairy</mark> tales but the same <mark class="vocab-word" data-word="story">story</mark> often takes a variety of forms in different parts of the world. In the <mark class="vocab-word" data-word="story">story</mark> of Little Red Riding Hood that European children are familiar with, a young girl on the way to see her grandmother meets a <mark class="vocab-word" data-word="wolf">wolf</mark> and tells him where she is going. The <mark class="vocab-word" data-word="wolf">wolf</mark> runs on ahead and <mark class="vocab-word" data-word="dispose">disposes</mark> of the grandmother, then gets into bed dressed in the grandmother’s <mark class="vocab-word" data-word="clothe">clothes</mark> to wait for Little Red Riding Hood. You may think you know the <mark class="vocab-word" data-word="story">story</mark> – but which version? In some versions, the <mark class="vocab-word" data-word="wolf">wolf</mark> <mark class="vocab-word" data-word="swallow">swallows</mark> up the grandmother, while in others it locks her in a <mark class="vocab-word" data-word="cupboard">cupboard</mark>. In some stories Red Riding Hood gets the better of the <mark class="vocab-word" data-word="wolf">wolf</mark> on her own, while in others a hunter or a woodcutter hears her cries and comes to her rescue.</p><p>The <mark class="vocab-word" data-word="universal">universal</mark> appeal of these tales is <mark class="vocab-word" data-word="frequent">frequently</mark> <mark class="vocab-word" data-word="attribute">attributed</mark> to the idea that they contain cautionary messages: in the case of Little Red Riding Hood, to listen to your mother, and avoid talking to strangers. ‘It might be what we find interesting about this <mark class="vocab-word" data-word="story">story</mark> is that it’s got this <mark class="vocab-word" data-word="survival">survival</mark> relevant information in it,’ says <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Jamie Tehrani at Durham University in the UK. But his research <mark class="vocab-word" data-word="suggest">suggests</mark> otherwise. ‘We have this huge gap in our knowledge about the history and prehistory of storytelling, despite the fact that we know this <mark class="vocab-word" data-word="genre">genre</mark> is an incredibly ancient one,’ he says. That hasn’t stopped <mark class="vocab-word" data-word="anthropologist">anthropologists</mark>, folklorists and other <mark class="vocab-word" data-word="academic">academics</mark> <mark class="vocab-word" data-word="devise">devising</mark> theories to explain the importance of <mark class="vocab-word" data-word="fairy">fairy</mark> tales in human society. Now Tehrani has found a way to test these ideas, borrowing a technique from evolutionary <mark class="vocab-word" data-word="biologist">biologists</mark>.</p><p>To work out the evolutionary history, development and relationships among groups of <mark class="vocab-word" data-word="organism">organisms</mark>, <mark class="vocab-word" data-word="biologist">biologists</mark> compare the characteristics of living species in a process called ‘phylogenetic analysis’. Tehrani has used the same approach to compare related versions of <mark class="vocab-word" data-word="fairy">fairy</mark> tales to discover how they have <mark class="vocab-word" data-word="evolve">evolved</mark> and which elements have survived longest.</p><p>Tehrani’s analysis focused on Little Red Riding Hood in its many forms, which include another Western <mark class="vocab-word" data-word="fairy">fairy</mark> tale known as The <mark class="vocab-word" data-word="wolf">Wolf</mark> and the Kids. Checking for <mark class="vocab-word" data-word="variant">variants</mark> of these two tales and similar stories from Africa, East Asia and other regions, he ended up with 58 stories recorded from <mark class="vocab-word" data-word="oral">oral</mark> traditions. Once his phylogenetic analysis had <mark class="vocab-word" data-word="established">established</mark> that they were indeed related, he used the same methods to explore how they have developed and altered over time.</p><p>First he tested some <mark class="vocab-word" data-word="assumption">assumptions</mark> about which aspects of the <mark class="vocab-word" data-word="story">story</mark> alter least as it <mark class="vocab-word" data-word="evolve">evolves</mark>, indicating their importance. Folklorists believe that what happens in a <mark class="vocab-word" data-word="story">story</mark> is more central to the <mark class="vocab-word" data-word="story">story</mark> than the characters in it – that visiting a relative, only to be met by a scary animal in <mark class="vocab-word" data-word="disguise">disguise</mark>, is more fundamental than whether the visitor is a little girl or three <mark class="vocab-word" data-word="sibling">siblings</mark>, or the animal is a tiger instead of a <mark class="vocab-word" data-word="wolf">wolf</mark>.</p><p>However, Tehrani found no significant difference in the rate of <mark class="vocab-word" data-word="evolution">evolution</mark> of incidents compared with that of characters. ‘Certain episodes are very <mark class="vocab-word" data-word="stable">stable</mark> because they are crucial to the <mark class="vocab-word" data-word="story">story</mark>, but there are lots of other details that can <mark class="vocab-word" data-word="evolve">evolve</mark> quite freely, ‘ he says. Neither did his analysis support the theory that the central section of a <mark class="vocab-word" data-word="story">story</mark> is the most <mark class="vocab-word" data-word="conserve">conserved</mark> part. He found no significant difference in the <mark class="vocab-word" data-word="flexibility">flexibility</mark> of events there compared with the beginning or the end.</p><p>But the really big surprise came when he looked at the cautionary elements of the <mark class="vocab-word" data-word="story">story</mark>. ‘Studies on hunter-gatherer <mark class="vocab-word" data-word="folk">folk</mark> tales <mark class="vocab-word" data-word="suggest">suggest</mark> that these narratives include really important information about the environment and the possible dangers that may be faced there – <mark class="vocab-word" data-word="stuff">stuff</mark> that’s relevant to <mark class="vocab-word" data-word="survival">survival</mark>,’ he says. Yet in his analysis such elements were just as flexible as seemingly <mark class="vocab-word" data-word="trivial">trivial</mark> details. What, then, is important enough to be <mark class="vocab-word" data-word="reproduce">reproduced</mark> from generation to generation?</p><p>The answer, it would appear, is fear – blood-thirsty and gruesome aspects of the <mark class="vocab-word" data-word="story">story</mark>, such as the eating of the grandmother by the <mark class="vocab-word" data-word="wolf">wolf</mark> turned out to be the best preserved of all. Why are these details retained by generations of storytellers, when other features are not? Tehrani has an idea: ‘In an <mark class="vocab-word" data-word="oral">oral</mark> context, a <mark class="vocab-word" data-word="story">story</mark> won’t survive because of one great teller. It also needs to be interesting when it’s told by someone who’s not necessarily a great storyteller.’ Maybe being <mark class="vocab-word" data-word="swallow">swallowed</mark> whole by a <mark class="vocab-word" data-word="wolf">wolf</mark>, then cut out of its stomach alive is so gripping that it helps the <mark class="vocab-word" data-word="story">story</mark> remain popular, no <mark class="vocab-word" data-word="matter">matter</mark> how badly it’s told.</p><p>Jack Zipes at the University of Minnesota, Minneapolis, is unconvinced by Tehrani’s views on <mark class="vocab-word" data-word="fairy">fairy</mark> tales. ‘Even if they’re gruesome, they won’t stick unless they <mark class="vocab-word" data-word="matter">matter</mark>,’ he says. He believes the <mark class="vocab-word" data-word="perennial">perennial</mark> theme of women as <mark class="vocab-word" data-word="victim">victims</mark> in stories like Little Red Riding Hood explains why they continue to feel relevant. But Tehrani points out that although this is often the case in Western versions, it is not always true elsewhere. In <mark class="vocab-word" data-word="chinese">Chinese</mark> and Japanese versions, often known as The Tiger Grandmother, the villain is a woman, and in both Iran and Nigeria, the <mark class="vocab-word" data-word="victim">victim</mark> is a boy.</p><p>Mathias Clasen at Aarhus University in Denmark isn’t surprised by Tehrani’s findings. ‘Habits and morals change, but the things that scare us, and the fact that we seek out entertainment that’s designed to scare us – those are constant,’ he says. Clasen believes that scary stories teach us what it feels like to be afraid without having to experience real danger, and so build up <mark class="vocab-word" data-word="resistance">resistance</mark> to <mark class="vocab-word" data-word="negative">negative</mark> emotions.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>每一种文化的人都会向彼此讲述童话故事，但相同的故事在世界上不同的地方却往往采取不同的形式。在欧洲儿童所熟悉的《小红帽》这一故事里，一名小女孩在前去探望奶奶的路上遇到了一只狼，并且告诉他她要去哪里。狼跑到前面，解决掉了奶奶，然后穿着奶奶的衣服躺到床上等待小红帽的到来。你可能觉得你知道这个故事。但究竟是哪个版本呢？在一些版本里，狼吃掉了奶奶，而在另外一些版本里，它将她锁在衣柜里。在一些故事中，小红帽独自战胜了狼，而在另外一些故事中，一名猎人或者伐木工听到了她的哭喊，赶来救援。</p><p>这些童话故事普世的吸引力通常被归功于他们所包含的警戒信息：以《小红帽》为例，就是要听妈妈的话，不要跟陌生人说话。“我们之所以觉得这个故事有趣，可能是因为它在其中包含了与生存相关的信息”，英国杜伦大学人类学家Jamie Tehrani说。但他的研究却表明并非如此。“我们对故事讲述的历史以及史前史的认知存在着巨大的空白，尽管我们知道这一体裁十分古老”，他说。但这并没有阻止人类学家，民俗学家和其他学者构建理论来解释童话故事在人类社会中的重要性。如今，Tehrani借用进化生物学家的方法，发现了一种测试这些观点是否正确的方式。</p><p>为了弄清楚生物群体的进化历史，发展历程与相互关系，生物学家通过一种叫作“系统进化分析法”的方式来比较物种特征。Tehrani利用相同方式来比较童话故事的关联版本，从而探询它们是如何演变的，以及那些元素存留的时间最长。</p><p>Tehrani的分析主要集中在《小红帽》的多个版本上。这其中就包括另一个西方故事《狼与孩子》。在非洲、东亚和其他地区检索了这两个故事以及相似故事的变种后，他最终从口述传统中记录下来58个故事。一旦系统进化分析法证实它们确实彼此相关，他就利用同样的方法探索它们是如何随着时间的推移而发展改变的。</p><p>首先，他测试了一些假设：故事在演化过程中哪些方面改变最少（这表明它们的重要性）。民俗学家认为，与角色相比，故事情节对于故事而言更为核心。即拜访亲戚，偶然遇到带有伪装的可怕动物，比拜访者究竟是一名小女孩还是三兄妹，又或者动物是狮子而不是狼更为重要。</p><p>然而，Tehrani发现事件的演变速度与角色相比并没有什么太大的区别。“由于特定的情节对故事至关重要，因而它们十分稳定，但也有许多其他细节可以十分自由地演变”，他说。他的分析也不支持以下理论，即故事的核心部分是留存最多的部分。他发现，与开头或结尾相比，该部分的事件灵活性并没有显著差异。</p><p>但他在研究该故事的警示元素时，真正令人吃惊的事情发生了。“对狩猎采集者的民间故事的研究表明，这些叙事中包含着有关环境以及那里可能存在的危险的重要信息 – 与生存相关的事项”，他说。然而，在他的分析中，这些元素与那些看似无关紧要的细节同样灵活多变。那么，究竟是什么东西重要到在一代又一代人中不断再现呢？</p><p>答案似乎是恐惧，即故事中嗜血与可怕的部分（例如奶奶被狼吃掉）是所有内容中被保留的最好的。为什么这些细节能够在一代又一代的故事讲述者中留存下来，而故事的其他特征却没有呢？Tehrani有一个想法：“在口述情况下，故事不会因为一名伟大的讲述者而留存下来。当它由一个不一定伟大的讲述者说出来的时候，它还得有趣才行”。或许被一头狼整个吞下，然后切开胃部活着出来，这一情节如此扣人心弦，以至于无论讲的有多么糟糕，它都能保持流行。</p><p>明尼阿波利斯明尼苏达大学的Jack Zipes不认同Tehrani有关童话的观点。“即使这些情节很可怕，除非它们确实重要，否则也不会保留下来”，他说。他认为，在诸如《小红帽》这样的故事中，女性作为受害者这一反复出现的主题解释了它们为什么让人觉得与自己休戚相关。但Tehrani指出，虽然在西方故事中确实经常如此，但在别的地方却并不总是这样。在中国和日本通常被称为《虎外婆》的版本中，反派角色是名女性。而在伊朗和尼日利亚的版本中，受害者是名男孩。</p><p>丹麦奥尔胡斯大学的Mathias Clasen并不吃惊于Tehrani的发现。“习惯与道德会发生改变，但让我们恐惧的事情，以及我们寻求设计出来让我们感到恐惧的娱乐这一事实是永恒的”，他说。Clasen认为，恐怖故事让我们可以体会害怕的感觉而无需经历真正的危险，从而加强我们对负面情绪的抵抗力。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>People of every culture tell each other <mark class="vocab-word" data-word="fairy">fairy</mark> tales but the same <mark class="vocab-word" data-word="story">story</mark> often takes a variety of forms in different parts of the world. In the <mark class="vocab-word" data-word="story">story</mark> of Little Red Riding Hood that European children are familiar with, a young girl on the way to see her grandmother meets a <mark class="vocab-word" data-word="wolf">wolf</mark> and tells him where she is going. The <mark class="vocab-word" data-word="wolf">wolf</mark> runs on ahead and <mark class="vocab-word" data-word="dispose">disposes</mark> of the grandmother, then gets into bed dressed in the grandmother’s <mark class="vocab-word" data-word="clothe">clothes</mark> to wait for Little Red Riding Hood. You may think you know the <mark class="vocab-word" data-word="story">story</mark> – but which version? In some versions, the <mark class="vocab-word" data-word="wolf">wolf</mark> <mark class="vocab-word" data-word="swallow">swallows</mark> up the grandmother, while in others it locks her in a <mark class="vocab-word" data-word="cupboard">cupboard</mark>. In some stories Red Riding Hood gets the better of the <mark class="vocab-word" data-word="wolf">wolf</mark> on her own, while in others a hunter or a woodcutter hears her cries and comes to her rescue.</p></div>  <div class="parallel-zh"><p>每一种文化的人都会向彼此讲述童话故事，但相同的故事在世界上不同的地方却往往采取不同的形式。在欧洲儿童所熟悉的《小红帽》这一故事里，一名小女孩在前去探望奶奶的路上遇到了一只狼，并且告诉他她要去哪里。狼跑到前面，解决掉了奶奶，然后穿着奶奶的衣服躺到床上等待小红帽的到来。你可能觉得你知道这个故事。但究竟是哪个版本呢？在一些版本里，狼吃掉了奶奶，而在另外一些版本里，它将她锁在衣柜里。在一些故事中，小红帽独自战胜了狼，而在另外一些故事中，一名猎人或者伐木工听到了她的哭喊，赶来救援。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The <mark class="vocab-word" data-word="universal">universal</mark> appeal of these tales is <mark class="vocab-word" data-word="frequent">frequently</mark> <mark class="vocab-word" data-word="attribute">attributed</mark> to the idea that they contain cautionary messages: in the case of Little Red Riding Hood, to listen to your mother, and avoid talking to strangers. ‘It might be what we find interesting about this <mark class="vocab-word" data-word="story">story</mark> is that it’s got this <mark class="vocab-word" data-word="survival">survival</mark> relevant information in it,’ says <mark class="vocab-word" data-word="anthropologist">anthropologist</mark> Jamie Tehrani at Durham University in the UK. But his research <mark class="vocab-word" data-word="suggest">suggests</mark> otherwise. ‘We have this huge gap in our knowledge about the history and prehistory of storytelling, despite the fact that we know this <mark class="vocab-word" data-word="genre">genre</mark> is an incredibly ancient one,’ he says. That hasn’t stopped <mark class="vocab-word" data-word="anthropologist">anthropologists</mark>, folklorists and other <mark class="vocab-word" data-word="academic">academics</mark> <mark class="vocab-word" data-word="devise">devising</mark> theories to explain the importance of <mark class="vocab-word" data-word="fairy">fairy</mark> tales in human society. Now Tehrani has found a way to test these ideas, borrowing a technique from evolutionary <mark class="vocab-word" data-word="biologist">biologists</mark>.</p></div>  <div class="parallel-zh"><p>这些童话故事普世的吸引力通常被归功于他们所包含的警戒信息：以《小红帽》为例，就是要听妈妈的话，不要跟陌生人说话。“我们之所以觉得这个故事有趣，可能是因为它在其中包含了与生存相关的信息”，英国杜伦大学人类学家Jamie Tehrani说。但他的研究却表明并非如此。“我们对故事讲述的历史以及史前史的认知存在着巨大的空白，尽管我们知道这一体裁十分古老”，他说。但这并没有阻止人类学家，民俗学家和其他学者构建理论来解释童话故事在人类社会中的重要性。如今，Tehrani借用进化生物学家的方法，发现了一种测试这些观点是否正确的方式。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>To work out the evolutionary history, development and relationships among groups of <mark class="vocab-word" data-word="organism">organisms</mark>, <mark class="vocab-word" data-word="biologist">biologists</mark> compare the characteristics of living species in a process called ‘phylogenetic analysis’. Tehrani has used the same approach to compare related versions of <mark class="vocab-word" data-word="fairy">fairy</mark> tales to discover how they have <mark class="vocab-word" data-word="evolve">evolved</mark> and which elements have survived longest.</p></div>  <div class="parallel-zh"><p>为了弄清楚生物群体的进化历史，发展历程与相互关系，生物学家通过一种叫作“系统进化分析法”的方式来比较物种特征。Tehrani利用相同方式来比较童话故事的关联版本，从而探询它们是如何演变的，以及那些元素存留的时间最长。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Tehrani’s analysis focused on Little Red Riding Hood in its many forms, which include another Western <mark class="vocab-word" data-word="fairy">fairy</mark> tale known as The <mark class="vocab-word" data-word="wolf">Wolf</mark> and the Kids. Checking for <mark class="vocab-word" data-word="variant">variants</mark> of these two tales and similar stories from Africa, East Asia and other regions, he ended up with 58 stories recorded from <mark class="vocab-word" data-word="oral">oral</mark> traditions. Once his phylogenetic analysis had <mark class="vocab-word" data-word="established">established</mark> that they were indeed related, he used the same methods to explore how they have developed and altered over time.</p></div>  <div class="parallel-zh"><p>Tehrani的分析主要集中在《小红帽》的多个版本上。这其中就包括另一个西方故事《狼与孩子》。在非洲、东亚和其他地区检索了这两个故事以及相似故事的变种后，他最终从口述传统中记录下来58个故事。一旦系统进化分析法证实它们确实彼此相关，他就利用同样的方法探索它们是如何随着时间的推移而发展改变的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>First he tested some <mark class="vocab-word" data-word="assumption">assumptions</mark> about which aspects of the <mark class="vocab-word" data-word="story">story</mark> alter least as it <mark class="vocab-word" data-word="evolve">evolves</mark>, indicating their importance. Folklorists believe that what happens in a <mark class="vocab-word" data-word="story">story</mark> is more central to the <mark class="vocab-word" data-word="story">story</mark> than the characters in it – that visiting a relative, only to be met by a scary animal in <mark class="vocab-word" data-word="disguise">disguise</mark>, is more fundamental than whether the visitor is a little girl or three <mark class="vocab-word" data-word="sibling">siblings</mark>, or the animal is a tiger instead of a <mark class="vocab-word" data-word="wolf">wolf</mark>.</p></div>  <div class="parallel-zh"><p>首先，他测试了一些假设：故事在演化过程中哪些方面改变最少（这表明它们的重要性）。民俗学家认为，与角色相比，故事情节对于故事而言更为核心。即拜访亲戚，偶然遇到带有伪装的可怕动物，比拜访者究竟是一名小女孩还是三兄妹，又或者动物是狮子而不是狼更为重要。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>However, Tehrani found no significant difference in the rate of <mark class="vocab-word" data-word="evolution">evolution</mark> of incidents compared with that of characters. ‘Certain episodes are very <mark class="vocab-word" data-word="stable">stable</mark> because they are crucial to the <mark class="vocab-word" data-word="story">story</mark>, but there are lots of other details that can <mark class="vocab-word" data-word="evolve">evolve</mark> quite freely, ‘ he says. Neither did his analysis support the theory that the central section of a <mark class="vocab-word" data-word="story">story</mark> is the most <mark class="vocab-word" data-word="conserve">conserved</mark> part. He found no significant difference in the <mark class="vocab-word" data-word="flexibility">flexibility</mark> of events there compared with the beginning or the end.</p></div>  <div class="parallel-zh"><p>然而，Tehrani发现事件的演变速度与角色相比并没有什么太大的区别。“由于特定的情节对故事至关重要，因而它们十分稳定，但也有许多其他细节可以十分自由地演变”，他说。他的分析也不支持以下理论，即故事的核心部分是留存最多的部分。他发现，与开头或结尾相比，该部分的事件灵活性并没有显著差异。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But the really big surprise came when he looked at the cautionary elements of the <mark class="vocab-word" data-word="story">story</mark>. ‘Studies on hunter-gatherer <mark class="vocab-word" data-word="folk">folk</mark> tales <mark class="vocab-word" data-word="suggest">suggest</mark> that these narratives include really important information about the environment and the possible dangers that may be faced there – <mark class="vocab-word" data-word="stuff">stuff</mark> that’s relevant to <mark class="vocab-word" data-word="survival">survival</mark>,’ he says. Yet in his analysis such elements were just as flexible as seemingly <mark class="vocab-word" data-word="trivial">trivial</mark> details. What, then, is important enough to be <mark class="vocab-word" data-word="reproduce">reproduced</mark> from generation to generation?</p></div>  <div class="parallel-zh"><p>但他在研究该故事的警示元素时，真正令人吃惊的事情发生了。“对狩猎采集者的民间故事的研究表明，这些叙事中包含着有关环境以及那里可能存在的危险的重要信息 – 与生存相关的事项”，他说。然而，在他的分析中，这些元素与那些看似无关紧要的细节同样灵活多变。那么，究竟是什么东西重要到在一代又一代人中不断再现呢？</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The answer, it would appear, is fear – blood-thirsty and gruesome aspects of the <mark class="vocab-word" data-word="story">story</mark>, such as the eating of the grandmother by the <mark class="vocab-word" data-word="wolf">wolf</mark> turned out to be the best preserved of all. Why are these details retained by generations of storytellers, when other features are not? Tehrani has an idea: ‘In an <mark class="vocab-word" data-word="oral">oral</mark> context, a <mark class="vocab-word" data-word="story">story</mark> won’t survive because of one great teller. It also needs to be interesting when it’s told by someone who’s not necessarily a great storyteller.’ Maybe being <mark class="vocab-word" data-word="swallow">swallowed</mark> whole by a <mark class="vocab-word" data-word="wolf">wolf</mark>, then cut out of its stomach alive is so gripping that it helps the <mark class="vocab-word" data-word="story">story</mark> remain popular, no <mark class="vocab-word" data-word="matter">matter</mark> how badly it’s told.</p></div>  <div class="parallel-zh"><p>答案似乎是恐惧，即故事中嗜血与可怕的部分（例如奶奶被狼吃掉）是所有内容中被保留的最好的。为什么这些细节能够在一代又一代的故事讲述者中留存下来，而故事的其他特征却没有呢？Tehrani有一个想法：“在口述情况下，故事不会因为一名伟大的讲述者而留存下来。当它由一个不一定伟大的讲述者说出来的时候，它还得有趣才行”。或许被一头狼整个吞下，然后切开胃部活着出来，这一情节如此扣人心弦，以至于无论讲的有多么糟糕，它都能保持流行。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Jack Zipes at the University of Minnesota, Minneapolis, is unconvinced by Tehrani’s views on <mark class="vocab-word" data-word="fairy">fairy</mark> tales. ‘Even if they’re gruesome, they won’t stick unless they <mark class="vocab-word" data-word="matter">matter</mark>,’ he says. He believes the <mark class="vocab-word" data-word="perennial">perennial</mark> theme of women as <mark class="vocab-word" data-word="victim">victims</mark> in stories like Little Red Riding Hood explains why they continue to feel relevant. But Tehrani points out that although this is often the case in Western versions, it is not always true elsewhere. In <mark class="vocab-word" data-word="chinese">Chinese</mark> and Japanese versions, often known as The Tiger Grandmother, the villain is a woman, and in both Iran and Nigeria, the <mark class="vocab-word" data-word="victim">victim</mark> is a boy.</p></div>  <div class="parallel-zh"><p>明尼阿波利斯明尼苏达大学的Jack Zipes不认同Tehrani有关童话的观点。“即使这些情节很可怕，除非它们确实重要，否则也不会保留下来”，他说。他认为，在诸如《小红帽》这样的故事中，女性作为受害者这一反复出现的主题解释了它们为什么让人觉得与自己休戚相关。但Tehrani指出，虽然在西方故事中确实经常如此，但在别的地方却并不总是这样。在中国和日本通常被称为《虎外婆》的版本中，反派角色是名女性。而在伊朗和尼日利亚的版本中，受害者是名男孩。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Mathias Clasen at Aarhus University in Denmark isn’t surprised by Tehrani’s findings. ‘Habits and morals change, but the things that scare us, and the fact that we seek out entertainment that’s designed to scare us – those are constant,’ he says. Clasen believes that scary stories teach us what it feels like to be afraid without having to experience real danger, and so build up <mark class="vocab-word" data-word="resistance">resistance</mark> to <mark class="vocab-word" data-word="negative">negative</mark> emotions.</p></div>  <div class="parallel-zh"><p>丹麦奥尔胡斯大学的Mathias Clasen并不吃惊于Tehrani的发现。“习惯与道德会发生改变，但让我们恐惧的事情，以及我们寻求设计出来让我们感到恐惧的娱乐这一事实是永恒的”，他说。Clasen认为，恐怖故事让我们可以体会害怕的感觉而无需经历真正的危险，从而加强我们对负面情绪的抵抗力。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"fairy": 5, "story": 13, "wolf": 8, "dispose": 1, "clothe": 1, "swallow": 2, "cupboard": 1, "universal": 1, "frequent": 1, "attribute": 1, "survival": 2, "anthropologist": 2, "suggest": 2, "genre": 1, "academic": 1, "devise": 1, "biologist": 2, "organism": 1, "evolve": 3, "variant": 1, "oral": 2, "established": 1, "assumption": 1, "disguise": 1, "sibling": 1, "evolution": 1, "stable": 1, "conserve": 1, "flexibility": 1, "folk": 1, "stuff": 1, "trivial": 1, "reproduce": 1, "matter": 2, "perennial": 1, "victim": 2, "chinese": 1, "resistance": 1, "negative": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

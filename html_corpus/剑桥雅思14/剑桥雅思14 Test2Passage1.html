@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander Henderson (1831-1913) - 剑桥雅思14 Test 2 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思14</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>Alexander Henderson (1831-1913)</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/39078.html" target="_blank">https://www.laokaoya.com/39078.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Alexander Henderson was born in Scotland in 1831 and was the son of a successful <mark class="vocab-word" data-word="merchant">merchant</mark>. His grandfather, also called Alexander, had founded the family business, and later became the first chairman of the National Bank of Scotland. The family had <mark class="vocab-word" data-word="extensive">extensive</mark> landholdings in Scotland. Besides its <mark class="vocab-word" data-word="residence">residence</mark> in Edinburgh, it owned Press <mark class="vocab-word" data-word="estate">Estate</mark>, 650 <mark class="vocab-word" data-word="acre">acres</mark> of farmland about 35 miles southeast of the city. The family often stayed at Press Castle, the large <mark class="vocab-word" data-word="mansion">mansion</mark> on the northern edge of the property, and Alexander spent much of his childhood in the area, playing on the beach near Eyemouth or fishing in the streams nearby.</p><p>Alexander Henderson</p><p>Even after he went to school at Murcheston <mark class="vocab-word" data-word="academy">Academy</mark> on the <mark class="vocab-word" data-word="outskirts">outskirts</mark> of Edinburgh, Henderson returned to Press at weekends. In 1849 he began a three-year apprenticeship to become an <mark class="vocab-word" data-word="accountant">accountant</mark>. Although he never liked the <mark class="vocab-word" data-word="prospect">prospect</mark> of a business career, he stayed with it to please his family. In October 1855, however, he <mark class="vocab-word" data-word="emigrate">emigrated</mark> to Canada with his wife Agnes <mark class="vocab-word" data-word="elder">Elder</mark> Robertson and they <mark class="vocab-word" data-word="settle">settled</mark> in Montreal.</p><p>Henderson <mark class="vocab-word" data-word="learned">learned</mark> photography in Montreal around the year 1857 and quickly took it up as a serious <mark class="vocab-word" data-word="amateur">amateur</mark>. He became a personal friend and colleague of the Scottish-Canadian photographer William Notman. The two men made a <mark class="vocab-word" data-word="photographic">photographic</mark> <mark class="vocab-word" data-word="excursion">excursion</mark> to Niagara Falls in 1860 and they <mark class="vocab-word" data-word="cooperate">cooperated</mark> on experiments with <mark class="vocab-word" data-word="magnesium">magnesium</mark> <mark class="vocab-word" data-word="flare">flares</mark> as a source of <mark class="vocab-word" data-word="artificial">artificial</mark> light in 1865. They belonged to the same societies and were among the founding members of the Art Association of Montreal. Henderson acted as chairman of the association’s first meeting, which was held in Notman’s studio on 11 January 1860.</p><p>In <mark class="vocab-word" data-word="spite">spite</mark> of their friendship, their styles of photography were quite different. While Notman’s landscapes were noted for their <mark class="vocab-word" data-word="bold">bold</mark> realism, Henderson for the first 20 years of his career produced romantic images, showing the strong <mark class="vocab-word" data-word="influence">influence</mark> of the British landscape tradition. His artistic and technical progress was rapid and in 1865 he published his first major collection of landscape photographs. The publication had limited <mark class="vocab-word" data-word="circulation">circulation</mark> (only seven copies have ever been found), and was called <mark class="vocab-word" data-word="canadian">Canadian</mark> Views and Studies. The contents of each copy vary significantly and have proved a useful source for evaluating Henderson’s early work.</p><p>In 1866, he gave up his business to open a <mark class="vocab-word" data-word="photographic">photographic</mark> studio, advertising himself as a <mark class="vocab-word" data-word="portrait">portrait</mark> and landscape photographer. From about 1870 he dropped portraiture to <mark class="vocab-word" data-word="specialize">specialize</mark> in landscape photography and other views. His numerous photographs of city life <mark class="vocab-word" data-word="reveal">revealed</mark> in street scenes, houses, and markets are alive with human activity, and although his favourite subject was landscape he usually <mark class="vocab-word" data-word="compose">composed</mark> his scenes around such human <mark class="vocab-word" data-word="pursuit">pursuits</mark> as farming the land, cutting ice on a river, or sailing down a woodland stream. There was <mark class="vocab-word" data-word="sufficient">sufficient</mark> demand for these types of scenes and others he took <mark class="vocab-word" data-word="depict">depicting</mark> the <mark class="vocab-word" data-word="lumber">lumber</mark> trade, <mark class="vocab-word" data-word="steamboat">steamboats</mark> and <mark class="vocab-word" data-word="waterfall">waterfalls</mark> to enable him to make a living. There was little competing hobby or <mark class="vocab-word" data-word="amateur">amateur</mark> photography before the late 1880s because of the time-consuming techniques <mark class="vocab-word" data-word="involved">involved</mark> and the weight of the equipment. People wanted to buy photographs as <mark class="vocab-word" data-word="souvenir">souvenirs</mark> of a trip or as gifts, and <mark class="vocab-word" data-word="catering">catering</mark> to this market, Henderson had stock photographs on display at his studio for mounting, framing, or inclusion in albums.</p><p>Henderson <mark class="vocab-word" data-word="frequent">frequently</mark> <mark class="vocab-word" data-word="exhibit">exhibited</mark> his photographs in Montreal and abroad, in London, Edinburgh, Dublin, Paris, New York, and Philadelphia. He met with greater success in 1877 and 1878 in New York when he won first prizes in the exhibition held by E and H T Anthony and Company for landscapes using the Lambertype process. In 1878 his work won second prize at the world exhibition in Paris.</p><p>In the 1870s and 1880s Henderson travelled widely throughout Quebec and Ontario, in Canada, documenting the major cities of the two provinces and many of the villages in Quebec. He was especially <mark class="vocab-word" data-word="fond">fond</mark> of the <mark class="vocab-word" data-word="wilderness">wilderness</mark> and often travelled by <mark class="vocab-word" data-word="canoe">canoe</mark> on the Blanche, du Lievre, and other noted eastern rivers. He went on several occasions to the <mark class="vocab-word" data-word="maritime">Maritimes</mark> and in 1872 he sailed by <mark class="vocab-word" data-word="yacht">yacht</mark> along the lower north <mark class="vocab-word" data-word="shore">shore</mark> of the St Lawrence River. That same year, while in the lower St Lawrence River region, he took some photographs of the construction of the Intercolonial Railway. This <mark class="vocab-word" data-word="undertaking">undertaking</mark> led in 1875 to a commission from the railway to record the <mark class="vocab-word" data-word="principal">principal</mark> structures along the almost-completed line connecting Montreal to Halifax. Commissions from other railways followed. In 1876 he photographed bridges on the Quebec, Montreal, Ottawa and Occidental Railway between Montreal and Ottawa. In 1885 he went west along the <mark class="vocab-word" data-word="canadian">Canadian</mark> Pacific Railway (CPR) as far as Rogers Pass in British Columbia, where he took photographs of the mountains and the progress of construction.</p><p>In 1892 Henderson accepted a full-time position with the CPR as manager of a <mark class="vocab-word" data-word="photographic">photographic</mark> department which he was to set up and <mark class="vocab-word" data-word="administer">administer</mark>. His duties included spending four months in the field each year. That summer he made his second trip west, photographing <mark class="vocab-word" data-word="extensive">extensively</mark> along the railway line as far as Victoria. He continued in this post until 1897, when he retired completely from photography.</p><p>When Henderson died in 1913, his huge collection of glass <mark class="vocab-word" data-word="negative">negatives</mark> was stored in the <mark class="vocab-word" data-word="basement">basement</mark> of his house. Today collections of his work are held at the National <mark class="vocab-word" data-word="archive">Archives</mark> of Canada, Ottawa, and the McCord Museum of <mark class="vocab-word" data-word="canadian">Canadian</mark> History, Montreal.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>于1831年在苏格兰出生，是一位成功商人的儿子。他的祖父，也叫做Alexander，开创了家族企业，后来成为苏格兰国家银行的首任主席。其家庭在苏格兰拥有大量的土地。除了位于爱丁堡的住宅之外，它还拥有Press Estate，一块城市东南部大约35英里处，占地650公顷的农场。一家人经常待在位于土地北部边缘的巨大住宅Press城堡。Alexander 在这里度过了其大部分的童年时光，要么在Eyemouth附近的海滩上玩耍，要么在附近的溪流中钓鱼。</p><p>即便在他前往爱丁堡郊区的Murcheston Academy读书之后，Henderson仍然会在周末回到Press。1849年，他开始为期三年的学徒生涯以成为一名会计。虽然他从未喜欢过这一商业职业的前景，但他为了让家人开心还是一直做着。然而，1855年10月，他与妻子 Agnes Elder Robertson移民到了加拿大，并在蒙特利尔安顿下来。</p><p>Henderson于1857年左右在蒙特利尔学习摄影，并迅速将它培养成一项认真的业余爱好。他成为苏格兰裔加拿大摄影师William Notman的私人好友与同事。这两个人在1860年的时候进行了一次前往尼亚加拉大瀑布的摄影之旅，在1865年的时候一起实验利用镁的燃烧作为自然光源。他们属于同一个社团，并且是蒙特利尔艺术协会的创始成员。Henderson还作为主席主持了该歇会的第一次会议。它于1860年1月11日在Notman工作室中举办。</p><p>尽管两人友谊甚笃，但他们的摄影风格差别很大。虽然Notman的风景照因为其大胆直白的现实主义而闻名，但Henderson在其职业生涯的前20年拍的却是浪漫主义照片，展现出英国风景画传统的浓厚影响。他在艺术和技术方面进步很快。1865年，他出版了自己第一套风景照片大合集。这套册子的流通十分有限（目前只发现了7本），取名为《加拿大风景与研究》。每一本的内容差别很大，成为评估Henderson早期作品的一个重要资源。</p><p>1866年，他放弃自己的生意，开设了一家摄影工作室，将自己宣传成一位人像与风景摄影师。从1870年左右开始，他舍弃人像，专注于拍摄风景照和其他景象照。他拍下数不胜数的城市生活照片。这些街道景象、房屋和市场因为有了芸芸众生的活动而显得充满生机。虽然他最喜欢的题材是风景，但他经常将风景围绕人类活动进行构图，比如耕种田地，河流取冰，或者沿林中溪水顺流而下。对这种类型的景象和其他他拍摄的描绘木材贸易，蒸汽船与瀑布的照片有很大需求，足以他以此谋生。在19世纪80年代末期之前，因为费时的技术以及设备的重量，几乎没有其他爱好或者业余摄影与他竞争。人们想要购买照片作为旅行的纪念品或者礼物。为了迎合这一市场需求，Henderson在自己的工作室展出大量的储备照片，以供镶嵌，加框或者收录集结成册。</p><p>Henderson在蒙特利尔和诸如伦敦、爱丁堡、都柏林、巴黎、纽约以及费城等国外地区频繁展出自己的照片。他于1877年和1878年在纽约获得更大的成功，当时他因为使用漫反射的处理手法拍摄风景而赢得由E and H T Anthony and Company举办的摄影展的头奖。1878年，他的作品在巴黎世界博览会上赢得二等奖。</p><p>19世纪70年代和80年代，Henderson广泛游历了加拿大的魁北克和安大略地区，用影像记录下这两个省份中的主要城市和魁北克地区的许多村庄。他尤其喜欢旷野景象，并且经常乘独木舟沿Blanche, du Lievre和其他著名的东部河流旅行。他去过几次Maritimes。1872年，他乘坐帆船走遍了St Lawrence河沿岸的北部低地地区。同一年在St Lawrence低地地区时，他拍摄了一些正在建设的殖民地之间铁路的照片。这一举动在1875年促成那家铁路公司委托他拍摄记录当时快要竣工的、连接蒙特利尔和哈利法克斯铁路沿线的主要建筑。来自其他铁路公司的委托接踵而至。1876年，他拍摄了魁北克线、蒙特利尔线、渥太华线以及蒙特利尔和渥太华之间的西洋铁路上的各种桥梁。1885年，他沿着加拿大太平洋铁路一直向西，最远到达过不列颠属哥伦比亚的Rogers Pass。在那里，他拍摄了群山和正在进行中的建筑工程。</p><p>1892年，Henderson接受CPR提供的一份全职工作，成为他即将设立并负责的摄影部门的经理。他的工作内容包括每年在户外待上4个月。那年夏天，他第二次向西旅行，沿着铁路线拍下大量的照片，最远到达过维多利亚。他在这一岗位上一直干到1897年从摄影业彻底退休。</p><p>当Henderson于1913年去世时，他海量的玻璃底片被储存在自己家的地下室里。如今，他的作品被收藏在位于渥太华的加拿大国家档案馆以及位于蒙特利尔的麦考得加拿大历史博物馆中。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Alexander Henderson was born in Scotland in 1831 and was the son of a successful <mark class="vocab-word" data-word="merchant">merchant</mark>. His grandfather, also called Alexander, had founded the family business, and later became the first chairman of the National Bank of Scotland. The family had <mark class="vocab-word" data-word="extensive">extensive</mark> landholdings in Scotland. Besides its <mark class="vocab-word" data-word="residence">residence</mark> in Edinburgh, it owned Press <mark class="vocab-word" data-word="estate">Estate</mark>, 650 <mark class="vocab-word" data-word="acre">acres</mark> of farmland about 35 miles southeast of the city. The family often stayed at Press Castle, the large <mark class="vocab-word" data-word="mansion">mansion</mark> on the northern edge of the property, and Alexander spent much of his childhood in the area, playing on the beach near Eyemouth or fishing in the streams nearby.</p><p>Alexander Henderson</p></div>  <div class="parallel-zh"><p>于1831年在苏格兰出生，是一位成功商人的儿子。他的祖父，也叫做Alexander，开创了家族企业，后来成为苏格兰国家银行的首任主席。其家庭在苏格兰拥有大量的土地。除了位于爱丁堡的住宅之外，它还拥有Press Estate，一块城市东南部大约35英里处，占地650公顷的农场。一家人经常待在位于土地北部边缘的巨大住宅Press城堡。Alexander 在这里度过了其大部分的童年时光，要么在Eyemouth附近的海滩上玩耍，要么在附近的溪流中钓鱼。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Even after he went to school at Murcheston <mark class="vocab-word" data-word="academy">Academy</mark> on the <mark class="vocab-word" data-word="outskirts">outskirts</mark> of Edinburgh, Henderson returned to Press at weekends. In 1849 he began a three-year apprenticeship to become an <mark class="vocab-word" data-word="accountant">accountant</mark>. Although he never liked the <mark class="vocab-word" data-word="prospect">prospect</mark> of a business career, he stayed with it to please his family. In October 1855, however, he <mark class="vocab-word" data-word="emigrate">emigrated</mark> to Canada with his wife Agnes <mark class="vocab-word" data-word="elder">Elder</mark> Robertson and they <mark class="vocab-word" data-word="settle">settled</mark> in Montreal.</p></div>  <div class="parallel-zh"><p>即便在他前往爱丁堡郊区的Murcheston Academy读书之后，Henderson仍然会在周末回到Press。1849年，他开始为期三年的学徒生涯以成为一名会计。虽然他从未喜欢过这一商业职业的前景，但他为了让家人开心还是一直做着。然而，1855年10月，他与妻子 Agnes Elder Robertson移民到了加拿大，并在蒙特利尔安顿下来。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Henderson <mark class="vocab-word" data-word="learned">learned</mark> photography in Montreal around the year 1857 and quickly took it up as a serious <mark class="vocab-word" data-word="amateur">amateur</mark>. He became a personal friend and colleague of the Scottish-Canadian photographer William Notman. The two men made a <mark class="vocab-word" data-word="photographic">photographic</mark> <mark class="vocab-word" data-word="excursion">excursion</mark> to Niagara Falls in 1860 and they <mark class="vocab-word" data-word="cooperate">cooperated</mark> on experiments with <mark class="vocab-word" data-word="magnesium">magnesium</mark> <mark class="vocab-word" data-word="flare">flares</mark> as a source of <mark class="vocab-word" data-word="artificial">artificial</mark> light in 1865. They belonged to the same societies and were among the founding members of the Art Association of Montreal. Henderson acted as chairman of the association’s first meeting, which was held in Notman’s studio on 11 January 1860.</p></div>  <div class="parallel-zh"><p>Henderson于1857年左右在蒙特利尔学习摄影，并迅速将它培养成一项认真的业余爱好。他成为苏格兰裔加拿大摄影师William Notman的私人好友与同事。这两个人在1860年的时候进行了一次前往尼亚加拉大瀑布的摄影之旅，在1865年的时候一起实验利用镁的燃烧作为自然光源。他们属于同一个社团，并且是蒙特利尔艺术协会的创始成员。Henderson还作为主席主持了该歇会的第一次会议。它于1860年1月11日在Notman工作室中举办。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In <mark class="vocab-word" data-word="spite">spite</mark> of their friendship, their styles of photography were quite different. While Notman’s landscapes were noted for their <mark class="vocab-word" data-word="bold">bold</mark> realism, Henderson for the first 20 years of his career produced romantic images, showing the strong <mark class="vocab-word" data-word="influence">influence</mark> of the British landscape tradition. His artistic and technical progress was rapid and in 1865 he published his first major collection of landscape photographs. The publication had limited <mark class="vocab-word" data-word="circulation">circulation</mark> (only seven copies have ever been found), and was called <mark class="vocab-word" data-word="canadian">Canadian</mark> Views and Studies. The contents of each copy vary significantly and have proved a useful source for evaluating Henderson’s early work.</p></div>  <div class="parallel-zh"><p>尽管两人友谊甚笃，但他们的摄影风格差别很大。虽然Notman的风景照因为其大胆直白的现实主义而闻名，但Henderson在其职业生涯的前20年拍的却是浪漫主义照片，展现出英国风景画传统的浓厚影响。他在艺术和技术方面进步很快。1865年，他出版了自己第一套风景照片大合集。这套册子的流通十分有限（目前只发现了7本），取名为《加拿大风景与研究》。每一本的内容差别很大，成为评估Henderson早期作品的一个重要资源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 1866, he gave up his business to open a <mark class="vocab-word" data-word="photographic">photographic</mark> studio, advertising himself as a <mark class="vocab-word" data-word="portrait">portrait</mark> and landscape photographer. From about 1870 he dropped portraiture to <mark class="vocab-word" data-word="specialize">specialize</mark> in landscape photography and other views. His numerous photographs of city life <mark class="vocab-word" data-word="reveal">revealed</mark> in street scenes, houses, and markets are alive with human activity, and although his favourite subject was landscape he usually <mark class="vocab-word" data-word="compose">composed</mark> his scenes around such human <mark class="vocab-word" data-word="pursuit">pursuits</mark> as farming the land, cutting ice on a river, or sailing down a woodland stream. There was <mark class="vocab-word" data-word="sufficient">sufficient</mark> demand for these types of scenes and others he took <mark class="vocab-word" data-word="depict">depicting</mark> the <mark class="vocab-word" data-word="lumber">lumber</mark> trade, <mark class="vocab-word" data-word="steamboat">steamboats</mark> and <mark class="vocab-word" data-word="waterfall">waterfalls</mark> to enable him to make a living. There was little competing hobby or <mark class="vocab-word" data-word="amateur">amateur</mark> photography before the late 1880s because of the time-consuming techniques <mark class="vocab-word" data-word="involved">involved</mark> and the weight of the equipment. People wanted to buy photographs as <mark class="vocab-word" data-word="souvenir">souvenirs</mark> of a trip or as gifts, and <mark class="vocab-word" data-word="catering">catering</mark> to this market, Henderson had stock photographs on display at his studio for mounting, framing, or inclusion in albums.</p></div>  <div class="parallel-zh"><p>1866年，他放弃自己的生意，开设了一家摄影工作室，将自己宣传成一位人像与风景摄影师。从1870年左右开始，他舍弃人像，专注于拍摄风景照和其他景象照。他拍下数不胜数的城市生活照片。这些街道景象、房屋和市场因为有了芸芸众生的活动而显得充满生机。虽然他最喜欢的题材是风景，但他经常将风景围绕人类活动进行构图，比如耕种田地，河流取冰，或者沿林中溪水顺流而下。对这种类型的景象和其他他拍摄的描绘木材贸易，蒸汽船与瀑布的照片有很大需求，足以他以此谋生。在19世纪80年代末期之前，因为费时的技术以及设备的重量，几乎没有其他爱好或者业余摄影与他竞争。人们想要购买照片作为旅行的纪念品或者礼物。为了迎合这一市场需求，Henderson在自己的工作室展出大量的储备照片，以供镶嵌，加框或者收录集结成册。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Henderson <mark class="vocab-word" data-word="frequent">frequently</mark> <mark class="vocab-word" data-word="exhibit">exhibited</mark> his photographs in Montreal and abroad, in London, Edinburgh, Dublin, Paris, New York, and Philadelphia. He met with greater success in 1877 and 1878 in New York when he won first prizes in the exhibition held by E and H T Anthony and Company for landscapes using the Lambertype process. In 1878 his work won second prize at the world exhibition in Paris.</p></div>  <div class="parallel-zh"><p>Henderson在蒙特利尔和诸如伦敦、爱丁堡、都柏林、巴黎、纽约以及费城等国外地区频繁展出自己的照片。他于1877年和1878年在纽约获得更大的成功，当时他因为使用漫反射的处理手法拍摄风景而赢得由E and H T Anthony and Company举办的摄影展的头奖。1878年，他的作品在巴黎世界博览会上赢得二等奖。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In the 1870s and 1880s Henderson travelled widely throughout Quebec and Ontario, in Canada, documenting the major cities of the two provinces and many of the villages in Quebec. He was especially <mark class="vocab-word" data-word="fond">fond</mark> of the <mark class="vocab-word" data-word="wilderness">wilderness</mark> and often travelled by <mark class="vocab-word" data-word="canoe">canoe</mark> on the Blanche, du Lievre, and other noted eastern rivers. He went on several occasions to the <mark class="vocab-word" data-word="maritime">Maritimes</mark> and in 1872 he sailed by <mark class="vocab-word" data-word="yacht">yacht</mark> along the lower north <mark class="vocab-word" data-word="shore">shore</mark> of the St Lawrence River. That same year, while in the lower St Lawrence River region, he took some photographs of the construction of the Intercolonial Railway. This <mark class="vocab-word" data-word="undertaking">undertaking</mark> led in 1875 to a commission from the railway to record the <mark class="vocab-word" data-word="principal">principal</mark> structures along the almost-completed line connecting Montreal to Halifax. Commissions from other railways followed. In 1876 he photographed bridges on the Quebec, Montreal, Ottawa and Occidental Railway between Montreal and Ottawa. In 1885 he went west along the <mark class="vocab-word" data-word="canadian">Canadian</mark> Pacific Railway (CPR) as far as Rogers Pass in British Columbia, where he took photographs of the mountains and the progress of construction.</p></div>  <div class="parallel-zh"><p>19世纪70年代和80年代，Henderson广泛游历了加拿大的魁北克和安大略地区，用影像记录下这两个省份中的主要城市和魁北克地区的许多村庄。他尤其喜欢旷野景象，并且经常乘独木舟沿Blanche, du Lievre和其他著名的东部河流旅行。他去过几次Maritimes。1872年，他乘坐帆船走遍了St Lawrence河沿岸的北部低地地区。同一年在St Lawrence低地地区时，他拍摄了一些正在建设的殖民地之间铁路的照片。这一举动在1875年促成那家铁路公司委托他拍摄记录当时快要竣工的、连接蒙特利尔和哈利法克斯铁路沿线的主要建筑。来自其他铁路公司的委托接踵而至。1876年，他拍摄了魁北克线、蒙特利尔线、渥太华线以及蒙特利尔和渥太华之间的西洋铁路上的各种桥梁。1885年，他沿着加拿大太平洋铁路一直向西，最远到达过不列颠属哥伦比亚的Rogers Pass。在那里，他拍摄了群山和正在进行中的建筑工程。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In 1892 Henderson accepted a full-time position with the CPR as manager of a <mark class="vocab-word" data-word="photographic">photographic</mark> department which he was to set up and <mark class="vocab-word" data-word="administer">administer</mark>. His duties included spending four months in the field each year. That summer he made his second trip west, photographing <mark class="vocab-word" data-word="extensive">extensively</mark> along the railway line as far as Victoria. He continued in this post until 1897, when he retired completely from photography.</p></div>  <div class="parallel-zh"><p>1892年，Henderson接受CPR提供的一份全职工作，成为他即将设立并负责的摄影部门的经理。他的工作内容包括每年在户外待上4个月。那年夏天，他第二次向西旅行，沿着铁路线拍下大量的照片，最远到达过维多利亚。他在这一岗位上一直干到1897年从摄影业彻底退休。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>When Henderson died in 1913, his huge collection of glass <mark class="vocab-word" data-word="negative">negatives</mark> was stored in the <mark class="vocab-word" data-word="basement">basement</mark> of his house. Today collections of his work are held at the National <mark class="vocab-word" data-word="archive">Archives</mark> of Canada, Ottawa, and the McCord Museum of <mark class="vocab-word" data-word="canadian">Canadian</mark> History, Montreal.</p></div>  <div class="parallel-zh"><p>当Henderson于1913年去世时，他海量的玻璃底片被储存在自己家的地下室里。如今，他的作品被收藏在位于渥太华的加拿大国家档案馆以及位于蒙特利尔的麦考得加拿大历史博物馆中。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"merchant": 1, "extensive": 2, "residence": 1, "estate": 1, "acre": 1, "mansion": 1, "academy": 1, "outskirts": 1, "accountant": 1, "prospect": 1, "emigrate": 1, "elder": 1, "settle": 1, "learned": 1, "amateur": 2, "photographic": 3, "excursion": 1, "cooperate": 1, "magnesium": 1, "flare": 1, "artificial": 1, "spite": 1, "bold": 1, "influence": 1, "circulation": 1, "canadian": 3, "portrait": 1, "specialize": 1, "reveal": 1, "compose": 1, "pursuit": 1, "sufficient": 1, "depict": 1, "lumber": 1, "steamboat": 1, "waterfall": 1, "involved": 1, "souvenir": 1, "catering": 1, "frequent": 1, "exhibit": 1, "fond": 1, "wilderness": 1, "canoe": 1, "maritime": 1, "yacht": 1, "shore": 1, "undertaking": 1, "principal": 1, "administer": 1, "negative": 1, "basement": 1, "archive": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

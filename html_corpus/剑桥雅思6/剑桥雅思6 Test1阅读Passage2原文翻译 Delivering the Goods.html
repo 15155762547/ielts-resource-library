@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivering the Goods - 剑桥雅思6 Test 1 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思6</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Delivering the Goods</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/23165.html" target="_blank">https://www.laokaoya.com/23165.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>International trade is growing at a <mark class="vocab-word" data-word="startle">startling</mark> pace. While the global economy has been expanding at a bit over 3% a year, the volume of trade has been rising at a <mark class="vocab-word" data-word="compound">compound</mark> annual rate of about twice that. Foreign products, from meat to <mark class="vocab-word" data-word="machinery">machinery</mark>, play a more important role in almost every economy in the world, and foreign markets now <mark class="vocab-word" data-word="tempt">tempt</mark> businesses that never much worried about sales beyond their nation’s borders.</p><p>What lies behind this <mark class="vocab-word" data-word="explosion">explosion</mark> in international <mark class="vocab-word" data-word="commerce">commerce</mark>? The general worldwide decline in trade barriers, such as customs duties and import <mark class="vocab-word" data-word="quota">quotas</mark>, is surely one explanation. The economic opening of countries that have <mark class="vocab-word" data-word="traditionally">traditionally</mark> been minor players is another. But one force behind the import-export <mark class="vocab-word" data-word="boom">boom</mark> has passed all but unnoticed: the rapidly falling cost of getting <mark class="vocab-word" data-word="goods">goods</mark> to market. <mark class="vocab-word" data-word="theoretically">Theoretically</mark>, in the world of trade, shipping costs do not <mark class="vocab-word" data-word="matter">matter</mark>. <mark class="vocab-word" data-word="goods">Goods</mark>, once they have been made, are assumed to move <mark class="vocab-word" data-word="instant">instantly</mark> and at no cost from place to place. The real world, however, is full of <mark class="vocab-word" data-word="friction">frictions</mark>. Cheap labour may make <mark class="vocab-word" data-word="chinese">Chinese</mark> <mark class="vocab-word" data-word="clothe">clothing</mark> competitive in America, but if delays in <mark class="vocab-word" data-word="shipment">shipment</mark> tie up working capital and cause winter coats to arrive in <mark class="vocab-word" data-word="spring">spring</mark>, trade may lose its advantages.</p><p>At the turn of the 20th century, <mark class="vocab-word" data-word="agriculture">agriculture</mark> and <mark class="vocab-word" data-word="manufacture">manufacturing</mark> were the two most important <mark class="vocab-word" data-word="sector">sectors</mark> almost everywhere, <mark class="vocab-word" data-word="accounting">accounting</mark> for about 70% of total <mark class="vocab-word" data-word="output">output</mark> in Germany, Italy and France, and 40-50% in America, Britain and Japan. International <mark class="vocab-word" data-word="commerce">commerce</mark> was therefore <mark class="vocab-word" data-word="dominate">dominated</mark> by <mark class="vocab-word" data-word="raw">raw</mark> materials, such as <mark class="vocab-word" data-word="wheat">wheat</mark>, wood and iron <mark class="vocab-word" data-word="ore">ore</mark>, or processed commodities, such as meat and steel. But these sorts of products are heavy and <mark class="vocab-word" data-word="bulky">bulky</mark> and the cost of transporting them relatively high.</p><p>Countries still trade disproportionately with their geographic neighbours. Over time, however, world <mark class="vocab-word" data-word="output">output</mark> has shifted into <mark class="vocab-word" data-word="goods">goods</mark> whose worth is unrelated to their size and weight. Today, it is finished <mark class="vocab-word" data-word="manufacture">manufactured</mark> products that <mark class="vocab-word" data-word="dominate">dominate</mark> the flow of trade, and, thanks to technological advances such as lightweight components, <mark class="vocab-word" data-word="manufacture">manufactured</mark> <mark class="vocab-word" data-word="goods">goods</mark> themselves have tended to become <mark class="vocab-word" data-word="lighter">lighter</mark> and less <mark class="vocab-word" data-word="bulky">bulky</mark>. As a result, less <mark class="vocab-word" data-word="transportation">transportation</mark> is required for every dollar’s worth of imports or exports.</p><p>To see how this <mark class="vocab-word" data-word="influence">influences</mark> trade, consider the business of making disk drives for computers. Most of the world’s disk-drive <mark class="vocab-word" data-word="manufacture">manufacturing</mark> is concentrated in <mark class="vocab-word" data-word="south-east">South-east</mark> Asia. This is possible only because disk drives, while valuable, are small and light and so cost little to ship. Computer <mark class="vocab-word" data-word="manufacturer">manufacturers</mark> in Japan or Texas will not face hugely bigger <mark class="vocab-word" data-word="freight">freight</mark> bills if they import drives from Singapore rather than purchasing them on the <mark class="vocab-word" data-word="domestic">domestic</mark> market. Distance therefore poses no <mark class="vocab-word" data-word="obstacle">obstacle</mark> to the globalisation of the disk-drive industry.</p><p>This is even more true of the fast-growing information industries. Films and <mark class="vocab-word" data-word="compact">compact</mark> <mark class="vocab-word" data-word="disc">discs</mark> cost little to transport, even by <mark class="vocab-word" data-word="aeroplane">aeroplane</mark>. Computer software can be ‘exported’ without ever loading it onto a ship, simply by transmitting it over telephone lines from one country to another, so <mark class="vocab-word" data-word="freight">freight</mark> rates and cargo-handling schedules become <mark class="vocab-word" data-word="insignificant">insignificant</mark> <mark class="vocab-word" data-word="factor">factors</mark> in deciding where to make the product. Businesses can locate based on other considerations, such as the <mark class="vocab-word" data-word="availability">availability</mark> of labour, while worrying less about the cost of delivering their <mark class="vocab-word" data-word="output">output</mark>.</p><p>In many countries deregulation has helped to drive the process along. But, behind the scenes, a series of technological <mark class="vocab-word" data-word="innovation">innovations</mark> known broadly as containerisation and intermodal <mark class="vocab-word" data-word="transportation">transportation</mark> has led to <mark class="vocab-word" data-word="swift">swift</mark> <mark class="vocab-word" data-word="productivity">productivity</mark> improvements in cargo-handling. Forty years ago, the process of exporting or importing <mark class="vocab-word" data-word="involved">involved</mark> a great many stages of handling, which risked <mark class="vocab-word" data-word="portion">portions</mark> of the <mark class="vocab-word" data-word="shipment">shipment</mark> being damaged or stolen along the way. The invention of the <mark class="vocab-word" data-word="container">container</mark> <mark class="vocab-word" data-word="crane">crane</mark> made it possible to load and <mark class="vocab-word" data-word="unload">unload</mark> <mark class="vocab-word" data-word="container">containers</mark> without <mark class="vocab-word" data-word="capsize">capsizing</mark> the ship and the adoption of standard <mark class="vocab-word" data-word="container">container</mark> sizes allowed almost any box to be transported on any ship. By 1967, dual-purpose ships, carrying loose <mark class="vocab-word" data-word="cargo">cargo</mark> in the hold* and <mark class="vocab-word" data-word="container">containers</mark> on the <mark class="vocab-word" data-word="deck">deck</mark>, were giving way to all-container <mark class="vocab-word" data-word="vessel">vessels</mark> that moved thousands of boxes at a time.</p><p>The shipping <mark class="vocab-word" data-word="container">container</mark> transformed ocean shipping into a highly efficient, intensely competitive business. But getting the <mark class="vocab-word" data-word="cargo">cargo</mark> to and from the <mark class="vocab-word" data-word="dock">dock</mark> was a different <mark class="vocab-word" data-word="story">story</mark>. National governments, by and large, kept a much firmer hand on truck and <mark class="vocab-word" data-word="railroad">railroad</mark> <mark class="vocab-word" data-word="tariff">tariffs</mark> than on charges for ocean <mark class="vocab-word" data-word="freight">freight</mark>. This started changing, however, in the mid-1970s, when America began to deregulate its <mark class="vocab-word" data-word="transportation">transportation</mark> industry. First airlines, then road hauliers and railways, were freed from <mark class="vocab-word" data-word="restriction">restrictions</mark> on what they could carry, where they could <mark class="vocab-word" data-word="haul">haul</mark> it and what price they could charge. Big <mark class="vocab-word" data-word="productivity">productivity</mark> gains resulted. Between 1985 and 1996, for example, America’s <mark class="vocab-word" data-word="freight">freight</mark> railways <mark class="vocab-word" data-word="dramatically">dramatically</mark> reduced their employment, trackage, and their <mark class="vocab-word" data-word="fleet">fleets</mark> of <mark class="vocab-word" data-word="locomotive">locomotives</mark> – while increasing the amount of <mark class="vocab-word" data-word="cargo">cargo</mark> they <mark class="vocab-word" data-word="haul">hauled</mark>. Europe’s railways have also shown <mark class="vocab-word" data-word="marked">marked</mark>, <mark class="vocab-word" data-word="albeit">albeit</mark> smaller, <mark class="vocab-word" data-word="productivity">productivity</mark> improvements.</p><p>In America the period of huge <mark class="vocab-word" data-word="productivity">productivity</mark> gains in <mark class="vocab-word" data-word="transportation">transportation</mark> may be almost over, but in most countries the process still has far to go. State <mark class="vocab-word" data-word="ownership">ownership</mark> of railways and airlines, regulation of <mark class="vocab-word" data-word="freight">freight</mark> rates and toleration of anti-competitive practices, such as cargo-handling monopolies, all keep the cost of shipping unnecessarily high and <mark class="vocab-word" data-word="deter">deter</mark> international trade. Bringing these barriers down would help the world’s economies grow even closer.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>国际贸易正以惊人的速度增长。尽管全球经济以每年3％的速度扩张，但贸易量却以每年约两倍的复合年增长率增长。从肉类到机械，外国产品在世界上几乎每个经济体中都扮演着更重要的角色。现在的外国市场吸引着哪些从不担心境外销售的企业。</p><p>国际贸易爆炸性增长背后的原因是什么？全世界范围内诸如关税和进口配额等贸易壁垒的普遍下降无疑是一种解释。传统上，一直是次要角色的国家的经济开放是另一种解释。但是，进出口热潮背后的一种力量被忽略了，即将商品推向市场的成本的迅速下降。从理论上讲，在贸易世界中，运输成本并不重要。货物一旦制成，就被认为可以立刻并且毫无成本地在不同地方之间移动。但是，现实世界充满摩擦。廉价劳动力可能会使中国服装在美国具有竞争力。但是，如果运输延误占用了营运资金并导致冬季大衣在春季到达，贸易可能会失去其优势。</p><p>20世纪初，农业和制造业几乎是世界上最重要的两个部门，占到德国、意大利和法国总产量的70％，美国、英国和日本的40-50％。因此，国际贸易以诸如小麦，木材和铁矿石之类的原材料，或诸如肉类和钢铁之类的加工商品为主。但是这些产品十分笨重，而且运输成本较高。</p><p>各国仍然与其地理上的邻国进行不成比例的贸易。但是，随着时间的流逝，世界产出已经转移到其价值与大小和重量无关的商品上。如今，制成品主导着贸易的流动。由于诸如轻量化组件之类的技术进步，制成品本身变得更轻，体积更小。结果，每进口或出口一美元产品所需的运输量就变少了。</p><p>要了解这如何影响贸易，可以考虑下为计算机制造磁盘驱动器的业务。世界上大多数磁盘驱动器的制造都集中在东南亚。这之所以成为可能是因为磁盘驱动器虽然价值很高，但又小又轻，因此运输成本很小。如果日本或德州的计算机制造商从新加坡进口驱动器而不是在国内市场上购买驱动器，他们并不会面临高的太多的运费。因此，距离对磁盘驱动器行业的全球化没有任何障碍。</p><p>在迅速发展的信息产业中，情况更是如此。胶卷和光盘即使用飞机运输成本也很低。计算机软件可以通过电话线从一个国家传输到另一个国家实现出口，而无需将其装载到船上。因此运费和货物装卸安排对于决定在哪里生产该产品并不重要。企业可以基于其他考虑（例如劳动力）来定位，而不必担心交付产品的成本。</p><p>在许多国家，放松管制有助于推动这一进程。但是，在幕后，一系列被称为集装箱化和多式联运的技术创新导致了货物装卸效率的迅速提高。四十年前，进出口过程涉及很多处理阶段，这可能会导致运输途中部分货物被损坏或被盗。集装箱起重机的发明使得装卸集装箱而不颠覆船舶成为可能。采用标准集装箱尺寸使得可以在几乎任何船舶上运输任何箱子。到1967年，把零散货物放在船舱内和在甲板上堆放集装箱的两用船，已被让一次移动数千箱的全集装箱船所取代。</p><p>集装箱运输将海运转变为高效，竞争激烈的业务。但是，往返码头运输货物却是另外一回事。总体而言，各国政府对卡车和铁路关税的态度要比对海运更为坚定。但是，这种情况在20世纪70年代中期开始改变，当时美国开始放宽对运输业的管制。首先是航空公司，然后是公路运输公司和铁路。它们的运输物品，运输地点和运输价格不再受到限制。从而大大提高了生产率。例如，在1985年至1996年之间，美国的货运铁路大大减少了他们的员工数量，轨道长度和火车头数量-同时增加了运输的货物量。尽管规模较小，欧洲的铁路也展现出明显的生产率提升。</p><p>在美国，运输业大幅提高生产率的时期可能快要结束了，但是在大多数国家，这一过程还有很长的路要走。国家对铁路和航空的所有权，对运费的管理以及对反竞争行为的容忍，例如货物处理的垄断，都使运输成本过高，并阻碍了国际贸易。消除这些障碍将有助于世界经济进一步发展。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>International trade is growing at a <mark class="vocab-word" data-word="startle">startling</mark> pace. While the global economy has been expanding at a bit over 3% a year, the volume of trade has been rising at a <mark class="vocab-word" data-word="compound">compound</mark> annual rate of about twice that. Foreign products, from meat to <mark class="vocab-word" data-word="machinery">machinery</mark>, play a more important role in almost every economy in the world, and foreign markets now <mark class="vocab-word" data-word="tempt">tempt</mark> businesses that never much worried about sales beyond their nation’s borders.</p></div>  <div class="parallel-zh"><p>国际贸易正以惊人的速度增长。尽管全球经济以每年3％的速度扩张，但贸易量却以每年约两倍的复合年增长率增长。从肉类到机械，外国产品在世界上几乎每个经济体中都扮演着更重要的角色。现在的外国市场吸引着哪些从不担心境外销售的企业。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What lies behind this <mark class="vocab-word" data-word="explosion">explosion</mark> in international <mark class="vocab-word" data-word="commerce">commerce</mark>? The general worldwide decline in trade barriers, such as customs duties and import <mark class="vocab-word" data-word="quota">quotas</mark>, is surely one explanation. The economic opening of countries that have <mark class="vocab-word" data-word="traditionally">traditionally</mark> been minor players is another. But one force behind the import-export <mark class="vocab-word" data-word="boom">boom</mark> has passed all but unnoticed: the rapidly falling cost of getting <mark class="vocab-word" data-word="goods">goods</mark> to market. <mark class="vocab-word" data-word="theoretically">Theoretically</mark>, in the world of trade, shipping costs do not <mark class="vocab-word" data-word="matter">matter</mark>. <mark class="vocab-word" data-word="goods">Goods</mark>, once they have been made, are assumed to move <mark class="vocab-word" data-word="instant">instantly</mark> and at no cost from place to place. The real world, however, is full of <mark class="vocab-word" data-word="friction">frictions</mark>. Cheap labour may make <mark class="vocab-word" data-word="chinese">Chinese</mark> <mark class="vocab-word" data-word="clothe">clothing</mark> competitive in America, but if delays in <mark class="vocab-word" data-word="shipment">shipment</mark> tie up working capital and cause winter coats to arrive in <mark class="vocab-word" data-word="spring">spring</mark>, trade may lose its advantages.</p></div>  <div class="parallel-zh"><p>国际贸易爆炸性增长背后的原因是什么？全世界范围内诸如关税和进口配额等贸易壁垒的普遍下降无疑是一种解释。传统上，一直是次要角色的国家的经济开放是另一种解释。但是，进出口热潮背后的一种力量被忽略了，即将商品推向市场的成本的迅速下降。从理论上讲，在贸易世界中，运输成本并不重要。货物一旦制成，就被认为可以立刻并且毫无成本地在不同地方之间移动。但是，现实世界充满摩擦。廉价劳动力可能会使中国服装在美国具有竞争力。但是，如果运输延误占用了营运资金并导致冬季大衣在春季到达，贸易可能会失去其优势。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>At the turn of the 20th century, <mark class="vocab-word" data-word="agriculture">agriculture</mark> and <mark class="vocab-word" data-word="manufacture">manufacturing</mark> were the two most important <mark class="vocab-word" data-word="sector">sectors</mark> almost everywhere, <mark class="vocab-word" data-word="accounting">accounting</mark> for about 70% of total <mark class="vocab-word" data-word="output">output</mark> in Germany, Italy and France, and 40-50% in America, Britain and Japan. International <mark class="vocab-word" data-word="commerce">commerce</mark> was therefore <mark class="vocab-word" data-word="dominate">dominated</mark> by <mark class="vocab-word" data-word="raw">raw</mark> materials, such as <mark class="vocab-word" data-word="wheat">wheat</mark>, wood and iron <mark class="vocab-word" data-word="ore">ore</mark>, or processed commodities, such as meat and steel. But these sorts of products are heavy and <mark class="vocab-word" data-word="bulky">bulky</mark> and the cost of transporting them relatively high.</p></div>  <div class="parallel-zh"><p>20世纪初，农业和制造业几乎是世界上最重要的两个部门，占到德国、意大利和法国总产量的70％，美国、英国和日本的40-50％。因此，国际贸易以诸如小麦，木材和铁矿石之类的原材料，或诸如肉类和钢铁之类的加工商品为主。但是这些产品十分笨重，而且运输成本较高。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Countries still trade disproportionately with their geographic neighbours. Over time, however, world <mark class="vocab-word" data-word="output">output</mark> has shifted into <mark class="vocab-word" data-word="goods">goods</mark> whose worth is unrelated to their size and weight. Today, it is finished <mark class="vocab-word" data-word="manufacture">manufactured</mark> products that <mark class="vocab-word" data-word="dominate">dominate</mark> the flow of trade, and, thanks to technological advances such as lightweight components, <mark class="vocab-word" data-word="manufacture">manufactured</mark> <mark class="vocab-word" data-word="goods">goods</mark> themselves have tended to become <mark class="vocab-word" data-word="lighter">lighter</mark> and less <mark class="vocab-word" data-word="bulky">bulky</mark>. As a result, less <mark class="vocab-word" data-word="transportation">transportation</mark> is required for every dollar’s worth of imports or exports.</p></div>  <div class="parallel-zh"><p>各国仍然与其地理上的邻国进行不成比例的贸易。但是，随着时间的流逝，世界产出已经转移到其价值与大小和重量无关的商品上。如今，制成品主导着贸易的流动。由于诸如轻量化组件之类的技术进步，制成品本身变得更轻，体积更小。结果，每进口或出口一美元产品所需的运输量就变少了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>To see how this <mark class="vocab-word" data-word="influence">influences</mark> trade, consider the business of making disk drives for computers. Most of the world’s disk-drive <mark class="vocab-word" data-word="manufacture">manufacturing</mark> is concentrated in <mark class="vocab-word" data-word="south-east">South-east</mark> Asia. This is possible only because disk drives, while valuable, are small and light and so cost little to ship. Computer <mark class="vocab-word" data-word="manufacturer">manufacturers</mark> in Japan or Texas will not face hugely bigger <mark class="vocab-word" data-word="freight">freight</mark> bills if they import drives from Singapore rather than purchasing them on the <mark class="vocab-word" data-word="domestic">domestic</mark> market. Distance therefore poses no <mark class="vocab-word" data-word="obstacle">obstacle</mark> to the globalisation of the disk-drive industry.</p></div>  <div class="parallel-zh"><p>要了解这如何影响贸易，可以考虑下为计算机制造磁盘驱动器的业务。世界上大多数磁盘驱动器的制造都集中在东南亚。这之所以成为可能是因为磁盘驱动器虽然价值很高，但又小又轻，因此运输成本很小。如果日本或德州的计算机制造商从新加坡进口驱动器而不是在国内市场上购买驱动器，他们并不会面临高的太多的运费。因此，距离对磁盘驱动器行业的全球化没有任何障碍。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This is even more true of the fast-growing information industries. Films and <mark class="vocab-word" data-word="compact">compact</mark> <mark class="vocab-word" data-word="disc">discs</mark> cost little to transport, even by <mark class="vocab-word" data-word="aeroplane">aeroplane</mark>. Computer software can be ‘exported’ without ever loading it onto a ship, simply by transmitting it over telephone lines from one country to another, so <mark class="vocab-word" data-word="freight">freight</mark> rates and cargo-handling schedules become <mark class="vocab-word" data-word="insignificant">insignificant</mark> <mark class="vocab-word" data-word="factor">factors</mark> in deciding where to make the product. Businesses can locate based on other considerations, such as the <mark class="vocab-word" data-word="availability">availability</mark> of labour, while worrying less about the cost of delivering their <mark class="vocab-word" data-word="output">output</mark>.</p></div>  <div class="parallel-zh"><p>在迅速发展的信息产业中，情况更是如此。胶卷和光盘即使用飞机运输成本也很低。计算机软件可以通过电话线从一个国家传输到另一个国家实现出口，而无需将其装载到船上。因此运费和货物装卸安排对于决定在哪里生产该产品并不重要。企业可以基于其他考虑（例如劳动力）来定位，而不必担心交付产品的成本。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In many countries deregulation has helped to drive the process along. But, behind the scenes, a series of technological <mark class="vocab-word" data-word="innovation">innovations</mark> known broadly as containerisation and intermodal <mark class="vocab-word" data-word="transportation">transportation</mark> has led to <mark class="vocab-word" data-word="swift">swift</mark> <mark class="vocab-word" data-word="productivity">productivity</mark> improvements in cargo-handling. Forty years ago, the process of exporting or importing <mark class="vocab-word" data-word="involved">involved</mark> a great many stages of handling, which risked <mark class="vocab-word" data-word="portion">portions</mark> of the <mark class="vocab-word" data-word="shipment">shipment</mark> being damaged or stolen along the way. The invention of the <mark class="vocab-word" data-word="container">container</mark> <mark class="vocab-word" data-word="crane">crane</mark> made it possible to load and <mark class="vocab-word" data-word="unload">unload</mark> <mark class="vocab-word" data-word="container">containers</mark> without <mark class="vocab-word" data-word="capsize">capsizing</mark> the ship and the adoption of standard <mark class="vocab-word" data-word="container">container</mark> sizes allowed almost any box to be transported on any ship. By 1967, dual-purpose ships, carrying loose <mark class="vocab-word" data-word="cargo">cargo</mark> in the hold* and <mark class="vocab-word" data-word="container">containers</mark> on the <mark class="vocab-word" data-word="deck">deck</mark>, were giving way to all-container <mark class="vocab-word" data-word="vessel">vessels</mark> that moved thousands of boxes at a time.</p></div>  <div class="parallel-zh"><p>在许多国家，放松管制有助于推动这一进程。但是，在幕后，一系列被称为集装箱化和多式联运的技术创新导致了货物装卸效率的迅速提高。四十年前，进出口过程涉及很多处理阶段，这可能会导致运输途中部分货物被损坏或被盗。集装箱起重机的发明使得装卸集装箱而不颠覆船舶成为可能。采用标准集装箱尺寸使得可以在几乎任何船舶上运输任何箱子。到1967年，把零散货物放在船舱内和在甲板上堆放集装箱的两用船，已被让一次移动数千箱的全集装箱船所取代。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The shipping <mark class="vocab-word" data-word="container">container</mark> transformed ocean shipping into a highly efficient, intensely competitive business. But getting the <mark class="vocab-word" data-word="cargo">cargo</mark> to and from the <mark class="vocab-word" data-word="dock">dock</mark> was a different <mark class="vocab-word" data-word="story">story</mark>. National governments, by and large, kept a much firmer hand on truck and <mark class="vocab-word" data-word="railroad">railroad</mark> <mark class="vocab-word" data-word="tariff">tariffs</mark> than on charges for ocean <mark class="vocab-word" data-word="freight">freight</mark>. This started changing, however, in the mid-1970s, when America began to deregulate its <mark class="vocab-word" data-word="transportation">transportation</mark> industry. First airlines, then road hauliers and railways, were freed from <mark class="vocab-word" data-word="restriction">restrictions</mark> on what they could carry, where they could <mark class="vocab-word" data-word="haul">haul</mark> it and what price they could charge. Big <mark class="vocab-word" data-word="productivity">productivity</mark> gains resulted. Between 1985 and 1996, for example, America’s <mark class="vocab-word" data-word="freight">freight</mark> railways <mark class="vocab-word" data-word="dramatically">dramatically</mark> reduced their employment, trackage, and their <mark class="vocab-word" data-word="fleet">fleets</mark> of <mark class="vocab-word" data-word="locomotive">locomotives</mark> – while increasing the amount of <mark class="vocab-word" data-word="cargo">cargo</mark> they <mark class="vocab-word" data-word="haul">hauled</mark>. Europe’s railways have also shown <mark class="vocab-word" data-word="marked">marked</mark>, <mark class="vocab-word" data-word="albeit">albeit</mark> smaller, <mark class="vocab-word" data-word="productivity">productivity</mark> improvements.</p></div>  <div class="parallel-zh"><p>集装箱运输将海运转变为高效，竞争激烈的业务。但是，往返码头运输货物却是另外一回事。总体而言，各国政府对卡车和铁路关税的态度要比对海运更为坚定。但是，这种情况在20世纪70年代中期开始改变，当时美国开始放宽对运输业的管制。首先是航空公司，然后是公路运输公司和铁路。它们的运输物品，运输地点和运输价格不再受到限制。从而大大提高了生产率。例如，在1985年至1996年之间，美国的货运铁路大大减少了他们的员工数量，轨道长度和火车头数量-同时增加了运输的货物量。尽管规模较小，欧洲的铁路也展现出明显的生产率提升。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In America the period of huge <mark class="vocab-word" data-word="productivity">productivity</mark> gains in <mark class="vocab-word" data-word="transportation">transportation</mark> may be almost over, but in most countries the process still has far to go. State <mark class="vocab-word" data-word="ownership">ownership</mark> of railways and airlines, regulation of <mark class="vocab-word" data-word="freight">freight</mark> rates and toleration of anti-competitive practices, such as cargo-handling monopolies, all keep the cost of shipping unnecessarily high and <mark class="vocab-word" data-word="deter">deter</mark> international trade. Bringing these barriers down would help the world’s economies grow even closer.</p></div>  <div class="parallel-zh"><p>在美国，运输业大幅提高生产率的时期可能快要结束了，但是在大多数国家，这一过程还有很长的路要走。国家对铁路和航空的所有权，对运费的管理以及对反竞争行为的容忍，例如货物处理的垄断，都使运输成本过高，并阻碍了国际贸易。消除这些障碍将有助于世界经济进一步发展。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"startle": 1, "compound": 1, "machinery": 1, "tempt": 1, "explosion": 1, "commerce": 2, "quota": 1, "traditionally": 1, "boom": 1, "goods": 4, "theoretically": 1, "matter": 1, "instant": 1, "friction": 1, "chinese": 1, "clothe": 1, "shipment": 2, "spring": 1, "agriculture": 1, "manufacture": 4, "sector": 1, "accounting": 1, "output": 3, "dominate": 2, "raw": 1, "wheat": 1, "ore": 1, "bulky": 2, "lighter": 1, "transportation": 4, "influence": 1, "south-east": 1, "manufacturer": 1, "freight": 5, "domestic": 1, "obstacle": 1, "compact": 1, "disc": 1, "aeroplane": 1, "insignificant": 1, "factor": 1, "availability": 1, "innovation": 1, "swift": 1, "productivity": 4, "involved": 1, "portion": 1, "container": 5, "crane": 1, "unload": 1, "capsize": 1, "cargo": 3, "deck": 1, "vessel": 1, "dock": 1, "story": 1, "railroad": 1, "tariff": 1, "restriction": 1, "haul": 2, "dramatically": 1, "fleet": 1, "locomotive": 1, "marked": 1, "albeit": 1, "ownership": 1, "deter": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

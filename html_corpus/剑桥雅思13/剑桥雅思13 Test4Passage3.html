@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Review 图书评论 - 剑桥雅思13 Test 4 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思13</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Book Review 图书评论</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/38913.html" target="_blank">https://www.laokaoya.com/38913.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>‘Happiness is the <mark class="vocab-word" data-word="ultimate">ultimate</mark> goal because it is self-evidently good. If we are asked why happiness <mark class="vocab-word" data-word="matter">matters</mark> we can give no further <mark class="vocab-word" data-word="external">external</mark> reason. It just obviously does <mark class="vocab-word" data-word="matter">matter</mark>.’ This pronouncement by Richard Layard, an economist and <mark class="vocab-word" data-word="advocate">advocate</mark> of ‘positive <mark class="vocab-word" data-word="psychology">psychology</mark>’, summarises the beliefs of many people today. For Layard and others like him, it is obvious that the purpose of government is to promote a state of <mark class="vocab-word" data-word="collective">collective</mark> <mark class="vocab-word" data-word="well-being">well-being</mark>. The only question is how to achieve it, and here positive <mark class="vocab-word" data-word="psychology">psychology</mark> – a supposed science that not only identifies what makes people happy but also allows their happiness to be measured – can show the way. Equipped with this science, they say, governments can secure happiness in society in a way they never could in the past.</p><p>It is an astonishingly <mark class="vocab-word" data-word="crude">crude</mark> and simple-minded way of thinking, and for that very reason increasingly popular. Those who think in this way are <mark class="vocab-word" data-word="oblivious">oblivious</mark> to the vast <mark class="vocab-word" data-word="philosophical">philosophical</mark> literature in which the meaning and value of happiness have been explored and questioned, and write as if nothing of any importance had been thought on the subject until it came to their attention. It was the <mark class="vocab-word" data-word="philosopher">philosopher</mark> Jeremy Bentham (1748-1832) who was more than anyone else responsible for the development of this way of thinking. For Bentham it was obvious that the human good consists of pleasure and the <mark class="vocab-word" data-word="absence">absence</mark> of pain. The Greek <mark class="vocab-word" data-word="philosopher">philosopher</mark> Aristotle may have identified happiness with self-realisation in the 4th century BC, and thinkers throughout the ages may have struggled to <mark class="vocab-word" data-word="reconcile">reconcile</mark> the <mark class="vocab-word" data-word="pursuit">pursuit</mark> of happiness with other human values, but for Bentham all this was <mark class="vocab-word" data-word="mere">mere</mark> metaphysics or <mark class="vocab-word" data-word="fiction">fiction</mark>. Without knowing anything much of him or the school of moral theory he <mark class="vocab-word" data-word="established">established</mark> – since they are by education and <mark class="vocab-word" data-word="intellectual">intellectual</mark> <mark class="vocab-word" data-word="conviction">conviction</mark> <mark class="vocab-word" data-word="illiterate">illiterate</mark> in the history of ideas – our <mark class="vocab-word" data-word="advocate">advocates</mark> of positive <mark class="vocab-word" data-word="psychology">psychology</mark> follow in his tracks in rejecting as <mark class="vocab-word" data-word="outmoded">outmoded</mark> and <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> pretty much the entirety of <mark class="vocab-word" data-word="ethical">ethical</mark> reflection on human happiness to date.</p><p>But as William Davies notes in his recent book The Happiness Industry, the view that happiness is the only self-evident good is actually a way of limiting moral inquiry. One of the <mark class="vocab-word" data-word="virtue">virtues</mark> of this rich, <mark class="vocab-word" data-word="lucid">lucid</mark> and arresting book is that it places the current <mark class="vocab-word" data-word="cult">cult</mark> of happiness in a well-defined historical <mark class="vocab-word" data-word="framework">framework</mark>. Rightly, Davies begins his <mark class="vocab-word" data-word="story">story</mark> with Bentham, noting that he was far more than a <mark class="vocab-word" data-word="philosopher">philosopher</mark>. Davies writes, ‘Bentham’s activities were those which we might now associate with a public <mark class="vocab-word" data-word="sector">sector</mark> management <mark class="vocab-word" data-word="consultant">consultant</mark>’. In the 1790s, he wrote to the Home Office <mark class="vocab-word" data-word="suggest">suggesting</mark> that the departments of government be linked together through a set of ‘conversation <mark class="vocab-word" data-word="tub">tubes</mark>’, and to the Bank of England with a design for a printing device that could produce unforgeable banknotes. He drew up plans for a ‘frigidarium’ to keep <mark class="vocab-word" data-word="provision">provisions</mark> such as meat, fish, fruit and vegetables fresh. His <mark class="vocab-word" data-word="celebrated">celebrated</mark> design for a prison to be known as a ‘Panopticon’, in which prisoners would be kept in <mark class="vocab-word" data-word="solitary">solitary</mark> confinement while being <mark class="vocab-word" data-word="visible">visible</mark> at all times to the guards, was very nearly adopted. (Surprisingly, Davies does not discuss the fact that Bentham meant his Panopticon not just as a model prison but also as an <mark class="vocab-word" data-word="instrument">instrument</mark> of control that could be <mark class="vocab-word" data-word="applied">applied</mark> to schools and factories.)</p><p>Bentham was also a <mark class="vocab-word" data-word="pioneer">pioneer</mark> of the ‘science of happiness’. If happiness is to be regarded as a science, it has to be measured, and Bentham <mark class="vocab-word" data-word="suggest">suggested</mark> two ways in which this might be done. Viewing happiness as a complex of pleasurable <mark class="vocab-word" data-word="sensation">sensations</mark>, he <mark class="vocab-word" data-word="suggest">suggested</mark> that it might be quantified by measuring the human <mark class="vocab-word" data-word="pulse">pulse</mark> rate. <mark class="vocab-word" data-word="alternatively">Alternatively</mark>, money could be used as the standard for quantification: if two different <mark class="vocab-word" data-word="goods">goods</mark> have the same price, it can be claimed that they produce the same quantity of pleasure in the consumer. Bentham was more attracted by the <mark class="vocab-word" data-word="latter">latter</mark> measure. By associating money so closely to <mark class="vocab-word" data-word="inner">inner</mark> experience, Davies writes, Bentham ‘set the stage for the <mark class="vocab-word" data-word="entangle">entangling</mark> of <mark class="vocab-word" data-word="psychological">psychological</mark> research and <mark class="vocab-word" data-word="capitalism">capitalism</mark> that would shape the business practices of the twentieth century’.</p><p>The Happiness Industry describes how the project of a science of happiness has become <mark class="vocab-word" data-word="integral">integral</mark> to <mark class="vocab-word" data-word="capitalism">capitalism</mark>. We learn much that is interesting about how economic problems are being redefined and treated as <mark class="vocab-word" data-word="psychological">psychological</mark> maladies. In addition, Davies shows how the belief that <mark class="vocab-word" data-word="inner">inner</mark> states of pleasure and displeasure can be objectively measured has informed management studies and advertising. The <mark class="vocab-word" data-word="tendency">tendency</mark> of thinkers such as J B Watson, the founder of behaviourism, was that human beings could be shaped, or <mark class="vocab-word" data-word="manipulate">manipulated</mark>, by policymakers and managers. Watson had no <mark class="vocab-word" data-word="factual">factual</mark> basis for his view of human <mark class="vocab-word" data-word="action">action</mark>. When he became president of the American <mark class="vocab-word" data-word="psychological">Psychological</mark> Association in 1915, he ‘had never even studied a single human being’: his research had been <mark class="vocab-word" data-word="confine">confined</mark> to experiments on white rats. Yet Watson’s reductive model is now widely <mark class="vocab-word" data-word="applied">applied</mark>, with ‘behaviour change’ becoming the goal of governments: in Britain, a ‘Behaviour <mark class="vocab-word" data-word="insight">Insights</mark> Team’ has been <mark class="vocab-word" data-word="established">established</mark> by the government to study how people can be encouraged, at minimum cost to the public <mark class="vocab-word" data-word="purse">purse</mark>, to live in what are considered to be socially <mark class="vocab-word" data-word="desirable">desirable</mark> ways.</p><p><mark class="vocab-word" data-word="modem">Modem</mark> industrial societies appear to need the possibility of ever-increasing happiness to <mark class="vocab-word" data-word="motivate">motivate</mark> them in their labours. But whatever its <mark class="vocab-word" data-word="intellectual">intellectual</mark> <mark class="vocab-word" data-word="pedigree">pedigree</mark>, the idea that governments should be responsible for promoting happiness is always a <mark class="vocab-word" data-word="threat">threat</mark> to human freedom.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>“幸福是最终目标，因为它不证自明就是好的。如果我们被问到为什么幸福重要，我们并不需要给出更进一步的外部理由。很明显，它就是很重要“。作为经济学家和积极心理学的倡导者，Richard Layard的这一言论概括了许多当代人的想法。对于Layard和其他像他一样的人来说，很明显，政府的目的是促进一种共同幸福的状态。唯一的问题是如何实现它。而积极心理学则提供了路径。这门所谓的科学不仅界定什么会让人们感到幸福，而且还让他们的幸福可以被衡量。他们说，有了这门科学之后，政府就能够以一种前所未有的方式来确保社会幸福感。</p><p>这种粗糙而简单的思考方式令人震惊。但正是因为这一原因，它越来越流行。那些以这种方式思考的人对丰富的哲学文献（在其中幸福的含义和价值已经被探索和拷问）视而不见，并且以一种在他们注意到该问题之前，其重要性从未被思考过的方式进行写作。哲学家Jeremy Bentham（1748-1832）比其他任何人都更应该为这种思考方式的发展负责。对于Bentham来说，很明显，人类的幸福包含愉悦以及痛苦的缺失。在公元前4世纪的时候，希腊哲学家亚里士多德或许认为幸福与自我实现有关。在其之后年代的哲学家似乎努力协调追求幸福与其他人类价值之间的关系。但对于Bentham来说，所有这些都是玄学或者虚构的东西。尽管对他自身以及他所建立的道德理论学派不甚了解（他们受到教育和确定信念的影响，对思想史一无所知），积极心理学的倡导者追随他的足迹，认为到目前为止对人类幸福的所有道德反思都都已经过时并且毫不相关。</p><p>但正如Williams Davies在他最近的《幸福产业》一书中指出的那样，认为幸福是种不证自明的善实际上是一种限制道德追问的方式。这本书内容丰富，观点清晰且非常有趣。它的优点之一在于它将当下对幸福的狂热放入定义清晰的历史框架中。Davies恰如其分的以Bentham开始他的故事，指出他不仅仅是个哲学家。Davies写到：“我们现在或许会将Bentham的行为与一名公共部门管理顾问联系在一起。”。他在18世纪90年代给内政部写信，建议政府部门通过一组“对话管道”联系在一起。他还给英格兰银行写信，附带一份印刷装置的设计。该装置可以生产无法被伪造的纸币。他起草了“冷藏室”计划，以便保持肉类、鱼类、水果和蔬菜等饮食供应的新鲜。他设计的“圆形监狱”差一点就被采纳。在这里，犯人被囚禁在单独的牢房中，并一直可以被守卫看到（令人惊艳的是，Davies并没有讨论如下事实。Bentham认为他的圆形监狱不仅可以被当作监狱的模板，而且可以作为管控工具用于学校和工厂）。</p><p>Bentham也是幸福科学的首创者。如果幸福要被当作一门科学，它就必须可以被测量。Bentham提出两种可能的测量方式。将幸福看作一系列愉悦情绪的组合，他认为它或许可以通过测量人们的脉搏来进行量化。此外，金钱可以被当作量化的标准：如果两种物品价格相同，就可以说他们为顾客带来同等数量的快乐。Bentham更喜欢后一种测量方式。Davies写到，通过将金钱与内在体验紧紧的联系在一起，Bentham“为心理研究和资本主义的结合搭建舞台。而它们将塑造整个20世纪的商业实践”。</p><p>《幸福产业》描述了辛福科学如何成为资本主义不可或缺的一部分。我们会了解到许多关于经济问题如何被重新定义为心理问题并进行处理的有趣现象。此外，Dvaies还展示了愉悦或者不愉悦的内心状态可以被客观测量的想法是如何影响管理研究和广告的。诸如行为主义的创始人J B Watson这样的思想家认为，政策制定者或者管理者可以塑造或操控人类。Watson有关人类行为的观点并没有任何事实依据。当他在1915年成为美国心理协会主席的时候，他“从来都没有研究过任何一个人类个体”。他的研究局限于小白鼠实验。然而，随着“行为改变”成为政府的目标，Watson的简化模型现在被广泛使用。在英国，政府建立“行为透视团队”来研究如何用最少的公共资金来鼓励人们以一种社会认可的方式生活。</p><p>现代工业社会似乎需要幸福不断增长的可能性来激励其员工。但无论知识流派如何，政府应该负责推进幸福的观点总是构成对人类自由的威胁。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>‘Happiness is the <mark class="vocab-word" data-word="ultimate">ultimate</mark> goal because it is self-evidently good. If we are asked why happiness <mark class="vocab-word" data-word="matter">matters</mark> we can give no further <mark class="vocab-word" data-word="external">external</mark> reason. It just obviously does <mark class="vocab-word" data-word="matter">matter</mark>.’ This pronouncement by Richard Layard, an economist and <mark class="vocab-word" data-word="advocate">advocate</mark> of ‘positive <mark class="vocab-word" data-word="psychology">psychology</mark>’, summarises the beliefs of many people today. For Layard and others like him, it is obvious that the purpose of government is to promote a state of <mark class="vocab-word" data-word="collective">collective</mark> <mark class="vocab-word" data-word="well-being">well-being</mark>. The only question is how to achieve it, and here positive <mark class="vocab-word" data-word="psychology">psychology</mark> – a supposed science that not only identifies what makes people happy but also allows their happiness to be measured – can show the way. Equipped with this science, they say, governments can secure happiness in society in a way they never could in the past.</p></div>  <div class="parallel-zh"><p>“幸福是最终目标，因为它不证自明就是好的。如果我们被问到为什么幸福重要，我们并不需要给出更进一步的外部理由。很明显，它就是很重要“。作为经济学家和积极心理学的倡导者，Richard Layard的这一言论概括了许多当代人的想法。对于Layard和其他像他一样的人来说，很明显，政府的目的是促进一种共同幸福的状态。唯一的问题是如何实现它。而积极心理学则提供了路径。这门所谓的科学不仅界定什么会让人们感到幸福，而且还让他们的幸福可以被衡量。他们说，有了这门科学之后，政府就能够以一种前所未有的方式来确保社会幸福感。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It is an astonishingly <mark class="vocab-word" data-word="crude">crude</mark> and simple-minded way of thinking, and for that very reason increasingly popular. Those who think in this way are <mark class="vocab-word" data-word="oblivious">oblivious</mark> to the vast <mark class="vocab-word" data-word="philosophical">philosophical</mark> literature in which the meaning and value of happiness have been explored and questioned, and write as if nothing of any importance had been thought on the subject until it came to their attention. It was the <mark class="vocab-word" data-word="philosopher">philosopher</mark> Jeremy Bentham (1748-1832) who was more than anyone else responsible for the development of this way of thinking. For Bentham it was obvious that the human good consists of pleasure and the <mark class="vocab-word" data-word="absence">absence</mark> of pain. The Greek <mark class="vocab-word" data-word="philosopher">philosopher</mark> Aristotle may have identified happiness with self-realisation in the 4th century BC, and thinkers throughout the ages may have struggled to <mark class="vocab-word" data-word="reconcile">reconcile</mark> the <mark class="vocab-word" data-word="pursuit">pursuit</mark> of happiness with other human values, but for Bentham all this was <mark class="vocab-word" data-word="mere">mere</mark> metaphysics or <mark class="vocab-word" data-word="fiction">fiction</mark>. Without knowing anything much of him or the school of moral theory he <mark class="vocab-word" data-word="established">established</mark> – since they are by education and <mark class="vocab-word" data-word="intellectual">intellectual</mark> <mark class="vocab-word" data-word="conviction">conviction</mark> <mark class="vocab-word" data-word="illiterate">illiterate</mark> in the history of ideas – our <mark class="vocab-word" data-word="advocate">advocates</mark> of positive <mark class="vocab-word" data-word="psychology">psychology</mark> follow in his tracks in rejecting as <mark class="vocab-word" data-word="outmoded">outmoded</mark> and <mark class="vocab-word" data-word="irrelevant">irrelevant</mark> pretty much the entirety of <mark class="vocab-word" data-word="ethical">ethical</mark> reflection on human happiness to date.</p></div>  <div class="parallel-zh"><p>这种粗糙而简单的思考方式令人震惊。但正是因为这一原因，它越来越流行。那些以这种方式思考的人对丰富的哲学文献（在其中幸福的含义和价值已经被探索和拷问）视而不见，并且以一种在他们注意到该问题之前，其重要性从未被思考过的方式进行写作。哲学家Jeremy Bentham（1748-1832）比其他任何人都更应该为这种思考方式的发展负责。对于Bentham来说，很明显，人类的幸福包含愉悦以及痛苦的缺失。在公元前4世纪的时候，希腊哲学家亚里士多德或许认为幸福与自我实现有关。在其之后年代的哲学家似乎努力协调追求幸福与其他人类价值之间的关系。但对于Bentham来说，所有这些都是玄学或者虚构的东西。尽管对他自身以及他所建立的道德理论学派不甚了解（他们受到教育和确定信念的影响，对思想史一无所知），积极心理学的倡导者追随他的足迹，认为到目前为止对人类幸福的所有道德反思都都已经过时并且毫不相关。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But as William Davies notes in his recent book The Happiness Industry, the view that happiness is the only self-evident good is actually a way of limiting moral inquiry. One of the <mark class="vocab-word" data-word="virtue">virtues</mark> of this rich, <mark class="vocab-word" data-word="lucid">lucid</mark> and arresting book is that it places the current <mark class="vocab-word" data-word="cult">cult</mark> of happiness in a well-defined historical <mark class="vocab-word" data-word="framework">framework</mark>. Rightly, Davies begins his <mark class="vocab-word" data-word="story">story</mark> with Bentham, noting that he was far more than a <mark class="vocab-word" data-word="philosopher">philosopher</mark>. Davies writes, ‘Bentham’s activities were those which we might now associate with a public <mark class="vocab-word" data-word="sector">sector</mark> management <mark class="vocab-word" data-word="consultant">consultant</mark>’. In the 1790s, he wrote to the Home Office <mark class="vocab-word" data-word="suggest">suggesting</mark> that the departments of government be linked together through a set of ‘conversation <mark class="vocab-word" data-word="tub">tubes</mark>’, and to the Bank of England with a design for a printing device that could produce unforgeable banknotes. He drew up plans for a ‘frigidarium’ to keep <mark class="vocab-word" data-word="provision">provisions</mark> such as meat, fish, fruit and vegetables fresh. His <mark class="vocab-word" data-word="celebrated">celebrated</mark> design for a prison to be known as a ‘Panopticon’, in which prisoners would be kept in <mark class="vocab-word" data-word="solitary">solitary</mark> confinement while being <mark class="vocab-word" data-word="visible">visible</mark> at all times to the guards, was very nearly adopted. (Surprisingly, Davies does not discuss the fact that Bentham meant his Panopticon not just as a model prison but also as an <mark class="vocab-word" data-word="instrument">instrument</mark> of control that could be <mark class="vocab-word" data-word="applied">applied</mark> to schools and factories.)</p></div>  <div class="parallel-zh"><p>但正如Williams Davies在他最近的《幸福产业》一书中指出的那样，认为幸福是种不证自明的善实际上是一种限制道德追问的方式。这本书内容丰富，观点清晰且非常有趣。它的优点之一在于它将当下对幸福的狂热放入定义清晰的历史框架中。Davies恰如其分的以Bentham开始他的故事，指出他不仅仅是个哲学家。Davies写到：“我们现在或许会将Bentham的行为与一名公共部门管理顾问联系在一起。”。他在18世纪90年代给内政部写信，建议政府部门通过一组“对话管道”联系在一起。他还给英格兰银行写信，附带一份印刷装置的设计。该装置可以生产无法被伪造的纸币。他起草了“冷藏室”计划，以便保持肉类、鱼类、水果和蔬菜等饮食供应的新鲜。他设计的“圆形监狱”差一点就被采纳。在这里，犯人被囚禁在单独的牢房中，并一直可以被守卫看到（令人惊艳的是，Davies并没有讨论如下事实。Bentham认为他的圆形监狱不仅可以被当作监狱的模板，而且可以作为管控工具用于学校和工厂）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Bentham was also a <mark class="vocab-word" data-word="pioneer">pioneer</mark> of the ‘science of happiness’. If happiness is to be regarded as a science, it has to be measured, and Bentham <mark class="vocab-word" data-word="suggest">suggested</mark> two ways in which this might be done. Viewing happiness as a complex of pleasurable <mark class="vocab-word" data-word="sensation">sensations</mark>, he <mark class="vocab-word" data-word="suggest">suggested</mark> that it might be quantified by measuring the human <mark class="vocab-word" data-word="pulse">pulse</mark> rate. <mark class="vocab-word" data-word="alternatively">Alternatively</mark>, money could be used as the standard for quantification: if two different <mark class="vocab-word" data-word="goods">goods</mark> have the same price, it can be claimed that they produce the same quantity of pleasure in the consumer. Bentham was more attracted by the <mark class="vocab-word" data-word="latter">latter</mark> measure. By associating money so closely to <mark class="vocab-word" data-word="inner">inner</mark> experience, Davies writes, Bentham ‘set the stage for the <mark class="vocab-word" data-word="entangle">entangling</mark> of <mark class="vocab-word" data-word="psychological">psychological</mark> research and <mark class="vocab-word" data-word="capitalism">capitalism</mark> that would shape the business practices of the twentieth century’.</p></div>  <div class="parallel-zh"><p>Bentham也是幸福科学的首创者。如果幸福要被当作一门科学，它就必须可以被测量。Bentham提出两种可能的测量方式。将幸福看作一系列愉悦情绪的组合，他认为它或许可以通过测量人们的脉搏来进行量化。此外，金钱可以被当作量化的标准：如果两种物品价格相同，就可以说他们为顾客带来同等数量的快乐。Bentham更喜欢后一种测量方式。Davies写到，通过将金钱与内在体验紧紧的联系在一起，Bentham“为心理研究和资本主义的结合搭建舞台。而它们将塑造整个20世纪的商业实践”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The Happiness Industry describes how the project of a science of happiness has become <mark class="vocab-word" data-word="integral">integral</mark> to <mark class="vocab-word" data-word="capitalism">capitalism</mark>. We learn much that is interesting about how economic problems are being redefined and treated as <mark class="vocab-word" data-word="psychological">psychological</mark> maladies. In addition, Davies shows how the belief that <mark class="vocab-word" data-word="inner">inner</mark> states of pleasure and displeasure can be objectively measured has informed management studies and advertising. The <mark class="vocab-word" data-word="tendency">tendency</mark> of thinkers such as J B Watson, the founder of behaviourism, was that human beings could be shaped, or <mark class="vocab-word" data-word="manipulate">manipulated</mark>, by policymakers and managers. Watson had no <mark class="vocab-word" data-word="factual">factual</mark> basis for his view of human <mark class="vocab-word" data-word="action">action</mark>. When he became president of the American <mark class="vocab-word" data-word="psychological">Psychological</mark> Association in 1915, he ‘had never even studied a single human being’: his research had been <mark class="vocab-word" data-word="confine">confined</mark> to experiments on white rats. Yet Watson’s reductive model is now widely <mark class="vocab-word" data-word="applied">applied</mark>, with ‘behaviour change’ becoming the goal of governments: in Britain, a ‘Behaviour <mark class="vocab-word" data-word="insight">Insights</mark> Team’ has been <mark class="vocab-word" data-word="established">established</mark> by the government to study how people can be encouraged, at minimum cost to the public <mark class="vocab-word" data-word="purse">purse</mark>, to live in what are considered to be socially <mark class="vocab-word" data-word="desirable">desirable</mark> ways.</p></div>  <div class="parallel-zh"><p>《幸福产业》描述了辛福科学如何成为资本主义不可或缺的一部分。我们会了解到许多关于经济问题如何被重新定义为心理问题并进行处理的有趣现象。此外，Dvaies还展示了愉悦或者不愉悦的内心状态可以被客观测量的想法是如何影响管理研究和广告的。诸如行为主义的创始人J B Watson这样的思想家认为，政策制定者或者管理者可以塑造或操控人类。Watson有关人类行为的观点并没有任何事实依据。当他在1915年成为美国心理协会主席的时候，他“从来都没有研究过任何一个人类个体”。他的研究局限于小白鼠实验。然而，随着“行为改变”成为政府的目标，Watson的简化模型现在被广泛使用。在英国，政府建立“行为透视团队”来研究如何用最少的公共资金来鼓励人们以一种社会认可的方式生活。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="modem">Modem</mark> industrial societies appear to need the possibility of ever-increasing happiness to <mark class="vocab-word" data-word="motivate">motivate</mark> them in their labours. But whatever its <mark class="vocab-word" data-word="intellectual">intellectual</mark> <mark class="vocab-word" data-word="pedigree">pedigree</mark>, the idea that governments should be responsible for promoting happiness is always a <mark class="vocab-word" data-word="threat">threat</mark> to human freedom.</p></div>  <div class="parallel-zh"><p>现代工业社会似乎需要幸福不断增长的可能性来激励其员工。但无论知识流派如何，政府应该负责推进幸福的观点总是构成对人类自由的威胁。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"ultimate": 1, "matter": 2, "external": 1, "advocate": 2, "psychology": 3, "collective": 1, "well-being": 1, "crude": 1, "oblivious": 1, "philosophical": 1, "philosopher": 3, "absence": 1, "reconcile": 1, "pursuit": 1, "mere": 1, "fiction": 1, "established": 2, "intellectual": 2, "conviction": 1, "illiterate": 1, "outmoded": 1, "irrelevant": 1, "ethical": 1, "virtue": 1, "lucid": 1, "cult": 1, "framework": 1, "story": 1, "sector": 1, "consultant": 1, "suggest": 3, "tub": 1, "provision": 1, "celebrated": 1, "solitary": 1, "visible": 1, "instrument": 1, "applied": 2, "pioneer": 1, "sensation": 1, "pulse": 1, "alternatively": 1, "goods": 1, "latter": 1, "inner": 2, "entangle": 1, "psychological": 3, "capitalism": 2, "integral": 1, "tendency": 1, "manipulate": 1, "factual": 1, "action": 1, "confine": 1, "insight": 1, "purse": 1, "desirable": 1, "modem": 1, "motivate": 1, "pedigree": 1, "threat": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to make wise decisions 如何做出明智的决策 - 剑桥雅思16 Test 2 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思16</span>
+                    <span class="badge-tag">Test 2</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>How to make wise decisions 如何做出明智的决策</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/42846.html" target="_blank">https://www.laokaoya.com/42846.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Across cultures, <mark class="vocab-word" data-word="wisdom">wisdom</mark> has been considered one of the most <mark class="vocab-word" data-word="revere">revered</mark> human qualities. Although the truly wise may seem few and far between, <mark class="vocab-word" data-word="empirical">empirical</mark> research examining <mark class="vocab-word" data-word="wisdom">wisdom</mark> <mark class="vocab-word" data-word="suggest">suggests</mark> that it isn’t an <mark class="vocab-word" data-word="exceptional">exceptional</mark> <mark class="vocab-word" data-word="trait">trait</mark> possessed by a small <mark class="vocab-word" data-word="handful">handful</mark> of bearded <mark class="vocab-word" data-word="philosopher">philosophers</mark> after all – in fact, the latest studies <mark class="vocab-word" data-word="suggest">suggest</mark> that most of us have the ability to make wise decisions, given the right context.</p><p>‘It appears that experiential, situational, and cultural <mark class="vocab-word" data-word="factor">factors</mark> are even more powerful in shaping <mark class="vocab-word" data-word="wisdom">wisdom</mark> than previously imagined,’ says Associate Professor Igor Grossmann of the University of Waterloo in Ontario, Canada. ‘Recent <mark class="vocab-word" data-word="empirical">empirical</mark> findings from <mark class="vocab-word" data-word="cognitive">cognitive</mark>, developmental, social, and personality <mark class="vocab-word" data-word="psychology">psychology</mark> <mark class="vocab-word" data-word="cumulative">cumulatively</mark> <mark class="vocab-word" data-word="suggest">suggest</mark> that people’s ability to reason wisely varies <mark class="vocab-word" data-word="dramatically">dramatically</mark> across experiential and situational contexts. Understanding the role of such <mark class="vocab-word" data-word="contextual">contextual</mark> <mark class="vocab-word" data-word="factor">factors</mark> offers unique <mark class="vocab-word" data-word="insight">insights</mark> into understanding <mark class="vocab-word" data-word="wisdom">wisdom</mark> in daily life, as well as how it can be enhanced and taught.’</p><p>It seems that it’s not so much that some people simply possess <mark class="vocab-word" data-word="wisdom">wisdom</mark> and others lack it, but that our ability to reason wisely depends on a variety of <mark class="vocab-word" data-word="external">external</mark> <mark class="vocab-word" data-word="factor">factors</mark>. ‘It is impossible to <mark class="vocab-word" data-word="characterize">characterize</mark> thought processes <mark class="vocab-word" data-word="attribute">attributed</mark> to <mark class="vocab-word" data-word="wisdom">wisdom</mark> without considering the role of <mark class="vocab-word" data-word="contextual">contextual</mark> <mark class="vocab-word" data-word="factor">factors</mark>,’ explains Grossmann. ‘In other words, <mark class="vocab-word" data-word="wisdom">wisdom</mark> is not <mark class="vocab-word" data-word="solely">solely</mark> an “<mark class="vocab-word" data-word="inner">inner</mark> quality” but rather <mark class="vocab-word" data-word="unfold">unfolds</mark> as a function of situations people happen to be in. Some situations are more likely to promote <mark class="vocab-word" data-word="wisdom">wisdom</mark> than others.’</p><p>Coming up with a definition of <mark class="vocab-word" data-word="wisdom">wisdom</mark> is <mark class="vocab-word" data-word="challenging">challenging</mark>, but Grossmann and his colleagues have identified four key characteristics as part of a <mark class="vocab-word" data-word="framework">framework</mark> of wise reasoning. One is <mark class="vocab-word" data-word="intellectual">intellectual</mark> humility or <mark class="vocab-word" data-word="recognition">recognition</mark> of the limits of our own knowledge, and another is <mark class="vocab-word" data-word="appreciation">appreciation</mark> of <mark class="vocab-word" data-word="perspective">perspectives</mark> wider than the issue at hand. <mark class="vocab-word" data-word="sensitivity">Sensitivity</mark> to the possibility of change in social relations is also key, along with <mark class="vocab-word" data-word="compromise">compromise</mark> or <mark class="vocab-word" data-word="integration">integration</mark> of different attitudes and beliefs.</p><p>Grossmann and his colleagues have also found that one of the most reliable ways to support <mark class="vocab-word" data-word="wisdom">wisdom</mark> in our own day-to-day decisions is to look at <mark class="vocab-word" data-word="scenario">scenarios</mark> from a third-party <mark class="vocab-word" data-word="perspective">perspective</mark>, as though giving advice to a friend. Research <mark class="vocab-word" data-word="suggest">suggests</mark> that when adopting a first-person <mark class="vocab-word" data-word="viewpoint">viewpoint</mark> we focus on ‘the focal features of the environment’ and when we adopt a third-person, ‘observer’ <mark class="vocab-word" data-word="viewpoint">viewpoint</mark> we reason more broadly and focus more on interpersonal and moral ideals such as justice and impartiality. Looking at problems from this more expansive <mark class="vocab-word" data-word="viewpoint">viewpoint</mark> appears to <mark class="vocab-word" data-word="foster">foster</mark> <mark class="vocab-word" data-word="cognitive">cognitive</mark> processes related to wise decisions.</p><p>What are we to do, then, when <mark class="vocab-word" data-word="confront">confronted</mark> with situations like a <mark class="vocab-word" data-word="disagreement">disagreement</mark> with a <mark class="vocab-word" data-word="spouse">spouse</mark> or <mark class="vocab-word" data-word="negotiate">negotiating</mark> a contract at work, that require us to take a personal <mark class="vocab-word" data-word="stake">stake</mark>? Grossmann argues that even when we aren’t able to change the situation, we can still evaluate these experiences from different <mark class="vocab-word" data-word="perspective">perspectives</mark>.</p><p>For example, in one experiment that took place during the <mark class="vocab-word" data-word="peak">peak</mark> of a recent economic <mark class="vocab-word" data-word="recession">recession</mark>, graduating college seniors were asked to reflect on their job <mark class="vocab-word" data-word="prospect">prospects</mark>. This article is from  website. The students were <mark class="vocab-word" data-word="instruct">instructed</mark> to imagine their career either ‘as if you were a <mark class="vocab-word" data-word="distant">distant</mark> observer’ or ‘before your own eyes as if you were right there’. Participants in the group <mark class="vocab-word" data-word="assign">assigned</mark> to the <mark class="vocab-word" data-word="distant">distant</mark> observer’ role displayed more wisdom-related reasoning (<mark class="vocab-word" data-word="intellectual">intellectual</mark> humility and <mark class="vocab-word" data-word="recognition">recognition</mark> of change) than did participants in the control group.</p><p>In another study, couples in <mark class="vocab-word" data-word="long-term">long-term</mark> romantic relationships were <mark class="vocab-word" data-word="instruct">instructed</mark> to <mark class="vocab-word" data-word="visualize">visualize</mark> an unresolved relationship conflict either through the eyes of an <mark class="vocab-word" data-word="outsider">outsider</mark> or from their own <mark class="vocab-word" data-word="perspective">perspective</mark>. Participants then discussed the incident with their partner for 10 minutes, after which they wrote down their thoughts about it. Couples in the ‘other’s eyes’ condition were significantly more likely to rely on wise reasoning – recognizing others’ <mark class="vocab-word" data-word="perspective">perspectives</mark> and searching for a <mark class="vocab-word" data-word="compromise">compromise</mark> -compared to the couples in the egocentric condition.</p><p>‘Ego-decentering promotes greater focus on others and enables a bigger picture, <mark class="vocab-word" data-word="conceptual">conceptual</mark> view of the experience, affording <mark class="vocab-word" data-word="recognition">recognition</mark> of <mark class="vocab-word" data-word="intellectual">intellectual</mark> humility and change,’ says Grossmann.</p><p>We might associate <mark class="vocab-word" data-word="wisdom">wisdom</mark> with intelligence or particular personality <mark class="vocab-word" data-word="trait">traits</mark>, but research shows only a small positive relationship between wise thinking and <mark class="vocab-word" data-word="crystallize">crystallized</mark> intelligence and the personality <mark class="vocab-word" data-word="trait">traits</mark> of openness and agreeableness. ‘It is <mark class="vocab-word" data-word="remarkable">remarkable</mark> how much people can vary in their <mark class="vocab-word" data-word="wisdom">wisdom</mark> from one situation to the next, and how much stronger such <mark class="vocab-word" data-word="contextual">contextual</mark> effects are for understanding the relationship between wise judgment and its social and affective outcomes as compared to the <mark class="vocab-word" data-word="generalize">generalized</mark> “<mark class="vocab-word" data-word="trait">traits</mark>”‘, Grossmann explains. ‘That is, knowing how wisely a person behaves in a given situation is more informative for understanding their emotions or <mark class="vocab-word" data-word="likelihood">likelihood</mark> to forgive [or] <mark class="vocab-word" data-word="retaliate">retaliate</mark> as compared to knowing whether the person may be wise “in general”‘.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>各个文化中，智慧一直都被认为是最受尊敬的人类品质之一。虽然真正的智慧似乎十分稀少罕见，但针对智慧的实证研究发现，它并不是一种只有少部分长满胡子的哲学家才拥有的独特品质。事实上，最新的研究表明，在正确情景下，我们大多数人都有做出明智决定的能力。</p><p>“经验、情景和文化因素在塑造智慧方面似乎比我们之前想象的还要重要”，位于加拿大安大略省滑铁卢大学的副教授Igor Grossmann说。“最近来自认知心理学，发展心理学，社会心理学和个性心理学的实证研究逐渐发现，人们进行智慧思考的能力在不同的经验和情景下出现巨大差异。理解这些背景因素为我们理解日常生活中的智慧，以及它如何被加强和传授提供了独特的角度”。</p><p>事情似乎并不简单是一些人拥有智慧而其他人没有智慧，我们明智思考的能力取决于各种外部因素。“不考虑背景因素的作用，就不可能总结出被归为智慧的思考过程的特点”，Grossmann解释道。“换句话说，智慧不仅仅是一种内部品质，而是人们所处情景的功能的展现。一些情景比其他情景更有可能促进智慧发展”。</p><p>给智慧下定义很困难，但Grossmann和他的同事已经界定出四个关键点，作为智慧思考框架的一部分。一个是智力谦逊，或者说承认我们知识的有限性，另一个是对比收头问题更广泛的解决方法的欣赏。对社会关系变化的可能性保持敏感也是关键之一，以及不同态度与观点之间的妥协或者融合。</p><p>Grossmann和他的同事还发现，在我们日常决策中，支撑智慧最可靠的方式之一就是从第三方角度看待问题，就像给朋友提建议一样。研究表明，当我们采用第一视角的时候，我们关注环境的核心特征，而当我们采用第三方、观察者视角的时候，我们会进行更广泛的思考，更加关注人际关系和道德理想，比如公平公正。从更加宽泛的视角看待问题似乎有助于促进与明智决策相关的认知过程。</p><p>当面对与配偶意见不一致或者在工作上沟通合同这样需要我们进行个人决策的情景时，我们该如何做呢？Grossmann认为，即便我们无法改变这一情景，我们仍然可以从不同的角度对这些经验进行评估。</p><p>例如，在一项于近期经济衰退到顶点时进行的实验中，大学毕业生被要求对他们的职业前景进行思考。实验人员指示学生从不同角度想象自己的工作，要么当自己是一个中立的观察者，要么当自己是当事人。相比于控制组的参与者而言，从中立观察者角度出发的参与者展现出更多与智慧相关的思考（智力谦逊与认识到变化）。</p><p>在另一项研究中，拥有长期浪漫关系的夫妻被要求从外人角度或者从他们自己的角度想象一项未能解决的人际冲突，随后参与者与他们的伴侣针对这一问题进行10分钟的讨论。然后他们写下自己的想法。与从自我角度出发的夫妻相比，从他人角度出发的夫妻明显更有可能进行明智的思考-接受他人的观点，并寻求妥协。</p><p>“不那么以自我为中心会让人们更加关注他人，从更宽广的视角对体验形成概念化的认知，从而意识到知识的有限性和改变”，Grossmann说。</p><p>我们可能会将智慧与智力或者特定的性格联系起来，但研究表明，智慧与明晰的智力以及开放、宜人的性格特点之间只有微弱的联系。“人们的智慧在不同情境中的差异之大让人震惊，而背景因素对于理解明智决策与其社会和情感结果之间关系的作用也要比普遍的性格特点有用很多”，Grossmann解释道。“了解一个人在特定情景下的表现有多么智慧或者有多大可能进行原谅或者报复，比了解这个人是否大体智慧要能够提供更多的信息”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Across cultures, <mark class="vocab-word" data-word="wisdom">wisdom</mark> has been considered one of the most <mark class="vocab-word" data-word="revere">revered</mark> human qualities. Although the truly wise may seem few and far between, <mark class="vocab-word" data-word="empirical">empirical</mark> research examining <mark class="vocab-word" data-word="wisdom">wisdom</mark> <mark class="vocab-word" data-word="suggest">suggests</mark> that it isn’t an <mark class="vocab-word" data-word="exceptional">exceptional</mark> <mark class="vocab-word" data-word="trait">trait</mark> possessed by a small <mark class="vocab-word" data-word="handful">handful</mark> of bearded <mark class="vocab-word" data-word="philosopher">philosophers</mark> after all – in fact, the latest studies <mark class="vocab-word" data-word="suggest">suggest</mark> that most of us have the ability to make wise decisions, given the right context.</p></div>  <div class="parallel-zh"><p>各个文化中，智慧一直都被认为是最受尊敬的人类品质之一。虽然真正的智慧似乎十分稀少罕见，但针对智慧的实证研究发现，它并不是一种只有少部分长满胡子的哲学家才拥有的独特品质。事实上，最新的研究表明，在正确情景下，我们大多数人都有做出明智决定的能力。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘It appears that experiential, situational, and cultural <mark class="vocab-word" data-word="factor">factors</mark> are even more powerful in shaping <mark class="vocab-word" data-word="wisdom">wisdom</mark> than previously imagined,’ says Associate Professor Igor Grossmann of the University of Waterloo in Ontario, Canada. ‘Recent <mark class="vocab-word" data-word="empirical">empirical</mark> findings from <mark class="vocab-word" data-word="cognitive">cognitive</mark>, developmental, social, and personality <mark class="vocab-word" data-word="psychology">psychology</mark> <mark class="vocab-word" data-word="cumulative">cumulatively</mark> <mark class="vocab-word" data-word="suggest">suggest</mark> that people’s ability to reason wisely varies <mark class="vocab-word" data-word="dramatically">dramatically</mark> across experiential and situational contexts. Understanding the role of such <mark class="vocab-word" data-word="contextual">contextual</mark> <mark class="vocab-word" data-word="factor">factors</mark> offers unique <mark class="vocab-word" data-word="insight">insights</mark> into understanding <mark class="vocab-word" data-word="wisdom">wisdom</mark> in daily life, as well as how it can be enhanced and taught.’</p></div>  <div class="parallel-zh"><p>“经验、情景和文化因素在塑造智慧方面似乎比我们之前想象的还要重要”，位于加拿大安大略省滑铁卢大学的副教授Igor Grossmann说。“最近来自认知心理学，发展心理学，社会心理学和个性心理学的实证研究逐渐发现，人们进行智慧思考的能力在不同的经验和情景下出现巨大差异。理解这些背景因素为我们理解日常生活中的智慧，以及它如何被加强和传授提供了独特的角度”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>It seems that it’s not so much that some people simply possess <mark class="vocab-word" data-word="wisdom">wisdom</mark> and others lack it, but that our ability to reason wisely depends on a variety of <mark class="vocab-word" data-word="external">external</mark> <mark class="vocab-word" data-word="factor">factors</mark>. ‘It is impossible to <mark class="vocab-word" data-word="characterize">characterize</mark> thought processes <mark class="vocab-word" data-word="attribute">attributed</mark> to <mark class="vocab-word" data-word="wisdom">wisdom</mark> without considering the role of <mark class="vocab-word" data-word="contextual">contextual</mark> <mark class="vocab-word" data-word="factor">factors</mark>,’ explains Grossmann. ‘In other words, <mark class="vocab-word" data-word="wisdom">wisdom</mark> is not <mark class="vocab-word" data-word="solely">solely</mark> an “<mark class="vocab-word" data-word="inner">inner</mark> quality” but rather <mark class="vocab-word" data-word="unfold">unfolds</mark> as a function of situations people happen to be in. Some situations are more likely to promote <mark class="vocab-word" data-word="wisdom">wisdom</mark> than others.’</p></div>  <div class="parallel-zh"><p>事情似乎并不简单是一些人拥有智慧而其他人没有智慧，我们明智思考的能力取决于各种外部因素。“不考虑背景因素的作用，就不可能总结出被归为智慧的思考过程的特点”，Grossmann解释道。“换句话说，智慧不仅仅是一种内部品质，而是人们所处情景的功能的展现。一些情景比其他情景更有可能促进智慧发展”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Coming up with a definition of <mark class="vocab-word" data-word="wisdom">wisdom</mark> is <mark class="vocab-word" data-word="challenging">challenging</mark>, but Grossmann and his colleagues have identified four key characteristics as part of a <mark class="vocab-word" data-word="framework">framework</mark> of wise reasoning. One is <mark class="vocab-word" data-word="intellectual">intellectual</mark> humility or <mark class="vocab-word" data-word="recognition">recognition</mark> of the limits of our own knowledge, and another is <mark class="vocab-word" data-word="appreciation">appreciation</mark> of <mark class="vocab-word" data-word="perspective">perspectives</mark> wider than the issue at hand. <mark class="vocab-word" data-word="sensitivity">Sensitivity</mark> to the possibility of change in social relations is also key, along with <mark class="vocab-word" data-word="compromise">compromise</mark> or <mark class="vocab-word" data-word="integration">integration</mark> of different attitudes and beliefs.</p></div>  <div class="parallel-zh"><p>给智慧下定义很困难，但Grossmann和他的同事已经界定出四个关键点，作为智慧思考框架的一部分。一个是智力谦逊，或者说承认我们知识的有限性，另一个是对比收头问题更广泛的解决方法的欣赏。对社会关系变化的可能性保持敏感也是关键之一，以及不同态度与观点之间的妥协或者融合。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Grossmann and his colleagues have also found that one of the most reliable ways to support <mark class="vocab-word" data-word="wisdom">wisdom</mark> in our own day-to-day decisions is to look at <mark class="vocab-word" data-word="scenario">scenarios</mark> from a third-party <mark class="vocab-word" data-word="perspective">perspective</mark>, as though giving advice to a friend. Research <mark class="vocab-word" data-word="suggest">suggests</mark> that when adopting a first-person <mark class="vocab-word" data-word="viewpoint">viewpoint</mark> we focus on ‘the focal features of the environment’ and when we adopt a third-person, ‘observer’ <mark class="vocab-word" data-word="viewpoint">viewpoint</mark> we reason more broadly and focus more on interpersonal and moral ideals such as justice and impartiality. Looking at problems from this more expansive <mark class="vocab-word" data-word="viewpoint">viewpoint</mark> appears to <mark class="vocab-word" data-word="foster">foster</mark> <mark class="vocab-word" data-word="cognitive">cognitive</mark> processes related to wise decisions.</p></div>  <div class="parallel-zh"><p>Grossmann和他的同事还发现，在我们日常决策中，支撑智慧最可靠的方式之一就是从第三方角度看待问题，就像给朋友提建议一样。研究表明，当我们采用第一视角的时候，我们关注环境的核心特征，而当我们采用第三方、观察者视角的时候，我们会进行更广泛的思考，更加关注人际关系和道德理想，比如公平公正。从更加宽泛的视角看待问题似乎有助于促进与明智决策相关的认知过程。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>What are we to do, then, when <mark class="vocab-word" data-word="confront">confronted</mark> with situations like a <mark class="vocab-word" data-word="disagreement">disagreement</mark> with a <mark class="vocab-word" data-word="spouse">spouse</mark> or <mark class="vocab-word" data-word="negotiate">negotiating</mark> a contract at work, that require us to take a personal <mark class="vocab-word" data-word="stake">stake</mark>? Grossmann argues that even when we aren’t able to change the situation, we can still evaluate these experiences from different <mark class="vocab-word" data-word="perspective">perspectives</mark>.</p></div>  <div class="parallel-zh"><p>当面对与配偶意见不一致或者在工作上沟通合同这样需要我们进行个人决策的情景时，我们该如何做呢？Grossmann认为，即便我们无法改变这一情景，我们仍然可以从不同的角度对这些经验进行评估。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>For example, in one experiment that took place during the <mark class="vocab-word" data-word="peak">peak</mark> of a recent economic <mark class="vocab-word" data-word="recession">recession</mark>, graduating college seniors were asked to reflect on their job <mark class="vocab-word" data-word="prospect">prospects</mark>. This article is from  website. The students were <mark class="vocab-word" data-word="instruct">instructed</mark> to imagine their career either ‘as if you were a <mark class="vocab-word" data-word="distant">distant</mark> observer’ or ‘before your own eyes as if you were right there’. Participants in the group <mark class="vocab-word" data-word="assign">assigned</mark> to the <mark class="vocab-word" data-word="distant">distant</mark> observer’ role displayed more wisdom-related reasoning (<mark class="vocab-word" data-word="intellectual">intellectual</mark> humility and <mark class="vocab-word" data-word="recognition">recognition</mark> of change) than did participants in the control group.</p></div>  <div class="parallel-zh"><p>例如，在一项于近期经济衰退到顶点时进行的实验中，大学毕业生被要求对他们的职业前景进行思考。实验人员指示学生从不同角度想象自己的工作，要么当自己是一个中立的观察者，要么当自己是当事人。相比于控制组的参与者而言，从中立观察者角度出发的参与者展现出更多与智慧相关的思考（智力谦逊与认识到变化）。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In another study, couples in <mark class="vocab-word" data-word="long-term">long-term</mark> romantic relationships were <mark class="vocab-word" data-word="instruct">instructed</mark> to <mark class="vocab-word" data-word="visualize">visualize</mark> an unresolved relationship conflict either through the eyes of an <mark class="vocab-word" data-word="outsider">outsider</mark> or from their own <mark class="vocab-word" data-word="perspective">perspective</mark>. Participants then discussed the incident with their partner for 10 minutes, after which they wrote down their thoughts about it. Couples in the ‘other’s eyes’ condition were significantly more likely to rely on wise reasoning – recognizing others’ <mark class="vocab-word" data-word="perspective">perspectives</mark> and searching for a <mark class="vocab-word" data-word="compromise">compromise</mark> -compared to the couples in the egocentric condition.</p></div>  <div class="parallel-zh"><p>在另一项研究中，拥有长期浪漫关系的夫妻被要求从外人角度或者从他们自己的角度想象一项未能解决的人际冲突，随后参与者与他们的伴侣针对这一问题进行10分钟的讨论。然后他们写下自己的想法。与从自我角度出发的夫妻相比，从他人角度出发的夫妻明显更有可能进行明智的思考-接受他人的观点，并寻求妥协。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘Ego-decentering promotes greater focus on others and enables a bigger picture, <mark class="vocab-word" data-word="conceptual">conceptual</mark> view of the experience, affording <mark class="vocab-word" data-word="recognition">recognition</mark> of <mark class="vocab-word" data-word="intellectual">intellectual</mark> humility and change,’ says Grossmann.</p></div>  <div class="parallel-zh"><p>“不那么以自我为中心会让人们更加关注他人，从更宽广的视角对体验形成概念化的认知，从而意识到知识的有限性和改变”，Grossmann说。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>We might associate <mark class="vocab-word" data-word="wisdom">wisdom</mark> with intelligence or particular personality <mark class="vocab-word" data-word="trait">traits</mark>, but research shows only a small positive relationship between wise thinking and <mark class="vocab-word" data-word="crystallize">crystallized</mark> intelligence and the personality <mark class="vocab-word" data-word="trait">traits</mark> of openness and agreeableness. ‘It is <mark class="vocab-word" data-word="remarkable">remarkable</mark> how much people can vary in their <mark class="vocab-word" data-word="wisdom">wisdom</mark> from one situation to the next, and how much stronger such <mark class="vocab-word" data-word="contextual">contextual</mark> effects are for understanding the relationship between wise judgment and its social and affective outcomes as compared to the <mark class="vocab-word" data-word="generalize">generalized</mark> “<mark class="vocab-word" data-word="trait">traits</mark>”‘, Grossmann explains. ‘That is, knowing how wisely a person behaves in a given situation is more informative for understanding their emotions or <mark class="vocab-word" data-word="likelihood">likelihood</mark> to forgive [or] <mark class="vocab-word" data-word="retaliate">retaliate</mark> as compared to knowing whether the person may be wise “in general”‘.</p></div>  <div class="parallel-zh"><p>我们可能会将智慧与智力或者特定的性格联系起来，但研究表明，智慧与明晰的智力以及开放、宜人的性格特点之间只有微弱的联系。“人们的智慧在不同情境中的差异之大让人震惊，而背景因素对于理解明智决策与其社会和情感结果之间关系的作用也要比普遍的性格特点有用很多”，Grossmann解释道。“了解一个人在特定情景下的表现有多么智慧或者有多大可能进行原谅或者报复，比了解这个人是否大体智慧要能够提供更多的信息”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"wisdom": 12, "revere": 1, "empirical": 2, "suggest": 4, "exceptional": 1, "trait": 4, "handful": 1, "philosopher": 1, "factor": 4, "cognitive": 2, "psychology": 1, "cumulative": 1, "dramatically": 1, "contextual": 3, "insight": 1, "external": 1, "characterize": 1, "attribute": 1, "solely": 1, "inner": 1, "unfold": 1, "challenging": 1, "framework": 1, "intellectual": 3, "recognition": 3, "appreciation": 1, "perspective": 5, "sensitivity": 1, "compromise": 2, "integration": 1, "scenario": 1, "viewpoint": 3, "foster": 1, "confront": 1, "disagreement": 1, "spouse": 1, "negotiate": 1, "stake": 1, "peak": 1, "recession": 1, "prospect": 1, "instruct": 2, "distant": 2, "assign": 1, "long-term": 1, "visualize": 1, "outsider": 1, "conceptual": 1, "crystallize": 1, "remarkable": 1, "generalize": 1, "likelihood": 1, "retaliate": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

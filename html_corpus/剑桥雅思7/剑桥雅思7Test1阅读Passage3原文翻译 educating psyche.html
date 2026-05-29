@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>educating psyche - 剑桥雅思7 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思7</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>educating psyche</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/24168.html" target="_blank">https://www.laokaoya.com/24168.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Educating <mark class="vocab-word" data-word="psyche">Psyche</mark> by Bernie Neville is a book which looks at <mark class="vocab-word" data-word="radical">radical</mark> new approaches to learning, describing the effects of emotion, imagination and the <mark class="vocab-word" data-word="unconscious">unconscious</mark> on learning. One theory discussed in the book is that <mark class="vocab-word" data-word="propose">proposed</mark> by George Lozanov, which focuses on the power of suggestion.</p><p>Lozanov’s instructional technique is based on the evidence that the connections made in the brain through <mark class="vocab-word" data-word="unconscious">unconscious</mark> <mark class="vocab-word" data-word="processing">processing</mark> (which he calls non-specific mental reactivity) are more <mark class="vocab-word" data-word="durable">durable</mark> than those made through <mark class="vocab-word" data-word="conscious">conscious</mark> <mark class="vocab-word" data-word="processing">processing</mark>. Besides the laboratory evidence for this, we know from our experience that we often remember what we have <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="peripheral">peripherally</mark>, long after we have forgotten what we set out to learn. If we think of a book we studied months or years ago, we will find it easier to recall <mark class="vocab-word" data-word="peripheral">peripheral</mark> details – the colour, the <mark class="vocab-word" data-word="bind">binding</mark>, the typeface, the table at the library where we sat while studying it – than the content on which we were concentrating. If we think of a lecture we listened to with great concentration, we will recall the <mark class="vocab-word" data-word="lecturer">lecturer</mark>’s appearance and mannerisms, our place in the <mark class="vocab-word" data-word="auditorium">auditorium</mark>, the failure of the air-conditioning, much more easily than the ideas we went to learn. Even if these <mark class="vocab-word" data-word="peripheral">peripheral</mark> details are a bit <mark class="vocab-word" data-word="elusive">elusive</mark>, they come back <mark class="vocab-word" data-word="readily">readily</mark> in hypnosis or when we relive the event <mark class="vocab-word" data-word="imaginative">imaginatively</mark>, as in psychodrama. The details of the content of the lecture, on the other hand, seem to have gone forever.</p><p>This <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> can be partly <mark class="vocab-word" data-word="attribute">attributed</mark> to the common <mark class="vocab-word" data-word="counterproductive">counterproductive</mark> approach to study (making extreme efforts to memorise, <mark class="vocab-word" data-word="tense">tensing</mark> muscles, <mark class="vocab-word" data-word="induce">inducing</mark> <mark class="vocab-word" data-word="fatigue">fatigue</mark>), but it also simply reflects the way the brain functions. Lozanov therefore made <mark class="vocab-word" data-word="indirect">indirect</mark> instruction (suggestion) central to his teaching system. In suggestopedia, as he called his method, consciousness is shifted away from the <mark class="vocab-word" data-word="curriculum">curriculum</mark> to focus on something <mark class="vocab-word" data-word="peripheral">peripheral</mark>. The <mark class="vocab-word" data-word="curriculum">curriculum</mark> then becomes <mark class="vocab-word" data-word="peripheral">peripheral</mark> and is dealt with by the reserve <mark class="vocab-word" data-word="capacity">capacity</mark> of the brain.</p><p>The suggestopedic approach to foreign language learning provides a good <mark class="vocab-word" data-word="illustration">illustration</mark>. In its most recent <mark class="vocab-word" data-word="variant">variant</mark> (1980), it consists of the reading of <mark class="vocab-word" data-word="vocabulary">vocabulary</mark> and text while the class is listening to music. The first session is in two parts. In the first part, the music is classical (Mozart, Beethoven, Brahms) and the teacher reads the text slowly and <mark class="vocab-word" data-word="solemn">solemnly</mark>, with attention to the <mark class="vocab-word" data-word="dynamic">dynamics</mark> of the music. The students follow the text in their books. This is followed by several minutes of silence. In the second part, they listen to baroque music (Bach, Corelli, Handel) while the teacher reads the text in a normal speaking voice. During this time they have their books closed. During the whole of this session, their attention is <mark class="vocab-word" data-word="passive">passive</mark>; they listen to the music but make no attempt to learn the material.</p><p><mark class="vocab-word" data-word="beforehand">Beforehand</mark>, the students have been carefully prepared for the language learning experience. Through meeting with the staff and satisfied students they develop the expectation that learning will be easy and pleasant and that they will successfully learn several hundred words of the foreign language during the class. In a <mark class="vocab-word" data-word="preliminary">preliminary</mark> talk, the teacher introduces them to the material to be covered, but does not ‘teach’ it. <mark class="vocab-word" data-word="likewise">Likewise</mark>, the students are <mark class="vocab-word" data-word="instruct">instructed</mark> not to try to learn it during this introduction.</p><p>Some hours after the two-part session, there is a follow-up class at which the students are <mark class="vocab-word" data-word="stimulate">stimulated</mark> to recall the material presented. Once again the approach is <mark class="vocab-word" data-word="indirect">indirect</mark>. The students do not focus their attention on trying to remember the <mark class="vocab-word" data-word="vocabulary">vocabulary</mark>, but focus on using the language to communicate (e.g. through games or <mark class="vocab-word" data-word="improvise">improvised</mark> dramatisations). Such methods are not unusual in language teaching. What is <mark class="vocab-word" data-word="distinctive">distinctive</mark> in the suggestopedic method is that they are <mark class="vocab-word" data-word="devoted">devoted</mark> entirely to assisting recall. The ‘learning’ of the material is assumed to be <mark class="vocab-word" data-word="automatic">automatic</mark> and <mark class="vocab-word" data-word="effortless">effortless</mark>, <mark class="vocab-word" data-word="accomplish">accomplished</mark> while listening to music. The teacher’s task is to assist the students to apply what they have <mark class="vocab-word" data-word="learned">learned</mark> paraconsciously, and in doing so to make it easily <mark class="vocab-word" data-word="accessible">accessible</mark> to consciousness. Another difference from <mark class="vocab-word" data-word="conventional">conventional</mark> teaching is the evidence that students can regularly learn 1000 new words of a foreign language during a suggestopedic session, as well as <mark class="vocab-word" data-word="grammar">grammar</mark> and <mark class="vocab-word" data-word="idiom">idiom</mark>.</p><p>Lozanov experimented with teaching by direct suggestion during sleep, hypnosis and <mark class="vocab-word" data-word="trance">trance</mark> states, but found such procedures unnecessary. Hypnosis, <mark class="vocab-word" data-word="yoga">yoga</mark>, Silva mind-control, religious ceremonies and faith <mark class="vocab-word" data-word="healing">healing</mark> are all associated with successful suggestion, but none of their techniques seem to be essential to it. Such <mark class="vocab-word" data-word="ritual">rituals</mark> may be seen as placebos. Lozanov acknowledges that the <mark class="vocab-word" data-word="ritual">ritual</mark> <mark class="vocab-word" data-word="surrounding">surrounding</mark> suggestion in his own system is also a placebo, but maintains that without such a placebo people are unable or afraid to <mark class="vocab-word" data-word="tap">tap</mark> the reserve <mark class="vocab-word" data-word="capacity">capacity</mark> of their brains. Like any placebo, it must be <mark class="vocab-word" data-word="dispense">dispensed</mark> with <mark class="vocab-word" data-word="authority">authority</mark> to be effective. Just as a doctor calls on the full power of <mark class="vocab-word" data-word="autocratic">autocratic</mark> suggestion by insisting that the patient take <mark class="vocab-word" data-word="precisely">precisely</mark> this white <mark class="vocab-word" data-word="capsule">capsule</mark> <mark class="vocab-word" data-word="precisely">precisely</mark> three times a day before meals, Lozanov is categoric in insisting that the suggestopedic session be conducted exactly in the manner <mark class="vocab-word" data-word="designate">designated</mark>, by trained and <mark class="vocab-word" data-word="accredit">accredited</mark> suggestopedic teachers.</p><p>While suggestopedia has gained some <mark class="vocab-word" data-word="notoriety">notoriety</mark> through success in the teaching of modern languages, few teachers are able to <mark class="vocab-word" data-word="emulate">emulate</mark> the <mark class="vocab-word" data-word="spectacular">spectacular</mark> results of Lozanov and his associates. We can, perhaps, <mark class="vocab-word" data-word="attribute">attribute</mark> <mark class="vocab-word" data-word="mediocre">mediocre</mark> results to an <mark class="vocab-word" data-word="inadequate">inadequate</mark> placebo effect. The students have not developed the appropriate mind set. They are often not <mark class="vocab-word" data-word="motivated">motivated</mark> to learn through this method. They do not have enough ‘faith’. They do not see it as ‘real teaching’, especially as it does not seem to involve the ‘work’ they have <mark class="vocab-word" data-word="learned">learned</mark> to believe is essential to learning.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>伯尼·内维尔（Bernie Neville）撰写的《教育心理》一书探讨了全新的学习方法，描述了情感，想象力和无意识对学习的影响。本书中讨论的一种理论是乔治·洛扎诺夫（George Lozanov）提出的，它着眼于建议的力量。</p><p>洛扎诺夫（Lozanov）的教学方法基于以下证据：通过无意识加工在大脑中建立的联系（他称之为非特定的心理反应）比通过有意识加工建立的联系更持久。除了支持这一观点的实验室证据外，我们从自己的经验中也能得知，在我们忘记所学习的东西很久之后，我们经常会记住周围的事项。如果我们想想几个月或几年前学习过的书，我们会发现回忆周围的细节（颜色，装订，字体，我们在图书馆时所坐的桌子）比回忆我们当时正在专心阅读的内容要简单。如果我们想想曾经专心听过的讲座，回忆讲师的外貌和举止，我们在观众席中的位置，空调的故障，要比回忆我们学到的观念容易得多。即使这些外围细节有些难以捉摸，它们也很容易在催眠状态下或当我们重温事件时出现。另一方面，讲课内容的细节似乎永远消失了。</p><p>这种现象可以部分归因于常见的适得其反的学习方法（尽力去记忆，拉紧肌肉，诱发疲劳），但它也反映了大脑运转的方式。因此，洛扎诺夫将间接指导（建议）作为其教学体系的核心。正如他所说的那样，在暗示教学法中，意识从课程转移到专注于某些外围事物。然后课程成为外围事项，由大脑的储备能力处理。</p><p>用暗示教学法学习外语提供了很好的例证。在其最新版本（1980）中，该课程包括在课堂上听音乐的同时阅读词汇和文本。第一节分为两部分。在第一部分中，音乐是古典乐（莫扎特，贝多芬，勃拉姆斯），老师会缓慢而庄重地阅读文本，将注意力放在音乐上。学生们根据书本上的文章学习。接下来是几分钟的沉默。在第二部分中，他们听巴洛克音乐（巴赫，科雷利，汉德尔），而老师则以普通语音朗读文本。在此期间他们合上书本。在整个过程中，他们的注意力是不集中的。他们听音乐，但没有尝试学习这些资料。</p><p>事先，学生已经为语言学习经历作了精心准备。通过与员工和满意的学生的见面，他们产生了学习会简单轻松并且将在课堂上成功地学习数百个外语单词的想法。在初步讲解中，老师向他们介绍了要学习的材料，但没有“教”它。同样，在介绍过程中，学生要要求不要尝试学习它。</p><p>在分为两部分的课程结束之后的几个小时内，会有一个后续课程。该课程会激发学生回忆所介绍的材料。同样，该方法是间接的。学生们不会将注意力集中在试图记住的词汇上，而是着重使用语言进行交流（例如，通过游戏或即兴表演） 。这种方法在语言教学中并不罕见。暗示教学法的独特之处是它们完全致力于协助回忆。材料的“学习”被认为是自动且轻松的，在听音乐的同时完成。教师的任务是协助学生将他们所学的知识通过潜意识应用出来，并使其易于被意识所接受。与常规教学的另一个不同之处在于，证据表明学生可以在暗示教学期间学会1000个新外语单词，以及语法和习语。</p><p>洛扎诺夫在睡觉，催眠和发呆状态下通过直接暗示进行了教学实验，但发现这样的程序并不必要。催眠，瑜伽，席尔瓦（Silva）心理控制，宗教仪式和信仰康复都与成功的暗示有关，但是这些方法似乎都不是必不可少的。这种仪式可以被视为安慰剂。洛扎诺夫（Lozanov）承认在他自己的体系中仪式性的周边暗示也是安慰剂，但他坚持认为，没有这样的安慰剂，人们将无法或害怕挖掘大脑的储备能力。像任何安慰剂一样，必须富有权威才能有效。正如医生通过坚持要求患者每天饭前精确地服用三粒白色胶囊来充分发挥权威暗示的全部力量一样，洛扎诺夫（Lozanov）坚决主张严格按照设计的方式，由受过训练、经过认可的暗示教学法的老师进行暗示教学。</p><p>尽管暗示教学法通过现代语言教学上的成功声名鹊起，但很少有老师能够模仿洛扎诺夫及其同事的惊人成果。我们也许可以将平庸的结果归因于安慰剂作用不足。学生们尚未建立适当的思维定势。他们通常没有动力通过这种方法学习。他们没有足够的“信仰” 。他们不认为这是“真正的教学”，尤其是当它似乎不涉及他们所认为的对学习至关重要的“努力” 。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Educating <mark class="vocab-word" data-word="psyche">Psyche</mark> by Bernie Neville is a book which looks at <mark class="vocab-word" data-word="radical">radical</mark> new approaches to learning, describing the effects of emotion, imagination and the <mark class="vocab-word" data-word="unconscious">unconscious</mark> on learning. One theory discussed in the book is that <mark class="vocab-word" data-word="propose">proposed</mark> by George Lozanov, which focuses on the power of suggestion.</p></div>  <div class="parallel-zh"><p>伯尼·内维尔（Bernie Neville）撰写的《教育心理》一书探讨了全新的学习方法，描述了情感，想象力和无意识对学习的影响。本书中讨论的一种理论是乔治·洛扎诺夫（George Lozanov）提出的，它着眼于建议的力量。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Lozanov’s instructional technique is based on the evidence that the connections made in the brain through <mark class="vocab-word" data-word="unconscious">unconscious</mark> <mark class="vocab-word" data-word="processing">processing</mark> (which he calls non-specific mental reactivity) are more <mark class="vocab-word" data-word="durable">durable</mark> than those made through <mark class="vocab-word" data-word="conscious">conscious</mark> <mark class="vocab-word" data-word="processing">processing</mark>. Besides the laboratory evidence for this, we know from our experience that we often remember what we have <mark class="vocab-word" data-word="perceive">perceived</mark> <mark class="vocab-word" data-word="peripheral">peripherally</mark>, long after we have forgotten what we set out to learn. If we think of a book we studied months or years ago, we will find it easier to recall <mark class="vocab-word" data-word="peripheral">peripheral</mark> details – the colour, the <mark class="vocab-word" data-word="bind">binding</mark>, the typeface, the table at the library where we sat while studying it – than the content on which we were concentrating. If we think of a lecture we listened to with great concentration, we will recall the <mark class="vocab-word" data-word="lecturer">lecturer</mark>’s appearance and mannerisms, our place in the <mark class="vocab-word" data-word="auditorium">auditorium</mark>, the failure of the air-conditioning, much more easily than the ideas we went to learn. Even if these <mark class="vocab-word" data-word="peripheral">peripheral</mark> details are a bit <mark class="vocab-word" data-word="elusive">elusive</mark>, they come back <mark class="vocab-word" data-word="readily">readily</mark> in hypnosis or when we relive the event <mark class="vocab-word" data-word="imaginative">imaginatively</mark>, as in psychodrama. The details of the content of the lecture, on the other hand, seem to have gone forever.</p></div>  <div class="parallel-zh"><p>洛扎诺夫（Lozanov）的教学方法基于以下证据：通过无意识加工在大脑中建立的联系（他称之为非特定的心理反应）比通过有意识加工建立的联系更持久。除了支持这一观点的实验室证据外，我们从自己的经验中也能得知，在我们忘记所学习的东西很久之后，我们经常会记住周围的事项。如果我们想想几个月或几年前学习过的书，我们会发现回忆周围的细节（颜色，装订，字体，我们在图书馆时所坐的桌子）比回忆我们当时正在专心阅读的内容要简单。如果我们想想曾经专心听过的讲座，回忆讲师的外貌和举止，我们在观众席中的位置，空调的故障，要比回忆我们学到的观念容易得多。即使这些外围细节有些难以捉摸，它们也很容易在催眠状态下或当我们重温事件时出现。另一方面，讲课内容的细节似乎永远消失了。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>This <mark class="vocab-word" data-word="phenomenon">phenomenon</mark> can be partly <mark class="vocab-word" data-word="attribute">attributed</mark> to the common <mark class="vocab-word" data-word="counterproductive">counterproductive</mark> approach to study (making extreme efforts to memorise, <mark class="vocab-word" data-word="tense">tensing</mark> muscles, <mark class="vocab-word" data-word="induce">inducing</mark> <mark class="vocab-word" data-word="fatigue">fatigue</mark>), but it also simply reflects the way the brain functions. Lozanov therefore made <mark class="vocab-word" data-word="indirect">indirect</mark> instruction (suggestion) central to his teaching system. In suggestopedia, as he called his method, consciousness is shifted away from the <mark class="vocab-word" data-word="curriculum">curriculum</mark> to focus on something <mark class="vocab-word" data-word="peripheral">peripheral</mark>. The <mark class="vocab-word" data-word="curriculum">curriculum</mark> then becomes <mark class="vocab-word" data-word="peripheral">peripheral</mark> and is dealt with by the reserve <mark class="vocab-word" data-word="capacity">capacity</mark> of the brain.</p></div>  <div class="parallel-zh"><p>这种现象可以部分归因于常见的适得其反的学习方法（尽力去记忆，拉紧肌肉，诱发疲劳），但它也反映了大脑运转的方式。因此，洛扎诺夫将间接指导（建议）作为其教学体系的核心。正如他所说的那样，在暗示教学法中，意识从课程转移到专注于某些外围事物。然后课程成为外围事项，由大脑的储备能力处理。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The suggestopedic approach to foreign language learning provides a good <mark class="vocab-word" data-word="illustration">illustration</mark>. In its most recent <mark class="vocab-word" data-word="variant">variant</mark> (1980), it consists of the reading of <mark class="vocab-word" data-word="vocabulary">vocabulary</mark> and text while the class is listening to music. The first session is in two parts. In the first part, the music is classical (Mozart, Beethoven, Brahms) and the teacher reads the text slowly and <mark class="vocab-word" data-word="solemn">solemnly</mark>, with attention to the <mark class="vocab-word" data-word="dynamic">dynamics</mark> of the music. The students follow the text in their books. This is followed by several minutes of silence. In the second part, they listen to baroque music (Bach, Corelli, Handel) while the teacher reads the text in a normal speaking voice. During this time they have their books closed. During the whole of this session, their attention is <mark class="vocab-word" data-word="passive">passive</mark>; they listen to the music but make no attempt to learn the material.</p></div>  <div class="parallel-zh"><p>用暗示教学法学习外语提供了很好的例证。在其最新版本（1980）中，该课程包括在课堂上听音乐的同时阅读词汇和文本。第一节分为两部分。在第一部分中，音乐是古典乐（莫扎特，贝多芬，勃拉姆斯），老师会缓慢而庄重地阅读文本，将注意力放在音乐上。学生们根据书本上的文章学习。接下来是几分钟的沉默。在第二部分中，他们听巴洛克音乐（巴赫，科雷利，汉德尔），而老师则以普通语音朗读文本。在此期间他们合上书本。在整个过程中，他们的注意力是不集中的。他们听音乐，但没有尝试学习这些资料。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="beforehand">Beforehand</mark>, the students have been carefully prepared for the language learning experience. Through meeting with the staff and satisfied students they develop the expectation that learning will be easy and pleasant and that they will successfully learn several hundred words of the foreign language during the class. In a <mark class="vocab-word" data-word="preliminary">preliminary</mark> talk, the teacher introduces them to the material to be covered, but does not ‘teach’ it. <mark class="vocab-word" data-word="likewise">Likewise</mark>, the students are <mark class="vocab-word" data-word="instruct">instructed</mark> not to try to learn it during this introduction.</p></div>  <div class="parallel-zh"><p>事先，学生已经为语言学习经历作了精心准备。通过与员工和满意的学生的见面，他们产生了学习会简单轻松并且将在课堂上成功地学习数百个外语单词的想法。在初步讲解中，老师向他们介绍了要学习的材料，但没有“教”它。同样，在介绍过程中，学生要要求不要尝试学习它。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Some hours after the two-part session, there is a follow-up class at which the students are <mark class="vocab-word" data-word="stimulate">stimulated</mark> to recall the material presented. Once again the approach is <mark class="vocab-word" data-word="indirect">indirect</mark>. The students do not focus their attention on trying to remember the <mark class="vocab-word" data-word="vocabulary">vocabulary</mark>, but focus on using the language to communicate (e.g. through games or <mark class="vocab-word" data-word="improvise">improvised</mark> dramatisations). Such methods are not unusual in language teaching. What is <mark class="vocab-word" data-word="distinctive">distinctive</mark> in the suggestopedic method is that they are <mark class="vocab-word" data-word="devoted">devoted</mark> entirely to assisting recall. The ‘learning’ of the material is assumed to be <mark class="vocab-word" data-word="automatic">automatic</mark> and <mark class="vocab-word" data-word="effortless">effortless</mark>, <mark class="vocab-word" data-word="accomplish">accomplished</mark> while listening to music. The teacher’s task is to assist the students to apply what they have <mark class="vocab-word" data-word="learned">learned</mark> paraconsciously, and in doing so to make it easily <mark class="vocab-word" data-word="accessible">accessible</mark> to consciousness. Another difference from <mark class="vocab-word" data-word="conventional">conventional</mark> teaching is the evidence that students can regularly learn 1000 new words of a foreign language during a suggestopedic session, as well as <mark class="vocab-word" data-word="grammar">grammar</mark> and <mark class="vocab-word" data-word="idiom">idiom</mark>.</p></div>  <div class="parallel-zh"><p>在分为两部分的课程结束之后的几个小时内，会有一个后续课程。该课程会激发学生回忆所介绍的材料。同样，该方法是间接的。学生们不会将注意力集中在试图记住的词汇上，而是着重使用语言进行交流（例如，通过游戏或即兴表演） 。这种方法在语言教学中并不罕见。暗示教学法的独特之处是它们完全致力于协助回忆。材料的“学习”被认为是自动且轻松的，在听音乐的同时完成。教师的任务是协助学生将他们所学的知识通过潜意识应用出来，并使其易于被意识所接受。与常规教学的另一个不同之处在于，证据表明学生可以在暗示教学期间学会1000个新外语单词，以及语法和习语。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Lozanov experimented with teaching by direct suggestion during sleep, hypnosis and <mark class="vocab-word" data-word="trance">trance</mark> states, but found such procedures unnecessary. Hypnosis, <mark class="vocab-word" data-word="yoga">yoga</mark>, Silva mind-control, religious ceremonies and faith <mark class="vocab-word" data-word="healing">healing</mark> are all associated with successful suggestion, but none of their techniques seem to be essential to it. Such <mark class="vocab-word" data-word="ritual">rituals</mark> may be seen as placebos. Lozanov acknowledges that the <mark class="vocab-word" data-word="ritual">ritual</mark> <mark class="vocab-word" data-word="surrounding">surrounding</mark> suggestion in his own system is also a placebo, but maintains that without such a placebo people are unable or afraid to <mark class="vocab-word" data-word="tap">tap</mark> the reserve <mark class="vocab-word" data-word="capacity">capacity</mark> of their brains. Like any placebo, it must be <mark class="vocab-word" data-word="dispense">dispensed</mark> with <mark class="vocab-word" data-word="authority">authority</mark> to be effective. Just as a doctor calls on the full power of <mark class="vocab-word" data-word="autocratic">autocratic</mark> suggestion by insisting that the patient take <mark class="vocab-word" data-word="precisely">precisely</mark> this white <mark class="vocab-word" data-word="capsule">capsule</mark> <mark class="vocab-word" data-word="precisely">precisely</mark> three times a day before meals, Lozanov is categoric in insisting that the suggestopedic session be conducted exactly in the manner <mark class="vocab-word" data-word="designate">designated</mark>, by trained and <mark class="vocab-word" data-word="accredit">accredited</mark> suggestopedic teachers.</p></div>  <div class="parallel-zh"><p>洛扎诺夫在睡觉，催眠和发呆状态下通过直接暗示进行了教学实验，但发现这样的程序并不必要。催眠，瑜伽，席尔瓦（Silva）心理控制，宗教仪式和信仰康复都与成功的暗示有关，但是这些方法似乎都不是必不可少的。这种仪式可以被视为安慰剂。洛扎诺夫（Lozanov）承认在他自己的体系中仪式性的周边暗示也是安慰剂，但他坚持认为，没有这样的安慰剂，人们将无法或害怕挖掘大脑的储备能力。像任何安慰剂一样，必须富有权威才能有效。正如医生通过坚持要求患者每天饭前精确地服用三粒白色胶囊来充分发挥权威暗示的全部力量一样，洛扎诺夫（Lozanov）坚决主张严格按照设计的方式，由受过训练、经过认可的暗示教学法的老师进行暗示教学。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>While suggestopedia has gained some <mark class="vocab-word" data-word="notoriety">notoriety</mark> through success in the teaching of modern languages, few teachers are able to <mark class="vocab-word" data-word="emulate">emulate</mark> the <mark class="vocab-word" data-word="spectacular">spectacular</mark> results of Lozanov and his associates. We can, perhaps, <mark class="vocab-word" data-word="attribute">attribute</mark> <mark class="vocab-word" data-word="mediocre">mediocre</mark> results to an <mark class="vocab-word" data-word="inadequate">inadequate</mark> placebo effect. The students have not developed the appropriate mind set. They are often not <mark class="vocab-word" data-word="motivated">motivated</mark> to learn through this method. They do not have enough ‘faith’. They do not see it as ‘real teaching’, especially as it does not seem to involve the ‘work’ they have <mark class="vocab-word" data-word="learned">learned</mark> to believe is essential to learning.</p></div>  <div class="parallel-zh"><p>尽管暗示教学法通过现代语言教学上的成功声名鹊起，但很少有老师能够模仿洛扎诺夫及其同事的惊人成果。我们也许可以将平庸的结果归因于安慰剂作用不足。学生们尚未建立适当的思维定势。他们通常没有动力通过这种方法学习。他们没有足够的“信仰” 。他们不认为这是“真正的教学”，尤其是当它似乎不涉及他们所认为的对学习至关重要的“努力” 。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"psyche": 1, "radical": 1, "unconscious": 2, "propose": 1, "processing": 2, "durable": 1, "conscious": 1, "perceive": 1, "peripheral": 5, "bind": 1, "lecturer": 1, "auditorium": 1, "elusive": 1, "readily": 1, "imaginative": 1, "phenomenon": 1, "attribute": 2, "counterproductive": 1, "tense": 1, "induce": 1, "fatigue": 1, "indirect": 2, "curriculum": 2, "capacity": 2, "illustration": 1, "variant": 1, "vocabulary": 2, "solemn": 1, "dynamic": 1, "passive": 1, "beforehand": 1, "preliminary": 1, "likewise": 1, "instruct": 1, "stimulate": 1, "improvise": 1, "distinctive": 1, "devoted": 1, "automatic": 1, "effortless": 1, "accomplish": 1, "learned": 2, "accessible": 1, "conventional": 1, "grammar": 1, "idiom": 1, "trance": 1, "yoga": 1, "healing": 1, "ritual": 2, "surrounding": 1, "tap": 1, "dispense": 1, "authority": 1, "autocratic": 1, "precisely": 2, "capsule": 1, "designate": 1, "accredit": 1, "notoriety": 1, "emulate": 1, "spectacular": 1, "mediocre": 1, "inadequate": 1, "motivated": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

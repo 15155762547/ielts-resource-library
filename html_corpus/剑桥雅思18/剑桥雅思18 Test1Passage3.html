@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conquering Earth’s space junk problem 解决地球的太空垃圾问题 - 剑桥雅思18 Test 1 Passage 3 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思18</span>
+                    <span class="badge-tag">Test 1</span>
+                    <span class="badge-tag">Passage 3</span>
+                </div>
+                <h1>Conquering Earth’s space junk problem 解决地球的太空垃圾问题</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/56292.html" target="_blank">https://www.laokaoya.com/56292.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Last year, commercial companies, military and civil departments and <mark class="vocab-word" data-word="amateur">amateurs</mark> sent more than 400 <mark class="vocab-word" data-word="satellite">satellites</mark> into <mark class="vocab-word" data-word="orbit">orbit</mark>, over four times the <mark class="vocab-word" data-word="yearly">yearly</mark> average in the previous <mark class="vocab-word" data-word="decade">decade</mark>. Numbers could rise even more sharply if <mark class="vocab-word" data-word="lead">leading</mark> space companies follow through on plans to <mark class="vocab-word" data-word="deploy">deploy</mark> hundreds to thousands of large <mark class="vocab-word" data-word="constellation">constellations</mark> of <mark class="vocab-word" data-word="satellite">satellites</mark> to space in the next few years.</p><p>All that traffic can <mark class="vocab-word" data-word="lead">lead</mark> to disaster. Ten years ago, a US commercial <mark class="vocab-word" data-word="iridium">Iridium</mark> <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="smash">smashed</mark> into an <mark class="vocab-word" data-word="inactive">inactive</mark> <mark class="vocab-word" data-word="russian">Russian</mark> communications <mark class="vocab-word" data-word="satellite">satellite</mark> called Cosmos-2251, creating thousands of new pieces of space shrapnel that now threaten other <mark class="vocab-word" data-word="satellite">satellites</mark> in low Earth <mark class="vocab-word" data-word="orbit">orbit</mark> – the zone stretching up to 2,000 kilometres in <mark class="vocab-word" data-word="altitude">altitude</mark>. <mark class="vocab-word" data-word="altogether">Altogether</mark>, there are roughly 20,000 human-made objects in <mark class="vocab-word" data-word="orbit">orbit</mark>, from working <mark class="vocab-word" data-word="satellite">satellites</mark> to small rocket pieces. And <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> can’t <mark class="vocab-word" data-word="steer">steer</mark> away from every potential crash, because each move consumes time and fuel that could otherwise be used for the <mark class="vocab-word" data-word="spacecraft">spacecraft</mark>’s main job.</p><p>Concern about space <mark class="vocab-word" data-word="junk">junk</mark> goes back to the beginning of the <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="era">era</mark>, but the number of objects in <mark class="vocab-word" data-word="orbit">orbit</mark> is rising so rapidly that researchers are <mark class="vocab-word" data-word="investigate">investigating</mark> new ways of attacking the problem. Several teams are trying to improve methods of assessing what is in <mark class="vocab-word" data-word="orbit">orbit</mark>, so that <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> can work more <mark class="vocab-word" data-word="efficiently">efficiently</mark> in ever-more-crowded space. Some researchers are now starting to <mark class="vocab-word" data-word="compile">compile</mark> a <mark class="vocab-word" data-word="massive">massive</mark> data set that includes the best possible information on where everything is in <mark class="vocab-word" data-word="orbit">orbit</mark>. Others are developing taxonomies of space <mark class="vocab-word" data-word="debris">debris</mark> – working on measuring properties such as the shape and size of an object, so that <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> know how much to worry about what’s coming their way.</p><p>The alternative, many say, is unthinkable. Just a few uncontrolled space crashes could generate enough <mark class="vocab-word" data-word="debris">debris</mark> to set off a runaway <mark class="vocab-word" data-word="cascade">cascade</mark> of <mark class="vocab-word" data-word="fragment">fragments</mark>, <mark class="vocab-word" data-word="rendering">rendering</mark> near-Earth space unusable.’If we go on like this, we will reach a point of no return,’ says Carolin Frueh, an astrodynamical researcher at Purdue University in WestLafayette, Indiana.</p><p>Even as our ability to monitor space objects increases, so too does the total number of items in <mark class="vocab-word" data-word="orbit">orbit</mark>. That means companies, governments and other players in space are <mark class="vocab-word" data-word="collaborate">collaborating</mark> in new ways to avoid a shared <mark class="vocab-word" data-word="threat">threat</mark>. International groups such as the Inter-Agency Space <mark class="vocab-word" data-word="debris">Debris</mark> <mark class="vocab-word" data-word="coordination">Coordination</mark> Committee have developed <mark class="vocab-word" data-word="guideline">guidelines</mark> on space sustainability. Those include inactivating <mark class="vocab-word" data-word="satellite">satellites</mark> at the end of their useful life by <mark class="vocab-word" data-word="vent">venting</mark> pressurized materials or <mark class="vocab-word" data-word="leftover">leftover</mark> fuel that might <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="explosion">explosions</mark>. The intergovernmental groups also advise lowering <mark class="vocab-word" data-word="satellite">satellites</mark> deep enough into the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark> that they will burn up or <mark class="vocab-word" data-word="disintegrate">disintegrate</mark> within 25 years. But so far, only about half of all missions have <mark class="vocab-word" data-word="abide">abided</mark> by this 25-year goal, says Holger Krag, head of the European Space Agency’s space-debris office in Darmstadt, Germany. <mark class="vocab-word" data-word="operator">Operators</mark> of the planned large <mark class="vocab-word" data-word="constellation">constellations</mark> of <mark class="vocab-word" data-word="satellite">satellites</mark> say they will be responsible <mark class="vocab-word" data-word="steward">stewards</mark> in their <mark class="vocab-word" data-word="enterprise">enterprises</mark> in space, but Krag worries that problems could increase, despite their best intentions.’What happens to those that fail or go <mark class="vocab-word" data-word="bankrupt">bankrupt</mark>?’ he asks.’They are probably not going to spend money to remove their <mark class="vocab-word" data-word="satellite">satellites</mark> from space.’</p><p>In theory, given the vastness of space, <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> should have plenty of room for all these missions to fly safely without ever nearing another object. So some scientists are <mark class="vocab-word" data-word="tackle">tackling</mark> the problem of space <mark class="vocab-word" data-word="junk">junk</mark> by trying to find out where all the <mark class="vocab-word" data-word="debris">debris</mark> is to a high degree of <mark class="vocab-word" data-word="precision">precision</mark>. That would <mark class="vocab-word" data-word="alleviate">alleviate</mark> the need for many of the unnecessary <mark class="vocab-word" data-word="maneuver">maneuvers</mark> that are carried out to avoid potential <mark class="vocab-word" data-word="collision">collisions</mark>.’If you knew <mark class="vocab-word" data-word="precisely">precisely</mark> where everything was, you would almost never have a problem,’ says Marlon Sorge, a space-debris specialist at the <mark class="vocab-word" data-word="aerospace">Aerospace</mark> <mark class="vocab-word" data-word="corporation">Corporation</mark> in El Segundo, California.</p><p>The field is called space traffic management, because it’s similar to managing traffic on the roads or in the air. Think about a busy day at an airport, says Moriba Jah, an astrodynamicist at the University of Texas at Austin: planes line up in the sky, this article is from  website, <mark class="vocab-word" data-word="landing">landing</mark> and taking off close to one another in a carefully choreographed routine. Air-traffic controllers know the location of the planes down to one metre in <mark class="vocab-word" data-word="accuracy">accuracy</mark>. The same can’t be said for space <mark class="vocab-word" data-word="debris">debris</mark>. Not all objects in <mark class="vocab-word" data-word="orbit">orbit</mark> are known, and even those included in <mark class="vocab-word" data-word="database">databases</mark> are not tracked <mark class="vocab-word" data-word="consistently">consistently</mark>.</p><p>An additional problem is that there is no <mark class="vocab-word" data-word="authoritative">authoritative</mark> <mark class="vocab-word" data-word="catalogue">catalogue</mark> that <mark class="vocab-word" data-word="accurate">accurately</mark> lists the <mark class="vocab-word" data-word="orbit">orbits</mark> of all known space <mark class="vocab-word" data-word="debris">debris</mark>. Jah illustrates this with a web-based <mark class="vocab-word" data-word="database">database</mark> that he has developed. It draws on several sources, such as <mark class="vocab-word" data-word="catalogue">catalogues</mark> maintained by the US and <mark class="vocab-word" data-word="russian">Russian</mark> governments, to visualise where objects are in space. When he types in an identifier for a particular space object, the <mark class="vocab-word" data-word="database">database</mark> draws a purple line to <mark class="vocab-word" data-word="designate">designate</mark> its <mark class="vocab-word" data-word="orbit">orbit</mark>. Only this doesn’t quite work for a number of objects, such as a <mark class="vocab-word" data-word="russian">Russian</mark> rocket body <mark class="vocab-word" data-word="designate">designated</mark> in the <mark class="vocab-word" data-word="database">database</mark> as object number 32280. When Jah enters that number, the <mark class="vocab-word" data-word="database">database</mark> draws two purple lines: the US and <mark class="vocab-word" data-word="russian">Russian</mark> sources contain two completely different <mark class="vocab-word" data-word="orbit">orbits</mark> for the same object. Jah says that it is almost impossible to tell which is correct, unless a third source of information made it possible to cross-correlate.</p><p>Jah describes himself as a space environmentalist:’I want to make space a place that is safe to operate, that is free and useful for generations to come.’Until that happens, he argues, the space community will continue devolving into a <mark class="vocab-word" data-word="tragedy">tragedy</mark> in which all spaceflight <mark class="vocab-word" data-word="operator">operators</mark> are <mark class="vocab-word" data-word="pollute">polluting</mark> a common resource.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>去年，商业公司、军事和民用部门以及业余爱好者将超过400颗卫星送入轨道，是过去十年平均数量的四倍还多。如果领先的太空公司按计划在接下来的几年内部署数百到数千个庞大的卫星群到太空，这个数字可能还会进一步急剧上升。</p><p>如此频繁的卫星活动可能导致灾难。十年前，一颗美国商业Iridium卫星撞上了一颗已停用的俄罗斯通信卫星Cosmos-2251，产生数千个太空碎片，现在这些碎片威胁着低地球轨道上的其他卫星。该轨道的高度一直延伸到2,000公里。总共大约有20,000个人造物体在轨道上，包括工作卫星和小型火箭碎片。卫星运营商无法避开每一次潜在的碰撞，因为每次移动都需要时间并消耗燃料，这些资源本来可以用于完成卫星的主要任务。</p><p>对太空碎片的担忧可以追溯到卫星时代的初始阶段，但轨道上的物体数量正在以如此之快的速度增长，以至于研究人员正在探索解决这个问题的新方法。几个团队正在尝试改进评估轨道上物体的方法，以便卫星运营商能够在日益拥挤的太空中更高效地工作。一些研究人员开始编制庞大的数据库，其中包含关于轨道上物体位置的最准确信息。其他人正在开发太空碎片的分类方法，研究如何测量物体的形状和大小等属性，以便卫星运营商知道是否需要担心即将接近的物体。</p><p>许多人认为，另一种情况是不可想象的。只要发生几次失控的太空碰撞，就能够产生足够的碎片，引发连锁反应，使近地空间变得无法使用。“如果继续这样下去，我们将到达一个无法回头的点，”印第安纳州西拉斐特的普渡大学天体动力学研究员Carolin Frueh表示。</p><p>随着我们监测太空物体的能力的增强，轨道上物体的总数也在增加。这意味着公司、政府和太空活动的其他参与者正在以新的方式合作，以避免共同面临的威胁。像国际太空碎片协调委员会这样的国际组织已经制定了太空可持续性发展指南。其中包括在卫星使用寿命结束时通过释放压力材料或剩余燃料来终止卫星，以防止发生爆炸。这些政府间组织还建议将卫星降低到大气层深处，在25年内燃烧或分解掉。但是，位于德国达姆施塔特的欧洲航天局的太空碎片办公室主任Holger Krag表示，到目前为止，只有约一半的卫星符合该25年目标。有计划发射大型卫星群的运营商表示，他们将在太空企业中扮演负责任的管理者角色。但Krag担心，尽管他们抱着最好的意图，但问题可能会恶化。“那些失败或破产的企业会怎样？”他问道。“他们可能不会花钱将卫星从太空中移除出去。”</p><p>从理论上讲，考虑到太空的广袤，卫星运营商应该有足够的空间让所有这些卫星安全地飞行，而不会接近其他物体。因此，一些科学家正在尝试通过精准定位所有碎片来解决太空垃圾问题。这将减少许多避免潜在碰撞而进行的不必要的机动操作。“如果你准确的知道所有东西的位置，那么几乎就永远不会有问题，”位于加利福尼亚州埃尔塞贡多的航天公司的太空碎片专家Marlon Sorge表示。</p><p>这个领域被称为太空交通管理，因为它类似于管理道路或空中交通。想象一下机场繁忙的一天，德克萨斯大学奥斯汀分校的天体动力学家Moriba Jah说道：飞机在天空中排队，按照精心编排的次序紧挨着彼此起降。空中交通管制员准确地了解飞机的位置，精度可达一米。但对于太空碎片来说，情况并非如此。并非所有轨道上的物体都是已知的，即使包含在数据库中的物体也没有得到持续跟踪。</p><p>另一个问题是没有一个权威的目录准确列出所有已知太空碎片的轨道。Jah通过他开发的一个基于网络的数据库来说明该问题。该数据库利用了多个信息源，如美国和俄罗斯政府维护的目录等，以可视化的方式展示物体在太空中的位置。当他输入特定太空物体的标识符时，数据库会绘制一条紫色线来表示其轨道。然而，对于一些物体来说，这并不完全适用，比如在数据库中被标识为32280的俄罗斯火箭残骸。当Jah输入该编号时，数据库绘制了两条紫色线：美国和俄罗斯的信息源对同一个物体展现出两个完全不同的轨道。Jah表示，除非有第三方信息源能够进行交叉验证，否则几乎不可能确定哪一个才是正确的。</p><p>Jah自称太空环保主义者：“我希望使太空成为一个可以安全运营的地方，为子孙后代提供免费和有用的资源。”在这个目标实现之前，他认为，太空界将继续陷入悲剧之中，所有的太空飞行运营商都在污染共同的资源。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Last year, commercial companies, military and civil departments and <mark class="vocab-word" data-word="amateur">amateurs</mark> sent more than 400 <mark class="vocab-word" data-word="satellite">satellites</mark> into <mark class="vocab-word" data-word="orbit">orbit</mark>, over four times the <mark class="vocab-word" data-word="yearly">yearly</mark> average in the previous <mark class="vocab-word" data-word="decade">decade</mark>. Numbers could rise even more sharply if <mark class="vocab-word" data-word="lead">leading</mark> space companies follow through on plans to <mark class="vocab-word" data-word="deploy">deploy</mark> hundreds to thousands of large <mark class="vocab-word" data-word="constellation">constellations</mark> of <mark class="vocab-word" data-word="satellite">satellites</mark> to space in the next few years.</p></div>  <div class="parallel-zh"><p>去年，商业公司、军事和民用部门以及业余爱好者将超过400颗卫星送入轨道，是过去十年平均数量的四倍还多。如果领先的太空公司按计划在接下来的几年内部署数百到数千个庞大的卫星群到太空，这个数字可能还会进一步急剧上升。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>All that traffic can <mark class="vocab-word" data-word="lead">lead</mark> to disaster. Ten years ago, a US commercial <mark class="vocab-word" data-word="iridium">Iridium</mark> <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="smash">smashed</mark> into an <mark class="vocab-word" data-word="inactive">inactive</mark> <mark class="vocab-word" data-word="russian">Russian</mark> communications <mark class="vocab-word" data-word="satellite">satellite</mark> called Cosmos-2251, creating thousands of new pieces of space shrapnel that now threaten other <mark class="vocab-word" data-word="satellite">satellites</mark> in low Earth <mark class="vocab-word" data-word="orbit">orbit</mark> – the zone stretching up to 2,000 kilometres in <mark class="vocab-word" data-word="altitude">altitude</mark>. <mark class="vocab-word" data-word="altogether">Altogether</mark>, there are roughly 20,000 human-made objects in <mark class="vocab-word" data-word="orbit">orbit</mark>, from working <mark class="vocab-word" data-word="satellite">satellites</mark> to small rocket pieces. And <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> can’t <mark class="vocab-word" data-word="steer">steer</mark> away from every potential crash, because each move consumes time and fuel that could otherwise be used for the <mark class="vocab-word" data-word="spacecraft">spacecraft</mark>’s main job.</p></div>  <div class="parallel-zh"><p>如此频繁的卫星活动可能导致灾难。十年前，一颗美国商业Iridium卫星撞上了一颗已停用的俄罗斯通信卫星Cosmos-2251，产生数千个太空碎片，现在这些碎片威胁着低地球轨道上的其他卫星。该轨道的高度一直延伸到2,000公里。总共大约有20,000个人造物体在轨道上，包括工作卫星和小型火箭碎片。卫星运营商无法避开每一次潜在的碰撞，因为每次移动都需要时间并消耗燃料，这些资源本来可以用于完成卫星的主要任务。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Concern about space <mark class="vocab-word" data-word="junk">junk</mark> goes back to the beginning of the <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="era">era</mark>, but the number of objects in <mark class="vocab-word" data-word="orbit">orbit</mark> is rising so rapidly that researchers are <mark class="vocab-word" data-word="investigate">investigating</mark> new ways of attacking the problem. Several teams are trying to improve methods of assessing what is in <mark class="vocab-word" data-word="orbit">orbit</mark>, so that <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> can work more <mark class="vocab-word" data-word="efficiently">efficiently</mark> in ever-more-crowded space. Some researchers are now starting to <mark class="vocab-word" data-word="compile">compile</mark> a <mark class="vocab-word" data-word="massive">massive</mark> data set that includes the best possible information on where everything is in <mark class="vocab-word" data-word="orbit">orbit</mark>. Others are developing taxonomies of space <mark class="vocab-word" data-word="debris">debris</mark> – working on measuring properties such as the shape and size of an object, so that <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> know how much to worry about what’s coming their way.</p></div>  <div class="parallel-zh"><p>对太空碎片的担忧可以追溯到卫星时代的初始阶段，但轨道上的物体数量正在以如此之快的速度增长，以至于研究人员正在探索解决这个问题的新方法。几个团队正在尝试改进评估轨道上物体的方法，以便卫星运营商能够在日益拥挤的太空中更高效地工作。一些研究人员开始编制庞大的数据库，其中包含关于轨道上物体位置的最准确信息。其他人正在开发太空碎片的分类方法，研究如何测量物体的形状和大小等属性，以便卫星运营商知道是否需要担心即将接近的物体。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The alternative, many say, is unthinkable. Just a few uncontrolled space crashes could generate enough <mark class="vocab-word" data-word="debris">debris</mark> to set off a runaway <mark class="vocab-word" data-word="cascade">cascade</mark> of <mark class="vocab-word" data-word="fragment">fragments</mark>, <mark class="vocab-word" data-word="rendering">rendering</mark> near-Earth space unusable.’If we go on like this, we will reach a point of no return,’ says Carolin Frueh, an astrodynamical researcher at Purdue University in WestLafayette, Indiana.</p></div>  <div class="parallel-zh"><p>许多人认为，另一种情况是不可想象的。只要发生几次失控的太空碰撞，就能够产生足够的碎片，引发连锁反应，使近地空间变得无法使用。“如果继续这样下去，我们将到达一个无法回头的点，”印第安纳州西拉斐特的普渡大学天体动力学研究员Carolin Frueh表示。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Even as our ability to monitor space objects increases, so too does the total number of items in <mark class="vocab-word" data-word="orbit">orbit</mark>. That means companies, governments and other players in space are <mark class="vocab-word" data-word="collaborate">collaborating</mark> in new ways to avoid a shared <mark class="vocab-word" data-word="threat">threat</mark>. International groups such as the Inter-Agency Space <mark class="vocab-word" data-word="debris">Debris</mark> <mark class="vocab-word" data-word="coordination">Coordination</mark> Committee have developed <mark class="vocab-word" data-word="guideline">guidelines</mark> on space sustainability. Those include inactivating <mark class="vocab-word" data-word="satellite">satellites</mark> at the end of their useful life by <mark class="vocab-word" data-word="vent">venting</mark> pressurized materials or <mark class="vocab-word" data-word="leftover">leftover</mark> fuel that might <mark class="vocab-word" data-word="lead">lead</mark> to <mark class="vocab-word" data-word="explosion">explosions</mark>. The intergovernmental groups also advise lowering <mark class="vocab-word" data-word="satellite">satellites</mark> deep enough into the <mark class="vocab-word" data-word="atmosphere">atmosphere</mark> that they will burn up or <mark class="vocab-word" data-word="disintegrate">disintegrate</mark> within 25 years. But so far, only about half of all missions have <mark class="vocab-word" data-word="abide">abided</mark> by this 25-year goal, says Holger Krag, head of the European Space Agency’s space-debris office in Darmstadt, Germany. <mark class="vocab-word" data-word="operator">Operators</mark> of the planned large <mark class="vocab-word" data-word="constellation">constellations</mark> of <mark class="vocab-word" data-word="satellite">satellites</mark> say they will be responsible <mark class="vocab-word" data-word="steward">stewards</mark> in their <mark class="vocab-word" data-word="enterprise">enterprises</mark> in space, but Krag worries that problems could increase, despite their best intentions.’What happens to those that fail or go <mark class="vocab-word" data-word="bankrupt">bankrupt</mark>?’ he asks.’They are probably not going to spend money to remove their <mark class="vocab-word" data-word="satellite">satellites</mark> from space.’</p></div>  <div class="parallel-zh"><p>随着我们监测太空物体的能力的增强，轨道上物体的总数也在增加。这意味着公司、政府和太空活动的其他参与者正在以新的方式合作，以避免共同面临的威胁。像国际太空碎片协调委员会这样的国际组织已经制定了太空可持续性发展指南。其中包括在卫星使用寿命结束时通过释放压力材料或剩余燃料来终止卫星，以防止发生爆炸。这些政府间组织还建议将卫星降低到大气层深处，在25年内燃烧或分解掉。但是，位于德国达姆施塔特的欧洲航天局的太空碎片办公室主任Holger Krag表示，到目前为止，只有约一半的卫星符合该25年目标。有计划发射大型卫星群的运营商表示，他们将在太空企业中扮演负责任的管理者角色。但Krag担心，尽管他们抱着最好的意图，但问题可能会恶化。“那些失败或破产的企业会怎样？”他问道。“他们可能不会花钱将卫星从太空中移除出去。”</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In theory, given the vastness of space, <mark class="vocab-word" data-word="satellite">satellite</mark> <mark class="vocab-word" data-word="operator">operators</mark> should have plenty of room for all these missions to fly safely without ever nearing another object. So some scientists are <mark class="vocab-word" data-word="tackle">tackling</mark> the problem of space <mark class="vocab-word" data-word="junk">junk</mark> by trying to find out where all the <mark class="vocab-word" data-word="debris">debris</mark> is to a high degree of <mark class="vocab-word" data-word="precision">precision</mark>. That would <mark class="vocab-word" data-word="alleviate">alleviate</mark> the need for many of the unnecessary <mark class="vocab-word" data-word="maneuver">maneuvers</mark> that are carried out to avoid potential <mark class="vocab-word" data-word="collision">collisions</mark>.’If you knew <mark class="vocab-word" data-word="precisely">precisely</mark> where everything was, you would almost never have a problem,’ says Marlon Sorge, a space-debris specialist at the <mark class="vocab-word" data-word="aerospace">Aerospace</mark> <mark class="vocab-word" data-word="corporation">Corporation</mark> in El Segundo, California.</p></div>  <div class="parallel-zh"><p>从理论上讲，考虑到太空的广袤，卫星运营商应该有足够的空间让所有这些卫星安全地飞行，而不会接近其他物体。因此，一些科学家正在尝试通过精准定位所有碎片来解决太空垃圾问题。这将减少许多避免潜在碰撞而进行的不必要的机动操作。“如果你准确的知道所有东西的位置，那么几乎就永远不会有问题，”位于加利福尼亚州埃尔塞贡多的航天公司的太空碎片专家Marlon Sorge表示。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>The field is called space traffic management, because it’s similar to managing traffic on the roads or in the air. Think about a busy day at an airport, says Moriba Jah, an astrodynamicist at the University of Texas at Austin: planes line up in the sky, this article is from  website, <mark class="vocab-word" data-word="landing">landing</mark> and taking off close to one another in a carefully choreographed routine. Air-traffic controllers know the location of the planes down to one metre in <mark class="vocab-word" data-word="accuracy">accuracy</mark>. The same can’t be said for space <mark class="vocab-word" data-word="debris">debris</mark>. Not all objects in <mark class="vocab-word" data-word="orbit">orbit</mark> are known, and even those included in <mark class="vocab-word" data-word="database">databases</mark> are not tracked <mark class="vocab-word" data-word="consistently">consistently</mark>.</p></div>  <div class="parallel-zh"><p>这个领域被称为太空交通管理，因为它类似于管理道路或空中交通。想象一下机场繁忙的一天，德克萨斯大学奥斯汀分校的天体动力学家Moriba Jah说道：飞机在天空中排队，按照精心编排的次序紧挨着彼此起降。空中交通管制员准确地了解飞机的位置，精度可达一米。但对于太空碎片来说，情况并非如此。并非所有轨道上的物体都是已知的，即使包含在数据库中的物体也没有得到持续跟踪。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>An additional problem is that there is no <mark class="vocab-word" data-word="authoritative">authoritative</mark> <mark class="vocab-word" data-word="catalogue">catalogue</mark> that <mark class="vocab-word" data-word="accurate">accurately</mark> lists the <mark class="vocab-word" data-word="orbit">orbits</mark> of all known space <mark class="vocab-word" data-word="debris">debris</mark>. Jah illustrates this with a web-based <mark class="vocab-word" data-word="database">database</mark> that he has developed. It draws on several sources, such as <mark class="vocab-word" data-word="catalogue">catalogues</mark> maintained by the US and <mark class="vocab-word" data-word="russian">Russian</mark> governments, to visualise where objects are in space. When he types in an identifier for a particular space object, the <mark class="vocab-word" data-word="database">database</mark> draws a purple line to <mark class="vocab-word" data-word="designate">designate</mark> its <mark class="vocab-word" data-word="orbit">orbit</mark>. Only this doesn’t quite work for a number of objects, such as a <mark class="vocab-word" data-word="russian">Russian</mark> rocket body <mark class="vocab-word" data-word="designate">designated</mark> in the <mark class="vocab-word" data-word="database">database</mark> as object number 32280. When Jah enters that number, the <mark class="vocab-word" data-word="database">database</mark> draws two purple lines: the US and <mark class="vocab-word" data-word="russian">Russian</mark> sources contain two completely different <mark class="vocab-word" data-word="orbit">orbits</mark> for the same object. Jah says that it is almost impossible to tell which is correct, unless a third source of information made it possible to cross-correlate.</p></div>  <div class="parallel-zh"><p>另一个问题是没有一个权威的目录准确列出所有已知太空碎片的轨道。Jah通过他开发的一个基于网络的数据库来说明该问题。该数据库利用了多个信息源，如美国和俄罗斯政府维护的目录等，以可视化的方式展示物体在太空中的位置。当他输入特定太空物体的标识符时，数据库会绘制一条紫色线来表示其轨道。然而，对于一些物体来说，这并不完全适用，比如在数据库中被标识为32280的俄罗斯火箭残骸。当Jah输入该编号时，数据库绘制了两条紫色线：美国和俄罗斯的信息源对同一个物体展现出两个完全不同的轨道。Jah表示，除非有第三方信息源能够进行交叉验证，否则几乎不可能确定哪一个才是正确的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Jah describes himself as a space environmentalist:’I want to make space a place that is safe to operate, that is free and useful for generations to come.’Until that happens, he argues, the space community will continue devolving into a <mark class="vocab-word" data-word="tragedy">tragedy</mark> in which all spaceflight <mark class="vocab-word" data-word="operator">operators</mark> are <mark class="vocab-word" data-word="pollute">polluting</mark> a common resource.</p></div>  <div class="parallel-zh"><p>Jah自称太空环保主义者：“我希望使太空成为一个可以安全运营的地方，为子孙后代提供免费和有用的资源。”在这个目标实现之前，他认为，太空界将继续陷入悲剧之中，所有的太空飞行运营商都在污染共同的资源。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"amateur": 1, "satellite": 15, "orbit": 11, "yearly": 1, "decade": 1, "lead": 3, "deploy": 1, "constellation": 2, "iridium": 1, "smash": 1, "inactive": 1, "russian": 4, "altitude": 1, "altogether": 1, "operator": 6, "steer": 1, "spacecraft": 1, "junk": 2, "era": 1, "investigate": 1, "efficiently": 1, "compile": 1, "massive": 1, "debris": 6, "cascade": 1, "fragment": 1, "rendering": 1, "collaborate": 1, "threat": 1, "coordination": 1, "guideline": 1, "vent": 1, "leftover": 1, "explosion": 1, "atmosphere": 1, "disintegrate": 1, "abide": 1, "steward": 1, "enterprise": 1, "bankrupt": 1, "tackle": 1, "precision": 1, "alleviate": 1, "maneuver": 1, "collision": 1, "precisely": 1, "aerospace": 1, "corporation": 1, "landing": 1, "accuracy": 1, "database": 5, "consistently": 1, "authoritative": 1, "catalogue": 2, "accurate": 1, "designate": 2, "tragedy": 1, "pollute": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

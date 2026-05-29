@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Migrations 伟大的迁徙 - 剑桥雅思11 Test 3 Passage 2 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思11</span>
+                    <span class="badge-tag">Test 3</span>
+                    <span class="badge-tag">Passage 2</span>
+                </div>
+                <h1>Great Migrations 伟大的迁徙</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29999.html" target="_blank">https://www.laokaoya.com/29999.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Animalmigration, however it is defined, is far more than just the movement of animals.It can loosely be described as travel that takes place at regular <mark class="vocab-word" data-word="interval">intervals</mark> – often in an annual cycle – that may involve many members of a species, and is rewarded only after a long journey.It suggestsinheritedinstinct.The <mark class="vocab-word" data-word="biologist">biologist</mark> Hugh Dingle has identified five characteristics that apply, in varying degrees and combinations, to all <mark class="vocab-word" data-word="migration">migrations</mark>.They areprolongedmovements that carry animals outside familiar <mark class="vocab-word" data-word="habitat">habitats</mark>; they tend to belinear, not zigzaggy; they involve special behaviours <mark class="vocab-word" data-word="concerning">concerning</mark> preparation (such as overfeeding) and arrival; they demand special <mark class="vocab-word" data-word="allocation">allocations</mark> of energy.And one more: <mark class="vocab-word" data-word="migrate">migrating</mark> animals maintain an intense attentiveness to the greater mission, which keeps them undistracted by <mark class="vocab-word" data-word="temptation">temptations</mark> and undeterred by challenges that would turn other animals aside.</p><p>An <mark class="vocab-word" data-word="arctic">arctic</mark> tern, on its 20,000 km flight from the extreme south of South America to the <mark class="vocab-word" data-word="arctic">Arctic</mark> circle, will take no notice of a nice <mark class="vocab-word" data-word="smelly">smelly</mark> <mark class="vocab-word" data-word="herring">herring</mark> offered from a bird-watcher’s boat along the way.While local <mark class="vocab-word" data-word="gull">gulls</mark> will divevoraciouslyfor such <mark class="vocab-word" data-word="handout">handouts</mark>, the tern flies on.Why? The <mark class="vocab-word" data-word="arctic">arctic</mark> tern resistsdistractionbecause it is driven at that moment by aninstinctivesense of something we humans find admirable: larger purpose.In other words, it isdeterminedto reach its destination.The bird senses that it can eat, rest and <mark class="vocab-word" data-word="mate">mate</mark> later.Right now it is totally focused on the journey; its undivided <mark class="vocab-word" data-word="intent">intent</mark> is arrival.Reaching some <mark class="vocab-word" data-word="gravel">gravelly</mark> <mark class="vocab-word" data-word="coastline">coastline</mark> in the <mark class="vocab-word" data-word="arctic">Arctic</mark>, upon which other <mark class="vocab-word" data-word="arctic">arctic</mark> terns have <mark class="vocab-word" data-word="converge">converged</mark>, will serve its larger purpose as shaped by <mark class="vocab-word" data-word="evolution">evolution</mark>: finding a place, a time, and a set of <mark class="vocab-word" data-word="circumstance">circumstances</mark> in which it can successfullyhatchand rearoffspring.</p><p>Butmigrationis a complex issue, and biologistsdefineit differently, depending in part on what sorts of animals they study.Joel Berger, of the University of Montana, who works on the American pronghorn and other largeterrestrialmammals, prefers what he calls a simple, practical definition <mark class="vocab-word" data-word="suite">suited</mark> to his <mark class="vocab-word" data-word="beast">beasts</mark>: ‘movements from a <mark class="vocab-word" data-word="seasonal">seasonal</mark> home area away to another home area and back again’.Generally the reason for such <mark class="vocab-word" data-word="seasonal">seasonal</mark> back-and-forth movement is to seek resources that aren’t available within a single area year-round.</p><p>But dailyverticalmovements by <mark class="vocab-word" data-word="zooplankton">zooplankton</mark> in the ocean – <mark class="vocab-word" data-word="upward">upward</mark> by night to seek food, <mark class="vocab-word" data-word="downward">downward</mark> by day to escape <mark class="vocab-word" data-word="predator">predators</mark> – can also be consideredmigration.So can the movement of aphids when, having <mark class="vocab-word" data-word="deplete">depleted</mark> the young leaves on one food plant, theiroffspringthen fly onward to a different host plant, with no one aphid ever returning to where it started.</p><p>Dingle is anevolutionarybiologist who studies insects.His definition is moreintricatethan Berger’s, <mark class="vocab-word" data-word="cite">citing</mark> those five features that distinguishmigrationfrom other forms of movement.They allow for the fact that, for example, aphids will become sensitive to blue light (from the sky) when it’s time for takeoff on their big journey, and sensitive to yellow light (reflected from <mark class="vocab-word" data-word="tender">tender</mark> young leaves) when it’s appropriate to land.Birds will fatten themselves with heavy feeding in advance of a long migrational flight.The value of his definition, Dingle argues, is that it focuses attention on what thephenomenonof wildebeestmigrationshares with thephenomenonof the aphids, and therefore helps guide researchers towards understanding howevolutionhas produced them all.</p><p>Human behaviour, however, is having adetrimentalimpact on animalmigration.The pronghorn, which <mark class="vocab-word" data-word="resemble">resembles</mark> an <mark class="vocab-word" data-word="antelope">antelope</mark>, though they are unrelated, is the fastest landmammalof the New World.One population, which spends the summer in the <mark class="vocab-word" data-word="mountainous">mountainous</mark> Grand Teton National Park of the western USA, follows a narrowroutefrom its summer range in the mountains, across a river, and down onto the plains.Here they wait out the <mark class="vocab-word" data-word="frozen">frozen</mark> months, feeding mainly on sagebrush <mark class="vocab-word" data-word="blown">blown</mark> clear of snow.These pronghorn arenotablefor the invariance of theirmigrationrouteand theseverityof its constriction at three bottlenecks.If they can’t pass through each of the three during their springmigration, they can’t reach their <mark class="vocab-word" data-word="bounty">bounty</mark> of summer <mark class="vocab-word" data-word="graze">grazing</mark>;if they can’t pass through again in autumn, escaping south onto those windblown plains, they are likely to die trying to overwinter in the deep snow.Pronghorn, <mark class="vocab-word" data-word="dependent">dependent</mark> on distance vision and speed to keep safe from <mark class="vocab-word" data-word="predator">predators</mark>, <mark class="vocab-word" data-word="traverse">traverse</mark> high, open shoulders of land, where they can see and run.At one of the bottlenecks, forested hills rise to form a V, leaving acorridorof open ground only about 150 metres wide, filled with private homes.Increasing development is <mark class="vocab-word" data-word="lead">leading</mark> toward a <mark class="vocab-word" data-word="crisis">crisis</mark> for the pronghorn, <mark class="vocab-word" data-word="threatening">threatening</mark> to <mark class="vocab-word" data-word="choke">choke</mark> off their passageway.</p><p><mark class="vocab-word" data-word="conservation">Conservation</mark> scientists, along with some <mark class="vocab-word" data-word="biologist">biologists</mark> and land managers within the USA’s National Park Service and other agencies, are now working topreservemigrational behaviours, not just species and <mark class="vocab-word" data-word="habitat">habitats</mark>.A National Forest has recognised the path of the pronghorn, much of which passes across its land, as a protectedmigrationcorridor.But neither the Forest Service nor the Park Service can control what happens on private land at abottleneck.And with certain other <mark class="vocab-word" data-word="migrate">migrating</mark> species, the challenge is <mark class="vocab-word" data-word="complicated">complicated</mark> further – by <mark class="vocab-word" data-word="vastly">vastly</mark> greater distances <mark class="vocab-word" data-word="traverse">traversed</mark>, more jurisdictions, more borders, more dangers along the way.We will require <mark class="vocab-word" data-word="wisdom">wisdom</mark> and resoluteness to ensure that <mark class="vocab-word" data-word="migrate">migrating</mark> species can continue their journeying a while longer.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>无论如何定义动物迁徙，它都不仅仅是动物的移动而已。它可以大致被描述为按照规律的间隔（通常以一年为周期）所进行的旅行。这通常涉及某一种群中的大部分成员，并且只有在漫长的旅程之后才能得到奖励。这种行为显示出它们的遗传本能。生物学家Hugh Dingle总结出5个在不同程度上或者按照不同组合适用于所有迁徙的特点。它们是漫长的移动，将动物带出熟悉的栖息地；它们通常是线性的，而非蜿蜒曲折的；它们涉及到与准备（如过量饮食）和到达相关的特殊行为；它们需要独特的能量分配。此外还有一点，迁徙中的动物对这一伟大的任务高度专注。这让它们不会被诱惑所干扰，面对让其他动物止步不前的挑战不屈不挠。</p><p>一只北极燕鸥在它从南美最南端到北极圈长达20000公里的飞行中，不会注意到路途上鸟类观察者的小船所提供的美味鲱鱼。尽管当地海鸥会为这些馈赠而贪婪地俯冲下来，燕鸥却继续向前飞行。这是为什么呢？北极燕鸥之所以拒绝这一诱惑是因为那时它被一种我们人类十分钦佩的本能所驱动着，即更大的目标。换句话说，它下定决心要到达自己的目的地。这只鸟感觉自己可以稍后进食、休息和交配。现在，它全神贯注于这一旅程，全部的心思都是抵达。到达北极沙砾遍布、其他北极燕鸥聚集的海岸便能达成由进化所塑造出来的更大的目标：找到某个地方，某个时间，以及一系列的环境条件。在其中，它可以成功地孵化和养育后代。</p><p>但是，迁徙是一个复杂的问题，根据生物学家所研究的动物种类不同，他们对它的定义也各有不同。蒙大拿大学、研究美国叉角羚和其他大型陆生哺乳动物的Joel Berger，倾向于使用一个适用于他所研究的动物类型的，简单实用的定义：“从一个季节性的栖息地离开，到另外一个栖息地去，并再次返回的过程”。大体来说，这种季节性往返移动的原因是为了寻找在某个单一区域并非全年存在的资源。</p><p>但是，海洋中浮游生物每天的垂直移动-夜里向上寻找食物，白天向下躲避捕食者-也可以被认为是迁徙。蚜虫的活动同样如此，在吃光了一株植物上的嫩叶之后，它们的后代会飞到一株不同的宿主植物上。没有一个蚜虫会返回到出发的地方。</p><p>Dingle是一名研究昆虫的进化生物学家。他的定义与Berger相比要更加精致一些，列举出迁徙区别于其他形式移动的5个特征。它们考虑到以下事实：例如蚜虫在开启自己宏大旅程的时候会变得对来自天空的蓝色光线更为敏感，而在适合降落的时候会对反射自嫩叶的黄色光线更为敏感。鸟类会在漫长迁徙飞行之前会大量饮食来让自身变得肥胖。Dingle认为，其定义的价值在于，它将注意力放在角马迁徙与蚜虫迁徙现象的共性上，并由此来帮助引导研究者理解进化是如何产生所有这些共性的。</p><p>然而，人类行为对动物迁徙有着负面影响。叉角羚虽然与羚羊无关，但看起来很像。它是新世界速度最快的陆生哺乳动物。其中一个族群会在美国西部大提顿国家公园的山脉之间度过夏天，然后从其山间的夏季牧场沿一条狭窄的路径南下，穿过河流，到达平原。在这里，他们等待寒冷月份结束，主要以被风吹过露出雪面的灌木为生。这些叉羚羊之所以引人注目是因为其迁徙路线的不变性，以及三个瓶颈的严重限制。如果它们在春季迁徙中无法通过三个中的任何一个，它们就不能到达食物充足的夏季草场。如果他们在秋季时不能再次通过，就无法向南逃到被风吹拂的平原上，并很有可能在试图度过厚厚冰雪的冬季中死亡。叉羚羊依赖其远视能力和速度来躲避捕食者。他们穿行于陆地高耸开阔的地带，便于四处观察和奔跑。在其中一个瓶颈中，遍布森林的山峰耸立，形成V字形状，只留下一条大约150米宽的走廊。其间充满私人住宅。不断的发展正在引发一场叉羚羊的生存危机，有堵塞它们通道的风险。</p><p>物种保护科学家，以及来自美国国家公园管理局和其他机构的一些生物学家和土地管理者，现在正努力保护动物的迁徙行为，而不仅仅是它们的种群和栖息地。一片国家森林将叉角羚的迁徙路线（很大一部分路径要穿行其中）列为受保护的迁徙走廊。但无论是森林服务局还是公园服务局都无法控制瓶颈地带私人土地上所发生的事情。对于其他一些迁徙物种来说，挑战要更加复杂一些。它们一路上穿越更长的距离，更多的管辖区，更多的边境，面对更多的危险。我们需要智慧和决心来确保迁徙中的物种能够将他们的旅途进行的更长久一些。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Animalmigration, however it is defined, is far more than just the movement of animals.It can loosely be described as travel that takes place at regular <mark class="vocab-word" data-word="interval">intervals</mark> – often in an annual cycle – that may involve many members of a species, and is rewarded only after a long journey.It suggestsinheritedinstinct.The <mark class="vocab-word" data-word="biologist">biologist</mark> Hugh Dingle has identified five characteristics that apply, in varying degrees and combinations, to all <mark class="vocab-word" data-word="migration">migrations</mark>.They areprolongedmovements that carry animals outside familiar <mark class="vocab-word" data-word="habitat">habitats</mark>; they tend to belinear, not zigzaggy; they involve special behaviours <mark class="vocab-word" data-word="concerning">concerning</mark> preparation (such as overfeeding) and arrival; they demand special <mark class="vocab-word" data-word="allocation">allocations</mark> of energy.And one more: <mark class="vocab-word" data-word="migrate">migrating</mark> animals maintain an intense attentiveness to the greater mission, which keeps them undistracted by <mark class="vocab-word" data-word="temptation">temptations</mark> and undeterred by challenges that would turn other animals aside.</p></div>  <div class="parallel-zh"><p>无论如何定义动物迁徙，它都不仅仅是动物的移动而已。它可以大致被描述为按照规律的间隔（通常以一年为周期）所进行的旅行。这通常涉及某一种群中的大部分成员，并且只有在漫长的旅程之后才能得到奖励。这种行为显示出它们的遗传本能。生物学家Hugh Dingle总结出5个在不同程度上或者按照不同组合适用于所有迁徙的特点。它们是漫长的移动，将动物带出熟悉的栖息地；它们通常是线性的，而非蜿蜒曲折的；它们涉及到与准备（如过量饮食）和到达相关的特殊行为；它们需要独特的能量分配。此外还有一点，迁徙中的动物对这一伟大的任务高度专注。这让它们不会被诱惑所干扰，面对让其他动物止步不前的挑战不屈不挠。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>An <mark class="vocab-word" data-word="arctic">arctic</mark> tern, on its 20,000 km flight from the extreme south of South America to the <mark class="vocab-word" data-word="arctic">Arctic</mark> circle, will take no notice of a nice <mark class="vocab-word" data-word="smelly">smelly</mark> <mark class="vocab-word" data-word="herring">herring</mark> offered from a bird-watcher’s boat along the way.While local <mark class="vocab-word" data-word="gull">gulls</mark> will divevoraciouslyfor such <mark class="vocab-word" data-word="handout">handouts</mark>, the tern flies on.Why? The <mark class="vocab-word" data-word="arctic">arctic</mark> tern resistsdistractionbecause it is driven at that moment by aninstinctivesense of something we humans find admirable: larger purpose.In other words, it isdeterminedto reach its destination.The bird senses that it can eat, rest and <mark class="vocab-word" data-word="mate">mate</mark> later.Right now it is totally focused on the journey; its undivided <mark class="vocab-word" data-word="intent">intent</mark> is arrival.Reaching some <mark class="vocab-word" data-word="gravel">gravelly</mark> <mark class="vocab-word" data-word="coastline">coastline</mark> in the <mark class="vocab-word" data-word="arctic">Arctic</mark>, upon which other <mark class="vocab-word" data-word="arctic">arctic</mark> terns have <mark class="vocab-word" data-word="converge">converged</mark>, will serve its larger purpose as shaped by <mark class="vocab-word" data-word="evolution">evolution</mark>: finding a place, a time, and a set of <mark class="vocab-word" data-word="circumstance">circumstances</mark> in which it can successfullyhatchand rearoffspring.</p></div>  <div class="parallel-zh"><p>一只北极燕鸥在它从南美最南端到北极圈长达20000公里的飞行中，不会注意到路途上鸟类观察者的小船所提供的美味鲱鱼。尽管当地海鸥会为这些馈赠而贪婪地俯冲下来，燕鸥却继续向前飞行。这是为什么呢？北极燕鸥之所以拒绝这一诱惑是因为那时它被一种我们人类十分钦佩的本能所驱动着，即更大的目标。换句话说，它下定决心要到达自己的目的地。这只鸟感觉自己可以稍后进食、休息和交配。现在，它全神贯注于这一旅程，全部的心思都是抵达。到达北极沙砾遍布、其他北极燕鸥聚集的海岸便能达成由进化所塑造出来的更大的目标：找到某个地方，某个时间，以及一系列的环境条件。在其中，它可以成功地孵化和养育后代。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Butmigrationis a complex issue, and biologistsdefineit differently, depending in part on what sorts of animals they study.Joel Berger, of the University of Montana, who works on the American pronghorn and other largeterrestrialmammals, prefers what he calls a simple, practical definition <mark class="vocab-word" data-word="suite">suited</mark> to his <mark class="vocab-word" data-word="beast">beasts</mark>: ‘movements from a <mark class="vocab-word" data-word="seasonal">seasonal</mark> home area away to another home area and back again’.Generally the reason for such <mark class="vocab-word" data-word="seasonal">seasonal</mark> back-and-forth movement is to seek resources that aren’t available within a single area year-round.</p></div>  <div class="parallel-zh"><p>但是，迁徙是一个复杂的问题，根据生物学家所研究的动物种类不同，他们对它的定义也各有不同。蒙大拿大学、研究美国叉角羚和其他大型陆生哺乳动物的Joel Berger，倾向于使用一个适用于他所研究的动物类型的，简单实用的定义：“从一个季节性的栖息地离开，到另外一个栖息地去，并再次返回的过程”。大体来说，这种季节性往返移动的原因是为了寻找在某个单一区域并非全年存在的资源。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>But dailyverticalmovements by <mark class="vocab-word" data-word="zooplankton">zooplankton</mark> in the ocean – <mark class="vocab-word" data-word="upward">upward</mark> by night to seek food, <mark class="vocab-word" data-word="downward">downward</mark> by day to escape <mark class="vocab-word" data-word="predator">predators</mark> – can also be consideredmigration.So can the movement of aphids when, having <mark class="vocab-word" data-word="deplete">depleted</mark> the young leaves on one food plant, theiroffspringthen fly onward to a different host plant, with no one aphid ever returning to where it started.</p></div>  <div class="parallel-zh"><p>但是，海洋中浮游生物每天的垂直移动-夜里向上寻找食物，白天向下躲避捕食者-也可以被认为是迁徙。蚜虫的活动同样如此，在吃光了一株植物上的嫩叶之后，它们的后代会飞到一株不同的宿主植物上。没有一个蚜虫会返回到出发的地方。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Dingle is anevolutionarybiologist who studies insects.His definition is moreintricatethan Berger’s, <mark class="vocab-word" data-word="cite">citing</mark> those five features that distinguishmigrationfrom other forms of movement.They allow for the fact that, for example, aphids will become sensitive to blue light (from the sky) when it’s time for takeoff on their big journey, and sensitive to yellow light (reflected from <mark class="vocab-word" data-word="tender">tender</mark> young leaves) when it’s appropriate to land.Birds will fatten themselves with heavy feeding in advance of a long migrational flight.The value of his definition, Dingle argues, is that it focuses attention on what thephenomenonof wildebeestmigrationshares with thephenomenonof the aphids, and therefore helps guide researchers towards understanding howevolutionhas produced them all.</p></div>  <div class="parallel-zh"><p>Dingle是一名研究昆虫的进化生物学家。他的定义与Berger相比要更加精致一些，列举出迁徙区别于其他形式移动的5个特征。它们考虑到以下事实：例如蚜虫在开启自己宏大旅程的时候会变得对来自天空的蓝色光线更为敏感，而在适合降落的时候会对反射自嫩叶的黄色光线更为敏感。鸟类会在漫长迁徙飞行之前会大量饮食来让自身变得肥胖。Dingle认为，其定义的价值在于，它将注意力放在角马迁徙与蚜虫迁徙现象的共性上，并由此来帮助引导研究者理解进化是如何产生所有这些共性的。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Human behaviour, however, is having adetrimentalimpact on animalmigration.The pronghorn, which <mark class="vocab-word" data-word="resemble">resembles</mark> an <mark class="vocab-word" data-word="antelope">antelope</mark>, though they are unrelated, is the fastest landmammalof the New World.One population, which spends the summer in the <mark class="vocab-word" data-word="mountainous">mountainous</mark> Grand Teton National Park of the western USA, follows a narrowroutefrom its summer range in the mountains, across a river, and down onto the plains.Here they wait out the <mark class="vocab-word" data-word="frozen">frozen</mark> months, feeding mainly on sagebrush <mark class="vocab-word" data-word="blown">blown</mark> clear of snow.These pronghorn arenotablefor the invariance of theirmigrationrouteand theseverityof its constriction at three bottlenecks.If they can’t pass through each of the three during their springmigration, they can’t reach their <mark class="vocab-word" data-word="bounty">bounty</mark> of summer <mark class="vocab-word" data-word="graze">grazing</mark>;if they can’t pass through again in autumn, escaping south onto those windblown plains, they are likely to die trying to overwinter in the deep snow.Pronghorn, <mark class="vocab-word" data-word="dependent">dependent</mark> on distance vision and speed to keep safe from <mark class="vocab-word" data-word="predator">predators</mark>, <mark class="vocab-word" data-word="traverse">traverse</mark> high, open shoulders of land, where they can see and run.At one of the bottlenecks, forested hills rise to form a V, leaving acorridorof open ground only about 150 metres wide, filled with private homes.Increasing development is <mark class="vocab-word" data-word="lead">leading</mark> toward a <mark class="vocab-word" data-word="crisis">crisis</mark> for the pronghorn, <mark class="vocab-word" data-word="threatening">threatening</mark> to <mark class="vocab-word" data-word="choke">choke</mark> off their passageway.</p></div>  <div class="parallel-zh"><p>然而，人类行为对动物迁徙有着负面影响。叉角羚虽然与羚羊无关，但看起来很像。它是新世界速度最快的陆生哺乳动物。其中一个族群会在美国西部大提顿国家公园的山脉之间度过夏天，然后从其山间的夏季牧场沿一条狭窄的路径南下，穿过河流，到达平原。在这里，他们等待寒冷月份结束，主要以被风吹过露出雪面的灌木为生。这些叉羚羊之所以引人注目是因为其迁徙路线的不变性，以及三个瓶颈的严重限制。如果它们在春季迁徙中无法通过三个中的任何一个，它们就不能到达食物充足的夏季草场。如果他们在秋季时不能再次通过，就无法向南逃到被风吹拂的平原上，并很有可能在试图度过厚厚冰雪的冬季中死亡。叉羚羊依赖其远视能力和速度来躲避捕食者。他们穿行于陆地高耸开阔的地带，便于四处观察和奔跑。在其中一个瓶颈中，遍布森林的山峰耸立，形成V字形状，只留下一条大约150米宽的走廊。其间充满私人住宅。不断的发展正在引发一场叉羚羊的生存危机，有堵塞它们通道的风险。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p><mark class="vocab-word" data-word="conservation">Conservation</mark> scientists, along with some <mark class="vocab-word" data-word="biologist">biologists</mark> and land managers within the USA’s National Park Service and other agencies, are now working topreservemigrational behaviours, not just species and <mark class="vocab-word" data-word="habitat">habitats</mark>.A National Forest has recognised the path of the pronghorn, much of which passes across its land, as a protectedmigrationcorridor.But neither the Forest Service nor the Park Service can control what happens on private land at abottleneck.And with certain other <mark class="vocab-word" data-word="migrate">migrating</mark> species, the challenge is <mark class="vocab-word" data-word="complicated">complicated</mark> further – by <mark class="vocab-word" data-word="vastly">vastly</mark> greater distances <mark class="vocab-word" data-word="traverse">traversed</mark>, more jurisdictions, more borders, more dangers along the way.We will require <mark class="vocab-word" data-word="wisdom">wisdom</mark> and resoluteness to ensure that <mark class="vocab-word" data-word="migrate">migrating</mark> species can continue their journeying a while longer.</p></div>  <div class="parallel-zh"><p>物种保护科学家，以及来自美国国家公园管理局和其他机构的一些生物学家和土地管理者，现在正努力保护动物的迁徙行为，而不仅仅是它们的种群和栖息地。一片国家森林将叉角羚的迁徙路线（很大一部分路径要穿行其中）列为受保护的迁徙走廊。但无论是森林服务局还是公园服务局都无法控制瓶颈地带私人土地上所发生的事情。对于其他一些迁徙物种来说，挑战要更加复杂一些。它们一路上穿越更长的距离，更多的管辖区，更多的边境，面对更多的危险。我们需要智慧和决心来确保迁徙中的物种能够将他们的旅途进行的更长久一些。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"interval": 1, "biologist": 2, "migration": 1, "habitat": 2, "concerning": 1, "allocation": 1, "migrate": 3, "temptation": 1, "arctic": 5, "smelly": 1, "herring": 1, "gull": 1, "handout": 1, "mate": 1, "intent": 1, "gravel": 1, "coastline": 1, "converge": 1, "evolution": 1, "circumstance": 1, "suite": 1, "beast": 1, "seasonal": 2, "zooplankton": 1, "upward": 1, "downward": 1, "predator": 2, "deplete": 1, "cite": 1, "tender": 1, "resemble": 1, "antelope": 1, "mountainous": 1, "frozen": 1, "blown": 1, "bounty": 1, "graze": 1, "dependent": 1, "traverse": 2, "lead": 1, "crisis": 1, "threatening": 1, "choke": 1, "conservation": 1, "complicated": 1, "vastly": 1, "wisdom": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>

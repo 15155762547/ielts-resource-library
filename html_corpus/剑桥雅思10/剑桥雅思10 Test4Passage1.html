@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The megafires of California 加利福尼亚超级大火 - 剑桥雅思10 Test 4 Passage 1 - 雅思阅读高亮资源库</title>
+    <!-- Outfit & Lora Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            flex: 1;
+            position: relative;
+        }
+
+        /* Sidebar Style */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .vocab-search {
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .vocab-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .vocab-search input:focus {
+            border-color: var(--primary);
+        }
+
+        .vocab-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+        }
+
+        .vocab-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .vocab-item:hover {
+            background: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .vocab-item.active-filter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vocab-item.active-filter .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .vocab-item .word-name {
+            font-weight: 500;
+        }
+
+        .vocab-item .badge {
+            font-size: 11px;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-weight: 600;
+        }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            max-width: 1200px;
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 60%);
+            pointer-events: none;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        header .meta-source {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .meta-source a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Toolbar controls */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Segmented Controller (Tabs) */
+        .tabs-selector {
+            display: inline-flex;
+            background: var(--bg-color);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            font-weight: 600;
+        }
+
+        /* Font controls */
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .font-slider {
+            width: 100px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.02);
+            padding: 48px;
+            min-height: 400px;
+            transition: all 0.2s;
+        }
+
+        .reading-section {
+            display: none;
+        }
+
+        .reading-section.active {
+            display: block;
+        }
+
+        /* Reading styles */
+        .en-article, .zh-article {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .en-article p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 18px);
+            line-height: 2.0;
+            color: var(--text-color);
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .zh-article p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 18px) - 2px);
+            line-height: 1.9;
+            color: #334155;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Parallel rows */
+        .parallel-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parallel-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .parallel-row:first-child {
+            padding-top: 0;
+        }
+
+        .parallel-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .parallel-en p {
+            font-family: 'Lora', Georgia, serif;
+            font-size: var(--article-font-size, 17px);
+            line-height: 1.9;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .parallel-en p:last-child {
+            margin-bottom: 0;
+        }
+
+        .parallel-zh p {
+            font-family: inherit;
+            font-size: calc(var(--article-font-size, 17px) - 2px);
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .parallel-zh p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Vocabulary highlights */
+        .vocab-word {
+            background-color: rgba(245, 158, 11, 0.12);
+            border-bottom: 2px solid rgba(245, 158, 11, 0.5);
+            color: inherit;
+            cursor: pointer;
+            padding: 1px 2px;
+            border-radius: 2px;
+            transition: all 0.15s ease-in-out;
+            font-weight: 500;
+        }
+
+        .vocab-word:hover {
+            background-color: var(--accent-light);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .vocab-word.highlighted-active {
+            background-color: var(--accent);
+            color: white;
+            border-bottom-color: var(--accent);
+            border-radius: 4px;
+            padding: 2px 4px;
+            box-shadow: 0 4px 6px rgba(217, 87, 6, 0.3);
+        }
+
+        /* Sidebar toggle button (Mobile) */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallel-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 0;
+            }
+            
+            .parallel-en {
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 20px;
+            }
+
+            .content-card {
+                padding: 24px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <div class="app-container">
+        <!-- Sidebar containing vocab list -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h2>📚 词汇浏览器</h2>
+                <p>本篇共识别出 <b id="vocab-total-count">0</b> 个高亮单词</p>
+            </div>
+            <div class="vocab-search">
+                <input type="text" id="vocab-search-input" placeholder="搜索本篇高亮单词..." oninput="filterVocabList()">
+            </div>
+            <div class="vocab-list-wrapper">
+                <ul class="vocab-list" id="vocab-list">
+                    <!-- Dynamic vocab items will be inserted here -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main text view -->
+        <main>
+            <header>
+                <a href="../index.html" class="back-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    返回总目录
+                </a>
+                <div class="badges">
+                    <span class="badge-tag">剑桥雅思10</span>
+                    <span class="badge-tag">Test 4</span>
+                    <span class="badge-tag">Passage 1</span>
+                </div>
+                <h1>The megafires of California 加利福尼亚超级大火</h1>
+                <div class="meta-source">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="opacity: 0.8;">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 4 8 4c2.12 0 3.879.668 5.168 1.957A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12 8 12c-2.12 0-3.879-.668-5.168-1.957A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span>来源：<a href="https://www.laokaoya.com/29257.html" target="_blank">https://www.laokaoya.com/29257.html</a></span>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <div class="tabs-selector">
+                    <button class="tab-btn active" onclick="switchTab('en')">English 原文</button>
+                    <button class="tab-btn" onclick="switchTab('zh')">中文翻译</button>
+                    <button class="tab-btn" onclick="switchTab('both')">双语对照</button>
+                </div>
+                <div class="font-controls">
+                    <span>字号</span>
+                    <input type="range" class="font-slider" id="font-size-slider" min="14" max="24" value="18" oninput="changeFontSize(this.value)">
+                    <span id="font-size-val">18px</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <!-- English section -->
+                <div class="reading-section active" id="section-en">
+                    <div class="en-article">
+                        <p>Wildfires are becoming an increasing <mark class="vocab-word" data-word="menace">menace</mark> in the western <mark class="vocab-word" data-word="unite">United</mark> States, with Southern California being the hardest hit area. There’s a reason fire squads battling more <mark class="vocab-word" data-word="frequent">frequent</mark> <mark class="vocab-word" data-word="blaze">blazes</mark> in Southern California are having such difficulty containing the <mark class="vocab-word" data-word="flame">flames</mark>, despite better preparedness than ever and <mark class="vocab-word" data-word="decade">decades</mark> of experience fighting <mark class="vocab-word" data-word="fir">fires</mark> fanned by the ‘Santa Ana <mark class="vocab-word" data-word="wind">Winds</mark>’. The wildfires themselves, experts say, are generally hotter, faster, and spread more erratically than in the past.</p><p>Megafires, also called ‘<mark class="vocab-word" data-word="siege">siege</mark> <mark class="vocab-word" data-word="fir">fires</mark>’, are the increasingly <mark class="vocab-word" data-word="frequent">frequent</mark> <mark class="vocab-word" data-word="blaze">blazes</mark> that burn 500,000 <mark class="vocab-word" data-word="acre">acres</mark> or more – 10 times the size of the average forest fire of 20 years ago. Some recent wildfires are among the biggest ever in California in terms of <mark class="vocab-word" data-word="acreage">acreage</mark> burned, <mark class="vocab-word" data-word="accord">according</mark> to state figures and news reports.</p><p>One explanation for the trend to more superhot <mark class="vocab-word" data-word="fir">fires</mark> is that the region, which usually has dry summers, has had significantly below normal <mark class="vocab-word" data-word="precipitation">precipitation</mark> in many recent years. Another reason, experts say, is related to the century-long policy of the US Forest Service to stop wildfires as quickly as possible. The unintentional consequence has been to <mark class="vocab-word" data-word="halt">halt</mark> the natural eradication of underbrush, now the primary fuel for megafires.</p><p>Three other <mark class="vocab-word" data-word="factor">factors</mark> contribute to the trend, they add. First is climate change, <mark class="vocab-word" data-word="marked">marked</mark> by a 1-degree <mark class="vocab-word" data-word="fahrenheit">Fahrenheit</mark> rise in average <mark class="vocab-word" data-word="yearly">yearly</mark> temperature across the western states. Second is fire seasons that on average are 78 days longer than they were 20 years ago. Third is increased construction of homes in wooded areas.</p><p>‘We are increasingly building our homes in fire-prone <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>,’ says Dominik Kulakowski, <mark class="vocab-word" data-word="adjunct">adjunct</mark> professor of biology at Clark University Graduate School of Geography in Worcester, Massachusetts. ‘Doing that in many of the forests of the western US is like building homes on the side of an active <mark class="vocab-word" data-word="volcano">volcano</mark>.’</p><p>In California, where population growth has averaged more than 600,000 a year for at least a <mark class="vocab-word" data-word="decade">decade</mark>, more <mark class="vocab-word" data-word="residential">residential</mark> <mark class="vocab-word" data-word="housing">housing</mark> is being built. ‘What once was open space is now <mark class="vocab-word" data-word="residential">residential</mark> homes providing fuel to make <mark class="vocab-word" data-word="fir">fires</mark> burn with greater <mark class="vocab-word" data-word="intensity">intensity</mark>,’ says Terry McHale of the California Department of <mark class="vocab-word" data-word="forestry">Forestry</mark> firefighters’ union. ‘With so much dryness, so many communities to <mark class="vocab-word" data-word="catch">catch</mark> fire, so many fronts to fight, it becomes an almost <mark class="vocab-word" data-word="incredible">incredible</mark> job.’</p><p>That said, many experts give California high marks for making progress on preparedness in recent years, after some of the largest <mark class="vocab-word" data-word="fir">fires</mark> in state history <mark class="vocab-word" data-word="scorch">scorched</mark> thousands of <mark class="vocab-word" data-word="acre">acres</mark>, burned thousands of homes, and killed numerous people. Stung in the past by criticism of bungling that allowed <mark class="vocab-word" data-word="fir">fires</mark> to spread when they might have been contained, <mark class="vocab-word" data-word="personnel">personnel</mark> are meeting the <mark class="vocab-word" data-word="peculiar">peculiar</mark> challenges of neighborhood—and <mark class="vocab-word" data-word="canyon">canyon</mark>—hopping <mark class="vocab-word" data-word="fir">fires</mark> better than previously, observers say.</p><p>State promises to provide more up-to-date engines, planes, and <mark class="vocab-word" data-word="helicopter">helicopters</mark> to fight <mark class="vocab-word" data-word="fir">fires</mark> have been <mark class="vocab-word" data-word="fulfill">fulfilled</mark>. Firefighters’ unions that in the past complained of dilapidated equipment, old fire engines, and <mark class="vocab-word" data-word="insufficient">insufficient</mark> <mark class="vocab-word" data-word="blueprint">blueprints</mark> for fire safety are now praising the state’s commitment, noting that funding for firefighting has increased, despite huge cuts in many other programs. ‘We are pleased that the current state administration has been very proactive in its support of us, and [has] come through with budgetary support of the <mark class="vocab-word" data-word="infrastructure">infrastructure</mark> needs we have long sought,’ says Mr. McHale of the firefighters’ union.</p><p>Besides providing money to <mark class="vocab-word" data-word="upgrade">upgrade</mark> the fire engines that must <mark class="vocab-word" data-word="traverse">traverse</mark> the <mark class="vocab-word" data-word="mammoth">mammoth</mark> state and <mark class="vocab-word" data-word="wind">wind</mark> along serpentine <mark class="vocab-word" data-word="canyon">canyon</mark> roads, the state has invested in better command-and-control facilities as well as in the strategies to run them. ‘In the fire <mark class="vocab-word" data-word="siege">sieges</mark> of earlier years, we found that other jurisdictions and states were willing to offer mutual-aid help, but we were not able to communicate <mark class="vocab-word" data-word="adequate">adequately</mark> with them,’ says Kim Zagaris, chief of the state’s Office of Emergency Services Fire and Rescue Branch. After a commission examined and revamped communications procedures, the statewide response ‘has become far more professional and <mark class="vocab-word" data-word="responsive">responsive</mark>,’ he says. There is a sense among both government officials and <mark class="vocab-word" data-word="resident">residents</mark> that the speed, <mark class="vocab-word" data-word="dedication">dedication</mark>, and <mark class="vocab-word" data-word="coordination">coordination</mark> of firefighters from several states and jurisdictions are resulting in greater <mark class="vocab-word" data-word="efficiency">efficiency</mark> than in past ‘<mark class="vocab-word" data-word="siege">siege</mark> fire’ situations.</p><p>In recent years, the Southern California region has improved building <mark class="vocab-word" data-word="cod">codes</mark>, <mark class="vocab-word" data-word="evacuation">evacuation</mark> procedures, and procurement of new technology. ‘I am extraordinarily impressed by the improvements we have <mark class="vocab-word" data-word="witness">witnessed</mark>,’ says Randy Jacobs, a Southern California-based lawyer who has had to <mark class="vocab-word" data-word="evacuate">evacuate</mark> both his home and business to escape wildfires. ‘<mark class="vocab-word" data-word="notwithstanding">Notwithstanding</mark> all the damage that will continue to be caused by wildfires, we will no longer suffer the loss of life <mark class="vocab-word" data-word="endure">endured</mark> in the past because of the fire prevention and firefighting measures that have been put in place,’ he says.</p>
+                    </div>
+                </div>
+
+                <!-- Chinese section -->
+                <div class="reading-section" id="section-zh">
+                    <div class="zh-article">
+                        <p>在美国西部，野火正变得越来越严重，南加州是受打击最严重的区域。尽管准备工作比以往任何时候都要好，并且有数十年对抗“Santa Ana”飓风所煽起的火灾的经验，但在南加州，与更频繁的大火作斗争的消防队却很难控制火灾规模。这是有原因的。专家说，与过去相比，野火本身温度更好，起火更快，传播路线也更加不规则。</p><p>超级大火也被称为“围攻火”，是越来越频繁的大火。他们烧毁了50万英亩甚至更多的土地，是20年前森林火灾平均损毁面积的10倍。根据州数据和新闻报道，就燃烧面积而言，最近的一些野火是加州有史以来最大的火灾。</p><p>超高温火灾越来越多的一种解释是，该地区夏季通常十分干燥。近年来，其降水量大大低于正常水平。专家们说，另一个原因与美国森林服务局长达一个世纪的政策有关。该政策要求尽快扑灭野火。它意外的阻碍了对矮木丛的自然清理，而它们现在成为超级火灾的主要燃料。</p><p>他们补充说，三个其他因素也加剧了这一趋势。首先是气候变化，西部各州的年平均气温升高了1华氏度。其次是火灾季节，平均比20年前长78天。第三是森林地带房屋建筑的增加。</p><p>“我们越来越多地把自己的家建在火灾易发的生态系统中”，马萨诸塞州伍斯特市克拉克大学研究生院生物学教授Dominik Kulakowski说，“在美国西部的许多森里中这样做，就仿佛是把家安在了活火山旁边”。</p><p>至少十年来，加利福尼亚平均每年人口增长超过600,000。更多的住宅被建造起来。“曾经的开阔地带现在被住宅所占据，它们为火灾提供燃料，使其燃烧的更为剧烈”，加利福尼亚森林消防工会的Terry Mchale说，“这么干燥的天气，这么多的社区着火，这么多的战线需要扑灭，这几乎是一项不可能完成的工作”。</p><p>话虽如此，在一些加州历史上最大的火灾烧焦了数千亩土地，烧毁了数千所房屋，并吞噬了无数生命之后，许多专家对加利福尼亚州近年来的备灾工作仍然给出了很高的评价。观察家说，相关人员过去曾因失败而饱受批评，因为他们让本可以受到控制的火灾四处蔓延，但现在他们更好地应对了奇特的挑战，火灾在住宅区和峡谷中隔空蔓延。</p><p>州政府关于提供更新的车辆、飞机和直升机以对抗火灾的承诺都已兑现。过去抱怨设备损坏，消防车老旧，以及缺乏足够消防安全蓝图的消防员工会，现在则对州政府的投入表示赞扬。他们注意到，尽管许多其他计划被大幅度削减，但用于消防的资金却有所增加。消防工会的McHale说：“我们感到高兴的是，现任州政府一直非常积极地支持我们，并且已经为我们长期以来寻求的基础设备需求提供了预算支持”。</p><p>除了提供资金以更新那些必须穿越全州、并在峡谷蜿蜒的道路上行驶的车辆以外，该州还投资了更好的指挥和控制设施以及操作它们的策略。州紧急事务办公室火灾与救援分部的主任Kim Zagaris说：“在前几年的火灾中，我们发现其他辖区和州愿意提供互相帮助，但我们无法与他们进行充分的沟通”。在委员会审查并修改了通信程序之后，全州的响应“变得更加专业和迅速”。政府官员和居民都意识到，与过去“围攻火灾”相比，来自多个州和辖区的消防员的速度、投入，和相互协调带来了更高的效率。</p><p>近年来，南加州地区已经改善了建筑规范，疏散程序和新技术的采购。“我对我们所见证到的改进印象十分深刻”，南加州的一名律师，Randy Jacobs说。他曾经两次撤离自己的家和办公室以逃避野火。“尽管野火必定会继续造成的损害，但由于采取了防火和消防措施，我们将不再遭受过去遭受的生命损失”。</p>
+                    </div>
+                </div>
+
+                <!-- Parallel section -->
+                <div class="reading-section" id="section-both">
+                    <div class="parallel-container">
+                        <div class="parallel-row">  <div class="parallel-en"><p>Wildfires are becoming an increasing <mark class="vocab-word" data-word="menace">menace</mark> in the western <mark class="vocab-word" data-word="unite">United</mark> States, with Southern California being the hardest hit area. There’s a reason fire squads battling more <mark class="vocab-word" data-word="frequent">frequent</mark> <mark class="vocab-word" data-word="blaze">blazes</mark> in Southern California are having such difficulty containing the <mark class="vocab-word" data-word="flame">flames</mark>, despite better preparedness than ever and <mark class="vocab-word" data-word="decade">decades</mark> of experience fighting <mark class="vocab-word" data-word="fir">fires</mark> fanned by the ‘Santa Ana <mark class="vocab-word" data-word="wind">Winds</mark>’. The wildfires themselves, experts say, are generally hotter, faster, and spread more erratically than in the past.</p></div>  <div class="parallel-zh"><p>在美国西部，野火正变得越来越严重，南加州是受打击最严重的区域。尽管准备工作比以往任何时候都要好，并且有数十年对抗“Santa Ana”飓风所煽起的火灾的经验，但在南加州，与更频繁的大火作斗争的消防队却很难控制火灾规模。这是有原因的。专家说，与过去相比，野火本身温度更好，起火更快，传播路线也更加不规则。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Megafires, also called ‘<mark class="vocab-word" data-word="siege">siege</mark> <mark class="vocab-word" data-word="fir">fires</mark>’, are the increasingly <mark class="vocab-word" data-word="frequent">frequent</mark> <mark class="vocab-word" data-word="blaze">blazes</mark> that burn 500,000 <mark class="vocab-word" data-word="acre">acres</mark> or more – 10 times the size of the average forest fire of 20 years ago. Some recent wildfires are among the biggest ever in California in terms of <mark class="vocab-word" data-word="acreage">acreage</mark> burned, <mark class="vocab-word" data-word="accord">according</mark> to state figures and news reports.</p></div>  <div class="parallel-zh"><p>超级大火也被称为“围攻火”，是越来越频繁的大火。他们烧毁了50万英亩甚至更多的土地，是20年前森林火灾平均损毁面积的10倍。根据州数据和新闻报道，就燃烧面积而言，最近的一些野火是加州有史以来最大的火灾。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>One explanation for the trend to more superhot <mark class="vocab-word" data-word="fir">fires</mark> is that the region, which usually has dry summers, has had significantly below normal <mark class="vocab-word" data-word="precipitation">precipitation</mark> in many recent years. Another reason, experts say, is related to the century-long policy of the US Forest Service to stop wildfires as quickly as possible. The unintentional consequence has been to <mark class="vocab-word" data-word="halt">halt</mark> the natural eradication of underbrush, now the primary fuel for megafires.</p></div>  <div class="parallel-zh"><p>超高温火灾越来越多的一种解释是，该地区夏季通常十分干燥。近年来，其降水量大大低于正常水平。专家们说，另一个原因与美国森林服务局长达一个世纪的政策有关。该政策要求尽快扑灭野火。它意外的阻碍了对矮木丛的自然清理，而它们现在成为超级火灾的主要燃料。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Three other <mark class="vocab-word" data-word="factor">factors</mark> contribute to the trend, they add. First is climate change, <mark class="vocab-word" data-word="marked">marked</mark> by a 1-degree <mark class="vocab-word" data-word="fahrenheit">Fahrenheit</mark> rise in average <mark class="vocab-word" data-word="yearly">yearly</mark> temperature across the western states. Second is fire seasons that on average are 78 days longer than they were 20 years ago. Third is increased construction of homes in wooded areas.</p></div>  <div class="parallel-zh"><p>他们补充说，三个其他因素也加剧了这一趋势。首先是气候变化，西部各州的年平均气温升高了1华氏度。其次是火灾季节，平均比20年前长78天。第三是森林地带房屋建筑的增加。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>‘We are increasingly building our homes in fire-prone <mark class="vocab-word" data-word="ecosystem">ecosystems</mark>,’ says Dominik Kulakowski, <mark class="vocab-word" data-word="adjunct">adjunct</mark> professor of biology at Clark University Graduate School of Geography in Worcester, Massachusetts. ‘Doing that in many of the forests of the western US is like building homes on the side of an active <mark class="vocab-word" data-word="volcano">volcano</mark>.’</p></div>  <div class="parallel-zh"><p>“我们越来越多地把自己的家建在火灾易发的生态系统中”，马萨诸塞州伍斯特市克拉克大学研究生院生物学教授Dominik Kulakowski说，“在美国西部的许多森里中这样做，就仿佛是把家安在了活火山旁边”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In California, where population growth has averaged more than 600,000 a year for at least a <mark class="vocab-word" data-word="decade">decade</mark>, more <mark class="vocab-word" data-word="residential">residential</mark> <mark class="vocab-word" data-word="housing">housing</mark> is being built. ‘What once was open space is now <mark class="vocab-word" data-word="residential">residential</mark> homes providing fuel to make <mark class="vocab-word" data-word="fir">fires</mark> burn with greater <mark class="vocab-word" data-word="intensity">intensity</mark>,’ says Terry McHale of the California Department of <mark class="vocab-word" data-word="forestry">Forestry</mark> firefighters’ union. ‘With so much dryness, so many communities to <mark class="vocab-word" data-word="catch">catch</mark> fire, so many fronts to fight, it becomes an almost <mark class="vocab-word" data-word="incredible">incredible</mark> job.’</p></div>  <div class="parallel-zh"><p>至少十年来，加利福尼亚平均每年人口增长超过600,000。更多的住宅被建造起来。“曾经的开阔地带现在被住宅所占据，它们为火灾提供燃料，使其燃烧的更为剧烈”，加利福尼亚森林消防工会的Terry Mchale说，“这么干燥的天气，这么多的社区着火，这么多的战线需要扑灭，这几乎是一项不可能完成的工作”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>That said, many experts give California high marks for making progress on preparedness in recent years, after some of the largest <mark class="vocab-word" data-word="fir">fires</mark> in state history <mark class="vocab-word" data-word="scorch">scorched</mark> thousands of <mark class="vocab-word" data-word="acre">acres</mark>, burned thousands of homes, and killed numerous people. Stung in the past by criticism of bungling that allowed <mark class="vocab-word" data-word="fir">fires</mark> to spread when they might have been contained, <mark class="vocab-word" data-word="personnel">personnel</mark> are meeting the <mark class="vocab-word" data-word="peculiar">peculiar</mark> challenges of neighborhood—and <mark class="vocab-word" data-word="canyon">canyon</mark>—hopping <mark class="vocab-word" data-word="fir">fires</mark> better than previously, observers say.</p></div>  <div class="parallel-zh"><p>话虽如此，在一些加州历史上最大的火灾烧焦了数千亩土地，烧毁了数千所房屋，并吞噬了无数生命之后，许多专家对加利福尼亚州近年来的备灾工作仍然给出了很高的评价。观察家说，相关人员过去曾因失败而饱受批评，因为他们让本可以受到控制的火灾四处蔓延，但现在他们更好地应对了奇特的挑战，火灾在住宅区和峡谷中隔空蔓延。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>State promises to provide more up-to-date engines, planes, and <mark class="vocab-word" data-word="helicopter">helicopters</mark> to fight <mark class="vocab-word" data-word="fir">fires</mark> have been <mark class="vocab-word" data-word="fulfill">fulfilled</mark>. Firefighters’ unions that in the past complained of dilapidated equipment, old fire engines, and <mark class="vocab-word" data-word="insufficient">insufficient</mark> <mark class="vocab-word" data-word="blueprint">blueprints</mark> for fire safety are now praising the state’s commitment, noting that funding for firefighting has increased, despite huge cuts in many other programs. ‘We are pleased that the current state administration has been very proactive in its support of us, and [has] come through with budgetary support of the <mark class="vocab-word" data-word="infrastructure">infrastructure</mark> needs we have long sought,’ says Mr. McHale of the firefighters’ union.</p></div>  <div class="parallel-zh"><p>州政府关于提供更新的车辆、飞机和直升机以对抗火灾的承诺都已兑现。过去抱怨设备损坏，消防车老旧，以及缺乏足够消防安全蓝图的消防员工会，现在则对州政府的投入表示赞扬。他们注意到，尽管许多其他计划被大幅度削减，但用于消防的资金却有所增加。消防工会的McHale说：“我们感到高兴的是，现任州政府一直非常积极地支持我们，并且已经为我们长期以来寻求的基础设备需求提供了预算支持”。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>Besides providing money to <mark class="vocab-word" data-word="upgrade">upgrade</mark> the fire engines that must <mark class="vocab-word" data-word="traverse">traverse</mark> the <mark class="vocab-word" data-word="mammoth">mammoth</mark> state and <mark class="vocab-word" data-word="wind">wind</mark> along serpentine <mark class="vocab-word" data-word="canyon">canyon</mark> roads, the state has invested in better command-and-control facilities as well as in the strategies to run them. ‘In the fire <mark class="vocab-word" data-word="siege">sieges</mark> of earlier years, we found that other jurisdictions and states were willing to offer mutual-aid help, but we were not able to communicate <mark class="vocab-word" data-word="adequate">adequately</mark> with them,’ says Kim Zagaris, chief of the state’s Office of Emergency Services Fire and Rescue Branch. After a commission examined and revamped communications procedures, the statewide response ‘has become far more professional and <mark class="vocab-word" data-word="responsive">responsive</mark>,’ he says. There is a sense among both government officials and <mark class="vocab-word" data-word="resident">residents</mark> that the speed, <mark class="vocab-word" data-word="dedication">dedication</mark>, and <mark class="vocab-word" data-word="coordination">coordination</mark> of firefighters from several states and jurisdictions are resulting in greater <mark class="vocab-word" data-word="efficiency">efficiency</mark> than in past ‘<mark class="vocab-word" data-word="siege">siege</mark> fire’ situations.</p></div>  <div class="parallel-zh"><p>除了提供资金以更新那些必须穿越全州、并在峡谷蜿蜒的道路上行驶的车辆以外，该州还投资了更好的指挥和控制设施以及操作它们的策略。州紧急事务办公室火灾与救援分部的主任Kim Zagaris说：“在前几年的火灾中，我们发现其他辖区和州愿意提供互相帮助，但我们无法与他们进行充分的沟通”。在委员会审查并修改了通信程序之后，全州的响应“变得更加专业和迅速”。政府官员和居民都意识到，与过去“围攻火灾”相比，来自多个州和辖区的消防员的速度、投入，和相互协调带来了更高的效率。</p></div></div><div class="parallel-row">  <div class="parallel-en"><p>In recent years, the Southern California region has improved building <mark class="vocab-word" data-word="cod">codes</mark>, <mark class="vocab-word" data-word="evacuation">evacuation</mark> procedures, and procurement of new technology. ‘I am extraordinarily impressed by the improvements we have <mark class="vocab-word" data-word="witness">witnessed</mark>,’ says Randy Jacobs, a Southern California-based lawyer who has had to <mark class="vocab-word" data-word="evacuate">evacuate</mark> both his home and business to escape wildfires. ‘<mark class="vocab-word" data-word="notwithstanding">Notwithstanding</mark> all the damage that will continue to be caused by wildfires, we will no longer suffer the loss of life <mark class="vocab-word" data-word="endure">endured</mark> in the past because of the fire prevention and firefighting measures that have been put in place,’ he says.</p></div>  <div class="parallel-zh"><p>近年来，南加州地区已经改善了建筑规范，疏散程序和新技术的采购。“我对我们所见证到的改进印象十分深刻”，南加州的一名律师，Randy Jacobs说。他曾经两次撤离自己的家和办公室以逃避野火。“尽管野火必定会继续造成的损害，但由于采取了防火和消防措施，我们将不再遭受过去遭受的生命损失”。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Set vocabulary list and counts dynamically
+        const wordCounts = {"menace": 1, "unite": 1, "frequent": 2, "blaze": 2, "flame": 1, "decade": 2, "fir": 8, "wind": 2, "siege": 3, "acre": 2, "acreage": 1, "accord": 1, "precipitation": 1, "halt": 1, "factor": 1, "marked": 1, "fahrenheit": 1, "yearly": 1, "ecosystem": 1, "adjunct": 1, "volcano": 1, "residential": 2, "housing": 1, "intensity": 1, "forestry": 1, "catch": 1, "incredible": 1, "scorch": 1, "personnel": 1, "peculiar": 1, "canyon": 2, "helicopter": 1, "fulfill": 1, "insufficient": 1, "blueprint": 1, "infrastructure": 1, "upgrade": 1, "traverse": 1, "mammoth": 1, "adequate": 1, "responsive": 1, "resident": 1, "dedication": 1, "coordination": 1, "efficiency": 1, "cod": 1, "evacuation": 1, "witness": 1, "evacuate": 1, "notwithstanding": 1, "endure": 1};
+        let activeWord = null;
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabList();
+            setupWordClickListeners();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.reading-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById('section-' + tabId).classList.add('active');
+            
+            // Find clicking button
+            let btnIdx = tabId === 'en' ? 0 : (tabId === 'zh' ? 1 : 2);
+            document.querySelectorAll('.tab-btn')[btnIdx].classList.add('active');
+        }
+
+        function changeFontSize(val) {
+            document.documentElement.style.setProperty('--article-font-size', val + 'px');
+            document.getElementById('font-size-val').textContent = val + 'px';
+        }
+
+        function renderVocabList(filter = '') {
+            const listContainer = document.getElementById('vocab-list');
+            listContainer.innerHTML = '';
+            
+            const words = Object.keys(wordCounts).sort();
+            let totalMatch = 0;
+            
+            words.forEach(word => {
+                if (filter && !word.includes(filter.toLowerCase())) return;
+                
+                totalMatch += wordCounts[word];
+                
+                const li = document.createElement('li');
+                li.className = 'vocab-item';
+                if (activeWord === word) li.classList.add('active-filter');
+                
+                li.innerHTML = `
+                    <span class="word-name">${word}</span>
+                    <span class="badge">${wordCounts[word]}</span>
+                `;
+                
+                li.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                listContainer.appendChild(li);
+            });
+            
+            document.getElementById('vocab-total-count').textContent = words.length;
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search-input').value;
+            renderVocabList(query);
+        }
+
+        function setupWordClickListeners() {
+            document.querySelectorAll('.vocab-word').forEach(element => {
+                element.onclick = (e) => {
+                    e.stopPropagation();
+                    const word = element.getAttribute('data-word');
+                    selectWord(word);
+                };
+            });
+        }
+
+        function selectWord(word) {
+            if (activeWord === word) {
+                // De-select
+                activeWord = null;
+                document.querySelectorAll('.vocab-word').forEach(el => {
+                    el.classList.remove('highlighted-active');
+                });
+                renderVocabList(document.getElementById('vocab-search-input').value);
+                return;
+            }
+            
+            activeWord = word;
+            
+            // Re-render sidebar items to show active class
+            renderVocabList(document.getElementById('vocab-search-input').value);
+            
+            // Highlight occurrences in document
+            document.querySelectorAll('.vocab-word').forEach(el => {
+                if (el.getAttribute('data-word') === word) {
+                    el.classList.add('highlighted-active');
+                } else {
+                    el.classList.remove('highlighted-active');
+                }
+            });
+            
+            // Scroll to the first active instance
+            const firstActive = document.querySelector('.vocab-word.highlighted-active');
+            if (firstActive) {
+                // Determine if we need to switch tabs
+                const parentSection = firstActive.closest('.reading-section');
+                if (parentSection && !parentSection.classList.contains('active')) {
+                    const sectionId = parentSection.id.replace('section-', '');
+                    switchTab(sectionId);
+                }
+                
+                setTimeout(() => {
+                    firstActive.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>
